@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.Country';
+export const scope = 'hrmi.containers.Country';
 
 export default defineMessages({
   header: {
