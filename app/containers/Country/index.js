@@ -11,20 +11,28 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
+import rootMessages from 'messages';
+
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import H1 from 'styled/H1';
 import makeSelectCountry from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+// import messages from './messages';
 
 export function Country(props) {
   useInjectReducer({ key: 'country', reducer });
   useInjectSaga({ key: 'country', saga });
   return (
     <div>
-      <FormattedMessage {...messages.header} />
-      <div>{props.match.params.country}</div>
+      <H1>
+        {props.match.params.country && (
+          <FormattedMessage
+            {...rootMessages.countries[props.match.params.country]}
+          />
+        )}
+      </H1>
     </div>
   );
 }
