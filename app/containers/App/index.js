@@ -23,6 +23,7 @@ import Country from 'containers/Country/Loadable';
 import Page from 'containers/Page/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LocaleToggle from 'containers/LocaleToggle';
+import CountryToggle from 'containers/CountryToggle';
 
 import { loadDataIfNeeded } from './actions';
 
@@ -74,6 +75,7 @@ export function App({ match, onLoadData }) {
         />
       </Helmet>
       <LocaleToggle />
+      <CountryToggle />
       <Switch>
         <Route exact path={`/${locale}`} component={Overview} />
         <Route

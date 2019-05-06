@@ -1,11 +1,21 @@
-import { takeEvery, select, put, call } from 'redux-saga/effects';
+import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
 import 'whatwg-fetch';
 
 // import dataRequest from 'utils/data-request';
-import { selectDataRequestedAt } from './selectors';
+import {
+  selectDataRequestedAt,
+  makeSelectLocale,
+  makeSelectLocation,
+} from './selectors';
 import { dataRequested, dataLoaded, dataLoadingError } from './actions';
-import { LOAD_DATA_IF_NEEDED, DATA_URL, DATA_RESOURCES } from './constants';
+import {
+  LOAD_DATA_IF_NEEDED,
+  DATA_URL,
+  DATA_RESOURCES,
+  SELECT_COUNTRY,
+} from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
 
@@ -75,10 +85,17 @@ function* loadDataErrorHandler(err, { key }) {
   yield put(dataLoadingError(key, err));
 }
 
+export function* selectCountrySaga({ code }) {
+  const currentLocale = yield select(makeSelectLocale());
+  const currentLocation = yield select(makeSelectLocation());
+  yield put(push(`/${currentLocale}/country/${code}${currentLocation.search}`));
+}
+
 export default function* defaultSaga() {
   // See example in containers/HomePage/saga.js
   yield takeEvery(
     LOAD_DATA_IF_NEEDED,
     autoRestart(loadDataSaga, loadDataErrorHandler, MAX_LOAD_ATTEMPTS),
   );
+  yield takeLatest(SELECT_COUNTRY, selectCountrySaga);
 }

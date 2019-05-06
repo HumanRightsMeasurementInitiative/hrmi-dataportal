@@ -4,8 +4,7 @@
 
 import { takeLatest, select, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { makeSelectLocation } from 'containers/App/selectors';
-import { makeSelectLocale } from './selectors';
+import { makeSelectLocale, makeSelectLocation } from 'containers/App/selectors';
 import { CHANGE_LOCALE } from './constants';
 
 // replace current locale with new locale in path while retaining any search params

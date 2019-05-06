@@ -495,8 +495,8 @@ export default defineMessages({
       defaultMessage: 'SLV',
     },
     SUR: {
-      id: `${scope}.countries.`,
-      defaultMessage: '',
+      id: `${scope}.countries.SUR`,
+      defaultMessage: 'SUR',
     },
     SXM: {
       id: `${scope}.countries.SXM`,
@@ -779,7 +779,7 @@ export default defineMessages({
       defaultMessage: 'GIB',
     },
     GRC: {
-      id: `${scope}.countries.`,
+      id: `${scope}.countries.GRC`,
       defaultMessage: 'GRC',
     },
     GRL: {

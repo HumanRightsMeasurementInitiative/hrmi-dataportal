@@ -10,6 +10,7 @@ import {
   LOAD_DATA_ERROR,
   DATA_REQUESTED,
   DATA_READY,
+  SELECT_COUNTRY,
 } from './constants';
 
 /**
@@ -53,5 +54,12 @@ export function dataReady(key, time) {
     type: DATA_READY,
     key,
     time,
+  };
+}
+
+export function selectCountry(code) {
+  return {
+    type: SELECT_COUNTRY,
+    code,
   };
 }

@@ -18,19 +18,20 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-export function Country() {
+export function Country(props) {
   useInjectReducer({ key: 'country', reducer });
   useInjectSaga({ key: 'country', saga });
-
   return (
     <div>
       <FormattedMessage {...messages.header} />
+      <div>{props.match.params.country}</div>
     </div>
   );
 }
 
 Country.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  match: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

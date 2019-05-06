@@ -14,6 +14,7 @@ export const LOAD_DATA_SUCCESS = 'hrmi/App/LOAD_DATA_SUCCESS';
 export const LOAD_DATA_ERROR = 'hrmi/App/LOAD_DATA_ERROR';
 export const DATA_REQUESTED = 'hrmi/App/DATA_REQUESTED';
 export const DATA_READY = 'hrmi/App/DATA_READY';
+export const SELECT_COUNTRY = 'hrmi/App/SELECT_COUNTRY';
 
 // URLs for external resources loaded on request
 export const DATA_URL = '//hrmi-dataportal-data.unfolddata.com/data';

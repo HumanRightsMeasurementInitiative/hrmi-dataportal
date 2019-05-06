@@ -14,7 +14,7 @@ import { IntlProvider } from 'react-intl';
 
 import { useInjectSaga } from 'utils/injectSaga';
 
-import { makeSelectLocale } from './selectors';
+import { makeSelectLocale } from 'containers/App/selectors';
 import saga from './saga';
 const key = 'languageProvider';
 
