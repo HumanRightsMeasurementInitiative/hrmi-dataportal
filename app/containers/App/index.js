@@ -5,12 +5,6 @@
  * This component is the skeleton around the actual pages, and should only
  * contain code that should be seen on all pages. (e.g. navigation bar)
  *
- * routes
- * overview: /?scale=:scale&standard=:standard&benchmark=:benchmark&region=:region&income=:income&cpr=:cpr
- * metric view: /metric/:metric?standard=:standard&benchmark=:benchmark&region=:region&income=:income&cpr=:cpr
- * country view: /country/:country?scale=:scale&standard=:standard&benchmark=:benchmark&view=:view
- * page view: /page/:page
- *
  */
 
 import React from 'react';
@@ -19,8 +13,14 @@ import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
+import Overview from 'containers/Overview/Loadable';
+import Metric from 'containers/Metric/Loadable';
+import Country from 'containers/Country/Loadable';
+import Page from 'containers/Page/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LocaleToggle from 'containers/LocaleToggle';
+
+import { DEFAULT_LOCALE } from '../../i18n';
 
 import GlobalStyle from '../../global-styles';
 
@@ -33,7 +33,17 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
+/**
+ * routes: /[locale] +
+ * overview: /?scale=:scale&standard=:standard&benchmark=:benchmark&region=:region&income=:income&cpr=:cpr
+ * metric view: /metric/:metric?standard=:standard&benchmark=:benchmark&region=:region&income=:income&cpr=:cpr
+ * country view: /country/:country?scale=:scale&standard=:standard&benchmark=:benchmark&view=:view
+ * page view: /page/:page
+ *
+ */
+
 export default function App({ match }) {
+  const lcl = match.params ? match.params.locale : DEFAULT_LOCALE;
   return (
     <AppWrapper>
       <Helmet
@@ -47,7 +57,11 @@ export default function App({ match }) {
       </Helmet>
       <LocaleToggle />
       <Switch>
-        <Route path={`/${match.params.locale}`} component={NotFoundPage} />
+        <Route exact path={`/${lcl}`} component={Overview} />
+        <Route path={`/${lcl}/metric/:metric/:country?`} component={Metric} />
+        <Route path={`/${lcl}/country/:country/:metric?`} component={Country} />
+        <Route path={`/${lcl}/page/:page`} component={Page} />
+        <Route path={`/${lcl}`} component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
     </AppWrapper>
