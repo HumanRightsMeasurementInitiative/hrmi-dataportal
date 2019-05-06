@@ -7,11 +7,15 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { compose } from 'redux';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
+
+import { useInjectSaga } from 'utils/injectSaga';
 
 import Overview from 'containers/Overview/Loadable';
 import Metric from 'containers/Metric/Loadable';
@@ -20,9 +24,15 @@ import Page from 'containers/Page/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import LocaleToggle from 'containers/LocaleToggle';
 
+import { loadDataIfNeeded } from './actions';
+
+import saga from './saga';
+
 import { DEFAULT_LOCALE } from '../../i18n';
 
 import GlobalStyle from '../../global-styles';
+
+const DEPENDENCIES = ['countries', 'cprScores', 'esrScores'];
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
@@ -42,8 +52,16 @@ const AppWrapper = styled.div`
  *
  */
 
-export default function App({ match }) {
-  const lcl = match.params ? match.params.locale : DEFAULT_LOCALE;
+export function App({ match, onLoadData }) {
+  const locale = match.params ? match.params.locale : DEFAULT_LOCALE;
+
+  useInjectSaga({ key: 'app', saga });
+
+  useEffect(() => {
+    // kick off loading of data
+    onLoadData();
+  }, []);
+
   return (
     <AppWrapper>
       <Helmet
@@ -57,11 +75,17 @@ export default function App({ match }) {
       </Helmet>
       <LocaleToggle />
       <Switch>
-        <Route exact path={`/${lcl}`} component={Overview} />
-        <Route path={`/${lcl}/metric/:metric/:country?`} component={Metric} />
-        <Route path={`/${lcl}/country/:country/:metric?`} component={Country} />
-        <Route path={`/${lcl}/page/:page`} component={Page} />
-        <Route path={`/${lcl}`} component={NotFoundPage} />
+        <Route exact path={`/${locale}`} component={Overview} />
+        <Route
+          path={`/${locale}/metric/:metric/:country?`}
+          component={Metric}
+        />
+        <Route
+          path={`/${locale}/country/:country/:metric?`}
+          component={Country}
+        />
+        <Route path={`/${locale}/page/:page`} component={Page} />
+        <Route path={`/${locale}`} component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
     </AppWrapper>
@@ -70,4 +94,20 @@ export default function App({ match }) {
 
 App.propTypes = {
   match: PropTypes.object,
+  onLoadData: PropTypes.func,
 };
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onLoadData: () => {
+      DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
+    },
+  };
+}
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(App);

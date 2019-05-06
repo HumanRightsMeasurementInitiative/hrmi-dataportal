@@ -1,16 +1,57 @@
 /*
  * App Actions
  *
- * Actions change things in your application
- * Since this boilerplate uses a uni-directional data flow, specifically redux,
- * we have these actions which are the only way your application interacts with
- * your application state. This guarantees that your state is up to date and nobody
- * messes it up weirdly somewhere.
  *
- * To add a new Action:
- * 1) Import your constant
- * 2) Add a function like this:
- *    export function yourAction(var) {
- *        return { type: YOUR_ACTION_CONSTANT, var: var }
- *    }
  */
+
+import {
+  LOAD_DATA_IF_NEEDED,
+  LOAD_DATA_SUCCESS,
+  LOAD_DATA_ERROR,
+  DATA_REQUESTED,
+  DATA_READY,
+} from './constants';
+
+/**
+ * Load the data, this action starts the request saga
+ *
+ */
+export function loadDataIfNeeded(key) {
+  return {
+    type: LOAD_DATA_IF_NEEDED,
+    key,
+  };
+}
+
+export function dataLoaded(key, data, time) {
+  return {
+    type: LOAD_DATA_SUCCESS,
+    data,
+    key,
+    time,
+  };
+}
+
+export function dataLoadingError(error, key) {
+  return {
+    type: LOAD_DATA_ERROR,
+    error,
+    key,
+  };
+}
+
+export function dataRequested(key, time) {
+  return {
+    type: DATA_REQUESTED,
+    key,
+    time,
+  };
+}
+
+export function dataReady(key, time) {
+  return {
+    type: DATA_READY,
+    key,
+    time,
+  };
+}
