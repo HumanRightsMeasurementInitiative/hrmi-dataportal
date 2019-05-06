@@ -13,6 +13,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 
@@ -31,19 +32,23 @@ import 'file-loader?name=.htaccess!./.htaccess';
 import configureStore from './configureStore';
 
 // Import i18n messages
-import { translationMessages } from './i18n';
+import { translationMessages, appLocales, DEFAULT_LOCALE } from './i18n';
 
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
+// setting up route for locale: will forward to default locale
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>
         <ConnectedRouter history={history}>
-          <App />
+          <Switch>
+            <Route path={`/:locale(${appLocales.join('|')})`} component={App} />
+            <Redirect to={`/${DEFAULT_LOCALE}`} />
+          </Switch>
         </ConnectedRouter>
       </LanguageProvider>
     </Provider>,

@@ -12,9 +12,15 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { IntlProvider } from 'react-intl';
 
+import { useInjectSaga } from 'utils/injectSaga';
+
 import { makeSelectLocale } from './selectors';
+import saga from './saga';
+const key = 'languageProvider';
 
 export function LanguageProvider(props) {
+  useInjectSaga({ key, saga });
+
   return (
     <IntlProvider
       locale={props.locale}
