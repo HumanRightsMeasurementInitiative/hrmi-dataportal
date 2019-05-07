@@ -38,13 +38,13 @@ export function Country(props) {
         )}
       </H1>
       <div>Dimensions</div>
-      <div>CPR: {props.dimensions.cpr.length}</div>
-      <div>ESR: {props.dimensions.esr.length}</div>
+      <div>CPR: {props.dimensions && props.dimensions.cpr.length}</div>
+      <div>ESR: {props.dimensions && props.dimensions.esr.length}</div>
       <div>Rights</div>
-      <div>CPR: {props.rights.cpr.length}</div>
-      <div>ESR: {props.rights.esr.length}</div>
+      <div>CPR: {props.rights && props.rights.cpr.length}</div>
+      <div>ESR: {props.rights && props.rights.esr.length}</div>
       <div>Indicators</div>
-      <div>ESR: {props.indicators.length}</div>
+      <div>ESR: {props.indicators && props.indicators.length}</div>
     </div>
   );
 }
