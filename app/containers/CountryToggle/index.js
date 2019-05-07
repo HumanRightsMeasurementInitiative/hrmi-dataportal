@@ -7,13 +7,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape } from 'react-intl';
 
 import Toggle from 'components/Toggle';
 
 import { selectCountry } from 'containers/App/actions';
-import { makeSelectCountries } from 'containers/App/selectors';
+import { getCountries } from 'containers/App/selectors';
 
 import rootMessages from 'messages';
 
@@ -48,8 +47,8 @@ CountryToggle.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  countries: makeSelectCountries(),
+const mapStateToProps = state => ({
+  countries: getCountries(state),
 });
 
 export function mapDispatchToProps(dispatch) {

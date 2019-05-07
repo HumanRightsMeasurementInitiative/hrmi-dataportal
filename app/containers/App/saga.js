@@ -5,9 +5,9 @@ import 'whatwg-fetch';
 
 // import dataRequest from 'utils/data-request';
 import {
-  selectDataRequestedAt,
-  makeSelectLocale,
-  makeSelectLocation,
+  getLocale,
+  getRouterLocation,
+  getDataRequestedByKey,
 } from './selectors';
 import { dataRequested, dataLoaded, dataLoadingError } from './actions';
 import {
@@ -48,7 +48,7 @@ export function* loadDataSaga({ key }) {
   if (resourceIndex > -1) {
     const url = `${DATA_URL}/${DATA_RESOURCES[resourceIndex].file}`;
     // requestedSelector returns the times that entities where fetched from the API
-    const requestedAt = yield select(selectDataRequestedAt, { key });
+    const requestedAt = yield select(getDataRequestedByKey, key);
     // If haven't requested yet, do so now.
     if (!requestedAt) {
       try {
@@ -86,8 +86,8 @@ function* loadDataErrorHandler(err, { key }) {
 }
 
 export function* selectCountrySaga({ code }) {
-  const currentLocale = yield select(makeSelectLocale());
-  const currentLocation = yield select(makeSelectLocation());
+  const currentLocale = yield select(getLocale);
+  const currentLocation = yield select(getRouterLocation);
   yield put(push(`/${currentLocale}/country/${code}${currentLocation.search}`));
 }
 

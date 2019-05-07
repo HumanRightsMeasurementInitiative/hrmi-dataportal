@@ -9,12 +9,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
+// import { createSelector } from 'reselect';
 import { IntlProvider } from 'react-intl';
 
 import { useInjectSaga } from 'utils/injectSaga';
 
-import { makeSelectLocale } from 'containers/App/selectors';
+import { getLocale } from 'containers/App/selectors';
 import saga from './saga';
 const key = 'languageProvider';
 
@@ -38,11 +38,8 @@ LanguageProvider.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-const mapStateToProps = createSelector(
-  makeSelectLocale(),
-  locale => ({
-    locale,
-  }),
-);
+const mapStateToProps = state => ({
+  locale: getLocale(state),
+});
 
 export default connect(mapStateToProps)(LanguageProvider);

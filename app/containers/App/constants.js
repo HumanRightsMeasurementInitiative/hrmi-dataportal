@@ -81,6 +81,9 @@ export const REGIONS = [
 
 export const METRIC_TYPES = ['cpr', 'esr'];
 
+// d: dimensions, r: rights
+export const SCALES = ['d', 'r'];
+
 export const DIMENSIONS = [
   {
     key: 'esr',
@@ -304,11 +307,22 @@ export const INDICATORS = [
 
 export const STANDARDS = [
   {
-    key: 'high',
-    code: 'HiY',
+    key: 'core',
+    code: 'Core',
   },
   {
-    key: 'low',
-    code: 'Core',
+    key: 'hi',
+    code: 'HiY',
+  },
+];
+
+export const BENCHMARKS = [
+  {
+    key: 'adjusted',
+    column: 'score_wrt_immediate_duty',
+  },
+  {
+    key: 'best',
+    column: 'score_wrt_global_best',
   },
 ];
