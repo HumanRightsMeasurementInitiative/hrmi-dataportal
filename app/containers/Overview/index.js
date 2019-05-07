@@ -13,6 +13,7 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+import { getCountriesFiltered } from 'containers/App/selectors';
 import makeSelectOverview from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -21,7 +22,6 @@ import messages from './messages';
 export function Overview() {
   useInjectReducer({ key: 'overview', reducer });
   useInjectSaga({ key: 'overview', saga });
-
   return (
     <div>
       <FormattedMessage {...messages.header} />
@@ -31,10 +31,12 @@ export function Overview() {
 
 Overview.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 const mapStateToProps = createStructuredSelector({
   overview: makeSelectOverview(),
+  countries: state => getCountriesFiltered(state),
 });
 
 function mapDispatchToProps(dispatch) {

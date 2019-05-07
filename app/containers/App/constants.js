@@ -70,6 +70,8 @@ export const PAGES = [
   },
 ];
 
+export const COUNTRY_SORTS = ['name', 'population', 'gdp', 'score'];
+
 export const REGIONS = [
   'americas',
   'east-asia-pacific',
@@ -77,6 +79,33 @@ export const REGIONS = [
   'middle-east-north-africa',
   'south-asia',
   'sub-saharan-africa',
+];
+
+// column: 'high_income_country',
+export const INCOME_GROUPS = [
+  {
+    key: 'hi',
+    value: 1,
+  },
+  {
+    key: 'lmi',
+    value: 0,
+  },
+];
+
+export const PEOPLE_GROUPS = [
+  {
+    key: 'all',
+    code: 'All',
+  },
+  {
+    key: 'male',
+    code: 'Male',
+  },
+  {
+    key: 'female',
+    code: 'Female',
+  },
 ];
 
 export const METRIC_TYPES = ['cpr', 'esr'];
@@ -110,24 +139,28 @@ export const RIGHTS = [
     key: 'arrest',
     code: 'arrest',
     dimension: 'physint',
+    type: 'cpr',
     resource: 'cprScores',
   },
   {
     key: 'assembly',
     code: 'assem',
     dimension: 'empowerment',
+    type: 'cpr',
     resource: 'cprScores',
   },
   {
     key: 'disappearance',
     code: 'disap',
     dimension: 'physint',
+    type: 'cpr',
     resource: 'cprScores',
   },
   {
     key: 'death-penalty',
     code: 'dpex',
     dimension: 'physint',
+    type: 'cpr',
     resource: 'cprScores',
     aggregate: 'execution',
   },
@@ -135,12 +168,14 @@ export const RIGHTS = [
     key: 'execution',
     code: 'execution',
     dimension: 'physint',
+    type: 'cpr',
     resource: 'cprScores',
   },
   {
     key: 'extrajud-killing',
     code: 'exkill',
     dimension: 'physint',
+    type: 'cpr',
     resource: 'cprScores',
     aggregate: 'execution',
   },
@@ -148,48 +183,56 @@ export const RIGHTS = [
     key: 'expression',
     code: 'express',
     dimension: 'empowerment',
+    type: 'cpr',
     resource: 'cprScores',
   },
   {
     key: 'participation',
     code: 'polpart',
     dimension: 'empowerment',
+    type: 'cpr',
     resource: 'cprScores',
   },
   {
     key: 'torture',
     code: 'tort',
     dimension: 'physint',
+    type: 'cpr',
     resource: 'cprScores',
   },
   {
     key: 'education',
     code: 'Education',
     dimension: 'esr',
+    type: 'esr',
     resource: 'esrScores',
   },
   {
     key: 'food',
     code: 'Food',
     dimension: 'esr',
+    type: 'esr',
     resource: 'esrScores',
   },
   {
     key: 'health',
     code: 'Health',
     dimension: 'esr',
+    type: 'esr',
     resource: 'esrScores',
   },
   {
     key: 'housing',
     code: 'Housing',
     dimension: 'esr',
+    type: 'esr',
     resource: 'esrScores',
   },
   {
     key: 'work',
     code: 'Work',
     dimension: 'esr',
+    type: 'esr',
     resource: 'esrScores',
   },
 ];

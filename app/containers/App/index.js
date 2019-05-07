@@ -33,7 +33,12 @@ import { DEFAULT_LOCALE } from '../../i18n';
 
 import GlobalStyle from '../../global-styles';
 
-const DEPENDENCIES = ['countries', 'cprScores', 'esrScores'];
+const DEPENDENCIES = [
+  'countries',
+  'cprScores',
+  'esrScores',
+  'esrIndicatorScores',
+];
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
