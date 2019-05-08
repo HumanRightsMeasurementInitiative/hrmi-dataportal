@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import styled from 'styled-components';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -19,13 +20,17 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
+const Styled = styled.div`
+  min-height: 2000px;
+`;
+
 export function Overview() {
   useInjectReducer({ key: 'overview', reducer });
   useInjectSaga({ key: 'overview', saga });
   return (
-    <div>
+    <Styled>
       <FormattedMessage {...messages.header} />
-    </div>
+    </Styled>
   );
 }
 

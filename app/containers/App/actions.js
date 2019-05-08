@@ -16,6 +16,7 @@ import {
   CONTENT_REQUESTED,
   CONTENT_READY,
   SELECT_COUNTRY,
+  NAVIGATE,
 } from './constants';
 
 /**
@@ -105,5 +106,19 @@ export function selectCountry(code) {
   return {
     type: SELECT_COUNTRY,
     code,
+  };
+}
+
+/**
+ * navigate to new location
+ * @param {object} location new location
+ * @param {object} args navigation arguments
+ * @return {object} `{type: action id, location: new location, args: navigation arguments}`
+ */
+export function navigate(location, args) {
+  return {
+    type: NAVIGATE,
+    location,
+    args,
   };
 }

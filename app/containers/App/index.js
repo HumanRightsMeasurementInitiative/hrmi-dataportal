@@ -17,15 +17,15 @@ import { Switch, Route } from 'react-router-dom';
 
 import { useInjectSaga } from 'utils/injectSaga';
 
+import Header from 'containers/Header/Loadable';
 import Overview from 'containers/Overview/Loadable';
 import Metric from 'containers/Metric/Loadable';
 import Country from 'containers/Country/Loadable';
 import Page from 'containers/Page/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import LocaleToggle from 'containers/LocaleToggle';
-import CountryToggle from 'containers/CountryToggle';
 
 import { loadDataIfNeeded } from './actions';
+import { BREAKPOINTS } from './constants';
 
 import saga from './saga';
 
@@ -41,12 +41,20 @@ const DEPENDENCIES = [
 ];
 
 const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const Main = styled.main`
+  padding-top: 70px;
+  min-height: 100vh;
+  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
+    padding-top: 100px;
+  }
+  &:focus {
+    outline: none;
+  }
 `;
 
 /**
@@ -79,21 +87,22 @@ export function App({ match, onLoadData }) {
           content="Human Rights Measurement Initiative"
         />
       </Helmet>
-      <LocaleToggle />
-      <CountryToggle />
-      <Switch>
-        <Route exact path={`/${locale}`} component={Overview} />
-        <Route
-          path={`/${locale}/metric/:metric/:country?`}
-          component={Metric}
-        />
-        <Route
-          path={`/${locale}/country/:country/:metric?`}
-          component={Country}
-        />
-        <Route path={`/${locale}/page/:page`} component={Page} />
-        <Route path={`/${locale}`} component={NotFoundPage} />
-      </Switch>
+      <Header />
+      <Main>
+        <Switch>
+          <Route exact path={`/${locale}`} component={Overview} />
+          <Route
+            path={`/${locale}/metric/:metric/:country?`}
+            component={Metric}
+          />
+          <Route
+            path={`/${locale}/country/:country/:metric?`}
+            component={Country}
+          />
+          <Route path={`/${locale}/page/:page`} component={Page} />
+          <Route path={`/${locale}`} component={NotFoundPage} />
+        </Switch>
+      </Main>
       <GlobalStyle />
     </AppWrapper>
   );

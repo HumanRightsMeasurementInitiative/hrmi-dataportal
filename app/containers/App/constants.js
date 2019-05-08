@@ -20,6 +20,7 @@ export const LOAD_CONTENT_ERROR = 'hrmi/App/LOAD_CONTENT_ERROR';
 export const CONTENT_REQUESTED = 'hrmi/App/CONTENT_REQUESTED';
 export const CONTENT_READY = 'hrmi/App/CONTENT_READY';
 export const SELECT_COUNTRY = 'hrmi/App/SELECT_COUNTRY';
+export const NAVIGATE = 'hrmi/App/NAVIGATE';
 
 // URLs for external resources loaded on request
 export const DATA_URL = '//hrmi-dataportal-data.unfolddata.com/data';
@@ -389,5 +390,14 @@ export const THEME = {
     dark: '#8B969D',
     black: '#202326',
     hover: '#2956D1',
+  },
+};
+
+export const ICON_SIZE = 38; // default size
+export const ICONS = {
+  brand: {
+    sizes: [154.95, 26],
+    path:
+      'M16.18,14.06,28.12,26,26,28.12,14.06,16.18,2.12,28.12,0,26,11.94,14.06,0,2.12,2.12,0,14.06,11.94,26,0l2.12,2.12Z',
   },
 };

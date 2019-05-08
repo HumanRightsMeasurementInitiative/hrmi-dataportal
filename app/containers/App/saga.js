@@ -1,6 +1,7 @@
 import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
+// import extend from 'lodash/extend';
 import 'whatwg-fetch';
 
 // import dataRequest from 'utils/data-request';
@@ -26,6 +27,7 @@ import {
   PAGES,
   PAGES_URL,
   SELECT_COUNTRY,
+  NAVIGATE,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -136,6 +138,23 @@ export function* selectCountrySaga({ code }) {
   const currentLocation = yield select(getRouterLocation);
   yield put(push(`/${currentLocale}/country/${code}${currentLocation.search}`));
 }
+export function* navigateSaga({ location }) {
+  // default args
+  // const xArgs = extend({ replaceSearch: true }, args || {});
+
+  // update path: replace or keep if not provided
+  let path = '';
+  if (typeof location === 'string' && location !== '') {
+    path += `/${location}`;
+  } else if (typeof location.path !== 'undefined') {
+    path += `/${location.path}`;
+  }
+
+  const currentLocale = yield select(getLocale);
+  const currentLocation = yield select(getRouterLocation);
+
+  yield put(push(`/${currentLocale}${path}${currentLocation.search}`));
+}
 
 export default function* defaultSaga() {
   // See example in containers/HomePage/saga.js
@@ -148,4 +167,5 @@ export default function* defaultSaga() {
     autoRestart(loadContentSaga, loadContentErrorHandler, MAX_LOAD_ATTEMPTS),
   );
   yield takeLatest(SELECT_COUNTRY, selectCountrySaga);
+  yield takeLatest(NAVIGATE, navigateSaga);
 }

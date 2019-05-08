@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
+const Wrapper = styled.span`
   padding: 2px;
 `;
 
