@@ -7,15 +7,17 @@
  *
  */
 import produce from 'immer';
+import { CHANGE_LOCALE } from 'containers/LanguageProvider/constants';
 import {
   DATA_RESOURCES,
   PAGES,
   DATA_REQUESTED,
   LOAD_DATA_ERROR,
   LOAD_DATA_SUCCESS,
+  CONTENT_REQUESTED,
+  LOAD_CONTENT_ERROR,
+  LOAD_CONTENT_SUCCESS,
 } from './constants';
-
-// import produce from 'immer';
 
 // The initial state of the App
 export const initialState = {
@@ -37,18 +39,18 @@ export const initialState = {
     memo[resource.key] = false;
     return memo;
   }, {}),
-  content: PAGES.reduce((memo, resource) => {
-    memo[resource.key] = false;
+  content: PAGES.reduce((memo, key) => {
+    memo[key] = false;
     return memo;
   }, {}),
   // record request time
-  contentRequested: PAGES.reduce((memo, resource) => {
-    memo[resource.key] = false;
+  contentRequested: PAGES.reduce((memo, key) => {
+    memo[key] = false;
     return memo;
   }, {}),
   // record return time
-  contentReady: PAGES.reduce((memo, resource) => {
-    memo[resource.key] = false;
+  contentReady: PAGES.reduce((memo, key) => {
+    memo[key] = false;
     return memo;
   }, {}),
   /* eslint-enable no-param-reassign */
@@ -67,6 +69,21 @@ const appReducer = (state = initialState, action) =>
         break;
       case LOAD_DATA_ERROR:
         draft.dataRequested[action.key] = false;
+        break;
+      case CONTENT_REQUESTED:
+        draft.contentRequested[action.key] = action.time;
+        break;
+      case LOAD_CONTENT_SUCCESS:
+        draft.content[action.key] = action.content;
+        draft.contentReady[action.key] = action.time;
+        break;
+      case LOAD_CONTENT_ERROR:
+        draft.contentRequested[action.key] = false;
+        break;
+      case CHANGE_LOCALE:
+        draft.content = initialState.content;
+        draft.contentReady = initialState.contentReady;
+        draft.contentRequested = initialState.contentRequested;
         break;
     }
   });

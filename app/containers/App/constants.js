@@ -14,11 +14,18 @@ export const LOAD_DATA_SUCCESS = 'hrmi/App/LOAD_DATA_SUCCESS';
 export const LOAD_DATA_ERROR = 'hrmi/App/LOAD_DATA_ERROR';
 export const DATA_REQUESTED = 'hrmi/App/DATA_REQUESTED';
 export const DATA_READY = 'hrmi/App/DATA_READY';
+export const LOAD_CONTENT_IF_NEEDED = 'hrmi/App/LOAD_CONTENT_IF_NEEDED';
+export const LOAD_CONTENT_SUCCESS = 'hrmi/App/LOAD_CONTENT_SUCCESS';
+export const LOAD_CONTENT_ERROR = 'hrmi/App/LOAD_CONTENT_ERROR';
+export const CONTENT_REQUESTED = 'hrmi/App/CONTENT_REQUESTED';
+export const CONTENT_READY = 'hrmi/App/CONTENT_READY';
 export const SELECT_COUNTRY = 'hrmi/App/SELECT_COUNTRY';
 
 // URLs for external resources loaded on request
 export const DATA_URL = '//hrmi-dataportal-data.unfolddata.com/data';
 export const PAGES_URL = '//hrmi-dataportal-content.unfolddata.com/';
+
+export const PAGES = ['about', 'methodology'];
 
 // countries: country lookup table
 // esrIndicators: ESR indicator lookup table
@@ -56,17 +63,6 @@ export const DATA_RESOURCES = [
   {
     key: 'esrIndicatorScores',
     file: 'esr-indicator-scores.csv',
-  },
-];
-
-export const PAGES = [
-  {
-    key: 'about',
-    file: 'about.html',
-  },
-  {
-    key: 'methodology',
-    file: 'methodology.html',
   },
 ];
 

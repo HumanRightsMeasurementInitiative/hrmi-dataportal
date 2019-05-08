@@ -8,12 +8,23 @@ import {
   getLocale,
   getRouterLocation,
   getDataRequestedByKey,
+  getContentRequestedByKey,
 } from './selectors';
-import { dataRequested, dataLoaded, dataLoadingError } from './actions';
+import {
+  dataRequested,
+  dataLoaded,
+  dataLoadingError,
+  contentRequested,
+  contentLoaded,
+  contentLoadingError,
+} from './actions';
 import {
   LOAD_DATA_IF_NEEDED,
   DATA_URL,
   DATA_RESOURCES,
+  LOAD_CONTENT_IF_NEEDED,
+  PAGES,
+  PAGES_URL,
   SELECT_COUNTRY,
 } from './constants';
 
@@ -74,6 +85,38 @@ export function* loadDataSaga({ key }) {
     }
   }
 }
+export function* loadContentSaga({ key }) {
+  const pageIndex = PAGES.indexOf(key);
+  if (pageIndex > -1) {
+    const locale = yield select(getLocale);
+    const url = `${PAGES_URL}/${locale}/${key}/`;
+    // requestedSelector returns the times that entities where fetched from the API
+    const requestedAt = yield select(getContentRequestedByKey, key);
+    // If haven't requested yet, do so now.
+    if (!requestedAt) {
+      try {
+        // First record that we are requesting
+        yield put(contentRequested(key, Date.now()));
+        const response = yield fetch(url);
+        const responseOk = yield response.ok;
+        if (responseOk && typeof response.text === 'function') {
+          const responseBody = yield response.text();
+          if (responseBody) {
+            yield put(contentLoaded(key, responseBody, Date.now()));
+          } else {
+            throw new Error(response.statusText);
+          }
+        } else {
+          throw new Error(response.statusText);
+        }
+      } catch (err) {
+        yield put(contentRequested(key, false));
+        // throw error
+        throw new Error(err);
+      }
+    }
+  }
+}
 
 /**
  * Generator function. Load data error handler:
@@ -83,6 +126,9 @@ export function* loadDataSaga({ key }) {
  */
 function* loadDataErrorHandler(err, { key }) {
   yield put(dataLoadingError(key, err));
+}
+function* loadContentErrorHandler(err, { key }) {
+  yield put(contentLoadingError(key, err));
 }
 
 export function* selectCountrySaga({ code }) {
@@ -96,6 +142,10 @@ export default function* defaultSaga() {
   yield takeEvery(
     LOAD_DATA_IF_NEEDED,
     autoRestart(loadDataSaga, loadDataErrorHandler, MAX_LOAD_ATTEMPTS),
+  );
+  yield takeEvery(
+    LOAD_CONTENT_IF_NEEDED,
+    autoRestart(loadContentSaga, loadContentErrorHandler, MAX_LOAD_ATTEMPTS),
   );
   yield takeLatest(SELECT_COUNTRY, selectCountrySaga);
 }

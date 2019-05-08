@@ -138,8 +138,30 @@ const getDataRequested = createSelector(
 );
 
 export const getDataRequestedByKey = createSelector(
+  (state, key) => key,
   getDataRequested,
-  (requested, key) => requested[key],
+  (key, requested) => requested[key],
+);
+
+const getContent = createSelector(
+  getGlobal,
+  global => global.content,
+);
+
+const getContentRequested = createSelector(
+  getGlobal,
+  global => global.contentRequested,
+);
+
+export const getContentRequestedByKey = createSelector(
+  (state, key) => key,
+  getContentRequested,
+  (key, requested) => requested[key],
+);
+export const getContentByKey = createSelector(
+  (state, key) => key,
+  getContent,
+  (key, content) => content[key],
 );
 
 export const getCountries = createSelector(

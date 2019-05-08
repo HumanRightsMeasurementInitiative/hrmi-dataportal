@@ -10,6 +10,11 @@ import {
   LOAD_DATA_ERROR,
   DATA_REQUESTED,
   DATA_READY,
+  LOAD_CONTENT_IF_NEEDED,
+  LOAD_CONTENT_SUCCESS,
+  LOAD_CONTENT_ERROR,
+  CONTENT_REQUESTED,
+  CONTENT_READY,
   SELECT_COUNTRY,
 } from './constants';
 
@@ -52,6 +57,45 @@ export function dataRequested(key, time) {
 export function dataReady(key, time) {
   return {
     type: DATA_READY,
+    key,
+    time,
+  };
+}
+export function loadContentIfNeeded(key) {
+  return {
+    type: LOAD_CONTENT_IF_NEEDED,
+    key,
+  };
+}
+
+export function contentLoaded(key, content, time) {
+  return {
+    type: LOAD_CONTENT_SUCCESS,
+    content,
+    key,
+    time,
+  };
+}
+
+export function contentLoadingError(error, key) {
+  return {
+    type: LOAD_CONTENT_ERROR,
+    error,
+    key,
+  };
+}
+
+export function contentRequested(key, time) {
+  return {
+    type: CONTENT_REQUESTED,
+    key,
+    time,
+  };
+}
+
+export function contentReady(key, time) {
+  return {
+    type: CONTENT_READY,
     key,
     time,
   };

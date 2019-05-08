@@ -4,42 +4,47 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
-import makeSelectPage from './selectors';
-import reducer from './reducer';
-import saga from './saga';
-import messages from './messages';
+import { loadContentIfNeeded } from 'containers/App/actions';
+import { getContentByKey } from 'containers/App/selectors';
 
-export function Page() {
-  useInjectReducer({ key: 'page', reducer });
-  useInjectSaga({ key: 'page', saga });
+import HTMLWrapper from 'components/HTMLWrapper';
+import Loading from 'components/Loading';
+
+export function Page({ match, onLoadContent, content }) {
+  useEffect(() => {
+    // kick off loading of page content
+    onLoadContent(match.params.page);
+  }, []);
 
   return (
     <div>
-      <FormattedMessage {...messages.header} />
+      {content && <HTMLWrapper innerhtml={content} />}
+      {!content && <Loading />}
     </div>
   );
 }
 
 Page.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  match: PropTypes.object,
+  onLoadContent: PropTypes.func,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
-  page: makeSelectPage(),
+  content: (state, props) => getContentByKey(state, props.match.params.page),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onLoadContent: page => {
+      dispatch(loadContentIfNeeded(page));
+    },
   };
 }
 
