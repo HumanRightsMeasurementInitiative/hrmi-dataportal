@@ -1,5 +1,5 @@
 /*
- * Country Messages
+ * Global Messages
  *
  * This contains all the text for the Country container.
  */
@@ -9,6 +9,136 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
+  'people-at-risk': {
+    0: {
+      id: `${scope}.people-at-risk.0`,
+      defaultMessage: 'People 0',
+    },
+    1: {
+      id: `${scope}.people-at-risk.1`,
+      defaultMessage: 'People 1',
+    },
+    2: {
+      id: `${scope}.people-at-risk.2`,
+      defaultMessage: 'People 2',
+    },
+    3: {
+      id: `${scope}.people-at-risk.3`,
+      defaultMessage: 'People 3',
+    },
+    4: {
+      id: `${scope}.people-at-risk.4`,
+      defaultMessage: 'People 4',
+    },
+    5: {
+      id: `${scope}.people-at-risk.5`,
+      defaultMessage: 'People 5',
+    },
+    6: {
+      id: `${scope}.people-at-risk.6`,
+      defaultMessage: 'People 6',
+    },
+    7: {
+      id: `${scope}.people-at-risk.7`,
+      defaultMessage: 'People 7',
+    },
+    8: {
+      id: `${scope}.people-at-risk.8`,
+      defaultMessage: 'People 8',
+    },
+    9: {
+      id: `${scope}.people-at-risk.9`,
+      defaultMessage: 'People 9',
+    },
+    10: {
+      id: `${scope}.people-at-risk.10`,
+      defaultMessage: 'People 10',
+    },
+    11: {
+      id: `${scope}.people-at-risk.11`,
+      defaultMessage: 'People 11',
+    },
+    12: {
+      id: `${scope}.people-at-risk.12`,
+      defaultMessage: 'People 12',
+    },
+    13: {
+      id: `${scope}.people-at-risk.13`,
+      defaultMessage: 'People 13',
+    },
+    14: {
+      id: `${scope}.people-at-risk.14`,
+      defaultMessage: 'People 14',
+    },
+    15: {
+      id: `${scope}.people-at-risk.15`,
+      defaultMessage: 'People 15',
+    },
+    16: {
+      id: `${scope}.people-at-risk.16`,
+      defaultMessage: 'People 16',
+    },
+    17: {
+      id: `${scope}.people-at-risk.17`,
+      defaultMessage: 'People 17',
+    },
+    18: {
+      id: `${scope}.people-at-risk.18`,
+      defaultMessage: 'People 18',
+    },
+    19: {
+      id: `${scope}.people-at-risk.19`,
+      defaultMessage: 'People 19',
+    },
+    20: {
+      id: `${scope}.people-at-risk.20`,
+      defaultMessage: 'People 20',
+    },
+    21: {
+      id: `${scope}.people-at-risk.22`,
+      defaultMessage: 'People 21',
+    },
+    22: {
+      id: `${scope}.people-at-risk.22`,
+      defaultMessage: 'People 22',
+    },
+    23: {
+      id: `${scope}.people-at-risk.23`,
+      defaultMessage: 'People 23',
+    },
+    24: {
+      id: `${scope}.people-at-risk.24`,
+      defaultMessage: 'People 24',
+    },
+    25: {
+      id: `${scope}.people-at-risk.25`,
+      defaultMessage: 'People 25',
+    },
+    26: {
+      id: `${scope}.people-at-risk.26`,
+      defaultMessage: 'People 26',
+    },
+    27: {
+      id: `${scope}.people-at-risk.27`,
+      defaultMessage: 'People 27',
+    },
+    28: {
+      id: `${scope}.people-at-risk.28`,
+      defaultMessage: 'People 28',
+    },
+    29: {
+      id: `${scope}.people-at-risk.29`,
+      defaultMessage: 'People 29',
+    },
+    30: {
+      id: `${scope}.people-at-risk.30`,
+      defaultMessage: 'People 30',
+    },
+    31: {
+      id: `${scope}.people-at-risk.31`,
+      defaultMessage: 'People 31',
+    },
+  },
   'metric-types': {
     cpr: {
       id: `${scope}.metric-types.cpr`,
