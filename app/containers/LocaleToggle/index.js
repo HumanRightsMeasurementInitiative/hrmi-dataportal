@@ -11,7 +11,7 @@ import styled from 'styled-components';
 
 import Toggle from 'components/Toggle';
 import { getLocale } from 'containers/App/selectors';
-import messages from './messages';
+import { LANGUAGES } from 'containers/App/constants';
 import { appLocales } from '../../i18n';
 import { changeLocale } from '../LanguageProvider/actions';
 
@@ -26,7 +26,7 @@ export function LocaleToggle(props) {
         inverse
         value={props.locale}
         values={appLocales}
-        messages={messages}
+        formattedMessages={LANGUAGES.short}
         onToggle={props.onLocaleToggle}
       />
     </Styled>

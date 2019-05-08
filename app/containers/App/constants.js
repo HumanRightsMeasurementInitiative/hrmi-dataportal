@@ -28,6 +28,21 @@ export const PAGES_URL = '//hrmi-dataportal-content.unfolddata.com/';
 
 export const PAGES = ['about', 'methodology'];
 
+export const LANGUAGES = {
+  short: {
+    en: 'EN',
+    es: 'ES',
+    pt: 'PT',
+    fr: 'FR',
+  },
+  long: {
+    en: 'English',
+    es: 'Español',
+    pt: 'Português',
+    fr: 'Français',
+  },
+};
+
 // countries: country lookup table
 // esrIndicators: ESR indicator lookup table
 // atRisk: CPR survey people at risk data

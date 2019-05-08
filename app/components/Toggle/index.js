@@ -15,10 +15,14 @@ function Toggle(props) {
   // If we have items, render them
   if (props.values) {
     content = props.values.map(value => (
-      <ToggleOption key={value} value={value} message={props.messages[value]} />
+      <ToggleOption
+        key={value}
+        value={value}
+        message={props.messages && props.messages[value]}
+        formatted={props.formattedMessages && props.formattedMessages[value]}
+      />
     ));
   }
-
   return (
     <Select
       value={props.value}
@@ -35,6 +39,7 @@ Toggle.propTypes = {
   values: PropTypes.array,
   value: PropTypes.string,
   messages: PropTypes.object,
+  formattedMessages: PropTypes.object,
   inverse: PropTypes.bool,
 };
 

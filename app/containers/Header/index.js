@@ -20,7 +20,7 @@ import { navigate } from 'containers/App/actions';
 
 import NavLink from 'styled/NavLink';
 
-import messages from './messages';
+import rootMessages from 'messages';
 
 const Styled = styled.header`
   position: fixed;
@@ -143,7 +143,7 @@ export function Header({ nav }) {
                     nav(`page/${page}`);
                   }}
                 >
-                  <FormattedMessage {...messages.page[page]} />
+                  <FormattedMessage {...rootMessages.page[page]} />
                 </NavLink>
               ))}
           </NavPages>
