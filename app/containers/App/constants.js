@@ -365,3 +365,29 @@ export const BENCHMARKS = [
     column: 'score_wrt_global_best',
   },
 ];
+
+// theme breakpoints
+export const BREAKPOINTS = {
+  MOBILE: -1,
+  SMALL: 0,
+  MEDIUM: 1,
+  LARGE: 2,
+};
+// theme defining breakpoints, colors, sizes, grid gutters
+// breakpoints:
+// < 720px (45em): extra-small (mobile)
+// > 960px (60em): small (tablet portrait)
+// >= 1152px (72em): medium (tablet landscape, desktop)
+export const THEME = {
+  breakpoints: ['720px', '960px', '1152px'],
+  space: [0, 6, 12, 18, 24],
+  maxWidth: '940px',
+  sizes: ['12px', '14px', '18.66px', '28px', '34px'],
+  colors: {
+    white: '#fff',
+    light: '#E7E9EB',
+    dark: '#8B969D',
+    black: '#202326',
+    hover: '#2956D1',
+  },
+};

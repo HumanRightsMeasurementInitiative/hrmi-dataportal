@@ -14,8 +14,12 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
+
+import { THEME } from 'containers/App/constants';
 
 // Import root app
 import App from 'containers/App';
@@ -43,14 +47,19 @@ const MOUNT_NODE = document.getElementById('app');
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <Switch>
-            <Route path={`/:locale(${appLocales.join('|')})`} component={App} />
-            <Redirect to={`/${DEFAULT_LOCALE}`} />
-          </Switch>
-        </ConnectedRouter>
-      </LanguageProvider>
+      <ThemeProvider theme={THEME}>
+        <LanguageProvider messages={messages}>
+          <ConnectedRouter history={history}>
+            <Switch>
+              <Route
+                path={`/:locale(${appLocales.join('|')})`}
+                component={App}
+              />
+              <Redirect to={`/${DEFAULT_LOCALE}`} />
+            </Switch>
+          </ConnectedRouter>
+        </LanguageProvider>
+      </ThemeProvider>
     </Provider>,
     MOUNT_NODE,
   );
@@ -71,7 +80,14 @@ if (!window.Intl) {
   new Promise(resolve => {
     resolve(import('intl'));
   })
-    .then(() => Promise.all([import('intl/locale-data/jsonp/en.js')]))
+    .then(() =>
+      Promise.all([
+        import('intl/locale-data/jsonp/en.js'),
+        import('intl/locale-data/jsonp/fr.js'),
+        import('intl/locale-data/jsonp/es.js'),
+        import('intl/locale-data/jsonp/pt.js'),
+      ]),
+    )
     .then(() => render(translationMessages))
     .catch(err => {
       throw err;
