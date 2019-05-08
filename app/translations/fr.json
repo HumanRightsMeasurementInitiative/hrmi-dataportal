@@ -3,6 +3,8 @@
   "hrmi.containers.LocaleToggle.es": "ES",
   "hrmi.containers.LocaleToggle.pt": "PT",
   "hrmi.containers.LocaleToggle.fr": "FR",
+  "hrmi.containers.Header.page.about": "A propos de l’initiative",
+  "hrmi.containers.Header.page.methodology": "Méthodologie",
   "hrmi.containers.NotFoundPage.header": "FR: Page not found.",
   "hrmi.peopl-at-risk.0": "FR: No one",
   "hrmi.peopl-at-risk.1": "FR: All people",

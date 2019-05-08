@@ -20,7 +20,11 @@ function Toggle(props) {
   }
 
   return (
-    <Select value={props.value} onChange={props.onToggle}>
+    <Select
+      value={props.value}
+      onChange={props.onToggle}
+      inverse={props.inverse}
+    >
       {content}
     </Select>
   );
@@ -31,6 +35,7 @@ Toggle.propTypes = {
   values: PropTypes.array,
   value: PropTypes.string,
   messages: PropTypes.object,
+  inverse: PropTypes.bool,
 };
 
 export default Toggle;

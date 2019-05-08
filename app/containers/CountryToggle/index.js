@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
+import styled from 'styled-components';
 
 import Toggle from 'components/Toggle';
 
@@ -16,11 +17,13 @@ import { getCountries } from 'containers/App/selectors';
 
 import rootMessages from 'messages';
 
-import Wrapper from './Wrapper';
+const Styled = styled.span`
+  padding: 2px;
+`;
 
 export function CountryToggle(props) {
   return (
-    <Wrapper>
+    <Styled>
       {props.countries && (
         <Toggle
           value={props.currentCountry}
@@ -36,7 +39,7 @@ export function CountryToggle(props) {
           onToggle={props.onSelectCountry}
         />
       )}
-    </Wrapper>
+    </Styled>
   );
 }
 

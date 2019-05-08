@@ -386,17 +386,35 @@ export const THEME = {
   sizes: ['12px', '14px', '18.66px', '28px', '34px'],
   colors: {
     white: '#fff',
-    light: '#E7E9EB',
-    dark: '#8B969D',
-    black: '#202326',
+    black: '#09052F',
     hover: '#2956D1',
+    hoverLight: '#EFEFEF',
+    darkBlue: '#3A5161',
+    dark: '#192E3A', // darkest >>>
+    dark2: '#2C3F4B',
+    dark3: '#667884', // AA
+    dark4: '#8896A0', // AA large
+    light5: '#D0D2D3',
+    light4: '#D7D9DB',
+    light3: '#E8EAE9',
+    light2: '#EFEFEF',
+    light: '#F2F3F4', // <<< lightest
+    empowerment: '#262064', // AA large
+    empowermentDark: '#262064', // AA
+    physint: '#6C3F99', // AA large
+    physintDark: '#6C3F99', // AA
+    esr: '#27AAE1', // AA large
+    esrDark: '#027AC0', // AA
+    highlight: '#FDB933',
+    highlight2: '#DB7E00', // AA large
+    highlight3: '#AD6500', // AA
   },
 };
 
 export const ICON_SIZE = 38; // default size
 export const ICONS = {
   brand: {
-    sizes: [154.95, 26],
+    sizes: [40, 26],
     path:
       'M16.18,14.06,28.12,26,26,28.12,14.06,16.18,2.12,28.12,0,26,11.94,14.06,0,2.12,2.12,0,14.06,11.94,26,0l2.12,2.12Z',
   },

@@ -7,24 +7,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import Toggle from 'components/Toggle';
 import { getLocale } from 'containers/App/selectors';
-import Wrapper from './Wrapper';
 import messages from './messages';
 import { appLocales } from '../../i18n';
 import { changeLocale } from '../LanguageProvider/actions';
 
+const Styled = styled.span`
+  padding: 2px;
+`;
+
 export function LocaleToggle(props) {
   return (
-    <Wrapper>
+    <Styled>
       <Toggle
+        inverse
         value={props.locale}
         values={appLocales}
         messages={messages}
         onToggle={props.onLocaleToggle}
       />
-    </Wrapper>
+    </Styled>
   );
 }
 

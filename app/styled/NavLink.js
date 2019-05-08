@@ -18,10 +18,11 @@ export default styled(Button)`
   font-weight: 600;
   max-width: 65px;
   border: 0;
+  color: ${props => props.theme.colors.white};
   ${props =>
     props.active &&
     css`
-      color: ${props.theme.colors.hover};
+      color: ${props.theme.colors.hoverLight};
       &:hover {
         cursor: auto;
       }
@@ -33,14 +34,14 @@ export default styled(Button)`
     padding: 7px 20px;
   }
   &:hover{
-    color: ${props => props.theme.colors.hover};
+    color: ${props => props.theme.colors.hoverLight};
   }
   &:focus{
     outline: 0;
-    color: ${props => props.theme.colors.hover};
+    color: ${props => props.theme.colors.hoverLight};
   }
   &:active{
-    color: ${props => props.theme.colors.hover};
+    color: ${props => props.theme.colors.hoverLight};
   }
   &:active:hover{
     cursor: auto;

@@ -4,10 +4,10 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import styled from 'styled-components';
 
@@ -15,31 +15,38 @@ import Icon from 'components/Icon';
 
 import LocaleToggle from 'containers/LocaleToggle';
 import CountryToggle from 'containers/CountryToggle';
-import { BREAKPOINTS } from 'containers/App/constants';
+import { BREAKPOINTS, PAGES } from 'containers/App/constants';
 import { navigate } from 'containers/App/actions';
 
 import NavLink from 'styled/NavLink';
-import ContentContainer from 'styled/ContentContainer';
 
-// import messages from './messages';
+import messages from './messages';
 
 const Styled = styled.header`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
+  height: 100px;
+  color: ${props => props.theme.colors.white};
+  background: ${props => props.theme.colors.dark};
   @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
     height: 100px;
   }
-  background: ${props => props.theme.colors.white};
 `;
 
 const NavBar = styled.div`
   position: relative;
   height: 50px;
   @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
-    height: 70px;
+    height: 50px;
+  }
+`;
+const NavBarSecondary = styled(NavBar)`
+  height: 50px;
+  background: ${props => props.theme.colors.darkBlue};
+  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
+    height: 50px;
   }
 `;
 
@@ -56,46 +63,95 @@ const Brand = styled(NavLink)`
   }
 `;
 
-// const LogoWrapper = styled.div`
-//   position: absolute;
-//   left: 0;
-//   top: 0;
-//   height: 50px;
-//   @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.MEDIUM]}) {
-//     height: 70px;
-//   }
-// `;
-// small helper function to figure out logo aspect ratio and infer display width from height
-// (width and height are needed to show SVG on iPhone 4
-// const widthForViewBox = (viewBox, height) => {
-//   const vB = viewBox.split(' ');
-//   const w = vB.length > 3 ? vB[2] : 164;
-//   const h = vB.length > 3 ? vB[3] : 70;
-//   return (w / h) * height;
-// };
+const Menu = styled.div`
+  display: ${props => (props.visible ? 'block' : 'none')};
+  position: fixed;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 99999;
+  background: ${props => props.theme.colors.black};
+  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    left: auto;
+    right: 0;
+    width: auto;
+    z-index: 300;
+    display: inline-block;
+    background: transparent;
+  }
+`;
+const ShowMenu = styled.button`
+  display: ${props => (props.visible ? 'block' : 'none')};
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 300;
+  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
+    display: none;
+  }
+  background-color: transparent;
+`;
+const HideMenu = styled.button`
+  display: ${props => (props.visible ? 'block' : 'none')};
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 300;
+  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
+    display: none;
+  }
+  background-color: transparent;
+`;
 
-// const Logo = styled.svg`
-//   position: relative;
-//   height: 50px;
-//   width: ${props => widthForViewBox(props.viewBox, 50)}px;
-//   @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.MEDIUM]}) {
-//     height: 70px;
-//     width: ${props => widthForViewBox(props.viewBox, 70)}px;
-//   }
-// `;
+const NavPages = styled.span``;
 
 export function Header({ nav }) {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <Styled role="banner">
       <NavBar>
-        <ContentContainer>
-          <Brand onClick={() => nav('')}>
-            <Icon name="brand" />
-          </Brand>
+        <Brand
+          onClick={() => {
+            setShowMenu(false);
+            nav('');
+          }}
+        >
+          <span>HRMI | </span>
+          <span>Data Portal</span>
+        </Brand>
+        <ShowMenu visible={!showMenu} onClick={() => setShowMenu(true)}>
+          <Icon name="brand" />
+        </ShowMenu>
+        <HideMenu visible={showMenu} onClick={() => setShowMenu(false)}>
+          <Icon name="brand" />
+        </HideMenu>
+        <Menu visible={showMenu}>
           <LocaleToggle />
-          <CountryToggle />
-        </ContentContainer>
+          <NavPages>
+            {PAGES &&
+              PAGES.map(page => (
+                <NavLink
+                  key={page}
+                  onClick={() => {
+                    setShowMenu(false);
+                    nav(`page/${page}`);
+                  }}
+                >
+                  <FormattedMessage {...messages.page[page]} />
+                </NavLink>
+              ))}
+          </NavPages>
+        </Menu>
       </NavBar>
+      <NavBarSecondary>
+        <CountryToggle />
+      </NavBarSecondary>
     </Styled>
   );
 }
