@@ -20,8 +20,7 @@ export function Page({ match, onLoadContent, content }) {
   useEffect(() => {
     // kick off loading of page content
     onLoadContent(match.params.page);
-  }, []);
-
+  });
   return (
     <div>
       {content && <HTMLWrapper innerhtml={content} />}
