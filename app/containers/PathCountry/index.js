@@ -58,12 +58,12 @@ PathCountry.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  indicators: (state, props) =>
-    getIndicatorsForCountry(state, props.match.params.country),
-  rights: (state, props) =>
-    getRightsForCountry(state, props.match.params.country),
-  dimensions: (state, props) =>
-    getDimensionsForCountry(state, props.match.params.country),
+  indicators: (state, { match }) =>
+    getIndicatorsForCountry(state, match.params.country),
+  rights: (state, { match }) =>
+    getRightsForCountry(state, match.params.country),
+  dimensions: (state, { match }) =>
+    getDimensionsForCountry(state, match.params.country),
 });
 
 function mapDispatchToProps(dispatch) {

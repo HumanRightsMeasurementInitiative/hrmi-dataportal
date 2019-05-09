@@ -259,11 +259,13 @@ export const getESRDimensionScores = createSelector(
   getIncomeSearch,
   getStandardSearch,
   getESRYear,
-  (scores, countries, region, income, standard, year) =>
+  (metric, scores, countries, region, income, standard, year) =>
     scores &&
     countries &&
     scores.filter(
       s =>
+        STANDARDS.find(as => as.key === standard) &&
+        DIMENSIONS.find(d => d.key === 'esr') &&
         s.standard === STANDARDS.find(as => as.key === standard).code &&
         s.metric_code === DIMENSIONS.find(d => d.key === 'esr').code &&
         parseInt(s.year, 10) === year &&
@@ -285,6 +287,7 @@ export const getCPRDimensionScores = createSelector(
     scores.filter(
       s =>
         !!metric && // make sure a metric is set
+        DIMENSIONS.find(d => d.key === metric) &&
         s.metric_code === DIMENSIONS.find(d => d.key === metric).code &&
         parseInt(s.year, 10) === year &&
         (!(region || income) ||
@@ -308,6 +311,7 @@ export const getESRRightScores = createSelector(
     scores.filter(
       s =>
         !!metric &&
+        RIGHTS.find(d => d.key === metric) &&
         s.group === PEOPLE_GROUPS.find(g => g.key === group).code &&
         s.standard === STANDARDS.find(as => as.key === standard).code &&
         s.metric_code === RIGHTS.find(d => d.key === metric).code &&
@@ -331,6 +335,7 @@ export const getCPRRightScores = createSelector(
     scores.filter(
       s =>
         !!metric && // make sure a metric is set
+        RIGHTS.find(d => d.key === metric) &&
         s.metric_code === RIGHTS.find(d => d.key === metric).code &&
         parseInt(s.year, 10) === year &&
         (!(region || income) ||

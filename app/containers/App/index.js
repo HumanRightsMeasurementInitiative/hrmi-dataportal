@@ -44,7 +44,7 @@ const AppWrapper = styled.div`
 `;
 
 const Main = styled.main`
-  min-height: 100vh;
+  min-height: 100%;
   padding-top: 100px;
   &:focus {
     outline: none;

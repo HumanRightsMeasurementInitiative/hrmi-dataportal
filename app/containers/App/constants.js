@@ -121,7 +121,9 @@ export const PEOPLE_GROUPS = [
   },
 ];
 
-export const METRIC_TYPES = ['cpr', 'esr'];
+export const METRIC_TYPES = ['dimensions', 'rights', 'indicators'];
+
+export const RIGHTS_TYPES = ['cpr', 'esr'];
 
 // d: dimensions, r: rights
 export const SCALES = ['d', 'r'];
@@ -355,7 +357,7 @@ export const INDICATORS = [
   },
   {
     key: 'longterm-unemployment',
-    code: 'NotLTunemployed',
+    code: 'NotLTUnemployed',
     right: 'work',
     resource: 'esrIndicatorScores',
   },
