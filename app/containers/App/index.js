@@ -17,7 +17,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import { useInjectSaga } from 'utils/injectSaga';
 
-import Header from 'containers/Header/Loadable';
+import Header from 'containers/Header';
 import Overview from 'containers/Overview/Loadable';
 import Metric from 'containers/Metric/Loadable';
 import Country from 'containers/Country/Loadable';
