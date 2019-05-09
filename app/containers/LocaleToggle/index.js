@@ -9,11 +9,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
-import Toggle from 'components/Toggle';
+import { appLocales } from 'i18n';
+
 import { getLocale } from 'containers/App/selectors';
 import { LANGUAGES } from 'containers/App/constants';
-import { appLocales } from '../../i18n';
-import { changeLocale } from '../LanguageProvider/actions';
+import { changeLocale } from 'containers/LanguageProvider/actions';
+
+import Toggle from 'components/Toggle';
 
 const Styled = styled.span`
   padding: 2px;

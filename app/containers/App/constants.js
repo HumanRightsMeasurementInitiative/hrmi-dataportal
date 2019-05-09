@@ -22,12 +22,6 @@ export const CONTENT_READY = 'hrmi/App/CONTENT_READY';
 export const SELECT_COUNTRY = 'hrmi/App/SELECT_COUNTRY';
 export const NAVIGATE = 'hrmi/App/NAVIGATE';
 
-// URLs for external resources loaded on request
-export const DATA_URL = '//hrmi-dataportal-data.unfolddata.com/data';
-export const PAGES_URL = '//hrmi-dataportal-content.unfolddata.com/';
-
-export const PAGES = ['about', 'methodology'];
-
 export const LANGUAGES = {
   short: {
     en: 'EN',
@@ -42,6 +36,12 @@ export const LANGUAGES = {
     fr: 'Français',
   },
 };
+
+// URLs for external resources loaded on request
+export const DATA_URL = '//hrmi-dataportal-data.unfolddata.com/data';
+export const PAGES_URL = '//hrmi-dataportal-content.unfolddata.com/';
+
+export const PAGES = ['about', 'methodology'];
 
 // countries: country lookup table
 // esrIndicators: ESR indicator lookup table
