@@ -11,6 +11,14 @@ export const scope = 'hrmi.containers.Header';
 export default defineMessages({
   language: {
     id: `${scope}.language`,
-    defaultMessage: 'Language:',
+    defaultMessage: 'Language: ',
+  },
+  countries: {
+    id: `${scope}.countries`,
+    defaultMessage: 'Countries',
+  },
+  metrics: {
+    id: `${scope}.metrics`,
+    defaultMessage: 'Metrics',
   },
 });

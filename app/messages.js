@@ -9,6 +9,24 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
+  'metric-types': {
+    dimensions: {
+      id: `${scope}.metric-types.dimensions`,
+      defaultMessage: 'Categories of Rights',
+    },
+    'dimensions-short': {
+      id: `${scope}.metric-types.dimensions-short`,
+      defaultMessage: 'Categories',
+    },
+    rights: {
+      id: `${scope}.metric-types.rights`,
+      defaultMessage: 'Rights',
+    },
+    indicators: {
+      id: `${scope}.metric-types.indicators`,
+      defaultMessage: 'Indicators',
+    },
+  },
   page: {
     about: {
       id: `${scope}.page.about`,
@@ -149,13 +167,13 @@ export default defineMessages({
       defaultMessage: 'People 31',
     },
   },
-  'metric-types': {
+  'rights-types': {
     cpr: {
-      id: `${scope}.metric-types.cpr`,
+      id: `${scope}.rights-types.cpr`,
       defaultMessage: 'cpr',
     },
     esr: {
-      id: `${scope}.metric-types.esr`,
+      id: `${scope}.rights-types.esr`,
       defaultMessage: 'esr',
     },
   },

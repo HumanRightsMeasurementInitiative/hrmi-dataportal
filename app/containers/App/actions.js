@@ -16,6 +16,7 @@ import {
   CONTENT_REQUESTED,
   CONTENT_READY,
   SELECT_COUNTRY,
+  SELECT_METRIC,
   NAVIGATE,
 } from './constants';
 
@@ -105,6 +106,12 @@ export function contentReady(key, time) {
 export function selectCountry(code) {
   return {
     type: SELECT_COUNTRY,
+    code,
+  };
+}
+export function selectMetric(code) {
+  return {
+    type: SELECT_METRIC,
     code,
   };
 }

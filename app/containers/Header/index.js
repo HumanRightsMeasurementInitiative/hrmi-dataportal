@@ -7,14 +7,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Box, Button } from 'grommet';
-import { Menu, Close } from 'grommet-icons';
+import { Box, Button, DropButton } from 'grommet';
+import { Menu, Close, Language, BarChart } from 'grommet-icons';
 
 import LocaleToggle from 'containers/LocaleToggle';
-import CountryToggle from 'containers/CountryToggle';
+import CountryDropdown from 'containers/CountryDropdown';
+import MetricDropdown from 'containers/MetricDropdown';
 import { PAGES } from 'containers/App/constants';
 import { navigate } from 'containers/App/actions';
 
@@ -116,8 +117,15 @@ const LocaleToggleWrap = styled.span`
   }
 `;
 
-export function Header({ nav }) {
+const SecondaryDropButton = styled(DropButton)`
+  height: 56px;
+  padding: 5px 10px;
+`;
+
+export function Header({ nav, intl }) {
   const [showMenu, setShowMenu] = useState(false);
+  const [showCountries, setShowCountries] = useState(false);
+  const [showMetrics, setShowMetrics] = useState(false);
 
   return (
     <Styled role="banner">
@@ -174,7 +182,30 @@ export function Header({ nav }) {
       </div>
       <div>
         <NavBarBottom>
-          <CountryToggle />
+          <SecondaryDropButton
+            plain
+            open={showCountries}
+            onClose={() => setShowCountries(false)}
+            onOpen={() => setShowCountries(true)}
+            dropProps={{ align: { top: 'bottom', left: 'left' } }}
+            dropContent={
+              <CountryDropdown onClose={() => setShowCountries(false)} />
+            }
+            icon={<Language />}
+            label={intl.formatMessage(messages.countries)}
+          />
+          <SecondaryDropButton
+            plain
+            open={showMetrics}
+            onClose={() => setShowMetrics(false)}
+            onOpen={() => setShowMetrics(true)}
+            dropProps={{ align: { top: 'bottom', left: 'left' } }}
+            dropContent={
+              <MetricDropdown onClose={() => setShowMetrics(false)} />
+            }
+            icon={<BarChart />}
+            label={intl.formatMessage(messages.metrics)}
+          />
         </NavBarBottom>
       </div>
     </Styled>
@@ -184,7 +215,7 @@ export function Header({ nav }) {
 Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
-  // dispatch: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -199,4 +230,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Header);
+export default compose(withConnect)(injectIntl(Header));

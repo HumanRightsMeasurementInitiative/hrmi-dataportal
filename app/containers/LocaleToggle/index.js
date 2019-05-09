@@ -46,6 +46,7 @@ export function LocaleToggle(props) {
         plain
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
+        dropProps={{ align: { top: 'bottom', right: 'right' } }}
         dropContent={
           <DropContent
             active={props.locale}
@@ -53,7 +54,6 @@ export function LocaleToggle(props) {
             onSelect={props.onLocaleToggle}
           />
         }
-        dropProps={{ align: { top: 'bottom', right: 'right' } }}
       >
         <Text>{LANGUAGES.short[props.locale]}</Text>
         {!open && <FormDown />}

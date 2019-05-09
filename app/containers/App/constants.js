@@ -20,6 +20,7 @@ export const LOAD_CONTENT_ERROR = 'hrmi/App/LOAD_CONTENT_ERROR';
 export const CONTENT_REQUESTED = 'hrmi/App/CONTENT_REQUESTED';
 export const CONTENT_READY = 'hrmi/App/CONTENT_READY';
 export const SELECT_COUNTRY = 'hrmi/App/SELECT_COUNTRY';
+export const SELECT_METRIC = 'hrmi/App/SELECT_METRIC';
 export const NAVIGATE = 'hrmi/App/NAVIGATE';
 
 export const LANGUAGES = {

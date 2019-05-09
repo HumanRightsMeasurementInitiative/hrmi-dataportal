@@ -27,6 +27,7 @@ import {
   PAGES,
   PAGES_URL,
   SELECT_COUNTRY,
+  SELECT_METRIC,
   NAVIGATE,
 } from './constants';
 
@@ -138,6 +139,11 @@ export function* selectCountrySaga({ code }) {
   const currentLocation = yield select(getRouterLocation);
   yield put(push(`/${currentLocale}/country/${code}${currentLocation.search}`));
 }
+export function* selectMetricSaga({ code }) {
+  const currentLocale = yield select(getLocale);
+  const currentLocation = yield select(getRouterLocation);
+  yield put(push(`/${currentLocale}/metric/${code}${currentLocation.search}`));
+}
 export function* navigateSaga({ location }) {
   // default args
   // const xArgs = extend({ replaceSearch: true }, args || {});
@@ -167,5 +173,6 @@ export default function* defaultSaga() {
     autoRestart(loadContentSaga, loadContentErrorHandler, MAX_LOAD_ATTEMPTS),
   );
   yield takeLatest(SELECT_COUNTRY, selectCountrySaga);
+  yield takeLatest(SELECT_METRIC, selectMetricSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
 }
