@@ -14,12 +14,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import { Grommet } from 'grommet';
+import theme from 'theme';
 
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
-
-import { THEME } from 'containers/App/constants';
 
 // Import root app
 import App from 'containers/App';
@@ -47,7 +46,7 @@ const MOUNT_NODE = document.getElementById('app');
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
-      <ThemeProvider theme={THEME}>
+      <Grommet theme={theme}>
         <LanguageProvider messages={messages}>
           <ConnectedRouter history={history}>
             <Switch>
@@ -59,7 +58,7 @@ const render = messages => {
             </Switch>
           </ConnectedRouter>
         </LanguageProvider>
-      </ThemeProvider>
+      </Grommet>
     </Provider>,
     MOUNT_NODE,
   );

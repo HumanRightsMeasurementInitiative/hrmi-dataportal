@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BREAKPOINTS } from 'containers/App/constants';
+import { BREAKPOINTS } from 'theme';
 
 const breakpoint = props => {
   if (props.min || props.min === BREAKPOINTS.SMALL) {

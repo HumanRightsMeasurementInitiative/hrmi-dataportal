@@ -10,17 +10,16 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import styled from 'styled-components';
-
-import Icon from 'components/Icon';
+import { Box, Button } from 'grommet';
+import { Menu, Close } from 'grommet-icons';
 
 import LocaleToggle from 'containers/LocaleToggle';
 import CountryToggle from 'containers/CountryToggle';
-import { BREAKPOINTS, PAGES } from 'containers/App/constants';
+import { PAGES } from 'containers/App/constants';
 import { navigate } from 'containers/App/actions';
 
-import NavLink from 'styled/NavLink';
-
 import rootMessages from 'messages';
+import messages from './messages';
 
 const Styled = styled.header`
   position: fixed;
@@ -28,55 +27,64 @@ const Styled = styled.header`
   left: 0;
   width: 100%;
   height: 100px;
-  color: ${props => props.theme.colors.white};
-  background: ${props => props.theme.colors.dark};
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
-    height: 100px;
-  }
+  color: ${props => props.theme.global.colors.white};
 `;
 
-const NavBar = styled.div`
-  position: relative;
-  height: 50px;
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
-    height: 50px;
-  }
-`;
-const NavBarSecondary = styled(NavBar)`
-  height: 50px;
-  background: ${props => props.theme.colors.darkBlue};
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
-    height: 50px;
-  }
-`;
+const NavBarTop = props => (
+  <Box
+    direction="row"
+    align="center"
+    background="dark-1"
+    height="44px"
+    width="full"
+    fill="horizontal"
+    {...props}
+  />
+);
+const NavBarBottom = props => (
+  <Box
+    elevation="medium"
+    direction="row"
+    align="center"
+    background="blue-dark"
+    height="56px"
+    width="full"
+    fill="horizontal"
+    {...props}
+  />
+);
 
-const Brand = styled(NavLink)`
-  box-shadow: none;
-  min-width: 0;
-  max-width: 130px;
+const BrandButton = styled(Button)`
+  height: 44px;
+  width: 200px;
   padding: 5px 10px;
-  margin: 0;
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
-    max-width: none;
-    padding: 5px 14px;
-    margin: 0 5px;
+  color: ${props => props.theme.global.colors.white};
+`;
+// prettier-ignore
+const NavButton = styled(Button)`
+  height: 44px;
+  padding: 5px 10px;
+  color: ${props => props.theme.global.colors.white};
+  display: block;
+  @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
+    display: inline-block;
   }
 `;
-
-const Menu = styled.div`
+// prettier-ignore
+const MenuList = styled.div`
   display: ${props => (props.visible ? 'block' : 'none')};
   position: fixed;
-  top: 30px;
+  top: 44px;
   left: 0;
   right: 0;
   bottom: 0;
   width: 100%;
   z-index: 99999;
-  background: ${props => props.theme.colors.black};
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
+  background: ${props => props.theme.global.colors['dark-1']};
+  @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
     position: absolute;
     top: 0;
-    bottom: auto;
+    height: 44px;
     left: auto;
     right: 0;
     width: auto;
@@ -85,73 +93,90 @@ const Menu = styled.div`
     background: transparent;
   }
 `;
-const ShowMenu = styled.button`
+// prettier-ignore
+const ToggleMenu = styled(Button)`
   display: ${props => (props.visible ? 'block' : 'none')};
   position: absolute;
   right: 0;
   top: 0;
   z-index: 300;
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
+  width: 44px;
+  height: 44px;
+  background-color: transparent;
+  text-align: center;
+  @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
     display: none;
   }
-  background-color: transparent;
 `;
-const HideMenu = styled.button`
-  display: ${props => (props.visible ? 'block' : 'none')};
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 300;
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
-    display: none;
+// prettier-ignore
+const LocaleToggleWrap = styled.span`
+  display: block;
+  @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
+    display: inline;
   }
-  background-color: transparent;
 `;
-
-const NavPages = styled.span``;
 
 export function Header({ nav }) {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
     <Styled role="banner">
-      <NavBar>
-        <Brand
-          onClick={() => {
-            setShowMenu(false);
-            nav('');
-          }}
-        >
-          <span>HRMI | </span>
-          <span>Data Portal</span>
-        </Brand>
-        <ShowMenu visible={!showMenu} onClick={() => setShowMenu(true)}>
-          <Icon name="brand" />
-        </ShowMenu>
-        <HideMenu visible={showMenu} onClick={() => setShowMenu(false)}>
-          <Icon name="brand" />
-        </HideMenu>
-        <Menu visible={showMenu}>
-          <LocaleToggle />
-          <NavPages>
-            {PAGES &&
-              PAGES.map(page => (
-                <NavLink
-                  key={page}
-                  onClick={() => {
-                    setShowMenu(false);
-                    nav(`page/${page}`);
-                  }}
-                >
-                  <FormattedMessage {...rootMessages.page[page]} />
-                </NavLink>
-              ))}
-          </NavPages>
-        </Menu>
-      </NavBar>
-      <NavBarSecondary>
-        <CountryToggle />
-      </NavBarSecondary>
+      <div>
+        <NavBarTop>
+          <BrandButton
+            plain
+            onClick={() => {
+              setShowMenu(false);
+              nav('');
+            }}
+          >
+            <span>HRMI | </span>
+            <span>Data Portal</span>
+          </BrandButton>
+          <ToggleMenu
+            plain
+            visible={!showMenu}
+            onClick={() => setShowMenu(true)}
+          >
+            <Menu />
+          </ToggleMenu>
+          <ToggleMenu
+            plain
+            visible={showMenu}
+            onClick={() => setShowMenu(false)}
+          >
+            <Close />
+          </ToggleMenu>
+          <MenuList visible={showMenu}>
+            <span>
+              <LocaleToggleWrap>
+                <FormattedMessage {...messages.language} />
+                <LocaleToggle />
+              </LocaleToggleWrap>
+            </span>
+            <span>
+              {PAGES &&
+                PAGES.map(page => (
+                  <NavButton
+                    plain
+                    key={page}
+                    onClick={() => {
+                      setShowMenu(false);
+                      nav(`page/${page}`);
+                    }}
+                  >
+                    <FormattedMessage {...rootMessages.page[page]} />
+                  </NavButton>
+                ))}
+            </span>
+          </MenuList>
+        </NavBarTop>
+      </div>
+      <div>
+        <NavBarBottom>
+          <CountryToggle />
+        </NavBarBottom>
+      </div>
     </Styled>
   );
 }

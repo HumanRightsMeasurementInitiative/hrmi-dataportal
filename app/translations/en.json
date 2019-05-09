@@ -1,7 +1,8 @@
 {
+  "hrmi.containers.header.language": "Language",
+  "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.page.about": "About the initiative",
   "hrmi.page.methodology": "Methodology",
-  "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.people-at-risk.0": "No one",
   "hrmi.people-at-risk.1": "All people",
   "hrmi.people-at-risk.2": "Indigenous people",

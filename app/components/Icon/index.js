@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 // app constants
-import { ICONS, ICON_SIZE } from 'containers/App/constants';
+import { ICONS, ICON_SIZE } from 'theme';
 // utils
 import asArray from 'utils/as-array';
 

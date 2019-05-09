@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-// import { BREAKPOINTS } from 'containers/App/constants';
 /**
  * @component
  * Page container to wrap page content

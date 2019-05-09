@@ -25,13 +25,10 @@ import Page from 'containers/Page/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import { loadDataIfNeeded } from './actions';
-import { BREAKPOINTS } from './constants';
 
 import saga from './saga';
 
 import { DEFAULT_LOCALE } from '../../i18n';
-
-import GlobalStyle from '../../global-styles';
 
 const DEPENDENCIES = [
   'countries',
@@ -47,11 +44,8 @@ const AppWrapper = styled.div`
 `;
 
 const Main = styled.main`
-  padding-top: 70px;
   min-height: 100vh;
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
-    padding-top: 100px;
-  }
+  padding-top: 100px;
   &:focus {
     outline: none;
   }
@@ -59,7 +53,7 @@ const Main = styled.main`
 
 /**
  * routes: /[locale] +
- * overview: /?scale=:scale&standard=:standard&benchmark=:benchmark&region=:region&income=:income&cpr=:cpr
+ * overview: ?scale=:scale&standard=:standard&benchmark=:benchmark&region=:region&income=:income&cpr=:cpr
  * metric view: /metric/:metric?standard=:standard&benchmark=:benchmark&region=:region&income=:income&cpr=:cpr
  * country view: /country/:country?scale=:scale&standard=:standard&benchmark=:benchmark&view=:view
  * page view: /page/:page
@@ -103,7 +97,6 @@ export function App({ match, onLoadData }) {
           <Route path={`/${locale}`} component={NotFoundPage} />
         </Switch>
       </Main>
-      <GlobalStyle />
     </AppWrapper>
   );
 }

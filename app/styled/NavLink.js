@@ -1,6 +1,5 @@
 // vendor
 import styled, { css } from 'styled-components';
-import { BREAKPOINTS } from 'containers/App/constants';
 // styles
 import Button from 'styled/Button';
 
@@ -27,7 +26,7 @@ export default styled(Button)`
         cursor: auto;
       }
     `}
-  @media (min-width: ${props => props.theme.breakpoints[BREAKPOINTS.SMALL]}) {
+  @media (min-width: ${props => props.theme.global.breakpoints.small.value}px) {
     font-size: 0.9em;
     min-width: 100px;
     max-width: none;
