@@ -18,11 +18,11 @@ import { Switch, Route } from 'react-router-dom';
 import { useInjectSaga } from 'utils/injectSaga';
 
 import Header from 'containers/Header';
-import Overview from 'containers/Overview/Loadable';
-import Metric from 'containers/Metric/Loadable';
-import Country from 'containers/Country/Loadable';
-import Page from 'containers/Page/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import PathOverview from 'containers/PathOverview/Loadable';
+import PathMetric from 'containers/PathMetric/Loadable';
+import PathCountry from 'containers/PathCountry/Loadable';
+import PathPage from 'containers/PathPage/Loadable';
+import PathNotFoundPage from 'containers/PathNotFoundPage/Loadable';
 
 import { loadDataIfNeeded } from './actions';
 
@@ -84,17 +84,17 @@ export function App({ match, onLoadData }) {
       <Header />
       <Main>
         <Switch>
-          <Route exact path={`/${locale}`} component={Overview} />
+          <Route exact path={`/${locale}`} component={PathOverview} />
           <Route
             path={`/${locale}/metric/:metric/:country?`}
-            component={Metric}
+            component={PathMetric}
           />
           <Route
             path={`/${locale}/country/:country/:metric?`}
-            component={Country}
+            component={PathCountry}
           />
-          <Route path={`/${locale}/page/:page`} component={Page} />
-          <Route path={`/${locale}`} component={NotFoundPage} />
+          <Route path={`/${locale}/page/:page`} component={PathPage} />
+          <Route path={`/${locale}`} component={PathNotFoundPage} />
         </Switch>
       </Main>
     </AppWrapper>

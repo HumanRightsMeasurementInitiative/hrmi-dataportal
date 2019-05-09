@@ -16,7 +16,7 @@ import { getContentByKey } from 'containers/App/selectors';
 import HTMLWrapper from 'components/HTMLWrapper';
 import Loading from 'components/Loading';
 
-export function Page({ match, onLoadContent, content }) {
+export function PathPage({ match, onLoadContent, content }) {
   useEffect(() => {
     // kick off loading of page content
     onLoadContent(match.params.page);
@@ -29,7 +29,7 @@ export function Page({ match, onLoadContent, content }) {
   );
 }
 
-Page.propTypes = {
+PathPage.propTypes = {
   match: PropTypes.object,
   onLoadContent: PropTypes.func,
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
@@ -52,4 +52,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Page);
+export default compose(withConnect)(PathPage);

@@ -18,7 +18,7 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 
-export function Metric() {
+export function PathMetric() {
   useInjectReducer({ key: 'metric', reducer });
   useInjectSaga({ key: 'metric', saga });
 
@@ -29,7 +29,7 @@ export function Metric() {
   );
 }
 
-Metric.propTypes = {
+PathMetric.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
@@ -48,4 +48,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Metric);
+export default compose(withConnect)(PathMetric);

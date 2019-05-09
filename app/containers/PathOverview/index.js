@@ -24,7 +24,7 @@ const Styled = styled.div`
   min-height: 2000px;
 `;
 
-export function Overview() {
+export function PathOverview() {
   useInjectReducer({ key: 'overview', reducer });
   useInjectSaga({ key: 'overview', saga });
   return (
@@ -34,7 +34,7 @@ export function Overview() {
   );
 }
 
-Overview.propTypes = {
+PathOverview.propTypes = {
   dispatch: PropTypes.func.isRequired,
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
@@ -55,4 +55,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Overview);
+export default compose(withConnect)(PathOverview);

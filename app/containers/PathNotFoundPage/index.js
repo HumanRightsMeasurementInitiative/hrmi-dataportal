@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import H1 from 'styled/H1';
 import messages from './messages';
 
-export default function NotFound() {
+export default function PathNotFound() {
   return (
     <article>
       <H1>

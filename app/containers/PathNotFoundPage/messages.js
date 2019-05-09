@@ -5,7 +5,7 @@
  */
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.containers.NotFoundPage';
+export const scope = 'hrmi.containers.PathNotFoundPage';
 
 export default defineMessages({
   header: {

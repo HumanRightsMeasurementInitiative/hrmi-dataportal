@@ -25,7 +25,7 @@ import reducer from './reducer';
 import saga from './saga';
 // import messages from './messages';
 
-export function Country(props) {
+export function PathCountry(props) {
   useInjectReducer({ key: 'country', reducer });
   useInjectSaga({ key: 'country', saga });
   return (
@@ -49,7 +49,7 @@ export function Country(props) {
   );
 }
 
-Country.propTypes = {
+PathCountry.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object,
   indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
@@ -77,4 +77,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Country);
+export default compose(withConnect)(PathCountry);
