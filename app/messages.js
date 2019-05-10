@@ -26,6 +26,22 @@ export default defineMessages({
       id: `${scope}.metric-types.indicators`,
       defaultMessage: 'Indicators',
     },
+    dimension: {
+      id: `${scope}.metric-types.dimension`,
+      defaultMessage: 'Category of Rights',
+    },
+    'dimension-short': {
+      id: `${scope}.metric-types.dimensions-short`,
+      defaultMessage: 'Category',
+    },
+    right: {
+      id: `${scope}.metric-types.right`,
+      defaultMessage: 'Right',
+    },
+    indicator: {
+      id: `${scope}.metric-types.indicator`,
+      defaultMessage: 'Indicator',
+    },
   },
   page: {
     about: {

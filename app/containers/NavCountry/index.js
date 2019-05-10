@@ -18,7 +18,7 @@ import rootMessages from 'messages';
 
 const Option = styled(Button)``;
 
-export function CountryDropdown({ countries, onSelectCountry, intl, onClose }) {
+export function NavCountry({ countries, onSelectCountry, intl, onClose }) {
   const sorted =
     countries &&
     countries
@@ -49,7 +49,7 @@ export function CountryDropdown({ countries, onSelectCountry, intl, onClose }) {
   );
 }
 
-CountryDropdown.propTypes = {
+NavCountry.propTypes = {
   onSelectCountry: PropTypes.func,
   onClose: PropTypes.func,
   // currentCountry: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
@@ -71,4 +71,4 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(injectIntl(CountryDropdown));
+)(injectIntl(NavCountry));

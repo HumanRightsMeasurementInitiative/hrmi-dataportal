@@ -30,12 +30,7 @@ import saga from './saga';
 
 import { DEFAULT_LOCALE } from '../../i18n';
 
-const DEPENDENCIES = [
-  'countries',
-  'cprScores',
-  'esrScores',
-  'esrIndicatorScores',
-];
+const DEPENDENCIES = ['countries', 'cprScores', 'esrScores'];
 
 const AppWrapper = styled.div`
   &:focus {
@@ -103,7 +98,7 @@ export function App({ match, onLoadData }) {
 
 App.propTypes = {
   match: PropTypes.object,
-  onLoadData: PropTypes.func,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 export function mapDispatchToProps(dispatch) {

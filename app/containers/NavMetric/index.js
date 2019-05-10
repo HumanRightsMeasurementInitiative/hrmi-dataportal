@@ -18,7 +18,7 @@ import rootMessages from 'messages';
 
 const Option = styled(Button)``;
 
-export function MetricDropdown({ onSelectMetric, onClose }) {
+export function NavMetric({ onSelectMetric, onClose }) {
   return (
     <Box pad="small">
       <Text color="dark-3" size="small">
@@ -72,7 +72,7 @@ export function MetricDropdown({ onSelectMetric, onClose }) {
   );
 }
 
-MetricDropdown.propTypes = {
+NavMetric.propTypes = {
   onSelectMetric: PropTypes.func,
   onClose: PropTypes.func,
 };
@@ -87,4 +87,4 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   null,
   mapDispatchToProps,
-)(MetricDropdown);
+)(NavMetric);

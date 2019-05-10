@@ -14,8 +14,8 @@ import { Box, Button, DropButton } from 'grommet';
 import { Menu, Close, Language, BarChart } from 'grommet-icons';
 
 import LocaleToggle from 'containers/LocaleToggle';
-import CountryDropdown from 'containers/CountryDropdown';
-import MetricDropdown from 'containers/MetricDropdown';
+import NavCountry from 'containers/NavCountry';
+import NavMetric from 'containers/NavMetric';
 import { PAGES } from 'containers/App/constants';
 import { navigate } from 'containers/App/actions';
 
@@ -188,9 +188,7 @@ export function Header({ nav, intl }) {
             onClose={() => setShowCountries(false)}
             onOpen={() => setShowCountries(true)}
             dropProps={{ align: { top: 'bottom', left: 'left' } }}
-            dropContent={
-              <CountryDropdown onClose={() => setShowCountries(false)} />
-            }
+            dropContent={<NavCountry onClose={() => setShowCountries(false)} />}
             icon={<Language />}
             label={intl.formatMessage(messages.countries)}
           />
@@ -200,9 +198,7 @@ export function Header({ nav, intl }) {
             onClose={() => setShowMetrics(false)}
             onOpen={() => setShowMetrics(true)}
             dropProps={{ align: { top: 'bottom', left: 'left' } }}
-            dropContent={
-              <MetricDropdown onClose={() => setShowMetrics(false)} />
-            }
+            dropContent={<NavMetric onClose={() => setShowMetrics(false)} />}
             icon={<BarChart />}
             label={intl.formatMessage(messages.metrics)}
           />
