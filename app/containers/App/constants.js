@@ -98,11 +98,35 @@ export const REGIONS = [
 export const INCOME_GROUPS = [
   {
     key: 'hi',
-    value: 1,
+    value: '1',
+    standard: 'hi',
   },
   {
     key: 'lmi',
-    value: 0,
+    value: '0',
+    standard: 'core',
+  },
+];
+
+export const STANDARDS = [
+  {
+    key: 'core',
+    code: 'Core',
+  },
+  {
+    key: 'hi',
+    code: 'HiY',
+  },
+];
+
+export const BENCHMARKS = [
+  {
+    key: 'adjusted',
+    column: 'score_wrt_immediate_duty',
+  },
+  {
+    key: 'best',
+    column: 'score_wrt_global_best',
   },
 ];
 
@@ -360,27 +384,5 @@ export const INDICATORS = [
     code: 'NotLTUnemployed',
     right: 'work',
     resource: 'esrIndicatorScores',
-  },
-];
-
-export const STANDARDS = [
-  {
-    key: 'core',
-    code: 'Core',
-  },
-  {
-    key: 'hi',
-    code: 'HiY',
-  },
-];
-
-export const BENCHMARKS = [
-  {
-    key: 'adjusted',
-    column: 'score_wrt_immediate_duty',
-  },
-  {
-    key: 'best',
-    column: 'score_wrt_global_best',
   },
 ];

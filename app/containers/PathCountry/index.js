@@ -75,7 +75,7 @@ export function PathCountry({
 }
 
 PathCountry.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   match: PropTypes.object,
   indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),

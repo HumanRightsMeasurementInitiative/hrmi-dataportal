@@ -28,6 +28,7 @@ const DropContent = ({ active, options, onSelect }) => (
     {options &&
       options.map(option => (
         <Option
+          key={option}
           plain
           color={active === option ? 'dark-4' : 'dark-1'}
           onClick={() => onSelect(option)}

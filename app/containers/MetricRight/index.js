@@ -46,7 +46,7 @@ export function MetricRight({ onLoadData, metric, scores }) {
 }
 
 MetricRight.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   metric: PropTypes.object.isRequired,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),

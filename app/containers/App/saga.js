@@ -8,8 +8,11 @@ import 'whatwg-fetch';
 import {
   getLocale,
   getRouterLocation,
+  getRouterSearchParams,
   getDataRequestedByKey,
   getContentRequestedByKey,
+  getCountry,
+  getStandardSearch,
 } from './selectors';
 import {
   dataRequested,
@@ -29,6 +32,8 @@ import {
   SELECT_COUNTRY,
   SELECT_METRIC,
   NAVIGATE,
+  STANDARDS,
+  INCOME_GROUPS,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -135,9 +140,24 @@ function* loadContentErrorHandler(err, { key }) {
 }
 
 export function* selectCountrySaga({ code }) {
+  const country = yield select(getCountry, code);
+  const group = INCOME_GROUPS.find(
+    g => g.value === country.high_income_country,
+  );
+  const countryStandard =
+    country && group && STANDARDS.find(s => s.key === group.standard);
+
+  const currentStandard = yield select(getStandardSearch);
   const currentLocale = yield select(getLocale);
-  const currentLocation = yield select(getRouterLocation);
-  yield put(push(`/${currentLocale}/country/${code}${currentLocation.search}`));
+  const searchParams = yield select(getRouterSearchParams);
+
+  if (countryStandard.key !== currentStandard) {
+    searchParams.set('as', countryStandard.key);
+  }
+
+  yield put(
+    push(`/${currentLocale}/country/${code}?${searchParams.toString()}`),
+  );
 }
 export function* selectMetricSaga({ code }) {
   const currentLocale = yield select(getLocale);

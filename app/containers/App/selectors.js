@@ -50,6 +50,18 @@ export const getRouterSearchParams = createSelector(
   location => location && new URLSearchParams(location.search),
 );
 
+export const getRouterPath = createSelector(
+  getRouterLocation,
+  location => {
+    if (location && location.pathname) {
+      const splitPath = location.pathname.split('/');
+      // should result in ["", "en", "page", "about"]
+      return splitPath.length > 2 ? splitPath[2] : '';
+    }
+    return '';
+  },
+);
+
 export const getScaleSearch = createSelector(
   getRouterSearchParams,
   search =>
@@ -167,6 +179,12 @@ export const getContentByKey = createSelector(
 export const getCountries = createSelector(
   getData,
   data => data.countries,
+);
+export const getCountry = createSelector(
+  (store, code) => code,
+  getCountries,
+  (code, countries) =>
+    countries && countries.find(c => c.country_code === code),
 );
 export const getESRScores = createSelector(
   getData,

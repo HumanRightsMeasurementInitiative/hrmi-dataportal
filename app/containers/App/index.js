@@ -18,6 +18,7 @@ import { Switch, Route } from 'react-router-dom';
 import { useInjectSaga } from 'utils/injectSaga';
 
 import Header from 'containers/Header';
+import Settings from 'containers/Settings';
 import PathOverview from 'containers/PathOverview/Loadable';
 import PathMetric from 'containers/PathMetric/Loadable';
 import PathCountry from 'containers/PathCountry/Loadable';
@@ -92,6 +93,7 @@ export function App({ match, onLoadData }) {
           <Route path={`/${locale}`} component={PathNotFoundPage} />
         </Switch>
       </Main>
+      <Settings />
     </AppWrapper>
   );
 }
