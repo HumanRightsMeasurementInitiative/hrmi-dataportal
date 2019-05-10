@@ -6,6 +6,7 @@ import { createSelector } from 'reselect';
 
 import { DEFAULT_LOCALE, appLocales } from 'i18n';
 import isInteger from 'utils/is-integer';
+import quasiEquals from 'utils/quasi-equals';
 
 import { initialState } from './reducer';
 import {
@@ -251,8 +252,11 @@ export const getCountriesFiltered = createSelector(
       .filter(
         c =>
           !income ||
-          parseInt(c.high_income_country, 10) ===
-            INCOME_GROUPS.find(i => i.key === income).value,
+          (INCOME_GROUPS.find(i => i.key === income) &&
+            quasiEquals(
+              c.high_income_country,
+              INCOME_GROUPS.find(i => i.key === income).value,
+            )),
       ),
 );
 

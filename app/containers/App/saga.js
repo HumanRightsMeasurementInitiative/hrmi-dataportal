@@ -4,6 +4,8 @@ import { csvParse } from 'd3-dsv';
 // import extend from 'lodash/extend';
 import 'whatwg-fetch';
 
+import quasiEquals from 'utils/quasi-equals';
+
 // import dataRequest from 'utils/data-request';
 import {
   getLocale,
@@ -140,21 +142,25 @@ function* loadContentErrorHandler(err, { key }) {
 }
 
 export function* selectCountrySaga({ code }) {
+  // figure out country group and default standard
   const country = yield select(getCountry, code);
-  const group = INCOME_GROUPS.find(
-    g => g.value === country.high_income_country,
-  );
-  const countryStandard =
-    country && group && STANDARDS.find(s => s.key === group.standard);
+  const group =
+    country &&
+    INCOME_GROUPS.find(g => quasiEquals(country.high_income_country, g.value));
+  const countryDefaultStandard =
+    group && STANDARDS.find(s => s.key === group.standard);
 
-  const currentStandard = yield select(getStandardSearch);
-  const currentLocale = yield select(getLocale);
+  // get URL search params
   const searchParams = yield select(getRouterSearchParams);
 
-  if (countryStandard.key !== currentStandard) {
-    searchParams.set('as', countryStandard.key);
+  // change to default standard if not already
+  const currentStandard = yield select(getStandardSearch);
+  if (countryDefaultStandard.key !== currentStandard) {
+    searchParams.set('as', countryDefaultStandard.key);
   }
 
+  // navigate to country and default standard
+  const currentLocale = yield select(getLocale);
   yield put(
     push(`/${currentLocale}/country/${code}?${searchParams.toString()}`),
   );
