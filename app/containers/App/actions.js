@@ -18,6 +18,9 @@ import {
   SELECT_COUNTRY,
   SELECT_METRIC,
   NAVIGATE,
+  SET_SCALE,
+  SET_STANDARD,
+  SET_BENCHMARK,
 } from './constants';
 
 /**
@@ -113,6 +116,24 @@ export function selectMetric(code) {
   return {
     type: SELECT_METRIC,
     code,
+  };
+}
+export function setScale(value) {
+  return {
+    type: SET_SCALE,
+    value,
+  };
+}
+export function setStandard(value) {
+  return {
+    type: SET_STANDARD,
+    value,
+  };
+}
+export function setBenchmark(value) {
+  return {
+    type: SET_BENCHMARK,
+    value,
   };
 }
 

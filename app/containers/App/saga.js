@@ -10,6 +10,7 @@ import quasiEquals from 'utils/quasi-equals';
 import {
   getLocale,
   getRouterLocation,
+  getRouterPath,
   getRouterSearchParams,
   getDataRequestedByKey,
   getContentRequestedByKey,
@@ -36,6 +37,9 @@ import {
   NAVIGATE,
   STANDARDS,
   INCOME_GROUPS,
+  SET_SCALE,
+  SET_STANDARD,
+  SET_BENCHMARK,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -156,7 +160,7 @@ export function* selectCountrySaga({ code }) {
   // change to default standard if not already
   const currentStandard = yield select(getStandardSearch);
   if (countryDefaultStandard.key !== currentStandard) {
-    searchParams.set('as', countryDefaultStandard.key);
+    yield searchParams.set('as', countryDefaultStandard.key);
   }
 
   // navigate to country and default standard
@@ -165,6 +169,37 @@ export function* selectCountrySaga({ code }) {
     push(`/${currentLocale}/country/${code}?${searchParams.toString()}`),
   );
 }
+
+export function* setScaleSaga({ value }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  yield searchParams.set('scale', value);
+
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(push(`${path}?${searchParams.toString()}`));
+}
+
+export function* setStandardSaga({ value }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  yield searchParams.set('as', value);
+
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(push(`${path}?${searchParams.toString()}`));
+}
+
+export function* setBenchmarkSaga({ value }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  yield searchParams.set('pb', value);
+
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(push(`${path}?${searchParams.toString()}`));
+}
+
 export function* selectMetricSaga({ code }) {
   const currentLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
@@ -200,5 +235,8 @@ export default function* defaultSaga() {
   );
   yield takeLatest(SELECT_COUNTRY, selectCountrySaga);
   yield takeLatest(SELECT_METRIC, selectMetricSaga);
+  yield takeLatest(SET_SCALE, setScaleSaga);
+  yield takeLatest(SET_STANDARD, setStandardSaga);
+  yield takeLatest(SET_BENCHMARK, setBenchmarkSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
 }

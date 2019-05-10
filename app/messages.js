@@ -9,6 +9,50 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
+  settings: {
+    scale: {
+      name: {
+        id: `${scope}.settings.scale.name`,
+        defaultMessage: 'Metric scale',
+      },
+      dimensions: {
+        id: `${scope}.settings.scale.dimensions`,
+        defaultMessage: 'Categories',
+      },
+      rights: {
+        id: `${scope}.settings.scale.rights`,
+        defaultMessage: 'Rights',
+      },
+    },
+    standard: {
+      name: {
+        id: `${scope}.settings.standard.name`,
+        defaultMessage: 'Assessment standard',
+      },
+      core: {
+        id: `${scope}.settings.standard.core`,
+        defaultMessage: 'Low and middle income',
+      },
+      hi: {
+        id: `${scope}.settings.standard.hi`,
+        defaultMessage: 'High income',
+      },
+    },
+    benchmark: {
+      name: {
+        id: `${scope}.settings.benchmark.name`,
+        defaultMessage: 'Performance benchmark',
+      },
+      adjusted: {
+        id: `${scope}.settings.benchmark.adjusted`,
+        defaultMessage: 'Income-adjusted',
+      },
+      best: {
+        id: `${scope}.settings.benchmark.best`,
+        defaultMessage: 'Global best',
+      },
+    },
+  },
   'metric-types': {
     dimensions: {
       id: `${scope}.metric-types.dimensions`,

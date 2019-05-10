@@ -9,6 +9,7 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
+// loading actions
 export const LOAD_DATA_IF_NEEDED = 'hrmi/App/LOAD_DATA_IF_NEEDED';
 export const LOAD_DATA_SUCCESS = 'hrmi/App/LOAD_DATA_SUCCESS';
 export const LOAD_DATA_ERROR = 'hrmi/App/LOAD_DATA_ERROR';
@@ -19,9 +20,14 @@ export const LOAD_CONTENT_SUCCESS = 'hrmi/App/LOAD_CONTENT_SUCCESS';
 export const LOAD_CONTENT_ERROR = 'hrmi/App/LOAD_CONTENT_ERROR';
 export const CONTENT_REQUESTED = 'hrmi/App/CONTENT_REQUESTED';
 export const CONTENT_READY = 'hrmi/App/CONTENT_READY';
+
+// navigation actions
 export const SELECT_COUNTRY = 'hrmi/App/SELECT_COUNTRY';
 export const SELECT_METRIC = 'hrmi/App/SELECT_METRIC';
 export const NAVIGATE = 'hrmi/App/NAVIGATE';
+export const SET_SCALE = 'hrmi/App/SET_SCALE';
+export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
+export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 
 export const LANGUAGES = {
   short: {
@@ -150,7 +156,16 @@ export const METRIC_TYPES = ['dimensions', 'rights', 'indicators'];
 export const RIGHTS_TYPES = ['cpr', 'esr'];
 
 // d: dimensions, r: rights
-export const SCALES = ['d', 'r'];
+export const SCALES = [
+  {
+    key: 'd',
+    type: 'dimensions',
+  },
+  {
+    key: 'r',
+    type: 'rights',
+  },
+];
 
 export const DIMENSIONS = [
   {

@@ -30,14 +30,22 @@ export const getRouterLocation = createSelector(
   routerState => routerState.location,
 );
 
+export const getRouterSearchParams = createSelector(
+  getRouterLocation,
+  location => location && new URLSearchParams(location.search),
+);
+export const getRouterPath = createSelector(
+  getRouterLocation,
+  location => location && location.pathname,
+);
 /**
  * Get the language locale
  */
 export const getLocale = createSelector(
-  getRouterLocation,
-  location => {
-    if (location && location.pathname) {
-      const splitPath = location.pathname.split('/');
+  getRouterPath,
+  path => {
+    if (path) {
+      const splitPath = path.split('/');
       return splitPath.length > 1 && appLocales.indexOf(splitPath[1]) >= 0
         ? splitPath[1]
         : DEFAULT_LOCALE;
@@ -46,16 +54,11 @@ export const getLocale = createSelector(
   },
 );
 
-export const getRouterSearchParams = createSelector(
-  getRouterLocation,
-  location => location && new URLSearchParams(location.search),
-);
-
-export const getRouterPath = createSelector(
-  getRouterLocation,
-  location => {
-    if (location && location.pathname) {
-      const splitPath = location.pathname.split('/');
+export const getRouterRoute = createSelector(
+  getRouterPath,
+  path => {
+    if (path) {
+      const splitPath = path.split('/');
       // should result in ["", "en", "page", "about"]
       return splitPath.length > 2 ? splitPath[2] : '';
     }
@@ -66,9 +69,10 @@ export const getRouterPath = createSelector(
 export const getScaleSearch = createSelector(
   getRouterSearchParams,
   search =>
-    search.has('scale') && SCALES.indexOf(search.get('scale')) > -1
+    search.has('scale') &&
+    SCALES.map(s => s.key).indexOf(search.get('scale')) > -1
       ? search.get('scale')
-      : SCALES[0],
+      : SCALES[0].key,
 );
 export const getStandardSearch = createSelector(
   getRouterSearchParams,

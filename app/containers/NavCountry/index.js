@@ -64,7 +64,6 @@ const mapStateToProps = state => ({
 export function mapDispatchToProps(dispatch) {
   return {
     onSelectCountry: country => dispatch(selectCountry(country)),
-    dispatch,
   };
 }
 
