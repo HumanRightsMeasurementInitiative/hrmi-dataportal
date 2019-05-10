@@ -15,6 +15,8 @@ import { Heading } from 'grommet';
 
 import rootMessages from 'messages';
 
+import Close from 'containers/Close';
+
 // import { useInjectSaga } from 'utils/injectSaga';
 // import { useInjectReducer } from 'utils/injectReducer';
 // import H1 from 'styled/H1';
@@ -24,7 +26,7 @@ import {
   getIndicatorsForCountry,
 } from 'containers/App/selectors';
 
-import { loadDataIfNeeded } from 'containers/App/actions';
+import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 
 // import reducer from './reducer';
 // import saga from './saga';
@@ -57,6 +59,7 @@ export function PathCountry({
         <title>Country</title>
         <meta name="description" content="Description of Country page" />
       </Helmet>
+      <Close />
       <Heading>
         {match.params.country && (
           <FormattedMessage {...rootMessages.countries[match.params.country]} />
@@ -97,6 +100,7 @@ export function mapDispatchToProps(dispatch) {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
+    onClose: () => dispatch(navigate('')),
   };
 }
 

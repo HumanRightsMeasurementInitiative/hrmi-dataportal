@@ -135,7 +135,7 @@ export function Header({ nav, intl }) {
             plain
             onClick={() => {
               setShowMenu(false);
-              nav('');
+              nav('', { reset: true });
             }}
           >
             <span>HRMI | </span>
@@ -216,8 +216,8 @@ Header.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   // navigate to location
-  nav: location => {
-    dispatch(navigate(location));
+  nav: (location, args) => {
+    dispatch(navigate(location, args));
   },
 });
 

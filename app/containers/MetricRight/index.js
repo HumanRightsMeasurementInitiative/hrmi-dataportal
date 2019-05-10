@@ -13,6 +13,8 @@ import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { Heading, Text } from 'grommet';
 
+import Close from 'containers/Close';
+
 import { getESRRightScores, getCPRRightScores } from 'containers/App/selectors';
 
 import { loadDataIfNeeded } from 'containers/App/actions';
@@ -34,6 +36,7 @@ export function MetricRight({ onLoadData, metric, scores }) {
         <title>MetricRight</title>
         <meta name="description" content="Description of MetricRight" />
       </Helmet>
+      <Close />
       <Text>
         <FormattedMessage {...rootMessages['metric-types'].right} />
       </Text>

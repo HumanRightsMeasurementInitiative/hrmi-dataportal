@@ -144,6 +144,11 @@ export const getSortOrderSearch = createSelector(
 // global sub-state
 const getGlobal = state => state.global || initialState;
 
+export const getCloseTarget = createSelector(
+  getGlobal,
+  global => global.closeTarget,
+);
+
 const getData = createSelector(
   getGlobal,
   global => global.data,

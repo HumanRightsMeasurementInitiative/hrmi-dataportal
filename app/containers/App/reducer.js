@@ -7,6 +7,8 @@
  *
  */
 import produce from 'immer';
+import { LOCATION_CHANGE } from 'connected-react-router';
+
 import { CHANGE_LOCALE } from 'containers/LanguageProvider/constants';
 import {
   DATA_RESOURCES,
@@ -53,6 +55,12 @@ export const initialState = {
     memo[key] = false;
     return memo;
   }, {}),
+  // the last location to go back to when closing routes
+  closeTarget: {
+    pathname: '',
+    search: '',
+    hash: '',
+  },
   /* eslint-enable no-param-reassign */
 };
 
@@ -60,6 +68,11 @@ export const initialState = {
 const appReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case LOCATION_CHANGE:
+        if (action.payload.location.pathname.indexOf('page') === -1) {
+          draft.closeTarget = action.payload.location;
+        }
+        break;
       case DATA_REQUESTED:
         draft.dataRequested[action.key] = action.time;
         break;

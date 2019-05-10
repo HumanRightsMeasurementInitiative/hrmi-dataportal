@@ -13,6 +13,8 @@ import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { Heading, Text } from 'grommet';
 
+import Close from 'containers/Close';
+
 import { getIndicatorScores } from 'containers/App/selectors';
 
 import { loadDataIfNeeded } from 'containers/App/actions';
@@ -34,6 +36,7 @@ export function MetricIndicator({ onLoadData, metric, scores }) {
         <title>MetricIndicator</title>
         <meta name="description" content="Description of MetricIndicator" />
       </Helmet>
+      <Close />
       <Text>
         <FormattedMessage {...rootMessages['metric-types'].indicator} />
       </Text>

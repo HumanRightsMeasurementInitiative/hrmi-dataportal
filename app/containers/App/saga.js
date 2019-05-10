@@ -1,7 +1,7 @@
 import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
-// import extend from 'lodash/extend';
+import extend from 'lodash/extend';
 import 'whatwg-fetch';
 
 import quasiEquals from 'utils/quasi-equals';
@@ -205,22 +205,39 @@ export function* selectMetricSaga({ code }) {
   const currentLocation = yield select(getRouterLocation);
   yield put(push(`/${currentLocale}/metric/${code}${currentLocation.search}`));
 }
-export function* navigateSaga({ location }) {
+
+// location can either be string or object { pathname, search}
+export function* navigateSaga({ location, args }) {
   // default args
-  // const xArgs = extend({ replaceSearch: true }, args || {});
+  const xArgs = extend(
+    {
+      reset: false,
+    },
+    args || {},
+  );
 
-  // update path: replace or keep if not provided
-  let path = '';
-  if (typeof location === 'string' && location !== '') {
-    path += `/${location}`;
-  } else if (typeof location.path !== 'undefined') {
-    path += `/${location.path}`;
+  if (xArgs.reset) {
+    yield put(push(''));
+  } else {
+    const currentLocation = yield select(getRouterLocation);
+    const currentLocale = yield select(getLocale);
+
+    // update path: replace or keep if not provided
+    let path = `/${currentLocale}`;
+    let { search } = currentLocation;
+    if (typeof location === 'string' && location !== '') {
+      path += `/${location}`;
+    } else if (typeof location === 'object') {
+      if (location.pathname) {
+        path = location.pathname;
+      }
+      if (typeof location.search === 'string') {
+        ({ search } = location);
+      }
+    }
+
+    yield put(push(`${path}${search}`));
   }
-
-  const currentLocale = yield select(getLocale);
-  const currentLocation = yield select(getRouterLocation);
-
-  yield put(push(`/${currentLocale}${path}${currentLocation.search}`));
 }
 
 export default function* defaultSaga() {

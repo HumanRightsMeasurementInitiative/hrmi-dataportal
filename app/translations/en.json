@@ -3,6 +3,7 @@
   "hrmi.containers.header.countries": "Countries",
   "hrmi.containers.header.metrics": "Metrics",
   "hrmi.containers.NotFoundPage.header": "Page not found.",
+  "hrmi.components.Close.label": "Back",
   "hrmi.settings.scale.name": "Metric scale",
   "hrmi.settings.scale.dimensions": "Categories",
   "hrmi.settings.scale.rights": "Rights",

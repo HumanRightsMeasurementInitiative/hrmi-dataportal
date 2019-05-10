@@ -13,6 +13,8 @@ import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { Heading, Text } from 'grommet';
 
+import Close from 'containers/Close';
+
 import {
   getESRDimensionScores,
   getCPRDimensionScores,
@@ -37,6 +39,7 @@ export function MetricDimension({ onLoadData, metric, scores }) {
         <title>MetricDimension</title>
         <meta name="description" content="Description of MetricDimension" />
       </Helmet>
+      <Close />
       <Text>
         <FormattedMessage {...rootMessages['metric-types'].dimension} />
       </Text>
