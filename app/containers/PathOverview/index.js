@@ -54,9 +54,11 @@ export function PathOverview({
     );
   return (
     <Styled>
-      <div>
-        <Heading>{`${countries.length} countries`}</Heading>
-      </div>
+      {countries && (
+        <div>
+          <Heading>{`${countries.length} countries`}</Heading>
+        </div>
+      )}
       <div>
         {regionFilterValue && (
           <span>

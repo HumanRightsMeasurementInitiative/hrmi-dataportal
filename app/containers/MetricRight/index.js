@@ -15,20 +15,37 @@ import { Heading, Text } from 'grommet';
 
 import Close from 'containers/Close';
 
-import { getESRRightScores, getCPRRightScores } from 'containers/App/selectors';
+import {
+  getESRRightScores,
+  getCPRRightScores,
+  getBenchmarkSearch,
+} from 'containers/App/selectors';
 
 import { loadDataIfNeeded } from 'containers/App/actions';
+import { BENCHMARKS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
 // import messages from './messages';
+import isNumber from 'utils/is-number';
 
 const DEPENDENCIES = ['countries', 'cprScores', 'esrScores'];
+const roundScore = value => isNumber(value) && Math.round(value * 100) / 100;
 
-export function MetricRight({ onLoadData, metric, scores }) {
+export function MetricRight({ onLoadData, metric, scores, benchmark }) {
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
+  const currentBenchmark =
+    metric.type === 'esr' && BENCHMARKS.find(s => s.key === benchmark);
+
+  const column = metric.type === 'esr' ? currentBenchmark.column : 'mean';
+
+  const sortedScores =
+    scores &&
+    scores.sort((a, b) =>
+      parseFloat(a[column], 10) < parseFloat(b[column], 10) ? 1 : -1,
+    );
 
   return (
     <div>
@@ -37,13 +54,19 @@ export function MetricRight({ onLoadData, metric, scores }) {
         <meta name="description" content="Description of MetricRight" />
       </Helmet>
       <Close />
-      <Text>
+      <Text size="small">
         <FormattedMessage {...rootMessages['metric-types'].right} />
       </Text>
-      <Heading>
+      <Heading margin={{ top: '5px' }}>
         <FormattedMessage {...rootMessages.rights[metric.key]} />
       </Heading>
-      <div>Scores for countries: {scores && scores.length}</div>
+      {sortedScores &&
+        sortedScores.map(s => (
+          <div key={s.country_code}>
+            <FormattedMessage {...rootMessages.countries[s.country_code]} />
+            <span>{`: ${roundScore(s[column])}`}</span>
+          </div>
+        ))}
     </div>
   );
 }
@@ -52,6 +75,7 @@ MetricRight.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   metric: PropTypes.object.isRequired,
+  benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
 };
 
@@ -60,6 +84,7 @@ const mapStateToProps = createStructuredSelector({
     metric.type === 'esr'
       ? getESRRightScores(state, metric.key)
       : getCPRRightScores(state, metric.key),
+  benchmark: state => getBenchmarkSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {

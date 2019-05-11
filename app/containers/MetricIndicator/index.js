@@ -15,21 +15,36 @@ import { Heading, Text } from 'grommet';
 
 import Close from 'containers/Close';
 
-import { getIndicatorScores } from 'containers/App/selectors';
+import {
+  getIndicatorScores,
+  getBenchmarkSearch,
+} from 'containers/App/selectors';
 
 import { loadDataIfNeeded } from 'containers/App/actions';
+import { BENCHMARKS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
 // import messages from './messages';
+import isNumber from 'utils/is-number';
 
 const DEPENDENCIES = ['countries', 'esrIndicatorScores'];
+const roundScore = value => isNumber(value) && Math.round(value * 100) / 100;
 
-export function MetricIndicator({ onLoadData, metric, scores }) {
+export function MetricIndicator({ onLoadData, metric, scores, benchmark }) {
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
+  const sortedScores =
+    scores &&
+    scores.sort((a, b) =>
+      parseFloat(a[currentBenchmark.column], 10) <
+      parseFloat(b[currentBenchmark.column], 10)
+        ? 1
+        : -1,
+    );
   return (
     <div>
       <Helmet>
@@ -37,13 +52,19 @@ export function MetricIndicator({ onLoadData, metric, scores }) {
         <meta name="description" content="Description of MetricIndicator" />
       </Helmet>
       <Close />
-      <Text>
+      <Text size="small">
         <FormattedMessage {...rootMessages['metric-types'].indicator} />
       </Text>
-      <Heading>
+      <Heading margin={{ top: '5px' }}>
         <FormattedMessage {...rootMessages.indicators[metric.key]} />
       </Heading>
-      <div>Scores for countries: {scores && scores.length}</div>
+      {sortedScores &&
+        sortedScores.map(s => (
+          <div key={s.country_code}>
+            <FormattedMessage {...rootMessages.countries[s.country_code]} />
+            <span>{`: ${roundScore(s[currentBenchmark.column])}`}</span>
+          </div>
+        ))}
     </div>
   );
 }
@@ -52,11 +73,13 @@ MetricIndicator.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   metric: PropTypes.object.isRequired,
+  benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
   scores: (state, { metric }) => getIndicatorScores(state, metric.key),
+  benchmark: state => getBenchmarkSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
