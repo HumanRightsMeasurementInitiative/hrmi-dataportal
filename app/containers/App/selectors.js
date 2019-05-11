@@ -65,6 +65,17 @@ export const getRouterRoute = createSelector(
     return '';
   },
 );
+export const getRouterMatch = createSelector(
+  getRouterPath,
+  path => {
+    if (path) {
+      const splitPath = path.split('/');
+      // should result in ["", "en", "page", "about"]
+      return splitPath.length > 3 ? splitPath[3] : '';
+    }
+    return '';
+  },
+);
 
 export const getScaleSearch = createSelector(
   getRouterSearchParams,
