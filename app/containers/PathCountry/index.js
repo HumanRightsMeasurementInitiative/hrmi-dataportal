@@ -18,9 +18,6 @@ import rootMessages from 'messages';
 
 import Close from 'containers/Close';
 
-// import { useInjectSaga } from 'utils/injectSaga';
-// import { useInjectReducer } from 'utils/injectReducer';
-// import H1 from 'styled/H1';
 import {
   getDimensionsForCountry,
   getRightsForCountry,
@@ -32,9 +29,6 @@ import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
-// import reducer from './reducer';
-// import saga from './saga';
-// import messages from './messages';
 
 const Header = styled.div``;
 const HeaderCategories = styled(Box)``;
@@ -60,8 +54,6 @@ export function PathCountry({
   indicators,
   country,
 }) {
-  // useInjectReducer({ key: 'country', reducer });
-  // useInjectSaga({ key: 'country', saga });
   useEffect(() => {
     // kick off loading of data
     onLoadData();

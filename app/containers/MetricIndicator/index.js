@@ -25,10 +25,9 @@ import { BENCHMARKS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
 // import messages from './messages';
-import isNumber from 'utils/is-number';
+import roundScore from 'utils/round-score';
 
 const DEPENDENCIES = ['countries', 'esrIndicatorScores'];
-const roundScore = value => isNumber(value) && Math.round(value * 100) / 100;
 
 export function MetricIndicator({ onLoadData, metric, scores, benchmark }) {
   useEffect(() => {

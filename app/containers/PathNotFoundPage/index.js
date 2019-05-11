@@ -7,15 +7,16 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import H1 from 'styled/H1';
+import { Heading } from 'grommet';
+
 import messages from './messages';
 
 export default function PathNotFound() {
   return (
     <article>
-      <H1>
+      <Heading>
         <FormattedMessage {...messages.header} />
-      </H1>
+      </Heading>
     </article>
   );
 }

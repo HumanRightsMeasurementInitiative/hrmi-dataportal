@@ -14,7 +14,7 @@ import { compose } from 'redux';
 import { Button, Box } from 'grommet';
 
 import rootMessages from 'messages';
-import isNumber from 'utils/is-number';
+import roundScore from 'utils/round-score';
 
 import {
   getDimensionsForCountry,
@@ -27,8 +27,6 @@ import { selectCountry } from 'containers/App/actions';
 import { STANDARDS, BENCHMARKS, RIGHTS } from 'containers/App/constants';
 
 // import messages from './messages';
-
-const roundScore = value => isNumber(value) && Math.round(value * 100) / 100;
 
 export function CountryPreview({
   onSelectCountry,
@@ -80,11 +78,11 @@ export function CountryPreview({
           {scale === 'r' &&
             rights &&
             rights.cpr.map(s => {
-              const rightInfo = RIGHTS.find(r => r.code === s.metric_code);
+              const metricDetails = RIGHTS.find(r => r.code === s.metric_code);
               return (
                 <div>
                   <FormattedMessage
-                    {...rootMessages['rights-short'][rightInfo.key]}
+                    {...rootMessages['rights-short'][metricDetails.key]}
                   />
                   <span>{`: ${roundScore(s.mean)}`}</span>
                 </div>
@@ -93,11 +91,11 @@ export function CountryPreview({
           {scale === 'r' &&
             rights &&
             rights.esr.map(s => {
-              const rightInfo = RIGHTS.find(r => r.code === s.metric_code);
+              const metricDetails = RIGHTS.find(r => r.code === s.metric_code);
               return (
                 <div>
                   <FormattedMessage
-                    {...rootMessages['rights-short'][rightInfo.key]}
+                    {...rootMessages['rights-short'][metricDetails.key]}
                   />
                   <span>{`: ${roundScore(s[currentBenchmark.column])}`}</span>
                 </div>

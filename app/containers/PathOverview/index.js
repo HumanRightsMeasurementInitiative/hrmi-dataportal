@@ -14,8 +14,6 @@ import styled from 'styled-components';
 import { Button, Heading } from 'grommet';
 import { FormClose } from 'grommet-icons';
 
-// import { useInjectSaga } from 'utils/injectSaga';
-// import { useInjectReducer } from 'utils/injectReducer';
 import {
   getCountriesFiltered,
   getRegionSearch,
@@ -25,25 +23,17 @@ import { navigate } from 'containers/App/actions';
 
 import CountryPreview from 'containers/CountryPreview';
 
-// import makeSelectOverview from './selectors';
-// import reducer from './reducer';
-// import saga from './saga';
-// import messages from './messages';
 import rootMessages from 'messages';
 
 const Styled = styled.div``;
 
 export function PathOverview({
   countries,
-  // onSelectCountry,
   regionFilterValue,
   incomeFilterValue,
   onRemoveFilter,
   intl,
 }) {
-  // useInjectReducer({ key: 'overview', reducer });
-  // useInjectSaga({ key: 'overview', saga });
-  // <FormattedMessage {...messages.header} />
   const sortedCountries =
     countries &&
     countries.sort((a, b) =>
