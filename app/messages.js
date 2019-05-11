@@ -542,13 +542,13 @@ export default defineMessages({
     },
   },
   income: {
-    high: {
-      id: `${scope}.income.high`,
-      defaultMessage: 'high',
+    hi: {
+      id: `${scope}.income.hi`,
+      defaultMessage: 'hi',
     },
-    low: {
-      id: `${scope}.income.low`,
-      defaultMessage: 'low',
+    lmi: {
+      id: `${scope}.income.lmi`,
+      defaultMessage: 'lmi',
     },
   },
   oecd: {

@@ -211,33 +211,53 @@ export function* navigateSaga({ location, args }) {
   // default args
   const xArgs = extend(
     {
-      reset: false,
+      needsLocale: true,
+      replace: true,
+      deleteParams: false,
     },
     args || {},
   );
+  const currentLocale = yield select(getLocale);
+  const currentLocation = yield select(getRouterLocation);
 
-  if (xArgs.reset) {
-    yield put(push(''));
-  } else {
-    const currentLocation = yield select(getRouterLocation);
-    const currentLocale = yield select(getLocale);
+  const newLocation = {
+    pathname: '',
+    search: '',
+  };
 
-    // update path: replace or keep if not provided
-    let path = `/${currentLocale}`;
-    let { search } = currentLocation;
-    if (typeof location === 'string' && location !== '') {
-      path += `/${location}`;
-    } else if (typeof location === 'object') {
-      if (location.pathname) {
-        path = location.pathname;
-      }
-      if (typeof location.search === 'string') {
-        ({ search } = location);
+  // if location is object, use pathname and replace or extend search
+  // location path is expected not to contain the locale
+  if (typeof location === 'object') {
+    if (typeof location.pathname !== 'undefined') {
+      newLocation.pathname = xArgs.needsLocale
+        ? `/${currentLocale}${location.pathname}`
+        : location.pathname;
+    }
+    if (typeof location.search !== 'undefined' || xArgs.deleteParams) {
+      if (xArgs.replace) {
+        newLocation.search = location.search;
+      } else {
+        const currentSearchParams = new URLSearchParams(currentLocation.search);
+        if (typeof location.search !== 'undefined') {
+          const searchParams = new URLSearchParams(location.search);
+          searchParams.forEach((value, key) =>
+            currentSearchParams.set(key, value),
+          );
+        }
+        if (xArgs.deleteParams) {
+          xArgs.deleteParams.forEach(p => currentSearchParams.delete(p));
+        }
+        newLocation.search = `?${currentSearchParams.toString()}`;
       }
     }
-
-    yield put(push(`${path}${search}`));
+  } else if (typeof location === 'string') {
+    newLocation.pathname = `/${currentLocale}`;
+    if (location !== '') {
+      newLocation.pathname += `/${location}`;
+    }
+    newLocation.search = currentLocation.search;
   }
+  yield put(push(`${newLocation.pathname}${newLocation.search}`));
 }
 
 export default function* defaultSaga() {

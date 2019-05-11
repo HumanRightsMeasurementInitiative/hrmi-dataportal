@@ -135,7 +135,7 @@ export function Header({ nav, intl }) {
             plain
             onClick={() => {
               setShowMenu(false);
-              nav('', { reset: true });
+              nav({ pathname: '', search: '' });
             }}
           >
             <span>HRMI | </span>

@@ -10,20 +10,23 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Box, Button } from 'grommet';
 import { Close as CloseIcon } from 'grommet-icons';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 
 import { navigate } from 'containers/App/actions';
-import messages from './messages';
+// import messages from './messages';
 
+// <FormattedMessage {...messages.label} />
 function Close({ onClose, closeTarget }) {
   return (
     <Box direction="row" pad="medium" align="center">
-      <FormattedMessage {...messages.label} />
-      <Button
-        icon={<CloseIcon />}
-        onClick={() => onClose(closeTarget || '')}
-        primary
-      />
+      <Box round="full" overflow="hidden">
+        <Button
+          primary
+          icon={<CloseIcon />}
+          hoverIndicator
+          onClick={() => onClose(closeTarget || '')}
+        />
+      </Box>
     </Box>
   );
 }
@@ -35,7 +38,7 @@ Close.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onClose: location => dispatch(navigate(location)),
+    onClose: location => dispatch(navigate(location, { needsLocale: false })),
   };
 }
 

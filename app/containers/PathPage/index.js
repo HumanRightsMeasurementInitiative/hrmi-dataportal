@@ -23,7 +23,6 @@ export function PathPage({ match, onLoadContent, content, closeTarget }) {
     // kick off loading of page content
     onLoadContent(match.params.page);
   });
-  console.log('Page', closeTarget);
   return (
     <div>
       <Helmet>
