@@ -72,7 +72,7 @@ export function Settings({
   return (
     <Styled>
       <Box
-        elevation="medium"
+        elevation="large"
         direction="row"
         background="white"
         height="100px"

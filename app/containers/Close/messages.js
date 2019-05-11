@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.components.Close';
+export const scope = 'hrmi.components.Close';
 
 export default defineMessages({
   label: {

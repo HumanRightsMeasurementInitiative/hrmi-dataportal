@@ -4,25 +4,31 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Heading, Box, Text, Button } from 'grommet';
+import { Heading, Box, Text, Button, Tabs, Tab } from 'grommet';
 
 import rootMessages from 'messages';
 
 import Close from 'containers/Close';
+import CountryReport from 'components/CountryReport';
+import CountryPeople from 'components/CountryPeople';
+import CountryAbout from 'components/CountryAbout';
 
 import {
   getDimensionsForCountry,
   getRightsForCountry,
   getIndicatorsForCountry,
   getCountry,
+  getScaleSearch,
+  getStandardSearch,
+  getBenchmarkSearch,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
@@ -30,13 +36,15 @@ import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 
+import messages from './messages';
+
 const Header = styled.div``;
 const HeaderCategories = styled(Box)``;
 const CategoryLink = styled(Button)``;
 const HeaderTitle = styled.div``;
 const Body = styled.div``;
-const MainColumn = styled.div``;
-const Sidebar = styled.div``;
+// const MainColumn = styled.div``;
+// const Sidebar = styled.div``;
 
 const DEPENDENCIES = [
   'countries',
@@ -46,6 +54,7 @@ const DEPENDENCIES = [
 ];
 
 export function PathCountry({
+  intl,
   onLoadData,
   onCategoryClick,
   match,
@@ -53,18 +62,28 @@ export function PathCountry({
   rights,
   indicators,
   country,
+  scale,
+  benchmark,
 }) {
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
+
+  const [tabIndex, setTabIndex] = useState(0);
+
   const group =
     country &&
     INCOME_GROUPS.find(g => quasiEquals(g.value, country.high_income_country));
+
+  const countryTitle =
+    match.params.country &&
+    intl.formatMessage(rootMessages.countries[match.params.country]);
+
   return (
     <div>
       <Helmet>
-        <title>Country</title>
+        <title>{countryTitle}</title>
         <meta name="description" content="Description of Country page" />
       </Helmet>
       <Header>
@@ -93,30 +112,33 @@ export function PathCountry({
           </Text>
         </HeaderCategories>
         <HeaderTitle>
-          <Heading margin={{ top: '5px' }}>
-            {match.params.country && (
-              <FormattedMessage
-                {...rootMessages.countries[match.params.country]}
-              />
-            )}
-          </Heading>
+          <Heading margin={{ top: '5px' }}>{countryTitle}</Heading>
         </HeaderTitle>
       </Header>
       <Body>
-        <MainColumn>
-          <Heading level={2}>Human Rights Report</Heading>
-          <div>Dimensions</div>
-          <div>CPR: {dimensions && dimensions.cpr.length}</div>
-          <div>ESR: {dimensions && dimensions.esr.length}</div>
-          <div>Rights</div>
-          <div>CPR: {rights && rights.cpr.length}</div>
-          <div>ESR: {rights && rights.esr.length}</div>
-          <div>Indicators</div>
-          <div>ESR: {indicators && indicators.length}</div>
-        </MainColumn>
-        <Sidebar>
-          <Heading level={3}>Country details</Heading>
-        </Sidebar>
+        <Tabs
+          justify="start"
+          activeIndex={tabIndex}
+          onActive={index => setTabIndex(index)}
+        >
+          <Tab title={intl.formatMessage(messages.tabs.report)}>
+            <CountryReport
+              countryTitle={countryTitle}
+              dimensions={dimensions}
+              rights={rights}
+              indicators={indicators}
+              country={country}
+              scale={scale}
+              benchmark={benchmark}
+            />
+          </Tab>
+          <Tab title={intl.formatMessage(messages.tabs['people-at-risk'])}>
+            <CountryPeople />
+          </Tab>
+          <Tab title={intl.formatMessage(messages.tabs.about)}>
+            <CountryAbout />
+          </Tab>
+        </Tabs>
       </Body>
     </div>
   );
@@ -124,6 +146,7 @@ export function PathCountry({
 
 PathCountry.propTypes = {
   // dispatch: PropTypes.func.isRequired,
+  intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   match: PropTypes.object,
@@ -131,6 +154,9 @@ PathCountry.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -141,6 +167,9 @@ const mapStateToProps = createStructuredSelector({
     getRightsForCountry(state, match.params.country),
   dimensions: (state, { match }) =>
     getDimensionsForCountry(state, match.params.country),
+  scale: state => getScaleSearch(state),
+  standard: state => getStandardSearch(state),
+  benchmark: state => getBenchmarkSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -167,4 +196,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(PathCountry);
+export default compose(withConnect)(injectIntl(PathCountry));

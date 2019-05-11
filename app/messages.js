@@ -9,6 +9,12 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
+  charts: {
+    noData: {
+      id: `${scope}.charts.noData`,
+      defaultMessage: 'No data',
+    },
+  },
   settings: {
     scale: {
       name: {

@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { Box, Button } from 'grommet';
@@ -67,7 +68,9 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
+const withConnect = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(injectIntl(NavCountry));
+);
+
+export default compose(withConnect)(injectIntl(NavCountry));

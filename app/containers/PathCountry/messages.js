@@ -1,16 +1,26 @@
 /*
- * Country Messages
+ * PathCountry Messages
  *
- * This contains all the text for the Country container.
+ * This contains all the text for the PathCountry container.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.containers.Country';
+export const scope = 'hrmi.containers.PathCountry';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the Country container!',
+  tabs: {
+    report: {
+      id: `${scope}.tabs.report`,
+      defaultMessage: 'Report',
+    },
+    'people-at-risk': {
+      id: `${scope}.tabs['people-at-risk']`,
+      defaultMessage: 'People at risk',
+    },
+    about: {
+      id: `${scope}.tabs.about`,
+      defaultMessage: 'About',
+    },
   },
 });

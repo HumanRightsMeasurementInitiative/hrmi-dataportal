@@ -44,7 +44,7 @@ const NavBarTop = props => (
 );
 const NavBarBottom = props => (
   <Box
-    elevation="medium"
+    elevation="large"
     direction="row"
     align="center"
     background="blue-dark"

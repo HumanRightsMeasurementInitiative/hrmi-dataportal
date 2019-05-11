@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'app.containers.MetricRight';
+export const scope = 'hrmi.containers.MetricRight';
 
 export default defineMessages({
   header: {

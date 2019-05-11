@@ -30,6 +30,7 @@ const theme = {
       'dark-2': '#2C3F4B',
       'dark-3': '#667884', // AA
       'dark-4': '#8896A0', // AA large
+      empowerment: '#262064', // AA
       empowermentDark: '#262064', // AA
       physint: '#6C3F99', // AA large
       physintDark: '#6C3F99', // AA
