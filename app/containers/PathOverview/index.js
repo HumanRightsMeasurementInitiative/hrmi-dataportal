@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
@@ -21,7 +21,9 @@ import {
   getRegionSearch,
   getIncomeSearch,
 } from 'containers/App/selectors';
-import { selectCountry, navigate } from 'containers/App/actions';
+import { navigate } from 'containers/App/actions';
+
+import CountryPreview from 'containers/CountryPreview';
 
 // import makeSelectOverview from './selectors';
 // import reducer from './reducer';
@@ -33,7 +35,7 @@ const Styled = styled.div``;
 
 export function PathOverview({
   countries,
-  onSelectCountry,
+  // onSelectCountry,
   regionFilterValue,
   incomeFilterValue,
   onRemoveFilter,
@@ -44,14 +46,12 @@ export function PathOverview({
   // <FormattedMessage {...messages.header} />
   const sortedCountries =
     countries &&
-    countries
-      .map(country => country.country_code)
-      .sort((a, b) =>
-        intl.formatMessage(rootMessages.countries[a]) <
-        intl.formatMessage(rootMessages.countries[b])
-          ? -1
-          : 1,
-      );
+    countries.sort((a, b) =>
+      intl.formatMessage(rootMessages.countries[a.country_code]) <
+      intl.formatMessage(rootMessages.countries[b.country_code])
+        ? -1
+        : 1,
+    );
   return (
     <Styled>
       <div>
@@ -83,13 +83,10 @@ export function PathOverview({
           </span>
         )}
       </div>
-      {sortedCountries.map(c => (
-        <div key={c}>
-          <Button onClick={() => onSelectCountry(c)}>
-            <FormattedMessage {...rootMessages.countries[c]} />
-          </Button>
-        </div>
-      ))}
+      {sortedCountries &&
+        sortedCountries.map(c => (
+          <CountryPreview key={c.country_code} country={c} />
+        ))}
     </Styled>
   );
 }
@@ -97,10 +94,9 @@ export function PathOverview({
 PathOverview.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  onSelectCountry: PropTypes.func,
   onRemoveFilter: PropTypes.func,
-  regionFilterValue: PropTypes.string,
-  incomeFilterValue: PropTypes.string,
+  regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
 };
 
@@ -112,7 +108,6 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onSelectCountry: country => dispatch(selectCountry(country)),
     onRemoveFilter: key =>
       dispatch(
         navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
