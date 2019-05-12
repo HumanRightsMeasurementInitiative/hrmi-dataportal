@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -15,6 +15,11 @@ import { Heading } from 'grommet';
 import CountrySummaryChart from 'components/CountrySummaryChart';
 import CountryNarrative from 'components/CountryNarrative';
 import messages from './messages';
+
+const Styled = styled.div`
+  max-width: 1000px;
+  padding: 0 50px;
+`;
 
 function CountryReport({
   countryTitle,
@@ -26,7 +31,7 @@ function CountryReport({
   country,
 }) {
   return (
-    <div>
+    <Styled>
       <Heading level={2}>
         <FormattedMessage
           {...messages.title}
@@ -49,7 +54,7 @@ function CountryReport({
         country={country}
         benchmark={benchmark}
       />
-    </div>
+    </Styled>
   );
 }
 

@@ -14,19 +14,45 @@ import rootMessages from 'messages';
 // import messages from './messages';
 import BarHorizontal from 'components/BarHorizontal';
 import { BENCHMARKS, RIGHTS } from 'containers/App/constants';
-import roundScore from 'utils/round-score';
+import formatScoreMax from 'utils/format-score-max';
 
 const RightsType = styled(Box)``;
 const Dimension = styled(Box)``;
-const RightsScores = props => (
+const DimensionScoreWrapper = props => <Box {...props} width="200px" />;
+const DimensionScoreText = props => <Text weight="bold" {...props} />;
+const RightsScoresWrapper = props => (
   <Box direction="column" {...props} width="200px" />
 );
-const RightScore = styled.div``;
-const DimensionScore = props => <Box {...props} width="200px" />;
+const RightsScoresWrapperTable = styled.div`
+  display: table;
+`;
+const RightsScoresWrapperRow = styled.div`
+  display: table-row;
+  line-height: 12px;
+`;
+const RightsScoresWrapperCellScore = styled.div`
+  width: 50px;
+  display: table-cell;
+  border-bottom: 1px solid;
+`;
+const RightsScoresWrapperCellLabel = styled.div`
+  display: table-cell;
+  border-bottom: 1px solid;
+  padding-bottom: 4px;
+`;
+const RightScoreText = props => <Text weight="bold" size="small" {...props} />;
+const RightLabelText = styled.span`
+  font-size: 12px;
+`;
 const BarWrap = props => <Box direction="row" {...props} align="center" />;
 const Wrapper = props => <Box direction="row" {...props} justify="end" />;
 const ChartArea = props => (
-  <Box direction="column" {...props} fill="horizontal" />
+  <Box
+    direction="column"
+    {...props}
+    fill="horizontal"
+    margin={{ bottom: '80px' }}
+  />
 );
 
 const RightsTypeHeading = props => (
@@ -38,9 +64,6 @@ const DimensionHeading = props => (
 const StyledDimensionHeading = styled(DimensionHeading)`
   font-weight: normal;
 `;
-
-const formatCPRScore = value => `${roundScore(value)}/10`;
-const formatESRScore = value => `${roundScore(value)}%`;
 
 function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
@@ -71,7 +94,7 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
       const score = rights.cpr.find(s => s.metric_code === r.code);
       return {
         key: r.key,
-        value: score ? roundScore(score.mean) : false,
+        value: score ? score.mean : false,
       };
     });
 
@@ -85,7 +108,7 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
       const score = rights.cpr.find(s => s.metric_code === r.code);
       return {
         key: r.key,
-        value: score ? roundScore(score.mean) : false,
+        value: score ? score.mean : false,
       };
     });
 
@@ -99,7 +122,7 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
       const score = rights.esr.find(s => s.metric_code === r.code);
       return {
         key: r.key,
-        value: score ? roundScore(score[currentBenchmark.column]) : false,
+        value: score ? score[currentBenchmark.column] : false,
       };
     });
 
@@ -133,14 +156,12 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
                 values={scale === 'r' && empowerValues}
               />
               {scale === 'd' && (
-                <DimensionScore>
-                  {empower && (
-                    <Text weight="bold" color="empowermentDark">
-                      {formatCPRScore(empower.mean)}
-                    </Text>
-                  )}
-                  {!empower && <Text>N/A</Text>}
-                </DimensionScore>
+                <DimensionScoreWrapper>
+                  <DimensionScoreText color="empowermentDark">
+                    {empower && formatScoreMax(empower.mean, 10)}
+                    {!empower && 'N/A'}
+                  </DimensionScoreText>
+                </DimensionScoreWrapper>
               )}
             </BarWrap>
           </Dimension>
@@ -167,14 +188,12 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
                 values={scale === 'r' && physintValues}
               />
               {scale === 'd' && (
-                <DimensionScore>
-                  {physint && (
-                    <Text weight="bold" color="physintDark">
-                      {formatCPRScore(physint.mean)}
-                    </Text>
-                  )}
-                  {!physint && <Text>N/A</Text>}
-                </DimensionScore>
+                <DimensionScoreWrapper>
+                  <DimensionScoreText color="physintDark">
+                    {physint && formatScoreMax(physint.mean, 10)}
+                    {!physint && 'N/A'}
+                  </DimensionScoreText>
+                </DimensionScoreWrapper>
               )}
             </BarWrap>
           </Dimension>
@@ -204,55 +223,76 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
                 values={scale === 'r' && esrValues}
               />
               {scale === 'd' && (
-                <DimensionScore>
-                  {esr && (
-                    <Text weight="bold" color="esrDark">
-                      {formatESRScore(esr[currentBenchmark.column])}
-                    </Text>
-                  )}
-                  {!esr && <Text>N/A</Text>}
-                </DimensionScore>
+                <DimensionScoreWrapper>
+                  <DimensionScoreText color="esrDark">
+                    {esr && formatScoreMax(esr[currentBenchmark.column])}
+                    {!esr && 'N/A'}
+                  </DimensionScoreText>
+                </DimensionScoreWrapper>
               )}
             </BarWrap>
           </Dimension>
         </RightsType>
       </ChartArea>
       {scale === 'r' && (
-        <RightsScores>
-          {empowerValues &&
-            empowerValues.map(v => (
-              <RightScore key={v.key}>
-                {v.value && (
-                  <Text weight="bold" color="empowermentDark" size="small">
-                    {formatCPRScore(v.value)}
-                  </Text>
-                )}
-                {!v.value && <Text>N/A</Text>}
-              </RightScore>
-            ))}
-          {physintValues &&
-            physintValues.map(v => (
-              <RightScore key={v.key}>
-                {v.value && (
-                  <Text weight="bold" color="physintDark" size="small">
-                    {formatCPRScore(v.value)}
-                  </Text>
-                )}
-                {!v.value && <Text>N/A</Text>}
-              </RightScore>
-            ))}
-          {esrValues &&
-            esrValues.map(v => (
-              <RightScore key={v.key}>
-                {v.value && (
-                  <Text weight="bold" color="esrDark" size="small">
-                    {formatESRScore(v.value)}
-                  </Text>
-                )}
-                {!v.value && <Text>N/A</Text>}
-              </RightScore>
-            ))}
-        </RightsScores>
+        <RightsScoresWrapper>
+          <RightsScoresWrapperTable>
+            {empowerValues &&
+              empowerValues.map(v => (
+                <RightsScoresWrapperRow key={v.key}>
+                  <RightsScoresWrapperCellScore>
+                    <RightScoreText color="empowermentDark">
+                      {v.value && formatScoreMax(v.value, 10)}
+                      {!v.value && 'N/A'}
+                    </RightScoreText>
+                  </RightsScoresWrapperCellScore>
+                  <RightsScoresWrapperCellLabel>
+                    <RightLabelText color="empowermentDark">
+                      <FormattedMessage
+                        {...rootMessages['rights-short'][v.key]}
+                      />
+                    </RightLabelText>
+                  </RightsScoresWrapperCellLabel>
+                </RightsScoresWrapperRow>
+              ))}
+            {physintValues &&
+              physintValues.map(v => (
+                <RightsScoresWrapperRow key={v.key}>
+                  <RightsScoresWrapperCellScore>
+                    <RightScoreText color="physintDark">
+                      {v.value && formatScoreMax(v.value, 10)}
+                      {!v.value && 'N/A'}
+                    </RightScoreText>
+                  </RightsScoresWrapperCellScore>
+                  <RightsScoresWrapperCellLabel>
+                    <RightLabelText color="physintDark">
+                      <FormattedMessage
+                        {...rootMessages['rights-short'][v.key]}
+                      />
+                    </RightLabelText>
+                  </RightsScoresWrapperCellLabel>
+                </RightsScoresWrapperRow>
+              ))}
+            {esrValues &&
+              esrValues.map(v => (
+                <RightsScoresWrapperRow key={v.key}>
+                  <RightsScoresWrapperCellScore>
+                    <RightScoreText color="esrDark">
+                      {v.value && formatScoreMax(v.value)}
+                      {!v.value && 'N/A'}
+                    </RightScoreText>
+                  </RightsScoresWrapperCellScore>
+                  <RightsScoresWrapperCellLabel>
+                    <RightLabelText color="esrDark">
+                      <FormattedMessage
+                        {...rootMessages['rights-short'][v.key]}
+                      />
+                    </RightLabelText>
+                  </RightsScoresWrapperCellLabel>
+                </RightsScoresWrapperRow>
+              ))}
+          </RightsScoresWrapperTable>
+        </RightsScoresWrapper>
       )}
     </Wrapper>
   );
