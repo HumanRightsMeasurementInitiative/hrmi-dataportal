@@ -24,7 +24,7 @@ const HEIGHT = 35;
 const BarReference = styled.div`
   position: relative;
   display: block;
-  height: ${HEIGHT}px;
+  height: ${props => props.height || HEIGHT}px;
   width: 100%;
   background-color: ${props => props.theme.global.colors['light-2']};
 `;
@@ -53,6 +53,7 @@ function BarHorizontal({
   unit,
   values,
   multiple,
+  height = HEIGHT,
 }) {
   return (
     <Wrapper>
@@ -62,9 +63,13 @@ function BarHorizontal({
         </Text>
       </MinLabel>
       <BarWrapper>
-        <BarReference>
+        <BarReference height={height}>
           {!multiple && !noData && (
-            <BarValue percentage={(value / maxValue) * 100} color={color} />
+            <BarValue
+              height={height}
+              percentage={(value / maxValue) * 100}
+              color={color}
+            />
           )}
           {noData && (
             <NoData>
@@ -77,14 +82,15 @@ function BarHorizontal({
             !noData &&
             values &&
             values.map((v, index, array) => {
-              const height = (HEIGHT - (array.length - 1)) / array.length;
+              const heightMultiple =
+                (height - (array.length - 1)) / array.length;
               return v.value ? (
                 <BarValue
                   key={v.key}
-                  height={height}
+                  height={heightMultiple}
                   percentage={(v.value / maxValue) * 100}
                   color={color}
-                  top={height * index + index}
+                  top={heightMultiple * index + index}
                 />
               ) : null;
             })}
@@ -106,6 +112,7 @@ BarHorizontal.propTypes = {
   maxValue: PropTypes.number,
   noData: PropTypes.bool,
   multiple: PropTypes.bool,
+  height: PropTypes.number,
 };
 
 export default BarHorizontal;

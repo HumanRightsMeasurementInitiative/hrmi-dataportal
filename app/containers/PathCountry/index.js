@@ -25,6 +25,7 @@ import {
   getDimensionsForCountry,
   getRightsForCountry,
   getIndicatorsForCountry,
+  getESRIndicatorsForStandard,
   getCountry,
   getScaleSearch,
   getStandardSearch,
@@ -51,6 +52,7 @@ const DEPENDENCIES = [
   'cprScores',
   'esrScores',
   'esrIndicatorScores',
+  'esrIndicators',
 ];
 
 export function PathCountry({
@@ -61,6 +63,7 @@ export function PathCountry({
   dimensions,
   rights,
   indicators,
+  indicatorDetails,
   country,
   scale,
   benchmark,
@@ -127,6 +130,7 @@ export function PathCountry({
               dimensions={dimensions}
               rights={rights}
               indicators={indicators}
+              indicatorDetails={indicatorDetails}
               country={country}
               scale={scale}
               benchmark={benchmark}
@@ -151,6 +155,7 @@ PathCountry.propTypes = {
   onCategoryClick: PropTypes.func,
   match: PropTypes.object,
   indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  indicatorDetails: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -163,6 +168,7 @@ const mapStateToProps = createStructuredSelector({
   country: (state, { match }) => getCountry(state, match.params.country),
   indicators: (state, { match }) =>
     getIndicatorsForCountry(state, match.params.country),
+  indicatorDetails: state => getESRIndicatorsForStandard(state),
   rights: (state, { match }) =>
     getRightsForCountry(state, match.params.country),
   dimensions: (state, { match }) =>

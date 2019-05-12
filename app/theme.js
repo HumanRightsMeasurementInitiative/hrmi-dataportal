@@ -13,6 +13,11 @@ export const BREAKPOINTS = {
 };
 const theme = {
   // used for grommet
+  accordion: {
+    border: {
+      color: 'transparent',
+    },
+  },
   global: {
     font: {
       family: 'Source Sans Pro',

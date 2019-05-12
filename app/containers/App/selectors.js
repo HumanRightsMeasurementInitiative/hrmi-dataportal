@@ -291,6 +291,18 @@ const getCPRYear = createSelector(
   (searchYear, maxYear) => parseInt(searchYear || maxYear, 10),
 );
 
+export const getESRIndicatorsForStandard = createSelector(
+  getESRIndicators,
+  getStandardSearch,
+  (indicators, standard) =>
+    indicators &&
+    indicators.filter(
+      i =>
+        i.standard === 'Both' ||
+        i.standard === STANDARDS.find(as => as.key === standard).code,
+    ),
+);
+
 // single metric
 // single dimension, multiple countries, single year
 export const getESRDimensionScores = createSelector(
@@ -500,19 +512,24 @@ export const getRightsForCountry = createSelector(
 export const getIndicatorsForCountry = createSelector(
   (state, country) => country,
   getESRIndicatorScores,
+  getESRIndicatorsForStandard,
   getGroupSearch,
   getESRYear,
-  (country, scores, group, year) => {
-    if (scores && country) {
-      // first filter by group
-      const filtered = scores.filter(
+  (country, scores, indicators, group, year) => {
+    if (scores && country && indicators) {
+      // first filter by country and group
+      const filteredByGroup = scores.filter(
         s =>
           s.country_code === country &&
           s.group === PEOPLE_GROUPS.find(g => g.key === group).code,
       );
+      // filter by standard
+      const filteredByStandard = filteredByGroup.filter(s =>
+        indicators.find(i => i.metric_code === s.metric_code),
+      );
       // then get the most recent year for each metric
       // figure out most recent data by metric
-      const metricYears = filtered.reduce((memo, s) => {
+      const metricYears = filteredByStandard.reduce((memo, s) => {
         const result = memo;
         const metric = s.metric_code;
         if (
@@ -524,13 +541,13 @@ export const getIndicatorsForCountry = createSelector(
         }
         return result;
       }, {});
-      // finally filter by year or most recent year
-      const filteredYear = filtered.filter(
+      // filter by year or most recent year
+      const filteredByYear = filteredByStandard.filter(
         s =>
           parseInt(s.year, 10) === year ||
           parseInt(s.year, 10) === metricYears[s.metric_code],
       );
-      return filteredYear;
+      return filteredByYear;
     }
     return false;
   },

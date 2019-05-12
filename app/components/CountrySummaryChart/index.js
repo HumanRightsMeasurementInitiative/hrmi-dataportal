@@ -54,15 +54,15 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
     scale === 'd' && dimensions && getDimensionScore(dimensions.esr, 'esr');
 
   // figure out rights scores
-  const physintValues =
-    scale === 'r' &&
-    rights &&
-    getRightsScoresForDimension(rights.cpr, 'physint', 'mean');
-  const empowerValues =
+  const empowerRights =
     scale === 'r' &&
     rights &&
     getRightsScoresForDimension(rights.cpr, 'empowerment', 'mean');
-  const esrValues =
+  const physintRights =
+    scale === 'r' &&
+    rights &&
+    getRightsScoresForDimension(rights.cpr, 'physint', 'mean');
+  const esrRights =
     scale === 'r' &&
     rights &&
     currentBenchmark &&
@@ -80,14 +80,14 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
             scale={scale}
             value={empower && parseFloat(empower.mean)}
             maxValue={10}
-            values={empowerValues}
+            values={empowerRights}
           />
           <Dimension
             dimensionKey="physint"
             scale={scale}
-            value={physint && parseFloat(empower.mean)}
+            value={physint && parseFloat(physint.mean)}
             maxValue={10}
-            values={physintValues}
+            values={physintRights}
           />
         </RightsType>
         <RightsType>
@@ -99,7 +99,7 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
             scale={scale}
             value={esr && parseFloat(esr[currentBenchmark.column])}
             maxValue={100}
-            values={esrValues}
+            values={esrRights}
             unit="%"
           />
         </RightsType>
@@ -107,31 +107,31 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
       {scale === 'r' && (
         <RightsScoresWrapper>
           <RightsScoresWrapperTable>
-            {empowerValues &&
-              empowerValues.map(v => (
+            {empowerRights &&
+              empowerRights.map(right => (
                 <RightsScoreItem
-                  key={v.key}
+                  key={right.key}
                   dimensionKey="empowerment"
                   maxValue={10}
-                  right={v}
+                  right={right}
                 />
               ))}
-            {physintValues &&
-              physintValues.map(v => (
+            {physintRights &&
+              physintRights.map(right => (
                 <RightsScoreItem
-                  key={v.key}
+                  key={right.key}
                   dimensionKey="physint"
                   maxValue={10}
-                  right={v}
+                  right={right}
                 />
               ))}
-            {esrValues &&
-              esrValues.map(v => (
+            {esrRights &&
+              esrRights.map(right => (
                 <RightsScoreItem
-                  key={v.key}
+                  key={right.key}
                   dimensionKey="esr"
                   maxValue={100}
-                  right={v}
+                  right={right}
                 />
               ))}
           </RightsScoresWrapperTable>
