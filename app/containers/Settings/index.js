@@ -35,7 +35,7 @@ const Styled = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 100px;
+  height: 80px;
 `;
 
 const showSettings = ({ route, match }) => {
@@ -75,7 +75,7 @@ export function Settings({
         elevation="large"
         direction="row"
         background="white"
-        height="100px"
+        height="80px"
         width="full"
         pad="medium"
         align="center"

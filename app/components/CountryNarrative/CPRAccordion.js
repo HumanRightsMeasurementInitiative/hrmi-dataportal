@@ -34,8 +34,9 @@ function CPRAccordion({ dimensions, dimensionKey, rights }) {
                   RIGHTS.filter(r => r.aggregate === right.key).length > 0;
                 if (!hasSubrights) {
                   return (
-                    <Box border="top">
+                    <Box border="top" direction="row">
                       <RightPanel key={right.key} right={right} column="mean" />
+                      <Box pad="medium" />
                     </Box>
                   );
                 }
@@ -56,13 +57,14 @@ function CPRAccordion({ dimensions, dimensionKey, rights }) {
                         }
                       >
                         {subrightScores.map(subright => (
-                          <Box border="top">
+                          <Box border="top" direction="row">
                             <RightPanel
                               key={subright.key}
                               right={subright}
                               column="mean"
                               isSubright
                             />
+                            <Box pad="medium" />
                           </Box>
                         ))}
                       </AccordionPanel>

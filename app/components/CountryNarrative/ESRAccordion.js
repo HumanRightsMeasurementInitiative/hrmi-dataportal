@@ -54,12 +54,13 @@ function ESRAccordion({
                         false,
                         indicatorDetails,
                       ).map(indicator => (
-                        <Box border="top">
+                        <Box border="top" direction="row">
                           <IndicatorPanel
                             key={indicator.key}
                             indicator={indicator}
                             column={benchmark.column}
                           />
+                          <Box pad="medium" />
                         </Box>
                       ))}
                     </AccordionPanel>

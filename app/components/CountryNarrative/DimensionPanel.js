@@ -20,7 +20,7 @@ function DimensionPanel({ dimensions, dimensionKey, column }) {
   const dimensionDetails = DIMENSIONS.find(d => d.key === dimensionKey);
   const value = score && score[column];
   return (
-    <Box pad="small" fill="horizontal">
+    <Box pad={{ vertical: 'xsmall', horizontal: 'small' }} fill="horizontal">
       <Heading level={5} margin={{ vertical: '2px' }}>
         <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
       </Heading>

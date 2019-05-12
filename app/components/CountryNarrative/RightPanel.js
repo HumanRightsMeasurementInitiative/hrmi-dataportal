@@ -9,19 +9,28 @@ import rootMessages from 'messages';
 import formatScore from 'utils/format-score';
 import { RIGHTS } from 'containers/App/constants';
 
-const RightScoreText = props => <Text weight="bold" size="small" {...props} />;
+const RightScoreText = props => (
+  <Text
+    weight="bold"
+    size="small"
+    alignSelf="end"
+    margin={{ right: '52px' }}
+    {...props}
+  />
+);
 
 function RightPanel({ right, column, isSubright }) {
   const rightDetails = RIGHTS.find(d => d.key === right.key);
   const value = right.value && right.value[column];
   const maxValue = rightDetails.type === 'esr' ? 100 : 10;
   return (
-    <Box pad="small">
+    <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
       <Heading level={isSubright ? 6 : 5} margin={{ vertical: '2px' }}>
         <FormattedMessage {...rootMessages['rights-short'][right.key]} />
       </Heading>
       {value && (
         <BarHorizontal
+          height={isSubright ? 8 : 15}
           color={rightDetails.dimension}
           value={parseFloat(value)}
           minValue={0}
@@ -31,8 +40,8 @@ function RightPanel({ right, column, isSubright }) {
         />
       )}
       <RightScoreText color={`${rightDetails.dimension}Dark`}>
-        {right.value && formatScore(right.value, maxValue)}
-        {!right.value && 'N/A'}
+        {value && formatScore(value)}
+        {!value && 'N/A'}
       </RightScoreText>
     </Box>
   );
