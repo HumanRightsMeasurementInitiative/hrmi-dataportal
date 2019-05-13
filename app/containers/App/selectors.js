@@ -322,7 +322,7 @@ export const getESRDimensionScores = createSelector(
         DIMENSIONS.find(d => d.key === 'esr') &&
         s.standard === STANDARDS.find(as => as.key === standard).code &&
         s.metric_code === DIMENSIONS.find(d => d.key === 'esr').code &&
-        parseInt(s.year, 10) === year &&
+        quasiEquals(s.year, year) &&
         (!(region || income) ||
           countries.map(c => c.country_code).indexOf(s.country_code) > -1),
     ),
@@ -343,7 +343,7 @@ export const getCPRDimensionScores = createSelector(
         !!metric && // make sure a metric is set
         DIMENSIONS.find(d => d.key === metric) &&
         s.metric_code === DIMENSIONS.find(d => d.key === metric).code &&
-        parseInt(s.year, 10) === year &&
+        quasiEquals(s.year, year) &&
         (!(region || income) ||
           countries.map(c => c.country_code).indexOf(s.country_code) > -1),
     ),
@@ -369,7 +369,7 @@ export const getESRRightScores = createSelector(
         s.group === PEOPLE_GROUPS.find(g => g.key === group).code &&
         s.standard === STANDARDS.find(as => as.key === standard).code &&
         s.metric_code === RIGHTS.find(d => d.key === metric).code &&
-        parseInt(s.year, 10) === year &&
+        quasiEquals(s.year, year) &&
         (!(region || income) ||
           countries.map(c => c.country_code).indexOf(s.country_code) > -1),
     ),
@@ -391,7 +391,7 @@ export const getCPRRightScores = createSelector(
         !!metric && // make sure a metric is set
         RIGHTS.find(d => d.key === metric) &&
         s.metric_code === RIGHTS.find(d => d.key === metric).code &&
-        parseInt(s.year, 10) === year &&
+        quasiEquals(s.year, year) &&
         (!(region || income) ||
           countries.map(c => c.country_code).indexOf(s.country_code) > -1),
     ),
@@ -433,8 +433,8 @@ export const getIndicatorScores = createSelector(
         // finally filter by year or most recent year
         const filteredYear = filtered.filter(
           s =>
-            parseInt(s.year, 10) === year ||
-            parseInt(s.year, 10) === countryYears[s.country_code],
+            quasiEquals(s.year, year) ||
+            quasiEquals(s.year, countryYears[s.country_code]),
         );
         return filteredYear;
       }
@@ -460,14 +460,14 @@ export const getDimensionsForCountry = createSelector(
       esr: esrScores.filter(
         s =>
           s.country_code === country &&
-          parseInt(s.year, 10) === esrYear &&
+          quasiEquals(s.year, esrYear) &&
           s.standard === STANDARDS.find(as => as.key === standard).code &&
           s.metric_code === DIMENSIONS.find(d => d.key === 'esr').code,
       ),
       cpr: cprScores.filter(
         s =>
           s.country_code === country &&
-          parseInt(s.year, 10) === cprYear &&
+          quasiEquals(s.year, cprYear) &&
           DIMENSIONS.filter(d => d.type === 'cpr')
             .map(d => d.code)
             .indexOf(s.metric_code) > -1,
@@ -491,7 +491,7 @@ export const getRightsForCountry = createSelector(
       esr: esrScores.filter(
         s =>
           s.country_code === country &&
-          parseInt(s.year, 10) === esrYear &&
+          quasiEquals(s.year, esrYear) &&
           s.group === PEOPLE_GROUPS.find(g => g.key === group).code &&
           s.standard === STANDARDS.find(as => as.key === standard).code &&
           RIGHTS.filter(d => d.type === 'esr')
@@ -501,7 +501,7 @@ export const getRightsForCountry = createSelector(
       cpr: cprScores.filter(
         s =>
           s.country_code === country &&
-          parseInt(s.year, 10) === cprYear &&
+          quasiEquals(s.year, cprYear) &&
           RIGHTS.filter(d => d.type === 'cpr')
             .map(d => d.code)
             .indexOf(s.metric_code) > -1,
@@ -544,8 +544,8 @@ export const getIndicatorsForCountry = createSelector(
       // filter by year or most recent year
       const filteredByYear = filteredByStandard.filter(
         s =>
-          parseInt(s.year, 10) === year ||
-          parseInt(s.year, 10) === metricYears[s.metric_code],
+          quasiEquals(s.year, year) ||
+          quasiEquals(s.year, metricYears[s.metric_code]),
       );
       return filteredByYear;
     }
