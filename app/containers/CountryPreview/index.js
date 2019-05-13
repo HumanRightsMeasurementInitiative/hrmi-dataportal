@@ -14,19 +14,39 @@ import { compose } from 'redux';
 import { Button, Box } from 'grommet';
 
 import rootMessages from 'messages';
-import roundScore from 'utils/round-score';
+import formatScore from 'utils/format-score';
 
 import {
   getDimensionsForCountry,
   getRightsForCountry,
   getScaleSearch,
-  getStandardSearch,
+  // getStandardSearch,
   getBenchmarkSearch,
 } from 'containers/App/selectors';
 import { selectCountry } from 'containers/App/actions';
-import { STANDARDS, BENCHMARKS, RIGHTS } from 'containers/App/constants';
+import { BENCHMARKS } from 'containers/App/constants';
 
 // import messages from './messages';
+
+const noDataMessage = data => {
+  if (!data) return 'No data';
+  if (data.hasScoreAlternate) {
+    return 'Incomplete data (change standard)';
+  }
+  if (data.hasScoreRights) {
+    return 'Incomplete data (explore underlying rights)';
+  }
+  if (data.hasScoreIndicators) {
+    return 'Incomplete data (explore underlying indicators)';
+  }
+  if (data.hasScoreAlternateRights) {
+    return 'Incomplete data (change standard & explore underlying rights)';
+  }
+  if (data.hasScoreIndicatorsAlternate) {
+    return 'Incomplete data (change standard & explore underlying indicators)';
+  }
+  return 'No data';
+};
 
 export function CountryPreview({
   onSelectCountry,
@@ -34,21 +54,15 @@ export function CountryPreview({
   rights,
   dimensions,
   scale,
-  standard,
+  // standard,
   benchmark,
 }) {
-  const currentStandard = STANDARDS.find(s => s.key === standard);
+  // return null;
+  // const currentStandard = STANDARDS.find(s => s.key === standard);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-  const empower =
-    dimensions && dimensions.cpr.find(s => s.metric_code === 'empower');
-  const physint =
-    dimensions && dimensions.cpr.find(s => s.metric_code === 'physint');
-  const esr =
-    dimensions &&
-    dimensions.esr.find(
-      s =>
-        s.metric_code === 'SER_Average' && s.standard === currentStandard.code,
-    );
+  const empower = dimensions && dimensions.empowerment.score;
+  const physint = dimensions && dimensions.physint.score;
+  const esr = dimensions && dimensions.esr.score;
   return (
     <Box pad="medium">
       {country && (
@@ -60,47 +74,50 @@ export function CountryPreview({
           </strong>
           {scale === 'd' && (
             <div>
-              {empower && (
-                <div>{`Empowerment: ${roundScore(empower.mean)}`}</div>
-              )}
-              {physint && (
-                <div>{`Physical integrity: ${roundScore(physint.mean)}`}</div>
-              )}
-              {esr && (
-                <div>
-                  {`Quality of life: ${roundScore(
-                    esr[currentBenchmark.column],
-                  )}`}
-                </div>
-              )}
+              <div>
+                {`Empowerment: ${
+                  empower ? formatScore(empower.mean) : 'No data'
+                }`}
+              </div>
+              <div>
+                {`Physical integrity: ${
+                  empower ? formatScore(physint.mean) : 'No data'
+                }`}
+              </div>
+              <div>
+                <span>Quality of life: </span>
+                {esr
+                  ? formatScore(esr[currentBenchmark.column])
+                  : noDataMessage(dimensions.esr)}
+              </div>
             </div>
           )}
           {scale === 'r' &&
             rights &&
-            rights.cpr.map(s => {
-              const metricDetails = RIGHTS.find(r => r.code === s.metric_code);
-              return (
-                <div>
-                  <FormattedMessage
-                    {...rootMessages['rights-short'][metricDetails.key]}
-                  />
-                  <span>{`: ${roundScore(s.mean)}`}</span>
+            Object.values(rights)
+              .filter(
+                r => r.type === 'cpr' && typeof r.aggregate === 'undefined',
+              )
+              .map(r => (
+                <div key={r.key}>
+                  <FormattedMessage {...rootMessages['rights-short'][r.key]} />
+                  <span>: </span>
+                  {r.score ? formatScore(r.score.mean) : 'No data'}
                 </div>
-              );
-            })}
+              ))}
           {scale === 'r' &&
             rights &&
-            rights.esr.map(s => {
-              const metricDetails = RIGHTS.find(r => r.code === s.metric_code);
-              return (
-                <div>
-                  <FormattedMessage
-                    {...rootMessages['rights-short'][metricDetails.key]}
-                  />
-                  <span>{`: ${roundScore(s[currentBenchmark.column])}`}</span>
+            Object.values(rights)
+              .filter(r => r.type === 'esr')
+              .map(r => (
+                <div key={r.key}>
+                  <FormattedMessage {...rootMessages['rights-short'][r.key]} />
+                  <span>: </span>
+                  {r.score
+                    ? formatScore(r.score[currentBenchmark.column])
+                    : noDataMessage(r)}
                 </div>
-              );
-            })}
+              ))}
         </Button>
       )}
     </Box>
@@ -114,7 +131,7 @@ CountryPreview.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dimensions: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  // standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
@@ -124,7 +141,7 @@ const mapStateToProps = createStructuredSelector({
   dimensions: (state, { country }) =>
     getDimensionsForCountry(state, country.country_code),
   scale: state => getScaleSearch(state),
-  standard: state => getStandardSearch(state),
+  // standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
 });
 

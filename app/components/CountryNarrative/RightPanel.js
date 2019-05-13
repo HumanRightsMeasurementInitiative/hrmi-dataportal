@@ -7,7 +7,6 @@ import BarHorizontal from 'components/BarHorizontal';
 
 import rootMessages from 'messages';
 import formatScore from 'utils/format-score';
-import { RIGHTS } from 'containers/App/constants';
 
 const RightScoreText = props => (
   <Text
@@ -20,9 +19,8 @@ const RightScoreText = props => (
 );
 
 function RightPanel({ right, column, isSubright }) {
-  const rightDetails = RIGHTS.find(d => d.key === right.key);
-  const value = right.value && right.value[column];
-  const maxValue = rightDetails.type === 'esr' ? 100 : 10;
+  const value = right.score && right.score[column];
+  const maxValue = right.type === 'esr' ? 100 : 10;
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
       <Heading level={isSubright ? 6 : 5} margin={{ vertical: '2px' }}>
@@ -31,15 +29,15 @@ function RightPanel({ right, column, isSubright }) {
       {value && (
         <BarHorizontal
           height={isSubright ? 8 : 15}
-          color={rightDetails.dimension}
+          color={right.dimension}
           value={parseFloat(value)}
           minValue={0}
           maxValue={maxValue}
           noData={!value}
-          unit={rightDetails.type === 'esr' ? '%' : ''}
+          unit={right.type === 'esr' ? '%' : ''}
         />
       )}
-      <RightScoreText color={`${rightDetails.dimension}Dark`}>
+      <RightScoreText color={`${right.dimension}Dark`}>
         {value && formatScore(value)}
         {!value && 'N/A'}
       </RightScoreText>

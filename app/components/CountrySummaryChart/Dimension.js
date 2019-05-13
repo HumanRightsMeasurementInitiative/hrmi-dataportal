@@ -25,9 +25,10 @@ const StyledDimensionHeading = styled(DimensionHeading)`
 function Dimension({
   dimensionKey,
   scale,
+  column,
   value,
   maxValue,
-  values,
+  rights,
   unit = '',
 }) {
   return (
@@ -44,12 +45,19 @@ function Dimension({
           noData={
             (scale === 'd' && !value) ||
             (scale === 'r' &&
-              values &&
-              !values.reduce((memo, v) => memo || !!v.value, false))
+              rights &&
+              !rights.reduce((memo, r) => memo || !!r.score, false))
           }
           unit={unit}
           multiple={scale === 'r'}
-          values={scale === 'r' && values}
+          values={
+            scale === 'r' &&
+            rights &&
+            rights.map(r => ({
+              key: r.key,
+              value: r.score ? r.score[column] : false,
+            }))
+          }
         />
         {scale === 'd' && (
           <DimensionScoreWrapper>
@@ -66,11 +74,12 @@ function Dimension({
 
 Dimension.propTypes = {
   dimensionKey: PropTypes.string,
+  column: PropTypes.string,
   scale: PropTypes.string,
   unit: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   maxValue: PropTypes.number,
-  values: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  rights: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 export default Dimension;

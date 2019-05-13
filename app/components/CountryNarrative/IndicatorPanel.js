@@ -19,7 +19,7 @@ const IndicatorScoreText = props => (
 );
 
 function IndicatorPanel({ indicator, column }) {
-  const value = indicator.value && indicator.value[column];
+  const value = indicator.score && indicator.score[column];
   const maxValue = 100;
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">

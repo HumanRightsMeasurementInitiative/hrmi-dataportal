@@ -31,7 +31,13 @@ import saga from './saga';
 
 import { DEFAULT_LOCALE } from '../../i18n';
 
-const DEPENDENCIES = ['countries', 'cprScores', 'esrScores'];
+const DEPENDENCIES = [
+  'countries',
+  'cprScores',
+  'esrScores',
+  'esrIndicatorScores',
+  'esrIndicators',
+];
 
 const AppWrapper = styled.div`
   &:focus {

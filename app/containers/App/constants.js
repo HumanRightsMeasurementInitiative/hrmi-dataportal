@@ -291,6 +291,8 @@ export const RIGHTS = [
   },
 ];
 
+export const INDICATOR_LOOKBACK = 10;
+
 export const INDICATORS = [
   {
     key: 'net-primary',

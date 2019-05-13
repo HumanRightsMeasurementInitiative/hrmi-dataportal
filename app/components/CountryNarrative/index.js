@@ -13,6 +13,7 @@ import { Heading, Box, Text } from 'grommet';
 import rootMessages from 'messages';
 
 import { BENCHMARKS } from 'containers/App/constants';
+import { getRightsScoresForDimension } from 'utils/scores';
 
 import CPRAccordion from './CPRAccordion';
 import ESRAccordion from './ESRAccordion';
@@ -35,18 +36,10 @@ const DimensionHeading = props => (
 );
 const StyledDimensionHeading = styled(DimensionHeading)``;
 
-function CountryNarrative({
-  dimensions,
-  rights,
-  indicators,
-  indicatorDetails,
-  benchmark,
-}) {
-  if (!dimensions || !rights || !indicators || !indicatorDetails) {
+function CountryNarrative({ dimensions, rights, indicators, benchmark }) {
+  if (!dimensions || !rights || !indicators) {
     return null;
   }
-  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-  // figure out rights scores
 
   return (
     <Styled>
@@ -60,9 +53,9 @@ function CountryNarrative({
           </StyledDimensionHeading>
           <Text>TODO: Empowerment narrative</Text>
           <CPRAccordion
-            dimensions={dimensions.cpr}
+            dimension={dimensions.empowerment}
             dimensionKey="empowerment"
-            rights={rights.cpr}
+            rights={getRightsScoresForDimension(rights, 'empowerment', true)}
           />
         </Dimension>
         <Dimension>
@@ -71,9 +64,9 @@ function CountryNarrative({
           </StyledDimensionHeading>
           <Text>TODO: Physical integrity narrative</Text>
           <CPRAccordion
-            dimensions={dimensions.cpr}
+            dimension={dimensions.physint}
             dimensionKey="physint"
-            rights={rights.cpr}
+            rights={getRightsScoresForDimension(rights, 'physint', true)}
           />
         </Dimension>
       </RightsType>
@@ -87,12 +80,11 @@ function CountryNarrative({
           </StyledDimensionHeading>
           <Text>TODO: Quality of Life narrative</Text>
           <ESRAccordion
-            dimensions={dimensions.esr}
+            dimension={dimensions.esr}
             dimensionKey="esr"
-            rights={rights.esr}
-            benchmark={currentBenchmark}
-            indicators={indicators}
-            indicatorDetails={indicatorDetails}
+            rights={getRightsScoresForDimension(rights, 'esr')}
+            benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+            indicators={Object.values(indicators)}
           />
         </Dimension>
       </RightsType>
@@ -109,8 +101,7 @@ function CountryNarrative({
 CountryNarrative.propTypes = {
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  indicatorDetails: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };

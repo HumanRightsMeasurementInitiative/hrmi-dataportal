@@ -20,6 +20,7 @@ import {
   RIGHTS,
   INDICATORS,
   PEOPLE_GROUPS,
+  INDICATOR_LOOKBACK,
 } from './constants';
 
 // router sub-state
@@ -446,22 +447,20 @@ export const getIndicatorScores = createSelector(
 
 // single country
 // single country, all dimensions, single year
-export const getDimensionsForCountry = createSelector(
+export const getDimensionScoresForCountry = createSelector(
   (state, country) => country,
   getESRScores,
   getCPRScores,
-  getStandardSearch,
   getESRYear,
   getCPRYear,
-  (country, esrScores, cprScores, standard, esrYear, cprYear) =>
+  (country, esrScores, cprScores, esrYear, cprYear) =>
     country &&
     esrScores &&
     cprScores && {
       esr: esrScores.filter(
         s =>
           s.country_code === country &&
-          quasiEquals(s.year, esrYear) &&
-          s.standard === STANDARDS.find(as => as.key === standard).code &&
+          // quasiEquals(s.year, esrYear) &&
           s.metric_code === DIMENSIONS.find(d => d.key === 'esr').code,
       ),
       cpr: cprScores.filter(
@@ -476,15 +475,14 @@ export const getDimensionsForCountry = createSelector(
 );
 
 // single country, all rights, single year
-export const getRightsForCountry = createSelector(
+export const getRightScoresForCountry = createSelector(
   (state, country) => country,
   getESRScores,
   getCPRScores,
-  getStandardSearch,
   getGroupSearch,
   getESRYear,
   getCPRYear,
-  (country, esrScores, cprScores, standard, group, esrYear, cprYear) =>
+  (country, esrScores, cprScores, group, esrYear, cprYear) =>
     country &&
     esrScores &&
     cprScores && {
@@ -493,7 +491,6 @@ export const getRightsForCountry = createSelector(
           s.country_code === country &&
           quasiEquals(s.year, esrYear) &&
           s.group === PEOPLE_GROUPS.find(g => g.key === group).code &&
-          s.standard === STANDARDS.find(as => as.key === standard).code &&
           RIGHTS.filter(d => d.type === 'esr')
             .map(d => d.code)
             .indexOf(s.metric_code) > -1,
@@ -508,11 +505,12 @@ export const getRightsForCountry = createSelector(
       ),
     },
 );
+
 // single country, all indicators, single year
-export const getIndicatorsForCountry = createSelector(
+export const getIndicatorScoresForCountry = createSelector(
   (state, country) => country,
   getESRIndicatorScores,
-  getESRIndicatorsForStandard,
+  getESRIndicators, // ForStandard,
   getGroupSearch,
   getESRYear,
   (country, scores, indicators, group, year) => {
@@ -533,9 +531,10 @@ export const getIndicatorsForCountry = createSelector(
         const result = memo;
         const metric = s.metric_code;
         if (
-          typeof result[metric] === 'undefined' ||
-          (parseInt(s.year, 10) > result[metric] &&
-            parseInt(s.year, 10) <= year)
+          parseInt(s.year, 10) >= year - INDICATOR_LOOKBACK &&
+          (typeof memo[metric] === 'undefined' ||
+            (parseInt(s.year, 10) > result[metric] &&
+              parseInt(s.year, 10) <= year))
         ) {
           result[metric] = parseInt(s.year, 10);
         }
@@ -550,6 +549,174 @@ export const getIndicatorsForCountry = createSelector(
       return filteredByYear;
     }
     return false;
+  },
+);
+export const getIndicatorsForCountry = createSelector(
+  getIndicatorScoresForCountry,
+  getESRIndicators,
+  getStandardSearch,
+  (scores, indicators, standard) => {
+    const standardCode = STANDARDS.find(as => as.key === standard).code;
+    return (
+      scores &&
+      indicators &&
+      INDICATORS.reduce((memo, i) => {
+        const details = indicators.find(id => id.metric_code === i.code);
+        return {
+          [i.key]: {
+            score: scores.find(
+              s =>
+                (details.standard === 'Both' ||
+                  details.standard === standardCode) &&
+                s.metric_code === i.code,
+            ),
+            details,
+            ...i,
+          },
+          ...memo,
+        };
+      }, {})
+    );
+  },
+);
+
+export const getDimensionsForCountry = createSelector(
+  getDimensionScoresForCountry,
+  getRightScoresForCountry,
+  getIndicatorScoresForCountry,
+  getESRIndicators,
+  getStandardSearch,
+  (scores, rightScores, indicatorScores, indicators, standard) => {
+    // scores && console.log('getDimensionsForCountry', scores, standard)
+    const standardCode = STANDARDS.find(as => as.key === standard).code;
+    return (
+      scores &&
+      rightScores &&
+      indicatorScores &&
+      indicators &&
+      DIMENSIONS.reduce((memo, d) => {
+        if (d.type === 'cpr') {
+          return {
+            [d.key]: {
+              score: scores.cpr.find(s => s.metric_code === d.code),
+              ...d,
+            },
+            ...memo,
+          };
+        }
+        // esr
+        const score = scores.esr.find(s => s.standard === standardCode);
+        if (score) {
+          return {
+            [d.key]: {
+              score,
+              ...d,
+            },
+            ...memo,
+          };
+        }
+        // without dimension score
+        const indicatorsStandard = indicators
+          .filter(i => i.standard === 'Both' || i.standard === standardCode)
+          .map(i => i.metric_code);
+        const indicatorsAlternate = indicators
+          .filter(i => i.standard !== 'Both' && i.standard !== standardCode)
+          .map(i => i.metric_code);
+        return {
+          [d.key]: {
+            score: false,
+            hasScoreAlternate: !!scores.esr.find(
+              s => s.standard !== standardCode,
+            ),
+            hasScoreRights: !!rightScores.esr.find(
+              s => s.standard === standardCode,
+            ),
+            hasScoreRightsAlternate: !!rightScores.esr.find(
+              s => s.standard !== standardCode,
+            ),
+            hasScoreIndicators: !!indicatorScores.find(
+              s => indicatorsStandard.indexOf(s.metric_code) > -1,
+            ),
+            hasScoreIndicatorsAlternate: !!indicatorScores.find(
+              s => indicatorsAlternate.indexOf(s.metric_code) > -1,
+            ),
+            ...d,
+          },
+          ...memo,
+        };
+      }, {})
+    );
+  },
+);
+
+export const getRightsForCountry = createSelector(
+  getRightScoresForCountry,
+  getIndicatorScoresForCountry,
+  getESRIndicators,
+  getStandardSearch,
+  (scores, indicatorScores, indicators, standard) => {
+    const standardCode = STANDARDS.find(as => as.key === standard).code;
+    return (
+      scores &&
+      indicatorScores &&
+      indicators &&
+      RIGHTS.reduce((memo, r) => {
+        if (r.type === 'cpr') {
+          return {
+            [r.key]: {
+              score: scores.cpr.find(s => s.metric_code === r.code),
+              ...r,
+            },
+            ...memo,
+          };
+        }
+        // esr
+        const score = scores.esr.find(
+          s => s.standard === standardCode && s.metric_code === r.code,
+        );
+        if (score) {
+          return {
+            [r.key]: {
+              score,
+              ...r,
+            },
+            ...memo,
+          };
+        }
+        // without dimension score
+        // get indicator definitions (to know right relationship)
+        const indicatorDetailsRight = INDICATORS.filter(
+          i => i.right === r.key,
+        ).map(i => i.code);
+        // get indicator look up info (to know standard info)
+        const indicatorsRight = indicators.filter(
+          i => indicatorDetailsRight.indexOf(i.metric_code) > -1,
+        );
+        const indicatorsStandard = indicatorsRight
+          .filter(i => i.standard === 'Both' || i.standard === standardCode)
+          .map(i => i.metric_code);
+        const indicatorsAlternate = indicatorsRight
+          .filter(i => i.standard !== 'Both' && i.standard !== standardCode)
+          .map(i => i.metric_code);
+
+        return {
+          [r.key]: {
+            score: false,
+            hasScoreAlternate: !!scores.esr.find(
+              s => s.standard !== standardCode && s.metric_code === r.code,
+            ),
+            hasScoreIndicators: !!indicatorScores.find(
+              s => indicatorsStandard.indexOf(s.metric_code) > -1,
+            ),
+            hasScoreIndicatorsAlternate: !!indicatorScores.find(
+              s => indicatorsAlternate.indexOf(s.metric_code) > -1,
+            ),
+            ...r,
+          },
+          ...memo,
+        };
+      }, {})
+    );
   },
 );
 

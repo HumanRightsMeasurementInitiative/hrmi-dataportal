@@ -4,48 +4,42 @@ import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { Accordion, AccordionPanel, Box } from 'grommet';
 
-import {
-  getSubrightsScoresForRight,
-  getRightsScoresForDimension,
-} from 'utils/scores';
 import { RIGHTS } from 'containers/App/constants';
 
 import DimensionPanel from './DimensionPanel';
 import RightPanel from './RightPanel';
 
-function CPRAccordion({ dimensions, dimensionKey, rights }) {
-  const dimRights = getRightsScoresForDimension(rights, dimensionKey, false);
+function CPRAccordion({ dimension, dimensionKey, rights }) {
+  const parentRights = rights.filter(r => typeof r.aggregate === 'undefined');
+  const subrights = rights.filter(r => typeof r.aggregate !== 'undefined');
   return (
     <Box elevation="small" margin={{ top: 'medium' }}>
       <Accordion animate={false} multiple>
         <AccordionPanel
           label={
             <DimensionPanel
-              dimensions={dimensions}
+              dimension={dimension}
               dimensionKey={dimensionKey}
               column="mean"
             />
           }
         >
           <div>
-            {dimRights &&
-              dimRights.map(right => {
+            {parentRights &&
+              parentRights.map(right => {
                 const hasSubrights =
                   RIGHTS.filter(r => r.aggregate === right.key).length > 0;
                 if (!hasSubrights) {
                   return (
-                    <Box border="top" direction="row">
+                    <Box border="top" direction="row" key={right.key}>
                       <RightPanel key={right.key} right={right} column="mean" />
                       <Box pad="medium" />
                     </Box>
                   );
                 }
-                const subrightScores = getSubrightsScoresForRight(
-                  rights,
-                  right.key,
-                );
+
                 return (
-                  <Box border="top">
+                  <Box border="top" key={right.key}>
                     <Accordion key={right.key} animate={false} multiple>
                       <AccordionPanel
                         label={
@@ -56,17 +50,23 @@ function CPRAccordion({ dimensions, dimensionKey, rights }) {
                           />
                         }
                       >
-                        {subrightScores.map(subright => (
-                          <Box border="top" direction="row">
-                            <RightPanel
+                        {subrights
+                          .filter(r => r.aggregate === right.key)
+                          .map(subright => (
+                            <Box
+                              border="top"
+                              direction="row"
                               key={subright.key}
-                              right={subright}
-                              column="mean"
-                              isSubright
-                            />
-                            <Box pad="medium" />
-                          </Box>
-                        ))}
+                            >
+                              <RightPanel
+                                key={subright.key}
+                                right={subright}
+                                column="mean"
+                                isSubright
+                              />
+                              <Box pad="medium" />
+                            </Box>
+                          ))}
                       </AccordionPanel>
                     </Accordion>
                   </Box>
@@ -81,7 +81,7 @@ function CPRAccordion({ dimensions, dimensionKey, rights }) {
 
 CPRAccordion.propTypes = {
   dimensionKey: PropTypes.string,
-  dimensions: PropTypes.array,
+  dimension: PropTypes.object,
   rights: PropTypes.array,
 };
 

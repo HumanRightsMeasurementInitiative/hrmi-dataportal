@@ -7,17 +7,14 @@ import BarHorizontal from 'components/BarHorizontal';
 
 import rootMessages from 'messages';
 
-import { getDimensionScore } from 'utils/scores';
 import formatScore from 'utils/format-score';
 
-import { DIMENSIONS } from 'containers/App/constants';
 const DimensionScoreText = props => (
   <Text weight="bold" {...props} alignSelf="end" margin={{ right: '52px' }} />
 );
 
-function DimensionPanel({ dimensions, dimensionKey, column }) {
-  const score = getDimensionScore(dimensions, dimensionKey);
-  const dimensionDetails = DIMENSIONS.find(d => d.key === dimensionKey);
+function DimensionPanel({ dimension, dimensionKey, column }) {
+  const { score, type } = dimension;
   const value = score && score[column];
   return (
     <Box pad={{ vertical: 'xsmall', horizontal: 'small' }} fill="horizontal">
@@ -29,9 +26,9 @@ function DimensionPanel({ dimensions, dimensionKey, column }) {
           color={dimensionKey}
           value={parseFloat(value)}
           minValue={0}
-          maxValue={dimensionDetails.type === 'esr' ? 100 : 10}
+          maxValue={type === 'esr' ? 100 : 10}
           noData={!value}
-          unit={dimensionDetails.type === 'esr' ? '%' : ''}
+          unit={type === 'esr' ? '%' : ''}
         />
       )}
       <DimensionScoreText color={`${dimensionKey}Dark`}>
@@ -42,7 +39,7 @@ function DimensionPanel({ dimensions, dimensionKey, column }) {
   );
 }
 DimensionPanel.propTypes = {
-  dimensions: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dimensionKey: PropTypes.string,
   column: PropTypes.string,
 };

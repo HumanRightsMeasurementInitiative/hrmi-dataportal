@@ -61,7 +61,7 @@ function CountryReport({
 
 CountryReport.propTypes = {
   countryTitle: PropTypes.string,
-  indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicatorDetails: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

@@ -13,7 +13,7 @@ import { Heading, Box } from 'grommet';
 import rootMessages from 'messages';
 // import messages from './messages';
 import { BENCHMARKS } from 'containers/App/constants';
-import { getDimensionScore, getRightsScoresForDimension } from 'utils/scores';
+import { getRightsScoresForDimension } from 'utils/scores';
 
 import Dimension from './Dimension';
 import RightsScoreItem from './RightsScoreItem';
@@ -44,29 +44,16 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   // figure out dimension scores
-  const empower =
-    scale === 'd' &&
-    dimensions &&
-    getDimensionScore(dimensions.cpr, 'empowerment');
-  const physint =
-    scale === 'd' && dimensions && getDimensionScore(dimensions.cpr, 'physint');
-  const esr =
-    scale === 'd' && dimensions && getDimensionScore(dimensions.esr, 'esr');
+  const empower = dimensions && dimensions.empowerment.score;
+  const physint = dimensions && dimensions.physint.score;
+  const esr = dimensions && dimensions.esr.score;
 
   // figure out rights scores
   const empowerRights =
-    scale === 'r' &&
-    rights &&
-    getRightsScoresForDimension(rights.cpr, 'empowerment', 'mean');
+    scale === 'r' && getRightsScoresForDimension(rights, 'empowerment');
   const physintRights =
-    scale === 'r' &&
-    rights &&
-    getRightsScoresForDimension(rights.cpr, 'physint', 'mean');
-  const esrRights =
-    scale === 'r' &&
-    rights &&
-    currentBenchmark &&
-    getRightsScoresForDimension(rights.esr, 'esr', currentBenchmark.column);
+    scale === 'r' && getRightsScoresForDimension(rights, 'physint');
+  const esrRights = scale === 'r' && getRightsScoresForDimension(rights, 'esr');
 
   return (
     <Styled>
@@ -80,14 +67,16 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
             scale={scale}
             value={empower && parseFloat(empower.mean)}
             maxValue={10}
-            values={empowerRights}
+            rights={empowerRights}
+            column="mean"
           />
           <Dimension
             dimensionKey="physint"
             scale={scale}
             value={physint && parseFloat(physint.mean)}
             maxValue={10}
-            values={physintRights}
+            rights={physintRights}
+            column="mean"
           />
         </RightsType>
         <RightsType>
@@ -99,8 +88,9 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
             scale={scale}
             value={esr && parseFloat(esr[currentBenchmark.column])}
             maxValue={100}
-            values={esrRights}
+            rights={esrRights}
             unit="%"
+            column={currentBenchmark.column}
           />
         </RightsType>
       </ChartArea>
@@ -113,7 +103,10 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
                   key={right.key}
                   dimensionKey="empowerment"
                   maxValue={10}
-                  right={right}
+                  right={{
+                    key: right.key,
+                    value: right.score && right.score.mean,
+                  }}
                 />
               ))}
             {physintRights &&
@@ -122,7 +115,10 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
                   key={right.key}
                   dimensionKey="physint"
                   maxValue={10}
-                  right={right}
+                  right={{
+                    key: right.key,
+                    value: right.score && right.score.mean,
+                  }}
                 />
               ))}
             {esrRights &&
@@ -131,7 +127,10 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
                   key={right.key}
                   dimensionKey="esr"
                   maxValue={100}
-                  right={right}
+                  right={{
+                    key: right.key,
+                    value: right.score && right.score[currentBenchmark.column],
+                  }}
                 />
               ))}
           </RightsScoresWrapperTable>
