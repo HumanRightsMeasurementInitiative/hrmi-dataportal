@@ -2,7 +2,6 @@
   "hrmi.containers.header.language": "Language: ",
   "hrmi.containers.header.countries": "Countries",
   "hrmi.containers.header.metrics": "Metrics",
-  "hrmi.containers.header.metrics": "Metrics",
   "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.components.Close.label": "Back",
   "hrmi.components.CountryReport.title": "{country}'s Human Rights Report",
