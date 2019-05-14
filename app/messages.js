@@ -346,6 +346,18 @@ export default defineMessages({
       id: `${scope}.rights.work`,
       defaultMessage: 'work',
     },
+    job: {
+      id: `${scope}.rights.job`,
+      defaultMessage: 'job',
+    },
+    jobcond: {
+      id: `${scope}.rights.jobcond`,
+      defaultMessage: 'jobcond',
+    },
+    union: {
+      id: `${scope}.rights.union`,
+      defaultMessage: 'union',
+    },
   },
   'rights-short': {
     arrest: {
@@ -403,6 +415,18 @@ export default defineMessages({
     work: {
       id: `${scope}.rights-short.work`,
       defaultMessage: 'work',
+    },
+    job: {
+      id: `${scope}.rights-short.job`,
+      defaultMessage: 'job',
+    },
+    jobcond: {
+      id: `${scope}.rights-short.jobcond`,
+      defaultMessage: 'jobcond',
+    },
+    union: {
+      id: `${scope}.rights-short.union`,
+      defaultMessage: 'union',
     },
   },
   indicators: {

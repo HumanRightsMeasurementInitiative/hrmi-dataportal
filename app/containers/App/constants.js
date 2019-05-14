@@ -311,6 +311,92 @@ export const RIGHTS = [
   },
 ];
 
+export const AT_RISK_INDICATORS = [
+  {
+    right: 'arrest',
+    code: 'arrest_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'assembly',
+    code: 'assem_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'disappearance',
+    code: 'disap_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'death-penalty',
+    code: 'dpex_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'execution',
+    code: 'exec_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'extrajud-killing',
+    code: 'exkill_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'expression',
+    code: 'express_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'participation',
+    code: 'polpart_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'torture',
+    code: 'tort_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'education',
+    code: 'educ_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'food',
+    code: 'food_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'health',
+    code: 'health_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'housing',
+    code: 'house_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'work',
+    subright: 'job',
+    code: 'job_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'work',
+    subright: 'jobcond',
+    code: 'jobcond_atrisk',
+    resource: 'atRisk',
+  },
+  {
+    right: 'work',
+    subright: 'union',
+    code: 'union_atrisk',
+    resource: 'atRisk',
+  },
+];
+
 export const INDICATOR_LOOKBACK = 10;
 
 export const INDICATORS = [
