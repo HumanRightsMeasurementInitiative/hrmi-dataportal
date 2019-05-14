@@ -482,12 +482,6 @@ export const INDICATORS = [
     resource: 'esrIndicatorScores',
   },
   {
-    key: 'affordable-housing',
-    code: 'AffordableHousing',
-    right: 'housing',
-    resource: 'esrIndicatorScores',
-  },
-  {
     key: 'relative-poverty',
     code: 'NotRelPoor',
     right: 'work',
