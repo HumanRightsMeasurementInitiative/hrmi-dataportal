@@ -21,6 +21,7 @@ import {
   INDICATORS,
   PEOPLE_GROUPS,
   INDICATOR_LOOKBACK,
+  AT_RISK_INDICATORS,
 } from './constants';
 
 // router sub-state
@@ -719,5 +720,45 @@ export const getRightsForCountry = createSelector(
 );
 
 // at risk
-// single country, single right, single year
-export const getPeople = () => null;
+// single country, one or multiple rights, single year
+export const getPeopleAtRiskForCountry = createSelector(
+  (state, { country }) => country,
+  (state, { metric }) => metric || false,
+  getAtRiskData,
+  getCPRYear,
+  (country, right, data, year) =>
+    data &&
+    RIGHTS.reduce((memo, r) => {
+      if (right && r.key !== right) return memo;
+      if (!right && typeof r.aggregate !== 'undefined') return memo;
+      // at risk indicators for given right
+      // prettier-ignore
+      const indicators = AT_RISK_INDICATORS.filter(
+        i => i.right === r.key || (right && i.subright === r.key),
+      );
+      const indicatorScores = indicators.reduce(
+        (m, i) => ({
+          [i.code]: {
+            scores: data.filter(
+              d =>
+                quasiEquals(d.year, year) &&
+                d.country_code === country &&
+                d.metric_code === i.code &&
+                !quasiEquals(d.people_code, 0) &&
+                parseInt(d.count, 10) > 0,
+            ),
+            ...i,
+          },
+          ...m,
+        }),
+        {},
+      );
+      return {
+        [r.key]: {
+          atRiskData: indicatorScores,
+          ...r,
+        },
+        ...memo,
+      };
+    }, {}),
+);

@@ -29,6 +29,7 @@ import {
   getScaleSearch,
   getStandardSearch,
   getBenchmarkSearch,
+  getPeopleAtRiskForCountry,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
@@ -52,6 +53,7 @@ const DEPENDENCIES = [
   'esrScores',
   'esrIndicatorScores',
   'esrIndicators',
+  'atRisk',
 ];
 
 export function PathCountry({
@@ -65,6 +67,7 @@ export function PathCountry({
   country,
   scale,
   benchmark,
+  atRisk,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -134,7 +137,7 @@ export function PathCountry({
             />
           </Tab>
           <Tab title={intl.formatMessage(messages.tabs['people-at-risk'])}>
-            <CountryPeople />
+            <CountryPeople data={atRisk} />
           </Tab>
           <Tab title={intl.formatMessage(messages.tabs.about)}>
             <CountryAbout />
@@ -151,6 +154,7 @@ PathCountry.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   match: PropTypes.object,
+  atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -168,6 +172,7 @@ const mapStateToProps = createStructuredSelector({
     getRightsForCountry(state, match.params.country),
   dimensions: (state, { match }) =>
     getDimensionsForCountry(state, match.params.country),
+  atRisk: (state, { match }) => getPeopleAtRiskForCountry(state, match.params),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),

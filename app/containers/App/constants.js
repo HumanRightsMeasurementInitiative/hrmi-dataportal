@@ -328,17 +328,14 @@ export const AT_RISK_INDICATORS = [
     resource: 'atRisk',
   },
   {
-    right: 'death-penalty',
+    right: 'execution',
+    subright: 'death-penalty',
     code: 'dpex_atrisk',
     resource: 'atRisk',
   },
   {
     right: 'execution',
-    code: 'exec_atrisk',
-    resource: 'atRisk',
-  },
-  {
-    right: 'extrajud-killing',
+    subright: 'extrajud-killing',
     code: 'exkill_atrisk',
     resource: 'atRisk',
   },
