@@ -19,12 +19,13 @@ const MinLabel = props => <Box {...props} width="25px" pad="xxsmall" />;
 const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
 const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
 
-const HEIGHT = 35;
+// level:
+const HEIGHT = [50, 35, 15, 8];
 
 const BarReference = styled.div`
   position: relative;
   display: block;
-  height: ${props => props.height || HEIGHT}px;
+  height: ${props => props.height}px;
   width: 100%;
   background-color: ${props => props.theme.global.colors['light-2']};
 `;
@@ -39,7 +40,7 @@ const BarValue = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  height: ${props => props.height || HEIGHT}px;
+  height: ${props => props.height}px;
   width: ${props => props.percentage}%;
   background-color: ${props => props.theme.global.colors[props.color]};
 `;
@@ -51,7 +52,7 @@ function BarHorizontal({
   color,
   noData,
   unit,
-  height = HEIGHT,
+  level = 1,
 }) {
   return (
     <Wrapper>
@@ -61,10 +62,10 @@ function BarHorizontal({
         </Text>
       </MinLabel>
       <BarWrapper>
-        <BarReference height={height}>
+        <BarReference height={HEIGHT[level]}>
           {!noData && (
             <BarValue
-              height={height}
+              height={HEIGHT[level]}
               percentage={(value / maxValue) * 100}
               color={color}
             />
@@ -92,7 +93,7 @@ BarHorizontal.propTypes = {
   minValue: PropTypes.number,
   maxValue: PropTypes.number,
   noData: PropTypes.bool,
-  height: PropTypes.number,
+  level: PropTypes.number,
 };
 
 export default BarHorizontal;

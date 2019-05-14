@@ -28,7 +28,7 @@ function IndicatorPanel({ indicator, column }) {
       </Heading>
       {value && (
         <BarHorizontal
-          height={8}
+          level={3}
           color="esr"
           value={parseFloat(value)}
           minValue={0}

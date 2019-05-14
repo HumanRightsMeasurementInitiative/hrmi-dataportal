@@ -28,6 +28,7 @@ function RightPanel({ right, column, isSubright, columnLo, columnHi }) {
       </Heading>
       {value && right.type === 'esr' && (
         <BarHorizontal
+          level={isSubright ? 3 : 2}
           color={right.dimension}
           value={parseFloat(value)}
           minValue={0}
@@ -38,7 +39,7 @@ function RightPanel({ right, column, isSubright, columnLo, columnHi }) {
       )}
       {value && right.type === 'cpr' && (
         <BarBulletHorizontal
-          height={isSubright ? 8 : 15}
+          level={isSubright ? 3 : 2}
           color={right.dimension}
           value={parseFloat(value)}
           band={{

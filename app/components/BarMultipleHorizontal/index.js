@@ -1,6 +1,6 @@
 /**
  *
- * BarBulletHorizontal
+ * BarMultipleHorizontal
  *
  */
 
@@ -19,13 +19,14 @@ const MinLabel = props => <Box {...props} width="25px" pad="xxsmall" />;
 const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
 const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
 
-const HEIGHT = 35;
+// level:
+const HEIGHT = [50, 35, 15, 8];
 
 const BarAnchor = styled.div`
   position: relative;
   display: block;
   width: 100%;
-  height: ${props => props.height || HEIGHT}px;
+  height: ${props => props.height}px;
 `;
 
 const NoData = styled.div`
@@ -59,8 +60,10 @@ function BarMultipleHorizontal({
   color,
   noData,
   unit,
-  height = HEIGHT,
+  level = 1,
 }) {
+  const heightMultiple =
+    values && (HEIGHT[level] - (values.length - 1)) / values.length;
   return (
     <Wrapper>
       <MinLabel>
@@ -69,7 +72,7 @@ function BarMultipleHorizontal({
         </Text>
       </MinLabel>
       <BarWrapper>
-        <BarAnchor height={height}>
+        <BarAnchor height={HEIGHT[level]}>
           {noData && (
             <NoData>
               <Text size="small">
@@ -79,10 +82,8 @@ function BarMultipleHorizontal({
           )}
           {!noData &&
             values &&
-            values.map((v, index, array) => {
-              const heightMultiple =
-                (height - (array.length - 1)) / array.length;
-              return v.value ? (
+            values.map((v, index) =>
+              v.value ? (
                 <BarReference
                   key={v.key}
                   height={heightMultiple}
@@ -94,8 +95,8 @@ function BarMultipleHorizontal({
                     color={color}
                   />
                 </BarReference>
-              ) : null;
-            })}
+              ) : null,
+            )}
         </BarAnchor>
       </BarWrapper>
       <MaxLabel>
@@ -112,7 +113,7 @@ BarMultipleHorizontal.propTypes = {
   minValue: PropTypes.number,
   maxValue: PropTypes.number,
   noData: PropTypes.bool,
-  height: PropTypes.number,
+  level: PropTypes.number,
 };
 
 export default BarMultipleHorizontal;

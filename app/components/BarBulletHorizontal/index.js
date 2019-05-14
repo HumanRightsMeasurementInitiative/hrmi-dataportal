@@ -19,7 +19,9 @@ const MinLabel = props => <Box {...props} width="25px" pad="xxsmall" />;
 const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
 const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
 
-const HEIGHT = 35;
+// level:
+const HEIGHT = [50, 35, 20, 14];
+const MARK_WIDTH = [8, 4, 2, 1];
 
 const BarAnchor = styled.div`
   position: relative;
@@ -32,9 +34,9 @@ const BarReference = styled.div`
   position: absolute;
   left: 0;
   top: 50%;
-  margin-top: -1px;
+  margin-top: -2px;
   width: 100%;
-  height: 2px;
+  height: 4px;
   background-color: ${props => props.theme.global.colors['light-2']};
 `;
 
@@ -57,7 +59,7 @@ const MarkValue = styled.div`
   top: 0;
   left: ${props => props.percentage}%;
   height: ${props => props.height}px;
-  width: 4px;
+  width: ${props => MARK_WIDTH[props.level || 1]}px;
   margin-left: -2px;
   background-color: ${props => props.theme.global.colors[props.color]};
 `;
@@ -87,7 +89,7 @@ function BarBulletHorizontal({
   band,
   noData,
   unit,
-  height = HEIGHT,
+  level = 1,
 }) {
   return (
     <Wrapper>
@@ -97,15 +99,18 @@ function BarBulletHorizontal({
         </Text>
       </MinLabel>
       <BarWrapper>
-        <BarAnchor height={height}>
+        <BarAnchor height={HEIGHT[level]}>
           {!noData && <BarReference />}
           {!noData && (
-            <BarValue percentage={(value / maxValue) * 100} height={height} />
+            <BarValue
+              percentage={(value / maxValue) * 100}
+              height={HEIGHT[level]}
+            />
           )}
           {!noData && (
             <BarBand
               color={color}
-              height={height}
+              height={HEIGHT[level]}
               lo={(band.lo / maxValue) * 100}
               hi={(band.hi / maxValue) * 100}
             />
@@ -114,21 +119,22 @@ function BarBulletHorizontal({
             <MarkBound
               color={color}
               percentage={(band.lo / maxValue) * 100}
-              height={height}
+              height={HEIGHT[level]}
             />
           )}
           {!noData && (
             <MarkValue
               color={color}
               percentage={(value / maxValue) * 100}
-              height={height}
+              height={HEIGHT[level]}
+              level={level}
             />
           )}
           {!noData && (
             <MarkBound
               color={color}
               percentage={(band.hi / maxValue) * 100}
-              height={height}
+              height={HEIGHT[level]}
             />
           )}
           {noData && (
@@ -157,7 +163,7 @@ BarBulletHorizontal.propTypes = {
   noData: PropTypes.bool,
   band: PropTypes.object,
   multiple: PropTypes.bool,
-  height: PropTypes.number,
+  level: PropTypes.number,
 };
 
 export default BarBulletHorizontal;
