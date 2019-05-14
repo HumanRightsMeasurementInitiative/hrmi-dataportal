@@ -29,31 +29,6 @@ import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 
 // import messages from './messages';
 
-// const incompleteDataMessage = data => {
-//   if (data.hasScoreAlternate) {
-//     return 'changeStandard';
-//   }
-//   if (data.hasScoreRights) {
-//     return 'drillDownRights';
-//   }
-//   if (data.hasScoreIndicators) {
-//     return 'drillDownIndicators';
-//   }
-//   if (data.hasScoreAlternateRights) {
-//     return 'changeStandard';
-//   }
-//   if (data.hasScoreIndicatorsAlternate) {
-//     return 'changeStandard';
-//   }
-//   return 'changeStandard';
-// };
-// const isIncomplete = data =>
-//   data.hasScoreAlternate ||
-//   data.hasScoreRights ||
-//   data.hasScoreIndicators ||
-//   data.hasScoreAlternateRights ||
-//   data.hasScoreIndicatorsAlternate;
-
 export function CountryPreview({
   onSelectCountry,
   country,
@@ -64,7 +39,7 @@ export function CountryPreview({
   benchmark,
   intl,
 }) {
-  if (!dimensions && !rights && !country) return null;
+  if (!dimensions || !rights || !country) return null;
   // return null;
   // const currentStandard = STANDARDS.find(s => s.key === standard);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
