@@ -13,7 +13,6 @@ import rootMessages from 'messages';
 import { FormattedMessage } from 'react-intl';
 
 function CountryPeople({ data }) {
-  console.log(data);
   return (
     <div>
       {data &&
