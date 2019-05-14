@@ -41,16 +41,18 @@ function ESRAccordion({
                         />
                       }
                     >
-                      {indicators.map(indicator => (
-                        <Box border="top" direction="row" key={indicator.key}>
-                          <IndicatorPanel
-                            key={indicator.key}
-                            indicator={indicator}
-                            column={benchmark.column}
-                          />
-                          <Box pad="medium" />
-                        </Box>
-                      ))}
+                      {indicators
+                        .filter(indicator => indicator.right === right.key)
+                        .map(indicator => (
+                          <Box border="top" direction="row" key={indicator.key}>
+                            <IndicatorPanel
+                              key={indicator.key}
+                              indicator={indicator}
+                              column={benchmark.column}
+                            />
+                            <Box pad="medium" />
+                          </Box>
+                        ))}
                     </AccordionPanel>
                   </Accordion>
                 </Box>

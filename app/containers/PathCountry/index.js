@@ -25,7 +25,6 @@ import {
   getDimensionsForCountry,
   getRightsForCountry,
   getIndicatorsForCountry,
-  getESRIndicatorsForStandard,
   getCountry,
   getScaleSearch,
   getStandardSearch,
@@ -63,7 +62,6 @@ export function PathCountry({
   dimensions,
   rights,
   indicators,
-  indicatorDetails,
   country,
   scale,
   benchmark,
@@ -130,7 +128,6 @@ export function PathCountry({
               dimensions={dimensions}
               rights={rights}
               indicators={indicators}
-              indicatorDetails={indicatorDetails}
               country={country}
               scale={scale}
               benchmark={benchmark}
@@ -154,7 +151,6 @@ PathCountry.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   match: PropTypes.object,
-  indicatorDetails: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -168,7 +164,6 @@ const mapStateToProps = createStructuredSelector({
   country: (state, { match }) => getCountry(state, match.params.country),
   indicators: (state, { match }) =>
     getIndicatorsForCountry(state, match.params.country),
-  indicatorDetails: state => getESRIndicatorsForStandard(state),
   rights: (state, { match }) =>
     getRightsForCountry(state, match.params.country),
   dimensions: (state, { match }) =>

@@ -28,7 +28,6 @@ function CountryReport({
   scale,
   benchmark,
   indicators,
-  indicatorDetails,
   country,
 }) {
   return (
@@ -51,7 +50,6 @@ function CountryReport({
         dimensions={dimensions}
         rights={rights}
         indicators={indicators}
-        indicatorDetails={indicatorDetails}
         country={country}
         benchmark={benchmark}
       />
@@ -62,7 +60,6 @@ function CountryReport({
 CountryReport.propTypes = {
   countryTitle: PropTypes.string,
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  indicatorDetails: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

@@ -562,19 +562,17 @@ export const getIndicatorsForCountry = createSelector(
       indicators &&
       INDICATORS.reduce((memo, i) => {
         const details = indicators.find(id => id.metric_code === i.code);
-        return {
-          [i.key]: {
-            score: scores.find(
-              s =>
-                (details.standard === 'Both' ||
-                  details.standard === standardCode) &&
-                s.metric_code === i.code,
-            ),
-            details,
-            ...i,
-          },
-          ...memo,
-        };
+        if (details.standard === 'Both' || details.standard === standardCode) {
+          return {
+            [i.key]: {
+              score: scores.find(s => s.metric_code === i.code),
+              details,
+              ...i,
+            },
+            ...memo,
+          };
+        }
+        return memo;
       }, {})
     );
   },
