@@ -30,7 +30,6 @@ export const getNoDataMessage = (intl, data) => {
 };
 
 export const getIncompleteDataActionMessage = (intl, data) => {
-  if (!isDataIncomplete(data)) return '';
   if (data.hasScoreRights) {
     return ` (${intl.formatMessage(
       messages.charts.incompleteData.drillDownRights,
