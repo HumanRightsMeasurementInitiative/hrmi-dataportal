@@ -7,6 +7,7 @@ import { Heading, Box, Text } from 'grommet';
 import rootMessages from 'messages';
 
 import BarHorizontal from 'components/BarHorizontal';
+import BarMultipleHorizontal from 'components/BarMultipleHorizontal';
 
 import formatScoreMax from 'utils/format-score-max';
 
@@ -37,28 +38,35 @@ function Dimension({
         <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
       </StyledDimensionHeading>
       <BarWrap>
-        <BarHorizontal
-          color={dimensionKey}
-          value={value}
-          minValue={0}
-          maxValue={maxValue}
-          noData={
-            (scale === 'd' && !value) ||
-            (scale === 'r' &&
+        {scale === 'd' && (
+          <BarHorizontal
+            color={dimensionKey}
+            value={value}
+            minValue={0}
+            maxValue={maxValue}
+            noData={!value}
+            unit={unit}
+          />
+        )}
+        {scale === 'r' && (
+          <BarMultipleHorizontal
+            color={dimensionKey}
+            minValue={0}
+            maxValue={maxValue}
+            unit={unit}
+            noData={
+              rights && !rights.reduce((memo, r) => memo || !!r.score, false)
+            }
+            values={
+              scale === 'r' &&
               rights &&
-              !rights.reduce((memo, r) => memo || !!r.score, false))
-          }
-          unit={unit}
-          multiple={scale === 'r'}
-          values={
-            scale === 'r' &&
-            rights &&
-            rights.map(r => ({
-              key: r.key,
-              value: r.score ? r.score[column] : false,
-            }))
-          }
-        />
+              rights.map(r => ({
+                key: r.key,
+                value: r.score ? r.score[column] : false,
+              }))
+            }
+          />
+        )}
         {scale === 'd' && (
           <DimensionScoreWrapper>
             <DimensionScoreText color={`${dimensionKey}Dark`}>

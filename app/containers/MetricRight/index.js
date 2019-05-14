@@ -22,7 +22,7 @@ import {
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded } from 'containers/App/actions';
-import { BENCHMARKS } from 'containers/App/constants';
+import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
 // import messages from './messages';
@@ -38,7 +38,8 @@ export function MetricRight({ onLoadData, metric, scores, benchmark }) {
   const currentBenchmark =
     metric.type === 'esr' && BENCHMARKS.find(s => s.key === benchmark);
 
-  const column = metric.type === 'esr' ? currentBenchmark.column : 'mean';
+  const column =
+    metric.type === 'esr' ? currentBenchmark.column : COLUMNS.CPR.MEAN;
 
   const sortedScores =
     scores &&

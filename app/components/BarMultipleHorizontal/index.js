@@ -1,6 +1,6 @@
 /**
  *
- * BarHorizontal
+ * BarBulletHorizontal
  *
  */
 
@@ -21,12 +21,11 @@ const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
 
 const HEIGHT = 35;
 
-const BarReference = styled.div`
+const BarAnchor = styled.div`
   position: relative;
   display: block;
-  height: ${props => props.height || HEIGHT}px;
   width: 100%;
-  background-color: ${props => props.theme.global.colors['light-2']};
+  height: ${props => props.height || HEIGHT}px;
 `;
 
 const NoData = styled.div`
@@ -35,19 +34,28 @@ const NoData = styled.div`
   top: 4px;
 `;
 
+const BarReference = styled.div`
+  position: absolute;
+  left: 0;
+  top: ${props => props.top || 0}px;
+  width: 100%;
+  height: ${props => props.height}px;
+  background-color: ${props => props.theme.global.colors['light-2']};
+`;
+
 const BarValue = styled.div`
   position: absolute;
   left: 0;
-  top: 0;
-  height: ${props => props.height || HEIGHT}px;
+  top: ${props => props.top || 0}px;
+  height: ${props => props.height}px;
   width: ${props => props.percentage}%;
   background-color: ${props => props.theme.global.colors[props.color]};
 `;
 
-function BarHorizontal({
+function BarMultipleHorizontal({
   minValue,
   maxValue,
-  value,
+  values,
   color,
   noData,
   unit,
@@ -61,14 +69,7 @@ function BarHorizontal({
         </Text>
       </MinLabel>
       <BarWrapper>
-        <BarReference height={height}>
-          {!noData && (
-            <BarValue
-              height={height}
-              percentage={(value / maxValue) * 100}
-              color={color}
-            />
-          )}
+        <BarAnchor height={height}>
           {noData && (
             <NoData>
               <Text size="small">
@@ -76,7 +77,26 @@ function BarHorizontal({
               </Text>
             </NoData>
           )}
-        </BarReference>
+          {!noData &&
+            values &&
+            values.map((v, index, array) => {
+              const heightMultiple =
+                (height - (array.length - 1)) / array.length;
+              return v.value ? (
+                <BarReference
+                  key={v.key}
+                  height={heightMultiple}
+                  top={heightMultiple * index + index}
+                >
+                  <BarValue
+                    height={heightMultiple}
+                    percentage={(v.value / maxValue) * 100}
+                    color={color}
+                  />
+                </BarReference>
+              ) : null;
+            })}
+        </BarAnchor>
       </BarWrapper>
       <MaxLabel>
         <Text size="small">{unit ? `${maxValue}${unit}` : `${maxValue}`}</Text>
@@ -85,14 +105,14 @@ function BarHorizontal({
   );
 }
 
-BarHorizontal.propTypes = {
+BarMultipleHorizontal.propTypes = {
   color: PropTypes.string,
   unit: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  values: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   minValue: PropTypes.number,
   maxValue: PropTypes.number,
   noData: PropTypes.bool,
   height: PropTypes.number,
 };
 
-export default BarHorizontal;
+export default BarMultipleHorizontal;

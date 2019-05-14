@@ -12,7 +12,7 @@ import { Heading, Box } from 'grommet';
 
 import rootMessages from 'messages';
 // import messages from './messages';
-import { BENCHMARKS } from 'containers/App/constants';
+import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 import { getRightsScoresForDimension } from 'utils/scores';
 
 import Dimension from './Dimension';
@@ -65,18 +65,18 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
           <Dimension
             dimensionKey="empowerment"
             scale={scale}
-            value={empower && parseFloat(empower.mean)}
+            value={empower && parseFloat(empower[COLUMNS.CPR.MEAN])}
             maxValue={10}
             rights={empowerRights}
-            column="mean"
+            column={COLUMNS.CPR.MEAN}
           />
           <Dimension
             dimensionKey="physint"
             scale={scale}
-            value={physint && parseFloat(physint.mean)}
+            value={physint && parseFloat(physint[COLUMNS.CPR.MEAN])}
             maxValue={10}
             rights={physintRights}
-            column="mean"
+            column={COLUMNS.CPR.MEAN}
           />
         </RightsType>
         <RightsType>
@@ -105,7 +105,7 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
                   maxValue={10}
                   right={{
                     key: right.key,
-                    value: right.score && right.score.mean,
+                    value: right.score && right.score[COLUMNS.CPR.MEAN],
                   }}
                 />
               ))}
@@ -117,7 +117,7 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
                   maxValue={10}
                   right={{
                     key: right.key,
-                    value: right.score && right.score.mean,
+                    value: right.score && right.score[COLUMNS.CPR.MEAN],
                   }}
                 />
               ))}

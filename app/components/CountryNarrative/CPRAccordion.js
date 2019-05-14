@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 import { Accordion, AccordionPanel, Box } from 'grommet';
 
-import { RIGHTS } from 'containers/App/constants';
+import { RIGHTS, COLUMNS } from 'containers/App/constants';
 
 import DimensionPanel from './DimensionPanel';
 import RightPanel from './RightPanel';
@@ -20,7 +20,9 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
             <DimensionPanel
               dimension={dimension}
               dimensionKey={dimensionKey}
-              column="mean"
+              column={COLUMNS.CPR.MEAN}
+              columnLo={COLUMNS.CPR.LO}
+              columnHi={COLUMNS.CPR.HI}
             />
           }
         >
@@ -32,7 +34,13 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
                 if (!hasSubrights) {
                   return (
                     <Box border="top" direction="row" key={right.key}>
-                      <RightPanel key={right.key} right={right} column="mean" />
+                      <RightPanel
+                        key={right.key}
+                        right={right}
+                        column={COLUMNS.CPR.MEAN}
+                        columnLo={COLUMNS.CPR.LO}
+                        columnHi={COLUMNS.CPR.HI}
+                      />
                       <Box pad="medium" />
                     </Box>
                   );
@@ -46,7 +54,9 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
                           <RightPanel
                             key={right.key}
                             right={right}
-                            column="mean"
+                            column={COLUMNS.CPR.MEAN}
+                            columnLo={COLUMNS.CPR.LO}
+                            columnHi={COLUMNS.CPR.HI}
                           />
                         }
                       >
@@ -61,7 +71,9 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
                               <RightPanel
                                 key={subright.key}
                                 right={subright}
-                                column="mean"
+                                column={COLUMNS.CPR.MEAN}
+                                columnLo={COLUMNS.CPR.LO}
+                                columnHi={COLUMNS.CPR.HI}
                                 isSubright
                               />
                               <Box pad="medium" />

@@ -24,7 +24,7 @@ import {
   getBenchmarkSearch,
 } from 'containers/App/selectors';
 import { selectCountry } from 'containers/App/actions';
-import { BENCHMARKS } from 'containers/App/constants';
+import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 
 // import messages from './messages';
 
@@ -76,12 +76,12 @@ export function CountryPreview({
             <div>
               <div>
                 {`Empowerment: ${
-                  empower ? formatScore(empower.mean) : 'No data'
+                  empower ? formatScore(empower[COLUMNS.CPR.MEAN]) : 'No data'
                 }`}
               </div>
               <div>
                 {`Physical integrity: ${
-                  empower ? formatScore(physint.mean) : 'No data'
+                  empower ? formatScore(physint[COLUMNS.CPR.MEAN]) : 'No data'
                 }`}
               </div>
               <div>
@@ -102,7 +102,7 @@ export function CountryPreview({
                 <div key={r.key}>
                   <FormattedMessage {...rootMessages['rights-short'][r.key]} />
                   <span>: </span>
-                  {r.score ? formatScore(r.score.mean) : 'No data'}
+                  {r.score ? formatScore(r.score[COLUMNS.CPR.MEAN]) : 'No data'}
                 </div>
               ))}
           {scale === 'r' &&

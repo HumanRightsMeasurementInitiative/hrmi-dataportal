@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 // import styled from 'styled-components';
 import { Text, Box, Heading } from 'grommet';
 import BarHorizontal from 'components/BarHorizontal';
+import BarBulletHorizontal from 'components/BarBulletHorizontal';
 
 import rootMessages from 'messages';
 
@@ -13,7 +14,13 @@ const DimensionScoreText = props => (
   <Text weight="bold" {...props} alignSelf="end" margin={{ right: '52px' }} />
 );
 
-function DimensionPanel({ dimension, dimensionKey, column }) {
+function DimensionPanel({
+  dimension,
+  dimensionKey,
+  column,
+  columnLo,
+  columnHi,
+}) {
   const { score, type } = dimension;
   const value = score && score[column];
   return (
@@ -21,14 +28,27 @@ function DimensionPanel({ dimension, dimensionKey, column }) {
       <Heading level={5} margin={{ vertical: '2px' }}>
         <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
       </Heading>
-      {value && (
+      {value && type === 'esr' && (
         <BarHorizontal
           color={dimensionKey}
           value={parseFloat(value)}
           minValue={0}
-          maxValue={type === 'esr' ? 100 : 10}
+          maxValue={100}
           noData={!value}
-          unit={type === 'esr' ? '%' : ''}
+          unit="%"
+        />
+      )}
+      {value && type === 'cpr' && (
+        <BarBulletHorizontal
+          color={dimensionKey}
+          value={parseFloat(value)}
+          band={{
+            lo: score && parseFloat(score[columnLo]),
+            hi: score && parseFloat(score[columnHi]),
+          }}
+          minValue={0}
+          maxValue={10}
+          noData={!value}
         />
       )}
       <DimensionScoreText color={`${dimensionKey}Dark`}>
@@ -42,6 +62,8 @@ DimensionPanel.propTypes = {
   dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   dimensionKey: PropTypes.string,
   column: PropTypes.string,
+  columnLo: PropTypes.string,
+  columnHi: PropTypes.string,
 };
 
 export default DimensionPanel;

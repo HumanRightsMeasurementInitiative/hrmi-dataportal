@@ -29,6 +29,26 @@ export const SET_SCALE = 'hrmi/App/SET_SCALE';
 export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
 export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 
+export const COLUMNS = {
+  CPR: {
+    MEAN: 'mean',
+    LO: 'lobound_10',
+    HI: 'upbound_90',
+  },
+  ESR: {
+    SCORE_ADJUSTED: 'score_wrt_immediate_duty',
+    SCORE_BEST: 'score_wrt_global_best',
+    SCORE_ADJUSTED_BEST: 'average_immediate_duty_wrt_global_best',
+    PENALTY: 'penalty',
+    RAW: 'value',
+    RAW_REF: 'immediate_duty',
+    RAW_REF_MIN: 'natural_minimum',
+    RAW_REF_BEST: 'global_best_all',
+    RAW_REF_BEST_MALE: 'global_best_male',
+    RAW_REF_BEST_FEMALE: 'global_best_female',
+  },
+};
+
 export const LANGUAGES = {
   short: {
     en: 'EN',
@@ -128,11 +148,11 @@ export const STANDARDS = [
 export const BENCHMARKS = [
   {
     key: 'adjusted',
-    column: 'score_wrt_immediate_duty',
+    column: COLUMNS.ESR.SCORE_ADJUSTED,
   },
   {
     key: 'best',
-    column: 'score_wrt_global_best',
+    column: COLUMNS.ESR.SCORE_BEST,
   },
 ];
 
