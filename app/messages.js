@@ -14,6 +14,38 @@ export default defineMessages({
       id: `${scope}.charts.noData`,
       defaultMessage: 'No data',
     },
+    noDataForStandard: {
+      id: `${scope}.charts.noDataForStandard`,
+      defaultMessage: 'No data for standard',
+    },
+    incompleteData: {
+      id: `${scope}.charts.incompleteData`,
+      defaultMessage: 'Incomplete data',
+      drillDownIndicators: {
+        id: `${scope}.charts.incompleteData.drillDownIndicators`,
+        defaultMessage: 'explore indicator data',
+      },
+      drillDownRights: {
+        id: `${scope}.charts.incompleteData.drillDownRights`,
+        defaultMessage: 'drillDownRights',
+      },
+      changeStandard: {
+        id: `${scope}.charts.incompleteData.changeStandard`,
+        defaultMessage: 'changeStandard',
+      },
+      changeScale: {
+        id: `${scope}.charts.incompleteData.changeScale`,
+        defaultMessage: 'changeScale',
+      },
+      scrollDown: {
+        id: `${scope}.charts.incompleteData.scrollDown`,
+        defaultMessage: 'scrollDown',
+      },
+      viewCountry: {
+        id: `${scope}.charts.incompleteData.viewCountry`,
+        defaultMessage: 'view country',
+      },
+    },
   },
   settings: {
     scale: {

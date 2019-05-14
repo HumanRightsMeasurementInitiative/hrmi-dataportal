@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 // import styled from 'styled-components';
@@ -15,6 +15,7 @@ import { Button, Box } from 'grommet';
 
 import rootMessages from 'messages';
 import formatScore from 'utils/format-score';
+import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
 
 import {
   getDimensionsForCountry,
@@ -28,25 +29,30 @@ import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 
 // import messages from './messages';
 
-const noDataMessage = data => {
-  if (!data) return 'No data';
-  if (data.hasScoreAlternate) {
-    return 'Incomplete data (change standard)';
-  }
-  if (data.hasScoreRights) {
-    return 'Incomplete data (explore underlying rights)';
-  }
-  if (data.hasScoreIndicators) {
-    return 'Incomplete data (explore underlying indicators)';
-  }
-  if (data.hasScoreAlternateRights) {
-    return 'Incomplete data (change standard & explore underlying rights)';
-  }
-  if (data.hasScoreIndicatorsAlternate) {
-    return 'Incomplete data (change standard & explore underlying indicators)';
-  }
-  return 'No data';
-};
+// const incompleteDataMessage = data => {
+//   if (data.hasScoreAlternate) {
+//     return 'changeStandard';
+//   }
+//   if (data.hasScoreRights) {
+//     return 'drillDownRights';
+//   }
+//   if (data.hasScoreIndicators) {
+//     return 'drillDownIndicators';
+//   }
+//   if (data.hasScoreAlternateRights) {
+//     return 'changeStandard';
+//   }
+//   if (data.hasScoreIndicatorsAlternate) {
+//     return 'changeStandard';
+//   }
+//   return 'changeStandard';
+// };
+// const isIncomplete = data =>
+//   data.hasScoreAlternate ||
+//   data.hasScoreRights ||
+//   data.hasScoreIndicators ||
+//   data.hasScoreAlternateRights ||
+//   data.hasScoreIndicatorsAlternate;
 
 export function CountryPreview({
   onSelectCountry,
@@ -56,13 +62,16 @@ export function CountryPreview({
   scale,
   // standard,
   benchmark,
+  intl,
 }) {
+  if (!dimensions && !rights && !country) return null;
   // return null;
   // const currentStandard = STANDARDS.find(s => s.key === standard);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-  const empower = dimensions && dimensions.empowerment.score;
-  const physint = dimensions && dimensions.physint.score;
-  const esr = dimensions && dimensions.esr.score;
+  const empowerScore = dimensions && dimensions.empowerment.score;
+  const physintScore = dimensions && dimensions.physint.score;
+  const esrScore = dimensions && dimensions.esr.score;
+  // country && dimensions && console.log(country.country_code, esrScore, dimensions.esr);
   return (
     <Box pad="medium">
       {country && (
@@ -75,20 +84,33 @@ export function CountryPreview({
           {scale === 'd' && (
             <div>
               <div>
-                {`Empowerment: ${
-                  empower ? formatScore(empower[COLUMNS.CPR.MEAN]) : 'No data'
-                }`}
+                <FormattedMessage {...rootMessages.dimensions.empowerment} />
+                <span>: </span>
+                {empowerScore && (
+                  <strong>{formatScore(empowerScore[COLUMNS.CPR.MEAN])}</strong>
+                )}
+                {!empowerScore &&
+                  getNoDataMessage(intl, dimensions.empowerment)}
               </div>
               <div>
-                {`Physical integrity: ${
-                  empower ? formatScore(physint[COLUMNS.CPR.MEAN]) : 'No data'
-                }`}
+                <FormattedMessage {...rootMessages.dimensions.physint} />
+                <span>: </span>
+                {physintScore && (
+                  <strong>{formatScore(physintScore[COLUMNS.CPR.MEAN])}</strong>
+                )}
+                {!physintScore && getNoDataMessage(intl, dimensions.physint)}
               </div>
               <div>
-                <span>Quality of life: </span>
-                {esr
-                  ? formatScore(esr[currentBenchmark.column])
-                  : noDataMessage(dimensions.esr)}
+                <FormattedMessage {...rootMessages.dimensions.esr} />
+                <span>: </span>
+                {esrScore && (
+                  <strong>
+                    {formatScore(esrScore[currentBenchmark.column])}
+                  </strong>
+                )}
+                {!esrScore && getNoDataMessage(intl, dimensions.esr)}
+                {!esrScore &&
+                  getIncompleteDataActionMessage(intl, dimensions.esr)}
               </div>
             </div>
           )}
@@ -102,7 +124,10 @@ export function CountryPreview({
                 <div key={r.key}>
                   <FormattedMessage {...rootMessages['rights-short'][r.key]} />
                   <span>: </span>
-                  {r.score ? formatScore(r.score[COLUMNS.CPR.MEAN]) : 'No data'}
+                  {r.score && (
+                    <strong>{formatScore(r.score[COLUMNS.CPR.MEAN])}</strong>
+                  )}
+                  {!r.score && getNoDataMessage(intl, r)}
                 </div>
               ))}
           {scale === 'r' &&
@@ -113,9 +138,13 @@ export function CountryPreview({
                 <div key={r.key}>
                   <FormattedMessage {...rootMessages['rights-short'][r.key]} />
                   <span>: </span>
-                  {r.score
-                    ? formatScore(r.score[currentBenchmark.column])
-                    : noDataMessage(r)}
+                  {r.score && (
+                    <strong>
+                      {formatScore(r.score[currentBenchmark.column])}
+                    </strong>
+                  )}
+                  {!r.score && getNoDataMessage(intl, r)}
+                  {!r.score && getIncompleteDataActionMessage(intl, r)}
                 </div>
               ))}
         </Button>
@@ -133,6 +162,7 @@ CountryPreview.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   // standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -156,4 +186,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(CountryPreview);
+export default compose(withConnect)(injectIntl(CountryPreview));
