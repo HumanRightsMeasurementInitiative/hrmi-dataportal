@@ -20,24 +20,25 @@ const RightScoreText = props => (
 );
 
 function RightPanel({ right, column, isSubright, columnLo, columnHi }) {
-  const value = right.score && right.score[column];
+  const value =
+    right.score && right.score[column] && parseFloat(right.score[column]);
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
       <Heading level={isSubright ? 6 : 5} margin={{ vertical: '2px' }}>
         <FormattedMessage {...rootMessages['rights-short'][right.key]} />
       </Heading>
-      {value && right.type === 'esr' && (
+      {right.type === 'esr' && (
         <BarHorizontal
           level={isSubright ? 3 : 2}
           color={right.dimension}
-          value={parseFloat(value)}
+          value={value}
           minValue={0}
           maxValue={100}
-          noData={!value}
+          data={right}
           unit="%"
         />
       )}
-      {value && right.type === 'cpr' && (
+      {right.type === 'cpr' && (
         <BarBulletHorizontal
           level={isSubright ? 3 : 2}
           color={right.dimension}
@@ -48,12 +49,11 @@ function RightPanel({ right, column, isSubright, columnLo, columnHi }) {
           }}
           minValue={0}
           maxValue={10}
-          noData={!value}
+          data={right}
         />
       )}
       <RightScoreText color={`${right.dimension}Dark`}>
         {value && formatScore(value)}
-        {!value && 'N/A'}
       </RightScoreText>
     </Box>
   );

@@ -24,6 +24,7 @@ import PathMetric from 'containers/PathMetric/Loadable';
 import PathCountry from 'containers/PathCountry/Loadable';
 import PathPage from 'containers/PathPage/Loadable';
 import PathNotFoundPage from 'containers/PathNotFoundPage/Loadable';
+import ScrollToTop from './ScrollToTop';
 
 import { loadDataIfNeeded } from './actions';
 
@@ -84,23 +85,25 @@ export function App({ match, onLoadData }) {
           content="Human Rights Measurement Initiative"
         />
       </Helmet>
-      <Header />
-      <Main>
-        <Switch>
-          <Route exact path={`/${locale}`} component={PathOverview} />
-          <Route
-            path={`/${locale}/metric/:metric/:country?`}
-            component={PathMetric}
-          />
-          <Route
-            path={`/${locale}/country/:country/:metric?`}
-            component={PathCountry}
-          />
-          <Route path={`/${locale}/page/:page`} component={PathPage} />
-          <Route path={`/${locale}`} component={PathNotFoundPage} />
-        </Switch>
-      </Main>
-      <Settings />
+      <ScrollToTop>
+        <Header />
+        <Main>
+          <Switch>
+            <Route exact path={`/${locale}`} component={PathOverview} />
+            <Route
+              path={`/${locale}/metric/:metric/:country?`}
+              component={PathMetric}
+            />
+            <Route
+              path={`/${locale}/country/:country/:metric?`}
+              component={PathCountry}
+            />
+            <Route path={`/${locale}/page/:page`} component={PathPage} />
+            <Route path={`/${locale}`} component={PathNotFoundPage} />
+          </Switch>
+        </Main>
+        <Settings />
+      </ScrollToTop>
     </AppWrapper>
   );
 }

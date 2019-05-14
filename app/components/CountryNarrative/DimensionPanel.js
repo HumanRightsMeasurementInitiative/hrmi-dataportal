@@ -22,26 +22,27 @@ function DimensionPanel({
   columnHi,
 }) {
   const { score, type } = dimension;
-  const value = score && score[column];
+  const value = score && score[column] && parseFloat(score[column]);
+
   return (
     <Box pad={{ vertical: 'xsmall', horizontal: 'small' }} fill="horizontal">
       <Heading level={5} margin={{ vertical: '2px' }}>
         <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
       </Heading>
-      {value && type === 'esr' && (
+      {type === 'esr' && (
         <BarHorizontal
           color={dimensionKey}
-          value={parseFloat(value)}
+          value={value}
           minValue={0}
           maxValue={100}
-          noData={!value}
+          data={dimension}
           unit="%"
         />
       )}
-      {value && type === 'cpr' && (
+      {type === 'cpr' && (
         <BarBulletHorizontal
           color={dimensionKey}
-          value={parseFloat(value)}
+          value={value}
           band={{
             lo: score && parseFloat(score[columnLo]),
             hi: score && parseFloat(score[columnHi]),
@@ -53,7 +54,6 @@ function DimensionPanel({
       )}
       <DimensionScoreText color={`${dimensionKey}Dark`}>
         {value && formatScore(value)}
-        {!value && 'N/A'}
       </DimensionScoreText>
     </Box>
   );

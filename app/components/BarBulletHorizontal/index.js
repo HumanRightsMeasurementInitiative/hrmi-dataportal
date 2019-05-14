@@ -40,6 +40,18 @@ const BarReference = styled.div`
   background-color: ${props => props.theme.global.colors['light-2']};
 `;
 
+const BarReferenceNoData = styled.div`
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: ${props => HEIGHT[props.level]}px;
+  background-color: 'transparent';
+  border: 1px solid;
+  border-color: ${props => props.theme.global.colors['light-4']};
+`;
+
 const NoData = styled.div`
   position: absolute;
   left: 2px;
@@ -101,6 +113,7 @@ function BarBulletHorizontal({
       <BarWrapper>
         <BarAnchor height={HEIGHT[level]}>
           {!noData && <BarReference />}
+          {noData && <BarReferenceNoData level={level} />}
           {!noData && (
             <BarValue
               percentage={(value / maxValue) * 100}

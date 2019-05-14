@@ -15,7 +15,8 @@ import rootMessages from 'messages';
 import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 import { getRightsScoresForDimension } from 'utils/scores';
 
-import Dimension from './Dimension';
+import DimensionChart from './DimensionChart';
+import RightsChart from './RightsChart';
 import RightsScoreItem from './RightsScoreItem';
 
 const RightsType = styled(Box)``;
@@ -43,11 +44,6 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
-  // figure out dimension scores
-  const empower = dimensions && dimensions.empowerment.score;
-  const physint = dimensions && dimensions.physint.score;
-  const esr = dimensions && dimensions.esr.score;
-
   // figure out rights scores
   const empowerRights =
     scale === 'r' && getRightsScoresForDimension(rights, 'empowerment');
@@ -62,36 +58,60 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
           <RightsTypeHeading>
             <FormattedMessage {...rootMessages['rights-types'].cpr} />
           </RightsTypeHeading>
-          <Dimension
-            dimensionKey="empowerment"
-            scale={scale}
-            value={empower && parseFloat(empower[COLUMNS.CPR.MEAN])}
-            maxValue={10}
-            rights={empowerRights}
-            column={COLUMNS.CPR.MEAN}
-          />
-          <Dimension
-            dimensionKey="physint"
-            scale={scale}
-            value={physint && parseFloat(physint[COLUMNS.CPR.MEAN])}
-            maxValue={10}
-            rights={physintRights}
-            column={COLUMNS.CPR.MEAN}
-          />
+          {scale === 'd' && (
+            <DimensionChart
+              dimensionKey="empowerment"
+              data={dimensions && dimensions.empowerment}
+              maxValue={10}
+              column={COLUMNS.CPR.MEAN}
+            />
+          )}
+          {scale === 'd' && (
+            <DimensionChart
+              dimensionKey="physint"
+              data={dimensions && dimensions.physint}
+              maxValue={10}
+              column={COLUMNS.CPR.MEAN}
+            />
+          )}
+          {scale === 'r' && (
+            <RightsChart
+              dimensionKey="empowerment"
+              data={empowerRights}
+              maxValue={10}
+              column={COLUMNS.CPR.MEAN}
+            />
+          )}
+          {scale === 'r' && (
+            <RightsChart
+              dimensionKey="physint"
+              data={physintRights}
+              maxValue={10}
+              column={COLUMNS.CPR.MEAN}
+            />
+          )}
         </RightsType>
         <RightsType>
           <RightsTypeHeading>
             <FormattedMessage {...rootMessages['rights-types'].esr} />
           </RightsTypeHeading>
-          <Dimension
-            dimensionKey="esr"
-            scale={scale}
-            value={esr && parseFloat(esr[currentBenchmark.column])}
-            maxValue={100}
-            rights={esrRights}
-            unit="%"
-            column={currentBenchmark.column}
-          />
+          {scale === 'd' && (
+            <DimensionChart
+              dimensionKey="esr"
+              data={dimensions && dimensions.esr}
+              maxValue={100}
+              unit="%"
+              column={currentBenchmark.column}
+            />
+          )}
+          {scale === 'r' && (
+            <RightsChart
+              dimensionKey="esr"
+              data={esrRights}
+              maxValue={100}
+              column={currentBenchmark.column}
+            />
+          )}
         </RightsType>
       </ChartArea>
       {scale === 'r' && (

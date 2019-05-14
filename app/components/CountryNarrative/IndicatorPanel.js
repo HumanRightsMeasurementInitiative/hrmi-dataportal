@@ -18,28 +18,29 @@ const IndicatorScoreText = props => (
   />
 );
 
+const maxValue = 100;
+
 function IndicatorPanel({ indicator, column }) {
-  const value = indicator.score && indicator.score[column];
-  const maxValue = 100;
+  const value =
+    indicator.score &&
+    indicator.score[column] &&
+    parseFloat(indicator.score[column]);
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
       <Heading level={6} margin={{ vertical: '2px' }}>
         <FormattedMessage {...rootMessages.indicators[indicator.key]} />
       </Heading>
-      {value && (
-        <BarHorizontal
-          level={3}
-          color="esr"
-          value={parseFloat(value)}
-          minValue={0}
-          maxValue={maxValue}
-          noData={!value}
-          unit="%"
-        />
-      )}
+      <BarHorizontal
+        level={3}
+        color="esr"
+        value={value}
+        minValue={0}
+        maxValue={maxValue}
+        data={indicator}
+        unit="%"
+      />
       <IndicatorScoreText color="esrDark">
         {value && formatScore(value)}
-        {!value && 'N/A'}
       </IndicatorScoreText>
     </Box>
   );
