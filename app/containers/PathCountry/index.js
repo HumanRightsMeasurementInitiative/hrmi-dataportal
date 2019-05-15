@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -30,9 +30,10 @@ import {
   getStandardSearch,
   getBenchmarkSearch,
   getPeopleAtRiskForCountry,
+  getTabSearch,
 } from 'containers/App/selectors';
 
-import { loadDataIfNeeded, navigate } from 'containers/App/actions';
+import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
 
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
@@ -68,14 +69,15 @@ export function PathCountry({
   scale,
   benchmark,
   atRisk,
+  tabIndex,
+  onTabClick,
 }) {
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
 
-  const [tabIndex, setTabIndex] = useState(0);
-
+  // const [tabIndex, setTabIndex] = useState(0);
   const group =
     country &&
     INCOME_GROUPS.find(g => quasiEquals(g.value, country.high_income_country));
@@ -123,7 +125,7 @@ export function PathCountry({
         <Tabs
           justify="start"
           activeIndex={tabIndex}
-          onActive={index => setTabIndex(index)}
+          onActive={index => onTabClick(index)}
         >
           <Tab title={intl.formatMessage(messages.tabs.report)}>
             <CountryReport
@@ -137,7 +139,7 @@ export function PathCountry({
             />
           </Tab>
           <Tab title={intl.formatMessage(messages.tabs['people-at-risk'])}>
-            <CountryPeople data={atRisk} />
+            <CountryPeople data={atRisk} countryTitle={countryTitle} />
           </Tab>
           <Tab title={intl.formatMessage(messages.tabs.about)}>
             <CountryAbout />
@@ -153,8 +155,9 @@ PathCountry.propTypes = {
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
+  onTabClick: PropTypes.func,
   match: PropTypes.object,
-  atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -162,6 +165,7 @@ PathCountry.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -176,6 +180,7 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
+  tabIndex: state => getTabSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -194,6 +199,7 @@ export function mapDispatchToProps(dispatch) {
         ),
       ),
     onClose: () => dispatch(navigate('')),
+    onTabClick: index => dispatch(setTab(index)),
   };
 }
 

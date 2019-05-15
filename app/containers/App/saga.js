@@ -40,6 +40,7 @@ import {
   SET_SCALE,
   SET_STANDARD,
   SET_BENCHMARK,
+  SET_TAB,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -199,6 +200,15 @@ export function* setBenchmarkSaga({ value }) {
   const path = yield select(getRouterPath);
   yield put(push(`${path}?${searchParams.toString()}`));
 }
+export function* setTabSaga({ value }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  yield searchParams.set('tab', value);
+
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(push(`${path}?${searchParams.toString()}`));
+}
 
 export function* selectMetricSaga({ code }) {
   const currentLocale = yield select(getLocale);
@@ -275,5 +285,6 @@ export default function* defaultSaga() {
   yield takeLatest(SET_SCALE, setScaleSaga);
   yield takeLatest(SET_STANDARD, setStandardSaga);
   yield takeLatest(SET_BENCHMARK, setBenchmarkSaga);
+  yield takeLatest(SET_TAB, setTabSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
 }

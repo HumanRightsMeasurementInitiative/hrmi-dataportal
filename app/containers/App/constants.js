@@ -28,6 +28,7 @@ export const NAVIGATE = 'hrmi/App/NAVIGATE';
 export const SET_SCALE = 'hrmi/App/SET_SCALE';
 export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
 export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
+export const SET_TAB = 'hrmi/App/SET_TAB';
 
 export const COLUMNS = {
   CPR: {
@@ -189,12 +190,6 @@ export const SCALES = [
 
 export const DIMENSIONS = [
   {
-    key: 'esr',
-    code: 'SER_Average',
-    type: 'esr',
-    resource: 'esrScores',
-  },
-  {
     key: 'empowerment',
     code: 'empower',
     type: 'cpr',
@@ -205,6 +200,12 @@ export const DIMENSIONS = [
     code: 'physint',
     type: 'cpr',
     resource: 'cprScores',
+  },
+  {
+    key: 'esr',
+    code: 'SER_Average',
+    type: 'esr',
+    resource: 'esrScores',
   },
 ];
 

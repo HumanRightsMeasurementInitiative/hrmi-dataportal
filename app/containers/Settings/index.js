@@ -20,6 +20,7 @@ import {
   getScaleSearch,
   getStandardSearch,
   getBenchmarkSearch,
+  getTabSearch,
 } from 'containers/App/selectors';
 
 import { SCALES, STANDARDS, BENCHMARKS } from 'containers/App/constants';
@@ -38,11 +39,14 @@ const Styled = styled.div`
   height: 80px;
 `;
 
-const showSettings = ({ route, match }) => {
+const showSettings = ({ route, match, tabIndex }) => {
   if (route === 'page') return false;
   if (route === 'metric') {
     const metricDetails = getMetricDetails(match);
     if (metricDetails && metricDetails.type === 'cpr') return false;
+  }
+  if (route === 'country') {
+    return tabIndex === 0;
   }
   return true;
 };
@@ -64,11 +68,12 @@ export function Settings({
   scale,
   standard,
   benchmark,
+  tabIndex,
   onSetScale,
   onSetStandard,
   onSetBenchmark,
 }) {
-  if (!showSettings({ route, match })) return null;
+  if (!showSettings({ route, match, tabIndex })) return null;
   return (
     <Styled>
       <Box
@@ -177,6 +182,7 @@ Settings.propTypes = {
   scale: PropTypes.string,
   standard: PropTypes.string,
   benchmark: PropTypes.string,
+  tabIndex: PropTypes.number,
   onSetScale: PropTypes.func,
   onSetStandard: PropTypes.func,
   onSetBenchmark: PropTypes.func,
@@ -188,6 +194,7 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
+  tabIndex: state => getTabSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {

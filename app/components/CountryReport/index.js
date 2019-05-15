@@ -19,6 +19,7 @@ import messages from './messages';
 const Styled = styled.div`
   max-width: 1000px;
   padding: 0 50px;
+  margin: 0 auto;
 `;
 
 function CountryReport({

@@ -79,6 +79,10 @@ export const getRouterMatch = createSelector(
   },
 );
 
+export const getTabSearch = createSelector(
+  getRouterSearchParams,
+  search => (search.has('tab') ? parseInt(search.get('tab'), 10) : 0),
+);
 export const getScaleSearch = createSelector(
   getRouterSearchParams,
   search =>
@@ -728,37 +732,42 @@ export const getPeopleAtRiskForCountry = createSelector(
   getCPRYear,
   (country, right, data, year) =>
     data &&
-    RIGHTS.reduce((memo, r) => {
-      if (right && r.key !== right) return memo;
-      if (!right && typeof r.aggregate !== 'undefined') return memo;
-      // at risk indicators for given right
-      // prettier-ignore
-      const indicators = AT_RISK_INDICATORS.filter(
-        i => i.right === r.key || (right && i.subright === r.key),
-      );
-      const indicatorScores = indicators.reduce(
-        (m, i) => ({
-          [i.code]: {
-            scores: data.filter(
-              d =>
-                quasiEquals(d.year, year) &&
-                d.country_code === country &&
-                d.metric_code === i.code &&
-                !quasiEquals(d.people_code, 0) &&
-                parseInt(d.count, 10) > 0,
-            ),
-            ...i,
+    DIMENSIONS.map(dim => ({
+      rights: RIGHTS.reduce((memo, r) => {
+        // console.log(r.key)
+        if (right && r.key !== right) return memo;
+        if (!right && typeof r.aggregate !== 'undefined') return memo;
+        if (r.dimension !== dim.key) return memo;
+        // at risk indicators for given right
+        // prettier-ignore
+        const indicators = AT_RISK_INDICATORS.filter(
+          i => i.right === r.key || (right && i.subright === r.key),
+        );
+        const indicatorScores = indicators.reduce(
+          (m, i) => ({
+            [i.code]: {
+              ...i,
+              scores: data.filter(
+                d =>
+                  quasiEquals(d.year, year) &&
+                  d.country_code === country &&
+                  d.metric_code === i.code &&
+                  !quasiEquals(d.people_code, 0) &&
+                  parseInt(d.count, 10) > 0,
+              ),
+            },
+            ...m,
+          }),
+          {},
+        );
+        return {
+          [r.key]: {
+            ...r,
+            atRiskData: indicatorScores,
           },
-          ...m,
-        }),
-        {},
-      );
-      return {
-        [r.key]: {
-          atRiskData: indicatorScores,
-          ...r,
-        },
-        ...memo,
-      };
-    }, {}),
+          ...memo,
+        };
+      }, {}),
+      ...dim,
+    })),
 );

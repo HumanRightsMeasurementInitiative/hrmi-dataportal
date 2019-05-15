@@ -9,8 +9,12 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.components.CountryPeople';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the CountryPeople component!',
+  title: {
+    id: `${scope}.title`,
+    defaultMessage: "{country}'s people at risk overview",
+  },
+  intro: {
+    id: `${scope}.intro`,
+    defaultMessage: 'An overview of people at risk by human right',
   },
 });

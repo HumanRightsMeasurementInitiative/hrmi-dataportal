@@ -21,6 +21,7 @@ import {
   SET_SCALE,
   SET_STANDARD,
   SET_BENCHMARK,
+  SET_TAB,
 } from './constants';
 
 /**
@@ -133,6 +134,12 @@ export function setStandard(value) {
 export function setBenchmark(value) {
   return {
     type: SET_BENCHMARK,
+    value,
+  };
+}
+export function setTab(value) {
+  return {
+    type: SET_TAB,
     value,
   };
 }

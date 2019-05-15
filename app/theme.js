@@ -37,10 +37,13 @@ const theme = {
       'dark-4': '#8896A0', // AA large
       empowerment: '#262064', // AA
       empowermentDark: '#262064', // AA
+      empowermentCloud: '#262064', // AA
       physint: '#6C3F99', // AA large
       physintDark: '#6C3F99', // AA
+      physintCloud: '#6C3F99', // AA
       esr: '#27AAE1', // AA large
       esrDark: '#027AC0', // AA
+      esrCloud: '#004f8f', // AA
     },
     size: {
       full: '100%',

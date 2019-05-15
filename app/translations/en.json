@@ -5,6 +5,8 @@
   "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.components.Close.label": "Back",
   "hrmi.components.CountryReport.title": "{country}'s Human Rights Report",
+  "hrmi.components.CountryPeople.title": "{country}'s people at risk overview",
+  "hrmi.components.CountryPeople.intro": "An overview of 'people at risk' by human right",
   "hrmi.components.PathCountry.tabs.report": "Report",
   "hrmi.components.PathCountry.tabs.people-at-risk": "People at risk",
   "hrmi.components.PathCountry.tabs.about": "About",
