@@ -20,7 +20,7 @@ const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
 const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
 
 // level:
-const HEIGHT = [50, 35, 15, 8];
+const HEIGHT = [50, 35, 20, 14];
 
 const BarReference = styled.div`
   position: relative;
@@ -37,7 +37,7 @@ const BarReference = styled.div`
 const NoData = styled.div`
   position: absolute;
   left: 2px;
-  top: ${props => (props.level > 1 ? -7 : 4)}px;
+  top: ${props => (props.level > 1 ? -5 : 4)}px;
 `;
 
 const BarValue = styled.div`

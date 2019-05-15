@@ -55,7 +55,7 @@ const BarReferenceNoData = styled.div`
 const NoData = styled.div`
   position: absolute;
   left: 2px;
-  top: 4px;
+  top: ${props => (props.level > 1 ? -5 : 4)}px;
 `;
 
 const BarValue = styled.div`
@@ -151,7 +151,7 @@ function BarBulletHorizontal({
             />
           )}
           {noData && (
-            <NoData>
+            <NoData level={level}>
               <Text size="small">
                 <FormattedMessage {...rootMessages.charts.noData} />
               </Text>
