@@ -500,10 +500,6 @@ export default defineMessages({
       id: `${scope}.indicators.safe-sanitation`,
       defaultMessage: 'safe-sanitation',
     },
-    'affordable-housing': {
-      id: `${scope}.indicators.affordable-housing`,
-      defaultMessage: 'affordable-housing',
-    },
     'relative-poverty': {
       id: `${scope}.indicators.relative-poverty`,
       defaultMessage: 'relative-poverty',
@@ -573,10 +569,6 @@ export default defineMessages({
     'safe-sanitation': {
       id: `${scope}.indicators-raw.safe-sanitation`,
       defaultMessage: 'safe-sanitation',
-    },
-    'affordable-housing': {
-      id: `${scope}.indicators-raw.affordable-housing`,
-      defaultMessage: 'affordable-housing',
     },
     'relative-poverty': {
       id: `${scope}.indicators-raw.relative-poverty`,
