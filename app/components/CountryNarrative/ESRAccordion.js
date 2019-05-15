@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { FormattedMessage } from 'react-intl';
 // import styled from 'styled-components';
-import { Box, Accordion, AccordionPanel } from 'grommet';
+import { Box } from 'grommet';
 
+import Accordion from './Accordion';
 import DimensionPanel from './DimensionPanel';
 import RightPanel from './RightPanel';
 import IndicatorPanel from './IndicatorPanel';
@@ -17,49 +18,53 @@ function ESRAccordion({
 }) {
   return (
     <Box elevation="small" margin={{ top: 'medium' }}>
-      <Accordion animate={false} multiple>
-        <AccordionPanel
-          label={
-            <DimensionPanel
-              dimension={dimension}
-              dimensionKey={dimensionKey}
-              column={benchmark.column}
-            />
-          }
-        >
+      <Accordion
+        buttonText={`${rights.length} rights`}
+        head={
+          <DimensionPanel
+            dimension={dimension}
+            dimensionKey={dimensionKey}
+            column={benchmark.column}
+          />
+        }
+        content={
           <div>
             {rights &&
-              rights.map(right => (
-                <Box border="top" key={right.key}>
-                  <Accordion animate={false} multiple key={right.key}>
-                    <AccordionPanel
-                      label={
-                        <RightPanel
-                          key={right.key}
-                          right={right}
-                          column={benchmark.column}
-                        />
+              rights.map(right => {
+                const rightIndicators = indicators.filter(
+                  indicator => indicator.right === right.key,
+                );
+                return (
+                  <Box border="top" key={right.key}>
+                    <Accordion
+                      buttonText={`${rightIndicators.length} indicators`}
+                      head={
+                        <RightPanel right={right} column={benchmark.column} />
                       }
-                    >
-                      {indicators
-                        .filter(indicator => indicator.right === right.key)
-                        .map(indicator => (
-                          <Box border="top" direction="row" key={indicator.key}>
-                            <IndicatorPanel
+                      content={
+                        <div>
+                          {rightIndicators.map(indicator => (
+                            <Box
+                              border="top"
+                              direction="row"
                               key={indicator.key}
-                              indicator={indicator}
-                              column={benchmark.column}
-                            />
-                            <Box pad="medium" />
-                          </Box>
-                        ))}
-                    </AccordionPanel>
-                  </Accordion>
-                </Box>
-              ))}
+                            >
+                              <IndicatorPanel
+                                indicator={indicator}
+                                column={benchmark.column}
+                              />
+                              <Box pad="medium" />
+                            </Box>
+                          ))}
+                        </div>
+                      }
+                    />
+                  </Box>
+                );
+              })}
           </div>
-        </AccordionPanel>
-      </Accordion>
+        }
+      />
     </Box>
   );
 }

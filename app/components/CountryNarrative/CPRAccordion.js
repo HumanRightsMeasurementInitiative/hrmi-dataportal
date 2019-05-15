@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 // import { FormattedMessage } from 'react-intl';
 // import styled from 'styled-components';
-import { Accordion, AccordionPanel, Box } from 'grommet';
+import { Box } from 'grommet';
 
-import { RIGHTS, COLUMNS } from 'containers/App/constants';
+import { COLUMNS } from 'containers/App/constants';
 
+import Accordion from './Accordion';
 import DimensionPanel from './DimensionPanel';
 import RightPanel from './RightPanel';
 
@@ -14,28 +15,28 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
   const subrights = rights.filter(r => typeof r.aggregate !== 'undefined');
   return (
     <Box elevation="small" margin={{ top: 'medium' }}>
-      <Accordion animate={false} multiple>
-        <AccordionPanel
-          label={
-            <DimensionPanel
-              dimension={dimension}
-              dimensionKey={dimensionKey}
-              column={COLUMNS.CPR.MEAN}
-              columnLo={COLUMNS.CPR.LO}
-              columnHi={COLUMNS.CPR.HI}
-            />
-          }
-        >
+      <Accordion
+        buttonText={`${parentRights.length} rights`}
+        head={
+          <DimensionPanel
+            dimension={dimension}
+            dimensionKey={dimensionKey}
+            column={COLUMNS.CPR.MEAN}
+            columnLo={COLUMNS.CPR.LO}
+            columnHi={COLUMNS.CPR.HI}
+          />
+        }
+        content={
           <div>
             {parentRights &&
               parentRights.map(right => {
-                const hasSubrights =
-                  RIGHTS.filter(r => r.aggregate === right.key).length > 0;
-                if (!hasSubrights) {
+                const rightSubrights = subrights.filter(
+                  r => r.aggregate === right.key,
+                );
+                if (rightSubrights.length === 0) {
                   return (
                     <Box border="top" direction="row" key={right.key}>
                       <RightPanel
-                        key={right.key}
                         right={right}
                         column={COLUMNS.CPR.MEAN}
                         columnLo={COLUMNS.CPR.LO}
@@ -48,28 +49,25 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
 
                 return (
                   <Box border="top" key={right.key}>
-                    <Accordion key={right.key} animate={false} multiple>
-                      <AccordionPanel
-                        label={
-                          <RightPanel
-                            key={right.key}
-                            right={right}
-                            column={COLUMNS.CPR.MEAN}
-                            columnLo={COLUMNS.CPR.LO}
-                            columnHi={COLUMNS.CPR.HI}
-                          />
-                        }
-                      >
-                        {subrights
-                          .filter(r => r.aggregate === right.key)
-                          .map(subright => (
+                    <Accordion
+                      buttonText={`${rightSubrights.length} subrights`}
+                      head={
+                        <RightPanel
+                          right={right}
+                          column={COLUMNS.CPR.MEAN}
+                          columnLo={COLUMNS.CPR.LO}
+                          columnHi={COLUMNS.CPR.HI}
+                        />
+                      }
+                      content={
+                        <div>
+                          {rightSubrights.map(subright => (
                             <Box
                               border="top"
                               direction="row"
                               key={subright.key}
                             >
                               <RightPanel
-                                key={subright.key}
                                 right={subright}
                                 column={COLUMNS.CPR.MEAN}
                                 columnLo={COLUMNS.CPR.LO}
@@ -79,14 +77,15 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
                               <Box pad="medium" />
                             </Box>
                           ))}
-                      </AccordionPanel>
-                    </Accordion>
+                        </div>
+                      }
+                    />
                   </Box>
                 );
               })}
           </div>
-        </AccordionPanel>
-      </Accordion>
+        }
+      />
     </Box>
   );
 }
