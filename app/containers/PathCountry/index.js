@@ -12,10 +12,11 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Heading, Box, Text, Button, Tabs, Tab } from 'grommet';
+import { Heading, Box, Text, Button, Tabs, Tab, Layer } from 'grommet';
 
 import rootMessages from 'messages';
 
+import CountryMetric from 'containers/CountryMetric';
 import Close from 'containers/Close';
 import CountryReport from 'components/CountryReport';
 import CountryPeople from 'components/CountryPeople';
@@ -72,11 +73,15 @@ export function PathCountry({
   atRisk,
   tabIndex,
   onTabClick,
+  onMetricClick,
+  onCloseMetricOverlay,
 }) {
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
+
+  const countryCode = match.params.country;
 
   // const [tabIndex, setTabIndex] = useState(0);
   const group =
@@ -84,8 +89,7 @@ export function PathCountry({
     INCOME_GROUPS.find(g => quasiEquals(g.value, country.high_income_country));
 
   const countryTitle =
-    match.params.country &&
-    intl.formatMessage(rootMessages.countries[match.params.country]);
+    countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
 
   return (
     <div>
@@ -94,6 +98,20 @@ export function PathCountry({
         <meta name="description" content="Description of Country page" />
       </Helmet>
       <Header>
+        {match.params.metric && (
+          <Layer
+            full
+            margin="medium"
+            onEsc={() => onCloseMetricOverlay(countryCode)}
+            onClickOutside={() => onCloseMetricOverlay(countryCode)}
+          >
+            <CountryMetric
+              metricCode={match.params.metric}
+              countryCode={countryCode}
+              onCloseOverlay={() => onCloseMetricOverlay(countryCode)}
+            />
+          </Layer>
+        )}
         <Close />
         <HeaderCategories direction="row">
           <Text size="small">
@@ -137,6 +155,9 @@ export function PathCountry({
               country={country}
               scale={scale}
               benchmark={benchmark}
+              onMetricClick={(metric, tab) =>
+                onMetricClick(countryCode, metric, tab)
+              }
             />
           </Tab>
           {hasCPR(dimensions) && (
@@ -159,6 +180,8 @@ PathCountry.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   onTabClick: PropTypes.func,
+  onMetricClick: PropTypes.func,
+  onCloseMetricOverlay: PropTypes.func,
   match: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -203,6 +226,30 @@ export function mapDispatchToProps(dispatch) {
       ),
     onClose: () => dispatch(navigate('')),
     onTabClick: index => dispatch(setTab(index)),
+    onMetricClick: (country, metric, tab = 0) =>
+      dispatch(
+        navigate(
+          {
+            pathname: `/country/${country}/${metric}`,
+            search: `?mtab=${tab}`,
+          },
+          {
+            replace: false,
+          },
+        ),
+      ),
+    onCloseMetricOverlay: country =>
+      dispatch(
+        navigate(
+          {
+            pathname: `/country/${country}`,
+          },
+          {
+            replace: false,
+            deleteParams: ['mtab'],
+          },
+        ),
+      ),
   };
 }
 

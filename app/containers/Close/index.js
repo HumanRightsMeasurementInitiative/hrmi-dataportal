@@ -16,7 +16,7 @@ import { navigate } from 'containers/App/actions';
 // import messages from './messages';
 
 // <FormattedMessage {...messages.label} />
-function Close({ onClose, closeTarget, keepTab = false }) {
+function Close({ onClose, closeTarget, keepTab = false, onClick }) {
   return (
     <Box direction="row" pad="medium" align="center">
       <Box round="full" overflow="hidden">
@@ -25,7 +25,13 @@ function Close({ onClose, closeTarget, keepTab = false }) {
           icon={<CloseIcon />}
           hoverIndicator
           onClick={() =>
-            onClose(closeTarget || '', { keepTab, needsLocale: !closeTarget })
+            // prettier-ignore
+            onClick
+              ? onClick()
+              : onClose(closeTarget || '', {
+                keepTab,
+                needsLocale: !closeTarget,
+              })
           }
         />
       </Box>
@@ -34,6 +40,7 @@ function Close({ onClose, closeTarget, keepTab = false }) {
 }
 
 Close.propTypes = {
+  onClick: PropTypes.func,
   onClose: PropTypes.func,
   closeTarget: PropTypes.object,
   keepTab: PropTypes.bool,

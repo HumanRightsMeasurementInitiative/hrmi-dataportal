@@ -36,7 +36,13 @@ const DimensionHeading = props => (
 );
 const StyledDimensionHeading = styled(DimensionHeading)``;
 
-function CountryNarrative({ dimensions, rights, indicators, benchmark }) {
+function CountryNarrative({
+  dimensions,
+  rights,
+  indicators,
+  benchmark,
+  onMetricClick,
+}) {
   if (!dimensions || !rights || !indicators) {
     return null;
   }
@@ -56,6 +62,7 @@ function CountryNarrative({ dimensions, rights, indicators, benchmark }) {
             dimension={dimensions.empowerment}
             dimensionKey="empowerment"
             rights={getRightsScoresForDimension(rights, 'empowerment', true)}
+            onMetricClick={onMetricClick}
           />
         </Dimension>
         <Dimension>
@@ -67,6 +74,7 @@ function CountryNarrative({ dimensions, rights, indicators, benchmark }) {
             dimension={dimensions.physint}
             dimensionKey="physint"
             rights={getRightsScoresForDimension(rights, 'physint', true)}
+            onMetricClick={onMetricClick}
           />
         </Dimension>
       </RightsType>
@@ -85,6 +93,7 @@ function CountryNarrative({ dimensions, rights, indicators, benchmark }) {
             rights={getRightsScoresForDimension(rights, 'esr')}
             benchmark={BENCHMARKS.find(s => s.key === benchmark)}
             indicators={Object.values(indicators)}
+            onMetricClick={onMetricClick}
           />
         </Dimension>
       </RightsType>
@@ -99,6 +108,7 @@ function CountryNarrative({ dimensions, rights, indicators, benchmark }) {
 }
 
 CountryNarrative.propTypes = {
+  onMetricClick: PropTypes.func,
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

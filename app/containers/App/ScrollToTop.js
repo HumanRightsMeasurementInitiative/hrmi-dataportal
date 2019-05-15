@@ -4,7 +4,17 @@ import { withRouter } from 'react-router-dom';
 
 class ScrollToTop extends React.Component {
   componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
+    const nextSplitPath = this.props.location.pathname.split('/');
+    const prevSplitPath = prevProps.location.pathname.split('/');
+
+    // eg ['', 'en', 'route', 'param1', 'param2']
+    if (
+      this.props.location.pathname !== prevProps.location.pathname &&
+      (nextSplitPath.length < 4 ||
+        prevSplitPath.length < 4 ||
+        nextSplitPath[2] !== prevSplitPath[2] ||
+        nextSplitPath[3] !== prevSplitPath[3])
+    ) {
       window.scrollTo(0, 0);
     }
   }

@@ -30,6 +30,7 @@ function CountryReport({
   benchmark,
   indicators,
   country,
+  onMetricClick,
 }) {
   return (
     <Styled>
@@ -53,6 +54,7 @@ function CountryReport({
         indicators={indicators}
         country={country}
         benchmark={benchmark}
+        onMetricClick={onMetricClick}
       />
     </Styled>
   );
@@ -60,6 +62,7 @@ function CountryReport({
 
 CountryReport.propTypes = {
   countryTitle: PropTypes.string,
+  onMetricClick: PropTypes.func,
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

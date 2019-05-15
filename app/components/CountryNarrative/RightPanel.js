@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 // import styled from 'styled-components';
-import { Heading, Text, Box } from 'grommet';
+import { Heading, Text, Box, Button } from 'grommet';
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
 
@@ -19,14 +19,23 @@ const RightScoreText = props => (
   />
 );
 
-function RightPanel({ right, column, isSubright, columnLo, columnHi }) {
+function RightPanel({
+  right,
+  column,
+  isSubright,
+  columnLo,
+  columnHi,
+  onMetricClick,
+}) {
   const value =
     right.score && right.score[column] && parseFloat(right.score[column]);
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
-      <Heading level={isSubright ? 6 : 5} margin={{ vertical: '2px' }}>
-        <FormattedMessage {...rootMessages['rights-short'][right.key]} />
-      </Heading>
+      <Button onClick={() => onMetricClick(right.key)}>
+        <Heading level={isSubright ? 6 : 5} margin={{ vertical: '2px' }}>
+          <FormattedMessage {...rootMessages['rights-short'][right.key]} />
+        </Heading>
+      </Button>
       {right.type === 'esr' && (
         <BarHorizontal
           level={isSubright ? 3 : 2}
@@ -50,6 +59,7 @@ function RightPanel({ right, column, isSubright, columnLo, columnHi }) {
           minValue={0}
           maxValue={10}
           data={right}
+          noData={!value}
         />
       )}
       <RightScoreText color={`${right.dimension}Dark`}>
@@ -59,6 +69,7 @@ function RightPanel({ right, column, isSubright, columnLo, columnHi }) {
   );
 }
 RightPanel.propTypes = {
+  onMetricClick: PropTypes.func,
   right: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   column: PropTypes.string,
   isSubright: PropTypes.bool,

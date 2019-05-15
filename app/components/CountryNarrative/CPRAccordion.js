@@ -10,7 +10,7 @@ import Accordion from './Accordion';
 import DimensionPanel from './DimensionPanel';
 import RightPanel from './RightPanel';
 
-function CPRAccordion({ dimension, dimensionKey, rights }) {
+function CPRAccordion({ dimension, dimensionKey, rights, onMetricClick }) {
   const parentRights = rights.filter(r => typeof r.aggregate === 'undefined');
   const subrights = rights.filter(r => typeof r.aggregate !== 'undefined');
   return (
@@ -24,6 +24,7 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
             column={COLUMNS.CPR.MEAN}
             columnLo={COLUMNS.CPR.LO}
             columnHi={COLUMNS.CPR.HI}
+            onMetricClick={onMetricClick}
           />
         }
         content={
@@ -41,6 +42,7 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
                         column={COLUMNS.CPR.MEAN}
                         columnLo={COLUMNS.CPR.LO}
                         columnHi={COLUMNS.CPR.HI}
+                        onMetricClick={onMetricClick}
                       />
                       <Box pad="medium" />
                     </Box>
@@ -57,6 +59,7 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
                           column={COLUMNS.CPR.MEAN}
                           columnLo={COLUMNS.CPR.LO}
                           columnHi={COLUMNS.CPR.HI}
+                          onMetricClick={onMetricClick}
                         />
                       }
                       content={
@@ -73,6 +76,7 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
                                 columnLo={COLUMNS.CPR.LO}
                                 columnHi={COLUMNS.CPR.HI}
                                 isSubright
+                                onMetricClick={onMetricClick}
                               />
                               <Box pad="medium" />
                             </Box>
@@ -91,6 +95,7 @@ function CPRAccordion({ dimension, dimensionKey, rights }) {
 }
 
 CPRAccordion.propTypes = {
+  onMetricClick: PropTypes.func,
   dimensionKey: PropTypes.string,
   dimension: PropTypes.object,
   rights: PropTypes.array,

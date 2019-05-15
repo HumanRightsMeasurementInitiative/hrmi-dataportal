@@ -76,7 +76,7 @@ function CountryPeople({ data, countryTitle }) {
       </div>
       {data &&
         data.map(dim => (
-          <div>
+          <div key={dim.key}>
             <StyledDimensionHeading>
               <FormattedMessage {...rootMessages.dimensions[dim.key]} />
             </StyledDimensionHeading>
@@ -99,6 +99,7 @@ function CountryPeople({ data, countryTitle }) {
                         .sort((a, b) => (a.proportion > b.proportion ? -1 : 1))
                         .map(s => (
                           <Tag
+                            key={s.people_code}
                             opacity={scaleOpacity(s.proportion)}
                             size={scaleFont(s.proportion) * MAX_SIZE}
                             color={`${i.dimension}Cloud`}
