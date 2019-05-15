@@ -22,6 +22,7 @@ import {
   SET_STANDARD,
   SET_BENCHMARK,
   SET_TAB,
+  SET_MODALTAB,
 } from './constants';
 
 /**
@@ -140,6 +141,12 @@ export function setBenchmark(value) {
 export function setTab(value) {
   return {
     type: SET_TAB,
+    value,
+  };
+}
+export function setModalTab(value) {
+  return {
+    type: SET_MODALTAB,
     value,
   };
 }

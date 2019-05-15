@@ -40,8 +40,6 @@ import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 
-import messages from './messages';
-
 const Header = styled.div``;
 const HeaderCategories = styled(Box)``;
 const CategoryLink = styled(Button)``;
@@ -101,14 +99,14 @@ export function PathCountry({
         {match.params.metric && (
           <Layer
             full
-            margin="medium"
+            margin="large"
             onEsc={() => onCloseMetricOverlay(countryCode)}
             onClickOutside={() => onCloseMetricOverlay(countryCode)}
           >
             <CountryMetric
               metricCode={match.params.metric}
               countryCode={countryCode}
-              onCloseOverlay={() => onCloseMetricOverlay(countryCode)}
+              base="country"
             />
           </Layer>
         )}
@@ -146,7 +144,7 @@ export function PathCountry({
           activeIndex={tabIndex}
           onActive={index => onTabClick(index)}
         >
-          <Tab title={intl.formatMessage(messages.tabs.report)}>
+          <Tab title={intl.formatMessage(rootMessages.tabs.report)}>
             <CountryReport
               countryTitle={countryTitle}
               dimensions={dimensions}
@@ -161,11 +159,13 @@ export function PathCountry({
             />
           </Tab>
           {hasCPR(dimensions) && (
-            <Tab title={intl.formatMessage(messages.tabs['people-at-risk'])}>
+            <Tab
+              title={intl.formatMessage(rootMessages.tabs['people-at-risk'])}
+            >
               <CountryPeople data={atRisk} countryTitle={countryTitle} />
             </Tab>
           )}
-          <Tab title={intl.formatMessage(messages.tabs.about)}>
+          <Tab title={intl.formatMessage(rootMessages.tabs.about)}>
             <CountryAbout />
           </Tab>
         </Tabs>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Heading, Text, Box, Button } from 'grommet';
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
@@ -19,6 +19,13 @@ const RightScoreText = props => (
   />
 );
 
+const RightHeading = props => (
+  <Heading level={5} margin={{ vertical: '5px' }} {...props} />
+);
+const StyledRightHeading = styled(RightHeading)`
+  display: inline-block;
+`;
+
 function RightPanel({
   right,
   column,
@@ -31,11 +38,21 @@ function RightPanel({
     right.score && right.score[column] && parseFloat(right.score[column]);
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
-      <Button onClick={() => onMetricClick(right.key)}>
-        <Heading level={isSubright ? 6 : 5} margin={{ vertical: '2px' }}>
-          <FormattedMessage {...rootMessages['rights-short'][right.key]} />
-        </Heading>
-      </Button>
+      <Box direction="row">
+        <Button onClick={() => onMetricClick(right.key)}>
+          <StyledRightHeading
+            level={isSubright ? 6 : 5}
+            margin={{ vertical: '2px' }}
+          >
+            <FormattedMessage {...rootMessages['rights-short'][right.key]} />
+          </StyledRightHeading>
+        </Button>
+        <Button onClick={() => onMetricClick(right.key)}>
+          <Text size="small" margin={{ horizontal: 'small' }}>
+            <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
+          </Text>
+        </Button>
+      </Box>
       {right.type === 'esr' && (
         <BarHorizontal
           level={isSubright ? 3 : 2}

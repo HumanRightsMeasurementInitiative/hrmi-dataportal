@@ -29,6 +29,7 @@ export const SET_SCALE = 'hrmi/App/SET_SCALE';
 export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
 export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 export const SET_TAB = 'hrmi/App/SET_TAB';
+export const SET_MODALTAB = 'hrmi/App/SET_MODALTAB';
 
 export const COLUMNS = {
   CPR: {

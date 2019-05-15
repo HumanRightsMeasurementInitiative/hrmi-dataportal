@@ -41,6 +41,7 @@ import {
   SET_STANDARD,
   SET_BENCHMARK,
   SET_TAB,
+  SET_MODALTAB,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -212,6 +213,15 @@ export function* setTabSaga({ value }) {
   const path = yield select(getRouterPath);
   yield put(push(`${path}?${searchParams.toString()}`));
 }
+export function* setModalTabSaga({ value }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  yield searchParams.set('mtab', value);
+
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(push(`${path}?${searchParams.toString()}`));
+}
 
 export function* selectMetricSaga({ code }) {
   const currentLocale = yield select(getLocale);
@@ -311,5 +321,6 @@ export default function* defaultSaga() {
   yield takeLatest(SET_STANDARD, setStandardSaga);
   yield takeLatest(SET_BENCHMARK, setBenchmarkSaga);
   yield takeLatest(SET_TAB, setTabSaga);
+  yield takeLatest(SET_MODALTAB, setModalTabSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
 }

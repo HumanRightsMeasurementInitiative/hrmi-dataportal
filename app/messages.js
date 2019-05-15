@@ -9,6 +9,20 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
+  tabs: {
+    report: {
+      id: `${scope}.tabs.report`,
+      defaultMessage: 'Report',
+    },
+    'people-at-risk': {
+      id: `${scope}.tabs['people-at-risk']`,
+      defaultMessage: 'People at risk',
+    },
+    about: {
+      id: `${scope}.tabs.about`,
+      defaultMessage: 'About',
+    },
+  },
   charts: {
     noData: {
       id: `${scope}.charts.noData`,

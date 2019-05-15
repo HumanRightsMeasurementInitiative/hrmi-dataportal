@@ -8,6 +8,8 @@ import { DEFAULT_LOCALE, appLocales } from 'i18n';
 import isInteger from 'utils/is-integer';
 import quasiEquals from 'utils/quasi-equals';
 
+import getMetricDetails from 'utils/metric-details';
+
 import { initialState } from './reducer';
 import {
   SCALES,
@@ -82,6 +84,10 @@ export const getRouterMatch = createSelector(
 export const getTabSearch = createSelector(
   getRouterSearchParams,
   search => (search.has('tab') ? parseInt(search.get('tab'), 10) : 0),
+);
+export const getModalTabSearch = createSelector(
+  getRouterSearchParams,
+  search => (search.has('mtab') ? parseInt(search.get('mtab'), 10) : 0),
 );
 export const getScaleSearch = createSelector(
   getRouterSearchParams,
@@ -724,27 +730,26 @@ export const getRightsForCountry = createSelector(
 );
 
 // at risk
-// single country, one or multiple rights, single year
+// single country, multiple rights, single year
 export const getPeopleAtRiskForCountry = createSelector(
   (state, { country }) => country,
-  (state, { metric }) => metric || false,
   getAtRiskData,
   getCPRYear,
-  (country, right, data, year) =>
+  (country, data, year) =>
     data &&
     DIMENSIONS.map(dim => ({
       rights: RIGHTS.reduce((memo, r) => {
         // console.log(r.key)
-        if (right && r.key !== right) return memo;
-        if (!right && typeof r.aggregate !== 'undefined') return memo;
+        if (typeof r.aggregate !== 'undefined') return memo;
         if (r.dimension !== dim.key) return memo;
         // at risk indicators for given right
         // prettier-ignore
         const indicators = AT_RISK_INDICATORS.filter(
-          i => i.right === r.key || (right && i.subright === r.key),
+          i => i.right === r.key,
         );
         const indicatorScores = indicators.reduce(
           (m, i) => ({
+            ...m,
             [i.code]: {
               ...i,
               scores: data.filter(
@@ -756,18 +761,47 @@ export const getPeopleAtRiskForCountry = createSelector(
                   parseInt(d.count, 10) > 0,
               ),
             },
-            ...m,
           }),
           {},
         );
         return {
+          ...memo,
           [r.key]: {
             ...r,
             atRiskData: indicatorScores,
           },
-          ...memo,
         };
       }, {}),
       ...dim,
     })),
+);
+
+export const getPeopleAtRisk = createSelector(
+  (state, { country }) => country,
+  (state, { metric }) => getMetricDetails(metric),
+  getAtRiskData,
+  getCPRYear,
+  (country, right, data, year) => {
+    if (!data || right.metricType !== 'rights') return false;
+    const indicators = AT_RISK_INDICATORS.filter(
+      i => i.right === right.key || i.subright === right.key,
+    );
+    return indicators.reduce(
+      (m, i) => ({
+        ...m,
+        [i.code]: {
+          ...i,
+          scores: data.filter(
+            d =>
+              quasiEquals(d.year, year) &&
+              d.country_code === country &&
+              d.metric_code === i.code &&
+              !quasiEquals(d.people_code, 0) &&
+              parseInt(d.count, 10) > 0,
+          ),
+        },
+      }),
+      {},
+    );
+  },
 );
