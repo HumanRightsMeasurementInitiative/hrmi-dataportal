@@ -29,7 +29,7 @@ export function PathPage({ match, onLoadContent, content, closeTarget }) {
         <title>Page</title>
         <meta name="description" content="Description of Page" />
       </Helmet>
-      <Close closeTarget={closeTarget} />
+      <Close closeTarget={closeTarget} keepTab />
       <div>
         {content && <HTMLWrapper innerhtml={content} />}
         {!content && <Loading />}

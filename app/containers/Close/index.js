@@ -16,7 +16,7 @@ import { navigate } from 'containers/App/actions';
 // import messages from './messages';
 
 // <FormattedMessage {...messages.label} />
-function Close({ onClose, closeTarget }) {
+function Close({ onClose, closeTarget, keepTab = false }) {
   return (
     <Box direction="row" pad="medium" align="center">
       <Box round="full" overflow="hidden">
@@ -24,7 +24,9 @@ function Close({ onClose, closeTarget }) {
           primary
           icon={<CloseIcon />}
           hoverIndicator
-          onClick={() => onClose(closeTarget || '')}
+          onClick={() =>
+            onClose(closeTarget || '', { keepTab, needsLocale: !closeTarget })
+          }
         />
       </Box>
     </Box>
@@ -34,11 +36,12 @@ function Close({ onClose, closeTarget }) {
 Close.propTypes = {
   onClose: PropTypes.func,
   closeTarget: PropTypes.object,
+  keepTab: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onClose: location => dispatch(navigate(location, { needsLocale: false })),
+    onClose: (location, args) => dispatch(navigate(location, args)),
   };
 }
 

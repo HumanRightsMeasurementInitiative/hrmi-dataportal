@@ -217,8 +217,8 @@ Header.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   // navigate to location
-  nav: (location, args) => {
-    dispatch(navigate(location, args));
+  nav: location => {
+    dispatch(navigate(location, { keepTab: true }));
   },
 });
 

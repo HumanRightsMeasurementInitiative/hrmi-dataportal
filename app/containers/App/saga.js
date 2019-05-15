@@ -157,6 +157,7 @@ export function* selectCountrySaga({ code }) {
 
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
+  searchParams.delete('tab');
 
   // change to default standard if not already
   const currentStandard = yield select(getStandardSearch);
@@ -166,9 +167,11 @@ export function* selectCountrySaga({ code }) {
 
   // navigate to country and default standard
   const currentLocale = yield select(getLocale);
-  yield put(
-    push(`/${currentLocale}/country/${code}?${searchParams.toString()}`),
-  );
+
+  const newSearch = searchParams.toString();
+  const search = newSearch.length > 0 ? `?${newSearch}` : '';
+
+  yield put(push(`/${currentLocale}/country/${code}${search}`));
 }
 
 export function* setScaleSaga({ value }) {
@@ -213,7 +216,11 @@ export function* setTabSaga({ value }) {
 export function* selectMetricSaga({ code }) {
   const currentLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
-  yield put(push(`/${currentLocale}/metric/${code}${currentLocation.search}`));
+  const currentSearchParams = new URLSearchParams(currentLocation.search);
+  currentSearchParams.delete('tab');
+  const newSearch = currentSearchParams.toString();
+  const search = newSearch.length > 0 ? `?${newSearch}` : '';
+  yield put(push(`/${currentLocale}/metric/${code}${search}`));
 }
 
 // location can either be string or object { pathname, search}
@@ -224,50 +231,68 @@ export function* navigateSaga({ location, args }) {
       needsLocale: true,
       replace: true,
       deleteParams: false,
+      keepTab: false,
     },
     args || {},
   );
   const currentLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
+  const currentSearchParams = new URLSearchParams(currentLocation.search);
 
-  const newLocation = {
-    pathname: '',
-    search: '',
-  };
+  // the new pathname
+  let newPathname;
+  // the new search (URLSearchParams object)
+  let newSearchParams;
+
+  // if location is string
+  // use as pathname and keep old search
+  // note: location path is expected not to contain the locale
+  if (typeof location === 'string') {
+    newPathname = xArgs.needsLocale ? `/${currentLocale}` : '/';
+    if (location !== '') {
+      newPathname += `/${location}`;
+    }
+    newSearchParams = currentSearchParams;
+  }
 
   // if location is object, use pathname and replace or extend search
   // location path is expected not to contain the locale
-  if (typeof location === 'object') {
+  else if (typeof location === 'object') {
+    // figure out new pathname or keep old one
     if (typeof location.pathname !== 'undefined') {
-      newLocation.pathname = xArgs.needsLocale
+      newPathname = xArgs.needsLocale
         ? `/${currentLocale}${location.pathname}`
         : location.pathname;
+    } else {
+      newPathname = currentLocation.pathname;
     }
-    if (typeof location.search !== 'undefined' || xArgs.deleteParams) {
-      if (xArgs.replace) {
-        newLocation.search = location.search;
-      } else {
-        const currentSearchParams = new URLSearchParams(currentLocation.search);
-        if (typeof location.search !== 'undefined') {
-          const searchParams = new URLSearchParams(location.search);
-          searchParams.forEach((value, key) =>
-            currentSearchParams.set(key, value),
-          );
-        }
-        if (xArgs.deleteParams) {
-          xArgs.deleteParams.forEach(p => currentSearchParams.delete(p));
-        }
-        newLocation.search = `?${currentSearchParams.toString()}`;
+
+    // figure out new search or keep old search
+    if (typeof location.search !== 'undefined') {
+      newSearchParams = new URLSearchParams(location.search);
+      // optionally keep old params
+      if (!xArgs.replace) {
+        newSearchParams.forEach((value, key) =>
+          currentSearchParams.set(key, value),
+        );
+        newSearchParams = currentSearchParams;
       }
+    } else {
+      newSearchParams = currentSearchParams;
     }
-  } else if (typeof location === 'string') {
-    newLocation.pathname = `/${currentLocale}`;
-    if (location !== '') {
-      newLocation.pathname += `/${location}`;
-    }
-    newLocation.search = currentLocation.search;
   }
-  yield put(push(`${newLocation.pathname}${newLocation.search}`));
+
+  // clean up search params
+  if (!xArgs.keepTab) {
+    newSearchParams.delete('tab');
+  }
+  if (xArgs.deleteParams) {
+    xArgs.deleteParams.forEach(p => newSearchParams.delete(p));
+  }
+  // convert to string and append if necessary
+  const newSearch = newSearchParams.toString();
+  const search = newSearch.length > 0 ? `?${newSearch}` : '';
+  yield put(push(`${newPathname}${search}`));
 }
 
 export default function* defaultSaga() {
