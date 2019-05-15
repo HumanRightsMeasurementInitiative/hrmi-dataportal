@@ -37,6 +37,7 @@ import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
 
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
+import { hasCPR } from 'utils/scores';
 
 import messages from './messages';
 
@@ -138,9 +139,11 @@ export function PathCountry({
               benchmark={benchmark}
             />
           </Tab>
-          <Tab title={intl.formatMessage(messages.tabs['people-at-risk'])}>
-            <CountryPeople data={atRisk} countryTitle={countryTitle} />
-          </Tab>
+          {hasCPR(dimensions) && (
+            <Tab title={intl.formatMessage(messages.tabs['people-at-risk'])}>
+              <CountryPeople data={atRisk} countryTitle={countryTitle} />
+            </Tab>
+          )}
           <Tab title={intl.formatMessage(messages.tabs.about)}>
             <CountryAbout />
           </Tab>

@@ -12,6 +12,9 @@ export const getRightsScoresForDimension = (
       (keepSubrights || typeof r.aggregate === 'undefined'),
   );
 
+export const hasCPR = data =>
+  data && data.empowerment && !!data.empowerment.score;
+
 const isDataIncomplete = data => data.hasScoreRights || data.hasScoreIndicators;
 
 const hasDataAlternate = data =>
