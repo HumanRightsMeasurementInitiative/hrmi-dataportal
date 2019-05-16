@@ -10,7 +10,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Helmet } from 'react-helmet';
-import { Layer } from 'grommet';
+import { Layer, Box, Button, Text } from 'grommet';
+import styled from 'styled-components';
 
 import CountryMetric from 'containers/CountryMetric';
 import Close from 'containers/Close';
@@ -29,12 +30,45 @@ import getMetricDetails from 'utils/metric-details';
 
 import { navigate } from 'containers/App/actions';
 
-export function PathMetric({ match, intl, onCloseMetricOverlay }) {
+const HeaderCategories = styled(Box)``;
+const CategoryLink = styled(Button)``;
+
+export function PathMetric({
+  match,
+  intl,
+  onCloseMetricOverlay,
+  onMetricClick,
+}) {
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
   const metricTitle = intl.formatMessage(
     rootMessages[metric.metricType][metric.key],
   );
+
+  const ancestors = [];
+
+  if (metric.metricType === 'rights') {
+    ancestors.push({
+      type: 'dimensions',
+      key: metric.dimension,
+    });
+    if (metric.aggregate) {
+      ancestors.push({
+        type: 'rights-short',
+        key: metric.aggregate,
+      });
+    }
+  }
+  if (metric.metricType === 'indicators') {
+    ancestors.push({
+      type: 'dimensions',
+      key: 'esr',
+    });
+    ancestors.push({
+      type: 'rights-short',
+      key: metric.right,
+    });
+  }
   return (
     <ContentWrap>
       <Helmet>
@@ -57,6 +91,21 @@ export function PathMetric({ match, intl, onCloseMetricOverlay }) {
       )}
       <ContentContainer direction="column" paddingTop>
         <Close topRight />
+        {ancestors.length > 0 && (
+          <HeaderCategories direction="row">
+            <Text size="small">
+              {ancestors.map(ancestor => (
+                <CategoryLink onClick={() => onMetricClick(ancestor.key)}>
+                  <Text margin={{ right: 'xsmall' }}>
+                    {`${intl.formatMessage(
+                      rootMessages[ancestor.type][ancestor.key],
+                    )} >`}
+                  </Text>
+                </CategoryLink>
+              ))}
+            </Text>
+          </HeaderCategories>
+        )}
         <PageTitle>{metricTitle}</PageTitle>
       </ContentContainer>
       <TabContainer
@@ -80,11 +129,13 @@ export function PathMetric({ match, intl, onCloseMetricOverlay }) {
 PathMetric.propTypes = {
   intl: intlShape.isRequired,
   onCloseMetricOverlay: PropTypes.func,
+  onMetricClick: PropTypes.func,
   match: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
+    onMetricClick: code => dispatch(navigate({ pathname: `/metric/${code}` })),
     onCloseMetricOverlay: code =>
       dispatch(
         navigate(
