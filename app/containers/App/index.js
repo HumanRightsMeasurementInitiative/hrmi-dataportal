@@ -54,6 +54,7 @@ const Main = styled.main`
     outline: none;
   }
 `;
+// ${props => console.log(props.theme)}
 
 /**
  * routes: /[locale] +
