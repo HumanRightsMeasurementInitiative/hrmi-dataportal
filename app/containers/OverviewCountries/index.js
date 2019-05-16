@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 // import styled from 'styled-components';
 // import { Paragraph, Text, Button, Heading, InfiniteScroll, ResponsiveContext } from 'grommet';
-import { Box, Button, InfiniteScroll } from 'grommet';
+import { Box, Button } from 'grommet';
 import { FormClose } from 'grommet-icons';
 
 import { getRegionSearch, getIncomeSearch } from 'containers/App/selectors';
@@ -63,9 +63,9 @@ export function OverviewCountries({
       )}
       {sortedCountries && (
         <Box direction="row" wrap width="100%">
-          <InfiniteScroll items={sortedCountries} step={40}>
-            {c => <CountryPreview key={c.country_code} country={c} />}
-          </InfiniteScroll>
+          {sortedCountries.map(c => (
+            <CountryPreview key={c.country_code} country={c} />
+          ))}
         </Box>
       )}
     </Box>
