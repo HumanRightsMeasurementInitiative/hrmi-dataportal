@@ -6,11 +6,15 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.containers.Overview';
+export const scope = 'hrmi.components.Overview';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the Overview container!',
+  aboveTitle: {
+    id: `${scope}.aboveTitle`,
+    defaultMessage: 'Human rights performance overview',
+  },
+  title: {
+    id: `${scope}.title`,
+    defaultMessage: '{number} countries',
   },
 });

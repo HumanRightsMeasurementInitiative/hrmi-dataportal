@@ -7,110 +7,109 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Heading } from 'grommet';
 import styled from 'styled-components';
-import { Button, Heading, InfiniteScroll } from 'grommet';
-import { FormClose } from 'grommet-icons';
 
-import {
-  getCountriesFiltered,
-  getRegionSearch,
-  getIncomeSearch,
-} from 'containers/App/selectors';
-import { navigate } from 'containers/App/actions';
+import { getCountriesFiltered } from 'containers/App/selectors';
 
-import CountryPreview from 'containers/CountryPreview';
+import OverviewMetrics from 'containers/OverviewMetrics';
+import OverviewCountries from 'containers/OverviewCountries';
+import TabContainer from 'containers/TabContainer';
 
 import rootMessages from 'messages';
 
-const Styled = styled.div``;
+// styles
+import ContentWrap from 'styled/ContentWrap';
+import ContentContainer from 'styled/ContentContainer';
+import PageTitle from 'styled/PageTitle';
 
-export function PathOverview({
-  countries,
-  regionFilterValue,
-  incomeFilterValue,
-  onRemoveFilter,
-  intl,
-}) {
-  const sortedCountries =
-    countries &&
-    countries.sort((a, b) =>
-      intl.formatMessage(rootMessages.countries[a.country_code]) <
-      intl.formatMessage(rootMessages.countries[b.country_code])
-        ? -1
-        : 1,
-    );
+import messages from './messages';
+
+const SuperHeading = props => <Heading level={4} {...props} />;
+const SuperHeadingStyled = styled(SuperHeading)`
+  font-weight: normal;
+  margin-bottom: 5px;
+  margin-top: 0;
+`;
+
+export function PathOverview({ countries, intl }) {
   return (
-    <Styled>
-      {countries && (
-        <div>
-          <Heading>{`${countries.length} countries`}</Heading>
-        </div>
-      )}
-      <div>
-        {regionFilterValue && (
+    <ContentWrap>
+      <ContentContainer paddingTop>
+        {countries && (
           <span>
-            <Button
-              primary
-              icon={<FormClose />}
-              reverse
-              onClick={() => onRemoveFilter('region')}
-              label={intl.formatMessage(
-                rootMessages.regions[regionFilterValue],
-              )}
-            />
+            <SuperHeadingStyled>
+              <FormattedMessage {...messages.aboveTitle} />
+            </SuperHeadingStyled>
+            <PageTitle>
+              <FormattedMessage
+                {...messages.title}
+                values={{ number: countries.length }}
+              />
+            </PageTitle>
           </span>
         )}
-        {incomeFilterValue && (
-          <span>
-            <Button
-              primary
-              icon={<FormClose />}
-              reverse
-              onClick={() => onRemoveFilter('income')}
-              label={intl.formatMessage(rootMessages.income[incomeFilterValue])}
-            />
-          </span>
-        )}
-      </div>
-      {sortedCountries && (
-        <InfiniteScroll items={sortedCountries} step={20}>
-          {c => <CountryPreview key={c.country_code} country={c} />}
-        </InfiniteScroll>
-      )}
-    </Styled>
+      </ContentContainer>
+      <TabContainer
+        tabs={[
+          {
+            key: 'countries',
+            title: intl.formatMessage(rootMessages.tabs.countries),
+            content: <OverviewCountries countries={countries} />,
+          },
+          {
+            key: 'metrics',
+            title: intl.formatMessage(rootMessages.tabs.metrics),
+            content: <OverviewMetrics />,
+          },
+        ]}
+      />
+    </ContentWrap>
   );
 }
 
 PathOverview.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  onRemoveFilter: PropTypes.func,
-  regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   countries: state => getCountriesFiltered(state),
-  regionFilterValue: state => getRegionSearch(state),
-  incomeFilterValue: state => getIncomeSearch(state),
 });
-
-export function mapDispatchToProps(dispatch) {
-  return {
-    onRemoveFilter: key =>
-      dispatch(
-        navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
-      ),
-  };
-}
 
 const withConnect = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  null,
 );
 
 export default compose(withConnect)(injectIntl(PathOverview));
+
+// <ResponsiveContext.Consumer>
+//   {size => {
+//     console.log('RC', size);
+//     return (
+//       <B>
+//         <Heading>{`${countries.length} countries`}</Heading>
+//         <Heading level={1}>Heading 1</Heading>
+//         <Heading level={2}>Heading 2</Heading>
+//         <Heading level={3}>Heading 3</Heading>
+//         <Heading level={4}>Heading 4</Heading>
+//         <Heading level={5}>Heading 5</Heading>
+//         <Heading level={6}>Heading 6</Heading>
+//         <Text as="div" size="xxlarge">Text xxlarge</Text>
+//         <Text as="div" size="xlarge">Text xlarge</Text>
+//         <Text as="div" size="large">Text large</Text>
+//         <Text as="div" size="medium">Text medium</Text>
+//         <Text>Text</Text>
+//         <Text as="div" size="small">Text small</Text>
+//         <Text as="div" size="xsmall">Text xsmall</Text>
+//         <Paragraph size="small">Paragraph small</Paragraph>
+//         <Paragraph size="medium">Paragraph medium</Paragraph>
+//         <Paragraph margin="none">Paragraph</Paragraph>
+//       </B>
+//     );
+//   }}
+// </ResponsiveContext.Consumer>

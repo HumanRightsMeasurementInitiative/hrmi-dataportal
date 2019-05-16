@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import styled, { css } from 'styled-components';
 import { Box, Button } from 'grommet';
 import { Close as CloseIcon } from 'grommet-icons';
 // import { FormattedMessage } from 'react-intl';
@@ -15,15 +16,26 @@ import { Close as CloseIcon } from 'grommet-icons';
 import { navigate } from 'containers/App/actions';
 // import messages from './messages';
 
+const Styled = styled(Box)`
+  ${props =>
+    props.topRight &&
+    css`
+      position: absolute;
+      top: 0;
+      right: 0;
+    `}
+`;
+
 // <FormattedMessage {...messages.label} />
-function Close({ onClose, closeTarget, keepTab = false, onClick }) {
+function Close({ onClose, closeTarget, keepTab = false, onClick, topRight }) {
   return (
-    <Box direction="row" pad="medium" align="center">
+    <Styled direction="row" pad="medium" align="center" topRight={topRight}>
       <Box round="full" overflow="hidden">
         <Button
           primary
+          color="dark-2"
           icon={<CloseIcon />}
-          hoverIndicator
+          hoverIndicator={{ background: 'dark-3' }}
           onClick={() =>
             // prettier-ignore
             onClick
@@ -35,7 +47,7 @@ function Close({ onClose, closeTarget, keepTab = false, onClick }) {
           }
         />
       </Box>
-    </Box>
+    </Styled>
   );
 }
 
@@ -44,6 +56,7 @@ Close.propTypes = {
   onClose: PropTypes.func,
   closeTarget: PropTypes.object,
   keepTab: PropTypes.bool,
+  topRight: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {

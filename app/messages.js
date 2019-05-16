@@ -10,6 +10,14 @@ export const scope = 'hrmi';
 
 export default defineMessages({
   tabs: {
+    countries: {
+      id: `${scope}.tabs.countries`,
+      defaultMessage: 'Explore by country',
+    },
+    metrics: {
+      id: `${scope}.tabs.metrics`,
+      defaultMessage: 'Explore by metric',
+    },
     report: {
       id: `${scope}.tabs.report`,
       defaultMessage: 'Report',

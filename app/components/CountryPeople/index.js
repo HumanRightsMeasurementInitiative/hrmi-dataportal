@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Heading, Text } from 'grommet';
+import { Heading, Text, Box } from 'grommet';
 
 import rootMessages from 'messages';
 import { FormattedMessage } from 'react-intl';
@@ -15,10 +15,9 @@ import { FormattedMessage } from 'react-intl';
 import WordCloud from 'components/WordCloud';
 import messages from './messages';
 
-const Styled = styled.div`
-  max-width: 1000px;
-  padding: 0 50px;
+const Styled = styled(Box)`
   margin: 0 auto;
+  max-width: 1000px;
 `;
 
 const DimensionHeading = props => (
@@ -36,7 +35,7 @@ const StyledRightHeading = styled(RightHeading)`
 
 function CountryPeople({ data, countryTitle }) {
   return (
-    <Styled>
+    <Styled pad="medium">
       <Heading level={2}>
         <FormattedMessage
           {...messages.title}

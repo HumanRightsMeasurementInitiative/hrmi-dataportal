@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Heading, Box, Text, Button, Tabs, Tab, Layer } from 'grommet';
+import { Box, Text, Button, Layer } from 'grommet';
 
 import rootMessages from 'messages';
 
@@ -21,6 +21,11 @@ import Close from 'containers/Close';
 import CountryReport from 'components/CountryReport';
 import CountryPeople from 'components/CountryPeople';
 import CountryAbout from 'components/CountryAbout';
+import TabContainer from 'containers/TabContainer';
+
+import ContentWrap from 'styled/ContentWrap';
+import ContentContainer from 'styled/ContentContainer';
+import PageTitle from 'styled/PageTitle';
 
 import {
   getDimensionsForCountry,
@@ -31,22 +36,16 @@ import {
   getStandardSearch,
   getBenchmarkSearch,
   getPeopleAtRiskForCountry,
-  getTabSearch,
 } from 'containers/App/selectors';
 
-import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
+import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 
-const Header = styled.div``;
 const HeaderCategories = styled(Box)``;
 const CategoryLink = styled(Button)``;
-const HeaderTitle = styled.div``;
-const Body = styled.div``;
-// const MainColumn = styled.div``;
-// const Sidebar = styled.div``;
 
 const DEPENDENCIES = [
   'countries',
@@ -69,8 +68,6 @@ export function PathCountry({
   scale,
   benchmark,
   atRisk,
-  tabIndex,
-  onTabClick,
   onMetricClick,
   onCloseMetricOverlay,
 }) {
@@ -90,27 +87,27 @@ export function PathCountry({
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
 
   return (
-    <div>
+    <ContentWrap>
       <Helmet>
         <title>{countryTitle}</title>
         <meta name="description" content="Description of Country page" />
       </Helmet>
-      <Header>
-        {match.params.metric && (
-          <Layer
-            full
-            margin="large"
-            onEsc={() => onCloseMetricOverlay(countryCode)}
-            onClickOutside={() => onCloseMetricOverlay(countryCode)}
-          >
-            <CountryMetric
-              metricCode={match.params.metric}
-              countryCode={countryCode}
-              base="country"
-            />
-          </Layer>
-        )}
-        <Close />
+      {match.params.metric && (
+        <Layer
+          full
+          margin="large"
+          onEsc={() => onCloseMetricOverlay(countryCode)}
+          onClickOutside={() => onCloseMetricOverlay(countryCode)}
+        >
+          <CountryMetric
+            metricCode={match.params.metric}
+            countryCode={countryCode}
+            base="country"
+          />
+        </Layer>
+      )}
+      <ContentContainer direction="column" paddingTop>
+        <Close topRight />
         <HeaderCategories direction="row">
           <Text size="small">
             <CategoryLink
@@ -134,43 +131,43 @@ export function PathCountry({
             </CategoryLink>
           </Text>
         </HeaderCategories>
-        <HeaderTitle>
-          <Heading margin={{ top: '5px' }}>{countryTitle}</Heading>
-        </HeaderTitle>
-      </Header>
-      <Body>
-        <Tabs
-          justify="start"
-          activeIndex={tabIndex}
-          onActive={index => onTabClick(index)}
-        >
-          <Tab title={intl.formatMessage(rootMessages.tabs.report)}>
-            <CountryReport
-              countryTitle={countryTitle}
-              dimensions={dimensions}
-              rights={rights}
-              indicators={indicators}
-              country={country}
-              scale={scale}
-              benchmark={benchmark}
-              onMetricClick={(metric, tab) =>
-                onMetricClick(countryCode, metric, tab)
-              }
-            />
-          </Tab>
-          {hasCPR(dimensions) && (
-            <Tab
-              title={intl.formatMessage(rootMessages.tabs['people-at-risk'])}
-            >
+        <PageTitle>{countryTitle}</PageTitle>
+      </ContentContainer>
+      <TabContainer
+        tabs={[
+          {
+            key: 'report',
+            title: intl.formatMessage(rootMessages.tabs.report),
+            content: (
+              <CountryReport
+                countryTitle={countryTitle}
+                dimensions={dimensions}
+                rights={rights}
+                indicators={indicators}
+                country={country}
+                scale={scale}
+                benchmark={benchmark}
+                onMetricClick={(metric, tab) =>
+                  onMetricClick(countryCode, metric, tab)
+                }
+              />
+            ),
+          },
+          {
+            key: 'atrisk',
+            title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+            content: hasCPR(dimensions) && (
               <CountryPeople data={atRisk} countryTitle={countryTitle} />
-            </Tab>
-          )}
-          <Tab title={intl.formatMessage(rootMessages.tabs.about)}>
-            <CountryAbout />
-          </Tab>
-        </Tabs>
-      </Body>
-    </div>
+            ),
+          },
+          {
+            key: 'about',
+            title: intl.formatMessage(rootMessages.tabs.about),
+            content: <CountryAbout />,
+          },
+        ]}
+      />
+    </ContentWrap>
   );
 }
 
@@ -179,7 +176,6 @@ PathCountry.propTypes = {
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
-  onTabClick: PropTypes.func,
   onMetricClick: PropTypes.func,
   onCloseMetricOverlay: PropTypes.func,
   match: PropTypes.object,
@@ -191,7 +187,6 @@ PathCountry.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -206,7 +201,6 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
-  tabIndex: state => getTabSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -225,7 +219,6 @@ export function mapDispatchToProps(dispatch) {
         ),
       ),
     onClose: () => dispatch(navigate('')),
-    onTabClick: index => dispatch(setTab(index)),
     onMetricClick: (country, metric, tab = 0) =>
       dispatch(
         navigate(

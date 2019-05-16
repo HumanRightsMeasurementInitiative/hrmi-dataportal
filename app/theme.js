@@ -1,26 +1,31 @@
+import { css } from 'styled-components';
 // theme defining breakpoints, colors, sizes, grid gutters
 // breakpoints:
-// < 720px (45em): extra-small (mobile)
-// > 960px (60em): small (tablet portrait)
-// >= 1152px (72em): medium (tablet landscape, desktop)
+// < 720px (45em): small (mobile)
+// < 960px (60em): medium (tablet portrait)
+// >= 961px (72em): large (tablet landscape, desktop)
 const myBreakpoints = [720, 960, 1152];
 // theme breakpoints
 export const BREAKPOINTS = {
-  MOBILE: -1,
   SMALL: 0,
   MEDIUM: 1,
   LARGE: 2,
 };
+const text = {
+  xxlarge: { size: '30px', height: '36px' },
+  xlarge: { size: '24px', height: '30px' },
+  large: { size: '20px', height: '25px' },
+  medium: { size: '16px', height: '22px', maxWidth: '348px' },
+};
 const theme = {
   // used for grommet
-  accordion: {
-    border: {
-      color: 'transparent',
-    },
-  },
+  text,
+  paragraph: text,
   global: {
     font: {
       family: 'Source Sans Pro',
+      height: '22px',
+      size: '16px',
     },
     colors: {
       black: '#09052F',
@@ -45,15 +50,15 @@ const theme = {
       esrDark: '#027AC0', // AA
       esrCloud: '#004f8f', // AA
     },
-    size: {
-      full: '100%',
-      large: '768px',
-      medium: '384px',
-      small: '192px',
-      xlarge: '1152px',
-      xsmall: '96px',
-      xxlarge: '1536px',
-      xxsmall: '48px',
+    // margins & paddings
+    edgeSize: {
+      hair: '1px',
+      xxsmall: '3px',
+      xsmall: '6px',
+      small: '12px',
+      medium: '24px',
+      large: '48px',
+      xlarge: '96px',
     },
     breakpoints: {
       small: {
@@ -65,31 +70,53 @@ const theme = {
       large: {
         value: myBreakpoints[2],
       },
+      xlarge: {},
     },
   },
-  breakpoints: myBreakpoints.map(bp => `${bp}px`), // used for rebass/grid, also hidden/visible
-  space: [0, 6, 12, 18, 24], // used for rebass/grid
-  maxWidth: '940px',
-  sizes: ['12px', '14px', '18.66px', '28px', '34px'],
-  colors: {
-    white: '#fff',
-    black: '#09052F',
-    hover: '#2956D1',
-    hoverLight: '#EFEFEF',
-    darkBlue: '#3A5161',
-    dark: '#192E3A', // darkest >>>
-    dark2: '#2C3F4B',
-    dark3: '#667884', // AA
-    dark4: '#8896A0', // AA large
-    light5: '#D0D2D3',
-    light4: '#D7D9DB',
-    light3: '#E8EAE9',
-    light2: '#EFEFEF',
-    light: '#F2F3F4', // <<< lightest
-    highlight: '#FDB933',
-    highlight2: '#DB7E00', // AA large
-    highlight3: '#AD6500', // AA
+  tab: {
+    pad: {
+      vertical: 'none',
+      bottom: '1px',
+    },
+    margin: {
+      vertical: 'none',
+    },
+    extend: props => css`
+      font-weight: ${props.theme.columnHeader.fontWeight};
+    `,
   },
+  tabs: {
+    header: {
+      extend: props => css`
+        padding-left: ${props.theme.global.edgeSize.medium};
+        border-bottom: ${props.theme.columnHeader.border};
+      `,
+    },
+  },
+  columnHeader: {
+    border: '1px solid',
+    fontWeight: 600,
+  },
+  maxWidth: '1200px',
+  // colors: {
+  //   white: '#fff',
+  //   black: '#09052F',
+  //   hover: '#2956D1',
+  //   hoverLight: '#EFEFEF',
+  //   darkBlue: '#3A5161',
+  //   dark: '#192E3A', // darkest >>>
+  //   dark2: '#2C3F4B',
+  //   dark3: '#667884', // AA
+  //   dark4: '#8896A0', // AA large
+  //   light5: '#D0D2D3',
+  //   light4: '#D7D9DB',
+  //   light3: '#E8EAE9',
+  //   light2: '#EFEFEF',
+  //   light: '#F2F3F4', // <<< lightest
+  //   highlight: '#FDB933',
+  //   highlight2: '#DB7E00', // AA large
+  //   highlight3: '#AD6500', // AA
+  // },
 };
 
 export const ICON_SIZE = 38; // default size

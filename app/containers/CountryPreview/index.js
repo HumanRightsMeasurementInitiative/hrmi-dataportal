@@ -48,7 +48,7 @@ export function CountryPreview({
   const esrScore = dimensions && dimensions.esr.score;
   // country && dimensions && console.log(country.country_code, esrScore, dimensions.esr);
   return (
-    <Box pad="medium">
+    <Box pad="small" width="280px">
       {country && (
         <Button onClick={() => onSelectCountry(country.country_code)}>
           <strong>

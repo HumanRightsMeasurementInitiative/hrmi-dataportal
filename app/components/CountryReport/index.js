@@ -10,16 +10,15 @@ import styled from 'styled-components';
 
 import { FormattedMessage } from 'react-intl';
 
-import { Heading } from 'grommet';
+import { Heading, Box } from 'grommet';
 
 import CountrySummaryChart from 'components/CountrySummaryChart';
 import CountryNarrative from 'components/CountryNarrative';
 import messages from './messages';
 
-const Styled = styled.div`
-  max-width: 1000px;
-  padding: 0 50px;
+const Styled = styled(Box)`
   margin: 0 auto;
+  max-width: 1000px;
 `;
 
 function CountryReport({
@@ -33,7 +32,7 @@ function CountryReport({
   onMetricClick,
 }) {
   return (
-    <Styled>
+    <Styled pad="medium">
       <Heading level={2}>
         <FormattedMessage
           {...messages.title}
