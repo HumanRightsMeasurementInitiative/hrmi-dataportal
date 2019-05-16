@@ -11,7 +11,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Button, Heading } from 'grommet';
+import { Button, Heading, InfiniteScroll } from 'grommet';
 import { FormClose } from 'grommet-icons';
 
 import {
@@ -75,10 +75,11 @@ export function PathOverview({
           </span>
         )}
       </div>
-      {sortedCountries &&
-        sortedCountries.map(c => (
-          <CountryPreview key={c.country_code} country={c} />
-        ))}
+      {sortedCountries && (
+        <InfiniteScroll items={sortedCountries} step={20}>
+          {c => <CountryPreview key={c.country_code} country={c} />}
+        </InfiniteScroll>
+      )}
     </Styled>
   );
 }
