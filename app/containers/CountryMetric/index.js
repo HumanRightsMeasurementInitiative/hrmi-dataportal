@@ -71,7 +71,7 @@ export function CountryMetric({
           onClose(base, base === 'country' ? countryCode : metricCode)
         }
       />
-      <Heading margin={{ top: '5px', bottom: '5px;' }}>
+      <Heading level="2" margin={{ top: '5px', bottom: '5px;' }}>
         <Button
           onClick={() => {
             if (base === 'country') {
@@ -84,7 +84,7 @@ export function CountryMetric({
           {countryTitle}
         </Button>
       </Heading>
-      <Heading margin={{ top: '5px' }}>
+      <Heading level="2" margin={{ top: '5px' }}>
         <Button
           onClick={() => {
             if (base === 'metric') {

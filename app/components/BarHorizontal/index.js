@@ -58,14 +58,17 @@ function BarHorizontal({
   level = 1,
   intl,
   data,
+  omitMinMaxLabels,
 }) {
   return (
     <Wrapper>
-      <MinLabel>
-        <Text size="small" alignSelf="end">
-          {minValue}
-        </Text>
-      </MinLabel>
+      {!omitMinMaxLabels && (
+        <MinLabel>
+          <Text size="small" alignSelf="end">
+            {minValue}
+          </Text>
+        </MinLabel>
+      )}
       <BarWrapper>
         <BarReference height={HEIGHT[level]} noData={!value}>
           {value && (
@@ -75,7 +78,7 @@ function BarHorizontal({
               color={color}
             />
           )}
-          {!value && level < 3 && (
+          {!value && data && level < 3 && (
             <NoData level={level}>
               <Text size="small">
                 {getNoDataMessage(intl, data)}
@@ -85,9 +88,13 @@ function BarHorizontal({
           )}
         </BarReference>
       </BarWrapper>
-      <MaxLabel>
-        <Text size="small">{unit ? `${maxValue}${unit}` : `${maxValue}`}</Text>
-      </MaxLabel>
+      {!omitMinMaxLabels && (
+        <MaxLabel>
+          <Text size="small">
+            {unit ? `${maxValue}${unit}` : `${maxValue}`}
+          </Text>
+        </MaxLabel>
+      )}
     </Wrapper>
   );
 }
@@ -100,6 +107,7 @@ BarHorizontal.propTypes = {
   minValue: PropTypes.number,
   maxValue: PropTypes.number,
   level: PropTypes.number,
+  omitMinMaxLabels: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

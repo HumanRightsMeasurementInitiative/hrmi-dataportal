@@ -17,11 +17,11 @@ const Wrapper = props => (
 
 const MinLabel = props => <Box {...props} width="25px" pad="xxsmall" />;
 const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
-const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
+const BarWrapper = props => <Box {...props} fill="horizontal" />;
 
 // level:
 const HEIGHT = [50, 35, 20, 14];
-const MARK_WIDTH = [8, 4, 2, 1];
+const MARK_WIDTH = [4, 4, 3, 3];
 
 const BarAnchor = styled.div`
   position: relative;
@@ -102,14 +102,17 @@ function BarBulletHorizontal({
   noData,
   unit,
   level = 1,
+  omitMinMaxLabels,
 }) {
   return (
     <Wrapper>
-      <MinLabel>
-        <Text size="small" alignSelf="end">
-          {minValue}
-        </Text>
-      </MinLabel>
+      {!omitMinMaxLabels && (
+        <MinLabel>
+          <Text size="small" alignSelf="end">
+            {minValue}
+          </Text>
+        </MinLabel>
+      )}
       <BarWrapper>
         <BarAnchor height={HEIGHT[level]}>
           {!noData && <BarReference />}
@@ -159,9 +162,13 @@ function BarBulletHorizontal({
           )}
         </BarAnchor>
       </BarWrapper>
-      <MaxLabel>
-        <Text size="small">{unit ? `${maxValue}${unit}` : `${maxValue}`}</Text>
-      </MaxLabel>
+      {!omitMinMaxLabels && (
+        <MaxLabel>
+          <Text size="small">
+            {unit ? `${maxValue}${unit}` : `${maxValue}`}
+          </Text>
+        </MaxLabel>
+      )}
     </Wrapper>
   );
 }
@@ -177,6 +184,7 @@ BarBulletHorizontal.propTypes = {
   band: PropTypes.object,
   multiple: PropTypes.bool,
   level: PropTypes.number,
+  omitMinMaxLabels: PropTypes.bool,
 };
 
 export default BarBulletHorizontal;
