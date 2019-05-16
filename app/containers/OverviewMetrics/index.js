@@ -5,50 +5,104 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
-// import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-// import styled from 'styled-components';
-// import { Paragraph, Text, Button, Heading, InfiniteScroll, ResponsiveContext } from 'grommet';
+import styled from 'styled-components';
+import { Button, Heading, Box } from 'grommet';
 // import { FormClose } from 'grommet-icons';
 
-// import {
-//   getCountriesFiltered,
-//   getRegionSearch,
-//   getIncomeSearch,
-// } from 'containers/App/selectors';
-import { navigate } from 'containers/App/actions';
+import { getScaleSearch } from 'containers/App/selectors';
+import { selectMetric } from 'containers/App/actions';
+import { RIGHTS_TYPES, DIMENSIONS, RIGHTS } from 'containers/App/constants';
+import rootMessages from 'messages';
 
-// import rootMessages from 'messages';
+const Option = styled(Button)``;
 
-export function OverviewMetrics() {
-  return <div>TODO: Metrics</div>;
+export function OverviewMetrics({ scale, onSelectMetric }) {
+  return (
+    <Box pad="medium">
+      {RIGHTS_TYPES.map(type => {
+        const dimensions = DIMENSIONS.filter(d => d.type === type);
+        return (
+          <Box key={type} pad={{ bottom: 'medium', top: 'none' }}>
+            <Heading
+              level={6}
+              margin={{
+                top: 'none',
+                bottom: 'xsmall',
+                horizontal: 'none',
+              }}
+            >
+              <FormattedMessage {...rootMessages['rights-types'][type]} />
+            </Heading>
+            {dimensions.map(d => {
+              const rights =
+                scale === 'r' &&
+                RIGHTS.filter(
+                  r =>
+                    r.dimension === d.key && typeof r.aggregate === 'undefined',
+                );
+              return (
+                <Box key={d.key} pad={{ bottom: 'xsmall', top: 'none' }}>
+                  <Option
+                    plain
+                    onClick={() => {
+                      onSelectMetric(d.key);
+                    }}
+                  >
+                    <Heading
+                      level={4}
+                      margin={{
+                        vertical: 'xsmall',
+                        horizontal: 'none',
+                      }}
+                    >
+                      <FormattedMessage {...rootMessages.dimensions[d.key]} />
+                    </Heading>
+                  </Option>
+                  {rights &&
+                    rights.map(r => (
+                      <div key={r.key}>
+                        <Option
+                          plain
+                          onClick={() => {
+                            onSelectMetric(r.key);
+                          }}
+                        >
+                          <FormattedMessage {...rootMessages.rights[r.key]} />
+                        </Option>
+                      </div>
+                    ))}
+                </Box>
+              );
+            })}
+          </Box>
+        );
+      })}
+    </Box>
+  );
 }
 
 OverviewMetrics.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
+  scale: PropTypes.string,
+  onSelectMetric: PropTypes.func,
   // countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  // onRemoveFilter: PropTypes.func,
   // regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   // incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  // intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   // countries: state => getCountriesFiltered(state),
   // regionFilterValue: state => getRegionSearch(state),
-  // incomeFilterValue: state => getIncomeSearch(state),
+  scale: state => getScaleSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onRemoveFilter: key =>
-      dispatch(
-        navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
-      ),
+    onSelectMetric: metric => dispatch(selectMetric(metric)),
   };
 }
 
@@ -57,4 +111,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(OverviewMetrics));
+export default compose(withConnect)(OverviewMetrics);
