@@ -7,10 +7,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import { compose } from 'redux';
 import styled from 'styled-components';
 import { Box, Text, Button, Layer } from 'grommet';
 

@@ -8,12 +8,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Heading, Text } from 'grommet';
-
-import Close from 'containers/Close';
 
 import {
   getESRDimensionScores,
@@ -47,17 +43,6 @@ export function MetricDimension({ onLoadData, metric, scores, benchmark }) {
     );
   return (
     <div>
-      <Helmet>
-        <title>MetricDimension</title>
-        <meta name="description" content="Description of MetricDimension" />
-      </Helmet>
-      <Close />
-      <Text size="small">
-        <FormattedMessage {...rootMessages['metric-types'].dimension} />
-      </Text>
-      <Heading margin={{ top: '5px' }}>
-        <FormattedMessage {...rootMessages.dimensions[metric.key]} />
-      </Heading>
       {sortedScores &&
         sortedScores.map(s => (
           <div key={s.country_code}>

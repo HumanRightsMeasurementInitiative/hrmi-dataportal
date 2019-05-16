@@ -22,6 +22,10 @@ export default defineMessages({
       id: `${scope}.tabs.report`,
       defaultMessage: 'Report',
     },
+    singleMetric: {
+      id: `${scope}.tabs.singleMetric`,
+      defaultMessage: 'Explore metric',
+    },
     'people-at-risk': {
       id: `${scope}.tabs['people-at-risk']`,
       defaultMessage: 'People at risk',

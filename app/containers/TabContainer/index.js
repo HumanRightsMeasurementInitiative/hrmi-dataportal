@@ -49,7 +49,7 @@ function TabContainer({ tabs, tabIndex, onTabClick }) {
                 </Box>
               )}
             </Box>
-            {size !== 'small' && (
+            {size !== 'small' && activeTabs.length > 1 && (
               <Box
                 width={size === 'medium' ? '280px' : '360px'}
                 direction="column"

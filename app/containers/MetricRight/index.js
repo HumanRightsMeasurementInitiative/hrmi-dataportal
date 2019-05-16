@@ -8,12 +8,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Heading, Text } from 'grommet';
-
-import Close from 'containers/Close';
 
 import {
   getESRRightScores,
@@ -49,17 +45,6 @@ export function MetricRight({ onLoadData, metric, scores, benchmark }) {
 
   return (
     <div>
-      <Helmet>
-        <title>MetricRight</title>
-        <meta name="description" content="Description of MetricRight" />
-      </Helmet>
-      <Close />
-      <Text size="small">
-        <FormattedMessage {...rootMessages['metric-types'].right} />
-      </Text>
-      <Heading margin={{ top: '5px' }}>
-        <FormattedMessage {...rootMessages.rights[metric.key]} />
-      </Heading>
       {sortedScores &&
         sortedScores.map(s => (
           <div key={s.country_code}>

@@ -8,12 +8,8 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Heading, Text } from 'grommet';
-
-import Close from 'containers/Close';
 
 import {
   getIndicatorScores,
@@ -29,7 +25,7 @@ import roundScore from 'utils/round-score';
 
 const DEPENDENCIES = ['countries', 'esrIndicatorScores'];
 
-export function MetricIndicator({ onLoadData, metric, scores, benchmark }) {
+export function MetricIndicator({ onLoadData, scores, benchmark }) {
   useEffect(() => {
     // kick off loading of data
     onLoadData();
@@ -46,17 +42,6 @@ export function MetricIndicator({ onLoadData, metric, scores, benchmark }) {
     );
   return (
     <div>
-      <Helmet>
-        <title>MetricIndicator</title>
-        <meta name="description" content="Description of MetricIndicator" />
-      </Helmet>
-      <Close />
-      <Text size="small">
-        <FormattedMessage {...rootMessages['metric-types'].indicator} />
-      </Text>
-      <Heading margin={{ top: '5px' }}>
-        <FormattedMessage {...rootMessages.indicators[metric.key]} />
-      </Heading>
       {sortedScores &&
         sortedScores.map(s => (
           <div key={s.country_code}>
@@ -71,7 +56,7 @@ export function MetricIndicator({ onLoadData, metric, scores, benchmark }) {
 MetricIndicator.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  metric: PropTypes.object.isRequired,
+  // metric: PropTypes.object.isRequired,
   benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
 };
