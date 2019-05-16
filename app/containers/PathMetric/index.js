@@ -15,9 +15,7 @@ import { Layer } from 'grommet';
 import CountryMetric from 'containers/CountryMetric';
 import Close from 'containers/Close';
 
-import MetricDimension from 'containers/MetricDimension/Loadable';
-import MetricRight from 'containers/MetricRight/Loadable';
-import MetricIndicator from 'containers/MetricIndicator/Loadable';
+import SingleMetric from 'containers/SingleMetric/Loadable';
 
 import TabContainer from 'containers/TabContainer';
 import MetricAside from 'components/MetricAside';
@@ -37,27 +35,10 @@ export function PathMetric({ match, intl, onCloseMetricOverlay }) {
   const metricTitle = intl.formatMessage(
     rootMessages[metric.metricType][metric.key],
   );
-  let metricType;
-  let MetricComponent = null;
-  if (metric) {
-    if (metric.metricType === 'dimensions') {
-      metricType = intl.formatMessage(rootMessages['metric-types'].dimension);
-      MetricComponent = <MetricDimension metric={metric} />;
-    }
-    if (metric.metricType === 'rights') {
-      metricType = intl.formatMessage(rootMessages['metric-types'].right);
-      MetricComponent = <MetricRight metric={metric} />;
-    }
-    if (metric.metricType === 'indicators') {
-      metricType = intl.formatMessage(rootMessages['metric-types'].indicator);
-      MetricComponent = <MetricIndicator metric={metric} />;
-    }
-  }
-
   return (
     <ContentWrap>
       <Helmet>
-        <title>{`${metricType}: ${metricTitle}`}</title>
+        <title>{metricTitle}</title>
         <meta name="description" content="Description of metric" />
       </Helmet>
       {match.params.country && (
@@ -83,7 +64,7 @@ export function PathMetric({ match, intl, onCloseMetricOverlay }) {
           {
             key: 'singleMetric',
             title: intl.formatMessage(rootMessages.tabs.singleMetric),
-            content: <div>{MetricComponent}</div>,
+            content: <SingleMetric metric={metric} />,
           },
           {
             key: 'about',
