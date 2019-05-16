@@ -19,16 +19,24 @@ const Styled = styled.div`
   width: 100%;
 `;
 const Tag = styled.div`
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   opacity: ${props => props.opacity || 1};
   font-size: ${props => props.size}px;
   line-height: ${props => props.size}px;
   color: ${props => props.theme.global.colors[props.color]};
+  font-weight: ${props => props.weight || 400};
 `;
 
-const MAX_SIZE = 36;
+const MAX_SIZE = 42;
 const MIN_SIZE = 14;
+
+const scaleFontWeight = value => {
+  if (value >= 0.9) return 900;
+  if (value >= 0.7) return 700;
+  if (value >= 0.6) return 600;
+  return 400;
+};
 
 const scaleFont = scaleLinear()
   .domain([0, 1])
@@ -59,6 +67,7 @@ export function WordCloud({ data, showTitle, dimension }) {
           .map(s => (
             <Tag
               key={s.people_code}
+              weight={scaleFontWeight(s.proportion)}
               opacity={scaleOpacity(s.proportion)}
               size={scaleFont(s.proportion) * MAX_SIZE}
               color={`${dimension}Cloud`}
