@@ -235,7 +235,7 @@ export default defineMessages({
       defaultMessage: 'People 20',
     },
     21: {
-      id: `${scope}.people-at-risk.22`,
+      id: `${scope}.people-at-risk.21`,
       defaultMessage: 'People 21',
     },
     22: {
