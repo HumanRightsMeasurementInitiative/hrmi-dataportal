@@ -11,6 +11,7 @@ export const scope = 'hrmi.components.CountryReport';
 export default defineMessages({
   title: {
     id: `${scope}.title`,
-    defaultMessage: "{country}'s Human Rights Report",
+    defaultMessage:
+      "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} Human Rights Report",
   },
 });

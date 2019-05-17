@@ -13,12 +13,12 @@ export default defineMessages({
     noData: {
       id: `${scope}.cpr.noData`,
       defaultMessage:
-        '{physint} and {empowerment} data have not yet been produced for {needsArticleEN, select, true {the} false {}} {country}. We plan to expand our data collection for these rights to the whole world as soon as increased funding becomes available.',
+        '{physint} and {empowerment} data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We plan to expand our data collection for these rights to the whole world as soon as increased funding becomes available.',
     },
     start: {
       id: `${scope}.cpr.start`,
       defaultMessage:
-        "{needsArticleEN, select, true {The } false { }}{country}'{arePluralEN, select, true {s} false {}} {dimension} score of {score} suggests that ",
+        "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} {dimension} score of {score} suggests that ",
     },
     then: {
       empowerment: {
