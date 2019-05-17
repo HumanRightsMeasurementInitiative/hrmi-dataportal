@@ -21,6 +21,8 @@ import ESRAccordion from './ESRAccordion';
 import NarrativeCPR from './NarrativeCPR';
 import NarrativeESR from './NarrativeESR';
 import NarrativeAtRisk from './NarrativeAtRisk';
+import NarrativeCPRCompAssessment from './NarrativeCPRCompAssessment';
+import NarrativeESRCompAssessment from './NarrativeESRCompAssessment';
 
 const Styled = props => <Box direction="column" {...props} />;
 
@@ -126,22 +128,47 @@ function CountryNarrative({
           />
         </Dimension>
       </RightsType>
-      <RightsType>
-        <RightsTypeHeading>
-          <FormattedMessage {...messages.atRiskSectionTitle} />
-        </RightsTypeHeading>
-        <NarrativeAtRisk
-          country={country}
-          noData={!hasCPR(dimensions)}
-          data={atRiskData}
-          onAtRiskClick={onAtRiskClick}
-        />
-      </RightsType>
-      <RightsType>
-        <RightsTypeHeading>
-          <FormattedMessage {...messages.compAssessmentSectionTitle} />
-        </RightsTypeHeading>
-      </RightsType>
+      {hasCPR(dimensions) && (
+        <RightsType>
+          <RightsTypeHeading>
+            <FormattedMessage {...messages.atRiskSectionTitle} />
+          </RightsTypeHeading>
+          <NarrativeAtRisk
+            country={country}
+            noData={!hasCPR(dimensions)}
+            data={atRiskData}
+            onAtRiskClick={onAtRiskClick}
+          />
+        </RightsType>
+      )}
+      {(hasCPR(dimensions) || (dimensions.esr && dimensions.esr.score)) && (
+        <RightsType>
+          <RightsTypeHeading>
+            <FormattedMessage {...messages.compAssessmentSectionTitle} />
+          </RightsTypeHeading>
+          {hasCPR(dimensions) && (
+            <>
+              <NarrativeCPRCompAssessment
+                dimensionKey="empowerment"
+                score={dimensions.empowerment && dimensions.empowerment.score}
+                country={country}
+              />
+              <NarrativeCPRCompAssessment
+                dimensionKey="physint"
+                score={dimensions.physint && dimensions.physint.score}
+                country={country}
+              />
+            </>
+          )}
+          {dimensions.esr && dimensions.esr.score && (
+            <NarrativeESRCompAssessment
+              country={country}
+              noCPRData={!hasCPR(dimensions)}
+              scores={dimensions}
+            />
+          )}
+        </RightsType>
+      )}
     </Styled>
   );
 }
