@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Box, Text } from 'grommet';
+import { Heading, Box } from 'grommet';
 
 import rootMessages from 'messages';
 
@@ -18,6 +18,7 @@ import { getRightsScoresForDimension } from 'utils/scores';
 import CPRAccordion from './CPRAccordion';
 import ESRAccordion from './ESRAccordion';
 import NarrativeCPR from './NarrativeCPR';
+import NarrativeESR from './NarrativeESR';
 
 const Styled = props => <Box direction="column" {...props} />;
 
@@ -107,7 +108,10 @@ function CountryNarrative({
           <StyledDimensionHeading>
             <FormattedMessage {...rootMessages.dimensions.esr} />
           </StyledDimensionHeading>
-          <Text>TODO: Quality of Life narrative</Text>
+          <NarrativeESR
+            score={dimensions.esr && dimensions.esr.score}
+            country={country}
+          />
           <ESRAccordion
             dimension={dimensions.esr}
             dimensionKey="esr"

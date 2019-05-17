@@ -1,3 +1,5 @@
+import roundScore from './round-score';
+
 const contriesNeedArticle = {
   en: [
     'GBR',
@@ -81,7 +83,36 @@ const CPR_SCORE_RANGES = [
   },
 ];
 
+const ESR_SCORE_RANGES = [
+  {
+    range: 'a',
+    min: 0,
+    max: 70,
+  },
+  {
+    range: 'b',
+    min: 70,
+    max: 80,
+  },
+  {
+    range: 'c',
+    min: 80,
+    max: 98,
+  },
+  {
+    range: 'd',
+    min: 98,
+    max: 99.9,
+  },
+];
+
 export const getCPRScoreRange = value => {
-  const range = CPR_SCORE_RANGES.find(r => value > r.min && value <= r.max);
+  const rvalue = roundScore(value);
+  const range = CPR_SCORE_RANGES.find(r => rvalue >= r.min && rvalue < r.max);
+  return range && range.range;
+};
+export const getESRScoreRange = value => {
+  const rvalue = roundScore(value);
+  const range = ESR_SCORE_RANGES.find(r => rvalue >= r.min && rvalue < r.max);
   return range && range.range;
 };

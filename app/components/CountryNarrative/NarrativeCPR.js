@@ -11,24 +11,23 @@ import rootMessages from 'messages';
 import messages from './messages';
 
 function NarrativeCPR({ dimensionKey, country, score, noData, intl }) {
-  // console.log(dimensionKey, country, score, noData, intl);
+  console.log(
+    rootMessages.dimensions.physint,
+    intl.formatMessage(rootMessages.dimensions.physint),
+  );
+  const messageValues = {
+    physint: intl.formatMessage(rootMessages.dimensions.physint),
+    empowerment: intl.formatMessage(rootMessages.dimensions.empowerment),
+    country: intl.formatMessage(rootMessages.countries[country.country_code]),
+    isPlural: isPlural(intl.locale, country.country_code),
+    needsArticle: needsArticle(intl.locale, country.country_code),
+    scoreBold: score && <strong>{formatScore(score.mean)}</strong>,
+    score: score && formatScore(score.mean),
+  };
   if (noData) {
     return (
       <Paragraph>
-        <FormattedMessage
-          {...messages.cpr.noData}
-          values={{
-            physint: intl.formatMessage(rootMessages.dimensions.physint),
-            empowerment: intl.formatMessage(
-              rootMessages.dimensions.empowerment,
-            ),
-            country: intl.formatMessage(
-              rootMessages.countries[country.country_code],
-            ),
-            isPlural: isPlural(intl.locale, country.country_code),
-            needsArticle: needsArticle(intl.locale, country.country_code),
-          }}
-        />
+        <FormattedMessage {...messages.cpr.noData} values={messageValues} />
       </Paragraph>
     );
   }
@@ -43,15 +42,18 @@ function NarrativeCPR({ dimensionKey, country, score, noData, intl }) {
               dimension: intl.formatMessage(
                 rootMessages.dimensions.empowerment,
               ),
-              country: intl.formatMessage(
-                rootMessages.countries[country.country_code],
-              ),
-              isPlural: isPlural(intl.locale, country.country_code),
-              needsArticle: needsArticle(intl.locale, country.country_code),
-              score: <strong>{formatScore(score.mean)}</strong>,
+              ...messageValues,
             }}
           />
-          <FormattedMessage {...messages.cpr.then.empowerment[range]} />
+          <FormattedMessage
+            {...messages.cpr.then.empowerment[range]}
+            values={{
+              dimension: intl.formatMessage(
+                rootMessages.dimensions.empowerment,
+              ),
+              ...messageValues,
+            }}
+          />
         </Paragraph>
       )
     );
@@ -65,15 +67,16 @@ function NarrativeCPR({ dimensionKey, country, score, noData, intl }) {
             {...messages.cpr.start}
             values={{
               dimension: intl.formatMessage(rootMessages.dimensions.physint),
-              country: intl.formatMessage(
-                rootMessages.countries[country.country_code],
-              ),
-              isPlural: isPlural(intl.locale, country.country_code),
-              needsArticle: needsArticle(intl.locale, country.country_code),
-              score: <strong>{formatScore(score.mean)}</strong>,
+              ...messageValues,
             }}
           />
-          {range && <FormattedMessage {...messages.cpr.then.physint[range]} />}
+          <FormattedMessage
+            {...messages.cpr.then.physint[range]}
+            values={{
+              dimension: intl.formatMessage(rootMessages.dimensions.physint),
+              ...messageValues,
+            }}
+          />
         </Paragraph>
       )
     );
