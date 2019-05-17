@@ -71,6 +71,7 @@ export function PathCountry({
   onMetricClick,
   onCloseMetricOverlay,
   onAtRiskClick,
+  standard,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -149,6 +150,21 @@ export function PathCountry({
                 scale={scale}
                 benchmark={benchmark}
                 atRiskData={atRisk}
+                standard={standard}
+                reference={{
+                  esr: {
+                    score: 80,
+                    count: 20,
+                  },
+                  empowerment: {
+                    score: 8,
+                    count: 5,
+                  },
+                  physint: {
+                    score: 6,
+                    count: 5,
+                  },
+                }}
                 onAtRiskClick={() => onAtRiskClick()}
                 onMetricClick={(metric, tab) =>
                   onMetricClick(countryCode, metric, tab)

@@ -117,7 +117,7 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
               <TableCell verticalAlign="top">
                 <ul>
                   {r.rights.map(right => (
-                    <li>
+                    <li key={right}>
                       <Text>
                         <FormattedMessage
                           {...rootMessages['rights-short'][right]}

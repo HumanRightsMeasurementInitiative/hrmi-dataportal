@@ -6,9 +6,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Box } from 'grommet';
+import { Heading, Box, Paragraph } from 'grommet';
 
 import rootMessages from 'messages';
 
@@ -42,6 +42,37 @@ const DimensionHeading = props => (
 );
 const StyledDimensionHeading = styled(DimensionHeading)``;
 
+// const isDefaultStandard = (standard, country) =>
+//   (standard === 'hi' && country.high_income_country === '1') ||
+//   (standard === 'core' && country.high_income_country === '0');
+
+const getDefaultStandard = country =>
+  country.high_income_country === '1' ? 'hi' : 'core';
+
+const getIncomeCategory = country =>
+  country.high_income_country === '1' ? 'hi' : 'lmi';
+
+const renderStandardHint = (intl, standard, country) => (
+  <Paragraph>
+    <strong>
+      <FormattedMessage
+        {...messages.esr.changeStandardNote}
+        values={{
+          otherStandard: intl.formatMessage(
+            rootMessages.settings.standard[standard],
+          ),
+          defaultStandard: intl.formatMessage(
+            rootMessages.settings.standard[getDefaultStandard(country)],
+          ),
+          incomeCategory: intl.formatMessage(
+            rootMessages.income[getIncomeCategory(country)],
+          ),
+        }}
+      />
+    </strong>
+  </Paragraph>
+);
+
 const hasCPR = dimensions =>
   dimensions.physint &&
   dimensions.physint.score &&
@@ -57,11 +88,14 @@ function CountryNarrative({
   country,
   atRiskData,
   onAtRiskClick,
+  standard,
+  intl,
+  reference,
 }) {
   if (!dimensions || !rights || !indicators) {
     return null;
   }
-
+  // console.log(standard, country);
   return (
     <Styled>
       <RightsType>
@@ -114,6 +148,8 @@ function CountryNarrative({
           <StyledDimensionHeading>
             <FormattedMessage {...rootMessages.dimensions.esr} />
           </StyledDimensionHeading>
+          {getDefaultStandard(country) !== standard &&
+            renderStandardHint(intl, standard, country)}
           <NarrativeESR
             score={dimensions.esr && dimensions.esr.score}
             country={country}
@@ -152,19 +188,29 @@ function CountryNarrative({
                 dimensionKey="empowerment"
                 score={dimensions.empowerment && dimensions.empowerment.score}
                 country={country}
+                referenceScore={reference.empowerment.score}
+                referenceCount={reference.empowerment.count}
               />
               <NarrativeCPRCompAssessment
                 dimensionKey="physint"
                 score={dimensions.physint && dimensions.physint.score}
                 country={country}
+                referenceScore={reference.physint.score}
+                referenceCount={reference.physint.count}
               />
             </>
           )}
+          {dimensions.esr &&
+            dimensions.esr.score &&
+            getDefaultStandard(country) !== standard &&
+            renderStandardHint(intl, standard, country)}
           {dimensions.esr && dimensions.esr.score && (
             <NarrativeESRCompAssessment
               country={country}
-              noCPRData={!hasCPR(dimensions)}
-              scores={dimensions}
+              score={dimensions.esr && dimensions.esr.score}
+              referenceScore={reference.esr.score}
+              referenceCount={reference.esr.count}
+              benchmark={BENCHMARKS.find(s => s.key === benchmark)}
             />
           )}
         </RightsType>
@@ -176,12 +222,15 @@ function CountryNarrative({
 CountryNarrative.propTypes = {
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
+  reference: PropTypes.object,
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  intl: intlShape.isRequired,
 };
 
-export default CountryNarrative;
+export default injectIntl(CountryNarrative);
