@@ -17,6 +17,7 @@ import { getRightsScoresForDimension } from 'utils/scores';
 
 import CPRAccordion from './CPRAccordion';
 import ESRAccordion from './ESRAccordion';
+import NarrativeCPR from './NarrativeCPR';
 
 const Styled = props => <Box direction="column" {...props} />;
 
@@ -36,12 +37,19 @@ const DimensionHeading = props => (
 );
 const StyledDimensionHeading = styled(DimensionHeading)``;
 
+const hasCPR = dimensions =>
+  dimensions.physint &&
+  dimensions.physint.score &&
+  dimensions.empowerment &&
+  dimensions.empowerment.score;
+
 function CountryNarrative({
   dimensions,
   rights,
   indicators,
   benchmark,
   onMetricClick,
+  country,
 }) {
   if (!dimensions || !rights || !indicators) {
     return null;
@@ -53,30 +61,43 @@ function CountryNarrative({
         <RightsTypeHeading>
           <FormattedMessage {...rootMessages['rights-types'].cpr} />
         </RightsTypeHeading>
-        <Dimension>
-          <StyledDimensionHeading>
-            <FormattedMessage {...rootMessages.dimensions.empowerment} />
-          </StyledDimensionHeading>
-          <Text>TODO: Empowerment narrative</Text>
-          <CPRAccordion
-            dimension={dimensions.empowerment}
-            dimensionKey="empowerment"
-            rights={getRightsScoresForDimension(rights, 'empowerment', true)}
-            onMetricClick={onMetricClick}
-          />
-        </Dimension>
-        <Dimension>
-          <StyledDimensionHeading>
-            <FormattedMessage {...rootMessages.dimensions.physint} />
-          </StyledDimensionHeading>
-          <Text>TODO: Physical integrity narrative</Text>
-          <CPRAccordion
-            dimension={dimensions.physint}
-            dimensionKey="physint"
-            rights={getRightsScoresForDimension(rights, 'physint', true)}
-            onMetricClick={onMetricClick}
-          />
-        </Dimension>
+        {dimensions.empowerment && dimensions.empowerment.score && (
+          <Dimension>
+            <StyledDimensionHeading>
+              <FormattedMessage {...rootMessages.dimensions.empowerment} />
+            </StyledDimensionHeading>
+            <NarrativeCPR
+              dimensionKey="empowerment"
+              score={dimensions.empowerment && dimensions.empowerment.score}
+              country={country}
+            />
+            <CPRAccordion
+              dimension={dimensions.empowerment}
+              dimensionKey="empowerment"
+              rights={getRightsScoresForDimension(rights, 'empowerment', true)}
+              onMetricClick={onMetricClick}
+            />
+          </Dimension>
+        )}
+        {dimensions.physint && dimensions.physint.score && (
+          <Dimension>
+            <StyledDimensionHeading>
+              <FormattedMessage {...rootMessages.dimensions.physint} />
+            </StyledDimensionHeading>
+            <NarrativeCPR
+              dimensionKey="physint"
+              score={dimensions.physint && dimensions.physint.score}
+              country={country}
+            />
+            <CPRAccordion
+              dimension={dimensions.physint}
+              dimensionKey="physint"
+              rights={getRightsScoresForDimension(rights, 'physint', true)}
+              onMetricClick={onMetricClick}
+            />
+          </Dimension>
+        )}
+        {!hasCPR(dimensions) && <NarrativeCPR noData country={country} />}
       </RightsType>
       <RightsType>
         <RightsTypeHeading>

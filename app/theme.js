@@ -12,10 +12,10 @@ export const BREAKPOINTS = {
   LARGE: 2,
 };
 const text = {
-  xxlarge: { size: '30px', height: '36px' },
-  xlarge: { size: '24px', height: '30px' },
-  large: { size: '20px', height: '25px' },
-  medium: { size: '16px', height: '22px', maxWidth: '348px' },
+  xxlarge: { size: '30px', height: '36px', maxWidth: '700px' },
+  xlarge: { size: '24px', height: '30px', maxWidth: '700px' },
+  large: { size: '20px', height: '25px', maxWidth: '700px' },
+  medium: { size: '16px', height: '22px', maxWidth: '700px' },
 };
 const theme = {
   // used for grommet
