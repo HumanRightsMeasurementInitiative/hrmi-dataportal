@@ -11,10 +11,6 @@ import rootMessages from 'messages';
 import messages from './messages';
 
 function NarrativeCPR({ dimensionKey, country, score, noData, intl }) {
-  console.log(
-    rootMessages.dimensions.physint,
-    intl.formatMessage(rootMessages.dimensions.physint),
-  );
   const messageValues = {
     physint: intl.formatMessage(rootMessages.dimensions.physint),
     empowerment: intl.formatMessage(rootMessages.dimensions.empowerment),
@@ -85,9 +81,9 @@ function NarrativeCPR({ dimensionKey, country, score, noData, intl }) {
 }
 NarrativeCPR.propTypes = {
   noData: PropTypes.bool,
+  country: PropTypes.object,
   dimensionKey: PropTypes.string,
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  country: PropTypes.object,
   intl: intlShape.isRequired,
 };
 

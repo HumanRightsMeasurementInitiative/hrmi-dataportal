@@ -15,10 +15,12 @@ import rootMessages from 'messages';
 import { BENCHMARKS } from 'containers/App/constants';
 import { getRightsScoresForDimension } from 'utils/scores';
 
+import messages from './messages';
 import CPRAccordion from './CPRAccordion';
 import ESRAccordion from './ESRAccordion';
 import NarrativeCPR from './NarrativeCPR';
 import NarrativeESR from './NarrativeESR';
+import NarrativeAtRisk from './NarrativeAtRisk';
 
 const Styled = props => <Box direction="column" {...props} />;
 
@@ -51,6 +53,8 @@ function CountryNarrative({
   benchmark,
   onMetricClick,
   country,
+  atRiskData,
+  onAtRiskClick,
 }) {
   if (!dimensions || !rights || !indicators) {
     return null;
@@ -123,10 +127,20 @@ function CountryNarrative({
         </Dimension>
       </RightsType>
       <RightsType>
-        <RightsTypeHeading>TODO: People at risk</RightsTypeHeading>
+        <RightsTypeHeading>
+          <FormattedMessage {...messages.atRiskSectionTitle} />
+        </RightsTypeHeading>
+        <NarrativeAtRisk
+          country={country}
+          noData={!hasCPR(dimensions)}
+          data={atRiskData}
+          onAtRiskClick={onAtRiskClick}
+        />
       </RightsType>
       <RightsType>
-        <RightsTypeHeading>TODO: Comparative assessment</RightsTypeHeading>
+        <RightsTypeHeading>
+          <FormattedMessage {...messages.compAssessmentSectionTitle} />
+        </RightsTypeHeading>
       </RightsType>
     </Styled>
   );
@@ -134,6 +148,8 @@ function CountryNarrative({
 
 CountryNarrative.propTypes = {
   onMetricClick: PropTypes.func,
+  onAtRiskClick: PropTypes.func,
+  atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
