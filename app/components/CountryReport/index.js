@@ -8,12 +8,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { Heading, Box } from 'grommet';
 
 import CountrySummaryChart from 'components/CountrySummaryChart';
 import CountryNarrative from 'components/CountryNarrative';
+
+import { needsArticle, isPlural } from 'utils/narrative';
+
 import messages from './messages';
 
 const Styled = styled(Box)`
@@ -30,6 +33,7 @@ function CountryReport({
   indicators,
   country,
   onMetricClick,
+  intl,
 }) {
   return (
     <Styled pad="medium">
@@ -38,6 +42,8 @@ function CountryReport({
           {...messages.title}
           values={{
             country: countryTitle,
+            isPlural: isPlural(intl.locale, country.country_code),
+            needsArticle: needsArticle(intl.locale, country.country_code),
           }}
         />
       </Heading>
@@ -68,6 +74,7 @@ CountryReport.propTypes = {
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  intl: intlShape.isRequired,
 };
 
-export default CountryReport;
+export default injectIntl(CountryReport);

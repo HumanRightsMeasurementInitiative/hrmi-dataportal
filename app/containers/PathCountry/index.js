@@ -157,7 +157,11 @@ export function PathCountry({
             key: 'atrisk',
             title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
             content: hasCPR(dimensions) && (
-              <CountryPeople data={atRisk} countryTitle={countryTitle} />
+              <CountryPeople
+                data={atRisk}
+                countryTitle={countryTitle}
+                countryCode={countryCode}
+              />
             ),
           },
           {
