@@ -17,12 +17,12 @@ export default defineMessages({
     noData: {
       id: `${scope}.atRisk.noData`,
       defaultMessage:
-        'At risk data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We plan to expand our data collection to the whole world as soon as increased funding becomes available.',
+        'At risk data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We plan to expand our data collection to the whole world as soon as increased funding becomes available. ',
     },
     start: {
       id: `${scope}.atRisk.start`,
       defaultMessage:
-        'The human rights experts we surveyed identified the following people as being at most risk of rights violations.',
+        'The human rights experts we surveyed identified the following people as being at most risk of rights violations. ',
     },
     tableGroupLabel: {
       id: `${scope}.atRisk.tableGroupLabel`,
@@ -45,7 +45,7 @@ export default defineMessages({
       afterLink: {
         id: `${scope}.atRisk.end.afterLink`,
         defaultMessage:
-          ' to see word clouds giving a more complete picture of which people in {needsArticle, select, true {the } false { }}{country} were identified as being especially vulnerable. ',
+          ' to see word clouds giving a more complete picture of which people in {needsArticle, select, true {the } false {}}{country} were identified as being especially vulnerable. ',
       },
     },
   },
@@ -53,7 +53,62 @@ export default defineMessages({
     id: `${scope}.compAssessmentSectionTitle`,
     defaultMessage: 'Comparative assessment',
   },
+  compAssessment: {
+    result: {
+      a: {
+        id: `${scope}.compAssessmentCPR.result.a`,
+        defaultMessage: 'better than average',
+      },
+      b: {
+        id: `${scope}.compAssessmentCPR.result.b`,
+        defaultMessage: 'worse than average',
+      },
+      c: {
+        id: `${scope}.compAssessmentCPR.result.c`,
+        defaultMessage: 'close to average',
+      },
+    },
+  },
+  compAssessmentCPR: {
+    hiOECD: {
+      id: `${scope}.compAssessmentCPR.hiOECD`,
+      defaultMessage:
+        'Compared with the {referenceCount} other high-income OECD countries we have civil and political rights data for, {needsArticle, select, true {the } false {}}{country} is performing ',
+    },
+    notHiOECD: {
+      id: `${scope}.compAssessmentCPR.notHiOECD`,
+      defaultMessage:
+        'For the civil and political rights we do not have data for enough countries in {needsArticleRegion, select, true {the } false {}}{region} to do a regional comparison. However, compared to the other countries in our sample, {needsArticle, select, true {the } false {}}{country} is performing ',
+    },
+    end: {
+      empowerment: {
+        id: `${scope}.compAssessmentCPR.end.empowerment`,
+        defaultMessage: ' on empowerment rights. ',
+      },
+      physint: {
+        id: `${scope}.compAssessmentCPR.end.physint`,
+        defaultMessage: ' on the right to be safe from the state. ',
+      },
+    },
+  },
+  compAssessmentESR: {
+    start: {
+      id: `${scope}.compAssessmentESR.start`,
+      defaultMessage:
+        'On {esr}, {needsArticle, select, true {the } false { }}{country} is performing ',
+    },
+    end: {
+      id: `${scope}.compAssessmentESR.end`,
+      defaultMessage:
+        ', compared with other countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
+    },
+  },
   esr: {
+    changeStandardNote: {
+      id: `${scope}.esr.changeStandardNote`,
+      defaultMessage:
+        "Please note: data and commentary are shown for the '{otherStandard}' assessment standard. For {incomeCategory} countries it is best to use the '{defaultStandard}' standard instead. ",
+    },
     noData: {
       id: `${scope}.esr.noData`,
       defaultMessage:

@@ -30,12 +30,14 @@ function CountryReport({
   rights,
   scale,
   benchmark,
+  standard,
   indicators,
   country,
   onMetricClick,
   intl,
   atRiskData,
   onAtRiskClick,
+  reference,
 }) {
   return (
     <Styled pad="medium">
@@ -61,9 +63,11 @@ function CountryReport({
         indicators={indicators}
         country={country}
         benchmark={benchmark}
+        standard={standard}
         onMetricClick={onMetricClick}
         atRiskData={atRiskData}
         onAtRiskClick={onAtRiskClick}
+        reference={reference}
       />
     </Styled>
   );
@@ -73,12 +77,14 @@ CountryReport.propTypes = {
   countryTitle: PropTypes.string,
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
+  reference: PropTypes.object,
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
 };

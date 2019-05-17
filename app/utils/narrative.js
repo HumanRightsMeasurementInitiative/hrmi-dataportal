@@ -60,10 +60,18 @@ const countriesArePlural = {
 
 export const needsArticle = (locale, code) =>
   contriesNeedArticle[locale].indexOf(code) > -1;
-export const needsArticleEN = code => needsArticle('en', code);
 export const isPlural = (locale, code) =>
   countriesArePlural[locale].indexOf(code) > -1;
-export const isPluralEN = code => isPlural('en', code);
+
+const regionsNeedArticle = {
+  en: ['americas', 'middle-east-north-africa'],
+  fr: [],
+  es: [],
+  pt: [],
+};
+
+export const needsArticleRegion = (locale, code) =>
+  regionsNeedArticle[locale].indexOf(code) > -1;
 
 const CPR_SCORE_RANGES = [
   {
@@ -115,4 +123,9 @@ export const getESRScoreRange = value => {
   const rvalue = roundScore(value);
   const range = ESR_SCORE_RANGES.find(r => rvalue >= r.min && rvalue < r.max);
   return range && range.range;
+};
+export const compareRange = ({ lo, hi, reference }) => {
+  if (lo > reference) return 'a'; // better than average
+  if (hi < reference) return 'b'; // worse than average
+  return 'c'; // close to average
 };
