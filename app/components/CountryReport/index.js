@@ -34,6 +34,8 @@ function CountryReport({
   country,
   onMetricClick,
   intl,
+  atRiskData,
+  onAtRiskClick,
 }) {
   return (
     <Styled pad="medium">
@@ -60,6 +62,8 @@ function CountryReport({
         country={country}
         benchmark={benchmark}
         onMetricClick={onMetricClick}
+        atRiskData={atRiskData}
+        onAtRiskClick={onAtRiskClick}
       />
     </Styled>
   );
@@ -68,6 +72,8 @@ function CountryReport({
 CountryReport.propTypes = {
   countryTitle: PropTypes.string,
   onMetricClick: PropTypes.func,
+  onAtRiskClick: PropTypes.func,
+  atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

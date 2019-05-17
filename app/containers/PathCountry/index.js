@@ -38,7 +38,7 @@ import {
   getPeopleAtRiskForCountry,
 } from 'containers/App/selectors';
 
-import { loadDataIfNeeded, navigate } from 'containers/App/actions';
+import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
 
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
@@ -70,6 +70,7 @@ export function PathCountry({
   atRisk,
   onMetricClick,
   onCloseMetricOverlay,
+  onAtRiskClick,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -147,6 +148,8 @@ export function PathCountry({
                 country={country}
                 scale={scale}
                 benchmark={benchmark}
+                atRiskData={atRisk}
+                onAtRiskClick={() => onAtRiskClick()}
                 onMetricClick={(metric, tab) =>
                   onMetricClick(countryCode, metric, tab)
                 }
@@ -181,6 +184,7 @@ PathCountry.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   onMetricClick: PropTypes.func,
+  onAtRiskClick: PropTypes.func,
   onCloseMetricOverlay: PropTypes.func,
   match: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
@@ -235,6 +239,10 @@ export function mapDispatchToProps(dispatch) {
           },
         ),
       ),
+    onAtRiskClick: () => {
+      window.scrollTo(0, 0);
+      return dispatch(setTab(1));
+    },
     onCloseMetricOverlay: country =>
       dispatch(
         navigate(
