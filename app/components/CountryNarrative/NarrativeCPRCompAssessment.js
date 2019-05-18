@@ -67,6 +67,11 @@ function NarrativeCPRCompAssessment({
           values={messageValues}
         />
       </Paragraph>
+      <Paragraph>
+        {` [DEBUG // scoreLo: ${score[COLUMNS.CPR.LO]} // scoreHi: ${
+          score[COLUMNS.CPR.HI]
+        } // referenceScore ${referenceScore}] `}
+      </Paragraph>
     </>
   );
 }

@@ -100,7 +100,12 @@ export default defineMessages({
     end: {
       id: `${scope}.compAssessmentESR.end`,
       defaultMessage:
-        ', compared with other countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
+        ', compared with {referenceCount} other countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
+    },
+    endHi: {
+      id: `${scope}.compAssessmentESR.endHi`,
+      defaultMessage:
+        ', compared with {referenceCount} other HI countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
     },
   },
   esr: {

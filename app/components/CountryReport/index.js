@@ -77,7 +77,7 @@ CountryReport.propTypes = {
   countryTitle: PropTypes.string,
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
-  reference: PropTypes.object,
+  reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

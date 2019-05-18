@@ -188,14 +188,14 @@ function CountryNarrative({
                 dimensionKey="empowerment"
                 score={dimensions.empowerment && dimensions.empowerment.score}
                 country={country}
-                referenceScore={reference.empowerment.score}
+                referenceScore={reference.empowerment.average}
                 referenceCount={reference.empowerment.count}
               />
               <NarrativeCPRCompAssessment
                 dimensionKey="physint"
                 score={dimensions.physint && dimensions.physint.score}
                 country={country}
-                referenceScore={reference.physint.score}
+                referenceScore={reference.physint.average}
                 referenceCount={reference.physint.count}
               />
             </>
@@ -204,12 +204,12 @@ function CountryNarrative({
             dimensions.esr.score &&
             getDefaultStandard(country) !== standard &&
             renderStandardHint(intl, standard, country)}
-          {dimensions.esr && dimensions.esr.score && (
+          {dimensions.esr && reference && reference.esr && (
             <NarrativeESRCompAssessment
               country={country}
-              score={dimensions.esr && dimensions.esr.score}
-              referenceScore={reference.esr.score}
-              referenceCount={reference.esr.count}
+              score={dimensions.esr.score}
+              referenceScore={reference.esr[standard].average[benchmark]}
+              referenceCount={reference.esr[standard].count}
               benchmark={BENCHMARKS.find(s => s.key === benchmark)}
             />
           )}
@@ -222,7 +222,7 @@ function CountryNarrative({
 CountryNarrative.propTypes = {
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
-  reference: PropTypes.object,
+  reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

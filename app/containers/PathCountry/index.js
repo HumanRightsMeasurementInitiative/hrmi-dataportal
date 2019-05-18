@@ -36,6 +36,7 @@ import {
   getStandardSearch,
   getBenchmarkSearch,
   getPeopleAtRiskForCountry,
+  getDimensionAverages,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
@@ -72,12 +73,12 @@ export function PathCountry({
   onCloseMetricOverlay,
   onAtRiskClick,
   standard,
+  dimensionAverages,
 }) {
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
-
   const countryCode = match.params.country;
 
   // const [tabIndex, setTabIndex] = useState(0);
@@ -151,20 +152,7 @@ export function PathCountry({
                 benchmark={benchmark}
                 atRiskData={atRisk}
                 standard={standard}
-                reference={{
-                  esr: {
-                    score: 80,
-                    count: 20,
-                  },
-                  empowerment: {
-                    score: 8,
-                    count: 5,
-                  },
-                  physint: {
-                    score: 6,
-                    count: 5,
-                  },
-                }}
+                reference={dimensionAverages}
                 onAtRiskClick={() => onAtRiskClick()}
                 onMetricClick={(metric, tab) =>
                   onMetricClick(countryCode, metric, tab)
@@ -207,6 +195,7 @@ PathCountry.propTypes = {
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -225,6 +214,7 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
+  dimensionAverages: state => getDimensionAverages(state),
 });
 
 export function mapDispatchToProps(dispatch) {
