@@ -182,7 +182,7 @@ function CountryNarrative({
           <RightsTypeHeading>
             <FormattedMessage {...messages.compAssessmentSectionTitle} />
           </RightsTypeHeading>
-          {hasCPR(dimensions) && (
+          {hasCPR(dimensions) && reference.empowerment && reference.physint && (
             <>
               <NarrativeCPRCompAssessment
                 dimensionKey="empowerment"
