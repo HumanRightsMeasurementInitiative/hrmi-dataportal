@@ -19,10 +19,10 @@ const isDataIncomplete = data => data.hasScoreRights || data.hasScoreIndicators;
 
 const hasDataAlternate = data =>
   data.hasScoreAlternate ||
-  data.hasScoreAlternateRights ||
+  data.hasScoreRightsAlternate ||
   data.hasScoreIndicatorsAlternate;
 
-export const getNoDataMessage = (intl, data) => {
+export const getNoDataMessage = (intl, data = false) => {
   if (isDataIncomplete(data)) {
     return intl.formatMessage(messages.charts.incompleteData);
   }
@@ -33,19 +33,14 @@ export const getNoDataMessage = (intl, data) => {
 };
 
 export const getIncompleteDataActionMessage = (intl, data) => {
-  if (data.hasScoreRights) {
-    return ` (${intl.formatMessage(
-      messages.charts.incompleteData.drillDownRights,
-    )})`;
-  }
-  if (data.hasScoreIndicators) {
-    return ` (${intl.formatMessage(
-      messages.charts.incompleteData.drillDownIndicators,
-    )})`;
-  }
   if (data.hasScoreAlternate) {
     return ` (${intl.formatMessage(
       messages.charts.incompleteData.changeStandard,
+    )})`;
+  }
+  if (data.hasScoreRights) {
+    return ` (${intl.formatMessage(
+      messages.charts.incompleteData.drillDownRights,
     )})`;
   }
   if (data.hasScoreAlternateRights) {
@@ -53,6 +48,11 @@ export const getIncompleteDataActionMessage = (intl, data) => {
       messages.charts.incompleteData.changeStandard,
     )} & ${intl.formatMessage(
       messages.charts.incompleteData.drillDownRights,
+    )})`;
+  }
+  if (data.hasScoreIndicators) {
+    return ` (${intl.formatMessage(
+      messages.charts.incompleteData.drillDownIndicators,
     )})`;
   }
   if (data.hasScoreIndicatorsAlternate) {

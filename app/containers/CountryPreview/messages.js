@@ -9,8 +9,8 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.containers.CountryPreview';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the CountryPreview container!',
+  hi: {
+    id: `${scope}.hi`,
+    defaultMessage: ' (HI)',
   },
 });
