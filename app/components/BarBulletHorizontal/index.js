@@ -4,6 +4,18 @@
  *
  */
 
+// TODO:
+// styled-components.browser.esm.js?bce9:1504 Over 200 classes were generated for component BarBulletHorizontal__MarkValue.
+// Consider using the attrs method, together with a style object for frequently changed styles.
+// Example:
+//   const Component = styled.div.attrs({
+//     style: ({ background }) => ({
+//       background,
+//     }),
+//   })`width: 100%;`
+//
+//   <Component />
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';

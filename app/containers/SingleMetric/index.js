@@ -115,7 +115,7 @@ const mapStateToProps = createStructuredSelector({
   scores: (state, { metric }) => {
     if (metric.metricType === 'dimensions') {
       return metric.type === 'esr'
-        ? getESRDimensionScores(state, metric.key)
+        ? getESRDimensionScores(state)
         : getCPRDimensionScores(state, metric.key);
     }
     if (metric.metricType === 'rights') {

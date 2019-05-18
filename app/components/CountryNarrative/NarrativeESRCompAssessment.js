@@ -15,6 +15,8 @@ import messages from './messages';
 
 const RANGE = 5;
 
+const isCountryHighIncome = country => country.high_income_country === '1';
+
 function NarrativeESRCompAssessment({
   benchmark,
   country,
@@ -53,10 +55,23 @@ function NarrativeESRCompAssessment({
             values={messageValues}
           />
         </strong>
-        <FormattedMessage
-          {...messages.compAssessmentESR.end}
-          values={messageValues}
-        />
+        {isCountryHighIncome(country) && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.endHi}
+            values={messageValues}
+          />
+        )}
+        {!isCountryHighIncome(country) && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.end}
+            values={messageValues}
+          />
+        )}
+      </Paragraph>
+      <Paragraph>
+        {` [DEBUG // score: ${
+          score[benchmark.column]
+        } // referenceScore ${referenceScore}] `}
       </Paragraph>
     </>
   );

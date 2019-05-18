@@ -24,6 +24,7 @@ import {
   PEOPLE_GROUPS,
   INDICATOR_LOOKBACK,
   AT_RISK_INDICATORS,
+  COLUMNS,
 } from './constants';
 
 // router sub-state
@@ -306,38 +307,44 @@ const getCPRYear = createSelector(
 export const getESRIndicatorsForStandard = createSelector(
   getESRIndicators,
   getStandardSearch,
-  (indicators, standard) =>
-    indicators &&
-    indicators.filter(
-      i =>
-        i.standard === 'Both' ||
-        i.standard === STANDARDS.find(as => as.key === standard).code,
-    ),
+  (indicators, standardSearch) => {
+    const standard = STANDARDS.find(as => as.key === standardSearch);
+    return (
+      indicators &&
+      indicators.filter(
+        i => i.standard === 'Both' || i.standard === standard.code,
+      )
+    );
+  },
 );
 
 // single metric
 // single dimension, multiple countries, single year
 export const getESRDimensionScores = createSelector(
-  (state, metric) => metric,
   getESRScores,
   getCountriesFiltered,
   getRegionSearch,
   getIncomeSearch,
   getStandardSearch,
   getESRYear,
-  (metric, scores, countries, region, income, standard, year) =>
-    scores &&
-    countries &&
-    scores.filter(
-      s =>
-        STANDARDS.find(as => as.key === standard) &&
-        DIMENSIONS.find(d => d.key === 'esr') &&
-        s.standard === STANDARDS.find(as => as.key === standard).code &&
-        s.metric_code === DIMENSIONS.find(d => d.key === 'esr').code &&
-        quasiEquals(s.year, year) &&
-        (!(region || income) ||
-          countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-    ),
+  (scores, countries, region, income, standardSearch, year) => {
+    const standard = STANDARDS.find(as => as.key === standardSearch);
+    const dimension = DIMENSIONS.find(d => d.key === 'esr');
+    return (
+      standard &&
+      dimension &&
+      scores &&
+      countries &&
+      scores.filter(
+        s =>
+          s.standard === standard.code &&
+          s.metric_code === dimension.code &&
+          quasiEquals(s.year, year) &&
+          (!(region || income) ||
+            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+      )
+    );
+  },
 );
 
 export const getCPRDimensionScores = createSelector(
@@ -347,18 +354,22 @@ export const getCPRDimensionScores = createSelector(
   getRegionSearch,
   getIncomeSearch,
   getCPRYear,
-  (metric, scores, countries, region, income, year) =>
-    scores &&
-    countries &&
-    scores.filter(
-      s =>
-        !!metric && // make sure a metric is set
-        DIMENSIONS.find(d => d.key === metric) &&
-        s.metric_code === DIMENSIONS.find(d => d.key === metric).code &&
-        quasiEquals(s.year, year) &&
-        (!(region || income) ||
-          countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-    ),
+  (metric, scores, countries, region, income, year) => {
+    // make sure a metric is set
+    const dimension = !!metric && DIMENSIONS.find(d => d.key === metric);
+    return (
+      dimension &&
+      scores &&
+      countries &&
+      scores.filter(
+        s =>
+          s.metric_code === dimension.code &&
+          quasiEquals(s.year, year) &&
+          (!(region || income) ||
+            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+      )
+    );
+  },
 );
 
 // single right, multiple countries, single year
@@ -371,20 +382,34 @@ export const getESRRightScores = createSelector(
   getStandardSearch,
   getGroupSearch,
   getESRYear,
-  (metric, scores, countries, region, income, standard, group, year) =>
-    scores &&
-    countries &&
-    scores.filter(
-      s =>
-        !!metric &&
-        RIGHTS.find(d => d.key === metric) &&
-        s.group === PEOPLE_GROUPS.find(g => g.key === group).code &&
-        s.standard === STANDARDS.find(as => as.key === standard).code &&
-        s.metric_code === RIGHTS.find(d => d.key === metric).code &&
-        quasiEquals(s.year, year) &&
-        (!(region || income) ||
-          countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-    ),
+  (
+    metric,
+    scores,
+    countries,
+    region,
+    income,
+    standardSearch,
+    groupSearch,
+    year,
+  ) => {
+    const standard = STANDARDS.find(as => as.key === standardSearch);
+    const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
+    const right = !!metric && RIGHTS.find(d => d.key === metric);
+    return (
+      scores &&
+      countries &&
+      right &&
+      scores.filter(
+        s =>
+          s.group === group.code &&
+          s.standard === standard.code &&
+          s.metric_code === right.code &&
+          quasiEquals(s.year, year) &&
+          (!(region || income) ||
+            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+      )
+    );
+  },
 );
 
 // single right, multiple countries, single year
@@ -395,18 +420,21 @@ export const getCPRRightScores = createSelector(
   getRegionSearch,
   getIncomeSearch,
   getCPRYear,
-  (metric, scores, countries, region, income, year) =>
-    scores &&
-    countries &&
-    scores.filter(
-      s =>
-        !!metric && // make sure a metric is set
-        RIGHTS.find(d => d.key === metric) &&
-        s.metric_code === RIGHTS.find(d => d.key === metric).code &&
-        quasiEquals(s.year, year) &&
-        (!(region || income) ||
-          countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-    ),
+  (metric, scores, countries, region, income, year) => {
+    const right = !!metric && RIGHTS.find(d => d.key === metric);
+    return (
+      scores &&
+      countries &&
+      right &&
+      scores.filter(
+        s =>
+          s.metric_code === right.code &&
+          quasiEquals(s.year, year) &&
+          (!(region || income) ||
+            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+      )
+    );
+  },
 );
 // single indicator, multiple countries, single year
 export const getIndicatorScores = createSelector(
@@ -417,20 +445,22 @@ export const getIndicatorScores = createSelector(
   getIncomeSearch,
   getGroupSearch,
   getESRYear,
-  (metric, scores, countries, region, income, group, year) => {
+  (metric, scores, countries, region, income, groupSearch, year) => {
     if (scores && countries) {
-      if (metric && INDICATORS.find(d => d.key === metric)) {
+      const indicator = metric && INDICATORS.find(d => d.key === metric);
+      const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
+      if (indicator) {
         // first filter by group, metric, countries
-        const filtered = scores.filter(
+        const filteredScores = scores.filter(
           s =>
-            s.group === PEOPLE_GROUPS.find(g => g.key === group).code &&
-            s.metric_code === INDICATORS.find(d => d.key === metric).code &&
+            s.group === group.code &&
+            s.metric_code === indicator.code &&
             (!(region || income) ||
               countries.map(c => c.country_code).indexOf(s.country_code) > -1),
         );
         // then get the most recent year for each country
         // figure out most recent data by country
-        const countryYears = filtered.reduce((memo, s) => {
+        const countryYears = filteredScores.reduce((memo, s) => {
           const result = memo;
           const country = s.country_code;
           if (
@@ -443,7 +473,7 @@ export const getIndicatorScores = createSelector(
           return result;
         }, {});
         // finally filter by year or most recent year
-        const filteredYear = filtered.filter(
+        const filteredYear = filteredScores.filter(
           s =>
             quasiEquals(s.year, year) ||
             quasiEquals(s.year, countryYears[s.country_code]),
@@ -464,25 +494,28 @@ export const getDimensionScoresForCountry = createSelector(
   getCPRScores,
   getESRYear,
   getCPRYear,
-  (country, esrScores, cprScores, esrYear, cprYear) =>
-    country &&
-    esrScores &&
-    cprScores && {
-      esr: esrScores.filter(
-        s =>
-          s.country_code === country &&
-          // quasiEquals(s.year, esrYear) &&
-          s.metric_code === DIMENSIONS.find(d => d.key === 'esr').code,
-      ),
-      cpr: cprScores.filter(
-        s =>
-          s.country_code === country &&
-          quasiEquals(s.year, cprYear) &&
-          DIMENSIONS.filter(d => d.type === 'cpr')
-            .map(d => d.code)
-            .indexOf(s.metric_code) > -1,
-      ),
-    },
+  (country, esrScores, cprScores, esrYear, cprYear) => {
+    const esr = DIMENSIONS.find(d => d.key === 'esr');
+    const cprs = DIMENSIONS.filter(d => d.type === 'cpr').map(d => d.code);
+    return (
+      country &&
+      esrScores &&
+      cprScores && {
+        esr: esrScores.filter(
+          s =>
+            s.country_code === country &&
+            // quasiEquals(s.year, esrYear) &&
+            s.metric_code === esr.code,
+        ),
+        cpr: cprScores.filter(
+          s =>
+            s.country_code === country &&
+            quasiEquals(s.year, cprYear) &&
+            cprs.indexOf(s.metric_code) > -1,
+        ),
+      }
+    );
+  },
 );
 
 // single country, all rights, single year
@@ -493,28 +526,30 @@ export const getRightScoresForCountry = createSelector(
   getGroupSearch,
   getESRYear,
   getCPRYear,
-  (country, esrScores, cprScores, group, esrYear, cprYear) =>
-    country &&
-    esrScores &&
-    cprScores && {
-      esr: esrScores.filter(
-        s =>
-          s.country_code === country &&
-          quasiEquals(s.year, esrYear) &&
-          s.group === PEOPLE_GROUPS.find(g => g.key === group).code &&
-          RIGHTS.filter(d => d.type === 'esr')
-            .map(d => d.code)
-            .indexOf(s.metric_code) > -1,
-      ),
-      cpr: cprScores.filter(
-        s =>
-          s.country_code === country &&
-          quasiEquals(s.year, cprYear) &&
-          RIGHTS.filter(d => d.type === 'cpr')
-            .map(d => d.code)
-            .indexOf(s.metric_code) > -1,
-      ),
-    },
+  (country, esrScores, cprScores, groupSearch, esrYear, cprYear) => {
+    const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
+    const rightsESR = RIGHTS.filter(d => d.type === 'esr').map(d => d.code);
+    const rightsCPR = RIGHTS.filter(d => d.type === 'cpr').map(d => d.code);
+    return (
+      country &&
+      esrScores &&
+      cprScores && {
+        esr: esrScores.filter(
+          s =>
+            s.country_code === country &&
+            quasiEquals(s.year, esrYear) &&
+            s.group === group.code &&
+            rightsESR.indexOf(s.metric_code) > -1,
+        ),
+        cpr: cprScores.filter(
+          s =>
+            s.country_code === country &&
+            quasiEquals(s.year, cprYear) &&
+            rightsCPR.indexOf(s.metric_code) > -1,
+        ),
+      }
+    );
+  },
 );
 
 // single country, all indicators, single year
@@ -524,13 +559,12 @@ export const getIndicatorScoresForCountry = createSelector(
   getESRIndicators, // ForStandard,
   getGroupSearch,
   getESRYear,
-  (country, scores, indicators, group, year) => {
+  (country, scores, indicators, groupSearch, year) => {
     if (scores && country && indicators) {
       // first filter by country and group
+      const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
       const filteredByGroup = scores.filter(
-        s =>
-          s.country_code === country &&
-          s.group === PEOPLE_GROUPS.find(g => g.key === group).code,
+        s => s.country_code === country && s.group === group.code,
       );
       // filter by standard
       const filteredByStandard = filteredByGroup.filter(s =>
@@ -803,5 +837,161 @@ export const getPeopleAtRisk = createSelector(
       }),
       {},
     );
+  },
+);
+export const getCountryFromRouter = createSelector(
+  getRouterMatch,
+  getCountries,
+  (code, countries) =>
+    countries && countries.find(c => c.country_code === code),
+);
+
+export const getESRDimensionScoresForYear = createSelector(
+  getESRYear,
+  getESRScores,
+  (year, scores) => {
+    const dimension = DIMENSIONS.find(d => d.key === 'esr');
+    return (
+      dimension &&
+      scores &&
+      scores.filter(
+        s => s.metric_code === dimension.code && quasiEquals(s.year, year),
+      )
+    );
+  },
+);
+
+export const getCPRDimensionScoresForYear = createSelector(
+  getCPRYear,
+  getCPRScores,
+  (year, scores) => {
+    const dimensions = DIMENSIONS.filter(d => d.type === 'cpr');
+    return (
+      dimensions &&
+      scores &&
+      dimensions.reduce(
+        (m, d) => ({
+          ...m,
+          [d.key]: scores.filter(
+            s => s.metric_code === d.code && quasiEquals(s.year, year),
+          ),
+        }),
+        {},
+      )
+    );
+  },
+);
+
+// esr: average of other countries in same region, if high income country only use high income average best calculate for both standards and benchmarks
+// cpr: average mean score of other countries worldwide, if high income oecd country only use HI OECD average
+//
+export const getDimensionAverages = createSelector(
+  getCountryFromRouter,
+  getCountries,
+  getESRDimensionScoresForYear,
+  getCPRDimensionScoresForYear,
+  (country, countries, esrScores, cprScores) => {
+    if (!country || !countries || !esrScores || !cprScores) return false;
+    // figure out esr averages
+    const compareESRCountries = countries.filter(
+      c =>
+        c.region_code === country.region_code &&
+        c.country_code !== country.country_code &&
+        (country.high_income_country === '0' || c.high_income_country === '1'),
+    );
+    const hiStandard = STANDARDS.find(s => s.key === 'hi');
+    const coreStandard = STANDARDS.find(s => s.key === 'core');
+    const esrScoreAdder = (m, c, standard) => {
+      const score = esrScores.find(
+        s => s.country_code === c.country_code && s.standard === standard,
+      );
+      // prettier-ignore
+      return score
+        ? {
+          sumAdjusted:
+            m.sumAdjusted + parseFloat(score[COLUMNS.ESR.SCORE_ADJUSTED]),
+          sumBest: m.sumBest + parseFloat(score[COLUMNS.ESR.SCORE_BEST]),
+          count: m.count + 1,
+        }
+        : m;
+    };
+    const esrSumsHi = compareESRCountries.reduce(
+      (m, c) => esrScoreAdder(m, c, hiStandard.code),
+      {
+        sumAdjusted: 0,
+        sumBest: 0,
+        count: 0,
+      },
+    );
+    const esrSumsCore = compareESRCountries.reduce(
+      (m, c) => esrScoreAdder(m, c, coreStandard.code),
+      {
+        sumAdjusted: 0,
+        sumBest: 0,
+        count: 0,
+      },
+    );
+    const esrAverages = {
+      hi: {
+        ...esrSumsHi,
+        average: {
+          adjusted: esrSumsHi.sumAdjusted / esrSumsHi.count,
+          best: esrSumsHi.sumBest / esrSumsHi.count,
+        },
+      },
+      core: {
+        ...esrSumsCore,
+        average: {
+          adjusted: esrSumsCore.sumAdjusted / esrSumsCore.count,
+          best: esrSumsCore.sumBest / esrSumsCore.count,
+        },
+      },
+    };
+    const compareCPRCountries = countries.filter(
+      c =>
+        c.country_code !== country.country_code &&
+        (country.high_income_country === '0' ||
+          country.OECD_country === '0' ||
+          (c.high_income_country === '1' && c.OECD_country === '1')),
+    );
+    const cprScoreAdder = (m, c, key) => {
+      const score = cprScores[key].find(s => s.country_code === c.country_code);
+      // prettier-ignore
+      return score
+        ? {
+          sum: m.sum + parseFloat(score[COLUMNS.CPR.MEAN]),
+          count: m.count + 1,
+        }
+        : m;
+    };
+    const cprDimensions = DIMENSIONS.filter(d => d.type === 'cpr');
+    const cprSums = cprDimensions.reduce(
+      (m, d) => ({
+        ...m,
+        [d.key]: compareCPRCountries.reduce(
+          (mc, c) => cprScoreAdder(mc, c, d.key),
+          {
+            sum: 0,
+            count: 0,
+          },
+        ),
+      }),
+      {},
+    );
+    const cprAverages = cprDimensions.reduce(
+      (m, d) => ({
+        ...m,
+        [d.key]: {
+          ...cprSums[d.key],
+          average: cprSums[d.key].sum / cprSums[d.key].count,
+        },
+      }),
+      {},
+    );
+
+    return {
+      esr: esrAverages,
+      ...cprAverages,
+    };
   },
 );

@@ -95,7 +95,10 @@ export function PathMetric({
           <HeaderCategories direction="row">
             <Text size="small">
               {ancestors.map(ancestor => (
-                <CategoryLink onClick={() => onMetricClick(ancestor.key)}>
+                <CategoryLink
+                  key={ancestor.key}
+                  onClick={() => onMetricClick(ancestor.key)}
+                >
                   <Text margin={{ right: 'xsmall' }}>
                     {`${intl.formatMessage(
                       rootMessages[ancestor.type][ancestor.key],
