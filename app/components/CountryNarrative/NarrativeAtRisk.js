@@ -136,7 +136,13 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
           {...messages.atRisk.end.beforeLink}
           values={messageValues}
         />
-        <Anchor href="#" onClick={() => onAtRiskClick()}>
+        <Anchor
+          href="#"
+          onClick={evt => {
+            if (evt) evt.preventDefault();
+            return onAtRiskClick();
+          }}
+        >
           <FormattedMessage
             {...messages.atRisk.end.link}
             values={messageValues}
