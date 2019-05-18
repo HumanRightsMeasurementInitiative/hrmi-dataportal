@@ -77,6 +77,7 @@ const appReducer = (state = initialState, action) =>
         draft.dataRequested[action.key] = action.time;
         break;
       case LOAD_DATA_SUCCESS:
+        console.log('data loaded', action.key);
         draft.data[action.key] = action.data;
         draft.dataReady[action.key] = action.time;
         break;

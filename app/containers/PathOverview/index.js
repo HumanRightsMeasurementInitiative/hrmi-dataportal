@@ -13,7 +13,10 @@ import { compose } from 'redux';
 import { Heading } from 'grommet';
 import styled from 'styled-components';
 
-import { getCountriesFiltered } from 'containers/App/selectors';
+import {
+  getCountriesFiltered,
+  getScoresByCountry,
+} from 'containers/App/selectors';
 
 import OverviewMetrics from 'containers/OverviewMetrics';
 import OverviewCountries from 'containers/OverviewCountries';
@@ -35,7 +38,7 @@ const SuperHeadingStyled = styled(SuperHeading)`
   margin-top: 0;
 `;
 
-export function PathOverview({ countries, intl }) {
+export function PathOverview({ countries, scoresAllCountries, intl }) {
   return (
     <ContentWrap>
       <ContentContainer paddingTop>
@@ -58,7 +61,12 @@ export function PathOverview({ countries, intl }) {
           {
             key: 'countries',
             title: intl.formatMessage(rootMessages.tabs.countries),
-            content: <OverviewCountries countries={countries} />,
+            content: (
+              <OverviewCountries
+                countries={countries}
+                scoresAllCountries={scoresAllCountries}
+              />
+            ),
           },
           {
             key: 'metrics',
@@ -73,11 +81,13 @@ export function PathOverview({ countries, intl }) {
 
 PathOverview.propTypes = {
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   countries: state => getCountriesFiltered(state),
+  scoresAllCountries: state => getScoresByCountry(state),
 });
 
 const withConnect = connect(
@@ -86,30 +96,3 @@ const withConnect = connect(
 );
 
 export default compose(withConnect)(injectIntl(PathOverview));
-
-// <ResponsiveContext.Consumer>
-//   {size => {
-//     console.log('RC', size);
-//     return (
-//       <B>
-//         <Heading>{`${countries.length} countries`}</Heading>
-//         <Heading level={1}>Heading 1</Heading>
-//         <Heading level={2}>Heading 2</Heading>
-//         <Heading level={3}>Heading 3</Heading>
-//         <Heading level={4}>Heading 4</Heading>
-//         <Heading level={5}>Heading 5</Heading>
-//         <Heading level={6}>Heading 6</Heading>
-//         <Text as="div" size="xxlarge">Text xxlarge</Text>
-//         <Text as="div" size="xlarge">Text xlarge</Text>
-//         <Text as="div" size="large">Text large</Text>
-//         <Text as="div" size="medium">Text medium</Text>
-//         <Text>Text</Text>
-//         <Text as="div" size="small">Text small</Text>
-//         <Text as="div" size="xsmall">Text xsmall</Text>
-//         <Paragraph size="small">Paragraph small</Paragraph>
-//         <Paragraph size="medium">Paragraph medium</Paragraph>
-//         <Paragraph margin="none">Paragraph</Paragraph>
-//       </B>
-//     );
-//   }}
-// </ResponsiveContext.Consumer>

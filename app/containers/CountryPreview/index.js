@@ -11,11 +11,9 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 // import styled from 'styled-components';
-import { Button, Box } from 'grommet';
+import { Button, Box, Text } from 'grommet';
 
 import rootMessages from 'messages';
-import formatScore from 'utils/format-score';
-import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
 
 import {
   getDimensionsForCountry,
@@ -25,9 +23,10 @@ import {
   getBenchmarkSearch,
 } from 'containers/App/selectors';
 import { selectCountry } from 'containers/App/actions';
-import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
+// import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 
-// import messages from './messages';
+import DiamondChart from './DiamondChart';
+import messages from './messages';
 
 export function CountryPreview({
   onSelectCountry,
@@ -37,91 +36,41 @@ export function CountryPreview({
   scale,
   // standard,
   benchmark,
-  intl,
 }) {
   if (!dimensions || !rights || !country) return null;
   // return null;
   // const currentStandard = STANDARDS.find(s => s.key === standard);
-  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-  const empowerScore = dimensions && dimensions.empowerment.score;
-  const physintScore = dimensions && dimensions.physint.score;
-  const esrScore = dimensions && dimensions.esr.score;
+  // const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
+  // const empowerScore = dimensions && dimensions.empowerment.score;
+  // const physintScore = dimensions && dimensions.physint.score;
+  // const esrScore = dimensions && dimensions.esr.score;
   // country && dimensions && console.log(country.country_code, esrScore, dimensions.esr);
   return (
-    <Box pad="small" width="270px">
+    <Box pad="small" width="200px" alignContent="center">
       {country && (
         <Button onClick={() => onSelectCountry(country.country_code)}>
-          <strong>
-            <FormattedMessage
-              {...rootMessages.countries[country.country_code]}
-            />
-          </strong>
           {scale === 'd' && (
             <div>
-              <div>
-                <FormattedMessage {...rootMessages.dimensions.empowerment} />
-                <span>: </span>
-                {empowerScore && (
-                  <strong>{formatScore(empowerScore[COLUMNS.CPR.MEAN])}</strong>
-                )}
-                {!empowerScore &&
-                  getNoDataMessage(intl, dimensions.empowerment)}
-              </div>
-              <div>
-                <FormattedMessage {...rootMessages.dimensions.physint} />
-                <span>: </span>
-                {physintScore && (
-                  <strong>{formatScore(physintScore[COLUMNS.CPR.MEAN])}</strong>
-                )}
-                {!physintScore && getNoDataMessage(intl, dimensions.physint)}
-              </div>
-              <div>
-                <FormattedMessage {...rootMessages.dimensions.esr} />
-                <span>: </span>
-                {esrScore && (
-                  <strong>
-                    {formatScore(esrScore[currentBenchmark.column])}
-                  </strong>
-                )}
-                {!esrScore && getNoDataMessage(intl, dimensions.esr)}
-                {!esrScore &&
-                  getIncompleteDataActionMessage(intl, dimensions.esr)}
-              </div>
+              <DiamondChart dimensions={dimensions} benchmark={benchmark} />
             </div>
           )}
-          {scale === 'r' &&
-            rights &&
-            Object.values(rights)
-              .filter(
-                r => r.type === 'cpr' && typeof r.aggregate === 'undefined',
-              )
-              .map(r => (
-                <div key={r.key}>
-                  <FormattedMessage {...rootMessages['rights-short'][r.key]} />
-                  <span>: </span>
-                  {r.score && (
-                    <strong>{formatScore(r.score[COLUMNS.CPR.MEAN])}</strong>
-                  )}
-                  {!r.score && getNoDataMessage(intl, r)}
-                </div>
-              ))}
-          {scale === 'r' &&
-            rights &&
-            Object.values(rights)
-              .filter(r => r.type === 'esr')
-              .map(r => (
-                <div key={r.key}>
-                  <FormattedMessage {...rootMessages['rights-short'][r.key]} />
-                  <span>: </span>
-                  {r.score && (
-                    <strong>
-                      {formatScore(r.score[currentBenchmark.column])}
-                    </strong>
-                  )}
-                  {!r.score && getNoDataMessage(intl, r)}
-                  {!r.score && getIncompleteDataActionMessage(intl, r)}
-                </div>
-              ))}
+          {scale === 'r' && (
+            <div>
+              <DiamondChart rights={rights} benchmark={benchmark} />
+            </div>
+          )}
+          <Box>
+            <Text textAlign="center" alignSelf="center">
+              <strong>
+                <FormattedMessage
+                  {...rootMessages.countries[country.country_code]}
+                />
+                {country.high_income_country === '1' && (
+                  <FormattedMessage {...messages.hi} />
+                )}
+              </strong>
+            </Text>
+          </Box>
         </Button>
       )}
     </Box>
