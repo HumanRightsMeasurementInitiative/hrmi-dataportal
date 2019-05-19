@@ -1,0 +1,24 @@
+/*
+ * Overview Messages
+ *
+ * This contains all the text for the Overview container.
+ */
+
+import { defineMessages } from 'react-intl';
+
+export const scope = 'hrmi.components.CountryFilters';
+
+export default defineMessages({
+  addFilter: {
+    id: `${scope}.addFilter`,
+    defaultMessage: 'Add country filter',
+  },
+  regionsFilterOptionGroup: {
+    id: `${scope}.regionsFilterOptionGroup`,
+    defaultMessage: 'Regions',
+  },
+  incomeFilterOptionGroup: {
+    id: `${scope}.incomeFilterOptionGroup`,
+    defaultMessage: 'Income group',
+  },
+});
