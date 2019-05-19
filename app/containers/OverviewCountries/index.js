@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 // import styled from 'styled-components';
 // import { Paragraph, Text, Button, Heading, InfiniteScroll, ResponsiveContext } from 'grommet';
-import { Box, Button } from 'grommet';
+import { Box, Button, InfiniteScroll } from 'grommet';
 import { FormClose } from 'grommet-icons';
 
 import {
@@ -131,20 +131,22 @@ export function OverviewCountries({
       )}
       {sortedCountries && scoresAllCountries && (
         <Box direction="row" wrap width="100%">
-          {sortedCountries.map(c => (
-            <CountryPreview
-              key={c.country_code}
-              country={c}
-              scale={scale}
-              scores={getScoresForCountry(c.country_code, scoresAllCountries)}
-              standard={standardDetails}
-              otherStandard={otherStandardDetails}
-              defaultStandard={isDefaultStandard(c, standardDetails)}
-              benchmark={BENCHMARKS.find(s => s.key === benchmark)}
-              onSelectCountry={() => onSelectCountry(c.country_code)}
-              indicators={indicators}
-            />
-          ))}
+          <InfiniteScroll items={sortedCountries} step={30} show={0}>
+            {c => (
+              <CountryPreview
+                key={c.country_code}
+                country={c}
+                scale={scale}
+                scores={getScoresForCountry(c.country_code, scoresAllCountries)}
+                standard={standardDetails}
+                otherStandard={otherStandardDetails}
+                defaultStandard={isDefaultStandard(c, standardDetails)}
+                benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+                onSelectCountry={() => onSelectCountry(c.country_code)}
+                indicators={indicators}
+              />
+            )}
+          </InfiniteScroll>
         </Box>
       )}
     </Box>
