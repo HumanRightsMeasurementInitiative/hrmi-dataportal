@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Box, Text } from 'grommet';
 import { injectIntl, intlShape } from 'react-intl';
 import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
@@ -46,6 +46,22 @@ const BarValue = styled.div`
   top: 0;
   height: ${props => props.height}px;
   background-color: ${props => props.theme.global.colors[props.color]};
+  ${props =>
+    props.stripes &&
+    css`
+      background-image: linear-gradient(
+        135deg,
+        ${props.theme.global.colors[props.color]} 30%,
+        ${props.theme.global.colors['light-2']} 30%,
+        ${props.theme.global.colors['light-2']} 50%,
+        ${props.theme.global.colors[props.color]} 50%,
+        ${props.theme.global.colors[props.color]} 80%,
+        ${props.theme.global.colors['light-2']} 80%,
+        ${props.theme.global.colors['light-2']} 100%
+      );
+      background-size: 5px 5px;
+      background-repeat: repeat;
+    `}
 `;
 
 function BarHorizontal({
@@ -58,6 +74,7 @@ function BarHorizontal({
   intl,
   data,
   omitMinMaxLabels,
+  stripes = false,
 }) {
   return (
     <Wrapper>
@@ -75,6 +92,7 @@ function BarHorizontal({
               height={HEIGHT[level]}
               color={color}
               style={{ width: `${(value / maxValue) * 100}%` }}
+              stripes={stripes}
             />
           )}
           {!value && data && level < 3 && (
@@ -107,6 +125,7 @@ BarHorizontal.propTypes = {
   maxValue: PropTypes.number,
   level: PropTypes.number,
   omitMinMaxLabels: PropTypes.bool,
+  stripes: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

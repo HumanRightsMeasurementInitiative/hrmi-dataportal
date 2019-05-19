@@ -20,6 +20,7 @@ function DimensionPanel({
   column,
   columnLo,
   columnHi,
+  standard,
 }) {
   const { score, type } = dimension;
   const value = score && score[column] && parseFloat(score[column]);
@@ -37,6 +38,7 @@ function DimensionPanel({
           maxValue={100}
           data={dimension}
           unit="%"
+          stripes={standard === 'hi'}
         />
       )}
       {type === 'cpr' && (
@@ -60,6 +62,7 @@ function DimensionPanel({
 }
 DimensionPanel.propTypes = {
   dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  standard: PropTypes.string,
   dimensionKey: PropTypes.string,
   column: PropTypes.string,
   columnLo: PropTypes.string,

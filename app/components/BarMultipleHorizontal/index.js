@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Box, Text } from 'grommet';
 import { injectIntl, intlShape } from 'react-intl';
 import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
@@ -54,6 +54,22 @@ const BarValue = styled.div`
   top: ${props => props.top || 0}px;
   height: ${props => props.height}px;
   background-color: ${props => props.theme.global.colors[props.color]};
+  ${props =>
+    props.stripes &&
+    css`
+      background-image: linear-gradient(
+        135deg,
+        ${props.theme.global.colors[props.color]} 30%,
+        ${props.theme.global.colors['light-2']} 30%,
+        ${props.theme.global.colors['light-2']} 50%,
+        ${props.theme.global.colors[props.color]} 50%,
+        ${props.theme.global.colors[props.color]} 80%,
+        ${props.theme.global.colors['light-2']} 80%,
+        ${props.theme.global.colors['light-2']} 100%
+      );
+      background-size: 5px 5px;
+      background-repeat: repeat;
+    `}
 `;
 
 function BarMultipleHorizontal({
@@ -65,7 +81,7 @@ function BarMultipleHorizontal({
   unit,
   level = 1,
   intl,
-  hideMsg = false,
+  stripes = false,
   omitMinMaxLabels = false,
   height,
 }) {
@@ -93,7 +109,7 @@ function BarMultipleHorizontal({
       )}
       <BarWrapper>
         <BarAnchor height={heightTotal}>
-          {!hasAnyScores && !hideMsg && level > 0 && (
+          {!hasAnyScores && level > 0 && (
             <BarReference height={heightTotal} noData>
               <NoData>
                 <Text size="small">
@@ -127,9 +143,10 @@ function BarMultipleHorizontal({
                       height={heightIndividual}
                       color={d.dimension || d.key || color}
                       style={{ width: `${(value / mv) * 100}%` }}
+                      stripes={d.stripes || stripes}
                     />
                   )}
-                  {!value && level < 1 && data.length < 4 && !hideMsg && (
+                  {!value && level < 1 && data.length < 4 && (
                     <NoData level={level}>
                       <Text size="xsmall">{getNoDataMessage(intl, d)}</Text>
                     </NoData>
@@ -160,7 +177,7 @@ BarMultipleHorizontal.propTypes = {
   column: PropTypes.string,
   level: PropTypes.number,
   omitMinMaxLabels: PropTypes.bool,
-  hideMsg: PropTypes.bool,
+  stripes: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

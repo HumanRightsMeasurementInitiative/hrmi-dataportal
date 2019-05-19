@@ -22,7 +22,14 @@ const StyledDimensionHeading = styled(DimensionHeading)`
   font-weight: normal;
 `;
 
-function DimensionChart({ dimensionKey, column, data, maxValue, unit = '' }) {
+function DimensionChart({
+  dimensionKey,
+  column,
+  data,
+  maxValue,
+  unit = '',
+  standard,
+}) {
   const value =
     data && data.score && data.score[column] && parseFloat(data.score[column]);
   return (
@@ -38,6 +45,7 @@ function DimensionChart({ dimensionKey, column, data, maxValue, unit = '' }) {
           minValue={0}
           maxValue={maxValue}
           unit={unit}
+          stripes={dimensionKey === 'esr' && standard === 'hi'}
         />
         <DimensionScoreWrapper>
           <DimensionScoreText color={`${dimensionKey}Dark`}>
@@ -55,6 +63,7 @@ DimensionChart.propTypes = {
   column: PropTypes.string,
   scale: PropTypes.string,
   unit: PropTypes.string,
+  standard: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   maxValue: PropTypes.number,
 };

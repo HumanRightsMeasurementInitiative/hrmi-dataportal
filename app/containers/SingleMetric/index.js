@@ -23,6 +23,7 @@ import {
   getCPRRightScores,
   getBenchmarkSearch,
   getIndicatorScores,
+  getStandardSearch,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded } from 'containers/App/actions';
@@ -39,7 +40,13 @@ const Styled = styled(Box)`
 const DEPENDENCIES = ['countries', 'cprScores', 'esrScores'];
 const DEPENDENCIES_INDICATORS = ['countries', 'esrIndicatorScores'];
 
-export function SingleMetric({ onLoadData, metric, scores, benchmark }) {
+export function SingleMetric({
+  onLoadData,
+  metric,
+  scores,
+  benchmark,
+  standard,
+}) {
   useEffect(() => {
     // kick off loading of data
     onLoadData(metric);
@@ -80,6 +87,7 @@ export function SingleMetric({ onLoadData, metric, scores, benchmark }) {
                   minValue={0}
                   maxValue={100}
                   unit="%"
+                  stripes={standard === 'hi'}
                 />
               )}
               {metric.type === 'cpr' && (
@@ -107,6 +115,7 @@ SingleMetric.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   metric: PropTypes.object.isRequired,
+  standard: PropTypes.string,
   benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
 };
@@ -129,6 +138,7 @@ const mapStateToProps = createStructuredSelector({
     return false;
   },
   benchmark: state => getBenchmarkSearch(state),
+  standard: state => getStandardSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {

@@ -56,6 +56,7 @@ function CountryReport({
         dimensions={dimensions}
         rights={rights}
         benchmark={benchmark}
+        standard={standard}
       />
       <CountryNarrative
         dimensions={dimensions}
