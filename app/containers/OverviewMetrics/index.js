@@ -11,17 +11,60 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Button, Heading, Box } from 'grommet';
+import { Button, Heading, Box, Text } from 'grommet';
 // import { FormClose } from 'grommet-icons';
 
-import { getScaleSearch } from 'containers/App/selectors';
+import {
+  getScaleSearch,
+  getBenchmarkSearch,
+  getStandardSearch,
+} from 'containers/App/selectors';
 import { selectMetric } from 'containers/App/actions';
-import { RIGHTS_TYPES, DIMENSIONS, RIGHTS } from 'containers/App/constants';
+import {
+  RIGHTS_TYPES,
+  DIMENSIONS,
+  RIGHTS,
+  STANDARDS,
+  BENCHMARKS,
+  COLUMNS,
+} from 'containers/App/constants';
 import rootMessages from 'messages';
 
-const Option = styled(Button)``;
+import MetricPreviewChart from './MetricPreviewChart';
 
-export function OverviewMetrics({ scale, onSelectMetric }) {
+const Option = styled(Button)`
+  width: 100%;
+`;
+
+const getScoresForDimension = (countries, dimension, scores, standard) =>
+  countries &&
+  scores &&
+  countries.map(c => {
+    const countryScores = scores[dimension.type][c.country_code];
+    const countryMetric = (countryScores && countryScores[dimension.key]) || [
+      { country_code: c.country_code },
+    ];
+    if (dimension.type === 'esr') {
+      // prettier-ignore
+      return countryMetric.find(
+        s => s.standard === standard.code && s.group === 'All',
+      ) || { country_code: c.country_code };
+    }
+    return countryMetric[0];
+  });
+
+export function OverviewMetrics({
+  scale,
+  onSelectMetric,
+  scoresAllCountries,
+  countries,
+  standard,
+  benchmark,
+}) {
+  // console.log(countries && countries.length)
+  const standardDetails = STANDARDS.find(s => s.key === standard);
+  const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
+
   return (
     <Box pad="medium">
       {RIGHTS_TYPES.map(type => {
@@ -54,7 +97,7 @@ export function OverviewMetrics({ scale, onSelectMetric }) {
                     }}
                   >
                     <Heading
-                      level={4}
+                      level={5}
                       margin={{
                         vertical: 'xsmall',
                         horizontal: 'none',
@@ -62,6 +105,24 @@ export function OverviewMetrics({ scale, onSelectMetric }) {
                     >
                       <FormattedMessage {...rootMessages.dimensions[d.key]} />
                     </Heading>
+                    {!rights && (
+                      <MetricPreviewChart
+                        maxValue={d.type === 'esr' ? 100 : 10}
+                        level={1}
+                        color={d.key}
+                        column={
+                          d.type === 'esr'
+                            ? benchmarkDetails.column
+                            : COLUMNS.CPR.MEAN
+                        }
+                        data={getScoresForDimension(
+                          countries,
+                          d,
+                          scoresAllCountries,
+                          standardDetails,
+                        )}
+                      />
+                    )}
                   </Option>
                   {rights &&
                     rights.map(r => (
@@ -72,7 +133,25 @@ export function OverviewMetrics({ scale, onSelectMetric }) {
                             onSelectMetric(r.key);
                           }}
                         >
-                          <FormattedMessage {...rootMessages.rights[r.key]} />
+                          <Text size="small">
+                            <FormattedMessage {...rootMessages.rights[r.key]} />
+                          </Text>
+                          <MetricPreviewChart
+                            level={2}
+                            maxValue={r.type === 'esr' ? 100 : 10}
+                            color={r.dimension}
+                            column={
+                              r.type === 'esr'
+                                ? benchmarkDetails.column
+                                : COLUMNS.CPR.MEAN
+                            }
+                            data={getScoresForDimension(
+                              countries,
+                              r,
+                              scoresAllCountries,
+                              standardDetails,
+                            )}
+                          />
                         </Option>
                       </div>
                     ))}
@@ -87,17 +166,18 @@ export function OverviewMetrics({ scale, onSelectMetric }) {
 }
 
 OverviewMetrics.propTypes = {
-  scale: PropTypes.string,
+  scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSelectMetric: PropTypes.func,
-  // countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  // regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  // incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 const mapStateToProps = createStructuredSelector({
-  // countries: state => getCountriesFiltered(state),
-  // regionFilterValue: state => getRegionSearch(state),
   scale: state => getScaleSearch(state),
+  standard: state => getStandardSearch(state),
+  benchmark: state => getBenchmarkSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
