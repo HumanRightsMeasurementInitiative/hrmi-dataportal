@@ -9,6 +9,24 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
+  assessedFilters: {
+    all: {
+      id: `${scope}.assessedFilters.all`,
+      defaultMessage: 'All rights',
+    },
+    'cpr-all': {
+      id: `${scope}.assessedFilters.cpr-all`,
+      defaultMessage: 'All CPR',
+    },
+    'esr-all': {
+      id: `${scope}.assessedFilters.esr-all`,
+      defaultMessage: 'All ESR',
+    },
+    some: {
+      id: `${scope}.assessedFilters.some`,
+      defaultMessage: 'Some rights',
+    },
+  },
   tabs: {
     countries: {
       id: `${scope}.tabs.countries`,

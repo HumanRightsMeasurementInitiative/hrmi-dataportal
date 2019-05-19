@@ -13,9 +13,13 @@ import { compose } from 'redux';
 import { Heading } from 'grommet';
 import styled from 'styled-components';
 
+import { STANDARDS } from 'containers/App/constants';
+
 import {
   getCountriesFiltered,
   getScoresByCountry,
+  getStandardSearch,
+  getAssessedSearch,
 } from 'containers/App/selectors';
 
 import OverviewMetrics from 'containers/OverviewMetrics';
@@ -29,6 +33,8 @@ import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
 import PageTitle from 'styled/PageTitle';
 
+import { filterByAssessment } from 'utils/scores';
+
 import messages from './messages';
 
 const SuperHeading = props => <Heading level={4} {...props} />;
@@ -38,11 +44,26 @@ const SuperHeadingStyled = styled(SuperHeading)`
   margin-top: 0;
 `;
 
-export function PathOverview({ countries, scoresAllCountries, intl }) {
+export function PathOverview({
+  countries,
+  scoresAllCountries,
+  intl,
+  standard,
+  assessed,
+}) {
+  if (!countries) return null;
+
+  const standardDetails = STANDARDS.find(s => s.key === standard);
+  // prettier-ignore
+  const filteredCountries = assessed
+    ? countries.filter(c =>
+      filterByAssessment(c, scoresAllCountries, assessed, standardDetails),
+    )
+    : countries;
   return (
     <ContentWrap>
       <ContentContainer paddingTop>
-        {countries && (
+        {filteredCountries && (
           <span>
             <SuperHeadingStyled>
               <FormattedMessage {...messages.aboveTitle} />
@@ -50,7 +71,7 @@ export function PathOverview({ countries, scoresAllCountries, intl }) {
             <PageTitle>
               <FormattedMessage
                 {...messages.title}
-                values={{ number: countries.length }}
+                values={{ number: filteredCountries.length }}
               />
             </PageTitle>
           </span>
@@ -63,7 +84,7 @@ export function PathOverview({ countries, scoresAllCountries, intl }) {
             title: intl.formatMessage(rootMessages.tabs.countries),
             content: (
               <OverviewCountries
-                countries={countries}
+                countries={filteredCountries}
                 scoresAllCountries={scoresAllCountries}
               />
             ),
@@ -73,7 +94,7 @@ export function PathOverview({ countries, scoresAllCountries, intl }) {
             title: intl.formatMessage(rootMessages.tabs.metrics),
             content: (
               <OverviewMetrics
-                countries={countries}
+                countries={filteredCountries}
                 scoresAllCountries={scoresAllCountries}
               />
             ),
@@ -88,11 +109,15 @@ PathOverview.propTypes = {
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 const mapStateToProps = createStructuredSelector({
   countries: state => getCountriesFiltered(state),
   scoresAllCountries: state => getScoresByCountry(state),
+  standard: state => getStandardSearch(state),
+  assessed: state => getAssessedSearch(state),
 });
 
 const withConnect = connect(

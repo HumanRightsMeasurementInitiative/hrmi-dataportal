@@ -21,4 +21,8 @@ export default defineMessages({
     id: `${scope}.incomeFilterOptionGroup`,
     defaultMessage: 'Income group',
   },
+  assessedFilterOptionGroup: {
+    id: `${scope}.assessedFilterOptionGroup`,
+    defaultMessage: 'Assessment',
+  },
 });

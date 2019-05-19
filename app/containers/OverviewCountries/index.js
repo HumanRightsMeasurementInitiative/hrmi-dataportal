@@ -19,6 +19,7 @@ import {
   getStandardSearch,
   getScaleSearch,
   getESRIndicators,
+  getAssessedSearch,
 } from 'containers/App/selectors';
 import { navigate, selectCountry } from 'containers/App/actions';
 
@@ -27,68 +28,22 @@ import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 import CountryPreview from 'components/CountryPreview';
 import CountryFilters from 'components/CountryFilters';
 
-import rootMessages from 'messages';
+import {
+  sortByName,
+  sortByAssessment,
+  getScoresForCountry,
+} from 'utils/scores';
 
-const isDefaultStandard = (country, standardDetails) =>
+export const isDefaultStandard = (country, standardDetails) =>
   (country.high_income_country === '0' && standardDetails.key === 'core') ||
   (country.high_income_country === '1' && standardDetails.key === 'hi');
-
-const getScoresForCountry = (countryCode, scores) => ({
-  esr: scores.esr && scores.esr[countryCode],
-  cpr: scores.cpr && scores.cpr[countryCode],
-  indicators: scores.indicators && scores.indicators[countryCode],
-});
-
-const dimensionCount = countryScores =>
-  (countryScores.esr && countryScores.esr.esr ? 1 : 0) +
-  (countryScores.cpr && countryScores.cpr.empowerment ? 1 : 0) +
-  (countryScores.cpr && countryScores.cpr.physint ? 1 : 0);
-
-const rightsCount = countryScores =>
-  (countryScores.esr ? Object.keys(countryScores.esr).length : 0) +
-  (countryScores.cpr ? Object.keys(countryScores.cpr).length : 0);
-
-const indicatorsCount = countryScores =>
-  countryScores.indicators ? Object.keys(countryScores.indicators).length : 0;
-
-const sortByName = (a, b, intl) =>
-  intl.formatMessage(rootMessages.countries[a.country_code]) >
-  intl.formatMessage(rootMessages.countries[b.country_code])
-    ? 1
-    : -1;
-
-const sortByAssessment = (a, b, scoresAllCountries) => {
-  const countryScoresA = getScoresForCountry(
-    a.country_code,
-    scoresAllCountries,
-  );
-  const countryScoresB = getScoresForCountry(
-    b.country_code,
-    scoresAllCountries,
-  );
-  const dimensionsA = dimensionCount(countryScoresA);
-  const dimensionsB = dimensionCount(countryScoresB);
-  if (dimensionsA > dimensionsB) return -1;
-  if (dimensionsA < dimensionsB) return 1;
-
-  const rightsA = rightsCount(countryScoresA);
-  const rightsB = rightsCount(countryScoresB);
-  if (rightsA > rightsB) return -1;
-  if (rightsA < rightsB) return 1;
-
-  const indicatorsA = indicatorsCount(countryScoresA);
-  const indicatorsB = indicatorsCount(countryScoresB);
-  if (indicatorsA > indicatorsB) return -1;
-  if (indicatorsA < indicatorsB) return 1;
-
-  return 1;
-};
 
 export function OverviewCountries({
   countries,
   scoresAllCountries,
   regionFilterValue,
   incomeFilterValue,
+  assessedFilterValue,
   onRemoveFilter,
   onAddFilter,
   onSelectCountry,
@@ -98,16 +53,15 @@ export function OverviewCountries({
   benchmark,
   indicators,
 }) {
-  if (!scoresAllCountries) return null;
-  const sortedCountries =
-    countries &&
-    countries
-      .sort((a, b) => sortByName(a, b, intl))
-      .sort((a, b) => sortByAssessment(a, b, scoresAllCountries));
-
+  if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const otherStandardDetails = STANDARDS.find(s => s.key !== standard);
+
+  // prettier-ignore
+  const sortedCountries = countries
+    .sort((a, b) => sortByName(a, b, intl))
+    .sort((a, b) => sortByAssessment(a, b, scoresAllCountries));
 
   return (
     <Box pad={{ horizontal: 'medium' }}>
@@ -116,6 +70,8 @@ export function OverviewCountries({
         onRemoveFilter={onRemoveFilter}
         onAddFilter={onAddFilter}
         incomeFilterValue={incomeFilterValue}
+        assessedFilterValue={assessedFilterValue}
+        filterGroups={['income', 'region', 'assessed']}
       />
       {sortedCountries && scoresAllCountries && (
         <Box direction="row" wrap width="100%">
@@ -151,6 +107,7 @@ OverviewCountries.propTypes = {
   onAddFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -160,6 +117,7 @@ OverviewCountries.propTypes = {
 const mapStateToProps = createStructuredSelector({
   regionFilterValue: state => getRegionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
+  assessedFilterValue: state => getAssessedSearch(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
