@@ -90,7 +90,7 @@ export function CountryFilters({
           onClose={() => setFilterOpen(false)}
           onOpen={() => setFilterOpen(true)}
           open={filterOpen}
-          dropProps={{ align: { top: 'bottom', left: 'left' } }}
+          dropProps={{ align: { top: 'top', left: 'left' } }}
           dropContent={
             <FilterOptions
               optionGroups={getFilterOptions(

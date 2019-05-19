@@ -24,7 +24,7 @@ import { navigate, selectCountry } from 'containers/App/actions';
 
 import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 
-import CountryPreview from 'containers/CountryPreview';
+import CountryPreview from 'components/CountryPreview';
 import CountryFilters from 'components/CountryFilters';
 
 import rootMessages from 'messages';
@@ -105,6 +105,7 @@ export function OverviewCountries({
       .sort((a, b) => sortByName(a, b, intl))
       .sort((a, b) => sortByAssessment(a, b, scoresAllCountries));
 
+  const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const otherStandardDetails = STANDARDS.find(s => s.key !== standard);
 
@@ -128,7 +129,7 @@ export function OverviewCountries({
                 standard={standardDetails}
                 otherStandard={otherStandardDetails}
                 defaultStandard={isDefaultStandard(c, standardDetails)}
-                benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+                benchmark={benchmarkDetails}
                 onSelectCountry={() => onSelectCountry(c.country_code)}
                 indicators={indicators}
               />

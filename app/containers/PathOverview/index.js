@@ -71,7 +71,12 @@ export function PathOverview({ countries, scoresAllCountries, intl }) {
           {
             key: 'metrics',
             title: intl.formatMessage(rootMessages.tabs.metrics),
-            content: <OverviewMetrics />,
+            content: (
+              <OverviewMetrics
+                countries={countries}
+                scoresAllCountries={scoresAllCountries}
+              />
+            ),
           },
         ]}
       />
