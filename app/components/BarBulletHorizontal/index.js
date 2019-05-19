@@ -75,13 +75,11 @@ const BarValue = styled.div`
   left: 0;
   top: ${props => props.height / 2 - props.height * 0.15}px;
   height: ${props => props.height * 0.3}px;
-  width: ${props => props.percentage}%;
   background-color: ${props => props.theme.global.colors['light-5']};
 `;
 const MarkValue = styled.div`
   position: absolute;
   top: 0;
-  left: ${props => props.percentage}%;
   height: ${props => props.height}px;
   width: ${props => MARK_WIDTH[props.level || 1]}px;
   margin-left: -2px;
@@ -97,10 +95,8 @@ const MarkBound = styled(MarkValue)`
 
 const BarBand = styled.div`
   position: absolute;
-  left: ${props => props.lo}%;
   top: ${props => props.height / 2 - props.height * 0.35}px;
   height: ${props => props.height * 0.7}px;
-  width: ${props => props.hi - props.lo}%;
   background-color: ${props => props.theme.global.colors[props.color]};
   opacity: 0.4;
 `;
@@ -131,8 +127,8 @@ function BarBulletHorizontal({
           {noData && <BarReferenceNoData level={level} />}
           {!noData && (
             <BarValue
-              percentage={(value / maxValue) * 100}
               height={HEIGHT[level]}
+              style={{ width: `${(value / maxValue) * 100}%` }}
             />
           )}
           {!noData && (
@@ -141,28 +137,33 @@ function BarBulletHorizontal({
               height={HEIGHT[level]}
               lo={(band.lo / maxValue) * 100}
               hi={(band.hi / maxValue) * 100}
+              style={{
+                left: `${(band.lo / maxValue) * 100}%`,
+                width: `${(band.hi / maxValue) * 100 -
+                  (band.lo / maxValue) * 100}%`,
+              }}
             />
           )}
           {!noData && (
             <MarkBound
               color={color}
-              percentage={(band.lo / maxValue) * 100}
               height={HEIGHT[level]}
+              style={{ left: `${(band.lo / maxValue) * 100}%` }}
             />
           )}
           {!noData && (
             <MarkValue
               color={color}
-              percentage={(value / maxValue) * 100}
               height={HEIGHT[level]}
               level={level}
+              style={{ left: `${(value / maxValue) * 100}%` }}
             />
           )}
           {!noData && (
             <MarkBound
               color={color}
-              percentage={(band.hi / maxValue) * 100}
               height={HEIGHT[level]}
+              style={{ left: `${(band.hi / maxValue) * 100}%` }}
             />
           )}
           {noData && (

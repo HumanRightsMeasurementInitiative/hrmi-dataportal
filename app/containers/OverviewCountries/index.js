@@ -15,12 +15,25 @@ import { compose } from 'redux';
 import { Box, Button } from 'grommet';
 import { FormClose } from 'grommet-icons';
 
-import { getRegionSearch, getIncomeSearch } from 'containers/App/selectors';
-import { navigate } from 'containers/App/actions';
+import {
+  getRegionSearch,
+  getIncomeSearch,
+  getBenchmarkSearch,
+  getStandardSearch,
+  getScaleSearch,
+  getESRIndicators,
+} from 'containers/App/selectors';
+import { navigate, selectCountry } from 'containers/App/actions';
+
+import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 
 import CountryPreview from 'containers/CountryPreview';
 
 import rootMessages from 'messages';
+
+const isDefaultStandard = (country, standardDetails) =>
+  (country.high_income_country === '0' && standardDetails.key === 'core') ||
+  (country.high_income_country === '1' && standardDetails.key === 'hi');
 
 const getScoresForCountry = (countryCode, scores) => ({
   esr: scores.esr && scores.esr[countryCode],
@@ -46,7 +59,12 @@ export function OverviewCountries({
   regionFilterValue,
   incomeFilterValue,
   onRemoveFilter,
+  onSelectCountry,
   intl,
+  scale,
+  standard,
+  benchmark,
+  indicators,
 }) {
   if (!scoresAllCountries) return null;
   const sortedCountries =
@@ -84,6 +102,9 @@ export function OverviewCountries({
 
         return 1;
       });
+  const standardDetails = STANDARDS.find(s => s.key === standard);
+  const otherStandardDetails = STANDARDS.find(s => s.key !== standard);
+
   return (
     <Box pad={{ horizontal: 'medium' }}>
       {regionFilterValue && (
@@ -108,10 +129,21 @@ export function OverviewCountries({
           />
         </span>
       )}
-      {sortedCountries && (
+      {sortedCountries && scoresAllCountries && (
         <Box direction="row" wrap width="100%">
           {sortedCountries.map(c => (
-            <CountryPreview key={c.country_code} country={c} />
+            <CountryPreview
+              key={c.country_code}
+              country={c}
+              scale={scale}
+              scores={getScoresForCountry(c.country_code, scoresAllCountries)}
+              standard={standardDetails}
+              otherStandard={otherStandardDetails}
+              defaultStandard={isDefaultStandard(c, standardDetails)}
+              benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+              onSelectCountry={() => onSelectCountry(c.country_code)}
+              indicators={indicators}
+            />
           ))}
         </Box>
       )}
@@ -121,17 +153,26 @@ export function OverviewCountries({
 
 OverviewCountries.propTypes = {
   // dispatch: PropTypes.func.isRequired,
+  indicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   onRemoveFilter: PropTypes.func,
+  onSelectCountry: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
+  scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 const mapStateToProps = createStructuredSelector({
   regionFilterValue: state => getRegionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
+  scale: state => getScaleSearch(state),
+  standard: state => getStandardSearch(state),
+  benchmark: state => getBenchmarkSearch(state),
+  indicators: state => getESRIndicators(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -140,6 +181,7 @@ export function mapDispatchToProps(dispatch) {
       dispatch(
         navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
       ),
+    onSelectCountry: country => dispatch(selectCountry(country)),
   };
 }
 
