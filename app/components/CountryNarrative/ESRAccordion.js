@@ -16,6 +16,7 @@ function ESRAccordion({
   indicators,
   benchmark,
   onMetricClick,
+  standard,
 }) {
   return (
     <Box elevation="small" margin={{ top: 'medium' }}>
@@ -27,6 +28,7 @@ function ESRAccordion({
             dimensionKey={dimensionKey}
             column={benchmark.column}
             onMetricClick={onMetricClick}
+            standard={standard}
           />
         }
         content={
@@ -45,6 +47,7 @@ function ESRAccordion({
                           right={right}
                           column={benchmark.column}
                           onMetricClick={onMetricClick}
+                          standard={standard}
                         />
                       }
                       content={
@@ -59,6 +62,7 @@ function ESRAccordion({
                                 indicator={indicator}
                                 column={benchmark.column}
                                 onMetricClick={onMetricClick}
+                                standard={standard}
                               />
                               <Box pad="medium" />
                             </Box>
@@ -78,6 +82,7 @@ function ESRAccordion({
 
 ESRAccordion.propTypes = {
   onMetricClick: PropTypes.func,
+  standard: PropTypes.string,
   dimensionKey: PropTypes.string,
   dimension: PropTypes.object,
   rights: PropTypes.array,

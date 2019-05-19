@@ -17,7 +17,14 @@ const StyledDimensionHeading = styled(DimensionHeading)`
   font-weight: normal;
 `;
 
-function RightsChart({ dimensionKey, column, maxValue, data, unit = '' }) {
+function RightsChart({
+  dimensionKey,
+  column,
+  maxValue,
+  data,
+  unit = '',
+  standard,
+}) {
   return (
     <Box>
       <StyledDimensionHeading>
@@ -31,6 +38,7 @@ function RightsChart({ dimensionKey, column, maxValue, data, unit = '' }) {
           unit={unit}
           data={data}
           column={column}
+          stripes={dimensionKey === 'esr' && standard === 'hi'}
         />
       </BarWrap>
     </Box>
@@ -41,6 +49,7 @@ RightsChart.propTypes = {
   dimensionKey: PropTypes.string,
   column: PropTypes.string,
   scale: PropTypes.string,
+  standard: PropTypes.string,
   unit: PropTypes.string,
   maxValue: PropTypes.number,
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),

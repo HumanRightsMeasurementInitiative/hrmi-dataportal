@@ -20,7 +20,7 @@ const IndicatorScoreText = props => (
 
 const maxValue = 100;
 
-function IndicatorPanel({ indicator, column }) {
+function IndicatorPanel({ indicator, column, standard }) {
   const value =
     indicator.score &&
     indicator.score[column] &&
@@ -38,6 +38,7 @@ function IndicatorPanel({ indicator, column }) {
         maxValue={maxValue}
         data={indicator}
         unit="%"
+        stripes={standard === 'hi'}
       />
       <IndicatorScoreText color="esrDark">
         {value && formatScore(value)}
@@ -48,6 +49,7 @@ function IndicatorPanel({ indicator, column }) {
 IndicatorPanel.propTypes = {
   indicator: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   column: PropTypes.string,
+  standard: PropTypes.string,
 };
 
 export default IndicatorPanel;

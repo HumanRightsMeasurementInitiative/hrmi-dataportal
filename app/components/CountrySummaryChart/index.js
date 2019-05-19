@@ -40,7 +40,13 @@ const RightsTypeHeading = props => (
   <Heading level={4} margin={{ vertical: '5px' }} {...props} />
 );
 
-function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
+function CountrySummaryChart({
+  dimensions,
+  benchmark,
+  scale,
+  rights,
+  standard,
+}) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
@@ -102,6 +108,7 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
               maxValue={100}
               unit="%"
               column={currentBenchmark.column}
+              standard={standard}
             />
           )}
           {scale === 'r' && (
@@ -110,6 +117,7 @@ function CountrySummaryChart({ dimensions, benchmark, scale, rights }) {
               data={esrRights}
               maxValue={100}
               column={currentBenchmark.column}
+              standard={standard}
             />
           )}
         </RightsType>
@@ -166,6 +174,7 @@ CountrySummaryChart.propTypes = {
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  standard: PropTypes.object,
 };
 
 export default CountrySummaryChart;

@@ -88,6 +88,7 @@ const getDimensions = (
         ? COLUMNS.CPR.MEAN
         : (benchmark && benchmark.column) || COLUMNS.ESR.CORE,
     maxValue: dim.type === 'cpr' ? 10 : 100,
+    stripes: dim.type === 'esr' && standard.key === 'hi',
   }));
 
 const prepRights = rights =>
@@ -136,6 +137,7 @@ const getRights = (scores, standard, benchmark, otherStandard, indicators) =>
         ? COLUMNS.CPR.MEAN
         : (benchmark && benchmark.column) || COLUMNS.ESR.CORE,
     maxValue: right.type === 'cpr' ? 10 : 100,
+    stripes: right.type === 'esr' && standard.key === 'hi',
   }));
 
 export function CountryPreview({

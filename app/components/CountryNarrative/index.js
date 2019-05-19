@@ -161,6 +161,7 @@ function CountryNarrative({
             benchmark={BENCHMARKS.find(s => s.key === benchmark)}
             indicators={Object.values(indicators)}
             onMetricClick={onMetricClick}
+            standard={standard}
           />
         </Dimension>
       </RightsType>

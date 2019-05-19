@@ -33,6 +33,7 @@ function RightPanel({
   columnLo,
   columnHi,
   onMetricClick,
+  standard,
 }) {
   const value =
     right.score && right.score[column] && parseFloat(right.score[column]);
@@ -62,6 +63,7 @@ function RightPanel({
           maxValue={100}
           data={right}
           unit="%"
+          stripes={standard === 'hi'}
         />
       )}
       {right.type === 'cpr' && (
@@ -88,6 +90,7 @@ function RightPanel({
 RightPanel.propTypes = {
   onMetricClick: PropTypes.func,
   right: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  standard: PropTypes.string,
   column: PropTypes.string,
   isSubright: PropTypes.bool,
   columnLo: PropTypes.string,
