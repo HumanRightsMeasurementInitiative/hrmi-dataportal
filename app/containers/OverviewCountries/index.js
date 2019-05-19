@@ -10,10 +10,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-// import styled from 'styled-components';
-// import { Paragraph, Text, Button, Heading, InfiniteScroll, ResponsiveContext } from 'grommet';
-import { Box, Button, InfiniteScroll } from 'grommet';
-import { FormClose } from 'grommet-icons';
+import { Box, InfiniteScroll } from 'grommet';
 
 import {
   getRegionSearch,
@@ -28,6 +25,7 @@ import { navigate, selectCountry } from 'containers/App/actions';
 import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 
 import CountryPreview from 'containers/CountryPreview';
+import CountryFilters from 'components/CountryFilters';
 
 import rootMessages from 'messages';
 
@@ -53,12 +51,46 @@ const rightsCount = countryScores =>
 const indicatorsCount = countryScores =>
   countryScores.indicators ? Object.keys(countryScores.indicators).length : 0;
 
+const sortByName = (a, b, intl) =>
+  intl.formatMessage(rootMessages.countries[a.country_code]) >
+  intl.formatMessage(rootMessages.countries[b.country_code])
+    ? 1
+    : -1;
+
+const sortByAssessment = (a, b, scoresAllCountries) => {
+  const countryScoresA = getScoresForCountry(
+    a.country_code,
+    scoresAllCountries,
+  );
+  const countryScoresB = getScoresForCountry(
+    b.country_code,
+    scoresAllCountries,
+  );
+  const dimensionsA = dimensionCount(countryScoresA);
+  const dimensionsB = dimensionCount(countryScoresB);
+  if (dimensionsA > dimensionsB) return -1;
+  if (dimensionsA < dimensionsB) return 1;
+
+  const rightsA = rightsCount(countryScoresA);
+  const rightsB = rightsCount(countryScoresB);
+  if (rightsA > rightsB) return -1;
+  if (rightsA < rightsB) return 1;
+
+  const indicatorsA = indicatorsCount(countryScoresA);
+  const indicatorsB = indicatorsCount(countryScoresB);
+  if (indicatorsA > indicatorsB) return -1;
+  if (indicatorsA < indicatorsB) return 1;
+
+  return 1;
+};
+
 export function OverviewCountries({
   countries,
   scoresAllCountries,
   regionFilterValue,
   incomeFilterValue,
   onRemoveFilter,
+  onAddFilter,
   onSelectCountry,
   intl,
   scale,
@@ -70,65 +102,20 @@ export function OverviewCountries({
   const sortedCountries =
     countries &&
     countries
-      .sort((a, b) =>
-        intl.formatMessage(rootMessages.countries[a.country_code]) >
-        intl.formatMessage(rootMessages.countries[b.country_code])
-          ? 1
-          : -1,
-      )
-      .sort((a, b) => {
-        const countryScoresA = getScoresForCountry(
-          a.country_code,
-          scoresAllCountries,
-        );
-        const countryScoresB = getScoresForCountry(
-          b.country_code,
-          scoresAllCountries,
-        );
-        const dimensionsA = dimensionCount(countryScoresA);
-        const dimensionsB = dimensionCount(countryScoresB);
-        if (dimensionsA > dimensionsB) return -1;
-        if (dimensionsA < dimensionsB) return 1;
+      .sort((a, b) => sortByName(a, b, intl))
+      .sort((a, b) => sortByAssessment(a, b, scoresAllCountries));
 
-        const rightsA = rightsCount(countryScoresA);
-        const rightsB = rightsCount(countryScoresB);
-        if (rightsA > rightsB) return -1;
-        if (rightsA < rightsB) return 1;
-
-        const indicatorsA = indicatorsCount(countryScoresA);
-        const indicatorsB = indicatorsCount(countryScoresB);
-        if (indicatorsA > indicatorsB) return -1;
-        if (indicatorsA < indicatorsB) return 1;
-
-        return 1;
-      });
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const otherStandardDetails = STANDARDS.find(s => s.key !== standard);
 
   return (
     <Box pad={{ horizontal: 'medium' }}>
-      {regionFilterValue && (
-        <span>
-          <Button
-            primary
-            icon={<FormClose />}
-            reverse
-            onClick={() => onRemoveFilter('region')}
-            label={intl.formatMessage(rootMessages.regions[regionFilterValue])}
-          />
-        </span>
-      )}
-      {incomeFilterValue && (
-        <span>
-          <Button
-            primary
-            icon={<FormClose />}
-            reverse
-            onClick={() => onRemoveFilter('income')}
-            label={intl.formatMessage(rootMessages.income[incomeFilterValue])}
-          />
-        </span>
-      )}
+      <CountryFilters
+        regionFilterValue={regionFilterValue}
+        onRemoveFilter={onRemoveFilter}
+        onAddFilter={onAddFilter}
+        incomeFilterValue={incomeFilterValue}
+      />
       {sortedCountries && scoresAllCountries && (
         <Box direction="row" wrap width="100%">
           <InfiniteScroll items={sortedCountries} step={30} show={0}>
@@ -158,8 +145,9 @@ OverviewCountries.propTypes = {
   indicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  onRemoveFilter: PropTypes.func,
   onSelectCountry: PropTypes.func,
+  onRemoveFilter: PropTypes.func,
+  onAddFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
@@ -184,6 +172,15 @@ export function mapDispatchToProps(dispatch) {
         navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
       ),
     onSelectCountry: country => dispatch(selectCountry(country)),
+    onAddFilter: (key, value) =>
+      dispatch(
+        navigate(
+          { search: `?${key}=${value}` },
+          {
+            replace: false,
+          },
+        ),
+      ),
   };
 }
 

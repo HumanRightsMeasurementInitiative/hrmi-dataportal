@@ -24,17 +24,19 @@ import {
   getBenchmarkSearch,
   getIndicatorScores,
   getStandardSearch,
+  getRegionSearch,
+  getIncomeSearch,
 } from 'containers/App/selectors';
 
-import { loadDataIfNeeded } from 'containers/App/actions';
+import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
+import CountryFilters from 'components/CountryFilters';
 
 import rootMessages from 'messages';
 // import messages from './messages';
 
 const Styled = styled(Box)`
   margin: 0 auto;
-  max-width: 1000px;
 `;
 
 const DEPENDENCIES = ['countries', 'cprScores', 'esrScores'];
@@ -46,6 +48,10 @@ export function SingleMetric({
   scores,
   benchmark,
   standard,
+  regionFilterValue,
+  incomeFilterValue,
+  onRemoveFilter,
+  onAddFilter,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -69,45 +75,53 @@ export function SingleMetric({
     );
 
   return (
-    <Styled pad={{ vertical: 'large' }} direction="column">
-      {sortedScores &&
-        sortedScores.map(s => (
-          <Box key={s.country_code} direction="row">
-            <Box width="150px" border="right">
-              <FormattedMessage {...rootMessages.countries[s.country_code]} />
+    <Box pad={{ horizontal: 'medium' }} direction="column">
+      <CountryFilters
+        regionFilterValue={regionFilterValue}
+        onRemoveFilter={onRemoveFilter}
+        onAddFilter={onAddFilter}
+        incomeFilterValue={incomeFilterValue}
+      />
+      <Styled pad={{ vertical: 'large' }} direction="column" fill="horizontal">
+        {sortedScores &&
+          sortedScores.map(s => (
+            <Box key={s.country_code} direction="row">
+              <Box width="150px" border="right">
+                <FormattedMessage {...rootMessages.countries[s.country_code]} />
+              </Box>
+              <Box flex>
+                {(metric.type === 'esr' ||
+                  metric.metricType === 'indicators') && (
+                  <BarHorizontal
+                    omitMinMaxLabels
+                    level={3}
+                    color={color}
+                    value={parseFloat(s[column])}
+                    minValue={0}
+                    maxValue={100}
+                    unit="%"
+                    stripes={standard === 'hi'}
+                  />
+                )}
+                {metric.type === 'cpr' && (
+                  <BarBulletHorizontal
+                    omitMinMaxLabels
+                    level={2}
+                    color={color}
+                    value={parseFloat(s[column])}
+                    band={{
+                      lo: parseFloat(s[COLUMNS.CPR.LO]),
+                      hi: parseFloat(s[COLUMNS.CPR.HI]),
+                    }}
+                    minValue={0}
+                    maxValue={10}
+                  />
+                )}
+              </Box>
             </Box>
-            <Box flex>
-              {(metric.type === 'esr' ||
-                metric.metricType === 'indicators') && (
-                <BarHorizontal
-                  omitMinMaxLabels
-                  level={3}
-                  color={color}
-                  value={parseFloat(s[column])}
-                  minValue={0}
-                  maxValue={100}
-                  unit="%"
-                  stripes={standard === 'hi'}
-                />
-              )}
-              {metric.type === 'cpr' && (
-                <BarBulletHorizontal
-                  omitMinMaxLabels
-                  level={2}
-                  color={color}
-                  value={parseFloat(s[column])}
-                  band={{
-                    lo: parseFloat(s[COLUMNS.CPR.LO]),
-                    hi: parseFloat(s[COLUMNS.CPR.HI]),
-                  }}
-                  minValue={0}
-                  maxValue={10}
-                />
-              )}
-            </Box>
-          </Box>
-        ))}
-    </Styled>
+          ))}
+      </Styled>
+    </Box>
   );
 }
 
@@ -118,6 +132,10 @@ SingleMetric.propTypes = {
   standard: PropTypes.string,
   benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  onAddFilter: PropTypes.func,
+  onRemoveFilter: PropTypes.func,
+  regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -139,6 +157,8 @@ const mapStateToProps = createStructuredSelector({
   },
   benchmark: state => getBenchmarkSearch(state),
   standard: state => getStandardSearch(state),
+  regionFilterValue: state => getRegionSearch(state),
+  incomeFilterValue: state => getIncomeSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -151,6 +171,17 @@ export function mapDispatchToProps(dispatch) {
       }
       return DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
+    onRemoveFilter: key =>
+      dispatch(navigate({}, { replace: false, deleteParams: [key] })),
+    onAddFilter: (key, value) =>
+      dispatch(
+        navigate(
+          { search: `?${key}=${value}` },
+          {
+            replace: false,
+          },
+        ),
+      ),
   };
 }
 
