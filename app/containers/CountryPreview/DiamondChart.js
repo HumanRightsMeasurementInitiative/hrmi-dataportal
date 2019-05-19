@@ -1,89 +1,57 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Box } from 'grommet';
 
-import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 import BarMultipleHorizontal from 'components/BarMultipleHorizontal';
 
+const HEIGHT = 100;
+const heightRotated = HEIGHT * 2 ** (1 / 2); // height * sqrt(2)
+const Styled = styled.div`
+  height: ${heightRotated}px;
+  padding-top: ${(heightRotated - HEIGHT) / 2}px;
+`;
 const BarWrap = props => (
-  <Box direction="row" {...props} align="center" pad="small" />
+  <Box direction="row" {...props} align="center" alignSelf="center" />
 );
-const prepRightsData = rights => {
-  const sorted = Object.values(rights).sort((a, b) => {
-    if (a.type === 'cpr' && b.type !== 'cpr') return -1;
-    if (a.type === 'esr' && b.type !== 'esr') return 1;
-    if (a.type === 'cpr' && b.type === 'cpr') {
-      if (a.dimension === 'empowerment' && b.dimension !== 'empowerment') {
-        return -1;
-      }
-      if (a.dimension !== 'empowerment' && b.dimension !== 'empowerment') {
-        return 1;
-      }
-      return 1;
-    }
-    return 1;
-  });
-  return sorted.filter(r => typeof r.aggregate === 'undefined');
-};
+const BarWrapRotated = styled(BarWrap)`
+  display: block;
+  width: ${HEIGHT}px;
+  margin: 0 auto;
+  transform: rotate(-45deg);
+`;
 
-export function DiamondChart({ dimensions, rights, benchmark }) {
+export function DiamondChart({ dimensions, rights }) {
   if (!dimensions && !rights) return null;
 
-  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   return (
-    <>
-      {dimensions && (
-        <BarWrap>
+    <Styled>
+      <BarWrapRotated>
+        {dimensions && (
           <BarMultipleHorizontal
+            omitMinMaxLabels
             minValue={0}
-            maxValues={[10, 10, 100]}
-            data={[dimensions.empowerment, dimensions.physint, dimensions.esr]}
+            data={dimensions}
             level={0}
-            columns={[
-              COLUMNS.CPR.MEAN,
-              COLUMNS.CPR.MEAN,
-              currentBenchmark.column,
-            ]}
+            height={HEIGHT}
           />
-        </BarWrap>
-      )}
-      {rights && (
-        <>
-          <BarWrap>
-            <BarMultipleHorizontal
-              minValue={0}
-              maxValues={[10, 10, 10, 10, 10, 10, 10, 100, 100, 100, 100, 100]}
-              data={prepRightsData(rights)}
-              level={0}
-              columns={[
-                COLUMNS.CPR.MEAN,
-                COLUMNS.CPR.MEAN,
-                COLUMNS.CPR.MEAN,
-                COLUMNS.CPR.MEAN,
-                COLUMNS.CPR.MEAN,
-                COLUMNS.CPR.MEAN,
-                COLUMNS.CPR.MEAN,
-                currentBenchmark.column,
-                currentBenchmark.column,
-                currentBenchmark.column,
-                currentBenchmark.column,
-                currentBenchmark.column,
-              ]}
-            />
-          </BarWrap>
-        </>
-      )}
-    </>
+        )}
+        {rights && (
+          <BarMultipleHorizontal
+            omitMinMaxLabels
+            minValue={0}
+            data={rights}
+            level={0}
+          />
+        )}
+      </BarWrapRotated>
+    </Styled>
   );
 }
 
 DiamondChart.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
-  rights: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  dimensions: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  // standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  rights: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  dimensions: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 export default DiamondChart;

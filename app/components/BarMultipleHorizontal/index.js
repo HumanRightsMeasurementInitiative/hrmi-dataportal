@@ -17,10 +17,10 @@ const Wrapper = props => (
 
 const MinLabel = props => <Box {...props} width="25px" pad="xxsmall" />;
 const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
-const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
+const BarWrapper = props => <Box {...props} fill="horizontal" />;
 
 // level:
-const HEIGHT = [110, 35, 15, 8];
+const HEIGHT = [100, 35, 15, 8];
 
 const BarAnchor = styled.div`
   position: relative;
@@ -53,46 +53,38 @@ const BarValue = styled.div`
   left: 0;
   top: ${props => props.top || 0}px;
   height: ${props => props.height}px;
-  width: ${props => props.percentage}%;
   background-color: ${props => props.theme.global.colors[props.color]};
 `;
 
 function BarMultipleHorizontal({
   minValue,
   maxValue,
-  maxValues,
   data,
   color,
   column,
-  columns,
   unit,
   level = 1,
   intl,
+  hideMsg = false,
+  omitMinMaxLabels = false,
+  height,
 }) {
-  // const values =
-  //   data &&
-  //   data.map(r => ({
-  //     key: r.key,
-  //     value: r.score ? r.score[column] : false,
-  //   }));
-
   const hasAnyScores =
-    data && data.reduce((memo, d) => memo || !!d.score, false);
+    level > 0 && data && data.reduce((memo, d) => memo || !!d.score, false);
   const hasAnyAlternateScores =
-    data && data.reduce((memo, d) => memo || d.hasScoreAlternate, false);
+    level > 0 &&
+    data &&
+    data.reduce((memo, d) => memo || d.hasScoreAlternate, false);
   const hasAnyIndicatorScores =
-    data && data.reduce((memo, d) => memo || d.hasScoreIndicators, false);
-
-  // console.log('hasAnyScores', hasAnyScores)
-  // console.log('hasAnyAlternateScores', hasAnyAlternateScores)
-  // console.log('hasAnyIndicatorScores', hasAnyIndicatorScores)
-  // console.log(data);
-
-  const heightMultiple =
-    data && (HEIGHT[level] - (data.length - 1)) / data.length;
+    level > 0 &&
+    data &&
+    data.reduce((memo, d) => memo || d.hasScoreIndicators, false);
+  const heightTotal = height || HEIGHT[level];
+  const heightIndividual =
+    data && (heightTotal - (data.length - 1)) / data.length;
   return (
     <Wrapper>
-      {!maxValues && (
+      {!omitMinMaxLabels && (
         <MinLabel>
           <Text size="small" alignSelf="end">
             {minValue}
@@ -100,9 +92,9 @@ function BarMultipleHorizontal({
         </MinLabel>
       )}
       <BarWrapper>
-        <BarAnchor height={HEIGHT[level]}>
-          {!hasAnyScores && (
-            <BarReference height={HEIGHT[level]} noData>
+        <BarAnchor height={heightTotal}>
+          {!hasAnyScores && !hideMsg && level > 0 && (
+            <BarReference height={heightTotal} noData>
               <NoData>
                 <Text size="small">
                   {getNoDataMessage(intl, {
@@ -117,29 +109,29 @@ function BarMultipleHorizontal({
               </NoData>
             </BarReference>
           )}
-          {hasAnyScores &&
+          {(hasAnyScores || level === 0) &&
             data &&
             data.map((d, index) => {
-              const col = columns ? columns[index] : column;
-              const mv = maxValues ? maxValues[index] : maxValue;
+              const col = d.column || column;
+              const mv = d.maxValue || maxValue;
               const value = d.score && d.score[col];
               return (
                 <BarReference
                   key={d.key}
-                  height={heightMultiple}
-                  top={heightMultiple * index + index}
+                  height={heightIndividual}
+                  top={heightIndividual * index + index}
                   noData={!value}
                 >
                   {value && (
                     <BarValue
-                      height={heightMultiple}
-                      percentage={(value / mv) * 100}
+                      height={heightIndividual}
                       color={d.dimension || d.key || color}
+                      style={{ width: `${(value / mv) * 100}%` }}
                     />
                   )}
-                  {!value && level < 1 && data.length < 4 && (
+                  {!value && level < 1 && data.length < 4 && !hideMsg && (
                     <NoData level={level}>
-                      <Text size="small">{getNoDataMessage(intl, d)}</Text>
+                      <Text size="xsmall">{getNoDataMessage(intl, d)}</Text>
                     </NoData>
                   )}
                 </BarReference>
@@ -147,7 +139,7 @@ function BarMultipleHorizontal({
             })}
         </BarAnchor>
       </BarWrapper>
-      {!maxValues && (
+      {!omitMinMaxLabels && (
         <MaxLabel>
           <Text size="small">
             {unit ? `${maxValue}${unit}` : `${maxValue}`}
@@ -164,10 +156,11 @@ BarMultipleHorizontal.propTypes = {
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   minValue: PropTypes.number,
   maxValue: PropTypes.number,
-  maxValues: PropTypes.array,
+  height: PropTypes.number,
   column: PropTypes.string,
-  columns: PropTypes.array,
   level: PropTypes.number,
+  omitMinMaxLabels: PropTypes.bool,
+  hideMsg: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

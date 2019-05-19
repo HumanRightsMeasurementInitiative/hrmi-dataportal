@@ -45,7 +45,6 @@ const BarValue = styled.div`
   left: 0;
   top: 0;
   height: ${props => props.height}px;
-  width: ${props => props.percentage}%;
   background-color: ${props => props.theme.global.colors[props.color]};
 `;
 
@@ -74,8 +73,8 @@ function BarHorizontal({
           {value && (
             <BarValue
               height={HEIGHT[level]}
-              percentage={(value / maxValue) * 100}
               color={color}
+              style={{ width: `${(value / maxValue) * 100}%` }}
             />
           )}
           {!value && data && level < 3 && (
