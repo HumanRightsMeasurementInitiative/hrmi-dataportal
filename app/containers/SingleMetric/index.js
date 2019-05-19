@@ -81,6 +81,7 @@ export function SingleMetric({
         onRemoveFilter={onRemoveFilter}
         onAddFilter={onAddFilter}
         incomeFilterValue={incomeFilterValue}
+        filterGroups={['income', 'region']}
       />
       <Styled pad={{ vertical: 'large' }} direction="column" fill="horizontal">
         {sortedScores &&

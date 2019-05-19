@@ -122,6 +122,8 @@ export const REGIONS = [
   'sub-saharan-africa',
 ];
 
+export const ASSESSED_FILTERS = ['all', 'cpr-all', 'esr-all', 'some'];
+
 // column: 'high_income_country',
 export const INCOME_GROUPS = [
   {

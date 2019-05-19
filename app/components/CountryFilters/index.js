@@ -5,15 +5,19 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Box, Button, DropButton } from 'grommet';
 import { FormClose, FormAdd } from 'grommet-icons';
 
-import { REGIONS, INCOME_GROUPS } from 'containers/App/constants';
+import {
+  REGIONS,
+  INCOME_GROUPS,
+  ASSESSED_FILTERS,
+} from 'containers/App/constants';
 
 import rootMessages from 'messages';
 import FilterOptions from './FilterOptions';
 import messages from './messages';
 
-const getFilterOptions = ({ region, income }, intl) => {
+const getFilterOptions = ({ region, income, assessed }, intl, filterGroups) => {
   let groups = [];
-  if (!region) {
+  if (!region && filterGroups.indexOf('region') > -1) {
     groups = [
       ...groups,
       {
@@ -27,7 +31,7 @@ const getFilterOptions = ({ region, income }, intl) => {
       },
     ];
   }
-  if (!income) {
+  if (!income && filterGroups.indexOf('income') > -1) {
     groups = [
       ...groups,
       {
@@ -41,6 +45,20 @@ const getFilterOptions = ({ region, income }, intl) => {
       },
     ];
   }
+  if (!assessed && filterGroups.indexOf('assessed') > -1) {
+    groups = [
+      ...groups,
+      {
+        group: 'assessed',
+        label: intl.formatMessage(messages.assessedFilterOptionGroup),
+        options: ASSESSED_FILTERS.map(a => ({
+          key: 'assessed',
+          value: a,
+          label: intl.formatMessage(rootMessages.assessedFilters[a]),
+        })),
+      },
+    ];
+  }
   return groups;
 };
 
@@ -49,13 +67,15 @@ export function CountryFilters({
   onRemoveFilter,
   onAddFilter,
   incomeFilterValue,
+  assessedFilterValue,
   intl,
+  filterGroups,
 }) {
   const [filterOpen, setFilterOpen] = useState(false);
 
   return (
     <Box direction="row" pad="xsmall">
-      {regionFilterValue && (
+      {filterGroups.indexOf('region') > -1 && regionFilterValue && (
         <Button
           primary
           icon={<FormClose />}
@@ -67,7 +87,7 @@ export function CountryFilters({
           margin={{ horizontal: 'xsmall' }}
         />
       )}
-      {incomeFilterValue && (
+      {filterGroups.indexOf('income') > -1 && incomeFilterValue && (
         <Button
           primary
           icon={<FormClose />}
@@ -79,7 +99,21 @@ export function CountryFilters({
           margin={{ horizontal: 'xsmall' }}
         />
       )}
-      {(!regionFilterValue || !incomeFilterValue) && (
+      {filterGroups.indexOf('assessed') > -1 && assessedFilterValue && (
+        <Button
+          primary
+          icon={<FormClose />}
+          reverse
+          onClick={() => onRemoveFilter('assessed')}
+          label={intl.formatMessage(
+            rootMessages.assessedFilters[assessedFilterValue],
+          )}
+          pad="xxsmall"
+          gap="xxsmall"
+          margin={{ horizontal: 'xsmall' }}
+        />
+      )}
+      {(!regionFilterValue || !incomeFilterValue || !assessedFilterValue) && (
         <DropButton
           plain
           reverse
@@ -97,8 +131,10 @@ export function CountryFilters({
                 {
                   region: regionFilterValue,
                   income: incomeFilterValue,
+                  assessed: assessedFilterValue,
                 },
                 intl,
+                filterGroups,
               )}
               onSelect={({ key, value }) => {
                 setFilterOpen(false);
@@ -116,8 +152,10 @@ CountryFilters.propTypes = {
   intl: intlShape.isRequired,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
+  filterGroups: PropTypes.array,
 };
 
 export default injectIntl(CountryFilters);

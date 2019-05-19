@@ -25,6 +25,7 @@ import {
   INDICATOR_LOOKBACK,
   AT_RISK_INDICATORS,
   COLUMNS,
+  ASSESSED_FILTERS,
 } from './constants';
 
 // router sub-state
@@ -131,6 +132,14 @@ export const getRegionSearch = createSelector(
   search =>
     search.has('region') && REGIONS.indexOf(search.get('region')) > -1
       ? search.get('region')
+      : false,
+);
+export const getAssessedSearch = createSelector(
+  getRouterSearchParams,
+  search =>
+    search.has('assessed') &&
+    ASSESSED_FILTERS.indexOf(search.get('assessed')) > -1
+      ? search.get('assessed')
       : false,
 );
 export const getIncomeSearch = createSelector(
