@@ -174,7 +174,7 @@ CountrySummaryChart.propTypes = {
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  standard: PropTypes.object,
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default CountrySummaryChart;
