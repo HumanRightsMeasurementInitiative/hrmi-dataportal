@@ -13,7 +13,10 @@ import styled from 'styled-components';
 import { Box, Button, DropButton } from 'grommet';
 import { Menu, Close } from 'grommet-icons';
 
+import ContentContainer from 'styled/ContentContainer';
+
 import Icon from 'components/Icon';
+
 import LocaleToggle from 'containers/LocaleToggle';
 import NavCountry from 'containers/NavCountry';
 import NavMetric from 'containers/NavMetric';
@@ -34,7 +37,7 @@ const Styled = styled.header`
 `;
 
 const NavBarTop = props => (
-  <Box
+  <ContentContainer
     direction="row"
     align="center"
     background="dark-1"
@@ -59,9 +62,23 @@ const NavBarBottom = props => (
 
 const BrandButton = styled(Button)`
   height: 44px;
-  width: 200px;
-  padding: 5px 10px;
+  width: 120px;
+  padding: 1px 5px;
+  margin-right: -5px;
   color: ${props => props.theme.global.colors.white};
+  &:hover {
+    color: ${props => props.theme.global.colors['light-3']};
+  }
+`;
+const TitleButton = styled(Button)`
+  height: 44px;
+  width: 120px;
+  padding: 1px 5px;
+  margin-right: -5px;
+  color: ${props => props.theme.global.colors.white};
+  &:hover {
+    color: ${props => props.theme.global.colors['light-3']};
+  }
 `;
 // prettier-ignore
 const NavButton = styled(Button)`
@@ -72,7 +89,11 @@ const NavButton = styled(Button)`
   @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
     display: inline-block;
   }
+  &:hover {
+    color: ${props => props.theme.global.colors['light-3']};
+  }
 `;
+
 // prettier-ignore
 const MenuList = styled.div`
   display: ${props => (props.visible ? 'block' : 'none')};
@@ -85,20 +106,23 @@ const MenuList = styled.div`
   z-index: 99999;
   background: ${props => props.theme.global.colors['dark-1']};
   @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
-    position: absolute;
-    top: 0;
-    height: 44px;
-    left: auto;
-    right: 0;
-    width: auto;
+    position: relative;
     z-index: 300;
-    display: inline-block;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: auto;
+    height: 44px;
     background: transparent;
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 0 auto;
+    align-items: center;
   }
 `;
 // prettier-ignore
 const ToggleMenu = styled(Button)`
-  display: ${props => (props.visible ? 'block' : 'none')};
+  display: block;
   position: absolute;
   right: 0;
   top: 0;
@@ -121,7 +145,14 @@ const LocaleToggleWrap = styled.span`
 
 const SecondaryDropButton = styled(DropButton)`
   height: 56px;
-  padding: 5px 10px;
+  padding: 5px 40px;
+  background-color: ${({ active, theme }) =>
+    active ? theme.global.colors['dark-2'] : 'transparent'};
+  border-right: 2px solid;
+  border-color: ${({ theme }) => theme.global.colors['dark-2']};
+  &:hover {
+    background-color: ${({ theme }) => theme.global.colors['dark-2']};
+  }
 `;
 
 export function Header({ nav, intl }) {
@@ -140,22 +171,20 @@ export function Header({ nav, intl }) {
               nav({ pathname: '', search: '' });
             }}
           >
-            <span>HRMI | </span>
-            <span>Data Portal</span>
+            <Icon name="BRAND" />
           </BrandButton>
-          <ToggleMenu
+          <TitleButton
             plain
-            visible={!showMenu}
-            onClick={() => setShowMenu(true)}
+            onClick={() => {
+              setShowMenu(false);
+              nav({ pathname: '', search: '' });
+            }}
           >
-            <Menu />
-          </ToggleMenu>
-          <ToggleMenu
-            plain
-            visible={showMenu}
-            onClick={() => setShowMenu(false)}
-          >
-            <Close />
+            <FormattedMessage {...messages.appTitle} />
+          </TitleButton>
+          <ToggleMenu plain onClick={() => setShowMenu(!showMenu)}>
+            {!showMenu && <Menu />}
+            {showMenu && <Close />}
           </ToggleMenu>
           <MenuList visible={showMenu}>
             <span>
@@ -187,6 +216,7 @@ export function Header({ nav, intl }) {
           <SecondaryDropButton
             plain
             open={showCountries}
+            active={showCountries}
             onClose={() => setShowCountries(false)}
             onOpen={() => setShowCountries(true)}
             dropProps={{ align: { top: 'bottom', left: 'left' } }}
@@ -197,6 +227,7 @@ export function Header({ nav, intl }) {
           <SecondaryDropButton
             plain
             open={showMetrics}
+            active={showMetrics}
             onClose={() => setShowMetrics(false)}
             onOpen={() => setShowMetrics(true)}
             dropProps={{ align: { top: 'bottom', left: 'left' } }}
