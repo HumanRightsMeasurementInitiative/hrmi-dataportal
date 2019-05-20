@@ -1,7 +1,8 @@
 {
-  "hrmi.containers.header.language": "Language: ",
-  "hrmi.containers.header.countries": "Countries",
-  "hrmi.containers.header.metrics": "Metrics",
+  "hrmi.containers.Header.appTitle": "Data Portal",
+  "hrmi.containers.Header.language": "Language: ",
+  "hrmi.containers.Header.countries": "Countries",
+  "hrmi.containers.Header.metrics": "Metrics",
   "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.components.WordCloud.noGroupData": "None selected by expert respondents",
   "hrmi.components.WordCloud.noAnalysisInLanguage": "We are sorry but this information is not yet available in your language",

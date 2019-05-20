@@ -9,6 +9,10 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.containers.Header';
 
 export default defineMessages({
+  appTitle: {
+    id: `${scope}.appTitle`,
+    defaultMessage: 'Data Portal',
+  },
   language: {
     id: `${scope}.language`,
     defaultMessage: 'Language: ',
