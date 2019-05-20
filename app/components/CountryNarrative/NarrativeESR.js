@@ -67,7 +67,7 @@ function NarrativeESR({ country, score, intl }) {
               />
               <strong>
                 <FormattedMessage
-                  {...messages.esr.scoreRange[rangeAdjusted]}
+                  {...messages.esr.scoreAdjustedRange[rangeAdjusted]}
                   values={messageValues}
                 />
               </strong>
@@ -85,7 +85,7 @@ function NarrativeESR({ country, score, intl }) {
               />
               <strong>
                 <FormattedMessage
-                  {...messages.esr.scoreRange[rangeBest]}
+                  {...messages.esr.scoreBestRange[rangeBest]}
                   values={messageValues}
                 />
               </strong>

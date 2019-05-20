@@ -139,21 +139,39 @@ export default defineMessages({
       defaultMessage:
         'This score tells us that {needsArticle, select, true {the } false { }}{country} is {less99adjusted, select, true {only } false {}} doing {scoreAdjusted} of what should be possible right now with the resources it has. Since anything less than 100% indicates that a country is not meeting its current duty under international human rights law, our assessment is that {needsArticle, select, true {the } false { }}{country} ',
     },
-    scoreRange: {
+    scoreAdjustedRange: {
       a: {
-        id: `${scope}.esr.scoreRange.a`,
+        id: `${scope}.esr.scoreAdjustedRange.a`,
         defaultMessage: 'has a very long way to go ',
       },
       b: {
-        id: `${scope}.esr.scoreRange.b`,
+        id: `${scope}.esr.scoreAdjustedRange.b`,
         defaultMessage: 'has a long way to go ',
       },
       c: {
-        id: `${scope}.esr.scoreRange.c`,
+        id: `${scope}.esr.scoreAdjustedRange.c`,
         defaultMessage: 'has some way to go ',
       },
       d: {
-        id: `${scope}.esr.scoreRange.d`,
+        id: `${scope}.esr.scoreAdjustedRange.d`,
+        defaultMessage: 'is close ',
+      },
+    },
+    scoreBestRange: {
+      a: {
+        id: `${scope}.esr.scoreBestRange.a`,
+        defaultMessage: 'has a very long way to go ',
+      },
+      b: {
+        id: `${scope}.esr.scoreBestRange.b`,
+        defaultMessage: 'has a long way to go ',
+      },
+      c: {
+        id: `${scope}.esr.scoreBestRange.c`,
+        defaultMessage: 'has some way to go ',
+      },
+      d: {
+        id: `${scope}.esr.scoreBestRange.d`,
         defaultMessage: 'is close ',
       },
     },
