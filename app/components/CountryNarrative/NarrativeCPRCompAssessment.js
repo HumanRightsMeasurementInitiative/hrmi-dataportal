@@ -33,6 +33,7 @@ function NarrativeCPRCompAssessment({
     isPlural: isPlural(intl.locale, country.country_code),
     needsArticle: needsArticle(intl.locale, country.country_code),
     referenceCount,
+    referenceCountLessOne: referenceCount - 1,
   };
 
   return (

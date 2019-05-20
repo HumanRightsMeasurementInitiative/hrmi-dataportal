@@ -33,6 +33,7 @@ function NarrativeESRCompAssessment({
     isPlural: isPlural(intl.locale, country.country_code),
     needsArticle: needsArticle(intl.locale, country.country_code),
     referenceCount,
+    referenceCountLessOne: referenceCount - 1,
   };
   const rangeLo = parseFloat(score[benchmark.column]) - RANGE;
   const rangeHi = parseFloat(score[benchmark.column]) + RANGE;
