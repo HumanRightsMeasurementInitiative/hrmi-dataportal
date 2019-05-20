@@ -889,7 +889,7 @@ export const getCPRDimensionScoresForYear = createSelector(
   },
 );
 
-// esr: average of other countries in same region, if high income country only use high income average best calculate for both standards and benchmarks
+// esr: average of countries in same region, if high income country use ALL high income average best calculate for both standards and benchmarks
 // cpr: average mean score of other countries worldwide, if high income oecd country only use HI OECD average
 //
 export const getDimensionAverages = createSelector(
@@ -902,8 +902,8 @@ export const getDimensionAverages = createSelector(
     // figure out esr averages
     const compareESRCountries = countries.filter(
       c =>
-        c.region_code === country.region_code &&
-        c.country_code !== country.country_code &&
+        (c.region_code === country.region_code ||
+          c.high_income_country === '1') &&
         (country.high_income_country === '0' || c.high_income_country === '1'),
     );
     const hiStandard = STANDARDS.find(s => s.key === 'hi');
@@ -956,10 +956,9 @@ export const getDimensionAverages = createSelector(
     };
     const compareCPRCountries = countries.filter(
       c =>
-        c.country_code !== country.country_code &&
-        (country.high_income_country === '0' ||
-          country.OECD_country === '0' ||
-          (c.high_income_country === '1' && c.OECD_country === '1')),
+        country.high_income_country === '0' ||
+        country.OECD_country === '0' ||
+        (c.high_income_country === '1' && c.OECD_country === '1'),
     );
     const cprScoreAdder = (m, c, key) => {
       const score = cprScores[key].find(s => s.country_code === c.country_code);
