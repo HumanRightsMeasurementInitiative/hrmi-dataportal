@@ -27,7 +27,11 @@ function IndicatorPanel({ indicator, column, standard }) {
     parseFloat(indicator.score[column]);
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
-      <Heading level={6} margin={{ vertical: '2px' }}>
+      <Heading
+        level={6}
+        margin={{ vertical: '2px' }}
+        style={{ fontWeight: 'normal' }}
+      >
         <FormattedMessage {...rootMessages.indicators[indicator.key]} />
       </Heading>
       <BarHorizontal
