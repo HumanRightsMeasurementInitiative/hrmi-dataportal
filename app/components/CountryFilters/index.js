@@ -113,7 +113,9 @@ export function CountryFilters({
           margin={{ horizontal: 'xsmall' }}
         />
       )}
-      {(!regionFilterValue || !incomeFilterValue || !assessedFilterValue) && (
+      {(!(filterGroups.indexOf('region') && regionFilterValue) ||
+        !(filterGroups.indexOf('income') > -1 && incomeFilterValue) ||
+        (!assessedFilterValue && filterGroups.indexOf('assessed') > -1)) && (
         <DropButton
           plain
           reverse
