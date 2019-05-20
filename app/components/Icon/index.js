@@ -27,7 +27,7 @@ const SVG = styled(({ color, themeColor, sizes, size, ...rest }) => (
       : props.size || '1em'};
 `;
 // fallback default size
-const defaultSize = 38;
+const defaultSize = 24;
 /**
  * SVG icon component that produces an inline SVG image if **compound paths** are defined in app constant `ICONS`.
  *
@@ -101,7 +101,7 @@ Icon.propTypes = {
 };
 
 Icon.defaultProps = {
-  name: 'placeholder',
+  name: 'COUNTRY',
   iconSize: ICON_SIZE || defaultSize,
 };
 

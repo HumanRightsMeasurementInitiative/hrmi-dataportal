@@ -11,8 +11,9 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import styled from 'styled-components';
 import { Box, Button, DropButton } from 'grommet';
-import { Menu, Close, Language, BarChart } from 'grommet-icons';
+import { Menu, Close } from 'grommet-icons';
 
+import Icon from 'components/Icon';
 import LocaleToggle from 'containers/LocaleToggle';
 import NavCountry from 'containers/NavCountry';
 import NavMetric from 'containers/NavMetric';
@@ -190,7 +191,7 @@ export function Header({ nav, intl }) {
             onOpen={() => setShowCountries(true)}
             dropProps={{ align: { top: 'bottom', left: 'left' } }}
             dropContent={<NavCountry onClose={() => setShowCountries(false)} />}
-            icon={<Language />}
+            icon={<Icon name="COUNTRY" />}
             label={intl.formatMessage(messages.countries)}
           />
           <SecondaryDropButton
@@ -200,7 +201,7 @@ export function Header({ nav, intl }) {
             onOpen={() => setShowMetrics(true)}
             dropProps={{ align: { top: 'bottom', left: 'left' } }}
             dropContent={<NavMetric onClose={() => setShowMetrics(false)} />}
-            icon={<BarChart />}
+            icon={<Icon name="METRICS" />}
             label={intl.formatMessage(messages.metrics)}
           />
         </NavBarBottom>
