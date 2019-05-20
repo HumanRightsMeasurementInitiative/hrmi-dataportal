@@ -56,15 +56,15 @@ export default defineMessages({
   compAssessment: {
     result: {
       a: {
-        id: `${scope}.compAssessmentCPR.result.a`,
+        id: `${scope}.compAssessment.result.a`,
         defaultMessage: 'better than average',
       },
       b: {
-        id: `${scope}.compAssessmentCPR.result.b`,
+        id: `${scope}.compAssessment.result.b`,
         defaultMessage: 'worse than average',
       },
       c: {
-        id: `${scope}.compAssessmentCPR.result.c`,
+        id: `${scope}.compAssessment.result.c`,
         defaultMessage: 'close to average',
       },
     },
