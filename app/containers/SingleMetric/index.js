@@ -8,13 +8,15 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { Box } from 'grommet';
 import styled from 'styled-components';
 
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
+
+import { sortScores } from 'utils/scores';
 
 import {
   getESRDimensionScores,
@@ -26,11 +28,14 @@ import {
   getStandardSearch,
   getRegionSearch,
   getIncomeSearch,
+  getSortSearch,
+  getSortOrderSearch,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
-import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
+import { BENCHMARKS, COLUMNS, COUNTRY_SORTS } from 'containers/App/constants';
 import CountryFilters from 'components/CountryFilters';
+import CountrySort from 'components/CountrySort';
 
 import rootMessages from 'messages';
 // import messages from './messages';
@@ -52,6 +57,11 @@ export function SingleMetric({
   incomeFilterValue,
   onRemoveFilter,
   onAddFilter,
+  sort,
+  sortOrder,
+  intl,
+  onSortSelect,
+  onOrderChange,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -68,21 +78,34 @@ export function SingleMetric({
     color = metric.metricType === 'rights' ? metric.dimension : metric.key;
   }
 
-  const sortedScores =
-    scores &&
-    scores.sort((a, b) =>
-      parseFloat(a[column], 10) < parseFloat(b[column], 10) ? 1 : -1,
-    );
+  const currentSort = sort || 'score';
+  const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
+  const sortedScores = sortScores({
+    intl,
+    sort: currentSort,
+    order: currentSortOrder,
+    scores,
+    column,
+  });
 
   return (
     <Box pad={{ horizontal: 'medium' }} direction="column">
-      <CountryFilters
-        regionFilterValue={regionFilterValue}
-        onRemoveFilter={onRemoveFilter}
-        onAddFilter={onAddFilter}
-        incomeFilterValue={incomeFilterValue}
-        filterGroups={['income', 'region']}
-      />
+      <Box direction="row">
+        <CountryFilters
+          regionFilterValue={regionFilterValue}
+          onRemoveFilter={onRemoveFilter}
+          onAddFilter={onAddFilter}
+          incomeFilterValue={incomeFilterValue}
+          filterGroups={['income', 'region']}
+        />
+        <CountrySort
+          sort={currentSort}
+          options={['score', 'name']}
+          order={currentSortOrder}
+          onSortSelect={onSortSelect}
+          onOrderToggle={onOrderChange}
+        />
+      </Box>
       <Styled pad={{ vertical: 'large' }} direction="column" fill="horizontal">
         {sortedScores &&
           sortedScores.map(s => (
@@ -137,6 +160,11 @@ SingleMetric.propTypes = {
   onRemoveFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  intl: intlShape.isRequired,
+  sort: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  onSortSelect: PropTypes.func,
+  onOrderChange: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -160,6 +188,8 @@ const mapStateToProps = createStructuredSelector({
   standard: state => getStandardSearch(state),
   regionFilterValue: state => getRegionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
+  sort: state => getSortSearch(state),
+  sortOrder: state => getSortOrderSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -183,6 +213,24 @@ export function mapDispatchToProps(dispatch) {
           },
         ),
       ),
+    onSortSelect: value =>
+      dispatch(
+        navigate(
+          { search: `?sort=${value}` },
+          {
+            replace: false,
+          },
+        ),
+      ),
+    onOrderChange: value =>
+      dispatch(
+        navigate(
+          { search: `?dir=${value}` },
+          {
+            replace: false,
+          },
+        ),
+      ),
   };
 }
 
@@ -191,4 +239,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(SingleMetric);
+export default compose(withConnect)(injectIntl(SingleMetric));

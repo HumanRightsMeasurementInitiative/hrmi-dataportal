@@ -111,7 +111,18 @@ export const DATA_RESOURCES = [
   },
 ];
 
-export const COUNTRY_SORTS = ['name', 'population', 'gdp', 'score'];
+// export const COUNTRY_SORTS = ['name', 'score', 'assessment'];
+export const COUNTRY_SORTS = {
+  name: {
+    order: 'asc',
+  },
+  score: {
+    order: 'desc',
+  },
+  assessment: {
+    order: 'desc',
+  },
+};
 
 export const REGIONS = [
   'americas',

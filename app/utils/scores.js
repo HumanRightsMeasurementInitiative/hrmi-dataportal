@@ -83,13 +83,17 @@ export const rightsCount = countryScores =>
 export const indicatorsCount = countryScores =>
   countryScores.indicators ? Object.keys(countryScores.indicators).length : 0;
 
-export const sortByName = (a, b, intl) =>
-  intl.formatMessage(messages.countries[a.country_code]) >
-  intl.formatMessage(messages.countries[b.country_code])
-    ? 1
-    : -1;
+export const sortByName = (a, b, order, intl) => {
+  const factor = order === 'asc' ? 1 : -1;
+  // prettier-ignore
+  return intl.formatMessage(messages.countries[a.country_code]) >
+    intl.formatMessage(messages.countries[b.country_code])
+    ? factor * 1
+    : factor * -1;
+};
 
-export const sortByAssessment = (a, b, scoresAllCountries) => {
+export const sortByAssessment = (a, b, scoresAllCountries, order) => {
+  const factor = order === 'asc' ? -1 : 1;
   const countryScoresA = getScoresForCountry(
     a.country_code,
     scoresAllCountries,
@@ -100,20 +104,48 @@ export const sortByAssessment = (a, b, scoresAllCountries) => {
   );
   const dimensionsA = dimensionCount(countryScoresA);
   const dimensionsB = dimensionCount(countryScoresB);
-  if (dimensionsA > dimensionsB) return -1;
-  if (dimensionsA < dimensionsB) return 1;
+  if (dimensionsA > dimensionsB) return factor * -1;
+  if (dimensionsA < dimensionsB) return factor * 1;
 
   const rightsA = rightsCount(countryScoresA);
   const rightsB = rightsCount(countryScoresB);
-  if (rightsA > rightsB) return -1;
-  if (rightsA < rightsB) return 1;
+  if (rightsA > rightsB) return factor * -1;
+  if (rightsA < rightsB) return factor * 1;
 
   const indicatorsA = indicatorsCount(countryScoresA);
   const indicatorsB = indicatorsCount(countryScoresB);
-  if (indicatorsA > indicatorsB) return -1;
-  if (indicatorsA < indicatorsB) return 1;
+  if (indicatorsA > indicatorsB) return factor * -1;
+  if (indicatorsA < indicatorsB) return factor * 1;
 
   return 1;
+};
+
+export const sortCountries = ({ countries, sort, order, intl, scores }) => {
+  if (sort === 'name') {
+    return countries.sort((a, b) => sortByName(a, b, order, intl));
+  }
+  if (scores && sort === 'assessment') {
+    return countries
+      .sort((a, b) => sortByName(a, b, 'asc', intl))
+      .sort((a, b) => sortByAssessment(a, b, scores, order));
+  }
+  return countries;
+};
+
+export const sortScores = ({ sort, order, intl, scores, column }) => {
+  const factor = order === 'asc' ? -1 : 1;
+  if (sort === 'name') {
+    return scores && scores.sort((a, b) => sortByName(a, b, order, intl));
+  }
+  // sort by score
+  return (
+    scores &&
+    scores.sort((a, b) =>
+      parseFloat(a[column], 10) < parseFloat(b[column], 10)
+        ? factor * 1
+        : factor * -1,
+    )
+  );
 };
 
 export const filterByAssessment = (
