@@ -12,7 +12,7 @@ import { Heading, Box, Paragraph } from 'grommet';
 
 import rootMessages from 'messages';
 
-import { BENCHMARKS } from 'containers/App/constants';
+import { BENCHMARKS, STANDARDS } from 'containers/App/constants';
 import { getRightsScoresForDimension } from 'utils/scores';
 
 import messages from './messages';
@@ -95,8 +95,18 @@ function CountryNarrative({
   if (!dimensions || !rights || !indicators) {
     return null;
   }
-  // console.log(standard, country);
-  const esrRightsScores = getRightsScoresForDimension(rights, 'esr');
+
+  const currentStandard = STANDARDS.find(s => s.key === standard);
+  const hasSomeIndicatorScores = Object.values(indicators)
+    .filter(s => {
+      if (!s.details) return false;
+      return (
+        s.details.standard === 'Both' ||
+        s.details.standard === currentStandard.code
+      );
+    })
+    .reduce((m, s) => m || !!s.score, false);
+
   return (
     <Styled>
       <RightsType>
@@ -154,12 +164,12 @@ function CountryNarrative({
           <NarrativeESR
             score={dimensions.esr && dimensions.esr.score}
             country={country}
-            someData={esrRightsScores.reduce((m, s) => m || !!s.score, false)}
+            someData={hasSomeIndicatorScores}
           />
           <ESRAccordion
             dimension={dimensions.esr}
             dimensionKey="esr"
-            rights={esrRightsScores}
+            rights={getRightsScoresForDimension(rights, 'esr')}
             benchmark={BENCHMARKS.find(s => s.key === benchmark)}
             indicators={Object.values(indicators)}
             onMetricClick={onMetricClick}
