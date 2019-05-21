@@ -1003,8 +1003,8 @@ export default defineMessages({
       defaultMessage: 'WSM',
     },
     ALB: {
-      id: `${scope}.countries.WSM`,
-      defaultMessage: 'WSM',
+      id: `${scope}.countries.ALB`,
+      defaultMessage: 'ALB',
     },
     AND: {
       id: `${scope}.countries.AND`,
@@ -1016,7 +1016,7 @@ export default defineMessages({
     },
     AUT: {
       id: `${scope}.countries.AUT`,
-      defaultMessage: '',
+      defaultMessage: 'AUT',
     },
     AZE: {
       id: `${scope}.countries.AZE`,
@@ -1167,8 +1167,8 @@ export default defineMessages({
       defaultMessage: 'MNE',
     },
     NLD: {
-      id: `${scope}.countries.MNE`,
-      defaultMessage: 'MNE',
+      id: `${scope}.countries.NLD`,
+      defaultMessage: 'NLD',
     },
     NOR: {
       id: `${scope}.countries.NOR`,
@@ -1196,7 +1196,7 @@ export default defineMessages({
     },
     SRB: {
       id: `${scope}.countries.SRB`,
-      defaultMessage: '',
+      defaultMessage: 'SRB',
     },
     SVK: {
       id: `${scope}.countries.SVK`,
@@ -1259,8 +1259,8 @@ export default defineMessages({
       defaultMessage: 'IRN',
     },
     IRQ: {
-      id: `${scope}.countries.IRN`,
-      defaultMessage: 'IRN',
+      id: `${scope}.countries.IRQ`,
+      defaultMessage: 'IRQ',
     },
     ISR: {
       id: `${scope}.countries.ISR`,
@@ -1395,8 +1395,8 @@ export default defineMessages({
       defaultMessage: 'COM',
     },
     CPV: {
-      id: `${scope}.countries.COM`,
-      defaultMessage: 'COM',
+      id: `${scope}.countries.CPV`,
+      defaultMessage: 'CPV',
     },
     ERI: {
       id: `${scope}.countries.ERI`,
