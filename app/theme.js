@@ -33,6 +33,7 @@ const theme = {
   global: {
     input: {
       padding: '2px',
+      weight: 400,
     },
     font: {
       family: 'Source Sans Pro',
