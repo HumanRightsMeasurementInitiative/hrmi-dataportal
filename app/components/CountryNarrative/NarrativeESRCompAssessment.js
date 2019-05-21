@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Paragraph } from 'grommet';
 
 import {
   needsArticle,
@@ -39,41 +38,34 @@ function NarrativeESRCompAssessment({
   const rangeHi = parseFloat(score[benchmark.column]) + RANGE;
   return (
     <>
-      <Paragraph>
+      <FormattedMessage
+        {...messages.compAssessmentESR.start}
+        values={messageValues}
+      />
+      <strong>
         <FormattedMessage
-          {...messages.compAssessmentESR.start}
+          {...messages.compAssessment.result[
+            compareRange({
+              lo: rangeLo,
+              hi: rangeHi,
+              reference: referenceScore,
+            })
+          ]}
           values={messageValues}
         />
-        <strong>
-          <FormattedMessage
-            {...messages.compAssessment.result[
-              compareRange({
-                lo: rangeLo,
-                hi: rangeHi,
-                reference: referenceScore,
-              })
-            ]}
-            values={messageValues}
-          />
-        </strong>
-        {isCountryHighIncome(country) && (
-          <FormattedMessage
-            {...messages.compAssessmentESR.endHi}
-            values={messageValues}
-          />
-        )}
-        {!isCountryHighIncome(country) && (
-          <FormattedMessage
-            {...messages.compAssessmentESR.end}
-            values={messageValues}
-          />
-        )}
-      </Paragraph>
-      <Paragraph>
-        {` [DEBUG // score: ${
-          score[benchmark.column]
-        } // referenceScore ${referenceScore}] `}
-      </Paragraph>
+      </strong>
+      {isCountryHighIncome(country) && (
+        <FormattedMessage
+          {...messages.compAssessmentESR.endHi}
+          values={messageValues}
+        />
+      )}
+      {!isCountryHighIncome(country) && (
+        <FormattedMessage
+          {...messages.compAssessmentESR.end}
+          values={messageValues}
+        />
+      )}
     </>
   );
 }

@@ -80,6 +80,10 @@ export default defineMessages({
       defaultMessage:
         'For the civil and political rights we do not have data for enough countries in {needsArticleRegion, select, true {the } false {}}{region} to do a regional comparison. However, compared to the other countries in our sample, {needsArticle, select, true {the } false {}}{country} is performing ',
     },
+    conjunct: {
+      id: `${scope}.compAssessmentCPR.conjunct`,
+      defaultMessage: 'and is performing ',
+    },
     end: {
       empowerment: {
         id: `${scope}.compAssessmentCPR.end.empowerment`,
@@ -118,6 +122,11 @@ export default defineMessages({
       id: `${scope}.esr.noData`,
       defaultMessage:
         'For {needsArticle, select, true {the } false { }}{country} a {dimension} score is not available due to missing data for at least one component of the rights to food, health, education, housing and work. Missing data tells us that {needsArticle, select, true {the } false { }}{country} has not submitted some information to the relevant international databases. With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it.',
+    },
+    someData: {
+      id: `${scope}.esr.someData`,
+      defaultMessage:
+        'Please explore the detail below (using the down arrow to the right) to see which rights have data available and which are missing. ',
     },
     start: {
       id: `${scope}.esr.start`,

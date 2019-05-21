@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Paragraph } from 'grommet';
 
 import {
   needsArticle,
@@ -25,6 +24,7 @@ function NarrativeCPRCompAssessment({
   referenceScore,
   referenceCount,
   intl,
+  conjunct = false,
 }) {
   const messageValues = {
     country: intl.formatMessage(rootMessages.countries[country.country_code]),
@@ -36,47 +36,50 @@ function NarrativeCPRCompAssessment({
     referenceCountLessOne: referenceCount - 1,
   };
 
+  const isHiOECD = isCountryHighIncome(country) && isCountryOECD(country);
+
   return (
     <>
-      <Paragraph>
-        {isCountryHighIncome(country) && isCountryOECD(country) && (
-          <FormattedMessage
-            {...messages.compAssessmentCPR.hiOECD}
-            values={messageValues}
-          />
-        )}
-        {(!isCountryHighIncome(country) || !isCountryOECD(country)) && (
-          <FormattedMessage
-            {...messages.compAssessmentCPR.notHiOECD}
-            values={messageValues}
-          />
-        )}
-        <strong>
-          <FormattedMessage
-            {...messages.compAssessment.result[
-              compareRange({
-                lo: score[COLUMNS.CPR.LO],
-                hi: score[COLUMNS.CPR.HI],
-                reference: referenceScore,
-              })
-            ]}
-            values={messageValues}
-          />
-        </strong>
+      {!conjunct && isHiOECD && (
         <FormattedMessage
-          {...messages.compAssessmentCPR.end[dimensionKey]}
+          {...messages.compAssessmentCPR.hiOECD}
           values={messageValues}
         />
-      </Paragraph>
-      <Paragraph>
-        {` [DEBUG // scoreLo: ${score[COLUMNS.CPR.LO]} // scoreHi: ${
-          score[COLUMNS.CPR.HI]
-        } // referenceScore ${referenceScore}] `}
-      </Paragraph>
+      )}
+      {!conjunct && !isHiOECD && (
+        <FormattedMessage
+          {...messages.compAssessmentCPR.notHiOECD}
+          values={messageValues}
+        />
+      )}
+      {conjunct && (
+        <FormattedMessage
+          {...messages.compAssessmentCPR.conjunct}
+          values={messageValues}
+        />
+      )}
+      <strong>
+        <FormattedMessage
+          {...messages.compAssessment.result[
+            compareRange({
+              lo: score[COLUMNS.CPR.LO],
+              hi: score[COLUMNS.CPR.HI],
+              reference: referenceScore,
+            })
+          ]}
+          values={messageValues}
+        />
+      </strong>
+      <FormattedMessage
+        {...messages.compAssessmentCPR.end[dimensionKey]}
+        values={messageValues}
+      />
+      {conjunct && <span>.</span>}
     </>
   );
 }
 NarrativeCPRCompAssessment.propTypes = {
+  conjunct: PropTypes.bool,
   country: PropTypes.object,
   referenceCount: PropTypes.number,
   referenceScore: PropTypes.number,

@@ -11,7 +11,7 @@ import { BENCHMARKS } from 'containers/App/constants';
 import rootMessages from 'messages';
 import messages from './messages';
 
-function NarrativeESR({ country, score, intl }) {
+function NarrativeESR({ country, score, intl, someData }) {
   // console.log(score);
   const scoreAdjusted =
     score && score[BENCHMARKS.find(s => s.key === 'adjusted').column];
@@ -35,9 +35,19 @@ function NarrativeESR({ country, score, intl }) {
   };
   if (!score) {
     return (
-      <Paragraph>
-        <FormattedMessage {...messages.esr.noData} values={messageValues} />
-      </Paragraph>
+      <>
+        <Paragraph>
+          <FormattedMessage {...messages.esr.noData} values={messageValues} />
+        </Paragraph>
+        {someData && (
+          <Paragraph>
+            <FormattedMessage
+              {...messages.esr.someData}
+              values={messageValues}
+            />
+          </Paragraph>
+        )}
+      </>
     );
   }
   if (score) {
@@ -104,6 +114,7 @@ function NarrativeESR({ country, score, intl }) {
 
 NarrativeESR.propTypes = {
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  someData: PropTypes.bool,
   country: PropTypes.object,
   intl: intlShape.isRequired,
 };

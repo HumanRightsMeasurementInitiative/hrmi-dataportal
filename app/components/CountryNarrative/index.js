@@ -96,6 +96,7 @@ function CountryNarrative({
     return null;
   }
   // console.log(standard, country);
+  const esrRightsScores = getRightsScoresForDimension(rights, 'esr');
   return (
     <Styled>
       <RightsType>
@@ -153,11 +154,12 @@ function CountryNarrative({
           <NarrativeESR
             score={dimensions.esr && dimensions.esr.score}
             country={country}
+            someData={esrRightsScores.reduce((m, s) => m || !!s.score, false)}
           />
           <ESRAccordion
             dimension={dimensions.esr}
             dimensionKey="esr"
-            rights={getRightsScoresForDimension(rights, 'esr')}
+            rights={esrRightsScores}
             benchmark={BENCHMARKS.find(s => s.key === benchmark)}
             indicators={Object.values(indicators)}
             onMetricClick={onMetricClick}
@@ -184,35 +186,39 @@ function CountryNarrative({
             <FormattedMessage {...messages.compAssessmentSectionTitle} />
           </RightsTypeHeading>
           {hasCPR(dimensions) && reference.empowerment && reference.physint && (
-            <>
+            <Paragraph>
               <NarrativeCPRCompAssessment
                 dimensionKey="empowerment"
                 score={dimensions.empowerment && dimensions.empowerment.score}
                 country={country}
                 referenceScore={reference.empowerment.average}
                 referenceCount={reference.empowerment.count}
+                start
               />
               <NarrativeCPRCompAssessment
+                conjunct
                 dimensionKey="physint"
                 score={dimensions.physint && dimensions.physint.score}
                 country={country}
                 referenceScore={reference.physint.average}
                 referenceCount={reference.physint.count}
               />
-            </>
+            </Paragraph>
           )}
           {dimensions.esr &&
             dimensions.esr.score &&
             getDefaultStandard(country) !== standard &&
             renderStandardHint(intl, standard, country)}
           {dimensions.esr && reference && reference.esr && (
-            <NarrativeESRCompAssessment
-              country={country}
-              score={dimensions.esr.score}
-              referenceScore={reference.esr[standard].average[benchmark]}
-              referenceCount={reference.esr[standard].count}
-              benchmark={BENCHMARKS.find(s => s.key === benchmark)}
-            />
+            <Paragraph>
+              <NarrativeESRCompAssessment
+                country={country}
+                score={dimensions.esr.score}
+                referenceScore={reference.esr[standard].average[benchmark]}
+                referenceCount={reference.esr[standard].count}
+                benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+              />
+            </Paragraph>
           )}
         </RightsType>
       )}
