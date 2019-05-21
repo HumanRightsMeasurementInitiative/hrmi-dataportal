@@ -4,27 +4,29 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Box, Button, DropButton } from 'grommet';
-import { Menu, Close } from 'grommet-icons';
+import { Box, Button, Drop, ResponsiveContext, TextInput } from 'grommet';
+import { Menu, Close, FormClose, Search } from 'grommet-icons';
 
 import ContentContainer from 'styled/ContentContainer';
 
 import Icon from 'components/Icon';
 
 import LocaleToggle from 'containers/LocaleToggle';
-import NavCountry from 'containers/NavCountry';
-import NavMetric from 'containers/NavMetric';
 import { PAGES } from 'containers/App/constants';
 import { navigate } from 'containers/App/actions';
 
 import rootMessages from 'messages';
 import messages from './messages';
+
+import NavCountry from './NavCountry';
+import NavMetric from './NavMetric';
+import SearchResults from './SearchResults';
 
 const Styled = styled.header`
   position: fixed;
@@ -143,7 +145,7 @@ const LocaleToggleWrap = styled.span`
   }
 `;
 
-const SecondaryDropButton = styled(DropButton)`
+const SecondaryDropButton = styled(Button)`
   height: 56px;
   padding: 5px 40px;
   background-color: ${({ active, theme }) =>
@@ -159,7 +161,10 @@ export function Header({ nav, intl }) {
   const [showMenu, setShowMenu] = useState(false);
   const [showCountries, setShowCountries] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
-
+  const [search, setSearch] = useState('');
+  const countryTarget = useRef(null);
+  const metricTarget = useRef(null);
+  const searchRef = useRef(null);
   return (
     <Styled role="banner">
       <div>
@@ -211,32 +216,97 @@ export function Header({ nav, intl }) {
           </MenuList>
         </NavBarTop>
       </div>
-      <div>
-        <NavBarBottom>
-          <SecondaryDropButton
-            plain
-            open={showCountries}
-            active={showCountries}
-            onClose={() => setShowCountries(false)}
-            onOpen={() => setShowCountries(true)}
-            dropProps={{ align: { top: 'bottom', left: 'left' } }}
-            dropContent={<NavCountry onClose={() => setShowCountries(false)} />}
-            icon={<Icon name="COUNTRY" />}
-            label={intl.formatMessage(messages.countries)}
-          />
-          <SecondaryDropButton
-            plain
-            open={showMetrics}
-            active={showMetrics}
-            onClose={() => setShowMetrics(false)}
-            onOpen={() => setShowMetrics(true)}
-            dropProps={{ align: { top: 'bottom', left: 'left' } }}
-            dropContent={<NavMetric onClose={() => setShowMetrics(false)} />}
-            icon={<Icon name="METRICS" />}
-            label={intl.formatMessage(messages.metrics)}
-          />
-        </NavBarBottom>
-      </div>
+      <ResponsiveContext.Consumer>
+        {size => (
+          <NavBarBottom>
+            <SecondaryDropButton
+              plain
+              active={showCountries}
+              onClick={() => {
+                setShowMetrics(false);
+                setShowCountries(!showCountries);
+              }}
+              icon={<Icon name="COUNTRY" />}
+              label={intl.formatMessage(messages.countries)}
+              ref={countryTarget}
+            />
+            {showCountries && size === 'small' && (
+              <NavCountry onClose={() => setShowCountries(false)} />
+            )}
+            {showCountries && size !== 'small' && (
+              <Drop
+                align={{ top: 'bottom', left: 'left' }}
+                target={countryTarget.current}
+                onClickOutside={() => setShowCountries(false)}
+              >
+                <NavCountry onClose={() => setShowCountries(false)} />
+              </Drop>
+            )}
+            <SecondaryDropButton
+              plain
+              active={showMetrics}
+              onClick={() => {
+                setShowCountries(false);
+                setShowMetrics(!showMetrics);
+              }}
+              icon={<Icon name="METRICS" />}
+              label={intl.formatMessage(messages.metrics)}
+              ref={metricTarget}
+            />
+            {showMetrics && size === 'small' && (
+              <NavMetric onClose={() => setShowMetrics(false)} />
+            )}
+            {showMetrics && size !== 'small' && (
+              <Drop
+                align={{ top: 'bottom', left: 'left' }}
+                target={metricTarget.current}
+                onClickOutside={() => setShowMetrics(false)}
+              >
+                <NavMetric onClose={() => setShowMetrics(false)} />
+              </Drop>
+            )}
+            <Box
+              background="dark-1"
+              width="large"
+              direction="row"
+              align="center"
+              pad={{ horizontal: 'small', vertical: 'xsmall' }}
+              round="small"
+              border={{ side: 'all' }}
+              margin={{ horizontal: 'medium' }}
+              ref={searchRef}
+            >
+              <TextInput
+                plain
+                value={search}
+                onChange={evt =>
+                  evt && evt.target && setSearch(evt.target.value)
+                }
+                placeholder={intl.formatMessage(messages.search.allSearch)}
+                pad="xsmall"
+              />
+              {search && search.length > 0 && (
+                <Button onClick={() => setSearch('')} pad="xsmall">
+                  <FormClose />
+                </Button>
+              )}
+              {(!search || search.length === 0) && <Search />}
+            </Box>
+            {search.length > 1 && size === 'small' && (
+              <SearchResults onClose={() => setSearch('')} search={search} />
+            )}
+            {search.length > 1 && size !== 'small' && (
+              <Drop
+                align={{ top: 'bottom', left: 'left' }}
+                target={searchRef.current}
+                onClickOutside={() => setSearch('')}
+              >
+                <SearchResults onClose={() => setSearch('')} search={search} />
+              </Drop>
+            )}
+          </NavBarBottom>
+        )}
+      </ResponsiveContext.Consumer>
     </Styled>
   );
 }
