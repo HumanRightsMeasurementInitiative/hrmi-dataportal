@@ -21,7 +21,19 @@ const theme = {
   // used for grommet
   text,
   paragraph: text,
+  icon: {
+    size: {
+      small: '12px',
+      medium: '16px',
+      large: '20px',
+      xlarge: '24px',
+    },
+  },
+  navTop: '60px',
   global: {
+    input: {
+      padding: '2px',
+    },
     font: {
       family: 'Source Sans Pro',
       height: '22px',
