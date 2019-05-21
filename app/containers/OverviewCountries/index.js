@@ -20,19 +20,18 @@ import {
   getScaleSearch,
   getESRIndicators,
   getAssessedSearch,
+  getSortSearch,
+  getSortOrderSearch,
 } from 'containers/App/selectors';
 import { navigate, selectCountry } from 'containers/App/actions';
 
-import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
+import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 
 import CountryPreview from 'components/CountryPreview';
+import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
 
-import {
-  sortByName,
-  sortByAssessment,
-  getScoresForCountry,
-} from 'utils/scores';
+import { sortCountries, getScoresForCountry } from 'utils/scores';
 
 export const isDefaultStandard = (country, standardDetails) =>
   (country.high_income_country === '0' && standardDetails.key === 'core') ||
@@ -52,27 +51,45 @@ export function OverviewCountries({
   standard,
   benchmark,
   indicators,
+  sort,
+  sortOrder,
+  onSortSelect,
+  onOrderChange,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const otherStandardDetails = STANDARDS.find(s => s.key !== standard);
 
-  // prettier-ignore
-  const sortedCountries = countries
-    .sort((a, b) => sortByName(a, b, intl))
-    .sort((a, b) => sortByAssessment(a, b, scoresAllCountries));
+  const currentSort = sort || 'assessment';
+  const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
 
+  const sortedCountries = sortCountries({
+    intl,
+    countries,
+    sort: currentSort,
+    order: currentSortOrder,
+    scores: scoresAllCountries,
+  });
   return (
     <Box pad={{ horizontal: 'medium' }}>
-      <CountryFilters
-        regionFilterValue={regionFilterValue}
-        onRemoveFilter={onRemoveFilter}
-        onAddFilter={onAddFilter}
-        incomeFilterValue={incomeFilterValue}
-        assessedFilterValue={assessedFilterValue}
-        filterGroups={['income', 'region', 'assessed']}
-      />
+      <Box direction="row">
+        <CountryFilters
+          regionFilterValue={regionFilterValue}
+          onRemoveFilter={onRemoveFilter}
+          onAddFilter={onAddFilter}
+          incomeFilterValue={incomeFilterValue}
+          assessedFilterValue={assessedFilterValue}
+          filterGroups={['income', 'region', 'assessed']}
+        />
+        <CountrySort
+          sort={currentSort}
+          options={['name', 'assessment']}
+          order={currentSortOrder}
+          onSortSelect={onSortSelect}
+          onOrderToggle={onOrderChange}
+        />
+      </Box>
       {sortedCountries && scoresAllCountries && (
         <Box direction="row" wrap width="100%">
           <InfiniteScroll items={sortedCountries} step={30} show={0}>
@@ -112,6 +129,10 @@ OverviewCountries.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  sort: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  onSortSelect: PropTypes.func,
+  onOrderChange: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -122,6 +143,8 @@ const mapStateToProps = createStructuredSelector({
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
   indicators: state => getESRIndicators(state),
+  sort: state => getSortSearch(state),
+  sortOrder: state => getSortOrderSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -135,6 +158,24 @@ export function mapDispatchToProps(dispatch) {
       dispatch(
         navigate(
           { search: `?${key}=${value}` },
+          {
+            replace: false,
+          },
+        ),
+      ),
+    onSortSelect: value =>
+      dispatch(
+        navigate(
+          { search: `?sort=${value}` },
+          {
+            replace: false,
+          },
+        ),
+      ),
+    onOrderChange: value =>
+      dispatch(
+        navigate(
+          { search: `?dir=${value}` },
           {
             replace: false,
           },

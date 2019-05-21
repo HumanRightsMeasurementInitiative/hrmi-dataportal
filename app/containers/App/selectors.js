@@ -161,16 +161,16 @@ export const getGroupSearch = createSelector(
 export const getSortSearch = createSelector(
   getRouterSearchParams,
   search =>
-    search.has('sort') && COUNTRY_SORTS.indexOf(search.get('sort')) > -1
-      ? search.get('sort')
-      : COUNTRY_SORTS[0],
+    search.has('sort') &&
+    Object.keys(COUNTRY_SORTS).indexOf(search.get('sort')) > -1 &&
+    search.get('sort'),
 );
 export const getSortOrderSearch = createSelector(
   getRouterSearchParams,
   search =>
-    search.has('dir') && ['asc', 'desc'].indexOf(search.get('dir')) > -1
-      ? search.get('dir')
-      : 'asc',
+    search.has('dir') &&
+    ['asc', 'desc'].indexOf(search.get('dir')) > -1 &&
+    search.get('dir'),
 );
 
 // global sub-state
