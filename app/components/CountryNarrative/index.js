@@ -193,7 +193,14 @@ function CountryNarrative({
       {(hasCPR(dimensions) || (dimensions.esr && dimensions.esr.score)) && (
         <RightsType>
           <RightsTypeHeading>
-            <FormattedMessage {...messages.compAssessmentSectionTitle} />
+            <FormattedMessage
+              {...messages.compAssessmentSectionTitle}
+              values={{
+                country: intl.formatMessage(
+                  rootMessages.countries[country.country_code],
+                ),
+              }}
+            />
           </RightsTypeHeading>
           {hasCPR(dimensions) && reference.empowerment && reference.physint && (
             <Paragraph>

@@ -312,20 +312,6 @@ export const getCountriesFiltered = createSelector(
       ),
 );
 
-export const getESRIndicatorsForStandard = createSelector(
-  getESRIndicators,
-  getStandardSearch,
-  (indicators, standardSearch) => {
-    const standard = STANDARDS.find(as => as.key === standardSearch);
-    return (
-      indicators &&
-      indicators.filter(
-        i => i.standard === 'Both' || i.standard === standard.code,
-      )
-    );
-  },
-);
-
 // single metric
 // single dimension, multiple countries, single year
 export const getESRDimensionScores = createSelector(
@@ -846,6 +832,7 @@ export const getPeopleAtRisk = createSelector(
     );
   },
 );
+
 export const getCountryFromRouter = createSelector(
   getRouterMatch,
   getCountries,
@@ -1145,4 +1132,15 @@ export const getScoresByCountry = createSelector(
       indicators,
     };
   },
+);
+
+// aux indicators
+// single country, single year
+export const getAuxIndicatorsForCountry = createSelector(
+  (state, country) => country,
+  getAuxIndicators,
+  getMaxYearESR,
+  (country, data, year) =>
+    data &&
+    data.find(d => d.country_code === country && quasiEquals(d.year, year)),
 );

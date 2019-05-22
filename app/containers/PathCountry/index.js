@@ -37,6 +37,7 @@ import {
   getBenchmarkSearch,
   getPeopleAtRiskForCountry,
   getDimensionAverages,
+  getAuxIndicatorsForCountry,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
@@ -55,6 +56,7 @@ const DEPENDENCIES = [
   'esrIndicatorScores',
   'esrIndicators',
   'atRisk',
+  'auxIndicators',
 ];
 
 export function PathCountry({
@@ -74,6 +76,7 @@ export function PathCountry({
   onAtRiskClick,
   standard,
   dimensionAverages,
+  auxIndicators,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -81,7 +84,6 @@ export function PathCountry({
   }, []);
   const countryCode = match.params.country;
 
-  // const [tabIndex, setTabIndex] = useState(0);
   const group =
     country &&
     INCOME_GROUPS.find(g => quasiEquals(g.value, country.high_income_country));
@@ -114,9 +116,7 @@ export function PathCountry({
         <HeaderCategories direction="row">
           <Text size="small">
             <CategoryLink
-              onClick={() =>
-                onCategoryClick('region', country.region_code, ['income'])
-              }
+              onClick={() => onCategoryClick('region', country.region_code)}
             >
               {country && (
                 <FormattedMessage
@@ -125,9 +125,7 @@ export function PathCountry({
               )}
             </CategoryLink>
             <Text>&nbsp;|&nbsp;</Text>
-            <CategoryLink
-              onClick={() => onCategoryClick('income', group.key, ['region'])}
-            >
+            <CategoryLink onClick={() => onCategoryClick('income', group.key)}>
               {group && (
                 <FormattedMessage {...rootMessages.income[group.key]} />
               )}
@@ -174,7 +172,13 @@ export function PathCountry({
           {
             key: 'about',
             title: intl.formatMessage(rootMessages.tabs.about),
-            content: <CountryAbout />,
+            content: (
+              <CountryAbout
+                country={country}
+                auxIndicators={auxIndicators}
+                onCategoryClick={onCategoryClick}
+              />
+            ),
           },
         ]}
       />
@@ -200,6 +204,7 @@ PathCountry.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -215,6 +220,8 @@ const mapStateToProps = createStructuredSelector({
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
   dimensionAverages: state => getDimensionAverages(state),
+  auxIndicators: (state, { match }) =>
+    getAuxIndicatorsForCountry(state, match.params.country),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -222,16 +229,18 @@ export function mapDispatchToProps(dispatch) {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
-    onCategoryClick: (key, value, deleteParams) =>
+    onCategoryClick: (key, value) => {
+      const deleteParams = ['income', 'region', 'assessed'];
       dispatch(
         navigate(
           { pathname: '', search: `?${key}=${value}` },
           {
             replace: false,
-            deleteParams,
+            deleteParams: deleteParams.filter(p => p !== key),
           },
         ),
-      ),
+      );
+    },
     onClose: () => dispatch(navigate('')),
     onMetricClick: (country, metric, tab = 0) =>
       dispatch(
