@@ -121,7 +121,12 @@ export default defineMessages({
     noData: {
       id: `${scope}.esr.noData`,
       defaultMessage:
-        'For {needsArticle, select, true {the } false { }}{country} a {dimension} score is not available due to missing data for at least one component of the rights to food, health, education, housing and work. Missing data tells us that {needsArticle, select, true {the } false { }}{country} has not submitted some information to the relevant international databases. With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it.',
+        'For {needsArticle, select, true {the } false { }}{country} a {dimension} score is not available due to missing data for at least one component of the rights to food, health, education, housing and work. Missing data tells us that {needsArticle, select, true {the } false { }}{country} has not submitted some information to the relevant international databases.',
+    },
+    noDataFunding: {
+      id: `${scope}.esr.noDataFunding`,
+      defaultMessage:
+        'With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it.',
     },
     someData: {
       id: `${scope}.esr.someData`,

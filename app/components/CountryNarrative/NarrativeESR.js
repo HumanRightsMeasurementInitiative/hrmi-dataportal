@@ -35,19 +35,16 @@ function NarrativeESR({ country, score, intl, someData }) {
   };
   if (!score) {
     return (
-      <>
-        <Paragraph>
-          <FormattedMessage {...messages.esr.noData} values={messageValues} />
-        </Paragraph>
+      <Paragraph>
+        <FormattedMessage {...messages.esr.noData} values={messageValues} />
         {someData && (
-          <Paragraph>
-            <FormattedMessage
-              {...messages.esr.someData}
-              values={messageValues}
-            />
-          </Paragraph>
+          <FormattedMessage {...messages.esr.someData} values={messageValues} />
         )}
-      </>
+        <FormattedMessage
+          {...messages.esr.noDataFunding}
+          values={messageValues}
+        />
+      </Paragraph>
     );
   }
   if (score) {
