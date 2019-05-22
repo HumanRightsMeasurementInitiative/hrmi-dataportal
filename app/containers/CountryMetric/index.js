@@ -4,18 +4,20 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 // import styled from 'styled-components';
-import { Heading, Button, Box } from 'grommet';
+import { Heading, Button, Box, Paragraph } from 'grommet';
 
 import rootMessages from 'messages';
 
+import HTMLWrapper from 'components/HTMLWrapper';
+import Loading from 'components/Loading';
 import WordCloud from 'components/WordCloud';
 import Close from 'containers/Close';
 
@@ -28,6 +30,8 @@ import {
   getBenchmarkSearch,
   getPeopleAtRisk,
   getModalTabSearch,
+  getContentByKey,
+  getLocale,
 } from 'containers/App/selectors';
 
 import {
@@ -35,13 +39,25 @@ import {
   setModalTab,
   selectCountry,
   selectMetric,
+  loadContentIfNeeded,
 } from 'containers/App/actions';
 
 // import { INCOME_GROUPS } from 'containers/App/constants';
 // import quasiEquals from 'utils/quasi-equals';
 // import { hasCPR } from 'utils/scores';
 
-// import messages from './messages';
+import messages from './messages';
+
+const generateKey = (metricCode, countryCode) => {
+  const metric = getMetricDetails(metricCode);
+  if (metric.metricType === 'rights') {
+    if (metric.type === 'esr') {
+      return `esr/${countryCode}`;
+    }
+    return `${metricCode}/${countryCode}`;
+  }
+  return null;
+};
 
 export function CountryMetric({
   metricCode,
@@ -53,8 +69,16 @@ export function CountryMetric({
   base,
   intl,
   atRisk,
+  atRiskAnalysis,
+  onLoadContent,
+  locale,
 }) {
   const metric = getMetricDetails(metricCode);
+  useEffect(() => {
+    const key = generateKey(metricCode, countryCode);
+    if (key) onLoadContent(key);
+  }, []);
+
   const countryTitle =
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
   const metricTitle =
@@ -107,6 +131,17 @@ export function CountryMetric({
           />
         ))}
       </div>
+      {atRiskAnalysis && (
+        <span>
+          {atRiskAnalysis.locale !== locale && (
+            <Paragraph>
+              <FormattedMessage {...messages.noAnalysisInLanguage} />
+            </Paragraph>
+          )}
+          <HTMLWrapper innerhtml={atRiskAnalysis.content} />
+        </span>
+      )}
+      {!atRiskAnalysis && <Loading />}
     </Box>
   );
 }
@@ -115,15 +150,19 @@ CountryMetric.propTypes = {
   intl: intlShape.isRequired,
   onClose: PropTypes.func,
   onSelectMetric: PropTypes.func,
+  onLoadContent: PropTypes.func,
   onSelectCountry: PropTypes.func,
   metricCode: PropTypes.string,
+  locale: PropTypes.string,
   countryCode: PropTypes.string,
   base: PropTypes.string,
   // tabIndex: PropTypes.number,
   atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
+  locale: state => getLocale(state),
   country: (state, { countryCode }) => getCountry(state, countryCode),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
@@ -134,6 +173,8 @@ const mapStateToProps = createStructuredSelector({
       country: countryCode,
       metric: metricCode,
     }),
+  atRiskAnalysis: (state, { countryCode, metricCode }) =>
+    getContentByKey(state, generateKey(metricCode, countryCode)),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -148,6 +189,9 @@ export function mapDispatchToProps(dispatch) {
           },
         ),
       ),
+    onLoadContent: path => {
+      dispatch(loadContentIfNeeded(path, 'atrisk'));
+    },
     onTabClick: index => dispatch(setModalTab(index)),
     onSelectCountry: country => dispatch(selectCountry(country)),
     onSelectMetric: metric => dispatch(selectMetric(metric)),

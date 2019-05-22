@@ -6,24 +6,23 @@ import 'whatwg-fetch';
 
 import quasiEquals from 'utils/quasi-equals';
 
+import { DEFAULT_LOCALE } from 'i18n';
+
 // import dataRequest from 'utils/data-request';
 import {
   getLocale,
   getRouterLocation,
   getRouterPath,
   getRouterSearchParams,
-  getDataRequestedByKey,
-  getContentRequestedByKey,
   getCountry,
   getStandardSearch,
 } from './selectors';
 import {
-  dataRequested,
   dataLoaded,
   dataLoadingError,
-  contentRequested,
   contentLoaded,
   contentLoadingError,
+  loadContentIfNeeded,
 } from './actions';
 import {
   LOAD_DATA_IF_NEEDED,
@@ -74,62 +73,57 @@ export function* loadDataSaga({ key }) {
   const resourceIndex = DATA_RESOURCES.map(r => r.key).indexOf(key);
   if (resourceIndex > -1) {
     const url = `${DATA_URL}/${DATA_RESOURCES[resourceIndex].file}`;
-    // requestedSelector returns the times that entities where fetched from the API
-    const requestedAt = yield select(getDataRequestedByKey, key);
-    // If haven't requested yet, do so now.
-    if (!requestedAt) {
-      try {
-        // First record that we are requesting
-        yield put(dataRequested(key, Date.now()));
-        const response = yield fetch(url);
-        const responseOk = yield response.ok;
-        if (responseOk && typeof response.text === 'function') {
-          const responseBody = yield response.text();
-          if (responseBody) {
-            yield put(dataLoaded(key, csvParse(responseBody), Date.now()));
-          } else {
-            throw new Error(response.statusText);
-          }
+    try {
+      // First record that we are requesting
+      const response = yield fetch(url);
+      const responseOk = yield response.ok;
+      if (responseOk && typeof response.text === 'function') {
+        const responseBody = yield response.text();
+        if (responseBody) {
+          yield put(dataLoaded(key, csvParse(responseBody), Date.now()));
         } else {
           throw new Error(response.statusText);
         }
-      } catch (err) {
-        yield put(dataRequested(key, false));
-        // throw error
-        throw new Error(err);
+      } else {
+        throw new Error(response.statusText);
       }
+    } catch (err) {
+      // throw error
+      throw new Error(err);
     }
   }
 }
-export function* loadContentSaga({ key }) {
+// key expected to include full path, for at risk data metric/country
+export function* loadContentSaga({ key, contentType = 'page', locale }) {
   const pageIndex = PAGES.indexOf(key);
-  if (pageIndex > -1) {
-    const locale = yield select(getLocale);
-    const url = `${PAGES_URL}/${locale}/${key}/`;
-    // requestedSelector returns the times that entities where fetched from the API
-    const requestedAt = yield select(getContentRequestedByKey, key);
-    // If haven't requested yet, do so now.
-    if (!requestedAt) {
-      try {
-        // First record that we are requesting
-        yield put(contentRequested(key, Date.now()));
-        const response = yield fetch(url);
-        const responseOk = yield response.ok;
-        if (responseOk && typeof response.text === 'function') {
-          const responseBody = yield response.text();
-          if (responseBody) {
-            yield put(contentLoaded(key, responseBody, Date.now()));
-          } else {
-            throw new Error(response.statusText);
-          }
+  if (pageIndex > -1 || contentType === 'atrisk') {
+    const requestLocale = yield locale || select(getLocale);
+    const url = `${PAGES_URL}${requestLocale}/${key}/`;
+    try {
+      // First record that we are requesting
+      const response = yield fetch(url);
+      const responseOk = yield response.ok;
+      if (responseOk && typeof response.text === 'function') {
+        const responseBody = yield response.text();
+        if (responseBody) {
+          yield put(
+            contentLoaded(key, responseBody, Date.now(), requestLocale),
+          );
         } else {
           throw new Error(response.statusText);
         }
-      } catch (err) {
-        yield put(contentRequested(key, false));
-        // throw error
-        throw new Error(err);
+      } else if (
+        contentType === 'atrisk' &&
+        quasiEquals(response.status, 404) &&
+        requestLocale !== DEFAULT_LOCALE
+      ) {
+        yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
+      } else {
+        throw new Error(response.statusText);
       }
+    } catch (err) {
+      // throw error
+      throw new Error(err);
     }
   }
 }
@@ -167,12 +161,12 @@ export function* selectCountrySaga({ code }) {
   }
 
   // navigate to country and default standard
-  const currentLocale = yield select(getLocale);
+  const requestLocale = yield select(getLocale);
 
   const newSearch = searchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
 
-  yield put(push(`/${currentLocale}/country/${code}${search}`));
+  yield put(push(`/${requestLocale}/country/${code}${search}`));
 }
 
 export function* setScaleSaga({ value }) {
@@ -224,13 +218,13 @@ export function* setModalTabSaga({ value }) {
 }
 
 export function* selectMetricSaga({ code }) {
-  const currentLocale = yield select(getLocale);
+  const requestLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
   const currentSearchParams = new URLSearchParams(currentLocation.search);
   currentSearchParams.delete('tab');
   const newSearch = currentSearchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
-  yield put(push(`/${currentLocale}/metric/${code}${search}`));
+  yield put(push(`/${requestLocale}/metric/${code}${search}`));
 }
 
 // location can either be string or object { pathname, search}
@@ -245,7 +239,7 @@ export function* navigateSaga({ location, args }) {
     },
     args || {},
   );
-  const currentLocale = yield select(getLocale);
+  const requestLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
   const currentSearchParams = new URLSearchParams(currentLocation.search);
 
@@ -258,7 +252,7 @@ export function* navigateSaga({ location, args }) {
   // use as pathname and keep old search
   // note: location path is expected not to contain the locale
   if (typeof location === 'string') {
-    newPathname = xArgs.needsLocale ? `/${currentLocale}` : '/';
+    newPathname = xArgs.needsLocale ? `/${requestLocale}` : '/';
     if (location !== '') {
       newPathname += `/${location}`;
     }
@@ -271,7 +265,7 @@ export function* navigateSaga({ location, args }) {
     // figure out new pathname or keep old one
     if (typeof location.pathname !== 'undefined') {
       newPathname = xArgs.needsLocale
-        ? `/${currentLocale}${location.pathname}`
+        ? `/${requestLocale}${location.pathname}`
         : location.pathname;
     } else {
       newPathname = currentLocation.pathname;
@@ -311,7 +305,7 @@ export default function* defaultSaga() {
     LOAD_DATA_IF_NEEDED,
     autoRestart(loadDataSaga, loadDataErrorHandler, MAX_LOAD_ATTEMPTS),
   );
-  yield takeEvery(
+  yield takeLatest(
     LOAD_CONTENT_IF_NEEDED,
     autoRestart(loadContentSaga, loadContentErrorHandler, MAX_LOAD_ATTEMPTS),
   );
