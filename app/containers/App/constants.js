@@ -13,12 +13,10 @@
 export const LOAD_DATA_IF_NEEDED = 'hrmi/App/LOAD_DATA_IF_NEEDED';
 export const LOAD_DATA_SUCCESS = 'hrmi/App/LOAD_DATA_SUCCESS';
 export const LOAD_DATA_ERROR = 'hrmi/App/LOAD_DATA_ERROR';
-export const DATA_REQUESTED = 'hrmi/App/DATA_REQUESTED';
 export const DATA_READY = 'hrmi/App/DATA_READY';
 export const LOAD_CONTENT_IF_NEEDED = 'hrmi/App/LOAD_CONTENT_IF_NEEDED';
 export const LOAD_CONTENT_SUCCESS = 'hrmi/App/LOAD_CONTENT_SUCCESS';
 export const LOAD_CONTENT_ERROR = 'hrmi/App/LOAD_CONTENT_ERROR';
-export const CONTENT_REQUESTED = 'hrmi/App/CONTENT_REQUESTED';
 export const CONTENT_READY = 'hrmi/App/CONTENT_READY';
 
 // navigation actions

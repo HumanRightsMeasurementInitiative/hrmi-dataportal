@@ -9,7 +9,7 @@
   "hrmi.containers.Header.search.noResults": "We are sorry! Your search did not return any results.",
   "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.components.WordCloud.noGroupData": "None selected by expert respondents",
-  "hrmi.components.WordCloud.noAnalysisInLanguage": "We are sorry but this information is not yet available in your language",
+  "hrmi.components.CountryMetric.noAnalysisInLanguage": "We are sorry but this information is not yet available in your language",
   "hrmi.components.Close.label": "Back",
   "hrmi.components.CountryReport.title": "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} Human Rights Report",
   "hrmi.components.CountryPeople.title": "Which people are most at risk?",

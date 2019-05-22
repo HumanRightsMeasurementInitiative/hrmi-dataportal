@@ -22,7 +22,7 @@ export function PathPage({ match, onLoadContent, content, closeTarget }) {
   useEffect(() => {
     // kick off loading of page content
     onLoadContent(match.params.page);
-  });
+  }, []);
   return (
     <div>
       <Helmet>
@@ -31,7 +31,7 @@ export function PathPage({ match, onLoadContent, content, closeTarget }) {
       </Helmet>
       <Close closeTarget={closeTarget} keepTab />
       <div>
-        {content && <HTMLWrapper innerhtml={content} />}
+        {content && <HTMLWrapper innerhtml={content.content} />}
         {!content && <Loading />}
       </div>
     </div>
@@ -42,7 +42,7 @@ PathPage.propTypes = {
   match: PropTypes.object,
   onLoadContent: PropTypes.func,
   closeTarget: PropTypes.object,
-  content: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  content: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -9,7 +9,7 @@
   "hrmi.containers.Header.search.noResults": "We are sorry! Your search did not return any results.",
   "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.containers.WordCloud.noGroupData": "None selected by expert respondents",
-  "hrmi.components.WordCloud.noAnalysisInLanguage": "Lamento, mas esta informação ainda não foi traduzida para o seu idioma.",
+  "hrmi.components.CountryMetric.noAnalysisInLanguage": "Lamento, mas esta informação ainda não foi traduzida para o seu idioma.",
   "hrmi.components.Close.label": "Back",
   "hrmi.components.CountryReport.title": "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} Human Rights Report",
   "hrmi.components.CountryPeople.title": "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} people at risk overview",

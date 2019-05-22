@@ -13,10 +13,8 @@ import { CHANGE_LOCALE } from 'containers/LanguageProvider/constants';
 import {
   DATA_RESOURCES,
   PAGES,
-  DATA_REQUESTED,
   LOAD_DATA_ERROR,
   LOAD_DATA_SUCCESS,
-  CONTENT_REQUESTED,
   LOAD_CONTENT_ERROR,
   LOAD_CONTENT_SUCCESS,
 } from './constants';
@@ -31,22 +29,12 @@ export const initialState = {
     memo[resource.key] = false;
     return memo;
   }, {}),
-  // record request time
-  dataRequested: DATA_RESOURCES.reduce((memo, resource) => {
-    memo[resource.key] = false;
-    return memo;
-  }, {}),
   // record return time
   dataReady: DATA_RESOURCES.reduce((memo, resource) => {
     memo[resource.key] = false;
     return memo;
   }, {}),
   content: PAGES.reduce((memo, key) => {
-    memo[key] = false;
-    return memo;
-  }, {}),
-  // record request time
-  contentRequested: PAGES.reduce((memo, key) => {
     memo[key] = false;
     return memo;
   }, {}),
@@ -73,31 +61,26 @@ const appReducer = (state = initialState, action) =>
           draft.closeTarget = action.payload.location;
         }
         break;
-      case DATA_REQUESTED:
-        draft.dataRequested[action.key] = action.time;
-        break;
       case LOAD_DATA_SUCCESS:
         console.log('data loaded', action.key);
         draft.data[action.key] = action.data;
         draft.dataReady[action.key] = action.time;
         break;
       case LOAD_DATA_ERROR:
-        draft.dataRequested[action.key] = false;
-        break;
-      case CONTENT_REQUESTED:
-        draft.contentRequested[action.key] = action.time;
         break;
       case LOAD_CONTENT_SUCCESS:
-        draft.content[action.key] = action.content;
+        draft.content[action.key] = {
+          locale: action.locale,
+          content: action.content,
+        };
         draft.contentReady[action.key] = action.time;
         break;
       case LOAD_CONTENT_ERROR:
-        draft.contentRequested[action.key] = false;
+        console.log('LOAD_CONTENT_ERROR');
         break;
       case CHANGE_LOCALE:
         draft.content = initialState.content;
         draft.contentReady = initialState.contentReady;
-        draft.contentRequested = initialState.contentRequested;
         break;
     }
   });

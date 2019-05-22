@@ -8,12 +8,10 @@ import {
   LOAD_DATA_IF_NEEDED,
   LOAD_DATA_SUCCESS,
   LOAD_DATA_ERROR,
-  DATA_REQUESTED,
   DATA_READY,
   LOAD_CONTENT_IF_NEEDED,
   LOAD_CONTENT_SUCCESS,
   LOAD_CONTENT_ERROR,
-  CONTENT_REQUESTED,
   CONTENT_READY,
   SELECT_COUNTRY,
   SELECT_METRIC,
@@ -53,14 +51,6 @@ export function dataLoadingError(error, key) {
   };
 }
 
-export function dataRequested(key, time) {
-  return {
-    type: DATA_REQUESTED,
-    key,
-    time,
-  };
-}
-
 export function dataReady(key, time) {
   return {
     type: DATA_READY,
@@ -68,19 +58,22 @@ export function dataReady(key, time) {
     time,
   };
 }
-export function loadContentIfNeeded(key) {
+export function loadContentIfNeeded(key, contentType, locale) {
   return {
     type: LOAD_CONTENT_IF_NEEDED,
     key,
+    contentType,
+    locale,
   };
 }
 
-export function contentLoaded(key, content, time) {
+export function contentLoaded(key, content, time, locale) {
   return {
     type: LOAD_CONTENT_SUCCESS,
     content,
     key,
     time,
+    locale,
   };
 }
 
@@ -89,14 +82,6 @@ export function contentLoadingError(error, key) {
     type: LOAD_CONTENT_ERROR,
     error,
     key,
-  };
-}
-
-export function contentRequested(key, time) {
-  return {
-    type: CONTENT_REQUESTED,
-    key,
-    time,
   };
 }
 

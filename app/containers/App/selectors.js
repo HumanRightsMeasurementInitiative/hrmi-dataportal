@@ -186,10 +186,6 @@ const getData = createSelector(
   getGlobal,
   global => global.data,
 );
-const getDataRequested = createSelector(
-  getGlobal,
-  global => global.dataRequested,
-);
 export const getESRScores = createSelector(
   getData,
   data => data.esrScores,
@@ -219,25 +215,10 @@ export const getCountries = createSelector(
   data => data.countries,
 );
 
+// data / content
 const getContent = createSelector(
   getGlobal,
   global => global.content,
-);
-const getContentRequested = createSelector(
-  getGlobal,
-  global => global.contentRequested,
-);
-
-// requested data / content
-export const getDataRequestedByKey = createSelector(
-  (state, key) => key,
-  getDataRequested,
-  (key, requested) => requested[key],
-);
-export const getContentRequestedByKey = createSelector(
-  (state, key) => key,
-  getContentRequested,
-  (key, requested) => requested[key],
 );
 export const getContentByKey = createSelector(
   (state, key) => key,

@@ -9,7 +9,7 @@
   "hrmi.containers.Header.search.noResults": "We are sorry! Your search did not return any results.",
   "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.components.WordCloud.noGroupData": "Aucun sélectionné par les experts",
-  "hrmi.components.WordCloud.noAnalysisInLanguage": "Désolé, cette information n'a pas encore été traduite dans votre langue",
+  "hrmi.components.CountryMetric.noAnalysisInLanguage": "Désolé, cette information n'a pas encore été traduite dans votre langue",
   "hrmi.components.Close.label": "Retour",
   "hrmi.components.CountryReport.title": "Rapport sur les droits humains de {needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}}",
   "hrmi.components.CountryPeople.title": "Quelles sont les personnes les plus vulnérables?",
