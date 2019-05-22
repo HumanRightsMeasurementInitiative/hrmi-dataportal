@@ -294,6 +294,13 @@ export const getCountriesFiltered = createSelector(
 );
 
 // single metric
+export const getIndicatorInfo = createSelector(
+  (state, metricCode) => metricCode,
+  getESRIndicators,
+  (metricCode, indicators) =>
+    indicators && indicators.find(i => i.metric_code === metricCode),
+);
+
 // single dimension, multiple countries, single year
 export const getESRDimensionScores = createSelector(
   getESRScores,
@@ -972,9 +979,8 @@ export const getDimensionAverages = createSelector(
 
 // /////////////////////// THE NEW STYLE
 
-const filterScoresByYear = (year, scores, log) => {
+const filterScoresByYear = (year, scores) => {
   if (!scores) return false;
-  console.log('filterScoresByYear', log);
   return scores && scores.filter(s => quasiEquals(s.year, year));
 };
 
@@ -989,9 +995,8 @@ export const getCPRScoresForYear = createSelector(
   (year, scores) => filterScoresByYear(year, scores, 'cpr'),
 );
 
-const scoresByCountry = (scores, log) => {
+const scoresByCountry = scores => {
   if (!scores) return false;
-  console.log('scoresByCountry', log);
   return scores.reduce((memo, score) => {
     const metricR = RIGHTS.find(r => r.code === score.metric_code);
     const metricD = DIMENSIONS.find(d => d.code === score.metric_code);
@@ -1028,7 +1033,6 @@ const scoresByCountry = (scores, log) => {
 
 const indicatorScoresByCountry = (year, scores) => {
   if (!scores) return false;
-  console.log('indicatorScoresByCountry');
   return scores.reduce((memo, score) => {
     // ignore all outdated scores
     if (parseInt(score.year, 10) < year - INDICATOR_LOOKBACK) return memo;
@@ -1105,14 +1109,11 @@ export const getScoresByCountry = createSelector(
   getESRScoresByCountry,
   getCPRScoresByCountry,
   getIndicatorScoresByCountry,
-  (esr, cpr, indicators) => {
-    console.log('getCountriesWithScores');
-    return {
-      esr,
-      cpr,
-      indicators,
-    };
-  },
+  (esr, cpr, indicators) => ({
+    esr,
+    cpr,
+    indicators,
+  }),
 );
 
 // aux indicators

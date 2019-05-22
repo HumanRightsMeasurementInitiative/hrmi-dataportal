@@ -5,6 +5,7 @@ export default function(code) {
   if (dimension) {
     return {
       metricType: 'dimensions',
+      metricTypeSingle: 'dimension',
       ...dimension,
     };
   }
@@ -12,6 +13,7 @@ export default function(code) {
   if (right) {
     return {
       metricType: 'rights',
+      metricTypeSingle: 'right',
       ...right,
     };
   }
@@ -19,6 +21,7 @@ export default function(code) {
   if (indicator) {
     return {
       metricType: 'indicators',
+      metricTypeSingle: 'indicator',
       ...indicator,
     };
   }
