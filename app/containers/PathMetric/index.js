@@ -19,7 +19,7 @@ import Close from 'containers/Close';
 import SingleMetric from 'containers/SingleMetric/Loadable';
 
 import TabContainer from 'containers/TabContainer';
-import MetricAside from 'components/MetricAside';
+import MetricAside from 'containers/MetricAside';
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
 import PageTitle from 'styled/PageTitle';
@@ -121,7 +121,7 @@ export function PathMetric({
           {
             key: 'about',
             title: intl.formatMessage(rootMessages.tabs.about),
-            content: <MetricAside />,
+            content: <MetricAside metric={metric} ancestors={ancestors} />,
           },
         ]}
       />

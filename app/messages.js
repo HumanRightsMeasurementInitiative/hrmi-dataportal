@@ -333,6 +333,20 @@ export default defineMessages({
       defaultMessage: 'physint',
     },
   },
+  'dimensions-about': {
+    esr: {
+      id: `${scope}.dimensions-about.esr`,
+      defaultMessage: 'about esr',
+    },
+    empowerment: {
+      id: `${scope}.dimensions-about.empowerment`,
+      defaultMessage: 'empowerment-about',
+    },
+    physint: {
+      id: `${scope}.dimensions-about.physint`,
+      defaultMessage: 'physint-about',
+    },
+  },
   rights: {
     arrest: {
       id: `${scope}.rights.arrest`,
@@ -473,6 +487,76 @@ export default defineMessages({
       defaultMessage: 'union',
     },
   },
+  'rights-about': {
+    arrest: {
+      id: `${scope}.rights-about.arrest`,
+      defaultMessage: 'arrest-about',
+    },
+    assembly: {
+      id: `${scope}.rights-about.assembly`,
+      defaultMessage: 'assembly-about',
+    },
+    disappearance: {
+      id: `${scope}.rights-about.disappearance`,
+      defaultMessage: 'disappearance-about',
+    },
+    'death-penalty': {
+      id: `${scope}.rights-about.death-penalty`,
+      defaultMessage: 'death-penalty-about',
+    },
+    execution: {
+      id: `${scope}.rights-about.execution`,
+      defaultMessage: 'execution-about',
+    },
+    'extrajud-killing': {
+      id: `${scope}.rights-about.extrajud-killing`,
+      defaultMessage: 'extrajud-killing-about',
+    },
+    expression: {
+      id: `${scope}.rights-about.expression`,
+      defaultMessage: 'expression-about',
+    },
+    participation: {
+      id: `${scope}.rights.participation`,
+      defaultMessage: 'participation-about',
+    },
+    torture: {
+      id: `${scope}.rights-about.torture`,
+      defaultMessage: 'torture-about',
+    },
+    education: {
+      id: `${scope}.rights-about.education`,
+      defaultMessage: 'education-about',
+    },
+    food: {
+      id: `${scope}.rights-about.food`,
+      defaultMessage: 'food-about',
+    },
+    health: {
+      id: `${scope}.rights-about.health`,
+      defaultMessage: 'health-about',
+    },
+    housing: {
+      id: `${scope}.rights-about.housing`,
+      defaultMessage: 'housing-about',
+    },
+    work: {
+      id: `${scope}.rights-about.work`,
+      defaultMessage: 'work-about',
+    },
+    job: {
+      id: `${scope}.rights-about.job`,
+      defaultMessage: 'job-about',
+    },
+    jobcond: {
+      id: `${scope}.rights-about.jobcond`,
+      defaultMessage: 'jobcond-about',
+    },
+    union: {
+      id: `${scope}.rights-about.union`,
+      defaultMessage: 'union-about',
+    },
+  },
   indicators: {
     'net-primary': {
       id: `${scope}.indicators.net-primary`,
@@ -611,6 +695,106 @@ export default defineMessages({
     'longterm-unemployment': {
       id: `${scope}.indicators-raw.longterm-unemployment`,
       defaultMessage: 'longterm-unemployment',
+    },
+  },
+  'indicators-about': {
+    'net-primary': {
+      id: `${scope}.indicators-about.net-primary`,
+      defaultMessage: 'net-primary-about',
+    },
+    'sec-enrol': {
+      id: `${scope}.indicators-about.sec-enrol`,
+      defaultMessage: 'sec-enrol-about',
+    },
+    'pisa-science': {
+      id: `${scope}.indicators-about.pisa-science`,
+      defaultMessage: 'pisa-science-about',
+    },
+    'pisa-math': {
+      id: `${scope}.indicators-about.pisa-math`,
+      defaultMessage: 'pisa-math-about',
+    },
+    'pisa-reading': {
+      id: `${scope}.indicators-about.pisa-reading`,
+      defaultMessage: 'pisa-reading-about',
+    },
+    'not-stunted': {
+      id: `${scope}.indicators-about.not-stunted`,
+      defaultMessage: 'not-stunted-about',
+    },
+    'food-security': {
+      id: `${scope}.indicators-about.food-security`,
+      defaultMessage: 'food-security-about',
+    },
+    'survival-65': {
+      id: `${scope}.indicators-about.survival-65`,
+      defaultMessage: 'survival-65-about',
+    },
+    'under-5-survival': {
+      id: `${scope}.indicators-about.under-5-survival`,
+      defaultMessage: 'under-5-survival-about',
+    },
+    contraception: {
+      id: `${scope}.indicators-about.contraception`,
+      defaultMessage: 'contraception-about',
+    },
+    'birth-weight': {
+      id: `${scope}.indicators-about.birth-weight`,
+      defaultMessage: 'birth-weight-about',
+    },
+    'water-in-home': {
+      id: `${scope}.indicators-about.water-in-home`,
+      defaultMessage: 'water-in-home-about',
+    },
+    'basic-sanitation': {
+      id: `${scope}.indicators-about.basic-sanitation`,
+      defaultMessage: 'basic-sanitation-about',
+    },
+    'safe-sanitation': {
+      id: `${scope}.indicators-about.safe-sanitation`,
+      defaultMessage: 'safe-sanitation-about',
+    },
+    'relative-poverty': {
+      id: `${scope}.indicators-about.relative-poverty`,
+      defaultMessage: 'relative-poverty-about',
+    },
+    'absolute-poverty': {
+      id: `${scope}.indicators-about.absolute-poverty`,
+      defaultMessage: 'absolute-poverty-about',
+    },
+    'longterm-unemployment': {
+      id: `${scope}.indicators-about.longterm-unemployment`,
+      defaultMessage: 'longterm-unemployment-about',
+    },
+  },
+  sources: {
+    fao: {
+      id: `${scope}.sources.fao`,
+      defaultMessage: 'fao',
+    },
+    oecd: {
+      id: `${scope}.sources.oecd`,
+      defaultMessage: 'oecd',
+    },
+    wb_edstats: {
+      id: `${scope}.sources.wb_edstats`,
+      defaultMessage: 'wb_edstats',
+    },
+    wb_hnp: {
+      id: `${scope}.sources.wb_hnp`,
+      defaultMessage: 'wb_hnp',
+    },
+    wb_wdi: {
+      id: `${scope}.sources.wb_wdi`,
+      defaultMessage: 'wb_wdi',
+    },
+    who_unicef: {
+      id: `${scope}.sources.who_unicef`,
+      defaultMessage: 'who_unicef',
+    },
+    lis: {
+      id: `${scope}.sources.lis`,
+      defaultMessage: 'lis',
     },
   },
   regions: {

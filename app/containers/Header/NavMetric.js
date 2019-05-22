@@ -87,8 +87,6 @@ NavMetric.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onSelectMetric: metric => dispatch(selectMetric(metric)),
-    dispatch,
-    intl: intlShape.isRequired,
   };
 }
 const withConnect = connect(
