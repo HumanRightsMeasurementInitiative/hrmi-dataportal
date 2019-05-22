@@ -45,7 +45,7 @@ export default defineMessages({
       defaultMessage: 'Explore metric',
     },
     'people-at-risk': {
-      id: `${scope}.tabs['people-at-risk']`,
+      id: `${scope}.tabs.people-at-risk`,
       defaultMessage: 'People at risk',
     },
     about: {

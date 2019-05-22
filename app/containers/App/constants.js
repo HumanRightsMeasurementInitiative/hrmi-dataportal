@@ -49,6 +49,15 @@ export const COLUMNS = {
     RAW_REF_BEST_MALE: 'global_best_male',
     RAW_REF_BEST_FEMALE: 'global_best_female',
   },
+  AUX: {
+    POPULATION: 'population',
+    GDP: 'gdp_per_capita_2011ppp',
+  },
+  COUNTRIES: {
+    HIGH_INCOME: 'high_income_country',
+    OECD: 'OECD_country',
+    REGION: 'region_code',
+  },
 };
 
 export const LANGUAGES = {
