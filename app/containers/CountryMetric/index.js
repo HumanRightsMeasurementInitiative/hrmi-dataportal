@@ -7,21 +7,23 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Heading, Button, Box, Paragraph } from 'grommet';
+import { Heading, Button, Box } from 'grommet';
 
 import rootMessages from 'messages';
 
-import HTMLWrapper from 'components/HTMLWrapper';
-import Loading from 'components/Loading';
-import WordCloud from 'components/WordCloud';
+import CountryMetricPeople from 'components/CountryMetricPeople';
+import CountryAbout from 'components/CountryAbout';
+import MetricAbout from 'components/MetricAbout';
 import Close from 'containers/Close';
+import TabContainer from 'containers/TabContainer';
 
-import { RIGHTS } from 'containers/App/constants';
+import { RIGHTS, STANDARDS } from 'containers/App/constants';
+import ContentContainer from 'styled/ContentContainer';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -33,7 +35,12 @@ import {
   getPeopleAtRisk,
   getModalTabSearch,
   getContentByKey,
-  getLocale,
+  getESRScoresForCountry,
+  getCPRScoresForCountry,
+  getESRIndicatorScoresForCountry,
+  getHasCountryCPR,
+  getAuxIndicatorsForCountry,
+  getIndicatorInfo,
 } from 'containers/App/selectors';
 
 import {
@@ -42,34 +49,43 @@ import {
   selectCountry,
   selectMetric,
   loadContentIfNeeded,
+  loadDataIfNeeded,
 } from 'containers/App/actions';
 
-import messages from './messages';
-
-const RightHeading = props => (
-  <Heading level={4} margin={{ vertical: '15px' }} {...props} />
+const MainHeading = props => (
+  <Heading level="2" margin={{ vertical: '5px' }} {...props} />
 );
-const StyledRightHeading = styled(RightHeading)`
-  font-weight: normal;
+
+const StyledMainHeading = styled(MainHeading)`
+  font-weight: ${({ base }) => (base ? 400 : 600)};
 `;
+
 const hasSubrights = metric => {
   const subrights = RIGHTS.filter(r => r.aggregate === metric.key);
   return subrights.length > 0;
 };
 
+const hasAnalysis = metric =>
+  (metric.metricType === 'rights' && !hasSubrights(metric)) ||
+  (metric.metricType === 'dimensions' && metric.key === 'esr');
+
 const generateKey = (metricCode, countryCode) => {
   const metric = getMetricDetails(metricCode);
-  if (metric.metricType === 'rights') {
-    if (metric.type === 'esr') {
+  if (hasAnalysis(metric)) {
+    if (metric.metricType === 'rights') {
+      if (metric.type === 'esr') {
+        return `esr/${countryCode}`;
+      }
+      return `${metricCode}/${countryCode}`;
+    }
+    if (metric.metricType === 'dimensions' && metric.key === 'esr') {
       return `esr/${countryCode}`;
     }
-    return `${metricCode}/${countryCode}`;
-  }
-  if (metric.metricType === 'dimensions' && metric.key === 'esr') {
-    return `esr/${countryCode}`;
   }
   return null;
 };
+
+const DEPENDENCIES = ['auxIndicators', 'atRisk', 'esrIndicators'];
 
 export function CountryMetric({
   metricCode,
@@ -83,12 +99,19 @@ export function CountryMetric({
   atRisk,
   atRiskAnalysis,
   onLoadContent,
-  locale,
+  // scores,
+  hasAtRisk,
+  onCategoryClick,
+  auxIndicators,
+  country,
+  onLoadData,
+  metricInfo,
 }) {
   const metric = getMetricDetails(metricCode);
   useEffect(() => {
     const key = generateKey(metricCode, countryCode);
-    if (key) onLoadContent(key);
+    if (key && hasAtRisk) onLoadContent(key);
+    onLoadData();
   }, []);
 
   const countryTitle =
@@ -96,89 +119,94 @@ export function CountryMetric({
   const metricTitle =
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
 
-  const hasAnalysis =
-    (metric.metricType === 'rights' && !hasSubrights(metric)) ||
-    (metric.metricType === 'dimensions' && metric.key === 'esr');
-
   return (
-    <Box overflow="auto" pad="large">
+    <Box overflow="auto" direction="column">
       <Helmet>
         <title>{`${countryTitle} - ${metricTitle}`}</title>
         <meta name="description" content="Description of Country Metric page" />
       </Helmet>
-      <Close
-        onClick={() =>
-          onClose(base, base === 'country' ? countryCode : metricCode)
-        }
-      />
-      <Heading level="2" margin={{ top: '5px', bottom: '5px;' }}>
-        <Button
-          onClick={() => {
-            if (base === 'country') {
-              onClose(base, countryCode);
-            } else {
-              onSelectCountry(countryCode);
-            }
-          }}
-        >
-          {countryTitle}
-        </Button>
-      </Heading>
-      <Heading level="2" margin={{ top: '5px' }}>
-        <Button
-          onClick={() => {
-            if (base === 'metric') {
-              onClose(base, metricCode);
-            } else {
-              onSelectMetric(metricCode);
-            }
-          }}
-        >
-          {metricTitle}
-        </Button>
-      </Heading>
-      {metric.metricType === 'rights' && (
-        <div>
-          {Object.values(atRisk).map((d, index, array) => (
-            <WordCloud
-              key={d.code}
-              data={d}
-              dimension={metric.dimension}
-              showTitle={array.length > 1}
-            />
-          ))}
-        </div>
-      )}
-      {metric.metricType === 'dimensions' && (
-        <div>
-          {Object.values(atRisk).map(i => (
-            <div key={i.key}>
-              <StyledRightHeading>
-                <FormattedMessage {...rootMessages.rights[i.key]} />
-              </StyledRightHeading>
-              {Object.values(i.atRiskData).map((d, index, array) => (
-                <WordCloud
-                  key={d.code}
-                  data={d}
-                  dimension={i.dimension}
-                  showTitle={array.length > 1}
+      <ContentContainer>
+        <Close
+          topRight
+          onClick={() =>
+            onClose(base, base === 'country' ? countryCode : metricCode)
+          }
+        />
+        <Box direction="column" pad="medium">
+          <StyledMainHeading>
+            <Button
+              onClick={() => {
+                if (base === 'metric') {
+                  onSelectCountry(countryCode);
+                } else {
+                  onSelectMetric(metricCode);
+                }
+              }}
+            >
+              {base === 'metric' ? countryTitle : metricTitle}
+            </Button>
+          </StyledMainHeading>
+          <StyledMainHeading base>
+            {base === 'metric' ? metricTitle : countryTitle}
+          </StyledMainHeading>
+        </Box>
+      </ContentContainer>
+      <TabContainer
+        aside={false}
+        modal
+        tabs={[
+          {
+            key: 'trend',
+            title: intl.formatMessage(rootMessages.tabs.trend),
+            content: <div>Over time</div>,
+          },
+          {
+            key: 'atrisk',
+            title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+            content: hasAtRisk && metric.metricType !== 'indicators' && (
+              <CountryMetricPeople
+                data={atRisk}
+                metric={metric}
+                atRiskAnalysis={atRiskAnalysis}
+                locale={intl.locale}
+                hasAnalysis={hasAnalysis(metric)}
+              />
+            ),
+          },
+          {
+            key: 'about',
+            title: `${intl.formatMessage(
+              rootMessages.tabs.about,
+            )}: ${intl.formatMessage(
+              base === 'country'
+                ? rootMessages[metric.metricType][metricCode]
+                : rootMessages.countries[countryCode],
+            )}`,
+            content:
+              base === 'country' ? (
+                <MetricAbout
+                  metric={metric}
+                  metricInfo={metricInfo}
+                  standard={
+                    metric.metricType === 'indicators'
+                      ? STANDARDS.find(s => metricInfo.standard === s.code)
+                      : null
+                  }
                 />
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-      {hasAnalysis && atRiskAnalysis && (
-        <span>
-          {atRiskAnalysis.locale !== locale && (
-            <Paragraph>
-              <FormattedMessage {...messages.noAnalysisInLanguage} />
-            </Paragraph>
-          )}
-          <HTMLWrapper innerhtml={atRiskAnalysis.content} />
-        </span>
-      )}
-      {hasAnalysis && !atRiskAnalysis && <Loading />}
+              ) : (
+                <>
+                  {country && auxIndicators && (
+                    <CountryAbout
+                      country={country}
+                      auxIndicators={auxIndicators}
+                      onCategoryClick={onCategoryClick}
+                    />
+                  )}
+                </>
+              ),
+          },
+        ]}
+      />
     </Box>
   );
 }
@@ -188,19 +216,23 @@ CountryMetric.propTypes = {
   onClose: PropTypes.func,
   onSelectMetric: PropTypes.func,
   onLoadContent: PropTypes.func,
+  onLoadData: PropTypes.func,
   onSelectCountry: PropTypes.func,
+  onCategoryClick: PropTypes.func,
   metricCode: PropTypes.string,
-  locale: PropTypes.string,
   countryCode: PropTypes.string,
   base: PropTypes.string,
+  hasAtRisk: PropTypes.bool,
   // tabIndex: PropTypes.number,
   atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  // scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
-  locale: state => getLocale(state),
-  country: (state, { countryCode }) => getCountry(state, countryCode),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
@@ -212,20 +244,58 @@ const mapStateToProps = createStructuredSelector({
     }),
   atRiskAnalysis: (state, { countryCode, metricCode }) =>
     getContentByKey(state, generateKey(metricCode, countryCode)),
+  hasAtRisk: (state, { countryCode }) => getHasCountryCPR(state, countryCode),
+  scores: (state, { countryCode, metricCode }) => {
+    const metric = getMetricDetails(metricCode);
+    if (metric.metricType === 'dimensions' || metric.metricType === 'rights') {
+      if (metric.type === 'esr') {
+        return getESRScoresForCountry(state, {
+          countryCode,
+          metric,
+        });
+      }
+      return getCPRScoresForCountry(state, {
+        countryCode,
+        metric,
+      });
+    }
+    if (metric.metricType === 'indicators') {
+      return getESRIndicatorScoresForCountry(state, {
+        countryCode,
+        metric,
+      });
+    }
+    return false;
+  },
+  auxIndicators: (state, { countryCode, base }) =>
+    base === 'metric' && getAuxIndicatorsForCountry(state, countryCode),
+  country: (state, { countryCode, base }) =>
+    base === 'metric' && getCountry(state, countryCode),
+  metricInfo: (state, { metricCode }) => {
+    const metric = getMetricDetails(metricCode);
+    if (metric.metricType === 'indicators') {
+      return getIndicatorInfo(state, metric.code);
+    }
+    return false;
+  },
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onCategoryClick: (key, value, deleteParams) =>
+    onLoadData: () =>
+      DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
+    onCategoryClick: (key, value) => {
+      const deleteParams = ['income', 'region', 'assessed'];
       dispatch(
         navigate(
           { pathname: '', search: `?${key}=${value}` },
           {
             replace: false,
-            deleteParams,
+            deleteParams: deleteParams.filter(p => p !== key),
           },
         ),
-      ),
+      );
+    },
     onLoadContent: path => {
       dispatch(loadContentIfNeeded(path, 'atrisk'));
     },

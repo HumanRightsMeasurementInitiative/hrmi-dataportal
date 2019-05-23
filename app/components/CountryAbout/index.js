@@ -86,18 +86,6 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
       <Box direction="row">
         <Box width="50%">
           <Text>
-            <FormattedMessage {...messages.oecd} />
-          </Text>
-        </Box>
-        <Text>
-          <FormattedMessage
-            {...rootMessages.oecd[country[COLUMNS.COUNTRIES.OECD]]}
-          />
-        </Text>
-      </Box>
-      <Box direction="row">
-        <Box width="50%">
-          <Text>
             <FormattedMessage {...messages.region} />
           </Text>
         </Box>
@@ -124,18 +112,6 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
             <FormattedMessage {...rootMessages.income[incomeCode]} />
           </Text>
         </Button>
-      </Box>
-      <Box direction="row">
-        <Box width="50%">
-          <Text>Default assessment standard</Text>
-        </Box>
-        <Text>
-          <FormattedMessage
-            {...rootMessages.settings.standard[
-              incomeCode === 'hi' ? 'hi' : 'core'
-            ]}
-          />
-        </Text>
       </Box>
     </Box>
   );

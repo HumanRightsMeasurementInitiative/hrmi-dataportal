@@ -27,15 +27,23 @@ function IndicatorPanel({ indicator, column, standard, onMetricClick }) {
     parseFloat(indicator.score[column]);
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
-      <Button onClick={() => onMetricClick(indicator.key)}>
-        <Heading
-          level={6}
-          margin={{ vertical: '2px' }}
-          style={{ fontWeight: 'normal' }}
-        >
-          <FormattedMessage {...rootMessages.indicators[indicator.key]} />
-        </Heading>
-      </Button>
+      <Box direction="row" align="center">
+        <Button onClick={() => onMetricClick(indicator.key)}>
+          <Heading level={6} margin={{ vertical: '2px' }}>
+            <FormattedMessage {...rootMessages.indicators[indicator.key]} />
+          </Heading>
+        </Button>
+        <Button onClick={() => onMetricClick(indicator.key, 0)}>
+          <Text size="xsmall" margin={{ horizontal: 'xsmall' }}>
+            <FormattedMessage {...rootMessages.tabs.trend} />
+          </Text>
+        </Button>
+        <Button onClick={() => onMetricClick(indicator.key, 1)}>
+          <Text size="xsmall" margin={{ horizontal: 'xsmall' }}>
+            <FormattedMessage {...rootMessages.tabs.about} />
+          </Text>
+        </Button>
+      </Box>
       <BarHorizontal
         level={3}
         color="esr"

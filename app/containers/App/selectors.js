@@ -468,6 +468,60 @@ export const getIndicatorScores = createSelector(
   },
 );
 
+// single metric, single country, multipleYears
+
+export const getCPRScoresForCountry = createSelector(
+  (state, { countryCode }) => countryCode,
+  (state, { metric }) => metric,
+  getCPRScores,
+  (countryCode, metric, scores) =>
+    scores &&
+    scores.filter(
+      s => s.country_code === countryCode && s.metric_code === metric.code,
+    ),
+);
+
+export const getHasCountryCPR = createSelector(
+  (state, countryCode) => countryCode,
+  getCPRScores,
+  (countryCode, scores) =>
+    scores && !!scores.find(s => s.country_code === countryCode),
+);
+
+export const getESRScoresForCountry = createSelector(
+  (state, { countryCode }) => countryCode,
+  (state, { metric }) => metric,
+  getESRScores,
+  getStandardSearch,
+  (countryCode, metric, scores, standardSearch) => {
+    const standard = STANDARDS.find(as => as.key === standardSearch);
+    return (
+      scores &&
+      scores.filter(
+        s =>
+          s.country_code === countryCode &&
+          s.metric_code === metric.code &&
+          s.group === 'All' &&
+          s.standard === standard.code,
+      )
+    );
+  },
+);
+
+export const getESRIndicatorScoresForCountry = createSelector(
+  (state, { countryCode }) => countryCode,
+  (state, { metric }) => metric,
+  getESRIndicatorScores,
+  (countryCode, metric, scores) =>
+    scores &&
+    scores.filter(
+      s =>
+        s.country_code === countryCode &&
+        s.metric_code === metric.code &&
+        s.group === 'All',
+    ),
+);
+
 // single country
 // single country, all dimensions, single year
 export const getDimensionScoresForCountry = createSelector(
@@ -743,6 +797,8 @@ export const getRightsForCountry = createSelector(
     );
   },
 );
+
+// at risk
 const atRiskScores = (
   data,
   rightKey,
@@ -771,7 +827,7 @@ const atRiskScores = (
     {},
   );
 };
-// at risk
+
 // single country, multiple rights, single year
 export const getPeopleAtRiskForCountry = createSelector(
   (state, { country }) => country,
@@ -985,8 +1041,7 @@ export const getDimensionAverages = createSelector(
   },
 );
 
-// /////////////////////// THE NEW STYLE
-
+// All countries
 const filterScoresByYear = (year, scores) => {
   if (!scores) return false;
   return scores && scores.filter(s => quasiEquals(s.year, year));
