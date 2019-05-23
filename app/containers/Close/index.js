@@ -34,7 +34,7 @@ function Close({ onClose, closeTarget, keepTab = false, onClick, topRight }) {
         <Button
           primary
           color="dark-2"
-          icon={<CloseIcon />}
+          icon={<CloseIcon size="large" />}
           hoverIndicator={{ background: 'dark-3' }}
           onClick={() =>
             // prettier-ignore

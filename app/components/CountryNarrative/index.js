@@ -13,7 +13,7 @@ import { Heading, Box, Paragraph } from 'grommet';
 import rootMessages from 'messages';
 
 import { BENCHMARKS, STANDARDS } from 'containers/App/constants';
-import { getRightsScoresForDimension } from 'utils/scores';
+import { getRightsScoresForDimension, hasCPR } from 'utils/scores';
 
 import messages from './messages';
 import CPRAccordion from './CPRAccordion';
@@ -72,12 +72,6 @@ const renderStandardHint = (intl, standard, country) => (
     </strong>
   </Paragraph>
 );
-
-const hasCPR = dimensions =>
-  dimensions.physint &&
-  dimensions.physint.score &&
-  dimensions.empowerment &&
-  dimensions.empowerment.score;
 
 function CountryNarrative({
   dimensions,
@@ -171,6 +165,7 @@ function CountryNarrative({
             indicators={Object.values(indicators)}
             onMetricClick={onMetricClick}
             standard={standard}
+            hasAtRisk={hasCPR(dimensions)}
           />
         </Dimension>
       </RightsType>

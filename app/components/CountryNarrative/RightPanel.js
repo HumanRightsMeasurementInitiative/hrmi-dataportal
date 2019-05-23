@@ -34,12 +34,13 @@ function RightPanel({
   columnHi,
   onMetricClick,
   standard,
+  hasAtRisk = true,
 }) {
   const value =
     right.score && right.score[column] && parseFloat(right.score[column]);
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
-      <Box direction="row">
+      <Box direction="row" align="center">
         <Button onClick={() => onMetricClick(right.key)}>
           <StyledRightHeading
             level={isSubright ? 6 : 5}
@@ -48,9 +49,30 @@ function RightPanel({
             <FormattedMessage {...rootMessages['rights-short'][right.key]} />
           </StyledRightHeading>
         </Button>
-        <Button onClick={() => onMetricClick(right.key)}>
-          <Text size="small" margin={{ horizontal: 'small' }}>
-            <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
+        <Button onClick={() => onMetricClick(right.key, 0)}>
+          <Text
+            size={isSubright ? 'xsmall' : 'small'}
+            margin={{ horizontal: 'xsmall' }}
+          >
+            <FormattedMessage {...rootMessages.tabs.trend} />
+          </Text>
+        </Button>
+        {hasAtRisk && (
+          <Button onClick={() => onMetricClick(right.key, 1)}>
+            <Text
+              size={isSubright ? 'xsmall' : 'small'}
+              margin={{ horizontal: 'xsmall' }}
+            >
+              <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
+            </Text>
+          </Button>
+        )}
+        <Button onClick={() => onMetricClick(right.key, hasAtRisk ? 2 : 1)}>
+          <Text
+            size={isSubright ? 'xsmall' : 'small'}
+            margin={{ horizontal: 'xsmall' }}
+          >
+            <FormattedMessage {...rootMessages.tabs.about} />
           </Text>
         </Button>
       </Box>
@@ -95,6 +117,7 @@ RightPanel.propTypes = {
   isSubright: PropTypes.bool,
   columnLo: PropTypes.string,
   columnHi: PropTypes.string,
+  hasAtRisk: PropTypes.bool,
 };
 
 export default RightPanel;

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Box } from 'grommet';
+import { Box, Button } from 'grommet';
 import styled from 'styled-components';
 
 import BarHorizontal from 'components/BarHorizontal';
@@ -62,6 +62,7 @@ export function SingleMetric({
   intl,
   onSortSelect,
   onOrderChange,
+  onCountryClick,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -111,7 +112,13 @@ export function SingleMetric({
           sortedScores.map(s => (
             <Box key={s.country_code} direction="row">
               <Box width="150px" border="right">
-                <FormattedMessage {...rootMessages.countries[s.country_code]} />
+                <Button
+                  onClick={() => onCountryClick(s.country_code, metric.key)}
+                >
+                  <FormattedMessage
+                    {...rootMessages.countries[s.country_code]}
+                  />
+                </Button>
               </Box>
               <Box flex>
                 {(metric.type === 'esr' ||
@@ -165,6 +172,7 @@ SingleMetric.propTypes = {
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
+  onCountryClick: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -226,6 +234,18 @@ export function mapDispatchToProps(dispatch) {
       dispatch(
         navigate(
           { search: `?dir=${value}` },
+          {
+            replace: false,
+          },
+        ),
+      ),
+    onCountryClick: (country, metric, tab = 0) =>
+      dispatch(
+        navigate(
+          {
+            pathname: `/metric/${metric}/${country}`,
+            search: `?mtab=${tab}`,
+          },
           {
             replace: false,
           },

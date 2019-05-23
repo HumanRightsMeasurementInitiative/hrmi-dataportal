@@ -6,41 +6,45 @@ import { createStructuredSelector } from 'reselect';
 import { Box, Tabs, Tab, ResponsiveContext } from 'grommet';
 // import styled from 'styled-components';
 
-import { getTabSearch } from 'containers/App/selectors';
-import { setTab } from 'containers/App/actions';
+import { getTabSearch, getModalTabSearch } from 'containers/App/selectors';
+import { setTab, setModalTab } from 'containers/App/actions';
 import ColumnTitle from 'styled/ColumnTitle';
 import ColumnHeader from 'styled/ColumnHeader';
 import ColumnContent from 'styled/ColumnContent';
 
 /* height: ${props => props.theme.columnHeader.height}; */
 
-function TabContainer({ tabs, tabIndex, onTabClick }) {
+function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
   return (
     <ResponsiveContext.Consumer>
       {size => {
         // tabs in main column if small or more than 2 tabs
         const activeTabs = tabs.filter(t => t.content);
         const mainTabs =
-          size === 'small'
+          size === 'small' || !aside
             ? activeTabs
             : activeTabs.slice(0, activeTabs.length - 1);
         return (
           <Box direction="row">
             <Box direction="column" flex>
-              {(size === 'small' || activeTabs.length > 2) && (
+              {(size === 'small' || !aside || activeTabs.length > 2) && (
                 <Tabs
                   justify="start"
                   activeIndex={tabIndex}
-                  onActive={index => index !== tabIndex && onTabClick(index)}
+                  onActive={index =>
+                    index !== tabIndex && onTabClick(index, modal)
+                  }
                 >
                   {mainTabs.slice().map(tab => (
                     <Tab title={tab.title} key={tab.key}>
-                      <ColumnContent main>{tab.content}</ColumnContent>
+                      <ColumnContent main={size !== 'small' && aside}>
+                        {tab.content}
+                      </ColumnContent>
                     </Tab>
                   ))}
                 </Tabs>
               )}
-              {size !== 'small' && activeTabs.length <= 2 && (
+              {size !== 'small' && aside && activeTabs.length <= 2 && (
                 <Box direction="column">
                   <ColumnHeader main>
                     <ColumnTitle>{activeTabs[0].title}</ColumnTitle>
@@ -49,7 +53,7 @@ function TabContainer({ tabs, tabIndex, onTabClick }) {
                 </Box>
               )}
             </Box>
-            {size !== 'small' && activeTabs.length > 1 && (
+            {size !== 'small' && aside && activeTabs.length > 1 && (
               <Box
                 width={size === 'medium' ? '280px' : '360px'}
                 direction="column"
@@ -74,16 +78,20 @@ function TabContainer({ tabs, tabIndex, onTabClick }) {
 TabContainer.propTypes = {
   tabs: PropTypes.array,
   onTabClick: PropTypes.func,
+  aside: PropTypes.bool,
+  modal: PropTypes.bool,
   tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
 
 const mapStateToProps = createStructuredSelector({
-  tabIndex: state => getTabSearch(state),
+  tabIndex: (state, { modal }) =>
+    modal ? getModalTabSearch(state) : getTabSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onTabClick: index => dispatch(setTab(index)),
+    onTabClick: (index, modal) =>
+      dispatch(modal ? setModalTab(index) : setTab(index)),
   };
 }
 

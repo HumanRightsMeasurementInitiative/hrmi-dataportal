@@ -7,6 +7,7 @@ const Styled = styled(Box)`
   margin: 0 auto;
   position: relative;
   padding-top: ${props => (props.paddingTop ? '30px' : 0)};
+  min-height: auto;
 `;
 
 export default props => (

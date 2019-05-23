@@ -52,6 +52,10 @@ export default defineMessages({
       id: `${scope}.tabs.about`,
       defaultMessage: 'About',
     },
+    trend: {
+      id: `${scope}.tabs.trend`,
+      defaultMessage: 'Over time',
+    },
   },
   charts: {
     noData: {

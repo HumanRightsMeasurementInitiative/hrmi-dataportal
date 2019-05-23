@@ -24,6 +24,7 @@ function CPRAccordion({ dimension, rights, onMetricClick }) {
             columnLo={COLUMNS.CPR.LO}
             columnHi={COLUMNS.CPR.HI}
             onMetricClick={onMetricClick}
+            hasAtRisk
           />
         }
         content={
@@ -42,6 +43,7 @@ function CPRAccordion({ dimension, rights, onMetricClick }) {
                         columnLo={COLUMNS.CPR.LO}
                         columnHi={COLUMNS.CPR.HI}
                         onMetricClick={onMetricClick}
+                        hasAtRisk
                       />
                       <Box pad="medium" />
                     </Box>
@@ -76,6 +78,7 @@ function CPRAccordion({ dimension, rights, onMetricClick }) {
                                 columnHi={COLUMNS.CPR.HI}
                                 isSubright
                                 onMetricClick={onMetricClick}
+                                hasAtRisk
                               />
                               <Box pad="medium" />
                             </Box>

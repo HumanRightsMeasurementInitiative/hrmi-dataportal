@@ -21,21 +21,33 @@ function DimensionPanel({
   columnHi,
   standard,
   onMetricClick,
+  hasAtRisk = true,
 }) {
   const { score, type, key } = dimension;
   const value = score && score[column] && parseFloat(score[column]);
-
   return (
     <Box pad={{ vertical: 'xsmall', horizontal: 'small' }} fill="horizontal">
-      <Box direction="row">
+      <Box direction="row" align="center">
         <Button onClick={() => onMetricClick(key)}>
           <Heading level={5} margin={{ vertical: '2px' }}>
             <FormattedMessage {...rootMessages.dimensions[key]} />
           </Heading>
         </Button>
-        <Button onClick={() => onMetricClick(key)}>
-          <Text size="small" margin={{ horizontal: 'small' }}>
-            <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
+        <Button onClick={() => onMetricClick(key, 0)}>
+          <Text size="small" margin={{ horizontal: 'xsmall' }}>
+            <FormattedMessage {...rootMessages.tabs.trend} />
+          </Text>
+        </Button>
+        {hasAtRisk && (
+          <Button onClick={() => onMetricClick(key, 1)}>
+            <Text size="small" margin={{ horizontal: 'xsmall' }}>
+              <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
+            </Text>
+          </Button>
+        )}
+        <Button onClick={() => onMetricClick(key, hasAtRisk ? 2 : 1)}>
+          <Text size="small" margin={{ horizontal: 'xsmall' }}>
+            <FormattedMessage {...rootMessages.tabs.about} />
           </Text>
         </Button>
       </Box>
@@ -76,6 +88,7 @@ DimensionPanel.propTypes = {
   columnLo: PropTypes.string,
   columnHi: PropTypes.string,
   onMetricClick: PropTypes.func,
+  hasAtRisk: PropTypes.bool,
 };
 
 export default DimensionPanel;
