@@ -76,12 +76,10 @@ export function WordCloud({ data, showTitle, dimension, intl }) {
                   color={`${dimension}Cloud`}
                   direction="row"
                   align="center"
-                  gap="xsmall"
                 >
-                  <FormattedMessage
-                    {...rootMessages['people-at-risk'][s.people_code]}
-                  />
-                  <span>{`(${Math.round(100 * s.proportion)}%)`}</span>
+                  {`${intl.formatMessage(
+                    rootMessages['people-at-risk'][s.people_code],
+                  )} (${Math.round(100 * s.proportion)}%)`}
                 </Tag>
                 {index === 0 && (
                   <Tooltip
