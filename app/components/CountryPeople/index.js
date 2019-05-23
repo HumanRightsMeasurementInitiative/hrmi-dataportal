@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Heading, Text, Box } from 'grommet';
+import { Heading, Paragraph, Box } from 'grommet';
 
 import rootMessages from 'messages';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -50,9 +50,9 @@ function CountryPeople({ data, countryTitle, countryCode, intl }) {
         />
       </Heading>
       <div>
-        <Text>
+        <Paragraph>
           <FormattedMessage {...messages.intro} />
-        </Text>
+        </Paragraph>
       </div>
       {data &&
         data.map(dim => (

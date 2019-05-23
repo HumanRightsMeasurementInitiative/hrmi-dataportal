@@ -15,6 +15,8 @@
   "hrmi.containers.MetricAside.titleChildren.rights.cpr": "What subrights were used to calculate this human right?",
   "hrmi.components.WordCloud.noGroupData": "None selected by expert respondents",
   "hrmi.components.CountryMetricPeople.noAnalysisInLanguage": "We are sorry but this information is not yet available in your language",
+  "hrmi.components.CountryMetricPeople.introRight": "We asked human rights experts to tell us which people were most at risk of having this right violated. The images below show those groups.",
+  "hrmi.components.CountryMetricPeople.introDimension": "We asked human rights experts to tell us which people were most at risk of having each right in this category violated. The images below show those groups.",
   "hrmi.components.Close.label": "Back",
   "hrmi.components.CountryReport.title": "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} Human Rights Report",
   "hrmi.components.CountryPeople.title": "Which people are most at risk?",
