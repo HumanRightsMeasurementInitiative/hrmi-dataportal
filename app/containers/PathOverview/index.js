@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Heading } from 'grommet';
-import styled from 'styled-components';
+// import { Heading } from 'grommet';
+// import styled from 'styled-components';
 
 import { STANDARDS } from 'containers/App/constants';
 
@@ -37,12 +37,12 @@ import { filterByAssessment } from 'utils/scores';
 
 import messages from './messages';
 
-const SuperHeading = props => <Heading level={4} {...props} />;
-const SuperHeadingStyled = styled(SuperHeading)`
-  font-weight: normal;
-  margin-bottom: 5px;
-  margin-top: 0;
-`;
+// const SuperHeading = props => <Heading level={4} {...props} />;
+// const SuperHeadingStyled = styled(SuperHeading)`
+//   font-weight: normal;
+//   margin-bottom: 5px;
+//   margin-top: 0;
+// `;
 
 export function PathOverview({
   countries,
@@ -63,25 +63,17 @@ export function PathOverview({
   return (
     <ContentWrap>
       <ContentContainer paddingTop>
-        {filteredCountries && (
-          <span>
-            <SuperHeadingStyled>
-              <FormattedMessage {...messages.aboveTitle} />
-            </SuperHeadingStyled>
-            <PageTitle>
-              <FormattedMessage
-                {...messages.title}
-                values={{ number: filteredCountries.length }}
-              />
-            </PageTitle>
-          </span>
-        )}
+        <PageTitle level={1}>
+          <FormattedMessage {...messages.aboveTitle} />
+        </PageTitle>
       </ContentContainer>
       <TabContainer
         tabs={[
           {
             key: 'countries',
-            title: intl.formatMessage(rootMessages.tabs.countries),
+            title: intl.formatMessage(rootMessages.tabs.countries, {
+              count: filteredCountries ? `${filteredCountries.length} ` : '',
+            }),
             content: (
               <OverviewCountries
                 countries={filteredCountries}
