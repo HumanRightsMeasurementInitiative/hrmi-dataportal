@@ -179,7 +179,7 @@ export function CountryMetric({
           {
             key: 'trend',
             title: intl.formatMessage(rootMessages.tabs.trend),
-            content: (
+            content: scores && scores.length > 0 && (
               <MetricTrend
                 color={theme.global.colors[getColour(metric)]}
                 scores={scores}
