@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 // import styled from 'styled-components';
-import { Heading, Text, Box } from 'grommet';
+import { Heading, Text, Box, Button } from 'grommet';
 import BarHorizontal from 'components/BarHorizontal';
 
 import rootMessages from 'messages';
@@ -20,20 +20,22 @@ const IndicatorScoreText = props => (
 
 const maxValue = 100;
 
-function IndicatorPanel({ indicator, column, standard }) {
+function IndicatorPanel({ indicator, column, standard, onMetricClick }) {
   const value =
     indicator.score &&
     indicator.score[column] &&
     parseFloat(indicator.score[column]);
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
-      <Heading
-        level={6}
-        margin={{ vertical: '2px' }}
-        style={{ fontWeight: 'normal' }}
-      >
-        <FormattedMessage {...rootMessages.indicators[indicator.key]} />
-      </Heading>
+      <Button onClick={() => onMetricClick(indicator.key)}>
+        <Heading
+          level={6}
+          margin={{ vertical: '2px' }}
+          style={{ fontWeight: 'normal' }}
+        >
+          <FormattedMessage {...rootMessages.indicators[indicator.key]} />
+        </Heading>
+      </Button>
       <BarHorizontal
         level={3}
         color="esr"
@@ -54,6 +56,7 @@ IndicatorPanel.propTypes = {
   indicator: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   column: PropTypes.string,
   standard: PropTypes.string,
+  onMetricClick: PropTypes.func,
 };
 
 export default IndicatorPanel;

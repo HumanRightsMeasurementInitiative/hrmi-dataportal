@@ -743,7 +743,34 @@ export const getRightsForCountry = createSelector(
     );
   },
 );
-
+const atRiskScores = (
+  data,
+  rightKey,
+  countryCode,
+  year,
+  includeSubright = false,
+) => {
+  const indicators = AT_RISK_INDICATORS.filter(
+    i => i.right === rightKey || (includeSubright && i.subright === rightKey),
+  );
+  return indicators.reduce(
+    (m, i) => ({
+      ...m,
+      [i.code]: {
+        ...i,
+        scores: data.filter(
+          d =>
+            quasiEquals(d.year, year) &&
+            d.country_code === countryCode &&
+            d.metric_code === i.code &&
+            !quasiEquals(d.people_code, 0) &&
+            parseInt(d.count, 10) > 0,
+        ),
+      },
+    }),
+    {},
+  );
+};
 // at risk
 // single country, multiple rights, single year
 export const getPeopleAtRiskForCountry = createSelector(
@@ -753,40 +780,20 @@ export const getPeopleAtRiskForCountry = createSelector(
   (country, data, year) =>
     data &&
     DIMENSIONS.map(dim => ({
-      rights: RIGHTS.reduce((memo, r) => {
-        // console.log(r.key)
-        if (typeof r.aggregate !== 'undefined') return memo;
-        if (r.dimension !== dim.key) return memo;
-        // at risk indicators for given right
-        // prettier-ignore
-        const indicators = AT_RISK_INDICATORS.filter(
-          i => i.right === r.key,
-        );
-        const indicatorScores = indicators.reduce(
-          (m, i) => ({
-            ...m,
-            [i.code]: {
-              ...i,
-              scores: data.filter(
-                d =>
-                  quasiEquals(d.year, year) &&
-                  d.country_code === country &&
-                  d.metric_code === i.code &&
-                  !quasiEquals(d.people_code, 0) &&
-                  parseInt(d.count, 10) > 0,
-              ),
+      // prettier-ignore
+      rights: RIGHTS.reduce(
+        (memo, r) =>
+          typeof r.aggregate !== 'undefined' || r.dimension !== dim.key
+            ? memo
+            : {
+              ...memo,
+              [r.key]: {
+                ...r,
+                atRiskData: atRiskScores(data, r.key, country, year),
+              },
             },
-          }),
-          {},
-        );
-        return {
-          ...memo,
-          [r.key]: {
-            ...r,
-            atRiskData: indicatorScores,
-          },
-        };
-      }, {}),
+        {},
+      ),
       ...dim,
     })),
 );
@@ -796,28 +803,29 @@ export const getPeopleAtRisk = createSelector(
   (state, { metric }) => getMetricDetails(metric),
   getAtRiskData,
   getCPRYear,
-  (country, right, data, year) => {
-    if (!data || right.metricType !== 'rights') return false;
-    const indicators = AT_RISK_INDICATORS.filter(
-      i => i.right === right.key || i.subright === right.key,
-    );
-    return indicators.reduce(
-      (m, i) => ({
-        ...m,
-        [i.code]: {
-          ...i,
-          scores: data.filter(
-            d =>
-              quasiEquals(d.year, year) &&
-              d.country_code === country &&
-              d.metric_code === i.code &&
-              !quasiEquals(d.people_code, 0) &&
-              parseInt(d.count, 10) > 0,
-          ),
-        },
-      }),
-      {},
-    );
+  (country, metric, data, year) => {
+    if (!data) return false;
+    if (metric.metricType === 'rights') {
+      return atRiskScores(data, metric.key, country, year, true);
+    }
+    if (metric.metricType === 'dimensions') {
+      // prettier-ignore
+      return RIGHTS.reduce(
+        (memo, r) =>
+          typeof r.aggregate !== 'undefined' || r.dimension !== metric.key
+            ? memo
+            : {
+              ...memo,
+              [r.key]: {
+                ...r,
+                atRiskData: atRiskScores(data, r.key, country, year),
+              },
+            },
+        {},
+      );
+      // return atRiskScores(data, right.key, country, year, true);
+    }
+    return false;
   },
 );
 

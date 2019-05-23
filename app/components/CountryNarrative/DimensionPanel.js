@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 // import styled from 'styled-components';
-import { Text, Box, Heading } from 'grommet';
+import { Text, Box, Heading, Button } from 'grommet';
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
 
@@ -16,23 +16,32 @@ const DimensionScoreText = props => (
 
 function DimensionPanel({
   dimension,
-  dimensionKey,
   column,
   columnLo,
   columnHi,
   standard,
+  onMetricClick,
 }) {
-  const { score, type } = dimension;
+  const { score, type, key } = dimension;
   const value = score && score[column] && parseFloat(score[column]);
 
   return (
     <Box pad={{ vertical: 'xsmall', horizontal: 'small' }} fill="horizontal">
-      <Heading level={5} margin={{ vertical: '2px' }}>
-        <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
-      </Heading>
+      <Box direction="row">
+        <Button onClick={() => onMetricClick(key)}>
+          <Heading level={5} margin={{ vertical: '2px' }}>
+            <FormattedMessage {...rootMessages.dimensions[key]} />
+          </Heading>
+        </Button>
+        <Button onClick={() => onMetricClick(key)}>
+          <Text size="small" margin={{ horizontal: 'small' }}>
+            <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
+          </Text>
+        </Button>
+      </Box>
       {type === 'esr' && (
         <BarHorizontal
-          color={dimensionKey}
+          color={key}
           value={value}
           minValue={0}
           maxValue={100}
@@ -43,7 +52,7 @@ function DimensionPanel({
       )}
       {type === 'cpr' && (
         <BarBulletHorizontal
-          color={dimensionKey}
+          color={key}
           value={value}
           band={{
             lo: score && parseFloat(score[columnLo]),
@@ -54,7 +63,7 @@ function DimensionPanel({
           noData={!value}
         />
       )}
-      <DimensionScoreText color={`${dimensionKey}Dark`}>
+      <DimensionScoreText color={`${key}Dark`}>
         {value && formatScore(value)}
       </DimensionScoreText>
     </Box>
@@ -63,10 +72,10 @@ function DimensionPanel({
 DimensionPanel.propTypes = {
   dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
-  dimensionKey: PropTypes.string,
   column: PropTypes.string,
   columnLo: PropTypes.string,
   columnHi: PropTypes.string,
+  onMetricClick: PropTypes.func,
 };
 
 export default DimensionPanel;

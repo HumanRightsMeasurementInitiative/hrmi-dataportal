@@ -11,7 +11,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Heading, Button, Box, Paragraph } from 'grommet';
 
 import rootMessages from 'messages';
@@ -20,6 +20,8 @@ import HTMLWrapper from 'components/HTMLWrapper';
 import Loading from 'components/Loading';
 import WordCloud from 'components/WordCloud';
 import Close from 'containers/Close';
+
+import { RIGHTS } from 'containers/App/constants';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -42,11 +44,18 @@ import {
   loadContentIfNeeded,
 } from 'containers/App/actions';
 
-// import { INCOME_GROUPS } from 'containers/App/constants';
-// import quasiEquals from 'utils/quasi-equals';
-// import { hasCPR } from 'utils/scores';
-
 import messages from './messages';
+
+const RightHeading = props => (
+  <Heading level={4} margin={{ vertical: '15px' }} {...props} />
+);
+const StyledRightHeading = styled(RightHeading)`
+  font-weight: normal;
+`;
+const hasSubrights = metric => {
+  const subrights = RIGHTS.filter(r => r.aggregate === metric.key);
+  return subrights.length > 0;
+};
 
 const generateKey = (metricCode, countryCode) => {
   const metric = getMetricDetails(metricCode);
@@ -55,6 +64,9 @@ const generateKey = (metricCode, countryCode) => {
       return `esr/${countryCode}`;
     }
     return `${metricCode}/${countryCode}`;
+  }
+  if (metric.metricType === 'dimensions' && metric.key === 'esr') {
+    return `esr/${countryCode}`;
   }
   return null;
 };
@@ -83,6 +95,10 @@ export function CountryMetric({
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
   const metricTitle =
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
+
+  const hasAnalysis =
+    (metric.metricType === 'rights' && !hasSubrights(metric)) ||
+    (metric.metricType === 'dimensions' && metric.key === 'esr');
 
   return (
     <Box overflow="auto" pad="large">
@@ -121,17 +137,38 @@ export function CountryMetric({
           {metricTitle}
         </Button>
       </Heading>
-      <div>
-        {Object.values(atRisk).map((d, index, array) => (
-          <WordCloud
-            key={d.code}
-            data={d}
-            dimension={metric.dimension}
-            showTitle={array.length > 1}
-          />
-        ))}
-      </div>
-      {atRiskAnalysis && (
+      {metric.metricType === 'rights' && (
+        <div>
+          {Object.values(atRisk).map((d, index, array) => (
+            <WordCloud
+              key={d.code}
+              data={d}
+              dimension={metric.dimension}
+              showTitle={array.length > 1}
+            />
+          ))}
+        </div>
+      )}
+      {metric.metricType === 'dimensions' && (
+        <div>
+          {Object.values(atRisk).map(i => (
+            <div key={i.key}>
+              <StyledRightHeading>
+                <FormattedMessage {...rootMessages.rights[i.key]} />
+              </StyledRightHeading>
+              {Object.values(i.atRiskData).map((d, index, array) => (
+                <WordCloud
+                  key={d.code}
+                  data={d}
+                  dimension={i.dimension}
+                  showTitle={array.length > 1}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+      {hasAnalysis && atRiskAnalysis && (
         <span>
           {atRiskAnalysis.locale !== locale && (
             <Paragraph>
@@ -141,7 +178,7 @@ export function CountryMetric({
           <HTMLWrapper innerhtml={atRiskAnalysis.content} />
         </span>
       )}
-      {!atRiskAnalysis && <Loading />}
+      {hasAnalysis && !atRiskAnalysis && <Loading />}
     </Box>
   );
 }

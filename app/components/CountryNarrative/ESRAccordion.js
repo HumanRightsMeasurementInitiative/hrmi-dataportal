@@ -11,7 +11,6 @@ import IndicatorPanel from './IndicatorPanel';
 
 function ESRAccordion({
   dimension,
-  dimensionKey,
   rights,
   indicators,
   benchmark,
@@ -25,7 +24,6 @@ function ESRAccordion({
         head={
           <DimensionPanel
             dimension={dimension}
-            dimensionKey={dimensionKey}
             column={benchmark.column}
             onMetricClick={onMetricClick}
             standard={standard}
@@ -83,7 +81,6 @@ function ESRAccordion({
 ESRAccordion.propTypes = {
   onMetricClick: PropTypes.func,
   standard: PropTypes.string,
-  dimensionKey: PropTypes.string,
   dimension: PropTypes.object,
   rights: PropTypes.array,
   indicators: PropTypes.array,
