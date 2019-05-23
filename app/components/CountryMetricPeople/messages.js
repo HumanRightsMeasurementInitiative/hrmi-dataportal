@@ -14,4 +14,12 @@ export default defineMessages({
     defaultMessage:
       'We are sorry but this information is not yet available in your language',
   },
+  introRight: {
+    id: `${scope}.introRight`,
+    defaultMessage: 'An overview of people at risk by human right',
+  },
+  introDimension: {
+    id: `${scope}.introDimension`,
+    defaultMessage: 'An overview of people at risk by human right',
+  },
 });

@@ -41,6 +41,9 @@ function CountryMetricPeople({
     <Styled pad="medium">
       {metric.metricType === 'rights' && (
         <Box>
+          <Paragraph>
+            <FormattedMessage {...messages.introRight} />
+          </Paragraph>
           {Object.values(data).map((d, index, array) => (
             <WordCloud
               key={d.code}
@@ -53,6 +56,9 @@ function CountryMetricPeople({
       )}
       {metric.metricType === 'dimensions' && (
         <Box>
+          <Paragraph>
+            <FormattedMessage {...messages.introDimension} />
+          </Paragraph>
           {Object.values(data).map(i => (
             <div key={i.key}>
               <StyledRightHeading>
