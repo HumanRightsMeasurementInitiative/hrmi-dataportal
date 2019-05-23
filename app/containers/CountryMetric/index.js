@@ -18,11 +18,17 @@ import rootMessages from 'messages';
 
 import CountryMetricPeople from 'components/CountryMetricPeople';
 import CountryAbout from 'components/CountryAbout';
+import MetricTrend from 'components/MetricTrend';
 import MetricAbout from 'components/MetricAbout';
 import Close from 'containers/Close';
 import TabContainer from 'containers/TabContainer';
 
-import { RIGHTS, STANDARDS } from 'containers/App/constants';
+import {
+  RIGHTS,
+  STANDARDS,
+  BENCHMARKS,
+  COLUMNS,
+} from 'containers/App/constants';
 import ContentContainer from 'styled/ContentContainer';
 
 import getMetricDetails from 'utils/metric-details';
@@ -41,6 +47,8 @@ import {
   getHasCountryCPR,
   getAuxIndicatorsForCountry,
   getIndicatorInfo,
+  getMaxYearESR,
+  getMaxYearCPR,
 } from 'containers/App/selectors';
 
 import {
@@ -99,26 +107,29 @@ export function CountryMetric({
   atRisk,
   atRiskAnalysis,
   onLoadContent,
-  // scores,
+  scores,
   hasAtRisk,
   onCategoryClick,
   auxIndicators,
   country,
   onLoadData,
   metricInfo,
+  benchmark,
+  maxYearESR,
+  maxYearCPR,
 }) {
-  const metric = getMetricDetails(metricCode);
   useEffect(() => {
     const key = generateKey(metricCode, countryCode);
     if (key && hasAtRisk) onLoadContent(key);
     onLoadData();
   }, []);
 
+  const metric = getMetricDetails(metricCode);
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const countryTitle =
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
   const metricTitle =
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
-
   return (
     <Box overflow="auto" direction="column">
       <Helmet>
@@ -158,7 +169,29 @@ export function CountryMetric({
           {
             key: 'trend',
             title: intl.formatMessage(rootMessages.tabs.trend),
-            content: <div>Over time</div>,
+            content: (
+              <MetricTrend
+                scores={scores}
+                percentage={
+                  metric.metricType === 'indicators' || metric.type === 'esr'
+                }
+                maxValue={
+                  metric.metricType === 'indicators' || metric.type === 'esr'
+                    ? 100
+                    : 11
+                }
+                maxYear={
+                  metric.metricType === 'indicators' || metric.type === 'esr'
+                    ? maxYearESR
+                    : maxYearCPR
+                }
+                column={
+                  metric.metricType === 'indicators' || metric.type === 'esr'
+                    ? currentBenchmark.column
+                    : COLUMNS.CPR.MEAN
+                }
+              />
+            ),
           },
           {
             key: 'atrisk',
@@ -222,17 +255,22 @@ CountryMetric.propTypes = {
   metricCode: PropTypes.string,
   countryCode: PropTypes.string,
   base: PropTypes.string,
+  benchmark: PropTypes.string,
+  maxYearESR: PropTypes.string,
+  maxYearCPR: PropTypes.string,
   hasAtRisk: PropTypes.bool,
   // tabIndex: PropTypes.number,
   atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
+  maxYearESR: state => getMaxYearESR(state),
+  maxYearCPR: state => getMaxYearCPR(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
