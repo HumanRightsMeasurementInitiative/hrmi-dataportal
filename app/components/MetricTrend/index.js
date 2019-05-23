@@ -13,6 +13,7 @@ import {
   FlexibleWidthXYPlot,
   XAxis,
   YAxis,
+  LineSeries,
   LineMarkSeries,
   AreaSeries,
   HorizontalGridLines,
@@ -24,7 +25,15 @@ import { INDICATOR_LOOKBACK } from 'containers/App/constants';
 
 import WrapPlot from 'styled/WrapPlot';
 
-function MetricTrend({ scores, column, maxYear, maxValue, percentage }) {
+function MetricTrend({
+  scores,
+  column,
+  maxYear,
+  maxValue,
+  percentage,
+  rangeColumns,
+  color,
+}) {
   const scoresSorted = scores.sort((a, b) =>
     parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
   );
@@ -42,6 +51,8 @@ function MetricTrend({ scores, column, maxYear, maxValue, percentage }) {
   ];
 
   const xyData = [];
+  const rangeUpper = [];
+  const rangeLower = [];
   /* eslint-disable no-plusplus */
   for (let y = minYear; y <= parseInt(maxYear, 10); y++) {
     const score = scoresSorted.reduce((memo, s) => {
@@ -50,16 +61,26 @@ function MetricTrend({ scores, column, maxYear, maxValue, percentage }) {
       if (scoreYear < y && scoreYear >= y - INDICATOR_LOOKBACK) return s;
       return memo;
     }, null);
-    // console.log(score)
     if (score) {
       xyData.push({
         syear: y,
         x: new Date(`${y}`).getTime(),
-        y: parseInt(score[column], 10),
+        y: parseFloat(score[column]),
+      });
+      if (rangeColumns) {
+        rangeUpper.push({
+          syear: y,
+          x: new Date(`${y}`).getTime(),
+          y: parseFloat(score[rangeColumns.upper]),
+        });
+      }
+      rangeLower.push({
+        syear: y,
+        x: new Date(`${y}`).getTime(),
+        y: parseFloat(score[rangeColumns.lower]),
       });
     }
   }
-  // console.log(scores, xyData)
   /* eslint-ensable no-plusplus */
   return (
     <Box direction="column" pad="medium">
@@ -69,8 +90,21 @@ function MetricTrend({ scores, column, maxYear, maxValue, percentage }) {
           xType="time"
           margin={{ bottom: 30, right: 13 }}
         >
-          <HorizontalGridLines />
           <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
+          <AreaSeries
+            data={rangeUpper}
+            style={{ fill: color, stroke: 'transparent', opacity: 0.2 }}
+          />
+          <AreaSeries
+            data={rangeLower}
+            style={{
+              fill: 'white',
+              stroke: 'white',
+              opacity: 1,
+              strokeWidth: 1,
+            }}
+          />
+          <HorizontalGridLines />
           <XAxis
             tickFormat={timeFormat('%Y')}
             tickTotal={xyData.length}
@@ -87,9 +121,21 @@ function MetricTrend({ scores, column, maxYear, maxValue, percentage }) {
             tickSize={3}
             tickPadding={2}
           />
+          <LineSeries
+            data={rangeUpper}
+            style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+          />
+          <LineSeries
+            data={rangeLower}
+            style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+          />
           <LineMarkSeries
             style={{
+              stroke: color,
               strokeWidth: 2,
+            }}
+            markStyle={{
+              fill: color,
             }}
             data={xyData}
           />
@@ -101,8 +147,10 @@ function MetricTrend({ scores, column, maxYear, maxValue, percentage }) {
 
 MetricTrend.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  rangeColumns: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   column: PropTypes.string,
   maxYear: PropTypes.string,
+  color: PropTypes.string,
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
 };

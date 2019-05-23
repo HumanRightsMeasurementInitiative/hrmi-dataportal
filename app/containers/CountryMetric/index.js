@@ -11,7 +11,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { Heading, Button, Box } from 'grommet';
 
 import rootMessages from 'messages';
@@ -92,13 +92,20 @@ const generateKey = (metricCode, countryCode) => {
   }
   return null;
 };
-
+const getColour = metric => {
+  if (metric.metricType === 'dimensions') {
+    return metric.key;
+  }
+  if (metric.metricType === 'rights') {
+    return metric.dimension;
+  }
+  return 'esr';
+};
 const DEPENDENCIES = ['auxIndicators', 'atRisk', 'esrIndicators'];
 
 export function CountryMetric({
   metricCode,
   countryCode,
-  // tabIndex = 0,
   onClose,
   onSelectCountry,
   onSelectMetric,
@@ -117,6 +124,7 @@ export function CountryMetric({
   benchmark,
   maxYearESR,
   maxYearCPR,
+  theme,
 }) {
   useEffect(() => {
     const key = generateKey(metricCode, countryCode);
@@ -130,6 +138,8 @@ export function CountryMetric({
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
   const metricTitle =
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
+  const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
+
   return (
     <Box overflow="auto" direction="column">
       <Helmet>
@@ -171,24 +181,17 @@ export function CountryMetric({
             title: intl.formatMessage(rootMessages.tabs.trend),
             content: (
               <MetricTrend
+                color={theme.global.colors[getColour(metric)]}
                 scores={scores}
-                percentage={
-                  metric.metricType === 'indicators' || metric.type === 'esr'
-                }
-                maxValue={
-                  metric.metricType === 'indicators' || metric.type === 'esr'
-                    ? 100
-                    : 11
-                }
-                maxYear={
-                  metric.metricType === 'indicators' || metric.type === 'esr'
-                    ? maxYearESR
-                    : maxYearCPR
-                }
-                column={
-                  metric.metricType === 'indicators' || metric.type === 'esr'
-                    ? currentBenchmark.column
-                    : COLUMNS.CPR.MEAN
+                percentage={isESR}
+                maxValue={isESR ? 100 : 11}
+                maxYear={isESR ? maxYearESR : maxYearCPR}
+                column={isESR ? currentBenchmark.column : COLUMNS.CPR.MEAN}
+                rangeColumns={
+                  !isESR && {
+                    upper: COLUMNS.CPR.HI,
+                    lower: COLUMNS.CPR.LO,
+                  }
                 }
               />
             ),
@@ -266,6 +269,7 @@ CountryMetric.propTypes = {
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  theme: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -359,4 +363,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(CountryMetric));
+export default compose(withConnect)(injectIntl(withTheme(CountryMetric)));
