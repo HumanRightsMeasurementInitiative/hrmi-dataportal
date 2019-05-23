@@ -148,7 +148,7 @@ function MetricTrend({
 
 MetricTrend.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  rangeColumns: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  rangeColumns: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   column: PropTypes.string,
   maxYear: PropTypes.string,
   color: PropTypes.string,
