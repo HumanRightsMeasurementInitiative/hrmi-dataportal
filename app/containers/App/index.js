@@ -15,6 +15,8 @@ import { compose } from 'redux';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
+import GlobalStyle from 'global-styles';
+
 import { useInjectSaga } from 'utils/injectSaga';
 
 import Header from 'containers/Header';
@@ -105,6 +107,7 @@ export function App({ match, onLoadData }) {
         </Main>
         <Settings />
       </ScrollToTop>
+      <GlobalStyle />
     </AppWrapper>
   );
 }
