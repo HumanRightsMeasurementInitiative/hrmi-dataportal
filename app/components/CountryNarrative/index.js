@@ -125,7 +125,6 @@ function CountryNarrative({
             />
             <CPRAccordion
               dimension={dimensions.empowerment}
-              dimensionKey="empowerment"
               rights={getRightsScoresForDimension(rights, 'empowerment', true)}
               onMetricClick={onMetricClick}
             />
@@ -143,7 +142,6 @@ function CountryNarrative({
             />
             <CPRAccordion
               dimension={dimensions.physint}
-              dimensionKey="physint"
               rights={getRightsScoresForDimension(rights, 'physint', true)}
               onMetricClick={onMetricClick}
             />
@@ -168,7 +166,6 @@ function CountryNarrative({
           />
           <ESRAccordion
             dimension={dimensions.esr}
-            dimensionKey="esr"
             rights={getRightsScoresForDimension(rights, 'esr')}
             benchmark={BENCHMARKS.find(s => s.key === benchmark)}
             indicators={Object.values(indicators)}

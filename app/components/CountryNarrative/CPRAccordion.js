@@ -10,7 +10,7 @@ import Accordion from './Accordion';
 import DimensionPanel from './DimensionPanel';
 import RightPanel from './RightPanel';
 
-function CPRAccordion({ dimension, dimensionKey, rights, onMetricClick }) {
+function CPRAccordion({ dimension, rights, onMetricClick }) {
   const parentRights = rights.filter(r => typeof r.aggregate === 'undefined');
   const subrights = rights.filter(r => typeof r.aggregate !== 'undefined');
   return (
@@ -20,7 +20,6 @@ function CPRAccordion({ dimension, dimensionKey, rights, onMetricClick }) {
         head={
           <DimensionPanel
             dimension={dimension}
-            dimensionKey={dimensionKey}
             column={COLUMNS.CPR.MEAN}
             columnLo={COLUMNS.CPR.LO}
             columnHi={COLUMNS.CPR.HI}
@@ -96,7 +95,6 @@ function CPRAccordion({ dimension, dimensionKey, rights, onMetricClick }) {
 
 CPRAccordion.propTypes = {
   onMetricClick: PropTypes.func,
-  dimensionKey: PropTypes.string,
   dimension: PropTypes.object,
   rights: PropTypes.array,
 };
