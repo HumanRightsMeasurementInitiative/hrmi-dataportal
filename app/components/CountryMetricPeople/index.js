@@ -38,7 +38,7 @@ function CountryMetricPeople({
   hasAnalysis,
 }) {
   return (
-    <Styled pad="medium">
+    <Styled pad="medium" direction="column">
       {metric.metricType === 'rights' && (
         <Box>
           <Paragraph>

@@ -6,21 +6,22 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Text } from 'grommet';
+import { Heading, Text, Box } from 'grommet';
 import { scaleLinear } from 'd3-scale';
-
+import Tooltip from 'components/Tooltip';
 import rootMessages from 'messages';
 import messages from './messages';
 
-const Styled = styled.div`
-  text-align: center;
+const Styled = styled(Box)`
   width: 100%;
 `;
-const Tag = styled.div`
-  max-width: 700px;
-  margin: 0 auto;
+const Words = styled(Box)`
+  width: 100%;
+  text-align: center;
+`;
+const Tag = styled(Box)`
   opacity: ${props => props.opacity || 1};
   font-size: ${props => props.size}px;
   line-height: ${props => props.size}px;
@@ -46,9 +47,9 @@ const scaleOpacity = scaleLinear()
   .domain([0, 1])
   .range([0.66, 1]);
 
-export function WordCloud({ data, showTitle, dimension }) {
+export function WordCloud({ data, showTitle, dimension, intl }) {
   return (
-    <Styled key={data.code}>
+    <Styled direction="column">
       {showTitle && (
         <Heading level={5}>
           <FormattedMessage
@@ -61,23 +62,36 @@ export function WordCloud({ data, showTitle, dimension }) {
           <FormattedMessage {...messages.noGroupData} />
         </Text>
       )}
-      {data.scores.length > 0 &&
-        data.scores
-          .sort((a, b) => (a.proportion > b.proportion ? -1 : 1))
-          .map(s => (
-            <Tag
-              key={s.people_code}
-              weight={scaleFontWeight(s.proportion)}
-              opacity={scaleOpacity(s.proportion)}
-              size={scaleFont(s.proportion) * MAX_SIZE}
-              color={`${dimension}Cloud`}
-            >
-              <FormattedMessage
-                {...rootMessages['people-at-risk'][s.people_code]}
-              />
-              <span>{` (${Math.round(100 * s.proportion)}%)`}</span>
-            </Tag>
-          ))}
+      <Words direction="column" align="center">
+        {data.scores.length > 0 &&
+          data.scores
+            .sort((a, b) => (a.proportion > b.proportion ? -1 : 1))
+            .map((s, index) => (
+              <Box direction="horizontal" align="center">
+                <Tag
+                  key={s.people_code}
+                  weight={scaleFontWeight(s.proportion)}
+                  opacity={scaleOpacity(s.proportion)}
+                  size={scaleFont(s.proportion) * MAX_SIZE}
+                  color={`${dimension}Cloud`}
+                  direction="row"
+                  align="center"
+                  gap="xsmall"
+                >
+                  <FormattedMessage
+                    {...rootMessages['people-at-risk'][s.people_code]}
+                  />
+                  <span>{`(${Math.round(100 * s.proportion)}%)`}</span>
+                </Tag>
+                {index === 0 && (
+                  <Tooltip
+                    iconSize="large"
+                    text={intl.formatMessage(messages.tooltip)}
+                  />
+                )}
+              </Box>
+            ))}
+      </Words>
     </Styled>
   );
 }
@@ -86,6 +100,7 @@ WordCloud.propTypes = {
   data: PropTypes.object,
   dimension: PropTypes.string,
   showTitle: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
-export default WordCloud;
+export default injectIntl(WordCloud);
