@@ -34,6 +34,7 @@ function MetricTrend({
   rangeColumns,
   color,
 }) {
+  if (!scores || scores.length === 0) return null;
   const scoresSorted = scores.sort((a, b) =>
     parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
   );

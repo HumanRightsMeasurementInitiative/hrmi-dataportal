@@ -25,6 +25,9 @@ function DimensionPanel({
 }) {
   const { score, type, key } = dimension;
   const value = score && score[column] && parseFloat(score[column]);
+  const trendTab = 0;
+  const atRiskTab = value ? 1 : 0;
+  const aboutTab = trendTab + atRiskTab + 1;
   return (
     <Box pad={{ vertical: 'xsmall', horizontal: 'small' }} fill="horizontal">
       <Box direction="row" align="center">
@@ -33,19 +36,21 @@ function DimensionPanel({
             <FormattedMessage {...rootMessages.dimensions[key]} />
           </Heading>
         </Button>
-        <Button onClick={() => onMetricClick(key, 0)}>
-          <Text size="small" margin={{ horizontal: 'xsmall' }}>
-            <FormattedMessage {...rootMessages.tabs.trend} />
-          </Text>
-        </Button>
+        {value && (
+          <Button onClick={() => onMetricClick(key, trendTab)}>
+            <Text size="small" margin={{ horizontal: 'xsmall' }}>
+              <FormattedMessage {...rootMessages.tabs.trend} />
+            </Text>
+          </Button>
+        )}
         {hasAtRisk && (
-          <Button onClick={() => onMetricClick(key, 1)}>
+          <Button onClick={() => onMetricClick(key, atRiskTab)}>
             <Text size="small" margin={{ horizontal: 'xsmall' }}>
               <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
             </Text>
           </Button>
         )}
-        <Button onClick={() => onMetricClick(key, hasAtRisk ? 2 : 1)}>
+        <Button onClick={() => onMetricClick(key, aboutTab)}>
           <Text size="small" margin={{ horizontal: 'xsmall' }}>
             <FormattedMessage {...rootMessages.tabs.about} />
           </Text>

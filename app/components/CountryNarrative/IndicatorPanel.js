@@ -33,12 +33,14 @@ function IndicatorPanel({ indicator, column, standard, onMetricClick }) {
             <FormattedMessage {...rootMessages.indicators[indicator.key]} />
           </Heading>
         </Button>
-        <Button onClick={() => onMetricClick(indicator.key, 0)}>
-          <Text size="xsmall" margin={{ horizontal: 'xsmall' }}>
-            <FormattedMessage {...rootMessages.tabs.trend} />
-          </Text>
-        </Button>
-        <Button onClick={() => onMetricClick(indicator.key, 1)}>
+        {value && (
+          <Button onClick={() => onMetricClick(indicator.key, 0)}>
+            <Text size="xsmall" margin={{ horizontal: 'xsmall' }}>
+              <FormattedMessage {...rootMessages.tabs.trend} />
+            </Text>
+          </Button>
+        )}
+        <Button onClick={() => onMetricClick(indicator.key, value ? 1 : 0)}>
           <Text size="xsmall" margin={{ horizontal: 'xsmall' }}>
             <FormattedMessage {...rootMessages.tabs.about} />
           </Text>
