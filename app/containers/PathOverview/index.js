@@ -31,6 +31,8 @@ import rootMessages from 'messages';
 // styles
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
+
 import PageTitle from 'styled/PageTitle';
 
 import { filterByAssessment } from 'utils/scores';
@@ -62,37 +64,41 @@ export function PathOverview({
     : countries;
   return (
     <ContentWrap>
-      <ContentContainer paddingTop>
-        <PageTitle level={1}>
-          <FormattedMessage {...messages.aboveTitle} />
-        </PageTitle>
+      <ContentContainer header>
+        <ContentMaxWidth>
+          <PageTitle level={1}>
+            <FormattedMessage {...messages.aboveTitle} />
+          </PageTitle>
+        </ContentMaxWidth>
       </ContentContainer>
-      <TabContainer
-        tabs={[
-          {
-            key: 'countries',
-            title: intl.formatMessage(rootMessages.tabs.countries, {
-              count: filteredCountries ? `${filteredCountries.length} ` : '',
-            }),
-            content: (
-              <OverviewCountries
-                countries={filteredCountries}
-                scoresAllCountries={scoresAllCountries}
-              />
-            ),
-          },
-          {
-            key: 'metrics',
-            title: intl.formatMessage(rootMessages.tabs.metrics),
-            content: (
-              <OverviewMetrics
-                countries={filteredCountries}
-                scoresAllCountries={scoresAllCountries}
-              />
-            ),
-          },
-        ]}
-      />
+      <ContentMaxWidth>
+        <TabContainer
+          tabs={[
+            {
+              key: 'countries',
+              title: intl.formatMessage(rootMessages.tabs.countries, {
+                count: filteredCountries ? `${filteredCountries.length} ` : '',
+              }),
+              content: (
+                <OverviewCountries
+                  countries={filteredCountries}
+                  scoresAllCountries={scoresAllCountries}
+                />
+              ),
+            },
+            {
+              key: 'metrics',
+              title: intl.formatMessage(rootMessages.tabs.metrics),
+              content: (
+                <OverviewMetrics
+                  countries={filteredCountries}
+                  scoresAllCountries={scoresAllCountries}
+                />
+              ),
+            },
+          ]}
+        />
+      </ContentMaxWidth>
     </ContentWrap>
   );
 }

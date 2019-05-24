@@ -15,19 +15,20 @@ export default styled.button`
   border-radius: 0;
   color: ${({ theme }) => theme.global.colors['dark-1']};
   background-color: transparent;
-  &:hover{
-    color: ${({ theme }) => theme.global.colors.highlight3};
+  &:hover {
+    color: ${({ theme, hoverColor }) =>
+    theme.global.colors[hoverColor || 'highlight3']};
     background-color: transparent;
   }
-  &:active{
+  &:active {
     /* color: ${({ theme }) => theme.global.colors.highlight3}; */
     background-color: transparent;
   }
-  &:visited{
+  &:visited {
     /* color: ${({ theme }) => theme.global.colors.highlight3}; */
     background-color: transparent;
   }
-  &:focus{
+  &:focus {
     /* color: ${({ theme }) => theme.global.colors.highlight3}; */
     box-shadow: none;
     border-radius: 0;

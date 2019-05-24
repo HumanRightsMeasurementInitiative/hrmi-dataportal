@@ -56,7 +56,7 @@ const theme = {
       'dark-2': '#2C3F4B',
       'dark-3': '#667884', // AA
       'dark-4': '#8896A0', // AA large
-      'blue-dark': '#3A5161',
+      dark: '#3A5161',
       highlight: '#FDB933',
       highlight2: '#DB7E00', // AA large
       highlight3: '#AD6500', // AA
@@ -114,8 +114,7 @@ const theme = {
   tabs: {
     header: {
       extend: props => css`
-        padding-left: ${props.theme.global.edgeSize.medium};
-        border-bottom: ${props.theme.columnHeader.border};
+        margin-left: -${props.theme.global.edgeSize.small};
       `,
     },
   },

@@ -25,7 +25,7 @@ function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
             ? activeTabs
             : activeTabs.slice(0, activeTabs.length - 1);
         return (
-          <Box direction="row">
+          <Box direction="row" margin="0 auto" width="100%">
             <Box direction="column" flex>
               {(size === 'small' || !aside || activeTabs.length > 2) && (
                 <Tabs

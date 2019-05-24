@@ -25,6 +25,7 @@ import TabContainer from 'containers/TabContainer';
 
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 
 import {
@@ -111,77 +112,85 @@ export function PathCountry({
           />
         </Layer>
       )}
-      <ContentContainer direction="column" paddingTop>
-        <Close topRight />
-        <HeaderCategories direction="row">
-          <Text size="small">
-            <CategoryLink
-              onClick={() => onCategoryClick('region', country.region_code)}
-            >
-              {country && (
-                <FormattedMessage
-                  {...rootMessages.regions[country.region_code]}
-                />
-              )}
-            </CategoryLink>
-            <Text>&nbsp;|&nbsp;</Text>
-            <CategoryLink onClick={() => onCategoryClick('income', group.key)}>
-              {group && (
-                <FormattedMessage {...rootMessages.income[group.key]} />
-              )}
-            </CategoryLink>
-          </Text>
-        </HeaderCategories>
-        <PageTitle>{countryTitle}</PageTitle>
+      <ContentContainer direction="column" header>
+        <ContentMaxWidth>
+          <Close topRight />
+          <Box direction="column">
+            <HeaderCategories direction="row">
+              <Text size="small">
+                <CategoryLink
+                  onClick={() => onCategoryClick('region', country.region_code)}
+                >
+                  {country && (
+                    <FormattedMessage
+                      {...rootMessages.regions[country.region_code]}
+                    />
+                  )}
+                </CategoryLink>
+                <Text>&nbsp;|&nbsp;</Text>
+                <CategoryLink
+                  onClick={() => onCategoryClick('income', group.key)}
+                >
+                  {group && (
+                    <FormattedMessage {...rootMessages.income[group.key]} />
+                  )}
+                </CategoryLink>
+              </Text>
+            </HeaderCategories>
+            <PageTitle>{countryTitle}</PageTitle>
+          </Box>
+        </ContentMaxWidth>
       </ContentContainer>
-      <TabContainer
-        tabs={[
-          {
-            key: 'report',
-            title: intl.formatMessage(rootMessages.tabs.report),
-            content: (
-              <CountryReport
-                countryTitle={countryTitle}
-                dimensions={dimensions}
-                rights={rights}
-                indicators={indicators}
-                country={country}
-                scale={scale}
-                benchmark={benchmark}
-                atRiskData={atRisk}
-                standard={standard}
-                reference={dimensionAverages}
-                onAtRiskClick={() => onAtRiskClick()}
-                onMetricClick={(metric, tab) =>
-                  onMetricClick(countryCode, metric, tab)
-                }
-              />
-            ),
-          },
-          {
-            key: 'atrisk',
-            title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-            content: hasCPR(dimensions) && (
-              <CountryPeople
-                data={atRisk}
-                countryTitle={countryTitle}
-                countryCode={countryCode}
-              />
-            ),
-          },
-          {
-            key: 'about',
-            title: intl.formatMessage(rootMessages.tabs.about),
-            content: (
-              <CountryAbout
-                country={country}
-                auxIndicators={auxIndicators}
-                onCategoryClick={onCategoryClick}
-              />
-            ),
-          },
-        ]}
-      />
+      <ContentMaxWidth>
+        <TabContainer
+          tabs={[
+            {
+              key: 'report',
+              title: intl.formatMessage(rootMessages.tabs.report),
+              content: (
+                <CountryReport
+                  countryTitle={countryTitle}
+                  dimensions={dimensions}
+                  rights={rights}
+                  indicators={indicators}
+                  country={country}
+                  scale={scale}
+                  benchmark={benchmark}
+                  atRiskData={atRisk}
+                  standard={standard}
+                  reference={dimensionAverages}
+                  onAtRiskClick={() => onAtRiskClick()}
+                  onMetricClick={(metric, tab) =>
+                    onMetricClick(countryCode, metric, tab)
+                  }
+                />
+              ),
+            },
+            {
+              key: 'atrisk',
+              title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              content: hasCPR(dimensions) && (
+                <CountryPeople
+                  data={atRisk}
+                  countryTitle={countryTitle}
+                  countryCode={countryCode}
+                />
+              ),
+            },
+            {
+              key: 'about',
+              title: intl.formatMessage(rootMessages.tabs.about),
+              content: (
+                <CountryAbout
+                  country={country}
+                  auxIndicators={auxIndicators}
+                  onCategoryClick={onCategoryClick}
+                />
+              ),
+            },
+          ]}
+        />
+      </ContentMaxWidth>
     </ContentWrap>
   );
 }

@@ -2,20 +2,10 @@ import styled from 'styled-components';
 import Button from './Button';
 // prettier-ignore
 export default styled(Button)`
-  display: inline-block;
   padding: 0 4px;
-  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
   font-size: inherit;
-  text-align: center;
-  vertical-align: middle;
   line-height: inherit;
-  touch-action: manipulation;
-  user-select: none;
-  background-image: none;
-  border: none;
-  border-radius: 0;
   color: ${({ theme }) => theme.global.colors['dark-1']};
-  background-color: transparent;
   font-weight: 600;
   text-decoration: underline;
   &:hover{
