@@ -58,6 +58,8 @@ import {
   selectMetric,
   loadContentIfNeeded,
   loadDataIfNeeded,
+  setStandard,
+  setBenchmark,
 } from 'containers/App/actions';
 
 const MainHeading = props => (
@@ -122,9 +124,12 @@ export function CountryMetric({
   onLoadData,
   metricInfo,
   benchmark,
+  standard,
   maxYearESR,
   maxYearCPR,
   theme,
+  onSetBenchmark,
+  onSetStandard,
 }) {
   useEffect(() => {
     const key = generateKey(metricCode, countryCode);
@@ -179,7 +184,7 @@ export function CountryMetric({
           {
             key: 'trend',
             title: intl.formatMessage(rootMessages.tabs.trend),
-            content: scores && scores.length > 0 && (
+            content: (
               <MetricTrend
                 color={theme.global.colors[getColour(metric)]}
                 scores={scores}
@@ -193,6 +198,12 @@ export function CountryMetric({
                     lower: COLUMNS.CPR.LO,
                   }
                 }
+                hasBenchmarkOption={isESR}
+                hasStandardOption={isESR && metric.metricType !== 'indicators'}
+                onSetBenchmark={onSetBenchmark}
+                onSetStandard={onSetStandard}
+                standard={standard}
+                benchmark={benchmark}
               />
             ),
           },
@@ -251,6 +262,8 @@ CountryMetric.propTypes = {
   intl: intlShape.isRequired,
   onClose: PropTypes.func,
   onSelectMetric: PropTypes.func,
+  onSetStandard: PropTypes.func,
+  onSetBenchmark: PropTypes.func,
   onLoadContent: PropTypes.func,
   onLoadData: PropTypes.func,
   onSelectCountry: PropTypes.func,
@@ -259,6 +272,7 @@ CountryMetric.propTypes = {
   countryCode: PropTypes.string,
   base: PropTypes.string,
   benchmark: PropTypes.string,
+  standard: PropTypes.string,
   hasAtRisk: PropTypes.bool,
   maxYearESR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   maxYearCPR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -343,6 +357,8 @@ export function mapDispatchToProps(dispatch) {
     onTabClick: index => dispatch(setModalTab(index)),
     onSelectCountry: country => dispatch(selectCountry(country)),
     onSelectMetric: metric => dispatch(selectMetric(metric)),
+    onSetStandard: value => dispatch(setStandard(value)),
+    onSetBenchmark: value => dispatch(setBenchmark(value)),
     onClose: (base, code) =>
       dispatch(
         navigate(

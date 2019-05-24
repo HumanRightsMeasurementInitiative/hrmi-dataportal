@@ -21,7 +21,13 @@ import {
 } from 'react-vis';
 import { timeFormat } from 'd3-time-format';
 
-import { INDICATOR_LOOKBACK } from 'containers/App/constants';
+import {
+  INDICATOR_LOOKBACK,
+  STANDARDS,
+  BENCHMARKS,
+} from 'containers/App/constants';
+
+import SettingsToggle from 'containers/Settings/SettingsToggle';
 
 import WrapPlot from 'styled/WrapPlot';
 
@@ -33,53 +39,70 @@ function MetricTrend({
   percentage,
   rangeColumns,
   color,
+  benchmark,
+  standard,
+  hasBenchmarkOption,
+  hasStandardOption,
+  onSetBenchmark,
+  onSetStandard,
 }) {
-  if (!scores || scores.length === 0) return null;
-  const scoresSorted = scores.sort((a, b) =>
-    parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
-  );
-  const minYear = parseInt(scoresSorted[0].year, 10);
-  // axis ranges
-  const xAxisRange = [
-    new Date(`${minYear - 0.5}`).getTime(),
+  const yAxisRange = [0, maxValue];
+  let xAxisRange = [
+    new Date(`${2015 - 0.5}`).getTime(),
     new Date(`${parseInt(maxYear, 10) + 0.5}`).getTime(),
   ];
-  const yAxisRange = [0, maxValue];
-  // dummy data to force the area plot from 0
-  const dataForceYRange = [
+  let dataForceYRange = [
     { x: xAxisRange[0], y: yAxisRange[0] },
     { x: xAxisRange[1], y: yAxisRange[1] },
   ];
-
-  const xyData = [];
   const rangeUpper = [];
   const rangeLower = [];
-  /* eslint-disable no-plusplus */
-  for (let y = minYear; y <= parseInt(maxYear, 10); y++) {
-    const score = scoresSorted.reduce((memo, s) => {
-      const scoreYear = parseInt(s.year, 10);
-      if (scoreYear === y) return s;
-      if (scoreYear < y && scoreYear >= y - INDICATOR_LOOKBACK) return s;
-      return memo;
-    }, null);
-    if (score) {
-      xyData.push({
-        syear: y,
-        x: new Date(`${y}`).getTime(),
-        y: parseFloat(score[column]),
-      });
-      if (rangeColumns) {
-        rangeUpper.push({
+  const xyData = [];
+  const hasScores = scores && scores.length > 0;
+  if (hasScores) {
+    const scoresSorted = scores.sort((a, b) =>
+      parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
+    );
+    const minYear = parseInt(scoresSorted[0].year, 10);
+    // axis ranges
+    xAxisRange = [
+      new Date(`${minYear - 0.5}`).getTime(),
+      new Date(`${parseInt(maxYear, 10) + 0.5}`).getTime(),
+    ];
+
+    // dummy data to force the area plot from 0
+    dataForceYRange = [
+      { x: xAxisRange[0], y: yAxisRange[0] },
+      { x: xAxisRange[1], y: yAxisRange[1] },
+    ];
+
+    /* eslint-disable no-plusplus */
+    for (let y = minYear; y <= parseInt(maxYear, 10); y++) {
+      const score = scoresSorted.reduce((memo, s) => {
+        const scoreYear = parseInt(s.year, 10);
+        if (scoreYear === y) return s;
+        if (scoreYear < y && scoreYear >= y - INDICATOR_LOOKBACK) return s;
+        return memo;
+      }, null);
+      if (score) {
+        xyData.push({
           syear: y,
           x: new Date(`${y}`).getTime(),
-          y: parseFloat(score[rangeColumns.upper]),
+          y: parseFloat(score[column]),
+        });
+        if (rangeColumns) {
+          rangeUpper.push({
+            syear: y,
+            x: new Date(`${y}`).getTime(),
+            y: parseFloat(score[rangeColumns.upper]),
+          });
+        }
+        rangeLower.push({
+          syear: y,
+          x: new Date(`${y}`).getTime(),
+          y: parseFloat(score[rangeColumns.lower]),
         });
       }
-      rangeLower.push({
-        syear: y,
-        x: new Date(`${y}`).getTime(),
-        y: parseFloat(score[rangeColumns.lower]),
-      });
     }
   }
   /* eslint-ensable no-plusplus */
@@ -92,7 +115,7 @@ function MetricTrend({
           margin={{ bottom: 30, right: 13 }}
         >
           <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
-          {rangeColumns && (
+          {hasScores && rangeColumns && (
             <>
               <AreaSeries
                 data={rangeUpper}
@@ -112,7 +135,7 @@ function MetricTrend({
           <HorizontalGridLines />
           <XAxis
             tickFormat={timeFormat('%Y')}
-            tickTotal={xyData.length}
+            tickTotal={hasScores ? xyData.length : 2}
             style={{
               ticks: { strokeWidth: 1 },
             }}
@@ -126,7 +149,7 @@ function MetricTrend({
             tickSize={3}
             tickPadding={2}
           />
-          {rangeColumns && (
+          {hasScores && rangeColumns && (
             <>
               <LineSeries
                 data={rangeUpper}
@@ -138,18 +161,40 @@ function MetricTrend({
               />
             </>
           )}
-          <LineMarkSeries
-            style={{
-              stroke: color,
-              strokeWidth: 2,
-            }}
-            markStyle={{
-              fill: color,
-            }}
-            data={xyData}
-          />
+          {hasScores && (
+            <LineMarkSeries
+              style={{
+                stroke: color,
+                strokeWidth: 2,
+              }}
+              markStyle={{
+                fill: color,
+              }}
+              data={xyData}
+            />
+          )}
         </FlexibleWidthXYPlot>
       </WrapPlot>
+      {(hasBenchmarkOption || hasStandardOption) && (
+        <Box direction="row" pad={{ horizontal: 'medium' }}>
+          {hasScores && hasBenchmarkOption && (
+            <SettingsToggle
+              setting="benchmark"
+              active={benchmark}
+              onActivate={onSetBenchmark}
+              options={BENCHMARKS}
+            />
+          )}
+          {hasStandardOption && (
+            <SettingsToggle
+              setting="standard"
+              active={standard}
+              onActivate={onSetStandard}
+              options={STANDARDS}
+            />
+          )}
+        </Box>
+      )}
     </Box>
   );
 }
@@ -162,6 +207,12 @@ MetricTrend.propTypes = {
   color: PropTypes.string,
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
+  benchmark: PropTypes.string,
+  standard: PropTypes.string,
+  hasBenchmarkOption: PropTypes.bool,
+  hasStandardOption: PropTypes.bool,
+  onSetBenchmark: PropTypes.func,
+  onSetStandard: PropTypes.func,
 };
 
 export default MetricTrend;

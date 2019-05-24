@@ -26,8 +26,8 @@ function DimensionPanel({
   const { score, type, key } = dimension;
   const value = score && score[column] && parseFloat(score[column]);
   const trendTab = 0;
-  const atRiskTab = value ? 1 : 0;
-  const aboutTab = trendTab + atRiskTab + 1;
+  const atRiskTab = 1;
+  const aboutTab = hasAtRisk ? 2 : 1;
   return (
     <Box pad={{ vertical: 'xsmall', horizontal: 'small' }} fill="horizontal">
       <Box direction="row" align="center">

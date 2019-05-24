@@ -10,7 +10,6 @@ import Tooltip from 'components/Tooltip';
 import { RIGHTS, DIMENSIONS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
-import messages from './messages';
 
 const HEIGHT = 8;
 const heightRotated = HEIGHT * 2 ** (1 / 2); // height * sqrt(2)
@@ -105,14 +104,14 @@ function Key({ intl }) {
                 >
                   <Tooltip
                     iconSize="medium"
-                    text={intl.formatMessage(messages.tooltip[d.key], {
+                    text={intl.formatMessage(rootMessages.tooltip[d.key], {
                       count: rights.length,
                     })}
                     maxWidth="300px"
                     component={
                       <>
                         <FormattedMessage
-                          {...messages.tooltip[d.key]}
+                          {...rootMessages.tooltip[d.key]}
                           values={{ count: rights.length }}
                         />
                         <UL>

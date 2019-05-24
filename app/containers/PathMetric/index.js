@@ -78,7 +78,7 @@ export function PathMetric({
       {match.params.country && (
         <Layer
           full
-          margin="large"
+          margin="small"
           onEsc={() => onCloseMetricOverlay(metricCode)}
           onClickOutside={() => onCloseMetricOverlay(metricCode)}
         >
