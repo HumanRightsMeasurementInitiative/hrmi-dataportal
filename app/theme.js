@@ -99,50 +99,85 @@ const theme = {
       xxlarge: {},
     },
   },
+  heading: {
+    level: {
+      1: {
+        medium: {
+          size: '42px',
+          height: '48px',
+        },
+      },
+      2: {
+        medium: {
+          size: '30px',
+          height: '36px',
+        },
+      },
+      3: {
+        medium: {
+          size: '24px',
+          height: '30px',
+        },
+      },
+      4: {
+        medium: {
+          size: '20px',
+          height: '26px',
+        },
+      },
+      5: {
+        medium: {
+          size: '16px',
+          height: '22px',
+        },
+      },
+      6: {
+        medium: {
+          size: '14px',
+          height: '20px',
+        },
+      },
+    },
+  },
   tab: {
     pad: {
-      vertical: 'none',
-      bottom: '1px',
+      horizontal: 'small',
+      bottom: '8px',
     },
     margin: {
+      right: '4px',
+      left: 'none',
       vertical: 'none',
+    },
+    color: '#3A5161',
+    active: {
+      color: '#3A5161',
+    },
+    hover: {
+      color: '#667884',
+    },
+    border: {
+      size: '4px',
+      color: 'transparent',
+      active: {
+        color: '#3A5161',
+      },
+      hover: {
+        color: '#667884',
+      },
     },
     extend: props => css`
       font-weight: ${props.theme.columnHeader.fontWeight};
+      height: 30px;
     `,
-  },
-  tabs: {
-    header: {
-      extend: props => css`
-        margin-left: -${props.theme.global.edgeSize.small};
-      `,
-    },
   },
   columnHeader: {
     border: '1px solid',
     fontWeight: 600,
   },
   maxWidth: '1200px',
-  // colors: {
-  //   white: '#fff',
-  //   black: '#09052F',
-  //   hover: '#2956D1',
-  //   hoverLight: '#EFEFEF',
-  //   darkBlue: '#3A5161',
-  //   dark: '#192E3A', // darkest >>>
-  //   dark2: '#2C3F4B',
-  //   dark3: '#667884', // AA
-  //   dark4: '#8896A0', // AA large
-  //   light5: '#D0D2D3',
-  //   light4: '#D7D9DB',
-  //   light3: '#E8EAE9',
-  //   light2: '#EFEFEF',
-  //   light: '#F2F3F4', // <<< lightest
-  //   highlight: '#FDB933',
-  //   highlight2: '#DB7E00', // AA large
-  //   highlight3: '#AD6500', // AA
-  // },
 };
+
 /**
  * SVG icon component that produces an inline SVG image if **compound paths** are defined in app constant `ICONS`.
  *

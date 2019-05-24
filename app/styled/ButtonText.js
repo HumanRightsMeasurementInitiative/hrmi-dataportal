@@ -2,15 +2,16 @@ import styled from 'styled-components';
 import Button from './Button';
 // prettier-ignore
 export default styled(Button)`
-  padding: 0 4px;
+  padding: 0;
   font-size: inherit;
   line-height: inherit;
-  color: ${({ theme }) => theme.global.colors['dark-1']};
+  color: ${({ theme }) => theme.global.colors.dark};
   font-weight: 600;
   text-decoration: underline;
   &:hover{
     color: ${({ theme }) => theme.global.colors.highlight3};
     background-color: transparent;
+    text-decoration: underline;
   }
   &:active{
     color: ${({ theme }) => theme.global.colors.highlight3};
@@ -28,6 +29,6 @@ export default styled(Button)`
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
     font-size: 1em;
-    padding: 6px 12px;
+    padding: 0;
   }
 `;

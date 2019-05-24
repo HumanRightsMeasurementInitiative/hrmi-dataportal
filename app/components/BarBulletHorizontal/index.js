@@ -29,7 +29,7 @@ const Wrapper = props => (
 
 const MinLabel = props => <Box {...props} width="25px" pad="xxsmall" />;
 const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
-const BarWrapper = props => <Box {...props} fill="horizontal" />;
+const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
 
 // level:
 const HEIGHT = [50, 35, 20, 14];

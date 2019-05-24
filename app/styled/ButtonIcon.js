@@ -3,7 +3,8 @@ import Button from './Button';
 // prettier-ignore
 export default styled(Button)`
   color: ${({ theme }) => theme.global.colors.white};
-  background-color: ${({ theme }) => theme.global.colors.dark};
+  background-color: ${({ theme, subtle }) =>
+    theme.global.colors[subtle ? 'white' : 'dark']};
   border-radius: 100%;
   width: 50px;
   height: 50px;
@@ -11,7 +12,7 @@ export default styled(Button)`
   padding: 0;
   &:hover{
     color: ${({ theme }) => theme.global.colors.white};
-    background-color: ${({ theme }) => theme.global.colors['dark-1']};
+    background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-2' : 'dark-1']};
   }
   &:active{
     color: ${({ theme }) => theme.global.colors.white};
@@ -23,7 +24,7 @@ export default styled(Button)`
   }
   &:focus{
     color: ${({ theme }) => theme.global.colors.white};
-    background-color: ${({ theme }) => theme.global.colors['dark-1']};
+    background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-1' : 'dark-1']};    
     box-shadow: none;
     border-radius: 100%;
   }

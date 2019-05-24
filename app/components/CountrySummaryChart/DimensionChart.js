@@ -1,26 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
-import { Heading, Box, Text } from 'grommet';
-
-import rootMessages from 'messages';
+import { Box, Text } from 'grommet';
 
 import BarHorizontal from 'components/BarHorizontal';
 
 import formatScoreMax from 'utils/format-score-max';
+import DimensionTitle from './DimensionTitle';
 
 const DimensionScoreWrapper = props => <Box {...props} width="200px" />;
 const DimensionScoreText = props => <Text weight="bold" {...props} />;
-
 const BarWrap = props => <Box direction="row" {...props} align="center" />;
-
-const DimensionHeading = props => (
-  <Heading level={5} margin={{ vertical: '5px' }} {...props} />
-);
-const StyledDimensionHeading = styled(DimensionHeading)`
-  font-weight: normal;
-`;
 
 function DimensionChart({
   dimensionKey,
@@ -34,9 +23,7 @@ function DimensionChart({
     data && data.score && data.score[column] && parseFloat(data.score[column]);
   return (
     <Box>
-      <StyledDimensionHeading>
-        <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
-      </StyledDimensionHeading>
+      <DimensionTitle dimensionKey={dimensionKey} />
       <BarWrap>
         <BarHorizontal
           color={dimensionKey}
@@ -61,7 +48,6 @@ function DimensionChart({
 DimensionChart.propTypes = {
   dimensionKey: PropTypes.string,
   column: PropTypes.string,
-  scale: PropTypes.string,
   unit: PropTypes.string,
   standard: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),

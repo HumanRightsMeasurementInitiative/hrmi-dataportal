@@ -21,11 +21,11 @@ import { useInjectSaga } from 'utils/injectSaga';
 
 import Header from 'containers/Header';
 import Settings from 'containers/Settings';
-import PathOverview from 'containers/PathOverview/Loadable';
-import PathMetric from 'containers/PathMetric/Loadable';
-import PathCountry from 'containers/PathCountry/Loadable';
-import PathPage from 'containers/PathPage/Loadable';
-import PathNotFoundPage from 'containers/PathNotFoundPage/Loadable';
+import PathOverview from 'containers/PathOverview';
+import PathMetric from 'containers/PathMetric';
+import PathCountry from 'containers/PathCountry';
+import PathPage from 'containers/PathPage';
+import PathNotFoundPage from 'containers/PathNotFoundPage';
 import ScrollToTop from './ScrollToTop';
 
 import { loadDataIfNeeded } from './actions';
@@ -51,7 +51,7 @@ const AppWrapper = styled.div`
 const Main = styled.main`
   min-height: 100%;
   padding-top: 100px;
-  padding-bottom: 200px;
+  padding-bottom: 80px;
   &:focus {
     outline: none;
   }

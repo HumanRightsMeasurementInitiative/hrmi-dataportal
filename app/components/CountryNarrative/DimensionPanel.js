@@ -1,18 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-// import styled from 'styled-components';
-import { Text, Box, Heading, Button } from 'grommet';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import styled from 'styled-components';
+import { Text, Box } from 'grommet';
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
 
 import rootMessages from 'messages';
 
 import formatScore from 'utils/format-score';
+import ButtonText from 'styled/ButtonText';
+
+import AccordionPanelHeading from './AccordionPanelHeading';
+import TabLinks from './TabLinks';
 
 const DimensionScoreText = props => (
   <Text weight="bold" {...props} alignSelf="end" margin={{ right: '52px' }} />
 );
+
+const ButtonTextHeading = styled(ButtonText)`
+  text-decoration: none;
+`;
 
 function DimensionPanel({
   dimension,
@@ -22,39 +30,45 @@ function DimensionPanel({
   standard,
   onMetricClick,
   hasAtRisk = true,
+  intl,
 }) {
   const { score, type, key } = dimension;
   const value = score && score[column] && parseFloat(score[column]);
-  const trendTab = 0;
-  const atRiskTab = 1;
-  const aboutTab = hasAtRisk ? 2 : 1;
   return (
-    <Box pad={{ vertical: 'xsmall', horizontal: 'small' }} fill="horizontal">
-      <Box direction="row" align="center">
-        <Button onClick={() => onMetricClick(key)}>
-          <Heading level={5} margin={{ vertical: '2px' }}>
+    <Box pad={{ vertical: 'small', horizontal: 'none' }} fill="horizontal">
+      <Box
+        direction="row"
+        align="center"
+        pad={{ vertical: 'none', horizontal: 'small' }}
+      >
+        <ButtonTextHeading onClick={() => onMetricClick(key)}>
+          <AccordionPanelHeading level={4}>
             <FormattedMessage {...rootMessages.dimensions[key]} />
-          </Heading>
-        </Button>
-        {value && (
-          <Button onClick={() => onMetricClick(key, trendTab)}>
-            <Text size="small" margin={{ horizontal: 'xsmall' }}>
-              <FormattedMessage {...rootMessages.tabs.trend} />
-            </Text>
-          </Button>
-        )}
-        {hasAtRisk && (
-          <Button onClick={() => onMetricClick(key, atRiskTab)}>
-            <Text size="small" margin={{ horizontal: 'xsmall' }}>
-              <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
-            </Text>
-          </Button>
-        )}
-        <Button onClick={() => onMetricClick(key, aboutTab)}>
-          <Text size="small" margin={{ horizontal: 'xsmall' }}>
-            <FormattedMessage {...rootMessages.tabs.about} />
-          </Text>
-        </Button>
+          </AccordionPanelHeading>
+        </ButtonTextHeading>
+        <TabLinks
+          level={1}
+          onItemClick={onMetricClick}
+          items={[
+            {
+              key,
+              value: 0,
+              label: intl.formatMessage(rootMessages.tabs.trend),
+              skip: !value,
+            },
+            {
+              key,
+              value: 1,
+              label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              skip: !hasAtRisk,
+            },
+            {
+              key,
+              value: hasAtRisk ? 2 : 1,
+              label: intl.formatMessage(rootMessages.tabs.about),
+            },
+          ]}
+        />
       </Box>
       {type === 'esr' && (
         <BarHorizontal
@@ -94,6 +108,7 @@ DimensionPanel.propTypes = {
   columnHi: PropTypes.string,
   onMetricClick: PropTypes.func,
   hasAtRisk: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
-export default DimensionPanel;
+export default injectIntl(DimensionPanel);

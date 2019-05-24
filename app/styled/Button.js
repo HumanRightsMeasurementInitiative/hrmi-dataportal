@@ -15,6 +15,7 @@ export default styled.button`
   border-radius: 0;
   color: ${({ theme }) => theme.global.colors['dark-1']};
   background-color: transparent;
+  text-decoration: none;
   &:hover {
     color: ${({ theme, hoverColor }) =>
     theme.global.colors[hoverColor || 'highlight3']};

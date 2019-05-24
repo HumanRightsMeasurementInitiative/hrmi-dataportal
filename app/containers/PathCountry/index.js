@@ -8,11 +8,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
-import { Box, Text, Button, Layer } from 'grommet';
+
+import { Box, Layer } from 'grommet';
 
 import rootMessages from 'messages';
 
@@ -21,6 +21,7 @@ import Close from 'containers/Close';
 import CountryReport from 'components/CountryReport';
 import CountryPeople from 'components/CountryPeople';
 import CountryAbout from 'components/CountryAbout';
+import HeaderLinks from 'components/HeaderLinks';
 import TabContainer from 'containers/TabContainer';
 
 import ContentWrap from 'styled/ContentWrap';
@@ -46,9 +47,6 @@ import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
-
-const HeaderCategories = styled(Box)``;
-const CategoryLink = styled(Button)``;
 
 const DEPENDENCIES = [
   'countries',
@@ -116,27 +114,25 @@ export function PathCountry({
         <ContentMaxWidth>
           <Close topRight />
           <Box direction="column">
-            <HeaderCategories direction="row">
-              <Text size="small">
-                <CategoryLink
-                  onClick={() => onCategoryClick('region', country.region_code)}
-                >
-                  {country && (
-                    <FormattedMessage
-                      {...rootMessages.regions[country.region_code]}
-                    />
-                  )}
-                </CategoryLink>
-                <Text>&nbsp;|&nbsp;</Text>
-                <CategoryLink
-                  onClick={() => onCategoryClick('income', group.key)}
-                >
-                  {group && (
-                    <FormattedMessage {...rootMessages.income[group.key]} />
-                  )}
-                </CategoryLink>
-              </Text>
-            </HeaderCategories>
+            {country && group && (
+              <HeaderLinks
+                onItemClick={(key, value) => onCategoryClick(key, value)}
+                items={[
+                  {
+                    key: 'region',
+                    value: country.region_code,
+                    label: intl.formatMessage(
+                      rootMessages.regions[country.region_code],
+                    ),
+                  },
+                  {
+                    key: 'income',
+                    value: group.key,
+                    label: intl.formatMessage(rootMessages.income[group.key]),
+                  },
+                ]}
+              />
+            )}
             <PageTitle>{countryTitle}</PageTitle>
           </Box>
         </ContentMaxWidth>

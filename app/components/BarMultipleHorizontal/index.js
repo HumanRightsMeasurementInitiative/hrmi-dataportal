@@ -43,7 +43,7 @@ const BarReference = styled.div`
   height: ${props => props.height}px;
   background-color: ${props =>
     props.noData ? 'transparent' : props.theme.global.colors['light-2']};
-  border: 1px solid;
+  border: ${props => (props.noData ? '1px solid' : 0)};
   border-color: ${props =>
     props.noData ? props.theme.global.colors['light-4'] : 'transparent'};
 `;
@@ -84,6 +84,7 @@ function BarMultipleHorizontal({
   stripes = false,
   omitMinMaxLabels = false,
   height,
+  noPadding = false,
 }) {
   const hasAnyScores =
     level > 0 && data && data.reduce((memo, d) => memo || !!d.score, false);
@@ -107,7 +108,7 @@ function BarMultipleHorizontal({
           </Text>
         </MinLabel>
       )}
-      <BarWrapper>
+      <BarWrapper pad={noPadding ? 'none' : 'xsmall'}>
         <BarAnchor height={heightTotal}>
           {!hasAnyScores && level > 0 && (
             <BarReference height={heightTotal} noData>
@@ -178,6 +179,7 @@ BarMultipleHorizontal.propTypes = {
   level: PropTypes.number,
   omitMinMaxLabels: PropTypes.bool,
   stripes: PropTypes.bool,
+  noPadding: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

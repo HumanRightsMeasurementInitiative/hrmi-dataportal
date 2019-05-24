@@ -10,28 +10,27 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Helmet } from 'react-helmet';
-import { Layer, Box, Button, Text } from 'grommet';
-import styled from 'styled-components';
+import { Layer, Box } from 'grommet';
+import { FormNext } from 'grommet-icons';
 
 import CountryMetric from 'containers/CountryMetric';
 import Close from 'containers/Close';
 
-import SingleMetric from 'containers/SingleMetric/Loadable';
+import SingleMetric from 'containers/SingleMetric';
 
 import TabContainer from 'containers/TabContainer';
 import MetricAside from 'containers/MetricAside';
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
+import HeaderLinks from 'components/HeaderLinks';
 
 import rootMessages from 'messages';
 
 import getMetricDetails from 'utils/metric-details';
 
 import { navigate } from 'containers/App/actions';
-
-const HeaderCategories = styled(Box)``;
-const CategoryLink = styled(Button)``;
 
 export function PathMetric({
   match,
@@ -90,41 +89,52 @@ export function PathMetric({
         </Layer>
       )}
       <ContentContainer direction="column" header>
-        <Close topRight />
-        {ancestors.length > 0 && (
-          <HeaderCategories direction="row">
-            <Text size="small">
-              {ancestors.map(ancestor => (
-                <CategoryLink
-                  key={ancestor.key}
-                  onClick={() => onMetricClick(ancestor.key)}
-                >
-                  <Text margin={{ right: 'xsmall' }}>
-                    {`${intl.formatMessage(
-                      rootMessages[ancestor.type][ancestor.key],
-                    )} >`}
-                  </Text>
-                </CategoryLink>
-              ))}
-            </Text>
-          </HeaderCategories>
-        )}
-        <PageTitle>{metricTitle}</PageTitle>
+        <ContentMaxWidth>
+          <Close topRight />
+          <Box direction="column">
+            {ancestors.length > 0 && (
+              <HeaderLinks
+                onItemClick={key => onMetricClick(key)}
+                spacer={<FormNext />}
+                items={ancestors.map(ancestor => ({
+                  key: ancestor.key,
+                  label: intl.formatMessage(
+                    rootMessages[ancestor.type][ancestor.key],
+                  ),
+                }))}
+              />
+            )}
+            {ancestors.length === 0 && (
+              <HeaderLinks
+                onItemClick={() => false}
+                items={[
+                  {
+                    key: 'x',
+                    label: '',
+                  },
+                ]}
+              />
+            )}
+            <PageTitle>{metricTitle}</PageTitle>
+          </Box>
+        </ContentMaxWidth>
       </ContentContainer>
-      <TabContainer
-        tabs={[
-          {
-            key: 'singleMetric',
-            title: intl.formatMessage(rootMessages.tabs.singleMetric),
-            content: <SingleMetric metric={metric} />,
-          },
-          {
-            key: 'about',
-            title: intl.formatMessage(rootMessages.tabs.about),
-            content: <MetricAside metric={metric} ancestors={ancestors} />,
-          },
-        ]}
-      />
+      <ContentMaxWidth>
+        <TabContainer
+          tabs={[
+            {
+              key: 'singleMetric',
+              title: intl.formatMessage(rootMessages.tabs.singleMetric),
+              content: <SingleMetric metric={metric} />,
+            },
+            {
+              key: 'about',
+              title: intl.formatMessage(rootMessages.tabs.about),
+              content: <MetricAside metric={metric} ancestors={ancestors} />,
+            },
+          ]}
+        />
+      </ContentMaxWidth>
     </ContentWrap>
   );
 }

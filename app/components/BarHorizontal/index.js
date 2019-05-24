@@ -29,7 +29,7 @@ const BarReference = styled.div`
   width: 100%;
   background-color: ${props =>
     props.noData ? 'transparent' : props.theme.global.colors['light-2']};
-  border: 1px solid;
+  border: ${props => (props.noData ? '1px solid' : 0)};
   border-color: ${props =>
     props.noData ? props.theme.global.colors['light-4'] : 'transparent'};
 `;

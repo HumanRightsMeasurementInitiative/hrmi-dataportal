@@ -46,6 +46,7 @@ const NavBarTop = props => (
     height="44px"
     width="full"
     fill="horizontal"
+    pad={{ horizontal: 'small', vertical: 'none' }}
     {...props}
   />
 );

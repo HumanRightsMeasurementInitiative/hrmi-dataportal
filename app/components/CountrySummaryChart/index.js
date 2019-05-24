@@ -30,9 +30,9 @@ const Styled = props => <Box direction="row" {...props} />;
 const ChartArea = props => (
   <Box
     direction="column"
-    {...props}
     fill="horizontal"
     margin={{ bottom: '80px' }}
+    {...props}
   />
 );
 
