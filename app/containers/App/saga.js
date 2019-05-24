@@ -16,6 +16,8 @@ import {
   getRouterSearchParams,
   getCountry,
   getStandardSearch,
+  getDataByKey,
+  getContentByKey,
 } from './selectors';
 import {
   dataLoaded,
@@ -73,23 +75,27 @@ export function* loadDataSaga({ key }) {
   const resourceIndex = DATA_RESOURCES.map(r => r.key).indexOf(key);
   if (resourceIndex > -1) {
     const url = `${DATA_URL}/${DATA_RESOURCES[resourceIndex].file}`;
-    try {
-      // First record that we are requesting
-      const response = yield fetch(url);
-      const responseOk = yield response.ok;
-      if (responseOk && typeof response.text === 'function') {
-        const responseBody = yield response.text();
-        if (responseBody) {
-          yield put(dataLoaded(key, csvParse(responseBody), Date.now()));
+    const ready = yield select(getDataByKey, key);
+    // If haven't loaded yet, do so now.
+    if (!ready) {
+      try {
+        // First record that we are requesting
+        const response = yield fetch(url);
+        const responseOk = yield response.ok;
+        if (responseOk && typeof response.text === 'function') {
+          const responseBody = yield response.text();
+          if (responseBody) {
+            yield put(dataLoaded(key, csvParse(responseBody), Date.now()));
+          } else {
+            throw new Error(response.statusText);
+          }
         } else {
           throw new Error(response.statusText);
         }
-      } else {
-        throw new Error(response.statusText);
+      } catch (err) {
+        // throw error
+        throw new Error(err);
       }
-    } catch (err) {
-      // throw error
-      throw new Error(err);
     }
   }
 }
@@ -99,31 +105,35 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
   if (pageIndex > -1 || contentType === 'atrisk') {
     const requestLocale = yield locale || select(getLocale);
     const url = `${PAGES_URL}${requestLocale}/${key}/`;
-    try {
-      // First record that we are requesting
-      const response = yield fetch(url);
-      const responseOk = yield response.ok;
-      if (responseOk && typeof response.text === 'function') {
-        const responseBody = yield response.text();
-        if (responseBody) {
-          yield put(
-            contentLoaded(key, responseBody, Date.now(), requestLocale),
-          );
+    const ready = yield select(getContentByKey, key);
+    // If haven't loaded yet, do so now.
+    if (!ready) {
+      try {
+        // First record that we are requesting
+        const response = yield fetch(url);
+        const responseOk = yield response.ok;
+        if (responseOk && typeof response.text === 'function') {
+          const responseBody = yield response.text();
+          if (responseBody) {
+            yield put(
+              contentLoaded(key, responseBody, Date.now(), requestLocale),
+            );
+          } else {
+            throw new Error(response.statusText);
+          }
+        } else if (
+          contentType === 'atrisk' &&
+          quasiEquals(response.status, 404) &&
+          requestLocale !== DEFAULT_LOCALE
+        ) {
+          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
         } else {
           throw new Error(response.statusText);
         }
-      } else if (
-        contentType === 'atrisk' &&
-        quasiEquals(response.status, 404) &&
-        requestLocale !== DEFAULT_LOCALE
-      ) {
-        yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
-      } else {
-        throw new Error(response.statusText);
+      } catch (err) {
+        // throw error
+        throw new Error(err);
       }
-    } catch (err) {
-      // throw error
-      throw new Error(err);
     }
   }
 }
