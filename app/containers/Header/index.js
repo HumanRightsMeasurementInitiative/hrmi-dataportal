@@ -88,7 +88,7 @@ const NavButton = styled(Button)`
   padding: 5px 10px;
   color: ${props => props.theme.global.colors.white};
   display: block;
-  @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
     display: inline-block;
   }
   &:hover {
@@ -107,7 +107,7 @@ const MenuList = styled.div`
   width: 100%;
   z-index: 99999;
   background: ${props => props.theme.global.colors['dark-1']};
-  @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
     position: relative;
     z-index: 300;
     top: auto;
@@ -133,14 +133,14 @@ const ToggleMenu = styled(Button)`
   height: 44px;
   background-color: transparent;
   text-align: center;
-  @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
     display: none;
   }
 `;
 // prettier-ignore
 const LocaleToggleWrap = styled.span`
   display: block;
-  @media (min-width: ${props => props.theme.global.breakpoints.medium.value}px) {
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
     display: inline;
   }
 `;

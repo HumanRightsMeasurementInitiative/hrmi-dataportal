@@ -2,25 +2,28 @@ import { css } from 'styled-components';
 // theme defining breakpoints, colors, sizes, grid gutters
 // breakpoints:
 // < 720px (45em): small (mobile)
-// < 960px (60em): medium (tablet portrait)
-// >= 961px (72em): large (tablet landscape, desktop)
-const myBreakpoints = [720, 960, 1152];
-// theme breakpoints
-export const BREAKPOINTS = {
-  SMALL: 0,
-  MEDIUM: 1,
-  LARGE: 2,
-};
+// 0: < 960px (60em): medium (tablet portrait)
+// 1: < 1152px (72em): large (tablet landscape, desktop)
+// 2: > 1152px (72em): xlarge
+const myBreakpoints = [720, 992, 1152, 10000];
+
 const text = {
   xxlarge: { size: '30px', height: '36px', maxWidth: '700px' },
   xlarge: { size: '24px', height: '30px', maxWidth: '700px' },
   large: { size: '20px', height: '25px', maxWidth: '700px' },
   medium: { size: '16px', height: '22px', maxWidth: '700px' },
+  xsmall: { size: '13px', height: '18px', maxWidth: '400px' },
 };
 const theme = {
   // used for grommet
   text,
   paragraph: text,
+  breakpoints: {
+    small: `${myBreakpoints[0]}px`, // max
+    medium: `${myBreakpoints[0]}px`, // min
+    large: `${myBreakpoints[1]}px`, // min
+    xlarge: `${myBreakpoints[2]}px`, // min
+  },
   icon: {
     size: {
       small: '12px',
@@ -75,6 +78,7 @@ const theme = {
       xxsmall: '3px',
       xsmall: '6px',
       small: '12px',
+      ms: '16px',
       medium: '24px',
       large: '48px',
       xlarge: '96px',
@@ -89,7 +93,10 @@ const theme = {
       large: {
         value: myBreakpoints[2],
       },
-      xlarge: {},
+      xlarge: {
+        value: myBreakpoints[3],
+      },
+      xxlarge: {},
     },
   },
   tab: {
