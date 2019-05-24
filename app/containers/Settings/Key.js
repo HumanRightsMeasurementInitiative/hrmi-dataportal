@@ -108,6 +108,7 @@ function Key({ intl }) {
                     text={intl.formatMessage(messages.tooltip[d.key], {
                       count: rights.length,
                     })}
+                    maxWidth="300px"
                     component={
                       <>
                         <FormattedMessage
