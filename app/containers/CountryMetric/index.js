@@ -151,7 +151,7 @@ export function CountryMetric({
         <title>{`${countryTitle} - ${metricTitle}`}</title>
         <meta name="description" content="Description of Country Metric page" />
       </Helmet>
-      <ContentContainer>
+      <ContentContainer header>
         <Close
           topRight
           onClick={() =>

@@ -89,7 +89,7 @@ export function PathMetric({
           />
         </Layer>
       )}
-      <ContentContainer direction="column" paddingTop>
+      <ContentContainer direction="column" header>
         <Close topRight />
         {ancestors.length > 0 && (
           <HeaderCategories direction="row">

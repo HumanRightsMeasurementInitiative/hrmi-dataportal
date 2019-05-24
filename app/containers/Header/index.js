@@ -54,7 +54,7 @@ const NavBarBottom = props => (
     elevation="large"
     direction="row"
     align="center"
-    background="blue-dark"
+    background="dark"
     height="56px"
     width="full"
     fill="horizontal"
