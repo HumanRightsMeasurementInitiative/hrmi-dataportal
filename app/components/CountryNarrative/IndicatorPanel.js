@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-// import styled from 'styled-components';
-import { Heading, Text, Box, Button } from 'grommet';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import styled from 'styled-components';
+import { Text, Box } from 'grommet';
 import BarHorizontal from 'components/BarHorizontal';
 
 import rootMessages from 'messages';
 import formatScore from 'utils/format-score';
+
+import ButtonText from 'styled/ButtonText';
+
+import AccordionPanelHeading from './AccordionPanelHeading';
+import TabLinks from './TabLinks';
 
 const IndicatorScoreText = props => (
   <Text
@@ -18,33 +23,46 @@ const IndicatorScoreText = props => (
   />
 );
 
+const ButtonTextHeading = styled(ButtonText)`
+  text-decoration: none;
+`;
+
 const maxValue = 100;
 
-function IndicatorPanel({ indicator, column, standard, onMetricClick }) {
+function IndicatorPanel({ indicator, column, standard, onMetricClick, intl }) {
   const value =
     indicator.score &&
     indicator.score[column] &&
     parseFloat(indicator.score[column]);
   return (
-    <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
-      <Box direction="row" align="center">
-        <Button onClick={() => onMetricClick(indicator.key)}>
-          <Heading level={6} margin={{ vertical: '2px' }}>
+    <Box pad={{ vertical: 'xxsmall', horizontal: 'none' }} fill="horizontal">
+      <Box
+        direction="row"
+        align="center"
+        pad={{ vertical: 'none', horizontal: 'small' }}
+      >
+        <ButtonTextHeading onClick={() => onMetricClick(indicator.key)}>
+          <AccordionPanelHeading level={6}>
             <FormattedMessage {...rootMessages.indicators[indicator.key]} />
-          </Heading>
-        </Button>
-        {value && (
-          <Button onClick={() => onMetricClick(indicator.key, 0)}>
-            <Text size="xsmall" margin={{ horizontal: 'xsmall' }}>
-              <FormattedMessage {...rootMessages.tabs.trend} />
-            </Text>
-          </Button>
-        )}
-        <Button onClick={() => onMetricClick(indicator.key, 1)}>
-          <Text size="xsmall" margin={{ horizontal: 'xsmall' }}>
-            <FormattedMessage {...rootMessages.tabs.about} />
-          </Text>
-        </Button>
+          </AccordionPanelHeading>
+        </ButtonTextHeading>
+        <TabLinks
+          level={3}
+          onItemClick={onMetricClick}
+          items={[
+            {
+              key: indicator.key,
+              value: 0,
+              label: intl.formatMessage(rootMessages.tabs.trend),
+              skip: !value,
+            },
+            {
+              key: indicator.key,
+              value: 1,
+              label: intl.formatMessage(rootMessages.tabs.about),
+            },
+          ]}
+        />
       </Box>
       <BarHorizontal
         level={3}
@@ -67,6 +85,7 @@ IndicatorPanel.propTypes = {
   column: PropTypes.string,
   standard: PropTypes.string,
   onMetricClick: PropTypes.func,
+  intl: intlShape.isRequired,
 };
 
-export default IndicatorPanel;
+export default injectIntl(IndicatorPanel);

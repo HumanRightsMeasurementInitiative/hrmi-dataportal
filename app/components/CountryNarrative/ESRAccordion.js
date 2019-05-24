@@ -65,7 +65,7 @@ function ESRAccordion({
                                 onMetricClick={onMetricClick}
                                 standard={standard}
                               />
-                              <Box pad="medium" />
+                              <Box width="200px" />
                             </Box>
                           ))}
                         </div>

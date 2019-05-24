@@ -37,19 +37,17 @@ function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
                 >
                   {mainTabs.slice().map(tab => (
                     <Tab title={tab.title} key={tab.key}>
-                      <ColumnContent main={size !== 'small' && aside}>
-                        {tab.content}
-                      </ColumnContent>
+                      <ColumnContent>{tab.content}</ColumnContent>
                     </Tab>
                   ))}
                 </Tabs>
               )}
               {size !== 'small' && aside && activeTabs.length <= 2 && (
                 <Box direction="column">
-                  <ColumnHeader main>
+                  <ColumnHeader>
                     <ColumnTitle>{activeTabs[0].title}</ColumnTitle>
                   </ColumnHeader>
-                  <ColumnContent main>{activeTabs[0].content}</ColumnContent>
+                  <ColumnContent>{activeTabs[0].content}</ColumnContent>
                 </Box>
               )}
             </Box>

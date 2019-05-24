@@ -45,7 +45,7 @@ function CPRAccordion({ dimension, rights, onMetricClick }) {
                         onMetricClick={onMetricClick}
                         hasAtRisk
                       />
-                      <Box pad="medium" />
+                      <Box width="200px" />
                     </Box>
                   );
                 }
@@ -80,7 +80,7 @@ function CPRAccordion({ dimension, rights, onMetricClick }) {
                                 onMetricClick={onMetricClick}
                                 hasAtRisk
                               />
-                              <Box pad="medium" />
+                              <Box width="200px" />
                             </Box>
                           ))}
                         </div>

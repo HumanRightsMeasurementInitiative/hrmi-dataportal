@@ -34,6 +34,7 @@ export function DiamondChart({ dimensions, rights }) {
             data={dimensions}
             level={0}
             height={HEIGHT}
+            noPadding
           />
         )}
         {rights && (

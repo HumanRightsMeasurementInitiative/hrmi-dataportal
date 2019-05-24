@@ -3,18 +3,17 @@ import styled from 'styled-components';
 import { Box } from 'grommet';
 
 const Styled = styled(Box)`
-  margin: 0 auto;
   width: 100%;
-  max-width: 1600px;
   position: relative;
-  min-height: auto;
+  min-height: 100vh;
+  border-right: 1px solid;
+  border-color: ${props => props.theme.global.colors['light-3']};
 `;
 
 export default props => (
   <Styled
-    direction="row"
-    align="center"
-    pad={{ horizontal: 'large' }}
+    direction="column"
+    pad={{ right: 'medium', bottom: 'large' }}
     {...props}
   />
 );

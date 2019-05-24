@@ -1,13 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Text, Box, Button } from 'grommet';
+import { Text, Box } from 'grommet';
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
 
 import rootMessages from 'messages';
 import formatScore from 'utils/format-score';
+
+import ButtonText from 'styled/ButtonText';
+
+import AccordionPanelHeading from './AccordionPanelHeading';
+import TabLinks from './TabLinks';
 
 const RightScoreText = props => (
   <Text
@@ -19,11 +24,8 @@ const RightScoreText = props => (
   />
 );
 
-const RightHeading = props => (
-  <Heading level={5} margin={{ vertical: '5px' }} {...props} />
-);
-const StyledRightHeading = styled(RightHeading)`
-  display: inline-block;
+const ButtonTextHeading = styled(ButtonText)`
+  text-decoration: none;
 `;
 
 function RightPanel({
@@ -35,51 +37,45 @@ function RightPanel({
   onMetricClick,
   standard,
   hasAtRisk = true,
+  intl,
 }) {
   const value =
     right.score && right.score[column] && parseFloat(right.score[column]);
-  const trendTab = 0;
-  const atRiskTab = 1;
-  const aboutTab = hasAtRisk ? 2 : 1;
   return (
-    <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
-      <Box direction="row" align="center">
-        <Button onClick={() => onMetricClick(right.key)}>
-          <StyledRightHeading
-            level={isSubright ? 6 : 5}
-            margin={{ vertical: '2px' }}
-          >
+    <Box pad={{ vertical: 'xxsmall', horizontal: 'none' }} fill="horizontal">
+      <Box
+        direction="row"
+        align="center"
+        pad={{ vertical: 'none', horizontal: 'small' }}
+      >
+        <ButtonTextHeading onClick={() => onMetricClick(right.key)}>
+          <AccordionPanelHeading level={isSubright ? 6 : 5}>
             <FormattedMessage {...rootMessages['rights-short'][right.key]} />
-          </StyledRightHeading>
-        </Button>
-        {value && (
-          <Button onClick={() => onMetricClick(right.key, trendTab)}>
-            <Text
-              size={isSubright ? 'xsmall' : 'small'}
-              margin={{ horizontal: 'xsmall' }}
-            >
-              <FormattedMessage {...rootMessages.tabs.trend} />
-            </Text>
-          </Button>
-        )}
-        {hasAtRisk && (
-          <Button onClick={() => onMetricClick(right.key, atRiskTab)}>
-            <Text
-              size={isSubright ? 'xsmall' : 'small'}
-              margin={{ horizontal: 'xsmall' }}
-            >
-              <FormattedMessage {...rootMessages.tabs['people-at-risk']} />
-            </Text>
-          </Button>
-        )}
-        <Button onClick={() => onMetricClick(right.key, aboutTab)}>
-          <Text
-            size={isSubright ? 'xsmall' : 'small'}
-            margin={{ horizontal: 'xsmall' }}
-          >
-            <FormattedMessage {...rootMessages.tabs.about} />
-          </Text>
-        </Button>
+          </AccordionPanelHeading>
+        </ButtonTextHeading>
+        <TabLinks
+          level={isSubright ? 3 : 2}
+          onItemClick={onMetricClick}
+          items={[
+            {
+              key: right.key,
+              value: 0,
+              label: intl.formatMessage(rootMessages.tabs.trend),
+              skip: !value,
+            },
+            {
+              key: right.key,
+              value: 1,
+              label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              skip: !hasAtRisk,
+            },
+            {
+              key: right.key,
+              value: hasAtRisk ? 2 : 1,
+              label: intl.formatMessage(rootMessages.tabs.about),
+            },
+          ]}
+        />
       </Box>
       {right.type === 'esr' && (
         <BarHorizontal
@@ -123,6 +119,7 @@ RightPanel.propTypes = {
   columnLo: PropTypes.string,
   columnHi: PropTypes.string,
   hasAtRisk: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
-export default RightPanel;
+export default injectIntl(RightPanel);

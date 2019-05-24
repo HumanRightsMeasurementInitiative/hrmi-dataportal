@@ -15,6 +15,7 @@ import styled from 'styled-components';
 
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
+import MainColumn from 'styled/MainColumn';
 
 import { sortScores } from 'utils/scores';
 
@@ -90,7 +91,7 @@ export function SingleMetric({
   });
 
   return (
-    <Box pad={{ horizontal: 'medium' }} direction="column">
+    <MainColumn>
       <Box direction="row">
         <CountryFilters
           regionFilterValue={regionFilterValue}
@@ -152,7 +153,7 @@ export function SingleMetric({
             </Box>
           ))}
       </Styled>
-    </Box>
+    </MainColumn>
   );
 }
 

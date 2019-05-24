@@ -1,15 +1,14 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styled, { css } from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
 
-import UL from 'styled/UL';
-
-import Tooltip from 'components/Tooltip';
-import { RIGHTS, DIMENSIONS } from 'containers/App/constants';
+import { DIMENSIONS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
+
+import DimensionTooltip from './DimensionTooltip';
 
 const HEIGHT = 8;
 const heightRotated = HEIGHT * 2 ** (1 / 2); // height * sqrt(2)
@@ -29,10 +28,6 @@ const Square = styled.div`
   background-color: ${({ theme, color }) => theme.global.colors[color]};
 `;
 
-const dimensionRights = dimensionKey =>
-  RIGHTS.filter(
-    r => typeof r.aggregate === 'undefined' && r.dimension === dimensionKey,
-  );
 const DimensionBox = props => <Box direction="row" align="center" {...props} />;
 
 const DimensionWrap = styled(DimensionBox)`
@@ -70,7 +65,7 @@ const DimensionWrap = styled(DimensionBox)`
     `}
 `;
 
-function Key({ intl }) {
+function Key() {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -84,60 +79,30 @@ function Key({ intl }) {
             size: '2px',
           }}
         >
-          {DIMENSIONS.map(d => {
-            const rights = dimensionRights(d.key);
-            return (
-              <DimensionWrap
-                key={d.key}
-                hasTriangle={d.key === 'esr'}
-                pad={{ right: size === 'xlarge' ? 'medium' : 'xsmall' }}
+          {DIMENSIONS.map(d => (
+            <DimensionWrap
+              key={d.key}
+              hasTriangle={d.key === 'esr'}
+              pad={{ right: size === 'xlarge' ? 'medium' : 'xsmall' }}
+            >
+              <SquareWrap>
+                <Square color={d.key} />
+              </SquareWrap>
+              <Text size="small">
+                <FormattedMessage {...rootMessages.dimensions[d.key]} />
+              </Text>
+              <Box
+                margin={{ left: 'auto' }}
+                pad={{ horizontal: size === 'xlarge' ? 'small' : 'xsmall' }}
               >
-                <SquareWrap>
-                  <Square color={d.key} />
-                </SquareWrap>
-                <Text size="small">
-                  <FormattedMessage {...rootMessages.dimensions[d.key]} />
-                </Text>
-                <Box
-                  margin={{ left: 'auto' }}
-                  pad={{ horizontal: size === 'xlarge' ? 'small' : 'xsmall' }}
-                >
-                  <Tooltip
-                    iconSize="medium"
-                    text={intl.formatMessage(rootMessages.tooltip[d.key], {
-                      count: rights.length,
-                    })}
-                    maxWidth="300px"
-                    component={
-                      <>
-                        <FormattedMessage
-                          {...rootMessages.tooltip[d.key]}
-                          values={{ count: rights.length }}
-                        />
-                        <UL>
-                          {rights.map(r => (
-                            <li key={r.key}>
-                              <FormattedMessage
-                                {...rootMessages.rights[r.key]}
-                              />
-                            </li>
-                          ))}
-                        </UL>
-                      </>
-                    }
-                  />
-                </Box>
-              </DimensionWrap>
-            );
-          })}
+                <DimensionTooltip dimensionKey={d.key} />
+              </Box>
+            </DimensionWrap>
+          ))}
         </Box>
       )}
     </ResponsiveContext.Consumer>
   );
 }
 
-Key.propTypes = {
-  intl: intlShape,
-};
-
-export default injectIntl(Key);
+export default Key;

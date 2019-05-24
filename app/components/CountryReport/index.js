@@ -6,23 +6,18 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import { Heading, Box } from 'grommet';
+import { Heading } from 'grommet';
 
 import CountrySummaryChart from 'components/CountrySummaryChart';
 import CountryNarrative from 'components/CountryNarrative';
+import MainColumn from 'styled/MainColumn';
 
 import { needsArticle, isPlural } from 'utils/narrative';
 
 import messages from './messages';
-
-const Styled = styled(Box)`
-  margin: 0 auto;
-  max-width: 1000px;
-`;
 
 function CountryReport({
   countryTitle,
@@ -40,7 +35,7 @@ function CountryReport({
   reference,
 }) {
   return (
-    <Styled pad="medium">
+    <MainColumn>
       <Heading level={2}>
         <FormattedMessage
           {...messages.title}
@@ -70,7 +65,7 @@ function CountryReport({
         onAtRiskClick={onAtRiskClick}
         reference={reference}
       />
-    </Styled>
+    </MainColumn>
   );
 }
 
