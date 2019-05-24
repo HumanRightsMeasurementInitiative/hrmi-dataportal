@@ -92,19 +92,23 @@ function MetricTrend({
           margin={{ bottom: 30, right: 13 }}
         >
           <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
-          <AreaSeries
-            data={rangeUpper}
-            style={{ fill: color, stroke: 'transparent', opacity: 0.2 }}
-          />
-          <AreaSeries
-            data={rangeLower}
-            style={{
-              fill: 'white',
-              stroke: 'white',
-              opacity: 1,
-              strokeWidth: 1,
-            }}
-          />
+          {rangeColumns && (
+            <>
+              <AreaSeries
+                data={rangeUpper}
+                style={{ fill: color, stroke: 'transparent', opacity: 0.2 }}
+              />
+              <AreaSeries
+                data={rangeLower}
+                style={{
+                  fill: 'white',
+                  stroke: 'white',
+                  opacity: 1,
+                  strokeWidth: 1,
+                }}
+              />
+            </>
+          )}
           <HorizontalGridLines />
           <XAxis
             tickFormat={timeFormat('%Y')}
@@ -122,14 +126,18 @@ function MetricTrend({
             tickSize={3}
             tickPadding={2}
           />
-          <LineSeries
-            data={rangeUpper}
-            style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
-          />
-          <LineSeries
-            data={rangeLower}
-            style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
-          />
+          {rangeColumns && (
+            <>
+              <LineSeries
+                data={rangeUpper}
+                style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+              />
+              <LineSeries
+                data={rangeLower}
+                style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+              />
+            </>
+          )}
           <LineMarkSeries
             style={{
               stroke: color,
