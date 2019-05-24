@@ -225,6 +225,11 @@ export const getContentByKey = createSelector(
   getContent,
   (key, content) => content[key],
 );
+export const getDataByKey = createSelector(
+  (state, key) => key,
+  getData,
+  (key, data) => data[key],
+);
 
 // helper functions
 const sortByNumber = (data, column, asc = true) => {
