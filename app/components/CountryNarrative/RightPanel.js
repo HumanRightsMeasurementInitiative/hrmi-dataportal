@@ -39,8 +39,8 @@ function RightPanel({
   const value =
     right.score && right.score[column] && parseFloat(right.score[column]);
   const trendTab = 0;
-  const atRiskTab = value ? 1 : 0;
-  const aboutTab = trendTab + atRiskTab + 1;
+  const atRiskTab = 1;
+  const aboutTab = hasAtRisk ? 2 : 1;
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'small' }} fill="horizontal">
       <Box direction="row" align="center">

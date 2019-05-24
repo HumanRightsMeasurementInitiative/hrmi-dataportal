@@ -40,7 +40,7 @@ function IndicatorPanel({ indicator, column, standard, onMetricClick }) {
             </Text>
           </Button>
         )}
-        <Button onClick={() => onMetricClick(indicator.key, value ? 1 : 0)}>
+        <Button onClick={() => onMetricClick(indicator.key, 1)}>
           <Text size="xsmall" margin={{ horizontal: 'xsmall' }}>
             <FormattedMessage {...rootMessages.tabs.about} />
           </Text>

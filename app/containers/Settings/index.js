@@ -11,7 +11,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Box, Paragraph, Text, ResponsiveContext } from 'grommet';
+import { Box, Text, ResponsiveContext } from 'grommet';
 // import { Performance } from 'grommet-icons';
 // import MyButton from 'styled/Button';
 // import ButtonText from 'styled/ButtonText';
@@ -157,35 +157,6 @@ export function Settings({
                   style: benchmark === 'best' ? 'dashed' : 'solid',
                   color: 'light-2',
                 }}
-                tooltip={
-                  <>
-                    <Paragraph>
-                      {intl.formatMessage(messages.tooltip.benchmark.intro)}
-                    </Paragraph>
-                    <Paragraph>
-                      <Text style={{ fontWeight: 600 }}>
-                        {`${intl.formatMessage(
-                          rootMessages.settings.benchmark.adjusted,
-                        )}: `}
-                      </Text>
-                      <Text>
-                        {intl.formatMessage(
-                          messages.tooltip.benchmark.adjusted,
-                        )}
-                      </Text>
-                    </Paragraph>
-                    <Paragraph>
-                      <Text style={{ fontWeight: 600 }}>
-                        {`${intl.formatMessage(
-                          rootMessages.settings.benchmark.best,
-                        )}: `}
-                      </Text>
-                      <Text>
-                        {intl.formatMessage(messages.tooltip.benchmark.best)}
-                      </Text>
-                    </Paragraph>
-                  </>
-                }
               />
             )}
             {showStandard({ route, match }) && (
@@ -199,33 +170,6 @@ export function Settings({
                   style: standard === 'core' ? 'solid' : 'stripes',
                   color: 'esr',
                 }}
-                tooltip={
-                  <>
-                    <Paragraph>
-                      {intl.formatMessage(messages.tooltip.standard.intro)}
-                    </Paragraph>
-                    <Paragraph>
-                      <Text style={{ fontWeight: 600 }}>
-                        {`${intl.formatMessage(
-                          rootMessages.settings.standard.core,
-                        )}: `}
-                      </Text>
-                      <Text>
-                        {intl.formatMessage(messages.tooltip.standard.core)}
-                      </Text>
-                    </Paragraph>
-                    <Paragraph>
-                      <Text style={{ fontWeight: 600 }}>
-                        {`${intl.formatMessage(
-                          rootMessages.settings.standard.hi,
-                        )}: `}
-                      </Text>
-                      <Text>
-                        {intl.formatMessage(messages.tooltip.standard.hi)}
-                      </Text>
-                    </Paragraph>
-                  </>
-                }
               />
             )}
             {showHINote({ route, match }) && (
