@@ -7,12 +7,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Button, Box, Text } from 'grommet';
-import { Performance } from 'grommet-icons';
+import { Box, Paragraph, Text, ResponsiveContext } from 'grommet';
+// import { Performance } from 'grommet-icons';
+// import MyButton from 'styled/Button';
+// import ButtonText from 'styled/ButtonText';
+// import UL from 'styled/UL';
+import ButtonToggleMainSetting from 'styled/ButtonToggleMainSetting';
+
+// import Tooltip from 'components/Tooltip';
 
 import {
   getRouterRoute,
@@ -23,20 +29,36 @@ import {
   getTabSearch,
 } from 'containers/App/selectors';
 
-import { SCALES, STANDARDS, BENCHMARKS } from 'containers/App/constants';
+import {
+  SCALES,
+  STANDARDS,
+  RIGHTS,
+  DIMENSIONS,
+  BENCHMARKS,
+} from 'containers/App/constants';
 
 import { setScale, setStandard, setBenchmark } from 'containers/App/actions';
 
 import getMetricDetails from 'utils/metric-details';
 
 import rootMessages from 'messages';
+import messages from './messages';
+import Key from './Key';
+import SettingsToggle from './SettingsToggle';
 
 const Styled = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 80px;
+  height: 90px;
+`;
+
+const SetScale = styled.div`
+  position: absolute;
+  left: ${({ theme }) => theme.global.edgeSize.medium};
+  bottom: 100%;
+  transform: translateY(20%);
 `;
 
 const showSettings = ({ route, match, tabIndex }) => {
@@ -55,12 +77,28 @@ const showScale = ({ route }) => {
   if (route === 'metric') return false;
   return true;
 };
+const showDimensionKey = ({ route }) => {
+  if (route === 'metric') return false;
+  return true;
+};
+const showHINote = ({ route, match }) => {
+  const metricDetails = getMetricDetails(match);
+  if (metricDetails && metricDetails.metricType === 'indicators') return false;
+  if (route === 'country') return false;
+  return true;
+};
+
 const showStandard = ({ match }) => {
   const metricDetails = getMetricDetails(match);
   if (metricDetails && metricDetails.metricType === 'indicators') return false;
   return true;
 };
 const showBenchmark = () => true;
+
+const count = {
+  r: RIGHTS.filter(r => typeof r.aggregate === 'undefined').length,
+  d: DIMENSIONS.length,
+};
 
 export function Settings({
   route,
@@ -72,105 +110,150 @@ export function Settings({
   onSetScale,
   onSetStandard,
   onSetBenchmark,
+  intl,
 }) {
   if (!showSettings({ route, match, tabIndex })) return null;
   return (
     <Styled>
-      <Box
-        elevation="large"
-        direction="row"
-        background="white"
-        height="80px"
-        width="full"
-        pad="medium"
-        align="center"
-      >
-        <Performance />
-        {showScale({ route }) && (
-          <Box pad="medium" direction="row" align="center">
-            <Text size="small">
-              <FormattedMessage {...rootMessages.settings.scale.name} />
-            </Text>
-            <Box direction="row">
-              {SCALES.map(s => (
-                <Box key={s.key} align="center" direction="row">
-                  <Button
-                    hoverIndicator="light-1"
-                    active={s.key === scale}
-                    onClick={() => {
-                      onSetScale(s.key);
-                    }}
-                  >
-                    <Box pad="small" direction="row" align="center" gap="small">
-                      <Text>
-                        <FormattedMessage
-                          {...rootMessages.settings.scale[s.type]}
-                        />
+      <SetScale>
+        {showScale({ route }) &&
+          SCALES.map(s => (
+            <ButtonToggleMainSetting
+              active={s.key === scale}
+              disabled={s.key === scale}
+              onClick={() => {
+                onSetScale(s.key);
+              }}
+              key={s.key}
+            >
+              {`${count[s.key]} ${intl.formatMessage(
+                rootMessages.settings.scale[s.type],
+              )}`}
+            </ButtonToggleMainSetting>
+          ))}
+      </SetScale>
+      <ResponsiveContext.Consumer>
+        {size => (
+          <Box
+            direction="row"
+            background="white"
+            height="90px"
+            width="full"
+            pad={{ horizontal: size === 'xlarge' ? 'medium' : 'small' }}
+            align="start"
+            style={{
+              boxShadow: '0px -3px 6px rgba(0, 0, 0, 0.15)',
+            }}
+          >
+            {showDimensionKey({ route, match }) && <Key />}
+            {showBenchmark() && (
+              <SettingsToggle
+                setting="benchmark"
+                active={benchmark}
+                onActivate={onSetBenchmark}
+                options={BENCHMARKS}
+                square={{
+                  type: 'line',
+                  style: benchmark === 'best' ? 'dashed' : 'solid',
+                  color: 'light-2',
+                }}
+                tooltip={
+                  <>
+                    <Paragraph>
+                      {intl.formatMessage(messages.tooltip.benchmark.intro)}
+                    </Paragraph>
+                    <Paragraph>
+                      <Text style={{ fontWeight: 600 }}>
+                        {`${intl.formatMessage(
+                          rootMessages.settings.benchmark.adjusted,
+                        )}: `}
                       </Text>
-                    </Box>
-                  </Button>
+                      <Text>
+                        {intl.formatMessage(
+                          messages.tooltip.benchmark.adjusted,
+                        )}
+                      </Text>
+                    </Paragraph>
+                    <Paragraph>
+                      <Text style={{ fontWeight: 600 }}>
+                        {`${intl.formatMessage(
+                          rootMessages.settings.benchmark.best,
+                        )}: `}
+                      </Text>
+                      <Text>
+                        {intl.formatMessage(messages.tooltip.benchmark.best)}
+                      </Text>
+                    </Paragraph>
+                  </>
+                }
+              />
+            )}
+            {showStandard({ route, match }) && (
+              <SettingsToggle
+                setting="standard"
+                active={standard}
+                onActivate={onSetStandard}
+                options={STANDARDS}
+                square={{
+                  type: 'square',
+                  style: standard === 'core' ? 'solid' : 'stripes',
+                  color: 'esr',
+                }}
+                tooltip={
+                  <>
+                    <Paragraph>
+                      {intl.formatMessage(messages.tooltip.standard.intro)}
+                    </Paragraph>
+                    <Paragraph>
+                      <Text style={{ fontWeight: 600 }}>
+                        {`${intl.formatMessage(
+                          rootMessages.settings.standard.core,
+                        )}: `}
+                      </Text>
+                      <Text>
+                        {intl.formatMessage(messages.tooltip.standard.core)}
+                      </Text>
+                    </Paragraph>
+                    <Paragraph>
+                      <Text style={{ fontWeight: 600 }}>
+                        {`${intl.formatMessage(
+                          rootMessages.settings.standard.hi,
+                        )}: `}
+                      </Text>
+                      <Text>
+                        {intl.formatMessage(messages.tooltip.standard.hi)}
+                      </Text>
+                    </Paragraph>
+                  </>
+                }
+              />
+            )}
+            {showHINote({ route, match }) && (
+              <Box
+                pad={{
+                  top: 'small',
+                  left: size === 'xlarge' ? 'large' : 'medium',
+                }}
+                direction="column"
+                style={{
+                  maxWidth: size === 'xlarge' ? '300px' : '240px',
+                }}
+              >
+                <Box pad={{ bottom: 'xsmall' }}>
+                  <Text style={{ fontWeight: 600 }} size="small">
+                    <FormattedMessage {...messages.hi.label} />
+                  </Text>
                 </Box>
-              ))}
-            </Box>
+                <Box>
+                  <Text size="xsmall">
+                    <FormattedMessage {...messages.hi.text} />
+                  </Text>
+                </Box>
+              </Box>
+            )}
           </Box>
         )}
-        {showStandard({ route, match }) && (
-          <Box pad="medium" direction="row" align="center">
-            <Text size="small">
-              <FormattedMessage {...rootMessages.settings.standard.name} />
-            </Text>
-            <Box direction="row">
-              {STANDARDS.map(s => (
-                <Box key={s.key} align="center" direction="row">
-                  <Button
-                    hoverIndicator="light-1"
-                    active={s.key === standard}
-                    onClick={() => {
-                      onSetStandard(s.key);
-                    }}
-                  >
-                    <Box pad="small" direction="row" align="center" gap="small">
-                      <Text>
-                        <FormattedMessage
-                          {...rootMessages.settings.standard[s.key]}
-                        />
-                      </Text>
-                    </Box>
-                  </Button>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        )}
-        {showBenchmark() && (
-          <Box pad="medium" direction="row" align="center">
-            <Text size="small">
-              <FormattedMessage {...rootMessages.settings.benchmark.name} />
-            </Text>
-            <Box direction="row">
-              {BENCHMARKS.map(s => (
-                <Box key={s.key} align="center" direction="row">
-                  <Button
-                    hoverIndicator="light-1"
-                    active={s.key === benchmark}
-                    onClick={() => {
-                      onSetBenchmark(s.key);
-                    }}
-                  >
-                    <Box pad="small" direction="row" align="center" gap="small">
-                      <Text>
-                        <FormattedMessage
-                          {...rootMessages.settings.benchmark[s.key]}
-                        />
-                      </Text>
-                    </Box>
-                  </Button>
-                </Box>
-              ))}
-            </Box>
-          </Box>
-        )}
-      </Box>
+      </ResponsiveContext.Consumer>
     </Styled>
   );
 }
@@ -186,6 +269,7 @@ Settings.propTypes = {
   onSetScale: PropTypes.func,
   onSetStandard: PropTypes.func,
   onSetBenchmark: PropTypes.func,
+  intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -210,4 +294,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(Settings);
+export default compose(withConnect)(injectIntl(Settings));

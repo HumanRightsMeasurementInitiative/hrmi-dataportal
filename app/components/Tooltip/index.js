@@ -22,7 +22,12 @@ const StyledDrop = styled(Drop)`
   }
 `;
 
-function Tooltip({ text = 'I am a tooltip', iconSize = 'large' }) {
+function Tooltip({
+  text = 'I am a tooltip',
+  iconSize = 'large',
+  component,
+  maxWidth = '200px',
+}) {
   const [over, setOver] = useState(false);
   const [open, setOpen] = useState(false);
   const button = useRef(null);
@@ -30,7 +35,7 @@ function Tooltip({ text = 'I am a tooltip', iconSize = 'large' }) {
     <>
       <Button
         plain
-        icon={<CircleQuestion size={iconSize} />}
+        icon={<CircleQuestion size={iconSize} color="highlight2" />}
         ref={button}
         onMouseEnter={() => setOver(true)}
         onMouseLeave={() => setOver(false)}
@@ -49,9 +54,10 @@ function Tooltip({ text = 'I am a tooltip', iconSize = 'large' }) {
           <Box
             pad={{ vertical: 'xsmall', horizontal: 'small' }}
             background="dark-1"
-            width="200px"
+            style={{ maxWidth }}
           >
-            <Text size="small">{text}</Text>
+            {component}
+            {!component && <Text size="small">{text}</Text>}
           </Box>
         </StyledDrop>
       )}
@@ -62,6 +68,8 @@ function Tooltip({ text = 'I am a tooltip', iconSize = 'large' }) {
 Tooltip.propTypes = {
   text: PropTypes.string,
   iconSize: PropTypes.string,
+  component: PropTypes.node,
+  maxWidth: PropTypes.string,
 };
 
 export default Tooltip;

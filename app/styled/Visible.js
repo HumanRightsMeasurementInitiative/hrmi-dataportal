@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import { BREAKPOINTS } from 'theme';
 
 const breakpoint = props => {
-  if (props.min || props.min === BREAKPOINTS.SMALL) {
+  if (props.min || props.min === 'small') {
     return props.theme.breakpoints[props.min];
   }
-  return props.theme.breakpoints[BREAKPOINTS.SMALL];
+  return props.theme.breakpoints.small;
 };
 
 /**

@@ -67,7 +67,7 @@ export function WordCloud({ data, showTitle, dimension, intl }) {
           data.scores
             .sort((a, b) => (a.proportion > b.proportion ? -1 : 1))
             .map((s, index) => (
-              <Box direction="horizontal" align="center">
+              <Box direction="row" align="center" key={s.people_code}>
                 <Tag
                   key={s.people_code}
                   weight={scaleFontWeight(s.proportion)}
