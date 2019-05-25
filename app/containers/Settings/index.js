@@ -12,13 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
-// import { Performance } from 'grommet-icons';
-// import MyButton from 'styled/Button';
-// import ButtonText from 'styled/ButtonText';
-// import UL from 'styled/UL';
 import ButtonToggleMainSetting from 'styled/ButtonToggleMainSetting';
-
-// import Tooltip from 'components/Tooltip';
 
 import {
   getRouterRoute,
@@ -154,7 +148,7 @@ export function Settings({
                 options={BENCHMARKS}
                 square={{
                   type: 'line',
-                  style: benchmark === 'best' ? 'dashed' : 'solid',
+                  style: benchmark === 'best' ? 'solid' : 'dashed',
                   color: 'light-2',
                 }}
               />
