@@ -10,8 +10,6 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-// import { Heading } from 'grommet';
-// import styled from 'styled-components';
 
 import { STANDARDS } from 'containers/App/constants';
 
@@ -38,13 +36,6 @@ import PageTitle from 'styled/PageTitle';
 import { filterByAssessment } from 'utils/scores';
 
 import messages from './messages';
-
-// const SuperHeading = props => <Heading level={4} {...props} />;
-// const SuperHeadingStyled = styled(SuperHeading)`
-//   font-weight: normal;
-//   margin-bottom: 5px;
-//   margin-top: 0;
-// `;
 
 export function PathOverview({
   countries,

@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import styled, { withTheme } from 'styled-components';
-import { Heading, Button, Box } from 'grommet';
+import { Heading, Box } from 'grommet';
 
 import rootMessages from 'messages';
 
@@ -22,6 +22,7 @@ import MetricTrend from 'components/MetricTrend';
 import MetricAbout from 'components/MetricAbout';
 import Close from 'containers/Close';
 import TabContainer from 'containers/TabContainer';
+import ButtonText from 'styled/ButtonText';
 
 import {
   RIGHTS,
@@ -30,6 +31,7 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 import ContentContainer from 'styled/ContentContainer';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -62,12 +64,14 @@ import {
   setBenchmark,
 } from 'containers/App/actions';
 
-const MainHeading = props => (
-  <Heading level="2" margin={{ vertical: '5px' }} {...props} />
-);
+const PageTitle = props => <Heading level="2" margin="none" {...props} />;
 
-const StyledMainHeading = styled(MainHeading)`
+const StyledPageTitle = styled(PageTitle)`
   font-weight: ${({ base }) => (base ? 400 : 600)};
+`;
+
+const StyledButtonText = styled(ButtonText)`
+  text-decoration: none;
 `;
 
 const hasSubrights = metric => {
@@ -151,16 +155,16 @@ export function CountryMetric({
         <title>{`${countryTitle} - ${metricTitle}`}</title>
         <meta name="description" content="Description of Country Metric page" />
       </Helmet>
-      <ContentContainer header>
-        <Close
-          topRight
-          onClick={() =>
-            onClose(base, base === 'country' ? countryCode : metricCode)
-          }
-        />
-        <Box direction="column" pad="medium">
-          <StyledMainHeading>
-            <Button
+      <ContentContainer direction="column" header>
+        <ContentMaxWidth>
+          <Close
+            topRight
+            onClick={() =>
+              onClose(base, base === 'country' ? countryCode : metricCode)
+            }
+          />
+          <Box direction="column" align="start">
+            <StyledButtonText
               onClick={() => {
                 if (base === 'metric') {
                   onSelectCountry(countryCode);
@@ -169,91 +173,97 @@ export function CountryMetric({
                 }
               }}
             >
-              {base === 'metric' ? countryTitle : metricTitle}
-            </Button>
-          </StyledMainHeading>
-          <StyledMainHeading base>
-            {base === 'metric' ? metricTitle : countryTitle}
-          </StyledMainHeading>
-        </Box>
+              <StyledPageTitle level="2">
+                {base === 'metric' ? countryTitle : metricTitle}
+              </StyledPageTitle>
+            </StyledButtonText>
+            <StyledPageTitle base level="2">
+              {base === 'metric' ? metricTitle : countryTitle}
+            </StyledPageTitle>
+          </Box>
+        </ContentMaxWidth>
       </ContentContainer>
-      <TabContainer
-        aside={false}
-        modal
-        tabs={[
-          {
-            key: 'trend',
-            title: intl.formatMessage(rootMessages.tabs.trend),
-            content: (
-              <MetricTrend
-                color={theme.global.colors[getColour(metric)]}
-                scores={scores}
-                percentage={isESR}
-                maxValue={isESR ? 100 : 11}
-                maxYear={isESR ? maxYearESR : maxYearCPR}
-                column={isESR ? currentBenchmark.column : COLUMNS.CPR.MEAN}
-                rangeColumns={
-                  !isESR && {
-                    upper: COLUMNS.CPR.HI,
-                    lower: COLUMNS.CPR.LO,
+      <ContentMaxWidth>
+        <TabContainer
+          aside={false}
+          modal
+          tabs={[
+            {
+              key: 'trend',
+              title: intl.formatMessage(rootMessages.tabs.trend),
+              content: (
+                <MetricTrend
+                  color={theme.global.colors[getColour(metric)]}
+                  scores={scores}
+                  percentage={isESR}
+                  maxValue={isESR ? 100 : 11}
+                  maxYear={isESR ? maxYearESR : maxYearCPR}
+                  column={isESR ? currentBenchmark.column : COLUMNS.CPR.MEAN}
+                  rangeColumns={
+                    !isESR && {
+                      upper: COLUMNS.CPR.HI,
+                      lower: COLUMNS.CPR.LO,
+                    }
                   }
-                }
-                hasBenchmarkOption={isESR}
-                hasStandardOption={isESR && metric.metricType !== 'indicators'}
-                onSetBenchmark={onSetBenchmark}
-                onSetStandard={onSetStandard}
-                standard={standard}
-                benchmark={benchmark}
-              />
-            ),
-          },
-          {
-            key: 'atrisk',
-            title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-            content: hasAtRisk && metric.metricType !== 'indicators' && (
-              <CountryMetricPeople
-                data={atRisk}
-                metric={metric}
-                atRiskAnalysis={atRiskAnalysis}
-                locale={intl.locale}
-                hasAnalysis={hasAnalysis(metric)}
-              />
-            ),
-          },
-          {
-            key: 'about',
-            title: `${intl.formatMessage(
-              rootMessages.tabs.about,
-            )}: ${intl.formatMessage(
-              base === 'country'
-                ? rootMessages[metric.metricType][metricCode]
-                : rootMessages.countries[countryCode],
-            )}`,
-            content:
-              base === 'country' ? (
-                <MetricAbout
-                  metric={metric}
-                  metricInfo={metricInfo}
-                  standard={
-                    metric.metricType === 'indicators'
-                      ? STANDARDS.find(s => metricInfo.standard === s.code)
-                      : null
+                  hasBenchmarkOption={isESR}
+                  hasStandardOption={
+                    isESR && metric.metricType !== 'indicators'
                   }
+                  onSetBenchmark={onSetBenchmark}
+                  onSetStandard={onSetStandard}
+                  standard={standard}
+                  benchmark={benchmark}
                 />
-              ) : (
-                <>
-                  {country && auxIndicators && (
-                    <CountryAbout
-                      country={country}
-                      auxIndicators={auxIndicators}
-                      onCategoryClick={onCategoryClick}
-                    />
-                  )}
-                </>
               ),
-          },
-        ]}
-      />
+            },
+            {
+              key: 'atrisk',
+              title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              content: hasAtRisk && metric.metricType !== 'indicators' && (
+                <CountryMetricPeople
+                  data={atRisk}
+                  metric={metric}
+                  atRiskAnalysis={atRiskAnalysis}
+                  locale={intl.locale}
+                  hasAnalysis={hasAnalysis(metric)}
+                />
+              ),
+            },
+            {
+              key: 'about',
+              title: `${intl.formatMessage(
+                rootMessages.tabs.about,
+              )}: ${intl.formatMessage(
+                base === 'country'
+                  ? rootMessages[metric.metricType][metricCode]
+                  : rootMessages.countries[countryCode],
+              )}`,
+              content:
+                base === 'country' ? (
+                  <MetricAbout
+                    metric={metric}
+                    metricInfo={metricInfo}
+                    standard={
+                      metric.metricType === 'indicators'
+                        ? STANDARDS.find(s => metricInfo.standard === s.code)
+                        : null
+                    }
+                  />
+                ) : (
+                  <>
+                    {country && auxIndicators && (
+                      <CountryAbout
+                        country={country}
+                        auxIndicators={auxIndicators}
+                        onCategoryClick={onCategoryClick}
+                      />
+                    )}
+                  </>
+                ),
+            },
+          ]}
+        />
+      </ContentMaxWidth>
     </Box>
   );
 }
