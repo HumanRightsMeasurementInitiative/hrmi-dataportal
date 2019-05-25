@@ -40,9 +40,7 @@ export function NavMetric({ onSelectMetric, intl, onClose }) {
           {!hasMetrics && <FormattedMessage {...messages.search.noResults} />}
           {dimensions.length > 0 && (
             <NavOptionGroup
-              label={intl.formatMessage(
-                rootMessages['metric-types'].dimensions,
-              )}
+              label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
               options={dimensions}
               onClick={key => {
                 onClose();
@@ -52,7 +50,7 @@ export function NavMetric({ onSelectMetric, intl, onClose }) {
           )}
           {rights.length > 0 && (
             <NavOptionGroup
-              label={intl.formatMessage(rootMessages['metric-types'].rights)}
+              label={intl.formatMessage(rootMessages.metricTypes.rights)}
               options={rights}
               onClick={key => {
                 onClose();
@@ -62,9 +60,7 @@ export function NavMetric({ onSelectMetric, intl, onClose }) {
           )}
           {indicators.length > 0 && (
             <NavOptionGroup
-              label={intl.formatMessage(
-                rootMessages['metric-types'].indicators,
-              )}
+              label={intl.formatMessage(rootMessages.metricTypes.indicators)}
               options={indicators}
               onClick={key => {
                 onClose();

@@ -16,7 +16,7 @@ const StyledTextButton = styled(Button)`
   }
 `;
 
-function Accordion({ head, content, buttonText }) {
+function Accordion({ head, content, buttonText, level }) {
   const [open, setOpen] = useState(false);
   return (
     <Box direction="column">
@@ -34,7 +34,7 @@ function Accordion({ head, content, buttonText }) {
             pad={{ right: 'small' }}
           >
             <StyledTextButton onClick={() => setOpen(!open)}>
-              <Text size="small">{buttonText}</Text>
+              <Text size={level > 1 ? 'xsmall' : 'small'}>{buttonText}</Text>
             </StyledTextButton>
             <ButtonIcon subtle onClick={() => setOpen(!open)}>
               {!open && <Down size="xlarge" />}
@@ -52,6 +52,7 @@ Accordion.propTypes = {
   head: PropTypes.node,
   content: PropTypes.node,
   buttonText: PropTypes.string,
+  level: PropTypes.number,
 };
 
 export default Accordion;

@@ -38,7 +38,8 @@ export const COLUMNS = {
   ESR: {
     SCORE_ADJUSTED: 'score_wrt_immediate_duty',
     SCORE_BEST: 'score_wrt_global_best',
-    SCORE_ADJUSTED_BEST: 'average_immediate_duty_wrt_global_best',
+    SCORE_DUTY_BEST: 'average_immediate_duty_wrt_global_best',
+    INDICATOR_SCORE_DUTY_BEST: 'immediate_duty_wrt_global_best',
     PENALTY: 'penalty',
     RAW: 'value',
     RAW_REF: 'immediate_duty',
@@ -175,6 +176,8 @@ export const BENCHMARKS = [
   {
     key: 'best',
     column: COLUMNS.ESR.SCORE_BEST,
+    refColumn: COLUMNS.ESR.SCORE_DUTY_BEST,
+    refIndicatorColumn: COLUMNS.ESR.INDICATOR_SCORE_DUTY_BEST,
   },
 ];
 

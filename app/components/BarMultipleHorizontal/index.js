@@ -71,6 +71,16 @@ const BarValue = styled.div`
       background-repeat: repeat;
     `}
 `;
+const MarkValue = styled.div`
+  position: absolute;
+  top: 0;
+  width: 3px;
+  height: ${props => props.height}px;
+  margin-left: -${({ lineStyle }) => (lineStyle === 'solid' ? '2.5' : '1.5')}px;
+  border-right: ${({ lineStyle }) => (lineStyle === 'solid' ? '1' : '2')}px
+    ${({ lineStyle }) => (lineStyle === 'solid' ? 'solid' : 'dotted')};
+  border-color: ${props => props.theme.global.colors['dark-3']};
+`;
 
 function BarMultipleHorizontal({
   minValue,
@@ -85,6 +95,7 @@ function BarMultipleHorizontal({
   omitMinMaxLabels = false,
   height,
   noPadding = false,
+  refData,
 }) {
   const hasAnyScores =
     level > 0 && data && data.reduce((memo, d) => memo || !!d.score, false);
@@ -132,6 +143,16 @@ function BarMultipleHorizontal({
               const col = d.column || column;
               const mv = d.maxValue || maxValue;
               const value = d.score && d.score[col];
+              const refValues =
+                !d.ignoreRefs &&
+                refData &&
+                d &&
+                d.score &&
+                refData.map(refD => ({
+                  value: refD.value || d.score[refD.column],
+                  style: refD.style,
+                  key: refD.key,
+                }));
               return (
                 <BarReference
                   key={d.key}
@@ -147,6 +168,15 @@ function BarMultipleHorizontal({
                       stripes={d.stripes || stripes}
                     />
                   )}
+                  {refValues &&
+                    refValues.map(ref => (
+                      <MarkValue
+                        height={heightIndividual}
+                        key={ref.key}
+                        lineStyle={ref.style}
+                        style={{ left: `${(ref.value / mv) * 100}%` }}
+                      />
+                    ))}
                   {!value && level < 1 && data.length < 4 && (
                     <NoData level={level}>
                       <Text size="xsmall">{getNoDataMessage(intl, d)}</Text>
@@ -181,6 +211,7 @@ BarMultipleHorizontal.propTypes = {
   stripes: PropTypes.bool,
   noPadding: PropTypes.bool,
   intl: intlShape.isRequired,
+  refData: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 export default injectIntl(BarMultipleHorizontal);

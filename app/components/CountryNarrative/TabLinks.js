@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ButtonText from 'styled/ButtonText';
-import { Text, Box } from 'grommet';
+import { Box } from 'grommet';
 // prettier-ignore
 const Styled = styled(Box)`
 `;
@@ -23,6 +23,16 @@ const textSize = level => {
   return 'xsmall';
 };
 
+const Text = styled.span`
+  font-size: ${({ theme, level }) => theme.text[textSize(level)].size};
+  ${({ level }) =>
+    level === 3 &&
+    css`
+      top: -1px;
+      position: relative;
+    `}
+`;
+
 function TabLinks({ items, onItemClick, level }) {
   return (
     <Styled direction="row" align="center">
@@ -33,7 +43,7 @@ function TabLinks({ items, onItemClick, level }) {
               key={`${item.key}${item.value}`}
               onClick={() => onItemClick(item.key, item.value)}
             >
-              <Text size={textSize(level)}>{item.label}</Text>
+              <Text level={level}>{item.label}</Text>
             </TabLink>
           ),
       )}

@@ -14,6 +14,7 @@ const BarWrap = props => <Box direction="row" {...props} align="center" />;
 function DimensionChart({
   dimensionKey,
   column,
+  refColumns,
   data,
   maxValue,
   unit = '',
@@ -21,6 +22,15 @@ function DimensionChart({
 }) {
   const value =
     data && data.score && data.score[column] && parseFloat(data.score[column]);
+  const refValues =
+    refColumns &&
+    data &&
+    data.score &&
+    refColumns.map(refColumn => ({
+      value: refColumn.value || data.score[refColumn.column],
+      style: refColumn.style,
+      key: refColumn.key,
+    }));
   return (
     <Box>
       <DimensionTitle dimensionKey={dimensionKey} />
@@ -33,6 +43,7 @@ function DimensionChart({
           maxValue={maxValue}
           unit={unit}
           stripes={dimensionKey === 'esr' && standard === 'hi'}
+          refValues={refValues}
         />
         <DimensionScoreWrapper>
           <DimensionScoreText color={`${dimensionKey}Dark`}>
@@ -52,6 +63,7 @@ DimensionChart.propTypes = {
   standard: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   maxValue: PropTypes.number,
+  refColumns: PropTypes.array,
 };
 
 export default DimensionChart;

@@ -81,15 +81,15 @@ const MarkValue = styled.div`
   position: absolute;
   top: 0;
   height: ${props => props.height}px;
-  width: ${props => MARK_WIDTH[props.level || 1]}px;
-  margin-left: -2px;
-  background-color: ${props => props.theme.global.colors[props.color]};
+  width: 0;
+  margin-left: -${props => MARK_WIDTH[props.level || 1] / 2}px;
+  border-right: ${props => MARK_WIDTH[props.level || 1]}px solid;
+  border-color: ${props => props.theme.global.colors[props.color]};
 `;
 const MarkBound = styled(MarkValue)`
-  height: ${props => props.height}px;
   top: ${props => props.height / 2 - props.height * 0.35}px;
-  width: 1px;
   margin-left: -0.5px;
+  border-right-width: 1px;
   height: ${props => props.height * 0.7}px;
 `;
 
@@ -145,18 +145,18 @@ function BarBulletHorizontal({
             />
           )}
           {!noData && (
-            <MarkBound
-              color={color}
-              height={HEIGHT[level]}
-              style={{ left: `${(band.lo / maxValue) * 100}%` }}
-            />
-          )}
-          {!noData && (
             <MarkValue
               color={color}
               height={HEIGHT[level]}
               level={level}
               style={{ left: `${(value / maxValue) * 100}%` }}
+            />
+          )}
+          {!noData && (
+            <MarkBound
+              color={color}
+              height={HEIGHT[level]}
+              style={{ left: `${(band.lo / maxValue) * 100}%` }}
             />
           )}
           {!noData && (

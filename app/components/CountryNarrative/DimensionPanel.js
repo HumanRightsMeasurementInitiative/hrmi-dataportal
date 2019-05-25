@@ -25,6 +25,7 @@ const ButtonTextHeading = styled(ButtonText)`
 function DimensionPanel({
   dimension,
   column,
+  refColumns,
   columnLo,
   columnHi,
   standard,
@@ -34,6 +35,14 @@ function DimensionPanel({
 }) {
   const { score, type, key } = dimension;
   const value = score && score[column] && parseFloat(score[column]);
+  const refValues =
+    refColumns &&
+    score &&
+    refColumns.map(refColumn => ({
+      value: refColumn.value || score[refColumn.column],
+      style: refColumn.style,
+      key: refColumn.key,
+    }));
   return (
     <Box pad={{ vertical: 'small', horizontal: 'none' }} fill="horizontal">
       <Box
@@ -79,6 +88,7 @@ function DimensionPanel({
           data={dimension}
           unit="%"
           stripes={standard === 'hi'}
+          refValues={refValues}
         />
       )}
       {type === 'cpr' && (
@@ -109,6 +119,7 @@ DimensionPanel.propTypes = {
   onMetricClick: PropTypes.func,
   hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
+  refColumns: PropTypes.array,
 };
 
 export default injectIntl(DimensionPanel);

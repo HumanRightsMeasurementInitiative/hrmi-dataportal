@@ -187,37 +187,41 @@ export default defineMessages({
       },
     },
   },
-  'metric-types': {
+  metricTypes: {
     dimensions: {
-      id: `${scope}.metric-types.dimensions`,
+      id: `${scope}.metricTypes.dimensions`,
       defaultMessage: 'Categories of Rights',
     },
     'dimensions-short': {
-      id: `${scope}.metric-types.dimensions-short`,
+      id: `${scope}.metricTypes.dimensions-short`,
       defaultMessage: 'Categories',
     },
     rights: {
-      id: `${scope}.metric-types.rights`,
+      id: `${scope}.metricTypes.rights`,
       defaultMessage: 'Rights',
     },
+    subrights: {
+      id: `${scope}.metricTypes.subrights`,
+      defaultMessage: 'Subrights',
+    },
     indicators: {
-      id: `${scope}.metric-types.indicators`,
+      id: `${scope}.metricTypes.indicators`,
       defaultMessage: 'Indicators',
     },
     dimension: {
-      id: `${scope}.metric-types.dimension`,
+      id: `${scope}.metricTypes.dimension`,
       defaultMessage: 'Category of Rights',
     },
     'dimension-short': {
-      id: `${scope}.metric-types.dimensions-short`,
+      id: `${scope}.metricTypes.dimensions-short`,
       defaultMessage: 'Category',
     },
     right: {
-      id: `${scope}.metric-types.right`,
+      id: `${scope}.metricTypes.right`,
       defaultMessage: 'Right',
     },
     indicator: {
-      id: `${scope}.metric-types.indicator`,
+      id: `${scope}.metricTypes.indicator`,
       defaultMessage: 'Indicator',
     },
   },

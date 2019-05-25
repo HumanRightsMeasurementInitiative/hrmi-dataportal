@@ -20,7 +20,7 @@ const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
 const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
 
 // level:
-const HEIGHT = [50, 35, 20, 14];
+const HEIGHT = [50, 35, 20, 12];
 
 const BarReference = styled.div`
   position: relative;
@@ -63,11 +63,23 @@ const BarValue = styled.div`
       background-repeat: repeat;
     `}
 `;
+// prettier-ignore
+const MarkValue = styled.div`
+  position: absolute;
+  top: 0;
+  width: 3px;
+  height: ${props => props.height}px;
+  margin-left: -${({ lineStyle }) => (lineStyle === 'solid' ? '2' : '1')}px;
+  border-right: ${({ lineStyle }) => (lineStyle === 'solid' ? '1' : '2')}px
+    ${({ lineStyle }) => (lineStyle === 'solid' ? 'solid' : 'dotted')};
+  border-color: ${props => props.theme.global.colors['dark-2']};
+`;
 
 function BarHorizontal({
   minValue,
   maxValue,
   value,
+  refValues,
   color,
   unit,
   level = 1,
@@ -95,6 +107,16 @@ function BarHorizontal({
               stripes={stripes}
             />
           )}
+          {refValues &&
+            refValues.map(ref => (
+              <MarkValue
+                height={HEIGHT[level]}
+                key={ref.key}
+                lineStyle={ref.style}
+                style={{ left: `${(ref.value / maxValue) * 100}%` }}
+                level={level}
+              />
+            ))}
           {!value && data && level < 3 && (
             <NoData level={level}>
               <Text size="small">
@@ -127,6 +149,7 @@ BarHorizontal.propTypes = {
   omitMinMaxLabels: PropTypes.bool,
   stripes: PropTypes.bool,
   intl: intlShape.isRequired,
+  refValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 export default injectIntl(BarHorizontal);

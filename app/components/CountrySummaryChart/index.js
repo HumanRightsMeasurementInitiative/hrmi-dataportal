@@ -109,6 +109,15 @@ function CountrySummaryChart({
               unit="%"
               column={currentBenchmark.column}
               standard={standard}
+              refColumns={
+                // prettier-ignore
+                currentBenchmark.key === 'adjusted'
+                  ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
+                  : [
+                    { value: 100, style: 'solid', key: 'adjusted' },
+                    { column: currentBenchmark.refColumn, style: 'dotted', key: 'best' },
+                  ]
+              }
             />
           )}
           {scale === 'r' && (
@@ -118,6 +127,15 @@ function CountrySummaryChart({
               maxValue={100}
               column={currentBenchmark.column}
               standard={standard}
+              refColumns={
+                // prettier-ignore
+                currentBenchmark.key === 'adjusted'
+                  ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
+                  : [
+                    { value: 100, style: 'solid', key: 'adjusted' },
+                    { column: currentBenchmark.refColumn, style: 'dotted', key: 'best' },
+                  ]
+              }
             />
           )}
         </RightsType>

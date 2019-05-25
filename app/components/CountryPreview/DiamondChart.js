@@ -21,7 +21,7 @@ const BarWrapRotated = styled(BarWrap)`
   transform: rotate(-45deg);
 `;
 
-export function DiamondChart({ dimensions, rights }) {
+export function DiamondChart({ dimensions, rights, refColumns }) {
   if (!dimensions && !rights) return null;
 
   return (
@@ -35,6 +35,7 @@ export function DiamondChart({ dimensions, rights }) {
             level={0}
             height={HEIGHT}
             noPadding
+            refData={refColumns}
           />
         )}
         {rights && (
@@ -43,6 +44,7 @@ export function DiamondChart({ dimensions, rights }) {
             minValue={0}
             data={rights}
             level={0}
+            refData={refColumns}
           />
         )}
       </BarWrapRotated>
@@ -53,6 +55,7 @@ export function DiamondChart({ dimensions, rights }) {
 DiamondChart.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   dimensions: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  refColumns: PropTypes.array,
 };
 
 export default DiamondChart;

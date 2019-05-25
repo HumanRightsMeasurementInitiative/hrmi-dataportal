@@ -57,9 +57,7 @@ export function SearchResults({
           </Heading>
           {dimensions.length > 0 && (
             <NavOptionGroup
-              label={intl.formatMessage(
-                rootMessages['metric-types'].dimensions,
-              )}
+              label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
               options={dimensions}
               onClick={key => {
                 onClose();
@@ -69,7 +67,7 @@ export function SearchResults({
           )}
           {rights.length > 0 && (
             <NavOptionGroup
-              label={intl.formatMessage(rootMessages['metric-types'].rights)}
+              label={intl.formatMessage(rootMessages.metricTypes.rights)}
               options={rights}
               onClick={key => {
                 onClose();
@@ -79,9 +77,7 @@ export function SearchResults({
           )}
           {indicators.length > 0 && (
             <NavOptionGroup
-              label={intl.formatMessage(
-                rootMessages['metric-types'].indicators,
-              )}
+              label={intl.formatMessage(rootMessages.metricTypes.indicators)}
               options={indicators}
               onClick={key => {
                 onClose();

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 // import styled from 'styled-components';
 import { Box } from 'grommet';
 
+import { lowerCase } from 'utils/string';
+import rootMessages from 'messages';
 import Accordion from './Accordion';
 import DimensionPanel from './DimensionPanel';
 import RightPanel from './RightPanel';
@@ -17,11 +19,13 @@ function ESRAccordion({
   onMetricClick,
   standard,
   hasAtRisk,
+  intl,
 }) {
   return (
     <Box elevation="small" margin={{ top: 'medium' }}>
       <Accordion
         buttonText={`${rights.length} rights`}
+        level={1}
         head={
           <DimensionPanel
             dimension={dimension}
@@ -29,6 +33,15 @@ function ESRAccordion({
             onMetricClick={onMetricClick}
             standard={standard}
             hasAtRisk={hasAtRisk}
+            refColumns={
+              // prettier-ignore
+              benchmark.key === 'adjusted'
+                ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
+                : [
+                  { value: 100, style: 'solid', key: 'adjusted' },
+                  { column: benchmark.refColumn, style: 'dotted', key: 'best' },
+                ]
+            }
           />
         }
         content={
@@ -41,7 +54,10 @@ function ESRAccordion({
                 return (
                   <Box border="top" key={right.key}>
                     <Accordion
-                      buttonText={`${rightIndicators.length} indicators`}
+                      buttonText={`${rightIndicators.length} ${lowerCase(
+                        intl.formatMessage(rootMessages.metricTypes.indicators),
+                      )}`}
+                      level={2}
                       head={
                         <RightPanel
                           right={right}
@@ -49,6 +65,15 @@ function ESRAccordion({
                           onMetricClick={onMetricClick}
                           standard={standard}
                           hasAtRisk={hasAtRisk}
+                          refColumns={
+                            // prettier-ignore
+                            benchmark.key === 'adjusted'
+                              ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
+                              : [
+                                { value: 100, style: 'solid', key: 'adjusted' },
+                                { column: benchmark.refColumn, style: 'dotted', key: 'best' },
+                              ]
+                          }
                         />
                       }
                       content={
@@ -64,6 +89,15 @@ function ESRAccordion({
                                 column={benchmark.column}
                                 onMetricClick={onMetricClick}
                                 standard={standard}
+                                refColumns={
+                                  // prettier-ignore
+                                  benchmark.key === 'adjusted'
+                                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
+                                    : [
+                                      { value: 100, style: 'solid', key: 'adjusted' },
+                                      { column: benchmark.refIndicatorColumn, style: 'dotted', key: 'best' },
+                                    ]
+                                }
                               />
                               <Box width="200px" />
                             </Box>
@@ -89,6 +123,7 @@ ESRAccordion.propTypes = {
   indicators: PropTypes.array,
   benchmark: PropTypes.object,
   hasAtRisk: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
-export default ESRAccordion;
+export default injectIntl(ESRAccordion);

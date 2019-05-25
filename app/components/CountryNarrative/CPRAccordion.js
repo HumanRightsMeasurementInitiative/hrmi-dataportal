@@ -1,22 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { FormattedMessage } from 'react-intl';
+import { intlShape, injectIntl } from 'react-intl';
 // import styled from 'styled-components';
 import { Box } from 'grommet';
 
 import { COLUMNS } from 'containers/App/constants';
 
+import rootMessages from 'messages';
+
+import { lowerCase } from 'utils/string';
+
 import Accordion from './Accordion';
 import DimensionPanel from './DimensionPanel';
 import RightPanel from './RightPanel';
 
-function CPRAccordion({ dimension, rights, onMetricClick }) {
+function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
   const parentRights = rights.filter(r => typeof r.aggregate === 'undefined');
   const subrights = rights.filter(r => typeof r.aggregate !== 'undefined');
   return (
     <Box elevation="small" margin={{ top: 'medium' }}>
       <Accordion
-        buttonText={`${parentRights.length} rights`}
+        buttonText={`${parentRights.length} ${lowerCase(
+          intl.formatMessage(rootMessages.metricTypes.rights),
+        )}`}
+        level={1}
         head={
           <DimensionPanel
             dimension={dimension}
@@ -53,7 +60,10 @@ function CPRAccordion({ dimension, rights, onMetricClick }) {
                 return (
                   <Box border="top" key={right.key}>
                     <Accordion
-                      buttonText={`${rightSubrights.length} subrights`}
+                      buttonText={`${rightSubrights.length} ${lowerCase(
+                        intl.formatMessage(rootMessages.metricTypes.subrights),
+                      )}`}
+                      level={2}
                       head={
                         <RightPanel
                           right={right}
@@ -100,6 +110,7 @@ CPRAccordion.propTypes = {
   onMetricClick: PropTypes.func,
   dimension: PropTypes.object,
   rights: PropTypes.array,
+  intl: intlShape.isRequired,
 };
 
-export default CPRAccordion;
+export default injectIntl(CPRAccordion);

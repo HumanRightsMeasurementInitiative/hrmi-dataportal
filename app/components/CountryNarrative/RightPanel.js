@@ -31,6 +31,7 @@ const ButtonTextHeading = styled(ButtonText)`
 function RightPanel({
   right,
   column,
+  refColumns,
   isSubright,
   columnLo,
   columnHi,
@@ -41,6 +42,14 @@ function RightPanel({
 }) {
   const value =
     right.score && right.score[column] && parseFloat(right.score[column]);
+  const refValues =
+    refColumns &&
+    right.score &&
+    refColumns.map(refColumn => ({
+      value: refColumn.value || right.score[refColumn.column],
+      style: refColumn.style,
+      key: refColumn.key,
+    }));
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'none' }} fill="horizontal">
       <Box
@@ -87,6 +96,7 @@ function RightPanel({
           data={right}
           unit="%"
           stripes={standard === 'hi'}
+          refValues={refValues}
         />
       )}
       {right.type === 'cpr' && (
@@ -120,6 +130,7 @@ RightPanel.propTypes = {
   columnHi: PropTypes.string,
   hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
+  refColumns: PropTypes.array,
 };
 
 export default injectIntl(RightPanel);
