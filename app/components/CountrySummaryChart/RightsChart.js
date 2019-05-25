@@ -14,6 +14,7 @@ function RightsChart({
   data,
   unit = '',
   standard,
+  refColumns,
 }) {
   return (
     <Box>
@@ -26,6 +27,7 @@ function RightsChart({
           unit={unit}
           data={data}
           column={column}
+          refData={refColumns}
           stripes={dimensionKey === 'esr' && standard === 'hi'}
         />
       </BarWrap>
@@ -35,6 +37,7 @@ function RightsChart({
 
 RightsChart.propTypes = {
   dimensionKey: PropTypes.string,
+  refColumns: PropTypes.array,
   column: PropTypes.string,
   standard: PropTypes.string,
   unit: PropTypes.string,

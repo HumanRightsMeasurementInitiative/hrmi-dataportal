@@ -89,6 +89,7 @@ const getDimensions = (
         : (benchmark && benchmark.column) || COLUMNS.ESR.CORE,
     maxValue: dim.type === 'cpr' ? 10 : 100,
     stripes: dim.type === 'esr' && standard.key === 'hi',
+    ignoreRefs: dim.type === 'cpr',
   }));
 
 const prepRights = rights =>
@@ -138,6 +139,7 @@ const getRights = (scores, standard, benchmark, otherStandard, indicators) =>
         : (benchmark && benchmark.column) || COLUMNS.ESR.CORE,
     maxValue: right.type === 'cpr' ? 10 : 100,
     stripes: right.type === 'esr' && standard.key === 'hi',
+    ignoreRefs: right.type === 'cpr',
   }));
 
 export function CountryPreview({
@@ -168,6 +170,15 @@ export function CountryPreview({
                   indicators,
                 )}
                 benchmark={benchmark}
+                refColumns={
+                  // prettier-ignore
+                  benchmark.key === 'adjusted'
+                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
+                    : [
+                      { value: 100, style: 'solid', key: 'adjusted' },
+                      { column: benchmark.refColumn, style: 'dotted', key: 'best' },
+                    ]
+                }
               />
             </div>
           )}
@@ -182,6 +193,15 @@ export function CountryPreview({
                   indicators,
                 )}
                 benchmark={benchmark}
+                refColumns={
+                  // prettier-ignore
+                  benchmark.key === 'adjusted'
+                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
+                    : [
+                      { value: 100, style: 'solid', key: 'adjusted' },
+                      { column: benchmark.refColumn, style: 'dotted', key: 'best' },
+                    ]
+                }
               />
             </div>
           )}

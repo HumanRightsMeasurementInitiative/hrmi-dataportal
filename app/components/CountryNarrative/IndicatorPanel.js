@@ -29,11 +29,26 @@ const ButtonTextHeading = styled(ButtonText)`
 
 const maxValue = 100;
 
-function IndicatorPanel({ indicator, column, standard, onMetricClick, intl }) {
+function IndicatorPanel({
+  indicator,
+  column,
+  standard,
+  onMetricClick,
+  intl,
+  refColumns,
+}) {
   const value =
     indicator.score &&
     indicator.score[column] &&
     parseFloat(indicator.score[column]);
+  const refValues =
+    refColumns &&
+    indicator.score &&
+    refColumns.map(refColumn => ({
+      value: refColumn.value || indicator.score[refColumn.column],
+      style: refColumn.style,
+      key: refColumn.key,
+    }));
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'none' }} fill="horizontal">
       <Box
@@ -73,6 +88,7 @@ function IndicatorPanel({ indicator, column, standard, onMetricClick, intl }) {
         data={indicator}
         unit="%"
         stripes={standard === 'hi'}
+        refValues={refValues}
       />
       <IndicatorScoreText color="esrDark">
         {value && formatScore(value)}
@@ -86,6 +102,7 @@ IndicatorPanel.propTypes = {
   standard: PropTypes.string,
   onMetricClick: PropTypes.func,
   intl: intlShape.isRequired,
+  refColumns: PropTypes.array,
 };
 
 export default injectIntl(IndicatorPanel);
