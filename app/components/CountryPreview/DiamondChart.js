@@ -44,6 +44,7 @@ export function DiamondChart({ dimensions, rights, refColumns }) {
             minValue={0}
             data={rights}
             level={0}
+            noPadding
             refData={refColumns}
           />
         )}

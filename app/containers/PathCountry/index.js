@@ -48,15 +48,15 @@ import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 
-const DEPENDENCIES = [
-  'countries',
-  'cprScores',
-  'esrScores',
-  'esrIndicatorScores',
-  'esrIndicators',
-  'atRisk',
-  'auxIndicators',
-];
+const DEPENDENCIES = []; // [
+//   'countries',
+//   'cprScores',
+//   'esrScores',
+//   'esrIndicatorScores',
+//   'esrIndicators',
+//   'atRisk',
+//   'auxIndicators',
+// ];
 
 export function PathCountry({
   intl,

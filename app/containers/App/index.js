@@ -40,6 +40,8 @@ const DEPENDENCIES = [
   'esrScores',
   'esrIndicatorScores',
   'esrIndicators',
+  'auxIndicators',
+  'atRisk',
 ];
 
 const AppWrapper = styled.div`

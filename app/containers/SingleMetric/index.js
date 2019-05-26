@@ -10,12 +10,13 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Box, Button } from 'grommet';
+import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
 import MainColumn from 'styled/MainColumn';
+import Button from 'styled/Button';
 
 import { sortScores } from 'utils/scores';
 
@@ -31,6 +32,7 @@ import {
   getIncomeSearch,
   getSortSearch,
   getSortOrderSearch,
+  getCountries,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
@@ -45,8 +47,25 @@ const Styled = styled(Box)`
   margin: 0 auto;
 `;
 
-const DEPENDENCIES = ['countries', 'cprScores', 'esrScores'];
-const DEPENDENCIES_INDICATORS = ['countries', 'esrIndicatorScores'];
+// prettier-ignore
+const CountryButton = styled(Button)`
+  text-align: left;
+  padding: 3px 0;
+  @media (min-width: ${({ theme }) =>
+    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+    padding: 6px 0;
+  }
+`;
+
+const BarWrap = styled(Box)``;
+// prettier-ignore
+const CountryWrap = styled(Box)`
+  border-right: 1px solid;
+  border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
+`;
+
+const DEPENDENCIES = []; // ['countries', 'cprScores', 'esrScores'];
+const DEPENDENCIES_INDICATORS = []; // ['countries', 'esrIndicatorScores'];
 
 export function SingleMetric({
   onLoadData,
@@ -64,6 +83,7 @@ export function SingleMetric({
   onSortSelect,
   onOrderChange,
   onCountryClick,
+  countries,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -108,50 +128,95 @@ export function SingleMetric({
           onOrderToggle={onOrderChange}
         />
       </Box>
-      <Styled pad={{ vertical: 'large' }} direction="column" fill="horizontal">
+      <Styled
+        pad={{ vertical: 'large', right: 'large' }}
+        direction="column"
+        fill="horizontal"
+      >
+        <Box direction="row" align="end" pad={{ bottom: 'xsmall' }}>
+          <CountryWrap
+            width="150px"
+            noBorder
+            align="end"
+            pad={{ right: 'medium' }}
+          >
+            <Text size="small" style={{ fontWeight: 600 }}>
+              <FormattedMessage {...rootMessages.scoreLabel} />
+            </Text>
+          </CountryWrap>
+          <BarWrap flex direction="row">
+            <Text size="small" style={{ transform: 'translateX(-50%)' }}>
+              0
+            </Text>
+            <Text
+              size="small"
+              margin={{ left: 'auto' }}
+              style={{ transform: 'translateX(50%)' }}
+            >
+              {metric.type === 'esr' ? '100%' : '10'}
+            </Text>
+          </BarWrap>
+        </Box>
         {sortedScores &&
-          sortedScores.map(s => (
-            <Box key={s.country_code} direction="row">
-              <Box width="150px" border="right">
-                <Button
-                  onClick={() => onCountryClick(s.country_code, metric.key)}
+          sortedScores.map(s => {
+            const country =
+              metric.metricType === 'esr' &&
+              countries.find(c => c.country_code === s.country_code);
+            return (
+              <Box
+                key={s.country_code}
+                direction="row"
+                align="center"
+                border="right"
+              >
+                <CountryWrap
+                  width="150px"
+                  align="end"
+                  pad={{ right: 'medium' }}
                 >
-                  <FormattedMessage
-                    {...rootMessages.countries[s.country_code]}
-                  />
-                </Button>
+                  <CountryButton
+                    onClick={() => onCountryClick(s.country_code, metric.key)}
+                  >
+                    <FormattedMessage
+                      {...rootMessages.countries[s.country_code]}
+                    />
+                    {country && country.high_income_country === '1' && (
+                      <FormattedMessage {...rootMessages.hiCountryLabel} />
+                    )}
+                  </CountryButton>
+                </CountryWrap>
+                <BarWrap flex>
+                  {(metric.type === 'esr' ||
+                    metric.metricType === 'indicators') && (
+                    <BarHorizontal
+                      omitMinMaxLabels
+                      level={3}
+                      color={color}
+                      value={parseFloat(s[column])}
+                      minValue={0}
+                      maxValue={100}
+                      unit="%"
+                      stripes={standard === 'hi'}
+                    />
+                  )}
+                  {metric.type === 'cpr' && (
+                    <BarBulletHorizontal
+                      omitMinMaxLabels
+                      level={2}
+                      color={color}
+                      value={parseFloat(s[column])}
+                      band={{
+                        lo: parseFloat(s[COLUMNS.CPR.LO]),
+                        hi: parseFloat(s[COLUMNS.CPR.HI]),
+                      }}
+                      minValue={0}
+                      maxValue={10}
+                    />
+                  )}
+                </BarWrap>
               </Box>
-              <Box flex>
-                {(metric.type === 'esr' ||
-                  metric.metricType === 'indicators') && (
-                  <BarHorizontal
-                    omitMinMaxLabels
-                    level={3}
-                    color={color}
-                    value={parseFloat(s[column])}
-                    minValue={0}
-                    maxValue={100}
-                    unit="%"
-                    stripes={standard === 'hi'}
-                  />
-                )}
-                {metric.type === 'cpr' && (
-                  <BarBulletHorizontal
-                    omitMinMaxLabels
-                    level={2}
-                    color={color}
-                    value={parseFloat(s[column])}
-                    band={{
-                      lo: parseFloat(s[COLUMNS.CPR.LO]),
-                      hi: parseFloat(s[COLUMNS.CPR.HI]),
-                    }}
-                    minValue={0}
-                    maxValue={10}
-                  />
-                )}
-              </Box>
-            </Box>
-          ))}
+            );
+          })}
       </Styled>
     </MainColumn>
   );
@@ -164,6 +229,7 @@ SingleMetric.propTypes = {
   standard: PropTypes.string,
   benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   onAddFilter: PropTypes.func,
   onRemoveFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -193,6 +259,7 @@ const mapStateToProps = createStructuredSelector({
     }
     return false;
   },
+  countries: state => getCountries(state),
   benchmark: state => getBenchmarkSearch(state),
   standard: state => getStandardSearch(state),
   regionFilterValue: state => getRegionSearch(state),
