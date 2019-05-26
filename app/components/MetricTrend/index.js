@@ -105,6 +105,7 @@ function MetricTrend({
       }
     }
   }
+
   /* eslint-ensable no-plusplus */
   return (
     <Box direction="column" pad="medium">
@@ -116,21 +117,21 @@ function MetricTrend({
         >
           <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
           {hasScores && rangeColumns && (
-            <>
-              <AreaSeries
-                data={rangeUpper}
-                style={{ fill: color, stroke: 'transparent', opacity: 0.2 }}
-              />
-              <AreaSeries
-                data={rangeLower}
-                style={{
-                  fill: 'white',
-                  stroke: 'white',
-                  opacity: 1,
-                  strokeWidth: 1,
-                }}
-              />
-            </>
+            <AreaSeries
+              data={rangeUpper}
+              style={{ fill: color, stroke: 'transparent', opacity: 0.2 }}
+            />
+          )}
+          {hasScores && rangeColumns && (
+            <AreaSeries
+              data={rangeLower}
+              style={{
+                fill: 'white',
+                stroke: 'white',
+                opacity: 1,
+                strokeWidth: 1,
+              }}
+            />
           )}
           <HorizontalGridLines />
           <XAxis
@@ -150,16 +151,16 @@ function MetricTrend({
             tickPadding={2}
           />
           {hasScores && rangeColumns && (
-            <>
-              <LineSeries
-                data={rangeUpper}
-                style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
-              />
-              <LineSeries
-                data={rangeLower}
-                style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
-              />
-            </>
+            <LineSeries
+              data={rangeUpper}
+              style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+            />
+          )}
+          {hasScores && rangeColumns && (
+            <LineSeries
+              data={rangeLower}
+              style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+            />
           )}
           {hasScores && (
             <LineMarkSeries
