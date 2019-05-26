@@ -1,19 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
-import { Box, Button } from 'grommet';
+import { Box } from 'grommet';
+import { Checkmark } from 'grommet-icons';
+import DropOption from 'styled/DropOption';
+
 import messages from './messages';
 
-const Option = styled(Button)``;
-
-const SortOptions = ({ options, onSelect }) => (
-  <Box pad="small">
+const SortOptions = ({ options, onSelect, active }) => (
+  <Box pad="none">
     {options &&
       options.map(option => (
-        <Option key={option} plain onClick={() => onSelect(option)}>
-          <FormattedMessage {...messages.sortOptions[option]} />
-        </Option>
+        <DropOption
+          key={option}
+          onClick={() => onSelect(option)}
+          active={active === option}
+          disabled={active === option}
+        >
+          <Box align="center" direction="row">
+            <FormattedMessage {...messages.sortOptions[option]} />
+            {active === option && (
+              <Box margin={{ left: 'auto' }}>
+                <Checkmark color="dark-4" />
+              </Box>
+            )}
+          </Box>
+        </DropOption>
       ))}
   </Box>
 );
@@ -21,6 +33,7 @@ const SortOptions = ({ options, onSelect }) => (
 SortOptions.propTypes = {
   onSelect: PropTypes.func,
   options: PropTypes.array,
+  active: PropTypes.string,
 };
 
 export default SortOptions;

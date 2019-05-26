@@ -20,7 +20,6 @@ import {
 } from 'containers/App/constants';
 
 import DiamondChart from './DiamondChart';
-import messages from './messages';
 
 const hasScoreRights = (metricScores, standard) => {
   if (Object.keys(metricScores).length === 0) return false;
@@ -212,7 +211,7 @@ export function CountryPreview({
                   {...rootMessages.countries[country.country_code]}
                 />
                 {country.high_income_country === '1' && (
-                  <FormattedMessage {...messages.hi} />
+                  <FormattedMessage {...rootMessages.hiCountryLabel} />
                 )}
               </strong>
             </Text>

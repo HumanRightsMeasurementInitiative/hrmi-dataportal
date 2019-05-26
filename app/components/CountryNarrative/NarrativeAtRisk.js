@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import {
   Paragraph,
-  Anchor,
   Table,
   TableHeader,
   TableBody,
@@ -17,6 +16,8 @@ import { needsArticle, isPlural } from 'utils/narrative';
 import quasiEquals from 'utils/quasi-equals';
 //
 // import { BENCHMARKS } from 'containers/App/constants';
+
+import ButtonText from 'styled/ButtonText';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -136,8 +137,7 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
           {...messages.atRisk.end.beforeLink}
           values={messageValues}
         />
-        <Anchor
-          href="#"
+        <ButtonText
           onClick={evt => {
             if (evt) evt.preventDefault();
             return onAtRiskClick();
@@ -147,7 +147,7 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
             {...messages.atRisk.end.link}
             values={messageValues}
           />
-        </Anchor>
+        </ButtonText>
         <FormattedMessage
           {...messages.atRisk.end.afterLink}
           values={messageValues}

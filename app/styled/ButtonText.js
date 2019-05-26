@@ -7,7 +7,10 @@ export default styled(Button)`
   line-height: inherit;
   color: ${({ theme }) => theme.global.colors.dark};
   font-weight: 600;
+  font-size: 1em;
+  vertical-align: baseline;
   text-decoration: underline;
+  text-align: left;
   &:hover{
     color: ${({ theme }) => theme.global.colors.highlight3};
     background-color: transparent;

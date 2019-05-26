@@ -6,11 +6,13 @@
 
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Box, Heading, Anchor, Text } from 'grommet';
+import { Box, Heading, Text } from 'grommet';
 
 import { lowerCase } from 'utils/string';
 
@@ -18,11 +20,21 @@ import MetricAbout from 'components/MetricAbout';
 import { STANDARDS, RIGHTS, INDICATORS } from 'containers/App/constants';
 import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
+import UL from 'styled/UL';
+import ButtonText from 'styled/ButtonText';
 
 import rootMessages from 'messages';
 import messages from './messages';
 
-const DEPENDENCIES_INDICATORS = ['esrIndicators'];
+const Button = styled(ButtonText)`
+  font-weight: 400;
+`;
+
+const Pad = styled.div`
+  padding-bottom: 16px;
+`;
+
+const DEPENDENCIES_INDICATORS = []; // ['esrIndicators'];
 
 export function MetricAside({
   metric,
@@ -75,13 +87,12 @@ export function MetricAside({
       />
       <Box direction="column" pad="medium">
         {metricType !== 'dimensions' && (
-          <>
+          <Pad>
             <Heading level={4} margin={{ vertical: 'xsmall' }}>
               <FormattedMessage {...messages.titleParent[metricType]} />
             </Heading>
             <Box>
-              <Anchor
-                href="#"
+              <Button
                 onClick={evt => {
                   if (evt) evt.preventDefault();
                   onSelectMetric(ancestors[ancestors.length - 1].key);
@@ -92,12 +103,12 @@ export function MetricAside({
                     ancestors[ancestors.length - 1].key
                   ]}
                 />
-              </Anchor>
+              </Button>
             </Box>
-          </>
+          </Pad>
         )}
         {metricType !== 'indicators' && children.length > 0 && (
-          <>
+          <Pad>
             <Heading level={4} margin={{ vertical: 'xsmall' }}>
               {metricType === 'dimensions' && (
                 <FormattedMessage {...messages.titleChildren[metricType]} />
@@ -111,26 +122,25 @@ export function MetricAside({
             <Box>
               {((metricType === 'rights' && metric.type === 'cpr') ||
                 metricType === 'dimensions') && (
-                <ul>
+                <UL>
                   {children.map(child => (
                     <li key={child.key}>
-                      <Anchor
-                        href="#"
+                      <Button
                         onClick={evt => {
                           if (evt) evt.preventDefault();
                           onSelectMetric(child.key);
                         }}
                       >
                         <FormattedMessage {...rootMessages.rights[child.key]} />
-                      </Anchor>
+                      </Button>
                     </li>
                   ))}
-                </ul>
+                </UL>
               )}
               {metricType === 'rights' && metric.type === 'esr' && (
                 <>
                   {children.map(as => (
-                    <div key={as.key}>
+                    <Pad key={as.key}>
                       <Text>
                         {`'${intl.formatMessage(
                           rootMessages.settings.standard[as.key],
@@ -140,11 +150,10 @@ export function MetricAside({
                           ),
                         )}`}
                       </Text>
-                      <ul>
+                      <UL>
                         {as.indicators.map(child => (
                           <li key={child.key}>
-                            <Anchor
-                              href="#"
+                            <Button
                               onClick={evt => {
                                 if (evt) evt.preventDefault();
                                 onSelectMetric(child.key);
@@ -153,16 +162,16 @@ export function MetricAside({
                               <FormattedMessage
                                 {...rootMessages.indicators[child.key]}
                               />
-                            </Anchor>
+                            </Button>
                           </li>
                         ))}
-                      </ul>
-                    </div>
+                      </UL>
+                    </Pad>
                   ))}
                 </>
               )}
             </Box>
-          </>
+          </Pad>
         )}
       </Box>
     </Box>

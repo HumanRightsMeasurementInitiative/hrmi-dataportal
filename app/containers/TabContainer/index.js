@@ -14,6 +14,16 @@ import ColumnContent from 'styled/ColumnContent';
 
 /* height: ${props => props.theme.columnHeader.height}; */
 
+// TODO fix aside when leaving screen
+//     position: fixed;
+//     top: 100px;
+//     right: 0;
+//     width: 432px;
+//     bottom: 90px;
+//     overflow-y: auto;
+//     background: white;
+//     box-shadow: 0 0 8px 1px rgba(0,0,0,0.1);
+
 function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
   return (
     <ResponsiveContext.Consumer>
