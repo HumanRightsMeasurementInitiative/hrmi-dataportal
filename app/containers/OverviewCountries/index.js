@@ -30,6 +30,7 @@ import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 import CountryPreview from 'components/CountryPreview';
 import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
+import MainColumn from 'styled/MainColumn';
 
 import { sortCountries, getScoresForCountry } from 'utils/scores';
 
@@ -72,7 +73,7 @@ export function OverviewCountries({
     scores: scoresAllCountries,
   });
   return (
-    <Box pad={{ horizontal: 'medium' }}>
+    <MainColumn>
       <Box direction="row">
         <CountryFilters
           regionFilterValue={regionFilterValue}
@@ -110,7 +111,7 @@ export function OverviewCountries({
           </InfiniteScroll>
         </Box>
       )}
-    </Box>
+    </MainColumn>
   );
 }
 

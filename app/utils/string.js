@@ -20,7 +20,7 @@ export const regExMultipleWords = str =>
 export const regExMultipleWordsMatchStart = str =>
   reduce(str.split(' '), (words, s) => `${words}(?=.*\\b${s})`, '');
 
-export const truncateText = (text, limit, keepWords = true) => {
+export const truncateText = (text, limit = 6, keepWords = true) => {
   if (text.length > limit) {
     if (!keepWords) {
       return `${text.substring(0, limit)}\u2026`;

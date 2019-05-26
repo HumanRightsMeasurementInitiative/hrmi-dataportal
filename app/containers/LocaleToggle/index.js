@@ -7,9 +7,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { Button, DropButton, Text, Box } from 'grommet';
-import { FormDown, FormUp } from 'grommet-icons';
+import { DropButton, Box } from 'grommet';
+import { FormDown, FormUp, Checkmark } from 'grommet-icons';
+import DropOption from 'styled/DropOption';
 
 import { appLocales } from 'i18n';
 
@@ -17,49 +19,58 @@ import { getLocale } from 'containers/App/selectors';
 import { LANGUAGES } from 'containers/App/constants';
 import { changeLocale } from 'containers/LanguageProvider/actions';
 
+import messages from './messages';
+
 const Styled = styled.span`
   padding: 0 5px;
 `;
 
-const Option = styled(Button)``;
-
 const DropContent = ({ active, options, onSelect }) => (
-  <Box pad="small">
+  <Box pad="none">
     {options &&
       options.map(option => (
-        <Option
+        <DropOption
           key={option}
-          plain
-          color={active === option ? 'dark-4' : 'dark-1'}
           onClick={() => onSelect(option)}
+          active={active === option}
+          disabled={active === option}
         >
-          {LANGUAGES.long[option]}
-        </Option>
+          <Box align="center" direction="row">
+            {LANGUAGES.long[option]}
+            {active === option && (
+              <Box margin={{ left: 'auto' }}>
+                <Checkmark color="dark-4" />
+              </Box>
+            )}
+          </Box>
+        </DropOption>
       ))}
   </Box>
 );
 
-export function LocaleToggle(props) {
+export function LocaleToggle({ intl, locale, onLocaleToggle }) {
   const [open, setOpen] = useState(false);
   return (
     <Styled>
       <DropButton
+        hoverIndicator={{ color: 'highlight3' }}
         plain
+        reverse
+        gap="xxsmall"
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
         dropProps={{ align: { top: 'bottom', right: 'right' } }}
+        icon={open ? <FormUp /> : <FormDown />}
+        label={`${intl.formatMessage(messages.language)}
+          ${LANGUAGES.short[locale]}`}
         dropContent={
           <DropContent
-            active={props.locale}
+            active={locale}
             options={appLocales}
-            onSelect={props.onLocaleToggle}
+            onSelect={onLocaleToggle}
           />
         }
-      >
-        <Text>{LANGUAGES.short[props.locale]}</Text>
-        {!open && <FormDown />}
-        {open && <FormUp />}
-      </DropButton>
+      />
     </Styled>
   );
 }
@@ -75,6 +86,7 @@ export function LocaleToggle(props) {
 LocaleToggle.propTypes = {
   onLocaleToggle: PropTypes.func,
   locale: PropTypes.string,
+  intl: intlShape.isRequired,
 };
 
 DropContent.propTypes = {
@@ -97,4 +109,4 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LocaleToggle);
+)(injectIntl(LocaleToggle));
