@@ -1,28 +1,48 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { Text } from 'grommet';
 import styled from 'styled-components';
-import { Box, Button, Text } from 'grommet';
 
-const Option = styled(Button)``;
+import DropOption from 'styled/DropOption';
+
+const Styled = styled.div`
+  padding-bottom: 16px;
+`;
+
+// prettier-ignore
+const GroupLabel = styled.div`
+  padding-left: 5px;
+  padding-top: 10px;
+  padding-bottom: 2px;
+  @media (min-width: ${({ theme }) =>
+    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+    padding-left: 16px;
+    padding-top: 15px;
+    padding-bottom: 3px;
+  }
+`;
 
 const FilterOptions = ({ optionGroups, onSelect }) => (
-  <Box pad="small">
+  <Styled>
     {optionGroups &&
-      optionGroups.map(group => (
-        <Box direction="column" key={group.group} pad={{ bottom: 'small' }}>
-          <div>
+      optionGroups.map((group, index, list) => (
+        <div key={group.group}>
+          <GroupLabel>
             <Text size="xsmall">{group.label}</Text>
-          </div>
+          </GroupLabel>
           {group.options &&
             group.options.map(option => (
-              <Option key={option.value} plain onClick={() => onSelect(option)}>
+              <DropOption
+                key={option.value}
+                onClick={() => onSelect(option)}
+                noBorderLast={index === list.length - 1}
+              >
                 {option.label}
-              </Option>
+              </DropOption>
             ))}
-        </Box>
+        </div>
       ))}
-  </Box>
+  </Styled>
 );
 
 FilterOptions.propTypes = {

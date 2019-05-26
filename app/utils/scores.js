@@ -140,11 +140,13 @@ export const sortScores = ({ sort, order, intl, scores, column }) => {
   // sort by score
   return (
     scores &&
-    scores.sort((a, b) =>
-      parseFloat(a[column], 10) < parseFloat(b[column], 10)
-        ? factor * 1
-        : factor * -1,
-    )
+    scores
+      .sort((a, b) => sortByName(a, b, order, intl))
+      .sort((a, b) =>
+        parseFloat(a[column], 10) < parseFloat(b[column], 10)
+          ? factor * 1
+          : factor * -1,
+      )
   );
 };
 

@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 import { injectIntl, intlShape } from 'react-intl';
 
-import { Box, DropButton, Button } from 'grommet';
+import { Box, DropButton } from 'grommet';
 import { FormDown, FormUp, Ascend, Descend } from 'grommet-icons';
+
+import ButtonIcon from 'styled/ButtonIcon';
 
 import messages from './messages';
 import SortOptions from './SortOptions';
+
+const StyledDropButton = styled(DropButton)`
+  &:hover {
+    color: ${({ theme }) => theme.global.colors.highlight3};
+  }
+`;
+
+const StyledButtonIcon = styled(ButtonIcon)`
+  width: 35px;
+  height: 35px;
+`;
 
 export function CountrySort({
   sort,
@@ -19,8 +34,8 @@ export function CountrySort({
   const [optionsOpen, setOptionsOpen] = useState(false);
 
   return (
-    <Box direction="row" pad="xsmall">
-      <DropButton
+    <Box direction="row" pad="xsmall" margin={{ left: 'auto' }} align="center">
+      <StyledDropButton
         plain
         reverse
         gap="xxsmall"
@@ -32,10 +47,11 @@ export function CountrySort({
         onClose={() => setOptionsOpen(false)}
         onOpen={() => setOptionsOpen(true)}
         open={optionsOpen}
-        dropProps={{ align: { top: 'bottom', left: 'left' } }}
+        dropProps={{ align: { top: 'bottom', right: 'right' } }}
         dropContent={
           <SortOptions
             options={options}
+            active={sort}
             onSelect={value => {
               setOptionsOpen(false);
               onSortSelect(value);
@@ -43,10 +59,13 @@ export function CountrySort({
           />
         }
       />
-      <Button onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}>
+      <StyledButtonIcon
+        subtle
+        onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
+      >
         {order === 'asc' && <Ascend />}
         {order === 'desc' && <Descend />}
-      </Button>
+      </StyledButtonIcon>
     </Box>
   );
 }

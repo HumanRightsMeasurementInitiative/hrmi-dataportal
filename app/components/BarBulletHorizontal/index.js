@@ -27,10 +27,15 @@ const Wrapper = props => (
   <Box direction="row" {...props} align="center" fill="horizontal" />
 );
 
-const MinLabel = props => <Box {...props} width="25px" pad="xxsmall" />;
-const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
-const BarWrapper = props => <Box {...props} fill="horizontal" pad="xsmall" />;
-
+const MinLabel = props => (
+  <Box {...props} width="25px" pad={{ right: 'xsmall' }} />
+);
+const MaxLabel = props => (
+  <Box {...props} width="55px" pad={{ left: 'xsmall' }} />
+);
+const BarWrapper = props => (
+  <Box {...props} fill="horizontal" pad={{ vertical: 'xsmall' }} />
+);
 // level:
 const HEIGHT = [50, 35, 20, 14];
 const MARK_WIDTH = [4, 4, 3, 3];

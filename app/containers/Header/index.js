@@ -195,7 +195,6 @@ export function Header({ nav, intl }) {
           <MenuList visible={showMenu}>
             <span>
               <LocaleToggleWrap>
-                <FormattedMessage {...messages.language} />
                 <LocaleToggle />
               </LocaleToggleWrap>
             </span>

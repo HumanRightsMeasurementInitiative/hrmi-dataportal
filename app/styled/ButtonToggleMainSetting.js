@@ -7,7 +7,7 @@ export default styled(Button)`
   background-color: ${({ theme, active }) =>
     active ? theme.global.colors.highlight : theme.global.colors.white};
   padding: 10px 12px;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.20);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
   font-weight: 600;
   min-width: 120px;
   margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};

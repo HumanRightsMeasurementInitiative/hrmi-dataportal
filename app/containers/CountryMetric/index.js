@@ -107,7 +107,7 @@ const getColour = metric => {
   }
   return 'esr';
 };
-const DEPENDENCIES = ['auxIndicators', 'atRisk', 'esrIndicators'];
+const DEPENDENCIES = []; // []; // ['auxIndicators', 'atRisk', 'esrIndicators'];
 
 export function CountryMetric({
   metricCode,
