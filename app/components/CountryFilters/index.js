@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import styled from 'styled-components';
 
-import { Box, Button, DropButton } from 'grommet';
-import { FormClose, FormAdd } from 'grommet-icons';
+import { Box, Text, Drop } from 'grommet';
+import { Close, Add } from 'grommet-icons';
+
+import ButtonIcon from 'styled/ButtonIcon';
 
 import {
   REGIONS,
@@ -13,7 +16,17 @@ import {
 
 import rootMessages from 'messages';
 import FilterOptions from './FilterOptions';
+import FilterDropButton from './FilterDropButton';
+import ActiveFilterButton from './ActiveFilterButton';
 import messages from './messages';
+
+const StyledButtonIcon = styled(ButtonIcon)`
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 40px;
+  height: 40px;
+`;
 
 const getFilterOptions = ({ region, income, assessed }, intl, filterGroups) => {
   let groups = [];
@@ -72,79 +85,77 @@ export function CountryFilters({
   filterGroups,
 }) {
   const [filterOpen, setFilterOpen] = useState(false);
+  const countryTarget = useRef(null);
 
   return (
-    <Box direction="row" pad="xsmall">
+    <Box direction="row" pad={{ vertical: 'small' }}>
       {filterGroups.indexOf('region') > -1 && regionFilterValue && (
-        <Button
-          primary
-          icon={<FormClose />}
-          reverse
-          onClick={() => onRemoveFilter('region')}
+        <ActiveFilterButton
+          onRemove={() => onRemoveFilter('region')}
           label={intl.formatMessage(rootMessages.regions[regionFilterValue])}
-          pad="xxsmall"
-          gap="xxsmall"
-          margin={{ horizontal: 'xsmall' }}
         />
       )}
       {filterGroups.indexOf('income') > -1 && incomeFilterValue && (
-        <Button
-          primary
-          icon={<FormClose />}
-          reverse
-          onClick={() => onRemoveFilter('income')}
+        <ActiveFilterButton
+          onRemove={() => onRemoveFilter('income')}
           label={intl.formatMessage(rootMessages.income[incomeFilterValue])}
-          pad="xxsmall"
-          gap="xxsmall"
-          margin={{ horizontal: 'xsmall' }}
         />
       )}
       {filterGroups.indexOf('assessed') > -1 && assessedFilterValue && (
-        <Button
-          primary
-          icon={<FormClose />}
-          reverse
-          onClick={() => onRemoveFilter('assessed')}
+        <ActiveFilterButton
+          onRemove={() => onRemoveFilter('assessed')}
           label={intl.formatMessage(
             rootMessages.assessedFilters[assessedFilterValue],
           )}
-          pad="xxsmall"
-          gap="xxsmall"
-          margin={{ horizontal: 'xsmall' }}
         />
       )}
       {(!(filterGroups.indexOf('region') && regionFilterValue) ||
         !(filterGroups.indexOf('income') > -1 && incomeFilterValue) ||
         (!assessedFilterValue && filterGroups.indexOf('assessed') > -1)) && (
-        <DropButton
-          plain
-          reverse
-          gap="xxsmall"
-          margin={{ horizontal: 'small' }}
-          icon={<FormAdd />}
-          label={intl.formatMessage(messages.addFilter)}
-          onClose={() => setFilterOpen(false)}
-          onOpen={() => setFilterOpen(true)}
-          open={filterOpen}
-          dropProps={{ align: { top: 'top', left: 'left' } }}
-          dropContent={
-            <FilterOptions
-              optionGroups={getFilterOptions(
-                {
-                  region: regionFilterValue,
-                  income: incomeFilterValue,
-                  assessed: assessedFilterValue,
-                },
-                intl,
-                filterGroups,
-              )}
-              onSelect={({ key, value }) => {
-                setFilterOpen(false);
-                onAddFilter(key, value);
-              }}
-            />
-          }
-        />
+        <>
+          <FilterDropButton
+            active={filterOpen}
+            onClick={() => {
+              setFilterOpen(!filterOpen);
+            }}
+            ref={countryTarget}
+          >
+            <Box direction="horizontal" align="center" gap="xsmall">
+              <Add />
+              <Text>
+                <FormattedMessage {...messages.addFilter} />
+              </Text>
+            </Box>
+          </FilterDropButton>
+          {filterOpen && (
+            <Drop
+              align={{ top: 'top', left: 'left' }}
+              target={countryTarget.current}
+              onClickOutside={() => setFilterOpen(false)}
+            >
+              <Box pad={{ horizontal: 'none', top: 'small', bottom: 'none' }}>
+                <StyledButtonIcon subtle onClick={() => setFilterOpen(false)}>
+                  <Close size="large" />
+                </StyledButtonIcon>
+                <FilterOptions
+                  optionGroups={getFilterOptions(
+                    {
+                      region: regionFilterValue,
+                      income: incomeFilterValue,
+                      assessed: assessedFilterValue,
+                    },
+                    intl,
+                    filterGroups,
+                  )}
+                  onSelect={({ key, value }) => {
+                    setFilterOpen(false);
+                    onAddFilter(key, value);
+                  }}
+                />
+              </Box>
+            </Drop>
+          )}
+        </>
       )}
     </Box>
   );
