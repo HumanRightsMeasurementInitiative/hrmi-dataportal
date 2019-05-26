@@ -120,7 +120,7 @@ export function CountryFilters({
             }}
             ref={countryTarget}
           >
-            <Box direction="horizontal" align="center" gap="xsmall">
+            <Box direction="row" align="center" gap="xsmall">
               <Add />
               <Text>
                 <FormattedMessage {...messages.addFilter} />

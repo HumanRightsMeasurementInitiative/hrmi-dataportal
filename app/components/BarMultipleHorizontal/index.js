@@ -15,8 +15,12 @@ const Wrapper = props => (
   <Box direction="row" {...props} align="center" fill="horizontal" />
 );
 
-const MinLabel = props => <Box {...props} width="25px" pad="xxsmall" />;
-const MaxLabel = props => <Box {...props} width="50px" pad="xxsmall" />;
+const MinLabel = props => (
+  <Box {...props} width="25px" pad={{ right: 'xsmall' }} />
+);
+const MaxLabel = props => (
+  <Box {...props} width="55px" pad={{ left: 'xsmall' }} />
+);
 const BarWrapper = props => <Box {...props} fill="horizontal" />;
 
 // level:
@@ -119,7 +123,7 @@ function BarMultipleHorizontal({
           </Text>
         </MinLabel>
       )}
-      <BarWrapper pad={noPadding ? 'none' : 'xsmall'}>
+      <BarWrapper pad={{ vertical: noPadding ? 'none' : 'xsmall' }}>
         <BarAnchor height={heightTotal}>
           {!hasAnyScores && level > 0 && (
             <BarReference height={heightTotal} noData>
