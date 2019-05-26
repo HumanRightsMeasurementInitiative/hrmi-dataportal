@@ -53,7 +53,6 @@ export function LocaleToggle({ intl, locale, onLocaleToggle }) {
   return (
     <Styled>
       <DropButton
-        hoverIndicator={{ color: 'highlight3' }}
         plain
         reverse
         gap="xxsmall"
