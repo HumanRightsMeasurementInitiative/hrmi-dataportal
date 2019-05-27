@@ -12,12 +12,10 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
-import ButtonToggleMainSetting from 'styled/ButtonToggleMainSetting';
 
 import {
   getRouterRoute,
   getRouterMatch,
-  getScaleSearch,
   getStandardSearch,
   getBenchmarkSearch,
   getTabSearch,
@@ -25,15 +23,9 @@ import {
   getCountry,
 } from 'containers/App/selectors';
 
-import {
-  SCALES,
-  STANDARDS,
-  RIGHTS,
-  DIMENSIONS,
-  BENCHMARKS,
-} from 'containers/App/constants';
+import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 
-import { setScale, setStandard, setBenchmark } from 'containers/App/actions';
+import { setStandard, setBenchmark } from 'containers/App/actions';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -41,6 +33,7 @@ import rootMessages from 'messages';
 import messages from './messages';
 import Key from './Key';
 import SettingsToggle from './SettingsToggle';
+import ScaleToggle from './ScaleToggle';
 
 const Styled = styled.div`
   position: fixed;
@@ -50,7 +43,7 @@ const Styled = styled.div`
   height: 90px;
 `;
 
-const SetScale = styled.div`
+const SetScaleWrap = styled.div`
   position: absolute;
   left: ${({ theme }) => theme.global.edgeSize.medium};
   bottom: 100%;
@@ -71,10 +64,12 @@ const showSettings = ({ route, match, tabIndex }) => {
 
 const showScale = ({ route }) => {
   if (route === 'metric') return false;
+  if (route === 'country') return false;
   return true;
 };
 const showDimensionKey = ({ route }) => {
   if (route === 'metric') return false;
+  if (route === 'country') return false;
   return true;
 };
 const showHINote = ({ route, match }) => {
@@ -116,19 +111,12 @@ const showStandard = ({ match }) => {
 };
 const showBenchmark = () => true;
 
-const count = {
-  r: RIGHTS.filter(r => typeof r.aggregate === 'undefined').length,
-  d: DIMENSIONS.length,
-};
-
 export function Settings({
   route,
   match,
-  scale,
   standard,
   benchmark,
   tabIndex,
-  onSetScale,
   onSetStandard,
   onSetBenchmark,
   intl,
@@ -138,23 +126,11 @@ export function Settings({
   if (!showSettings({ route, match, tabIndex })) return null;
   return (
     <Styled>
-      <SetScale>
-        {showScale({ route }) &&
-          SCALES.map(s => (
-            <ButtonToggleMainSetting
-              active={s.key === scale}
-              disabled={s.key === scale}
-              onClick={() => {
-                onSetScale(s.key);
-              }}
-              key={s.key}
-            >
-              {`${count[s.key]} ${intl.formatMessage(
-                rootMessages.settings.scale[s.type],
-              )}`}
-            </ButtonToggleMainSetting>
-          ))}
-      </SetScale>
+      {showScale({ route }) && (
+        <SetScaleWrap>
+          <ScaleToggle />
+        </SetScaleWrap>
+      )}
       <ResponsiveContext.Consumer>
         {size => (
           <Box
@@ -249,11 +225,9 @@ Settings.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   route: PropTypes.string.isRequired,
   match: PropTypes.string.isRequired,
-  scale: PropTypes.string,
   standard: PropTypes.string,
   benchmark: PropTypes.string,
   tabIndex: PropTypes.number,
-  onSetScale: PropTypes.func,
   onSetStandard: PropTypes.func,
   onSetBenchmark: PropTypes.func,
   intl: intlShape.isRequired,
@@ -264,7 +238,6 @@ Settings.propTypes = {
 const mapStateToProps = createStructuredSelector({
   route: state => getRouterRoute(state),
   match: state => getRouterMatch(state),
-  scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
   tabIndex: state => getTabSearch(state),
@@ -292,7 +265,6 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onSetScale: value => dispatch(setScale(value)),
     onSetStandard: value => dispatch(setStandard(value)),
     onSetBenchmark: value => dispatch(setBenchmark(value)),
   };

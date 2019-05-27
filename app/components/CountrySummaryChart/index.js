@@ -13,6 +13,7 @@ import { Heading, Box } from 'grommet';
 import rootMessages from 'messages';
 // import messages from './messages';
 import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
+import ScaleToggle from 'containers/Settings/ScaleToggle';
 import { getRightsScoresForDimension } from 'utils/scores';
 
 import DimensionChart from './DimensionChart';
@@ -139,6 +140,9 @@ function CountrySummaryChart({
             />
           )}
         </RightsType>
+        <Box pad={{ vertical: 'medium' }}>
+          <ScaleToggle />
+        </Box>
       </ChartArea>
       {scale === 'r' && (
         <RightsScoresWrapper>
