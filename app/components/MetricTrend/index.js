@@ -21,6 +21,8 @@ import {
 } from 'react-vis';
 import { timeFormat } from 'd3-time-format';
 
+import Source from 'components/Source';
+
 import {
   INDICATOR_LOOKBACK,
   STANDARDS,
@@ -196,6 +198,7 @@ function MetricTrend({
           )}
         </Box>
       )}
+      <Source />
     </Box>
   );
 }

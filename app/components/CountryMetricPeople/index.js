@@ -18,10 +18,7 @@ import WordCloud from 'components/WordCloud';
 
 import messages from './messages';
 
-const Styled = styled(Box)`
-  margin: 0 auto;
-  max-width: 1000px;
-`;
+const Styled = styled(Box)``;
 
 const RightHeading = props => (
   <Heading level={4} margin={{ vertical: '15px' }} {...props} />
