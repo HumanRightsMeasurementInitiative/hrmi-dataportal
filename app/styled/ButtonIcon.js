@@ -6,8 +6,8 @@ export default styled(Button)`
   background-color: ${({ theme, subtle }) =>
     theme.global.colors[subtle ? 'white' : 'dark']};
   border-radius: 100%;
-  width: 50px;
-  height: 50px;
+  width: ${({ small }) => (small ? 30 : 50)}px;
+  height: ${({ small }) => (small ? 30 : 50)}px;
   text-align: center;
   padding: 0;
   &:hover{
@@ -16,7 +16,7 @@ export default styled(Button)`
   }
   &:active{
     color: ${({ theme }) => theme.global.colors.white};
-    background-color: ${({ theme }) => theme.global.colors.dark};
+    background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-1' : 'dark']};
   }
   &:visited{
     color: ${({ theme }) => theme.global.colors.white};
@@ -24,7 +24,7 @@ export default styled(Button)`
   }
   &:focus{
     color: ${({ theme }) => theme.global.colors.white};
-    background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-1' : 'dark-1']};    
+    background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-1' : 'dark-1']};
     box-shadow: none;
     border-radius: 100%;
   }

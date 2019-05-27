@@ -14,6 +14,7 @@ import roundValue from 'utils/round-score';
 
 import { COLUMNS } from 'containers/App/constants';
 
+import FAQs from 'containers/FAQs';
 import ButtonText from 'styled/ButtonText';
 
 import rootMessages from 'messages';
@@ -149,6 +150,9 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
           </Button>
         </Box>
       </Box>
+      <FAQs
+        questions={['scale', 'year', 'standards', 'benchmarks', 'indicators']}
+      />
     </Box>
   );
 }
