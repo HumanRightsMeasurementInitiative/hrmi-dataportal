@@ -76,6 +76,10 @@ export function PathOverview({
                   scoresAllCountries={scoresAllCountries}
                 />
               ),
+              howToRead: {
+                type: 'diamonds',
+                context: 'overview',
+              },
             },
             {
               key: 'metrics',

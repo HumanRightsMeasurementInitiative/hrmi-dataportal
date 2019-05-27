@@ -7,21 +7,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Heading, Paragraph, Box } from 'grommet';
+import { Heading, Paragraph } from 'grommet';
 
 import rootMessages from 'messages';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import WordCloud from 'components/WordCloud';
+import MainColumn from 'styled/MainColumn';
 
 import { needsArticle, isPlural } from 'utils/narrative';
 
 import messages from './messages';
 
-const Styled = styled(Box)`
-  margin: 0 auto;
-  max-width: 1000px;
-`;
+// const Styled = styled(Box)`
+//   margin: 0 auto;
+//   max-width: 1000px;
+// `;
 
 const DimensionHeading = props => (
   <Heading level={3} margin={{ vertical: '15px' }} {...props} />
@@ -38,7 +39,7 @@ const StyledRightHeading = styled(RightHeading)`
 
 function CountryPeople({ data, countryTitle, countryCode, intl }) {
   return (
-    <Styled pad="medium">
+    <MainColumn>
       <Heading level={2}>
         <FormattedMessage
           {...messages.title}
@@ -78,7 +79,7 @@ function CountryPeople({ data, countryTitle, countryCode, intl }) {
               ))}
           </div>
         ))}
-    </Styled>
+    </MainColumn>
   );
 }
 
