@@ -33,6 +33,7 @@ import {
   getSortSearch,
   getSortOrderSearch,
   getCountries,
+  getIndicatorInfo,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
@@ -84,6 +85,7 @@ export function SingleMetric({
   onOrderChange,
   onCountryClick,
   countries,
+  metricInfo,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -109,7 +111,6 @@ export function SingleMetric({
     scores,
     column,
   });
-
   return (
     <MainColumn>
       <Box direction="row">
@@ -141,7 +142,7 @@ export function SingleMetric({
             pad={{ right: 'medium' }}
           >
             <Text size="small" style={{ fontWeight: 600 }}>
-              <FormattedMessage {...rootMessages.scoreLabel} />
+              <FormattedMessage {...rootMessages.labels.score} />
             </Text>
           </CountryWrap>
           <BarWrap flex direction="row">
@@ -162,7 +163,9 @@ export function SingleMetric({
         {sortedScores &&
           sortedScores.map(s => {
             const country =
-              metric.metricType === 'esr' &&
+              (metric.type === 'esr' ||
+                (metric.metricType === 'indicators' &&
+                  metricInfo.standard === 'Core')) &&
               countries.find(c => c.country_code === s.country_code);
             return (
               <Box
@@ -183,7 +186,11 @@ export function SingleMetric({
                       {...rootMessages.countries[s.country_code]}
                     />
                     {country && country.high_income_country === '1' && (
-                      <FormattedMessage {...rootMessages.hiCountryLabel} />
+                      <span>
+                        {` (${intl.formatMessage(
+                          rootMessages.labels.hiCountry,
+                        )})`}
+                      </span>
                     )}
                   </CountryButton>
                 </CountryWrap>
@@ -242,6 +249,7 @@ SingleMetric.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   onCountryClick: PropTypes.func,
+  metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -258,6 +266,12 @@ const mapStateToProps = createStructuredSelector({
     }
     if (metric.metricType === 'indicators') {
       return getIndicatorScores(state, metric.key);
+    }
+    return false;
+  },
+  metricInfo: (state, { metric }) => {
+    if (metric.metricType === 'indicators') {
+      return getIndicatorInfo(state, metric.code);
     }
     return false;
   },

@@ -9,13 +9,15 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
-  scoreLabel: {
-    id: `${scope}.scoreLabel`,
-    defaultMessage: 'Score',
-  },
-  hiCountryLabel: {
-    id: `${scope}.hi`,
-    defaultMessage: ' (HI)',
+  labels: {
+    score: {
+      id: `${scope}.labels.score`,
+      defaultMessage: 'Score',
+    },
+    hiCountry: {
+      id: `${scope}.labels.hiCountry`,
+      defaultMessage: 'HI',
+    },
   },
   tooltip: {
     empowerment: {
