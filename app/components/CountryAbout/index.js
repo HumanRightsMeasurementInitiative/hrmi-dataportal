@@ -118,6 +118,26 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
       <Box direction="row">
         <Box width="50%">
           <Label>
+            <FormattedMessage {...messages.oecd} />
+          </Label>
+        </Box>
+        <Box width="50%">
+          <Button
+            onClick={() =>
+              onCategoryClick('oecd', country[COLUMNS.COUNTRIES.OECD])
+            }
+          >
+            <Text>
+              <FormattedMessage
+                {...rootMessages.oecd[country[COLUMNS.COUNTRIES.OECD]]}
+              />
+            </Text>
+          </Button>
+        </Box>
+      </Box>
+      <Box direction="row">
+        <Box width="50%">
+          <Label>
             <FormattedMessage {...messages.income} />
           </Label>
         </Box>

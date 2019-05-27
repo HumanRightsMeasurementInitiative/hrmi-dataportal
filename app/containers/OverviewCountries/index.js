@@ -20,6 +20,7 @@ import {
   getScaleSearch,
   getESRIndicators,
   getAssessedSearch,
+  getOECDSearch,
   getSortSearch,
   getSortOrderSearch,
 } from 'containers/App/selectors';
@@ -44,6 +45,7 @@ export function OverviewCountries({
   regionFilterValue,
   incomeFilterValue,
   assessedFilterValue,
+  oecdFilterValue,
   onRemoveFilter,
   onAddFilter,
   onSelectCountry,
@@ -81,7 +83,8 @@ export function OverviewCountries({
           onAddFilter={onAddFilter}
           incomeFilterValue={incomeFilterValue}
           assessedFilterValue={assessedFilterValue}
-          filterGroups={['income', 'region', 'assessed']}
+          oecdFilterValue={oecdFilterValue}
+          filterGroups={['income', 'region', 'assessed', 'oecd']}
         />
         <CountrySort
           sort={currentSort}
@@ -126,6 +129,7 @@ OverviewCountries.propTypes = {
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -140,6 +144,7 @@ const mapStateToProps = createStructuredSelector({
   regionFilterValue: state => getRegionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
   assessedFilterValue: state => getAssessedSearch(state),
+  oecdFilterValue: state => getOECDSearch(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
