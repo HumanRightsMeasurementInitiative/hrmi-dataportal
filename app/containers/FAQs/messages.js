@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.containers.ReadMore';
+export const scope = 'hrmi.containers.FAQs';
 
 export default defineMessages({
   methodology: {
@@ -70,14 +70,6 @@ export default defineMessages({
       defaultMessage:
         'All metrics presented are the most recent data available. The civil and political rights metrics are for January to June 2017. The economic and social rights metrics are from the 2017 update of the International Social and Economic Rights Fulfilment Index, which covers the period from 2005 to 2015. The data used for each year are the most recently available data as of that year. HRMI graphs use the most recently available data from the full dataset.',
     },
-    standards: {
-      id: `${scope}.answers.standards`,
-      defaultMessage: 'TODO: use settings tooltip content',
-    },
-    benchmarks: {
-      id: `${scope}.answers.benchmarks`,
-      defaultMessage: 'TODO: use settings tooltip content',
-    },
     indicators: {
       id: `${scope}.answers.indicators`,
       defaultMessage:
@@ -85,7 +77,7 @@ export default defineMessages({
     },
     measureIndicators: {
       id: `${scope}.answers.measureIndicators`,
-      defaultMessage: 'TODO: how are indicator scores calculated frp, raw data',
+      defaultMessage: 'TODO: how are indicator scores calculated from raw data',
     },
     measureRightESR: {
       id: `${scope}.answers.measureRightESR`,
