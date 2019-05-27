@@ -58,6 +58,7 @@ const theme = {
       'dark-3': '#667884', // AA
       'dark-4': '#8896A0', // AA large
       dark: '#3A5161',
+      brand: '#3A5161',
       highlight: '#FDB933',
       highlight2: '#DB7E00', // AA large
       highlight3: '#AD6500', // AA
@@ -171,6 +172,11 @@ const theme = {
       font-weight: ${props.theme.columnHeader.fontWeight};
       height: 30px;
     `,
+  },
+  accordion: {
+    heading: {
+      level: 6,
+    },
   },
   columnHeader: {
     border: '1px solid',
