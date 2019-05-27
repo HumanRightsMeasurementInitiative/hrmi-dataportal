@@ -50,7 +50,7 @@ const Styled = styled(Box)`
 
 // prettier-ignore
 const CountryButton = styled(Button)`
-  text-align: left;
+  text-align: right;
   padding: 3px 0;
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
