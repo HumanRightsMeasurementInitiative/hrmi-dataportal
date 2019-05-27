@@ -49,7 +49,7 @@ const scaleOpacity = scaleLinear()
 
 export function WordCloud({ data, showTitle, dimension, intl }) {
   return (
-    <Styled direction="column">
+    <Styled direction="column" pad={{ bottom: 'large' }} border="bottom">
       {showTitle && (
         <Heading level={5}>
           <FormattedMessage
