@@ -191,6 +191,11 @@ export function CountryMetric({
             {
               key: 'trend',
               title: intl.formatMessage(rootMessages.tabs.trend),
+              howToRead: {
+                context: 'CountryMetric',
+                chart: 'Trend',
+                data: metric.type,
+              },
               content: (
                 <MetricTrend
                   color={theme.global.colors[getColour(metric)]}
@@ -219,6 +224,11 @@ export function CountryMetric({
             {
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              howToRead: {
+                context: 'CountryMetric',
+                chart: 'WordCloud',
+                data: 'atRisk',
+              },
               content: hasAtRisk && metric.metricType !== 'indicators' && (
                 <CountryMetricPeople
                   data={atRisk}

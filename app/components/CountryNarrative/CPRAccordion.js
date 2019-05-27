@@ -24,7 +24,7 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
   return (
     <Styled margin={{ top: 'medium' }}>
       <Box alignSelf="end">
-        <HowToRead type="cpr" context="accordion" />
+        <HowToRead chart="Bullet" context="CountryNarrative" data="cpr" />
       </Box>
       <Box elevation="small" margin={{ top: 'xsmall' }}>
         <Accordion

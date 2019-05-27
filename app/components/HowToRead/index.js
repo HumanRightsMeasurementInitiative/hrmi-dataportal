@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import ButtonHowToRead from 'styled/ButtonHowToRead';
-import { Layer } from 'grommet';
+import { Layer, Box } from 'grommet';
 import messages from './messages';
 
-function HowToRead({ type, context }) {
+function HowToRead({ chart, context, data }) {
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -17,8 +17,11 @@ function HowToRead({ type, context }) {
           onEsc={() => setOpen(false)}
           onClickOutside={() => setOpen(false)}
         >
-          <div>Type: {type}</div>
-          <div>Context: {context}</div>
+          <Box pad="medium">
+            <div>Context: {context}</div>
+            <div>Chart: {chart}</div>
+            <div>Data: {data}</div>
+          </Box>
         </Layer>
       )}
     </>
@@ -26,8 +29,9 @@ function HowToRead({ type, context }) {
 }
 
 HowToRead.propTypes = {
-  type: PropTypes.string,
+  chart: PropTypes.string,
   context: PropTypes.string,
+  data: PropTypes.string,
 };
 
 export default HowToRead;
