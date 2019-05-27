@@ -96,7 +96,6 @@ const showHIIndicatorNote = ({ match, metricInfo }) => {
   return false;
 };
 const showHICountryNote = ({ route, country, standard }) => {
-  console.log(route, country, standard);
   if (
     route === 'country' &&
     country.high_income_country === '1' &&
