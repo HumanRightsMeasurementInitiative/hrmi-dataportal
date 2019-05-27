@@ -153,7 +153,9 @@ export function SingleMetric({
               margin={{ left: 'auto' }}
               style={{ transform: 'translateX(50%)' }}
             >
-              {metric.type === 'esr' ? '100%' : '10'}
+              {metric.type === 'esr' || metric.metricType === 'indicators'
+                ? '100%'
+                : '10'}
             </Text>
           </BarWrap>
         </Box>
