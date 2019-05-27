@@ -153,8 +153,9 @@ export function PathCountry({
               key: 'report',
               title: intl.formatMessage(rootMessages.tabs.report),
               howToRead: {
-                type: scale,
-                context: 'summary',
+                context: 'PathCountry',
+                chart: 'Summary',
+                data: scale,
               },
               content: (
                 <CountryReport
@@ -179,8 +180,9 @@ export function PathCountry({
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
               howToRead: {
-                type: 'atrisk',
-                context: 'country',
+                context: 'PathCountry',
+                chart: 'WordCloud',
+                data: 'atRisk',
               },
               content: hasCPR(dimensions) && (
                 <CountryPeople

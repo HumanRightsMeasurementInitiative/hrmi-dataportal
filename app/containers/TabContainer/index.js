@@ -55,10 +55,7 @@ function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
                       <Tab title={tab.title} key={tab.key}>
                         {tab.howToRead && (
                           <HowToReadWrapper>
-                            <HowToRead
-                              type={tab.howToRead.type}
-                              context={tab.howToRead.context}
-                            />
+                            <HowToRead {...tab.howToRead} />
                           </HowToReadWrapper>
                         )}
                         <ColumnContent>{tab.content}</ColumnContent>
@@ -77,10 +74,7 @@ function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
                         margin={{ left: 'auto' }}
                         pad={{ right: 'medium' }}
                       >
-                        <HowToRead
-                          type={tabsWithContent[0].howToRead.type}
-                          context={tabsWithContent[0].howToRead.context}
-                        />
+                        <HowToRead {...tabsWithContent[0].howToRead} />
                       </Box>
                     )}
                   </ColumnHeader>

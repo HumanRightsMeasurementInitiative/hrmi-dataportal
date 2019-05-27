@@ -28,7 +28,11 @@ function ESRAccordion({
   return (
     <Styled margin={{ top: 'medium' }}>
       <Box alignSelf="end">
-        <HowToRead type="esr" context="accordion" />
+        <HowToRead
+          chart="SingleBar"
+          context="CountryNarrative"
+          data={benchmark.key}
+        />
       </Box>
       <Box elevation="small" margin={{ top: 'xsmall' }}>
         <Accordion
