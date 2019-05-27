@@ -21,6 +21,8 @@ import {
   getStandardSearch,
   getBenchmarkSearch,
   getTabSearch,
+  getIndicatorInfo,
+  getCountry,
 } from 'containers/App/selectors';
 
 import {
@@ -81,6 +83,32 @@ const showHINote = ({ route, match }) => {
   if (route === 'country') return false;
   return true;
 };
+const showHIIndicatorNote = ({ match, metricInfo }) => {
+  const metricDetails = getMetricDetails(match);
+  if (
+    metricDetails &&
+    metricDetails.metricType === 'indicators' &&
+    metricInfo &&
+    metricInfo.standard === 'Core'
+  ) {
+    return true;
+  }
+  return false;
+};
+const showHICountryNote = ({ route, country, standard }) => {
+  console.log(route, country, standard);
+  if (
+    route === 'country' &&
+    country.high_income_country === '1' &&
+    standard !== 'hi'
+  ) {
+    return true;
+  }
+  return false;
+};
+
+const showAnyHINote = args =>
+  showHINote(args) || showHIIndicatorNote(args) || showHICountryNote(args);
 
 const showStandard = ({ match }) => {
   const metricDetails = getMetricDetails(match);
@@ -105,6 +133,8 @@ export function Settings({
   onSetStandard,
   onSetBenchmark,
   intl,
+  metricInfo,
+  country,
 }) {
   if (!showSettings({ route, match, tabIndex })) return null;
   return (
@@ -166,7 +196,7 @@ export function Settings({
                 }}
               />
             )}
-            {showHINote({ route, match }) && (
+            {showAnyHINote({ route, match, metricInfo, country, standard }) && (
               <Box
                 pad={{
                   top: 'small',
@@ -179,12 +209,32 @@ export function Settings({
               >
                 <Box pad={{ bottom: 'xsmall' }}>
                   <Text style={{ fontWeight: 600 }} size="small">
-                    <FormattedMessage {...messages.hi.label} />
+                    {showHINote({ route, match }) && (
+                      <span>
+                        {`(${intl.formatMessage(
+                          rootMessages.labels.hiCountry,
+                        )}): ${intl.formatMessage(messages.hi.title)}`}
+                      </span>
+                    )}
+                    {showHIIndicatorNote({ route, match, metricInfo }) && (
+                      <FormattedMessage {...messages.hi.title} />
+                    )}
+                    {showHICountryNote({ route, country, standard }) && (
+                      <FormattedMessage {...messages.hi.title} />
+                    )}
                   </Text>
                 </Box>
                 <Box>
                   <Text size="xsmall">
-                    <FormattedMessage {...messages.hi.text} />
+                    {showHINote({ route, match }) && (
+                      <FormattedMessage {...messages.hi.text} />
+                    )}
+                    {showHIIndicatorNote({ route, match, metricInfo }) && (
+                      <FormattedMessage {...messages.hi.textIndicator} />
+                    )}
+                    {showHICountryNote({ route, country, standard }) && (
+                      <FormattedMessage {...messages.hi.text} />
+                    )}
                   </Text>
                 </Box>
               </Box>
@@ -208,6 +258,8 @@ Settings.propTypes = {
   onSetStandard: PropTypes.func,
   onSetBenchmark: PropTypes.func,
   intl: intlShape.isRequired,
+  metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -217,6 +269,26 @@ const mapStateToProps = createStructuredSelector({
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
   tabIndex: state => getTabSearch(state),
+  metricInfo: state => {
+    const route = getRouterRoute(state);
+    if (route === 'metric') {
+      const match = getRouterMatch(state);
+      const metric = getMetricDetails(match);
+      if (metric.metricType === 'indicators') {
+        return getIndicatorInfo(state, metric.code);
+      }
+      return false;
+    }
+    return false;
+  },
+  country: state => {
+    const route = getRouterRoute(state);
+    if (route === 'country') {
+      const match = getRouterMatch(state);
+      return getCountry(state, match);
+    }
+    return false;
+  },
 });
 
 export function mapDispatchToProps(dispatch) {
