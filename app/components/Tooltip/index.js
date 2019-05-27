@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, Drop, Button, Text } from 'grommet';
-import { CircleQuestion } from 'grommet-icons';
+import { CircleInformation } from 'grommet-icons';
 import styled from 'styled-components';
 
 const StyledDrop = styled(Drop)`
@@ -35,7 +35,7 @@ function Tooltip({
     <>
       <Button
         plain
-        icon={<CircleQuestion size={iconSize} color="highlight2" />}
+        icon={<CircleInformation size={iconSize} color="highlight2" />}
         ref={button}
         onMouseEnter={() => setOver(true)}
         onMouseLeave={() => setOver(false)}
