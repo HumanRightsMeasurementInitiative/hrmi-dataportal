@@ -13,6 +13,7 @@ import { compose } from 'redux';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 
+import Source from 'components/Source';
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
 import MainColumn from 'styled/MainColumn';
@@ -230,6 +231,7 @@ export function SingleMetric({
             );
           })}
       </Styled>
+      <Source />
     </MainColumn>
   );
 }

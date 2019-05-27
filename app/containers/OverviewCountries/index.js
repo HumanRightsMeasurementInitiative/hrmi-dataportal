@@ -28,6 +28,7 @@ import { navigate, selectCountry } from 'containers/App/actions';
 
 import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 
+import Source from 'components/Source';
 import CountryPreview from 'components/CountryPreview';
 import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
@@ -95,7 +96,7 @@ export function OverviewCountries({
         />
       </Box>
       {sortedCountries && scoresAllCountries && (
-        <Box direction="row" wrap width="100%">
+        <Box direction="row" wrap width="100%" pad={{ bottom: 'medium' }}>
           <InfiniteScroll items={sortedCountries} step={30} show={0}>
             {c => (
               <CountryPreview
@@ -114,6 +115,7 @@ export function OverviewCountries({
           </InfiniteScroll>
         </Box>
       )}
+      <Source />
     </MainColumn>
   );
 }

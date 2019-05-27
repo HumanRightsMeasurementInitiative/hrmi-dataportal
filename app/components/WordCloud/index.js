@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { Heading, Text, Box } from 'grommet';
 import { scaleLinear } from 'd3-scale';
 import Tooltip from 'components/Tooltip';
+import Source from 'components/Source';
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -20,6 +21,7 @@ const Styled = styled(Box)`
 const Words = styled(Box)`
   width: 100%;
   text-align: center;
+  padding-bottom: 1em;
 `;
 const Tag = styled(Box)`
   opacity: ${props => props.opacity || 1};
@@ -90,6 +92,7 @@ export function WordCloud({ data, showTitle, dimension, intl }) {
               </Box>
             ))}
       </Words>
+      <Source center />
     </Styled>
   );
 }
