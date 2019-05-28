@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Text } from 'grommet';
 
-import BarMultipleHorizontal from 'components/Bars/BarMultiple';
-import BarHorizontal from 'components/Bars/Bar';
+import BarBarMultiple from 'components/Bars/BarMultiple';
+import Bar from 'components/Bars/Bar';
 
 const WIDTH = 116;
 const heightRotated = WIDTH * 2 ** (1 / 2); // height * sqrt(2)
@@ -76,9 +76,10 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
         {dimensions &&
           dimensions.map(dim => (
             <BarWrapInner key={dim.key}>
-              <BarHorizontal
+              <Bar
                 data={dim}
                 showLabels={showLabels}
+                showBenchmark={showLabels}
                 rotate={45}
                 showIncompleteAction={false}
               />
@@ -87,7 +88,7 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
         {rightGroups &&
           rightGroups.map(rightGroup => (
             <BarWrapInner key={rightGroup.key}>
-              <BarMultipleHorizontal
+              <BarBarMultiple
                 dataMultiple={rightGroup}
                 showLabels={showLabels}
                 rotate={45}

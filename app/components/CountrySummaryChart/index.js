@@ -63,35 +63,27 @@ function CountrySummaryChart({
               <FormattedMessage {...rootMessages['rights-types'].cpr} />
             </RightsTypeHeading>
             {scale === 'd' && (
-              <DimensionChart
-                dimensionKey="empowerment"
-                data={dimensions && dimensions.empowerment}
-                maxValue={10}
-                column={COLUMNS.CPR.MEAN}
-              />
+              <DimensionChart data={dimensions && dimensions.empowerment} />
             )}
             {scale === 'd' && (
-              <DimensionChart
-                dimensionKey="physint"
-                data={dimensions && dimensions.physint}
-                maxValue={10}
-                column={COLUMNS.CPR.MEAN}
+              <DimensionChart data={dimensions && dimensions.physint} />
+            )}
+            {scale === 'r' && (
+              <RightsChart
+                data={{
+                  rights: empowerRights,
+                  type: 'cpr',
+                  dimension: 'empowerment',
+                }}
               />
             )}
             {scale === 'r' && (
               <RightsChart
-                dimensionKey="empowerment"
-                data={empowerRights}
-                maxValue={10}
-                column={COLUMNS.CPR.MEAN}
-              />
-            )}
-            {scale === 'r' && (
-              <RightsChart
-                dimensionKey="physint"
-                data={physintRights}
-                maxValue={10}
-                column={COLUMNS.CPR.MEAN}
+                data={{
+                  rights: physintRights,
+                  type: 'cpr',
+                  dimension: 'physint',
+                }}
               />
             )}
           </RightsType>
@@ -101,39 +93,20 @@ function CountrySummaryChart({
             </RightsTypeHeading>
             {scale === 'd' && (
               <DimensionChart
-                dimensionKey="esr"
                 data={dimensions && dimensions.esr}
-                maxValue={100}
-                unit="%"
-                column={currentBenchmark.column}
+                benchmark={currentBenchmark}
                 standard={standard}
-                refColumns={
-                  // prettier-ignore
-                  currentBenchmark.key === 'adjusted'
-                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                    : [
-                      { value: 100, style: 'solid', key: 'adjusted' },
-                      { column: currentBenchmark.refColumn, style: 'dotted', key: 'best' },
-                    ]
-                }
               />
             )}
             {scale === 'r' && (
               <RightsChart
-                dimensionKey="esr"
-                data={esrRights}
-                maxValue={100}
-                column={currentBenchmark.column}
+                data={{
+                  rights: esrRights,
+                  type: 'esr',
+                  dimension: 'esr',
+                }}
+                benchmark={currentBenchmark}
                 standard={standard}
-                refColumns={
-                  // prettier-ignore
-                  currentBenchmark.key === 'adjusted'
-                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                    : [
-                      { value: 100, style: 'solid', key: 'adjusted' },
-                      { column: currentBenchmark.refColumn, style: 'dotted', key: 'best' },
-                    ]
-                }
               />
             )}
           </RightsType>
