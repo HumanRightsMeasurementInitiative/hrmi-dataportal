@@ -138,7 +138,7 @@ function BarMultipleHorizontal2({ dataMultiple, showLabels, rotate, intl }) {
               insideButton
               margin={{ top: 'xsmall' }}
               iconSize="medium"
-              maxWidth={300}
+              maxWidth="300px"
               component={
                 <>
                   <Paragraph margin={{ vertical: 'xsmall' }}>

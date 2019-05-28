@@ -215,7 +215,7 @@ function BarHorizontal2({
                   insideButton
                   margin={{ top: 'xsmall' }}
                   iconSize="medium"
-                  maxWidth={300}
+                  maxWidth="300px"
                   component={
                     <>
                       <Paragraph margin={{ vertical: 'xsmall' }}>
