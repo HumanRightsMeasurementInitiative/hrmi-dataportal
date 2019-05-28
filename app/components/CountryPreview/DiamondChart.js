@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Text } from 'grommet';
 
-import BarMultipleHorizontal from 'components/BarMultipleHorizontal2';
-import BarHorizontal from 'components/BarHorizontal2';
+import BarMultipleHorizontal from 'components/Bars/BarMultiple';
+import BarHorizontal from 'components/Bars/Bar';
 
 const WIDTH = 116;
 const heightRotated = WIDTH * 2 ** (1 / 2); // height * sqrt(2)
