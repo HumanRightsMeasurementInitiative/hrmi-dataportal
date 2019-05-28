@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styled, { css } from 'styled-components';
-import { Box, Text, ResponsiveContext, Paragraph } from 'grommet';
+import { Box, Text, ResponsiveContext } from 'grommet';
 
 import Tooltip from 'components/Tooltip';
+import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
+import StandardOverlay from 'components/Tooltip/StandardOverlay';
 import ButtonToggleSetting from 'styled/ButtonToggleSetting';
+
 // import { DIMENSIONS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
@@ -49,14 +52,7 @@ const Square = styled.div`
     `}
 `;
 
-function SettingsToggle({
-  options,
-  onActivate,
-  active,
-  setting,
-  square,
-  intl,
-}) {
+function SettingsToggle({ options, onActivate, active, setting, square }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -73,76 +69,14 @@ function SettingsToggle({
                 <Tooltip
                   iconSize="medium"
                   maxWidth="400px"
-                  component={
-                    <>
-                      <Paragraph>
-                        {intl.formatMessage(
-                          rootMessages.tooltip.standard.intro,
-                        )}
-                      </Paragraph>
-                      <Paragraph>
-                        <Text style={{ fontWeight: 600 }}>
-                          {`${intl.formatMessage(
-                            rootMessages.settings.standard.core,
-                          )}: `}
-                        </Text>
-                        <Text>
-                          {intl.formatMessage(
-                            rootMessages.tooltip.standard.core,
-                          )}
-                        </Text>
-                      </Paragraph>
-                      <Paragraph>
-                        <Text style={{ fontWeight: 600 }}>
-                          {`${intl.formatMessage(
-                            rootMessages.settings.standard.hi,
-                          )}: `}
-                        </Text>
-                        <Text>
-                          {intl.formatMessage(rootMessages.tooltip.standard.hi)}
-                        </Text>
-                      </Paragraph>
-                    </>
-                  }
+                  component={<StandardOverlay />}
                 />
               )}
               {setting === 'benchmark' && (
                 <Tooltip
                   iconSize="medium"
                   maxWidth="400px"
-                  component={
-                    <>
-                      <Paragraph>
-                        {intl.formatMessage(
-                          rootMessages.tooltip.benchmark.intro,
-                        )}
-                      </Paragraph>
-                      <Paragraph>
-                        <Text style={{ fontWeight: 600 }}>
-                          {`${intl.formatMessage(
-                            rootMessages.settings.benchmark.adjusted,
-                          )}: `}
-                        </Text>
-                        <Text>
-                          {intl.formatMessage(
-                            rootMessages.tooltip.benchmark.adjusted,
-                          )}
-                        </Text>
-                      </Paragraph>
-                      <Paragraph>
-                        <Text style={{ fontWeight: 600 }}>
-                          {`${intl.formatMessage(
-                            rootMessages.settings.benchmark.best,
-                          )}: `}
-                        </Text>
-                        <Text>
-                          {intl.formatMessage(
-                            rootMessages.tooltip.benchmark.best,
-                          )}
-                        </Text>
-                      </Paragraph>
-                    </>
-                  }
+                  component={<BenchmarkOverlay />}
                 />
               )}
             </Box>
@@ -187,7 +121,6 @@ SettingsToggle.propTypes = {
   options: PropTypes.array.isRequired,
   square: PropTypes.object,
   tooltip: PropTypes.node,
-  intl: intlShape.isRequired,
 };
 
-export default injectIntl(SettingsToggle);
+export default SettingsToggle;

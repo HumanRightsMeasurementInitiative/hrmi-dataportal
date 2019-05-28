@@ -14,11 +14,12 @@ import {
 import { Down, Up } from 'grommet-icons';
 
 import { navigate } from 'containers/App/actions';
+import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
+import StandardOverlay from 'components/Tooltip/StandardOverlay';
 
 import ButtonIcon from 'styled/ButtonIcon';
 import ButtonText from 'styled/ButtonText';
 
-import rootMessages from 'messages';
 import messages from './messages';
 
 const QUESTIONS = [
@@ -93,27 +94,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'standards') {
     return (
       <>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small">
-            <FormattedMessage {...rootMessages.tooltip.standard.intro} />
-          </Text>
-        </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small" style={{ fontWeight: 600 }}>
-            {`${intl.formatMessage(rootMessages.settings.standard.core)}: `}
-          </Text>
-          <Text size="small">
-            {intl.formatMessage(rootMessages.tooltip.standard.core)}
-          </Text>
-        </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small" style={{ fontWeight: 600 }}>
-            {`${intl.formatMessage(rootMessages.settings.standard.hi)}: `}
-          </Text>
-          <Text size="small">
-            <FormattedMessage {...rootMessages.tooltip.standard.hi} />
-          </Text>
-        </Paragraph>
+        <StandardOverlay />
         <ButtonText onClick={() => navMethodology()}>
           <Text size="small">
             <FormattedMessage {...messages.methodology} />
@@ -125,29 +106,12 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'benchmarks') {
     return (
       <>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
+        <BenchmarkOverlay />
+        <ButtonText onClick={() => navMethodology()}>
           <Text size="small">
-            <FormattedMessage {...rootMessages.tooltip.benchmark.intro} />
+            <FormattedMessage {...messages.methodology} />
           </Text>
-        </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small" style={{ fontWeight: 600 }}>
-            {`${intl.formatMessage(
-              rootMessages.settings.benchmark.adjusted,
-            )}: `}
-          </Text>
-          <Text size="small">
-            {intl.formatMessage(rootMessages.tooltip.benchmark.adjusted)}
-          </Text>
-        </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small" style={{ fontWeight: 600 }}>
-            {`${intl.formatMessage(rootMessages.settings.benchmark.best)}: `}
-          </Text>
-          <Text size="small">
-            <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
-          </Text>
-        </Paragraph>
+        </ButtonText>
       </>
     );
   }
