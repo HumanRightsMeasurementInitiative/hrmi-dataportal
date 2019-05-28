@@ -187,6 +187,10 @@ export default defineMessages({
         id: `${scope}.settings.benchmark.name`,
         defaultMessage: 'Performance benchmark',
       },
+      nameShort: {
+        id: `${scope}.settings.benchmark.nameShort`,
+        defaultMessage: 'Benchmark',
+      },
       adjusted: {
         id: `${scope}.settings.benchmark.adjusted`,
         defaultMessage: 'Income-adjusted',
