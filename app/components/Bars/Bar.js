@@ -53,7 +53,7 @@ const BarNoValue = styled.div`
 const BarValue = styled.div`
   position: absolute;
   left: 0;
-  top: 0;
+  top: -1px;
   height: ${props => props.height}px;
   background-color: ${props => props.theme.global.colors[props.color]};
   ${props =>
@@ -76,7 +76,7 @@ const BarValue = styled.div`
 // prettier-ignore
 const MarkValue = styled.div`
   position: absolute;
-  top: 0;
+  top: -1px;
   width: 3px;
   height: ${props => props.height}px;
   margin-left: -${({ lineStyle }) => (lineStyle === 'solid' ? '2' : '2')}px;
@@ -92,13 +92,16 @@ function Bar({
   data,
   level = 1,
   showLabels = false,
+  showBenchmark = false,
   intl,
   rotate,
   showIncompleteAction = true,
   height,
+  annotateBenchmarkAbove = false,
 }) {
   const { color, value, refValues, maxValue, stripes = false, unit } = data;
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
+  // console.log(refValues)
   // prettier-ignore
   return (
     <Wrapper>
@@ -139,8 +142,12 @@ function Bar({
               level={level}
             />
           )}
-          {showLabels && refValues && !!theRefValue && (
-            <AnnotateBenchmark rotate={rotate} benchmarkKey={theRefValue.key} />
+          {showBenchmark && refValues && !!theRefValue && (
+            <AnnotateBenchmark
+              rotate={rotate}
+              benchmarkKey={theRefValue.key}
+              above={annotateBenchmarkAbove}
+            />
           )}
           {!value && data && level < 3 && (
             <NoData level={level}>
@@ -167,9 +174,11 @@ Bar.propTypes = {
   height: PropTypes.number,
   level: PropTypes.number,
   showLabels: PropTypes.bool,
+  showBenchmark: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   intl: intlShape.isRequired,
+  annotateBenchmarkAbove: PropTypes.bool,
 };
 
 export default injectIntl(Bar);

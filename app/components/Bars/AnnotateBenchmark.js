@@ -18,12 +18,18 @@ import AnnotateRefInner from './styled/AnnotateRefInner';
 import AnnotateRefLine from './styled/AnnotateRefLine';
 import AnnotateRef from './styled/AnnotateRef';
 
-function AnnotateBenchmark({ intl, rotate, benchmarkKey, multiple = false }) {
+function AnnotateBenchmark({
+  intl,
+  rotate,
+  benchmarkKey,
+  multiple = false,
+  above = false,
+}) {
   // prettier-ignore
   return (
-    <AnnotateRef rotate={rotate} multiple={multiple}>
-      <AnnotateRefLine />
-      <AnnotateRefInner>
+    <AnnotateRef rotate={rotate} multiple={multiple} above={above}>
+      <AnnotateRefLine above={above}/>
+      <AnnotateRefInner above={above}>
         <Text size="xsmall">
           {`${intl.formatMessage(
             rootMessages.settings.benchmark[benchmarkKey]
@@ -33,9 +39,9 @@ function AnnotateBenchmark({ intl, rotate, benchmarkKey, multiple = false }) {
         </Text>
         <Tooltip
           insideButton
-          margin={{ top: 'xsmall' }}
+          margin={above ? { left: 'xsmall' } : { top: 'xsmall' }}
           iconSize="medium"
-          maxWidth="300"
+          maxWidth="300px"
           component={<BenchmarkOverlay size="xsmall" />}
         />
       </AnnotateRefInner>
@@ -46,6 +52,7 @@ function AnnotateBenchmark({ intl, rotate, benchmarkKey, multiple = false }) {
 AnnotateBenchmark.propTypes = {
   multiple: PropTypes.bool,
   benchmarkKey: PropTypes.string,
+  above: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   intl: intlShape.isRequired,
 };

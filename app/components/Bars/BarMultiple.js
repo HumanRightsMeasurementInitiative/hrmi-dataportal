@@ -22,7 +22,7 @@ const BarWrapInner = styled.div`
 // level:
 const HEIGHT = 7;
 
-function BarMultiple({ dataMultiple, showLabels, rotate }) {
+function BarMultiple({ dataMultiple, showLabels, rotate, totalHeight }) {
   const {
     color,
     data,
@@ -32,6 +32,10 @@ function BarMultiple({ dataMultiple, showLabels, rotate }) {
     tooltip,
     benchmark,
   } = dataMultiple;
+  console.log(dataMultiple);
+  const heightTotal = totalHeight || HEIGHT;
+  const heightIndividual =
+    data && (heightTotal - 3 * (data.length - 1)) / data.length;
   return (
     <Wrapper>
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
@@ -48,9 +52,10 @@ function BarMultiple({ dataMultiple, showLabels, rotate }) {
               }}
               level={3}
               showLabels={false}
+              showBenchmark={false}
               rotate={rotate}
               showIncompleteAction={false}
-              height={HEIGHT}
+              height={heightIndividual}
             />
           </BarWrapInner>
         ))}
@@ -70,6 +75,7 @@ function BarMultiple({ dataMultiple, showLabels, rotate }) {
 BarMultiple.propTypes = {
   dataMultiple: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   showLabels: PropTypes.bool,
+  totalHeight: PropTypes.number,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
 
