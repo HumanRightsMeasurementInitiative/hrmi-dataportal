@@ -7,10 +7,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Button, Box, Text } from 'grommet';
+import { Emergency } from 'grommet-icons';
 
-import rootMessages from 'messages';
+import Tooltip from 'components/Tooltip';
 
 import {
   DIMENSIONS,
@@ -19,7 +20,14 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 
+import rootMessages from 'messages';
+import messages from './messages';
+
 import DiamondChart from './DiamondChart';
+
+const StyledEmergency = styled(Emergency)`
+  fill: ${({ theme }) => theme.global.colors.highlight2} !important;
+`;
 
 const hasScoreRights = (metricScores, standard) => {
   if (Object.keys(metricScores).length === 0) return false;
@@ -50,21 +58,85 @@ const hasScoreIndicators = (indicatorScores, indicators, right, standard) => {
   );
 };
 
+const getDimensionRefs = (dim, scores, standard, benchmark) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best' && scores.esr) {
+    const score =
+      scores.esr[dim.key] &&
+      scores.esr[dim.key].find(s => s.standard === standard.code);
+    const col = benchmark.refColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      { value: score && score[col], style: 'dotted', key: 'adjusted' },
+    ];
+  }
+  return false;
+};
+const getDimensionValue = (dim, scores, standard, benchmark) => {
+  if (
+    dim.type === 'cpr' &&
+    scores.cpr &&
+    scores.cpr[dim.key] &&
+    scores.cpr[dim.key].length > 0
+  ) {
+    return scores.cpr[dim.key][0][COLUMNS.CPR.MEAN];
+  }
+  if (
+    dim.type === 'esr' &&
+    scores.esr &&
+    scores.esr[dim.key] &&
+    scores.esr[dim.key].length > 0
+  ) {
+    const score = scores.esr[dim.key].find(s => s.standard === standard.code);
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return score && score[col];
+  }
+  return false;
+};
+const getTooltip = (standard, country, intl) => {
+  if (country.high_income_country === '1' && standard.key === 'core') {
+    return (
+      <Tooltip
+        icon={<StyledEmergency size="small" />}
+        text={intl.formatMessage(messages.hiForCore)}
+        insideButton
+        maxWidth="150px"
+      />
+    );
+  }
+  if (country.high_income_country === '0' && standard.key === 'hi') {
+    return (
+      <Tooltip
+        icon={<StyledEmergency size="small" />}
+        text={intl.formatMessage(messages.loForHi)}
+        insideButton
+        maxWidth="150px"
+      />
+    );
+  }
+  return null;
+};
 const getDimensions = (
   scores,
   standard,
   benchmark,
   otherStandard,
   indicators,
+  country,
+  intl,
 ) =>
   DIMENSIONS.map(dim => ({
-    ...dim,
-    score:
-      scores[dim.type] &&
-      scores[dim.type][dim.key] &&
-      (dim.type === 'cpr'
-        ? scores.cpr[dim.key][0]
-        : scores.esr[dim.key].find(s => s.standard === standard.code)),
+    tooltip: dim.type === 'esr' && getTooltip(standard, country, intl),
+    key: dim.key,
+    color: dim.key,
+    value: getDimensionValue(dim, scores, standard, benchmark),
+    refValues:
+      dim.type === 'esr' && getDimensionRefs(dim, scores, standard, benchmark),
+    maxValue: dim.type === 'cpr' ? 10 : 100,
+    stripes: dim.type === 'esr' && standard.key === 'hi',
+    unit: dim.type === 'esr' ? '%' : '',
     hasScoreAlternate:
       dim.type === 'esr' &&
       scores.esr &&
@@ -82,63 +154,34 @@ const getDimensions = (
     hasScoreIndicatorsAlternate:
       dim.type === 'esr' &&
       hasScoreIndicators(scores.indicators, indicators, false, otherStandard),
-    column:
-      dim.type === 'cpr'
-        ? COLUMNS.CPR.MEAN
-        : (benchmark && benchmark.column) || COLUMNS.ESR.CORE,
-    maxValue: dim.type === 'cpr' ? 10 : 100,
-    stripes: dim.type === 'esr' && standard.key === 'hi',
-    ignoreRefs: dim.type === 'cpr',
   }));
 
-const prepRights = rights =>
-  Object.values(rights)
-    .filter(r => typeof r.aggregate === 'undefined')
-    .sort((a, b) => {
-      if (a.type === 'cpr' && b.type !== 'cpr') return -1;
-      if (a.type === 'esr' && b.type !== 'esr') return 1;
-      if (a.type === 'cpr' && b.type === 'cpr') {
-        if (a.dimension === 'empowerment' && b.dimension !== 'empowerment') {
-          return -1;
-        }
-        if (a.dimension !== 'empowerment' && b.dimension !== 'empowerment') {
-          return 1;
-        }
-        return 1;
-      }
-      return 1;
-    });
-
 // prettier-ignore
-const getRights = (scores, standard, benchmark, otherStandard, indicators) =>
-  prepRights(RIGHTS).map(right => ({
-    ...right,
-    score:
-      scores[right.type] &&
-      scores[right.type][right.key] &&
-      (right.type === 'cpr'
-        ? scores.cpr[right.key][0]
-        : scores.esr[right.key].find(
-          s => s.standard === standard.code && s.group === 'All',
-        )),
-    hasScoreAlternate:
-      right.type === 'esr' &&
-      scores.esr &&
-      scores.esr[right.key] &&
-      !!scores.esr[right.key].find(s => s.standard === otherStandard.code),
-    hasScoreIndicators:
-      right.type === 'esr' &&
-      hasScoreIndicators(scores.indicators, indicators, right, standard),
-    hasScoreIndicatorsAlternate:
-      right.type === 'esr' &&
-      hasScoreIndicators(scores.indicators, indicators, right, otherStandard),
-    column:
-      right.type === 'cpr'
-        ? COLUMNS.CPR.MEAN
-        : (benchmark && benchmark.column) || COLUMNS.ESR.CORE,
-    maxValue: right.type === 'cpr' ? 10 : 100,
-    stripes: right.type === 'esr' && standard.key === 'hi',
-    ignoreRefs: right.type === 'cpr',
+const getRightGroups = (
+  scores,
+  standard,
+  benchmark,
+  otherStandard,
+  indicators,
+  country,
+  intl,
+) =>
+  DIMENSIONS.map(dim => ({
+    tooltip: dim.type === 'esr' && getTooltip(standard, country, intl),
+    benchmark: dim.type === 'esr' && benchmark && benchmark.key,
+    key: dim.key,
+    color: dim.key,
+    stripes: dim.type === 'esr' && standard.key === 'hi',
+    unit: dim.type === 'esr' ? '%' : '',
+    maxValue: dim.type === 'cpr' ? 10 : 100,
+    data: Object.values(RIGHTS)
+      .filter(r => r.dimension === dim.key && typeof r.aggregate === 'undefined')
+      .map(right => ({
+        key: right.key,
+        value: getDimensionValue(right, scores, standard, benchmark),
+        refValues:
+        right.type === 'esr' && getDimensionRefs(right, scores, standard, benchmark),
+      }))
   }));
 
 export function CountryPreview({
@@ -151,12 +194,15 @@ export function CountryPreview({
   scores,
   indicators,
   intl,
+  showAnnotation,
 }) {
   if (!country) return null;
-
-  // country && console.log(country.country_code, scores);
   return (
-    <Box pad="small" width="200px" alignContent="center">
+    <Box
+      pad={{ horizontal: 'small', vertical: 'medium' }}
+      width="250px"
+      alignContent="center"
+    >
       {country && (
         <Button onClick={() => onSelectCountry(country.country_code)}>
           {scale === 'd' && (
@@ -168,44 +214,32 @@ export function CountryPreview({
                   benchmark,
                   otherStandard,
                   indicators,
+                  country,
+                  intl,
                 )}
                 benchmark={benchmark}
-                refColumns={
-                  // prettier-ignore
-                  benchmark.key === 'adjusted'
-                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                    : [
-                      { value: 100, style: 'solid', key: 'adjusted' },
-                      { column: benchmark.refColumn, style: 'dotted', key: 'best' },
-                    ]
-                }
+                showLabels={showAnnotation}
               />
             </div>
           )}
           {scale === 'r' && (
             <div>
               <DiamondChart
-                rights={getRights(
+                rightGroups={getRightGroups(
                   scores,
                   standard,
                   benchmark,
                   otherStandard,
                   indicators,
+                  country,
+                  intl,
                 )}
                 benchmark={benchmark}
-                refColumns={
-                  // prettier-ignore
-                  benchmark.key === 'adjusted'
-                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                    : [
-                      { value: 100, style: 'solid', key: 'adjusted' },
-                      { column: benchmark.refColumn, style: 'dotted', key: 'best' },
-                    ]
-                }
+                showLabels={showAnnotation}
               />
             </div>
           )}
-          <Box>
+          <Box pad={{ top: 'small' }}>
             <Text textAlign="center" alignSelf="center">
               <strong>
                 <FormattedMessage
@@ -235,6 +269,7 @@ CountryPreview.propTypes = {
   standard: PropTypes.object,
   otherStandard: PropTypes.object,
   isDefaultStandard: PropTypes.bool,
+  showAnnotation: PropTypes.bool,
   benchmark: PropTypes.object,
   intl: intlShape.isRequired,
 };

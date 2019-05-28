@@ -27,6 +27,9 @@ function Tooltip({
   iconSize = 'large',
   component,
   maxWidth = '200px',
+  icon,
+  insideButton,
+  margin,
 }) {
   const [over, setOver] = useState(false);
   const [open, setOpen] = useState(false);
@@ -34,15 +37,24 @@ function Tooltip({
   return (
     <>
       <Button
+        as={insideButton ? 'span' : 'button'}
         plain
-        icon={<CircleInformation size={iconSize} color="highlight2" />}
+        icon={icon || <CircleInformation size={iconSize} color="highlight2" />}
         ref={button}
         onMouseEnter={() => setOver(true)}
         onMouseLeave={() => setOver(false)}
-        onClick={() => setOpen(!open)}
+        onClick={evt => {
+          if (evt) evt.preventDefault();
+          if (evt) evt.stopPropagation();
+          setOpen(!open);
+        }}
         onFocus={() => {}}
         onBlur={() => {}}
-        margin={{ horizontal: 'xsmall' }}
+        margin={margin || { horizontal: 'xsmall' }}
+        style={{
+          webkitAppearance: 'none',
+          mozAppearance: 'none',
+        }}
       />
       {button.current && (over || open) && (
         <StyledDrop
@@ -68,8 +80,11 @@ function Tooltip({
 Tooltip.propTypes = {
   text: PropTypes.string,
   iconSize: PropTypes.string,
+  icon: PropTypes.node,
   component: PropTypes.node,
   maxWidth: PropTypes.string,
+  insideButton: PropTypes.bool,
+  margin: PropTypes.object,
 };
 
 export default Tooltip;

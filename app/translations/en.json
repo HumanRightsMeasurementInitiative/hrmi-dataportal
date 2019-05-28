@@ -162,6 +162,7 @@
   "hrmi.settings.standard.core": "Low and middle income",
   "hrmi.settings.standard.hi": "High income",
   "hrmi.settings.benchmark.name": "Performance benchmark",
+  "hrmi.settings.benchmark.nameShort": "Benchmark",
   "hrmi.settings.benchmark.adjusted": "Income adjusted",
   "hrmi.settings.benchmark.best": "Global best",
   "hrmi.metricTypes.dimensions": "Categories of rights",

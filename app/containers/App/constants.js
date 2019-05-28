@@ -162,10 +162,12 @@ export const STANDARDS = [
   {
     key: 'core',
     code: 'Core',
+    hiValue: '0',
   },
   {
     key: 'hi',
     code: 'HiY',
+    hiValue: '1',
   },
 ];
 
