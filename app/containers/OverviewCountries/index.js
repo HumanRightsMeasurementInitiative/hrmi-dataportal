@@ -96,10 +96,16 @@ export function OverviewCountries({
         />
       </Box>
       {sortedCountries && scoresAllCountries && (
-        <Box direction="row" wrap width="100%" pad={{ bottom: 'medium' }}>
+        <Box
+          direction="row"
+          wrap
+          width="100%"
+          pad={{ bottom: 'medium', top: 'small' }}
+        >
           <InfiniteScroll items={sortedCountries} step={30} show={0}>
-            {c => (
+            {(c, index) => (
               <CountryPreview
+                showAnnotation={index === 0}
                 key={c.country_code}
                 country={c}
                 scale={scale}
