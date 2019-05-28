@@ -6,26 +6,29 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 // import styled from 'styled-components';
 import { Heading, Box } from 'grommet';
 
 import { STANDARDS } from 'containers/App/constants';
+import ReadMore from 'components/ReadMore';
 import rootMessages from 'messages';
 import messages from './messages';
 
-function MetricAbout({ metric, metricInfo, standard }) {
+function MetricAbout({ metric, metricInfo, standard, intl }) {
   const { metricType } = metric;
   return (
-    <Box direction="column" pad="medium">
+    <Box direction="column" pad={{ left: 'medium', vertical: 'medium' }}>
       <Heading level={4} margin={{ vertical: 'xsmall' }}>
         <FormattedMessage {...messages.title[metricType]} />
       </Heading>
-      <Box>
-        <FormattedMessage
-          {...rootMessages[`${metricType}-about`][metric.key]}
+      {rootMessages[`${metricType}-about`] && (
+        <ReadMore
+          message={intl.formatMessage(
+            rootMessages[`${metricType}-about`][metric.key],
+          )}
         />
-      </Box>
+      )}
       {metricType === 'indicators' && metricInfo && (
         <>
           <Box>
@@ -79,6 +82,7 @@ MetricAbout.propTypes = {
   metric: PropTypes.object,
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.object,
+  intl: intlShape.isRequired,
 };
 
-export default MetricAbout;
+export default injectIntl(MetricAbout);

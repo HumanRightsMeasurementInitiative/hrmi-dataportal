@@ -20,6 +20,7 @@ import {
   getScaleSearch,
   getESRIndicators,
   getAssessedSearch,
+  getOECDSearch,
   getSortSearch,
   getSortOrderSearch,
 } from 'containers/App/selectors';
@@ -27,6 +28,7 @@ import { navigate, selectCountry } from 'containers/App/actions';
 
 import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 
+import Source from 'components/Source';
 import CountryPreview from 'components/CountryPreview';
 import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
@@ -44,6 +46,7 @@ export function OverviewCountries({
   regionFilterValue,
   incomeFilterValue,
   assessedFilterValue,
+  oecdFilterValue,
   onRemoveFilter,
   onAddFilter,
   onSelectCountry,
@@ -81,7 +84,8 @@ export function OverviewCountries({
           onAddFilter={onAddFilter}
           incomeFilterValue={incomeFilterValue}
           assessedFilterValue={assessedFilterValue}
-          filterGroups={['income', 'region', 'assessed']}
+          oecdFilterValue={oecdFilterValue}
+          filterGroups={['income', 'region', 'assessed', 'oecd']}
         />
         <CountrySort
           sort={currentSort}
@@ -92,7 +96,7 @@ export function OverviewCountries({
         />
       </Box>
       {sortedCountries && scoresAllCountries && (
-        <Box direction="row" wrap width="100%">
+        <Box direction="row" wrap width="100%" pad={{ bottom: 'medium' }}>
           <InfiniteScroll items={sortedCountries} step={30} show={0}>
             {c => (
               <CountryPreview
@@ -111,6 +115,7 @@ export function OverviewCountries({
           </InfiniteScroll>
         </Box>
       )}
+      <Source />
     </MainColumn>
   );
 }
@@ -126,6 +131,7 @@ OverviewCountries.propTypes = {
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -140,6 +146,7 @@ const mapStateToProps = createStructuredSelector({
   regionFilterValue: state => getRegionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
   assessedFilterValue: state => getAssessedSearch(state),
+  oecdFilterValue: state => getOECDSearch(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),

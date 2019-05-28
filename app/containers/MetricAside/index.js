@@ -16,6 +16,7 @@ import { Box, Heading, Text } from 'grommet';
 
 import { lowerCase } from 'utils/string';
 
+import FAQs from 'containers/FAQs';
 import MetricAbout from 'components/MetricAbout';
 import { STANDARDS, RIGHTS, INDICATORS } from 'containers/App/constants';
 import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
@@ -58,15 +59,27 @@ export function MetricAside({
       : null;
 
   let children = [];
+  let questions = [];
   if (metricType === 'dimensions') {
     children = RIGHTS.filter(
       r => r.dimension === metric.key && typeof r.aggregate === 'undefined',
     );
+    if (metric.type === 'cpr') {
+      questions = [...questions, 'measureDimensionCPR'];
+    } else {
+      questions = [
+        ...questions,
+        'measureDimensionESR',
+        'standards',
+        'benchmarks',
+      ];
+    }
   }
   if (metricType === 'rights' && metric.type === 'cpr') {
     children = RIGHTS.filter(r => r.aggregate === metric.key);
+    questions = [...questions, 'measureRightCPR'];
   }
-  if (metricType === 'rights' && metric.type === 'esr') {
+  if (allIndicators && metricType === 'rights' && metric.type === 'esr') {
     children = STANDARDS.map(as => ({
       ...as,
       indicators: INDICATORS.filter(i => {
@@ -77,7 +90,12 @@ export function MetricAside({
         );
       }),
     }));
+    questions = [...questions, 'measureRightESR', 'standards', 'benchmarks'];
   }
+  if (metricType === 'indicators') {
+    questions = [...questions, 'measureIndicators', 'indicators'];
+  }
+
   return (
     <Box direction="column">
       <MetricAbout
@@ -85,7 +103,7 @@ export function MetricAside({
         metricInfo={metricInfo}
         standard={standard}
       />
-      <Box direction="column" pad="medium">
+      <Box direction="column" pad={{ bottom: 'medium', left: 'medium' }}>
         {metricType !== 'dimensions' && (
           <Pad>
             <Heading level={4} margin={{ vertical: 'xsmall' }}>
@@ -173,6 +191,12 @@ export function MetricAside({
             </Box>
           </Pad>
         )}
+        <FAQs
+          questions={questions}
+          metric={intl.formatMessage(
+            rootMessages[metric.metricType][metric.key],
+          )}
+        />
       </Box>
     </Box>
   );

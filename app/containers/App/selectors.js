@@ -26,6 +26,7 @@ import {
   AT_RISK_INDICATORS,
   COLUMNS,
   ASSESSED_FILTERS,
+  OECD_FILTERS,
 } from './constants';
 
 // router sub-state
@@ -148,6 +149,13 @@ export const getIncomeSearch = createSelector(
     search.has('income') &&
     INCOME_GROUPS.map(s => s.key).indexOf(search.get('income')) > -1
       ? search.get('income')
+      : false,
+);
+export const getOECDSearch = createSelector(
+  getRouterSearchParams,
+  search =>
+    search.has('oecd') && OECD_FILTERS.indexOf(search.get('oecd')) > -1
+      ? search.get('oecd')
       : false,
 );
 export const getGroupSearch = createSelector(
@@ -283,10 +291,12 @@ export const getCountriesFiltered = createSelector(
   getCountries,
   getRegionSearch,
   getIncomeSearch,
-  (countries, region, income) =>
+  getOECDSearch,
+  (countries, region, income, oecd) =>
     countries &&
     countries
       .filter(c => !region || c.region_code === region)
+      .filter(c => !oecd || c.OECD_country === oecd)
       .filter(
         c =>
           !income ||
@@ -312,9 +322,10 @@ export const getESRDimensionScores = createSelector(
   getCountriesFiltered,
   getRegionSearch,
   getIncomeSearch,
+  getOECDSearch,
   getStandardSearch,
   getESRYear,
-  (scores, countries, region, income, standardSearch, year) => {
+  (scores, countries, region, income, oecd, standardSearch, year) => {
     const standard = STANDARDS.find(as => as.key === standardSearch);
     const dimension = DIMENSIONS.find(d => d.key === 'esr');
     return (
@@ -327,7 +338,7 @@ export const getESRDimensionScores = createSelector(
           s.standard === standard.code &&
           s.metric_code === dimension.code &&
           quasiEquals(s.year, year) &&
-          (!(region || income) ||
+          (!(region || income || oecd) ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
     );

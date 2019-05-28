@@ -4,15 +4,20 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Box, Tabs, Tab, ResponsiveContext } from 'grommet';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 
 import { getTabSearch, getModalTabSearch } from 'containers/App/selectors';
 import { setTab, setModalTab } from 'containers/App/actions';
+import HowToRead from 'components/HowToRead';
 import ColumnTitle from 'styled/ColumnTitle';
 import ColumnHeader from 'styled/ColumnHeader';
 import ColumnContent from 'styled/ColumnContent';
 
-/* height: ${props => props.theme.columnHeader.height}; */
+const HowToReadWrapper = styled.div`
+  position: absolute;
+  right: ${({ theme }) => theme.global.edgeSize.medium};
+  top: 0;
+`;
 
 // TODO fix aside when leaving screen
 //     position: fixed;
@@ -29,50 +34,66 @@ function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
     <ResponsiveContext.Consumer>
       {size => {
         // tabs in main column if small or more than 2 tabs
-        const activeTabs = tabs.filter(t => t.content);
+        const tabsWithContent = tabs.filter(t => t.content);
         const mainTabs =
           size === 'small' || !aside
-            ? activeTabs
-            : activeTabs.slice(0, activeTabs.length - 1);
+            ? tabsWithContent
+            : tabsWithContent.slice(0, tabsWithContent.length - 1);
         return (
           <Box direction="row" margin="0 auto" width="100%">
-            <Box direction="column" flex>
-              {(size === 'small' || !aside || activeTabs.length > 2) && (
-                <Tabs
-                  justify="start"
-                  activeIndex={tabIndex}
-                  onActive={index =>
-                    index !== tabIndex && onTabClick(index, modal)
-                  }
-                >
-                  {mainTabs.slice().map(tab => (
-                    <Tab title={tab.title} key={tab.key}>
-                      <ColumnContent>{tab.content}</ColumnContent>
-                    </Tab>
-                  ))}
-                </Tabs>
+            <Box direction="column" flex style={{ position: 'relative' }}>
+              {(size === 'small' || !aside || tabsWithContent.length > 2) && (
+                <>
+                  <Tabs
+                    justify="start"
+                    activeIndex={tabIndex}
+                    onActive={index =>
+                      index !== tabIndex && onTabClick(index, modal)
+                    }
+                  >
+                    {mainTabs.slice().map(tab => (
+                      <Tab title={tab.title} key={tab.key}>
+                        {tab.howToRead && (
+                          <HowToReadWrapper>
+                            <HowToRead {...tab.howToRead} />
+                          </HowToReadWrapper>
+                        )}
+                        <ColumnContent>{tab.content}</ColumnContent>
+                      </Tab>
+                    ))}
+                  </Tabs>
+                </>
               )}
-              {size !== 'small' && aside && activeTabs.length <= 2 && (
+              {size !== 'small' && aside && tabsWithContent.length <= 2 && (
                 <Box direction="column">
-                  <ColumnHeader>
-                    <ColumnTitle>{activeTabs[0].title}</ColumnTitle>
+                  <ColumnHeader direction="row">
+                    <ColumnTitle>{tabsWithContent[0].title}</ColumnTitle>
+                    {tabsWithContent[0].howToRead && (
+                      <Box
+                        alignSelf="end"
+                        margin={{ left: 'auto' }}
+                        pad={{ right: 'medium' }}
+                      >
+                        <HowToRead {...tabsWithContent[0].howToRead} />
+                      </Box>
+                    )}
                   </ColumnHeader>
-                  <ColumnContent>{activeTabs[0].content}</ColumnContent>
+                  <ColumnContent>{tabsWithContent[0].content}</ColumnContent>
                 </Box>
               )}
             </Box>
-            {size !== 'small' && aside && activeTabs.length > 1 && (
+            {size !== 'small' && aside && tabsWithContent.length > 1 && (
               <Box
                 width={size === 'medium' ? '280px' : '360px'}
                 direction="column"
               >
                 <ColumnHeader>
                   <ColumnTitle>
-                    {activeTabs[activeTabs.length - 1].title}
+                    {tabsWithContent[tabsWithContent.length - 1].title}
                   </ColumnTitle>
                 </ColumnHeader>
                 <ColumnContent>
-                  {activeTabs[activeTabs.length - 1].content}
+                  {tabsWithContent[tabsWithContent.length - 1].content}
                 </ColumnContent>
               </Box>
             )}

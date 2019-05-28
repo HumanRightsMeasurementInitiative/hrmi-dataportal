@@ -12,6 +12,7 @@ import {
   REGIONS,
   INCOME_GROUPS,
   ASSESSED_FILTERS,
+  OECD_FILTERS,
 } from 'containers/App/constants';
 
 import rootMessages from 'messages';
@@ -28,7 +29,11 @@ const StyledButtonIcon = styled(ButtonIcon)`
   height: 40px;
 `;
 
-const getFilterOptions = ({ region, income, assessed }, intl, filterGroups) => {
+const getFilterOptions = (
+  { region, income, assessed, oecd },
+  intl,
+  filterGroups,
+) => {
   let groups = [];
   if (!region && filterGroups.indexOf('region') > -1) {
     groups = [
@@ -72,6 +77,20 @@ const getFilterOptions = ({ region, income, assessed }, intl, filterGroups) => {
       },
     ];
   }
+  if (!oecd && filterGroups.indexOf('oecd') > -1) {
+    groups = [
+      ...groups,
+      {
+        group: 'oecd',
+        label: intl.formatMessage(messages.oecdFilterOptionGroup),
+        options: OECD_FILTERS.map(a => ({
+          key: 'oecd',
+          value: a,
+          label: intl.formatMessage(rootMessages.oecd[a]),
+        })),
+      },
+    ];
+  }
   return groups;
 };
 
@@ -81,27 +100,37 @@ export function CountryFilters({
   onAddFilter,
   incomeFilterValue,
   assessedFilterValue,
+  oecdFilterValue,
   intl,
   filterGroups,
 }) {
   const [filterOpen, setFilterOpen] = useState(false);
   const countryTarget = useRef(null);
-
+  const setFilters = {
+    region: filterGroups.indexOf('region') > -1 && regionFilterValue,
+    income: filterGroups.indexOf('income') > -1 && incomeFilterValue,
+    assessed: filterGroups.indexOf('assessed') > -1 && assessedFilterValue,
+    oecd: filterGroups.indexOf('region') > -1 && oecdFilterValue,
+  };
+  const setAllFilters = Object.values(setFilters).reduce(
+    (memo, set) => memo && set,
+    true,
+  );
   return (
     <Box direction="row" pad={{ vertical: 'small' }}>
-      {filterGroups.indexOf('region') > -1 && regionFilterValue && (
+      {setFilters.region && (
         <ActiveFilterButton
           onRemove={() => onRemoveFilter('region')}
           label={intl.formatMessage(rootMessages.regions[regionFilterValue])}
         />
       )}
-      {filterGroups.indexOf('income') > -1 && incomeFilterValue && (
+      {setFilters.income && (
         <ActiveFilterButton
           onRemove={() => onRemoveFilter('income')}
           label={intl.formatMessage(rootMessages.income[incomeFilterValue])}
         />
       )}
-      {filterGroups.indexOf('assessed') > -1 && assessedFilterValue && (
+      {setFilters.assessed && (
         <ActiveFilterButton
           onRemove={() => onRemoveFilter('assessed')}
           label={intl.formatMessage(
@@ -109,9 +138,13 @@ export function CountryFilters({
           )}
         />
       )}
-      {(!(filterGroups.indexOf('region') && regionFilterValue) ||
-        !(filterGroups.indexOf('income') > -1 && incomeFilterValue) ||
-        (!assessedFilterValue && filterGroups.indexOf('assessed') > -1)) && (
+      {setFilters.oecd && (
+        <ActiveFilterButton
+          onRemove={() => onRemoveFilter('oecd')}
+          label={intl.formatMessage(rootMessages.oecd[oecdFilterValue])}
+        />
+      )}
+      {!setAllFilters && (
         <>
           <FilterDropButton
             active={filterOpen}
@@ -143,6 +176,7 @@ export function CountryFilters({
                       region: regionFilterValue,
                       income: incomeFilterValue,
                       assessed: assessedFilterValue,
+                      oecd: oecdFilterValue,
                     },
                     intl,
                     filterGroups,
@@ -166,6 +200,7 @@ CountryFilters.propTypes = {
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   filterGroups: PropTypes.array,

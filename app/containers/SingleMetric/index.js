@@ -13,6 +13,7 @@ import { compose } from 'redux';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 
+import Source from 'components/Source';
 import BarHorizontal from 'components/BarHorizontal';
 import BarBulletHorizontal from 'components/BarBulletHorizontal';
 import MainColumn from 'styled/MainColumn';
@@ -33,6 +34,8 @@ import {
   getSortSearch,
   getSortOrderSearch,
   getCountries,
+  getIndicatorInfo,
+  getOECDSearch,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
@@ -49,7 +52,7 @@ const Styled = styled(Box)`
 
 // prettier-ignore
 const CountryButton = styled(Button)`
-  text-align: left;
+  text-align: right;
   padding: 3px 0;
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
@@ -75,6 +78,7 @@ export function SingleMetric({
   standard,
   regionFilterValue,
   incomeFilterValue,
+  oecdFilterValue,
   onRemoveFilter,
   onAddFilter,
   sort,
@@ -84,6 +88,7 @@ export function SingleMetric({
   onOrderChange,
   onCountryClick,
   countries,
+  metricInfo,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -109,7 +114,6 @@ export function SingleMetric({
     scores,
     column,
   });
-
   return (
     <MainColumn>
       <Box direction="row">
@@ -118,7 +122,8 @@ export function SingleMetric({
           onRemoveFilter={onRemoveFilter}
           onAddFilter={onAddFilter}
           incomeFilterValue={incomeFilterValue}
-          filterGroups={['income', 'region']}
+          oecdFilterValue={oecdFilterValue}
+          filterGroups={['income', 'region', 'oecd']}
         />
         <CountrySort
           sort={currentSort}
@@ -141,7 +146,7 @@ export function SingleMetric({
             pad={{ right: 'medium' }}
           >
             <Text size="small" style={{ fontWeight: 600 }}>
-              <FormattedMessage {...rootMessages.scoreLabel} />
+              <FormattedMessage {...rootMessages.labels.score} />
             </Text>
           </CountryWrap>
           <BarWrap flex direction="row">
@@ -153,14 +158,18 @@ export function SingleMetric({
               margin={{ left: 'auto' }}
               style={{ transform: 'translateX(50%)' }}
             >
-              {metric.type === 'esr' ? '100%' : '10'}
+              {metric.type === 'esr' || metric.metricType === 'indicators'
+                ? '100%'
+                : '10'}
             </Text>
           </BarWrap>
         </Box>
         {sortedScores &&
           sortedScores.map(s => {
             const country =
-              metric.metricType === 'esr' &&
+              (metric.type === 'esr' ||
+                (metric.metricType === 'indicators' &&
+                  metricInfo.standard === 'Core')) &&
               countries.find(c => c.country_code === s.country_code);
             return (
               <Box
@@ -181,7 +190,11 @@ export function SingleMetric({
                       {...rootMessages.countries[s.country_code]}
                     />
                     {country && country.high_income_country === '1' && (
-                      <FormattedMessage {...rootMessages.hiCountryLabel} />
+                      <span>
+                        {` (${intl.formatMessage(
+                          rootMessages.labels.hiCountry,
+                        )})`}
+                      </span>
                     )}
                   </CountryButton>
                 </CountryWrap>
@@ -218,6 +231,7 @@ export function SingleMetric({
             );
           })}
       </Styled>
+      <Source />
     </MainColumn>
   );
 }
@@ -234,12 +248,14 @@ SingleMetric.propTypes = {
   onRemoveFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   sort: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   onCountryClick: PropTypes.func,
+  metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -259,11 +275,18 @@ const mapStateToProps = createStructuredSelector({
     }
     return false;
   },
+  metricInfo: (state, { metric }) => {
+    if (metric.metricType === 'indicators') {
+      return getIndicatorInfo(state, metric.code);
+    }
+    return false;
+  },
   countries: state => getCountries(state),
   benchmark: state => getBenchmarkSearch(state),
   standard: state => getStandardSearch(state),
   regionFilterValue: state => getRegionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
+  oecdFilterValue: state => getOECDSearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
 });
