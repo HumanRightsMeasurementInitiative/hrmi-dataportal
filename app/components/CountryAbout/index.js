@@ -14,6 +14,7 @@ import roundValue from 'utils/round-score';
 
 import { COLUMNS } from 'containers/App/constants';
 
+import FAQs from 'containers/FAQs';
 import ButtonText from 'styled/ButtonText';
 
 import rootMessages from 'messages';
@@ -118,6 +119,26 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
       <Box direction="row">
         <Box width="50%">
           <Label>
+            <FormattedMessage {...messages.oecd} />
+          </Label>
+        </Box>
+        <Box width="50%">
+          <Button
+            onClick={() =>
+              onCategoryClick('oecd', country[COLUMNS.COUNTRIES.OECD])
+            }
+          >
+            <Text>
+              <FormattedMessage
+                {...rootMessages.oecd[country[COLUMNS.COUNTRIES.OECD]]}
+              />
+            </Text>
+          </Button>
+        </Box>
+      </Box>
+      <Box direction="row">
+        <Box width="50%">
+          <Label>
             <FormattedMessage {...messages.income} />
           </Label>
         </Box>
@@ -129,6 +150,9 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
           </Button>
         </Box>
       </Box>
+      <FAQs
+        questions={['scale', 'year', 'standards', 'benchmarks', 'indicators']}
+      />
     </Box>
   );
 }

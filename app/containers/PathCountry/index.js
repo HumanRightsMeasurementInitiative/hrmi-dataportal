@@ -83,7 +83,7 @@ export function PathCountry({
   }, []);
   const countryCode = match.params.country;
 
-  const group =
+  const incomeGroup =
     country &&
     INCOME_GROUPS.find(g => quasiEquals(g.value, country.high_income_country));
 
@@ -114,7 +114,7 @@ export function PathCountry({
         <ContentMaxWidth>
           <Close topRight />
           <Box direction="column">
-            {country && group && (
+            {country && incomeGroup && (
               <HeaderLinks
                 onItemClick={(key, value) => onCategoryClick(key, value)}
                 items={[
@@ -126,9 +126,18 @@ export function PathCountry({
                     ),
                   },
                   {
+                    key: 'oecd',
+                    value: country.OECD_country,
+                    label: intl.formatMessage(
+                      rootMessages.oecd[country.OECD_country],
+                    ),
+                  },
+                  {
                     key: 'income',
-                    value: group.key,
-                    label: intl.formatMessage(rootMessages.income[group.key]),
+                    value: incomeGroup.key,
+                    label: intl.formatMessage(
+                      rootMessages.income[incomeGroup.key],
+                    ),
                   },
                 ]}
               />
@@ -143,6 +152,11 @@ export function PathCountry({
             {
               key: 'report',
               title: intl.formatMessage(rootMessages.tabs.report),
+              howToRead: {
+                context: 'PathCountry',
+                chart: 'Summary',
+                data: scale,
+              },
               content: (
                 <CountryReport
                   countryTitle={countryTitle}
@@ -165,6 +179,11 @@ export function PathCountry({
             {
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              howToRead: {
+                context: 'PathCountry',
+                chart: 'WordCloud',
+                data: 'atRisk',
+              },
               content: hasCPR(dimensions) && (
                 <CountryPeople
                   data={atRisk}

@@ -13,7 +13,7 @@ const Styled = styled(Box)`
 export default props => (
   <Styled
     direction="column"
-    pad={{ right: 'medium', bottom: 'large' }}
+    pad={{ right: 'medium', bottom: 'xlarge' }}
     {...props}
   />
 );

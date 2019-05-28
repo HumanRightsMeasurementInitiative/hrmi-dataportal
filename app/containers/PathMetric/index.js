@@ -126,6 +126,11 @@ export function PathMetric({
               key: 'singleMetric',
               title: intl.formatMessage(rootMessages.tabs.singleMetric),
               content: <SingleMetric metric={metric} />,
+              howToRead: {
+                context: 'PathMetric',
+                chart: 'BarHorizontal',
+                data: metric.type,
+              },
             },
             {
               key: 'about',

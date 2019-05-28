@@ -10,12 +10,17 @@ export const scope = 'hrmi.containers.Settings';
 
 export default defineMessages({
   hi: {
-    label: {
-      id: `${scope}.hi.label`,
-      defaultMessage: '(HI): High income country',
+    title: {
+      id: `${scope}.hi.title`,
+      defaultMessage: 'High income country',
     },
     text: {
       id: `${scope}.hi.text`,
+      defaultMessage:
+        'For these countries it is best to use the high income assessment standard.',
+    },
+    textIndicator: {
+      id: `${scope}.hi.textIndicator`,
       defaultMessage:
         'For these countries it is best to use the high income assessment standard.',
     },

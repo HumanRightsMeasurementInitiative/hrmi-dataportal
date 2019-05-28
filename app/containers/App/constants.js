@@ -142,6 +142,7 @@ export const REGIONS = [
 ];
 
 export const ASSESSED_FILTERS = ['all', 'cpr-all', 'esr-all', 'some'];
+export const OECD_FILTERS = ['1', '0'];
 
 // column: 'high_income_country',
 export const INCOME_GROUPS = [

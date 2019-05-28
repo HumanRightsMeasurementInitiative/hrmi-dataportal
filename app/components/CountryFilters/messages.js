@@ -25,4 +25,8 @@ export default defineMessages({
     id: `${scope}.assessedFilterOptionGroup`,
     defaultMessage: 'Assessment',
   },
+  oecdFilterOptionGroup: {
+    id: `${scope}.oecdFilterOptionGroup`,
+    defaultMessage: 'OECD status',
+  },
 });

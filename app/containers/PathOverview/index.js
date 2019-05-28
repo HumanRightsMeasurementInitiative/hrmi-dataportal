@@ -18,6 +18,7 @@ import {
   getScoresByCountry,
   getStandardSearch,
   getAssessedSearch,
+  getScaleSearch,
 } from 'containers/App/selectors';
 
 import OverviewMetrics from 'containers/OverviewMetrics';
@@ -43,6 +44,7 @@ export function PathOverview({
   intl,
   standard,
   assessed,
+  scale,
 }) {
   if (!countries) return null;
 
@@ -76,6 +78,11 @@ export function PathOverview({
                   scoresAllCountries={scoresAllCountries}
                 />
               ),
+              howToRead: {
+                context: 'PathOverview',
+                chart: 'Diamonds',
+                data: scale,
+              },
             },
             {
               key: 'metrics',
@@ -100,6 +107,7 @@ PathOverview.propTypes = {
   intl: intlShape.isRequired,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -107,6 +115,7 @@ const mapStateToProps = createStructuredSelector({
   scoresAllCountries: state => getScoresByCountry(state),
   standard: state => getStandardSearch(state),
   assessed: state => getAssessedSearch(state),
+  scale: state => getScaleSearch(state),
 });
 
 const withConnect = connect(

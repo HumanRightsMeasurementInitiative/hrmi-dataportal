@@ -150,6 +150,7 @@ export function CountryPreview({
   benchmark,
   scores,
   indicators,
+  intl,
 }) {
   if (!country) return null;
 
@@ -210,8 +211,10 @@ export function CountryPreview({
                 <FormattedMessage
                   {...rootMessages.countries[country.country_code]}
                 />
-                {country.high_income_country === '1' && (
-                  <FormattedMessage {...rootMessages.hiCountryLabel} />
+                {country && country.high_income_country === '1' && (
+                  <span>
+                    {` (${intl.formatMessage(rootMessages.labels.hiCountry)})`}
+                  </span>
                 )}
               </strong>
             </Text>
