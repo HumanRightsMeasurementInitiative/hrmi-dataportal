@@ -52,8 +52,8 @@ function Tooltip({
         onBlur={() => {}}
         margin={margin || { horizontal: 'xsmall' }}
         style={{
-          webkitAppearance: 'none',
-          mozAppearance: 'none',
+          WebkitAppearance: 'none',
+          MozAppearance: 'none',
         }}
       />
       {button.current && (over || open) && (
