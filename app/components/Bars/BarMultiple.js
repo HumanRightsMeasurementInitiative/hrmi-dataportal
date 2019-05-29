@@ -34,6 +34,7 @@ function BarMultiple({
   rotate,
   totalHeight,
   annotateBenchmarkAbove,
+  scoreOnHover,
 }) {
   const {
     color,
@@ -74,6 +75,7 @@ function BarMultiple({
               rotate={rotate}
               showIncompleteAction={false}
               height={Math.round(heightIndividual)}
+              scoreOnHover={scoreOnHover}
             />
           </BarWrapInner>
         ))}
@@ -101,6 +103,7 @@ BarMultiple.propTypes = {
   annotateBenchmarkAbove: PropTypes.bool,
   totalHeight: PropTypes.number,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default BarMultiple;

@@ -235,7 +235,7 @@ export function SingleMetric({
                     metric.metricType === 'indicators') && (
                     <Bar
                       showLabels={false}
-                      level={3}
+                      level={2}
                       data={{
                         color: 'esr',
                         refValues: getDimensionRefs(s, currentBenchmark),
@@ -244,6 +244,7 @@ export function SingleMetric({
                         unit: '%',
                         stripes: standard === 'hi',
                       }}
+                      scoreOnHover="top"
                     />
                   )}
                   {metric.type === 'cpr' && (
@@ -258,6 +259,8 @@ export function SingleMetric({
                         unit: '',
                         band: getBand(s),
                       }}
+                      scoreOnHover="top"
+                      bandOnHover="top"
                     />
                   )}
                 </BarWrap>

@@ -120,6 +120,7 @@ function RightPanel({
             data={data}
             showLabels
             showScore
+            bandOnHover
           />
         )}
       </Box>

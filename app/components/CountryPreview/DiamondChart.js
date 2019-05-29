@@ -81,6 +81,7 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
                 showBenchmark={showLabels}
                 rotate={45}
                 showIncompleteAction={false}
+                scoreOnHover="top"
               />
             </BarWrapInner>
           ))}
@@ -95,6 +96,7 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
                 dataMultiple={rightGroup}
                 showLabels={showLabels}
                 rotate={45}
+                scoreOnHover="top"
               />
             </BarWrapInner>
           ))}

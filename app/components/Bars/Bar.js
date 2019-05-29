@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Text } from 'grommet';
@@ -51,6 +51,7 @@ const BarNoValue = styled.div`
   border-color: ${props => props.theme.global.colors['light-4']};
 `;
 
+// prettier-ignore
 const BarValue = styled.div`
   position: absolute;
   left: 0;
@@ -58,6 +59,7 @@ const BarValue = styled.div`
   height: ${props => props.height}px;
   background-color: ${props =>
     props.stripes ? 'transparent' : props.theme.global.colors[props.color]};
+  opacity: ${props => props.active ? 0.8 : 1};
   ${props =>
     props.stripes &&
     css`
@@ -116,13 +118,26 @@ function Bar({
   height,
   annotateBenchmarkAbove = false,
   showAllBenchmarkAnnotations = false,
+  scoreOnHover = false,
 }) {
-  const { color, value, refValues, maxValue, stripes = false, unit } = data;
+  const [hover, setHover] = useState(false);
+  const {
+    color,
+    value,
+    refValues,
+    maxValue,
+    stripes = false,
+    unit,
+    title,
+  } = data;
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
 
   // prettier-ignore
   return (
-    <Wrapper>
+    <Wrapper
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
       <BarWrapper>
         <BarReference height={height || HEIGHT[level]} noData={!value}>
@@ -135,6 +150,7 @@ function Bar({
           {value && (
             <BarValue
               height={height || HEIGHT[level]}
+              active={hover}
               color={color}
               style={{ width: `${(value / maxValue) * 100}%` }}
               stripes={stripes}
@@ -189,13 +205,16 @@ function Bar({
             </NoData>
           )}
         </BarReference>
-        {showScore && (
+        {(showScore || (hover && scoreOnHover)) && (
           <Score
+            rotate={rotate}
             score={value}
             left={(value / maxValue) * 100}
             color={color}
             unit={unit}
-            level={level}
+            level={scoreOnHover ? 1 : level}
+            direction={scoreOnHover || 'bottom'}
+            title={title}
           />
         )}
       </BarWrapper>
@@ -221,6 +240,7 @@ Bar.propTypes = {
   intl: intlShape.isRequired,
   annotateBenchmarkAbove: PropTypes.bool,
   showAllBenchmarkAnnotations: PropTypes.bool,
+  scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default injectIntl(Bar);
