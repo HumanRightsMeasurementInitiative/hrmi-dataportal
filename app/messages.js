@@ -18,6 +18,14 @@ export default defineMessages({
       id: `${scope}.labels.hiCountry`,
       defaultMessage: 'HI',
     },
+    better: {
+      id: `${scope}.labels.better`,
+      defaultMessage: 'Better',
+    },
+    worse: {
+      id: `${scope}.labels.worse`,
+      defaultMessage: 'Worse',
+    },
   },
   tooltip: {
     empowerment: {
@@ -186,6 +194,10 @@ export default defineMessages({
       name: {
         id: `${scope}.settings.benchmark.name`,
         defaultMessage: 'Performance benchmark',
+      },
+      nameShort: {
+        id: `${scope}.settings.benchmark.nameShort`,
+        defaultMessage: 'Benchmark',
       },
       adjusted: {
         id: `${scope}.settings.benchmark.adjusted`,

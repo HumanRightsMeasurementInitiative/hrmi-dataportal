@@ -2,53 +2,80 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Text } from 'grommet';
 
-import BarHorizontal from 'components/BarHorizontal';
-
+import Bar from 'components/Bars/Bar';
+import { COLUMNS } from 'containers/App/constants';
 import formatScoreMax from 'utils/format-score-max';
 import DimensionTitle from './DimensionTitle';
+import AnnotateBetter from './AnnotateBetter';
 
-const DimensionScoreWrapper = props => <Box {...props} width="200px" />;
+const DimensionScoreWrapper = props => (
+  <Box {...props} width="200px" flex={{ shrink: 0 }} />
+);
 const DimensionScoreText = props => <Text weight="bold" {...props} />;
 const BarWrap = props => <Box direction="row" {...props} align="center" />;
 
-function DimensionChart({
-  dimensionKey,
-  column,
-  refColumns,
-  data,
-  maxValue,
-  unit = '',
-  standard,
-}) {
-  const value =
-    data && data.score && data.score[column] && parseFloat(data.score[column]);
-  const refValues =
-    refColumns &&
-    data &&
-    data.score &&
-    refColumns.map(refColumn => ({
-      value: refColumn.value || data.score[refColumn.column],
-      style: refColumn.style,
-      key: refColumn.key,
-    }));
+const getDimensionRefs = (score, benchmark) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    const col = benchmark.refColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        value: score && score[col],
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
+
+const getDimensionValue = (data, benchmark) => {
+  if (data.type === 'cpr' && data.score) {
+    return data.score[COLUMNS.CPR.MEAN];
+  }
+  if (data.type === 'esr' && data.score) {
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return data.score && data.score[col];
+  }
+  return false;
+};
+
+function DimensionChart({ data, benchmark, standard }) {
+  if (!data) return null;
+  const maxValue = data.type === 'cpr' ? 10 : 100;
+  const dim = {
+    ...data,
+    color: data.key,
+    value: getDimensionValue(data, benchmark),
+    refValues: data.type === 'esr' && getDimensionRefs(data.score, benchmark),
+    maxValue,
+    stripes: data.type === 'esr' && standard === 'hi',
+    unit: data.type === 'esr' ? '%' : '',
+  };
   return (
-    <Box>
-      <DimensionTitle dimensionKey={dimensionKey} />
+    <Box pad={{ bottom: 'medium' }}>
+      <DimensionTitle dimensionKey={data.key} />
       <BarWrap>
-        <BarHorizontal
-          color={dimensionKey}
-          data={data}
-          value={value}
-          minValue={0}
-          maxValue={maxValue}
-          unit={unit}
-          stripes={dimensionKey === 'esr' && standard === 'hi'}
-          refValues={refValues}
-        />
+        <Box
+          pad={{ vertical: 'xsmall', left: 'medium', right: 'large' }}
+          fill="horizontal"
+          style={{ position: 'relative' }}
+        >
+          <Bar
+            data={dim}
+            showLabels
+            annotateBenchmarkAbove
+            showBenchmark={!!dim.value}
+          />
+          <AnnotateBetter />
+        </Box>
         <DimensionScoreWrapper>
-          <DimensionScoreText color={`${dimensionKey}Dark`}>
-            {value && formatScoreMax(value, maxValue)}
-            {!value && 'N/A'}
+          <DimensionScoreText color={`${data.key}Dark`}>
+            {dim.value && formatScoreMax(dim.value, maxValue)}
+            {!dim.value && 'N/A'}
           </DimensionScoreText>
         </DimensionScoreWrapper>
       </BarWrap>
@@ -57,13 +84,9 @@ function DimensionChart({
 }
 
 DimensionChart.propTypes = {
-  dimensionKey: PropTypes.string,
-  column: PropTypes.string,
-  unit: PropTypes.string,
+  benchmark: PropTypes.object,
   standard: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  maxValue: PropTypes.number,
-  refColumns: PropTypes.array,
 };
 
 export default DimensionChart;

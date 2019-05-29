@@ -11,16 +11,22 @@ import formatScoreMax from 'utils/format-score-max';
 const RightsScoresWrapperRow = styled.div`
   display: table-row;
   line-height: 12px;
+  border-bottom-color: ${({ theme }) => theme.global.colors['light-5']};
+  &:last-child {
+    border-bottom-color: transparent;
+  }
 `;
 const RightsScoresWrapperCellScore = styled.div`
   width: 50px;
   display: table-cell;
   border-bottom: 1px solid;
+  border-bottom-color: inherit;
 `;
 const RightsScoresWrapperCellLabel = styled.div`
   display: table-cell;
   border-bottom: 1px solid;
-  padding-bottom: 4px;
+  padding-bottom: 7px;
+  border-bottom-color: inherit;
 `;
 const RightScoreText = props => <Text weight="bold" size="small" {...props} />;
 const RightLabelText = styled.span`

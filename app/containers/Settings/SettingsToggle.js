@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styled, { css } from 'styled-components';
-import { Box, Text, ResponsiveContext, Paragraph } from 'grommet';
+import { Box, Text, ResponsiveContext } from 'grommet';
 
 import Tooltip from 'components/Tooltip';
+import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
+import StandardOverlay from 'components/Tooltip/StandardOverlay';
 import ButtonToggleSetting from 'styled/ButtonToggleSetting';
+
 // import { DIMENSIONS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
@@ -15,21 +18,44 @@ const HEIGHT = 20;
 const heightRotated = HEIGHT * 2 ** (1 / 2); // height * sqrt(2)
 const SquareWrap = styled.div`
   display: block;
-  height: ${heightRotated}px;
-  width: ${heightRotated}px;
-  padding-top: ${(heightRotated - HEIGHT) / 2}px;
+  height: ${({ rotated }) => (rotated ? heightRotated : HEIGHT / 2)}px;
+  width: ${({ rotated }) => (rotated ? heightRotated : HEIGHT * 1.5)}px;
+  padding-top: ${({ rotated }) =>
+    rotated ? (heightRotated - HEIGHT) / 2 : 0}px;
+  padding-right: ${({ rotated }) =>
+    rotated ? (heightRotated - HEIGHT) / 2 : 0}px;
   margin: 0 0 0 auto;
 `;
 const Square = styled.div`
   display: block;
-  width: ${HEIGHT}px;
-  height: ${HEIGHT}px;
+  width: ${({ rotated }) => (rotated ? HEIGHT : HEIGHT * 1.5)}px;
+  height: ${({ rotated }) => (rotated ? HEIGHT : HEIGHT / 2)}px;
   margin: 0 auto;
-  transform: rotate(-45deg);
+  ${({ rotated }) =>
+    rotated &&
+    css`
+      transform: rotate(-45deg);
+    `};
   background-color: ${({ theme, color }) => theme.global.colors[color]};
-  border-right: 1px ${({ lineStyle }) => lineStyle || 'solid'};
-  border-color: ${({ theme, type }) =>
-    type === 'line' ? theme.global.colors['dark-2'] : 'transparent'};
+  ${({ lineStyle, type }) =>
+    lineStyle === 'solid' &&
+    type === 'line' &&
+    css`
+      border-right: 1px solid;
+      border-color: ${props => props.theme.global.colors['dark-2']};
+    `}
+  ${({ lineStyle, type }) =>
+    lineStyle !== 'solid' &&
+    type === 'line' &&
+    css`
+      background-image: linear-gradient(
+        ${props => props.theme.global.colors['dark-2']} 50%,
+        rgba(255, 255, 255, 0) 0%
+      );
+      background-position: right;
+      background-size: 2px 4px;
+      background-repeat: repeat-y;
+    `}
   ${({ type, lineStyle, theme, color }) =>
     type === 'square' &&
     lineStyle === 'stripes' &&
@@ -55,7 +81,7 @@ function SettingsToggle({
   active,
   setting,
   square,
-  intl,
+  horizontal = false,
 }) {
   return (
     <ResponsiveContext.Consumer>
@@ -64,7 +90,7 @@ function SettingsToggle({
           pad={{ left: size === 'xlarge' ? 'large' : 'medium' }}
           direction="column"
         >
-          <Box direction="row" align="center" margin={{ right: 'xsmall' }}>
+          <Box direction="row" align="center">
             <Box pad={{ vertical: 'small' }} direction="row">
               <Text size="small" style={{ fontWeight: 600 }}>
                 <FormattedMessage {...rootMessages.settings[setting].name} />
@@ -73,82 +99,21 @@ function SettingsToggle({
                 <Tooltip
                   iconSize="medium"
                   maxWidth="400px"
-                  component={
-                    <>
-                      <Paragraph>
-                        {intl.formatMessage(
-                          rootMessages.tooltip.standard.intro,
-                        )}
-                      </Paragraph>
-                      <Paragraph>
-                        <Text style={{ fontWeight: 600 }}>
-                          {`${intl.formatMessage(
-                            rootMessages.settings.standard.core,
-                          )}: `}
-                        </Text>
-                        <Text>
-                          {intl.formatMessage(
-                            rootMessages.tooltip.standard.core,
-                          )}
-                        </Text>
-                      </Paragraph>
-                      <Paragraph>
-                        <Text style={{ fontWeight: 600 }}>
-                          {`${intl.formatMessage(
-                            rootMessages.settings.standard.hi,
-                          )}: `}
-                        </Text>
-                        <Text>
-                          {intl.formatMessage(rootMessages.tooltip.standard.hi)}
-                        </Text>
-                      </Paragraph>
-                    </>
-                  }
+                  component={<StandardOverlay />}
                 />
               )}
               {setting === 'benchmark' && (
                 <Tooltip
                   iconSize="medium"
                   maxWidth="400px"
-                  component={
-                    <>
-                      <Paragraph>
-                        {intl.formatMessage(
-                          rootMessages.tooltip.benchmark.intro,
-                        )}
-                      </Paragraph>
-                      <Paragraph>
-                        <Text style={{ fontWeight: 600 }}>
-                          {`${intl.formatMessage(
-                            rootMessages.settings.benchmark.adjusted,
-                          )}: `}
-                        </Text>
-                        <Text>
-                          {intl.formatMessage(
-                            rootMessages.tooltip.benchmark.adjusted,
-                          )}
-                        </Text>
-                      </Paragraph>
-                      <Paragraph>
-                        <Text style={{ fontWeight: 600 }}>
-                          {`${intl.formatMessage(
-                            rootMessages.settings.benchmark.best,
-                          )}: `}
-                        </Text>
-                        <Text>
-                          {intl.formatMessage(
-                            rootMessages.tooltip.benchmark.best,
-                          )}
-                        </Text>
-                      </Paragraph>
-                    </>
-                  }
+                  component={<BenchmarkOverlay />}
                 />
               )}
             </Box>
             {square && (
-              <SquareWrap>
+              <SquareWrap rotated={!horizontal}>
                 <Square
+                  rotated={!horizontal}
                   color={square.color}
                   type={square.type}
                   lineStyle={square.style}
@@ -187,7 +152,7 @@ SettingsToggle.propTypes = {
   options: PropTypes.array.isRequired,
   square: PropTypes.object,
   tooltip: PropTypes.node,
-  intl: intlShape.isRequired,
+  horizontal: PropTypes.bool,
 };
 
-export default injectIntl(SettingsToggle);
+export default SettingsToggle;
