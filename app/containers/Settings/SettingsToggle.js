@@ -36,7 +36,8 @@ const Square = styled.div`
     css`
       transform: rotate(-45deg);
     `};
-  background-color: ${({ theme, color }) => theme.global.colors[color]};
+  background-color: ${({ theme, color, lineStyle }) =>
+    lineStyle === 'stripes' ? 'transparent' : theme.global.colors[color]};
   ${({ lineStyle, type }) =>
     lineStyle === 'solid' &&
     type === 'line' &&
@@ -63,12 +64,12 @@ const Square = styled.div`
       background-image: linear-gradient(
         135deg,
         ${theme.global.colors[color]} 30%,
-        ${theme.global.colors['light-2']} 30%,
-        ${theme.global.colors['light-2']} 50%,
+        ${theme.global.colors[`${color}Trans`]} 30%,
+        ${theme.global.colors[`${color}Trans`]} 50%,
         ${theme.global.colors[color]} 50%,
         ${theme.global.colors[color]} 80%,
-        ${theme.global.colors['light-2']} 80%,
-        ${theme.global.colors['light-2']} 100%
+        ${theme.global.colors[`${color}Trans`]} 80%,
+        ${theme.global.colors[`${color}Trans`]} 100%
       );
       background-size: 5px 5px;
       background-repeat: repeat;

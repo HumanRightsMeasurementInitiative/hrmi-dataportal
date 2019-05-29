@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Text } from 'grommet';
@@ -16,6 +16,7 @@ import MinLabel from './styled/MinLabel';
 import MaxLabelOriginal from './styled/MaxLabel';
 import AnnotateBenchmark from './AnnotateBenchmark';
 import WrapTooltip from './styled/WrapTooltip';
+import Score from './styled/Score';
 
 const MaxLabel = styled(MaxLabelOriginal)`
   top: ${({ bottom }) => (bottom ? 105 : 50)}%;
@@ -50,24 +51,27 @@ const BarNoValue = styled.div`
   border-color: ${props => props.theme.global.colors['light-4']};
 `;
 
+// prettier-ignore
 const BarValue = styled.div`
   position: absolute;
   left: 0;
   top: -1px;
   height: ${props => props.height}px;
-  background-color: ${props => props.theme.global.colors[props.color]};
+  background-color: ${props =>
+    props.stripes ? 'transparent' : props.theme.global.colors[props.color]};
+  opacity: ${props => props.active ? 0.8 : 1};
   ${props =>
     props.stripes &&
     css`
       background-image: linear-gradient(
         135deg,
         ${props.theme.global.colors[props.color]} 30%,
-        ${props.theme.global.colors['light-2']} 30%,
-        ${props.theme.global.colors['light-2']} 50%,
+        ${props.theme.global.colors[`${props.color}Trans`]} 30%,
+        ${props.theme.global.colors[`${props.color}Trans`]} 50%,
         ${props.theme.global.colors[props.color]} 50%,
         ${props.theme.global.colors[props.color]} 80%,
-        ${props.theme.global.colors['light-2']} 80%,
-        ${props.theme.global.colors['light-2']} 100%
+        ${props.theme.global.colors[`${props.color}Trans`]} 80%,
+        ${props.theme.global.colors[`${props.color}Trans`]} 100%
       );
       background-size: 5px 5px;
       background-repeat: repeat;
@@ -106,19 +110,34 @@ function Bar({
   data,
   level = 1,
   showLabels = false,
+  showScore = false,
   showBenchmark = false,
   intl,
   rotate,
   showIncompleteAction = true,
   height,
   annotateBenchmarkAbove = false,
+  showAllBenchmarkAnnotations = false,
+  scoreOnHover = false,
 }) {
-  const { color, value, refValues, maxValue, stripes = false, unit } = data;
+  const [hover, setHover] = useState(false);
+  const {
+    color,
+    value,
+    refValues,
+    maxValue,
+    stripes = false,
+    unit,
+    title,
+  } = data;
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
 
   // prettier-ignore
   return (
-    <Wrapper>
+    <Wrapper
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
       <BarWrapper>
         <BarReference height={height || HEIGHT[level]} noData={!value}>
@@ -131,6 +150,7 @@ function Bar({
           {value && (
             <BarValue
               height={height || HEIGHT[level]}
+              active={hover}
               color={color}
               style={{ width: `${(value / maxValue) * 100}%` }}
               stripes={stripes}
@@ -156,7 +176,7 @@ function Bar({
               level={level}
             />
           )}
-          {showBenchmark && refValues && !!theRefValue && (
+          {showBenchmark && refValues && !!theRefValue && !showAllBenchmarkAnnotations && (
             <AnnotateBenchmark
               rotate={rotate}
               benchmarkKey={theRefValue.key}
@@ -164,6 +184,18 @@ function Bar({
               margin="1px"
             />
           )}
+          {showBenchmark && showAllBenchmarkAnnotations && refValues && annotateBenchmarkAbove &&
+            refValues.map(ref => (
+              <AnnotateBenchmark
+                relative
+                left={(ref.value / maxValue) * 100}
+                align={ref.key === 'best' ? 'left' : 'right'}
+                benchmarkKey={ref.key}
+                above
+                margin="1px"
+              />
+            ))
+          }
           {!value && data && level < 3 && (
             <NoData level={level}>
               <Text size="xsmall">
@@ -173,6 +205,18 @@ function Bar({
             </NoData>
           )}
         </BarReference>
+        {(showScore || (hover && scoreOnHover)) && (
+          <Score
+            rotate={rotate}
+            score={value}
+            left={(value / maxValue) * 100}
+            color={color}
+            unit={unit}
+            level={scoreOnHover ? 1 : level}
+            direction={scoreOnHover || 'bottom'}
+            title={title}
+          />
+        )}
       </BarWrapper>
       {showLabels && (
         <MaxLabel rotate={rotate} bottom={data.tooltip}>
@@ -189,11 +233,14 @@ Bar.propTypes = {
   height: PropTypes.number,
   level: PropTypes.number,
   showLabels: PropTypes.bool,
+  showScore: PropTypes.bool,
   showBenchmark: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   intl: intlShape.isRequired,
   annotateBenchmarkAbove: PropTypes.bool,
+  showAllBenchmarkAnnotations: PropTypes.bool,
+  scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default injectIntl(Bar);

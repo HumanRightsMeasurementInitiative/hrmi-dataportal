@@ -2,53 +2,62 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { Text, Box } from 'grommet';
-import BarHorizontal from 'components/BarHorizontal';
+import { Box } from 'grommet';
+import Bar from 'components/Bars/Bar';
+import { COLUMNS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
-import formatScore from 'utils/format-score';
 
 import ButtonText from 'styled/ButtonText';
 
 import AccordionPanelHeading from './AccordionPanelHeading';
 import TabLinks from './TabLinks';
 
-const IndicatorScoreText = props => (
-  <Text
-    weight="bold"
-    size="small"
-    alignSelf="end"
-    margin={{ right: '52px' }}
-    {...props}
-  />
-);
-
 const ButtonTextHeading = styled(ButtonText)`
   text-decoration: none;
 `;
 
-const maxValue = 100;
+const getDimensionValue = (data, benchmark) => {
+  if (data.score) {
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return data.score && data.score[col];
+  }
+  return false;
+};
 
+const getDimensionRefs = (score, benchmark) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    const col = benchmark.refIndicatorColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        value: score && score[col],
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
 function IndicatorPanel({
   indicator,
-  column,
+  benchmark,
   standard,
   onMetricClick,
   intl,
-  refColumns,
 }) {
-  const value =
-    indicator.score &&
-    indicator.score[column] &&
-    parseFloat(indicator.score[column]);
-  const refValues =
-    refColumns &&
-    indicator.score &&
-    refColumns.map(refColumn => ({
-      value: refColumn.value || indicator.score[refColumn.column],
-      style: refColumn.style,
-      key: refColumn.key,
-    }));
+  const data = {
+    ...indicator,
+    color: 'esr',
+    value: getDimensionValue(indicator, benchmark),
+    refValues: getDimensionRefs(indicator.score, benchmark),
+    maxValue: '100',
+    stripes: standard === 'hi',
+    unit: '%',
+  };
   return (
     <Box pad={{ vertical: 'xxsmall', horizontal: 'none' }} fill="horizontal">
       <Box
@@ -69,7 +78,7 @@ function IndicatorPanel({
               key: indicator.key,
               value: 0,
               label: intl.formatMessage(rootMessages.tabs.trend),
-              skip: !value,
+              skip: !data.value,
             },
             {
               key: indicator.key,
@@ -79,30 +88,22 @@ function IndicatorPanel({
           ]}
         />
       </Box>
-      <BarHorizontal
-        level={3}
-        color="esr"
-        value={value}
-        minValue={0}
-        maxValue={maxValue}
-        data={indicator}
-        unit="%"
-        stripes={standard === 'hi'}
-        refValues={refValues}
-      />
-      <IndicatorScoreText color="esrDark">
-        {value && formatScore(value)}
-      </IndicatorScoreText>
+      <Box
+        pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
+        fill="horizontal"
+        style={{ position: 'relative' }}
+      >
+        <Bar level={3} data={data} showScore showLabels />
+      </Box>
     </Box>
   );
 }
 IndicatorPanel.propTypes = {
   indicator: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  column: PropTypes.string,
+  benchmark: PropTypes.object,
   standard: PropTypes.string,
   onMetricClick: PropTypes.func,
   intl: intlShape.isRequired,
-  refColumns: PropTypes.array,
 };
 
 export default injectIntl(IndicatorPanel);

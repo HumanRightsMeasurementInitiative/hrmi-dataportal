@@ -128,7 +128,7 @@ export function PathMetric({
               content: <SingleMetric metric={metric} />,
               howToRead: {
                 context: 'PathMetric',
-                chart: 'BarHorizontal',
+                chart: 'Bar',
                 data: metric.type,
               },
             },
