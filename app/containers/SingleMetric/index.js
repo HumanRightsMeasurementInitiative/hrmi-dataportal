@@ -16,6 +16,7 @@ import styled from 'styled-components';
 import Source from 'components/Source';
 import Bar from 'components/Bars/Bar';
 import BarBullet from 'components/Bars/BarBullet';
+import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
 import MainColumn from 'styled/MainColumn';
 import Button from 'styled/Button';
 
@@ -172,7 +173,7 @@ export function SingleMetric({
               <FormattedMessage {...rootMessages.labels.score} />
             </Text>
           </CountryWrap>
-          <BarWrap flex direction="row">
+          <BarWrap flex direction="row" style={{ position: 'relative' }}>
             <Text size="small" style={{ transform: 'translateX(-50%)' }}>
               0
             </Text>
@@ -185,6 +186,9 @@ export function SingleMetric({
                 ? '100%'
                 : '10'}
             </Text>
+            {metric.type === 'esr' && (
+              <AnnotateBenchmark benchmarkKey={benchmark} above />
+            )}
           </BarWrap>
         </Box>
         {sortedScores &&
