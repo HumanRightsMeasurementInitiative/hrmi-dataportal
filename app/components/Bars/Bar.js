@@ -16,6 +16,7 @@ import MinLabel from './styled/MinLabel';
 import MaxLabelOriginal from './styled/MaxLabel';
 import AnnotateBenchmark from './AnnotateBenchmark';
 import WrapTooltip from './styled/WrapTooltip';
+import Score from './styled/Score';
 
 const MaxLabel = styled(MaxLabelOriginal)`
   top: ${({ bottom }) => (bottom ? 105 : 50)}%;
@@ -55,19 +56,20 @@ const BarValue = styled.div`
   left: 0;
   top: -1px;
   height: ${props => props.height}px;
-  background-color: ${props => props.theme.global.colors[props.color]};
+  background-color: ${props =>
+    props.stripes ? 'transparent' : props.theme.global.colors[props.color]};
   ${props =>
     props.stripes &&
     css`
       background-image: linear-gradient(
         135deg,
         ${props.theme.global.colors[props.color]} 30%,
-        ${props.theme.global.colors['light-2']} 30%,
-        ${props.theme.global.colors['light-2']} 50%,
+        ${props.theme.global.colors[`${props.color}Trans`]} 30%,
+        ${props.theme.global.colors[`${props.color}Trans`]} 50%,
         ${props.theme.global.colors[props.color]} 50%,
         ${props.theme.global.colors[props.color]} 80%,
-        ${props.theme.global.colors['light-2']} 80%,
-        ${props.theme.global.colors['light-2']} 100%
+        ${props.theme.global.colors[`${props.color}Trans`]} 80%,
+        ${props.theme.global.colors[`${props.color}Trans`]} 100%
       );
       background-size: 5px 5px;
       background-repeat: repeat;
@@ -106,12 +108,14 @@ function Bar({
   data,
   level = 1,
   showLabels = false,
+  showScore = false,
   showBenchmark = false,
   intl,
   rotate,
   showIncompleteAction = true,
   height,
   annotateBenchmarkAbove = false,
+  showAllBenchmarkAnnotations = false,
 }) {
   const { color, value, refValues, maxValue, stripes = false, unit } = data;
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
@@ -156,7 +160,7 @@ function Bar({
               level={level}
             />
           )}
-          {showBenchmark && refValues && !!theRefValue && (
+          {showBenchmark && refValues && !!theRefValue && !showAllBenchmarkAnnotations && (
             <AnnotateBenchmark
               rotate={rotate}
               benchmarkKey={theRefValue.key}
@@ -164,6 +168,18 @@ function Bar({
               margin="1px"
             />
           )}
+          {showBenchmark && showAllBenchmarkAnnotations && refValues && annotateBenchmarkAbove &&
+            refValues.map(ref => (
+              <AnnotateBenchmark
+                relative
+                left={(ref.value / maxValue) * 100}
+                align={ref.key === 'best' ? 'left' : 'right'}
+                benchmarkKey={ref.key}
+                above
+                margin="1px"
+              />
+            ))
+          }
           {!value && data && level < 3 && (
             <NoData level={level}>
               <Text size="xsmall">
@@ -173,6 +189,15 @@ function Bar({
             </NoData>
           )}
         </BarReference>
+        {showScore && (
+          <Score
+            score={value}
+            left={(value / maxValue) * 100}
+            color={color}
+            unit={unit}
+            level={level}
+          />
+        )}
       </BarWrapper>
       {showLabels && (
         <MaxLabel rotate={rotate} bottom={data.tooltip}>
@@ -189,11 +214,13 @@ Bar.propTypes = {
   height: PropTypes.number,
   level: PropTypes.number,
   showLabels: PropTypes.bool,
+  showScore: PropTypes.bool,
   showBenchmark: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   intl: intlShape.isRequired,
   annotateBenchmarkAbove: PropTypes.bool,
+  showAllBenchmarkAnnotations: PropTypes.bool,
 };
 
 export default injectIntl(Bar);

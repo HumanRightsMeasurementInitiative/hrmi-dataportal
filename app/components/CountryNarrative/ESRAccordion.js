@@ -41,19 +41,10 @@ function ESRAccordion({
           head={
             <DimensionPanel
               dimension={dimension}
-              column={benchmark.column}
               onMetricClick={onMetricClick}
               standard={standard}
+              benchmark={benchmark}
               hasAtRisk={hasAtRisk}
-              refColumns={
-                // prettier-ignore
-                benchmark.key === 'adjusted'
-                  ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                  : [
-                    { value: 100, style: 'solid', key: 'adjusted' },
-                    { column: benchmark.refColumn, style: 'dotted', key: 'best' },
-                  ]
-              }
             />
           }
           content={
@@ -75,19 +66,10 @@ function ESRAccordion({
                         head={
                           <RightPanel
                             right={right}
-                            column={benchmark.column}
+                            benchmark={benchmark}
                             onMetricClick={onMetricClick}
                             standard={standard}
                             hasAtRisk={hasAtRisk}
-                            refColumns={
-                              // prettier-ignore
-                              benchmark.key === 'adjusted'
-                                ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                                : [
-                                  { value: 100, style: 'solid', key: 'adjusted' },
-                                  { column: benchmark.refColumn, style: 'dotted', key: 'best' },
-                                ]
-                            }
                           />
                         }
                         content={
@@ -100,20 +82,11 @@ function ESRAccordion({
                               >
                                 <IndicatorPanel
                                   indicator={indicator}
-                                  column={benchmark.column}
+                                  benchmark={benchmark}
                                   onMetricClick={onMetricClick}
                                   standard={standard}
-                                  refColumns={
-                                    // prettier-ignore
-                                    benchmark.key === 'adjusted'
-                                      ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                                      : [
-                                        { value: 100, style: 'solid', key: 'adjusted' },
-                                        { column: benchmark.refIndicatorColumn, style: 'dotted', key: 'best' },
-                                      ]
-                                  }
                                 />
-                                <Box width="200px" />
+                                <Box width="200px" flex={{ shrink: 0 }} />
                               </Box>
                             ))}
                           </div>
