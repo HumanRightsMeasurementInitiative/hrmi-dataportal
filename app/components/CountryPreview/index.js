@@ -132,6 +132,7 @@ const getDimensions = (
     key: dim.key,
     color: dim.key,
     value: getDimensionValue(dim, scores, standard, benchmark),
+    title: intl.formatMessage(rootMessages.dimensions[dim.key]),
     refValues:
       dim.type === 'esr' && getDimensionRefs(dim, scores, standard, benchmark),
     maxValue: dim.type === 'cpr' ? 10 : 100,
@@ -179,6 +180,7 @@ const getRightGroups = (
       .map(right => ({
         key: right.key,
         value: getDimensionValue(right, scores, standard, benchmark),
+        title: intl.formatMessage(rootMessages['rights-short'][right.key]),
         refValues:
         right.type === 'esr' && getDimensionRefs(right, scores, standard, benchmark),
       }))

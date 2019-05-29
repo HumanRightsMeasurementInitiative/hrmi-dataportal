@@ -116,7 +116,7 @@ function DimensionPanel({
       >
         <AnnotateBetter />
         {dimension.type === 'cpr' && (
-          <BarBullet data={data} showLabels showScore />
+          <BarBullet data={data} showLabels showScore bandOnHover />
         )}
         {dimension.type === 'esr' && (
           <Bar

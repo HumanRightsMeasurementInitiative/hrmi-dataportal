@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Text } from 'grommet';
@@ -65,13 +65,25 @@ const BarBand = styled.div`
   top: ${props => props.height / 2 - props.height * 0.35}px;
   height: ${props => props.height * 0.7}px;
   background-color: ${props => props.theme.global.colors[props.color]};
-  opacity: 0.4;
+  opacity: ${({ active }) => (active ? 0.3 : 0.4)};
 `;
 
-function BarBullet({ data, level = 1, showLabels, showScore }) {
+function BarBullet({
+  data,
+  level = 1,
+  showLabels,
+  showScore,
+  scoreOnHover,
+  bandOnHover,
+}) {
+  const [hover, setHover] = useState(false);
+
   const { color, value, maxValue, unit, band } = data;
   return (
-    <Wrapper>
+    <Wrapper
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
       {showLabels && <MinLabel>0</MinLabel>}
       <BarWrapper>
         <BarAnchor height={HEIGHT[level]}>
@@ -85,6 +97,7 @@ function BarBullet({ data, level = 1, showLabels, showScore }) {
           {value && (
             <BarBand
               color={color}
+              active={hover}
               height={HEIGHT[level]}
               lo={(band.lo / maxValue) * 100}
               hi={(band.hi / maxValue) * 100}
@@ -117,12 +130,35 @@ function BarBullet({ data, level = 1, showLabels, showScore }) {
               style={{ left: `${(band.hi / maxValue) * 100}%` }}
             />
           )}
-          {showScore && (
+          {hover && bandOnHover && (
+            <>
+              <Score
+                score={band.lo}
+                left={(band.lo / maxValue) * 100}
+                color={color}
+                level={2}
+                direction={scoreOnHover || 'bottom'}
+                secondary
+                align="right"
+              />
+              <Score
+                score={band.hi}
+                left={(band.hi / maxValue) * 100}
+                color={color}
+                level={2}
+                direction={scoreOnHover || 'bottom'}
+                secondary
+                align="left"
+              />
+            </>
+          )}
+          {(showScore || (hover && scoreOnHover)) && (
             <Score
               score={value}
               left={(value / maxValue) * 100}
               color={color}
-              level={level}
+              level={scoreOnHover ? 1 : level}
+              direction={scoreOnHover || 'bottom'}
             />
           )}
         </BarAnchor>
@@ -143,6 +179,8 @@ BarBullet.propTypes = {
   level: PropTypes.number,
   showLabels: PropTypes.bool,
   showScore: PropTypes.bool,
+  scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  bandOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default BarBullet;
