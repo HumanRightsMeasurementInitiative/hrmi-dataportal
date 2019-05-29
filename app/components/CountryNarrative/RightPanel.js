@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
-import BarHorizontal from 'components/Bars/Bar';
-import BarBulletHorizontal from 'components/Bars/BarBullet';
+import Bar from 'components/Bars/Bar';
+import BarBullet from 'components/Bars/BarBullet';
 import { COLUMNS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
@@ -112,15 +112,10 @@ function RightPanel({
         style={{ position: 'relative' }}
       >
         {right.type === 'esr' && (
-          <BarHorizontal
-            level={isSubright ? 3 : 2}
-            data={data}
-            showScore
-            showLabels
-          />
+          <Bar level={isSubright ? 3 : 2} data={data} showScore showLabels />
         )}
         {right.type === 'cpr' && (
-          <BarBulletHorizontal
+          <BarBullet
             level={isSubright ? 3 : 2}
             data={data}
             showLabels

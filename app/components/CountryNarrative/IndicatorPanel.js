@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
-import BarHorizontal from 'components/Bars/Bar';
+import Bar from 'components/Bars/Bar';
 import { COLUMNS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
@@ -93,7 +93,7 @@ function IndicatorPanel({
         fill="horizontal"
         style={{ position: 'relative' }}
       >
-        <BarHorizontal level={3} data={data} showScore showLabels />
+        <Bar level={3} data={data} showScore showLabels />
       </Box>
     </Box>
   );
