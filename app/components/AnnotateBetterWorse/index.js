@@ -1,17 +1,9 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Text } from 'grommet';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import rootMessages from 'messages';
-
-const Styled = styled.div`
-  position: absolute;
-  left: ${({ theme }) => theme.global.edgeSize.medium};
-  right: ${({ theme }) => theme.global.edgeSize.large};
-  top: 100%;
-  margin-top: -4px;
-`;
 
 const Label = styled.div`
   position: absolute;
@@ -49,36 +41,38 @@ const Worse = styled(Label)`
 `;
 
 const AnnotateBetterInner = styled.div`
-  position: absolute;
-  top: 100%;
-  right: 0;
-  left: 0;
+  ${({ absolute }) =>
+    absolute &&
+    css`
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+    `}
   width: 100%;
   color: ${({ theme }) => theme.global.colors['dark-3']};
   padding: 12px;
 `;
 
-function AnnotateBetter() {
+function AnnotateBetterWorse({ absolute }) {
   return (
-    <Styled>
-      <AnnotateBetterInner>
-        <Worse>
-          <Text size="xsmall">
-            <FormattedMessage {...rootMessages.labels.worse} />
-          </Text>
-        </Worse>
-        <Better>
-          <Text size="xsmall">
-            <FormattedMessage {...rootMessages.labels.better} />
-          </Text>
-        </Better>
-      </AnnotateBetterInner>
-    </Styled>
+    <AnnotateBetterInner absolute={absolute}>
+      <Worse>
+        <Text size="xsmall">
+          <FormattedMessage {...rootMessages.labels.worse} />
+        </Text>
+      </Worse>
+      <Better>
+        <Text size="xsmall">
+          <FormattedMessage {...rootMessages.labels.better} />
+        </Text>
+      </Better>
+    </AnnotateBetterInner>
   );
 }
 
-// AnnotateBetter.propTypes = {
-//
-// }
+AnnotateBetterWorse.propTypes = {
+  absolute: PropTypes.bool,
+};
 
-export default AnnotateBetter;
+export default AnnotateBetterWorse;

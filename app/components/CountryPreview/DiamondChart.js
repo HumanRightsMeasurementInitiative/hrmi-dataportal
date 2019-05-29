@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { FormattedMessage } from 'react-intl';
 import { Text } from 'grommet';
 
 import BarMultiple from 'components/Bars/BarMultiple';
 import Bar from 'components/Bars/Bar';
+import rootMessages from 'messages';
 
 const WIDTH = 116;
 const heightRotated = WIDTH * 2 ** (1 / 2); // height * sqrt(2)
@@ -64,7 +66,9 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
         {showLabels && (
           <AnnotateBetter>
             <AnnotateBetterInner>
-              <Text size="xsmall"> Better </Text>
+              <Text size="xsmall">
+                <FormattedMessage {...rootMessages.labels.better} />
+              </Text>
             </AnnotateBetterInner>
           </AnnotateBetter>
         )}
