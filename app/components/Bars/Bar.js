@@ -134,12 +134,12 @@ function Bar({
 
   // prettier-ignore
   return (
-    <Wrapper
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
+    <Wrapper>
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
-      <BarWrapper>
+      <BarWrapper
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+      >
         <BarReference height={height || HEIGHT[level]} noData={!value}>
           {!value && (
             <BarNoValue
@@ -205,7 +205,7 @@ function Bar({
             </NoData>
           )}
         </BarReference>
-        {(showScore || (hover && scoreOnHover)) && (
+        {(showScore || (hover && scoreOnHover)) && value && (
           <Score
             rotate={rotate}
             score={value}
