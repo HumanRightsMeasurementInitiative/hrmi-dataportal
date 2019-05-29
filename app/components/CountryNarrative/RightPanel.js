@@ -20,11 +20,11 @@ const ButtonTextHeading = styled(ButtonText)`
 
 const getDimensionValue = (data, benchmark) => {
   if (data.type === 'cpr' && data.score) {
-    return data.score[COLUMNS.CPR.MEAN];
+    return parseFloat(data.score[COLUMNS.CPR.MEAN]);
   }
   if (data.type === 'esr' && data.score) {
     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-    return data.score && data.score[col];
+    return parseFloat(data.score[col]);
   }
   return false;
 };
@@ -38,7 +38,7 @@ const getDimensionRefs = (score, benchmark) => {
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
-        value: score && score[col],
+        value: score && parseFloat(score[col]),
         style: 'dotted',
         key: 'adjusted',
       },

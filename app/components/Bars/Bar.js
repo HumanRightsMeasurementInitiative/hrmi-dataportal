@@ -188,6 +188,7 @@ function Bar({
             refValues.map(ref => (
               <AnnotateBenchmark
                 relative
+                key={ref.key}
                 left={(ref.value / maxValue) * 100}
                 align={ref.key === 'best' ? 'left' : 'right'}
                 benchmarkKey={ref.key}

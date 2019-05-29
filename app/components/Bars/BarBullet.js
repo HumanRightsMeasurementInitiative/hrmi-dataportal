@@ -130,29 +130,29 @@ function BarBullet({
               style={{ left: `${(band.hi / maxValue) * 100}%` }}
             />
           )}
-          {hover && bandOnHover && (
-            <>
-              <Score
-                score={band.lo}
-                left={(band.lo / maxValue) * 100}
-                color={color}
-                level={2}
-                direction={scoreOnHover || 'bottom'}
-                secondary
-                align="right"
-              />
-              <Score
-                score={band.hi}
-                left={(band.hi / maxValue) * 100}
-                color={color}
-                level={2}
-                direction={scoreOnHover || 'bottom'}
-                secondary
-                align="left"
-              />
-            </>
+          {band.lo && hover && bandOnHover && (
+            <Score
+              score={band.lo}
+              left={(band.lo / maxValue) * 100}
+              color={color}
+              level={Math.max(2, level)}
+              direction={scoreOnHover || 'bottom'}
+              secondary
+              align="right"
+            />
           )}
-          {(showScore || (hover && scoreOnHover)) && (
+          {band.hi && hover && bandOnHover && (
+            <Score
+              score={band.hi}
+              left={(band.hi / maxValue) * 100}
+              color={color}
+              level={Math.max(2, level)}
+              direction={scoreOnHover || 'bottom'}
+              secondary
+              align="left"
+            />
+          )}
+          {value && (showScore || (hover && scoreOnHover)) && (
             <Score
               score={value}
               left={(value / maxValue) * 100}

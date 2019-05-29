@@ -17,6 +17,7 @@ import Source from 'components/Source';
 import Bar from 'components/Bars/Bar';
 import BarBullet from 'components/Bars/BarBullet';
 import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
+import AnnotateBetter from 'components/AnnotateBetterWorse';
 import MainColumn from 'styled/MainColumn';
 import Button from 'styled/Button';
 
@@ -51,6 +52,13 @@ const Styled = styled(Box)`
   margin: 0 auto;
 `;
 
+const WrapAnnotateBetter = styled.div`
+  position: absolute;
+  left: ${({ theme }) => theme.global.edgeSize.small};
+  right: ${({ theme }) => theme.global.edgeSize.small};
+  top: -2px;
+`;
+
 // prettier-ignore
 const CountryButton = styled(Button)`
   text-align: right;
@@ -74,11 +82,12 @@ const DEPENDENCIES_INDICATORS = []; // ['countries', 'esrIndicatorScores'];
 const getESRDimensionValue = (score, benchmark) => {
   if (score) {
     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-    return score && score[col];
+    return score && parseFloat(score[col]);
   }
   return false;
 };
-const getCPRDimensionValue = score => score && score[COLUMNS.CPR.MEAN];
+const getCPRDimensionValue = score =>
+  score && parseFloat(score[COLUMNS.CPR.MEAN]);
 
 const getDimensionRefs = (score, benchmark) => {
   if (benchmark && benchmark.key === 'adjusted') {
@@ -89,7 +98,7 @@ const getDimensionRefs = (score, benchmark) => {
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
-        value: score && score[col],
+        value: score && parseFloat(score[col]),
         style: 'dotted',
         key: 'adjusted',
       },
@@ -173,7 +182,12 @@ export function SingleMetric({
               <FormattedMessage {...rootMessages.labels.score} />
             </Text>
           </CountryWrap>
-          <BarWrap flex direction="row" style={{ position: 'relative' }}>
+          <BarWrap
+            flex
+            direction="row"
+            style={{ position: 'relative' }}
+            align="center"
+          >
             <Text size="small" style={{ transform: 'translateX(-50%)' }}>
               0
             </Text>
@@ -186,6 +200,9 @@ export function SingleMetric({
                 ? '100%'
                 : '10'}
             </Text>
+            <WrapAnnotateBetter>
+              <AnnotateBetter />
+            </WrapAnnotateBetter>
             {metric.type === 'esr' && (
               <AnnotateBenchmark
                 benchmarkKey={benchmark}
