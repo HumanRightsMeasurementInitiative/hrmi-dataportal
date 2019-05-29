@@ -14,8 +14,8 @@ import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 
 import Source from 'components/Source';
-import BarHorizontal from 'components/BarHorizontal';
-import BarBulletHorizontal from 'components/BarBulletHorizontal';
+import Bar from 'components/Bars/Bar';
+import BarBullet from 'components/Bars/BarBullet';
 import MainColumn from 'styled/MainColumn';
 import Button from 'styled/Button';
 
@@ -70,6 +70,37 @@ const CountryWrap = styled(Box)`
 const DEPENDENCIES = []; // ['countries', 'cprScores', 'esrScores'];
 const DEPENDENCIES_INDICATORS = []; // ['countries', 'esrIndicatorScores'];
 
+const getESRDimensionValue = (score, benchmark) => {
+  if (score) {
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return score && score[col];
+  }
+  return false;
+};
+const getCPRDimensionValue = score => score && score[COLUMNS.CPR.MEAN];
+
+const getDimensionRefs = (score, benchmark) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    const col = benchmark.refColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        value: score && score[col],
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
+const getBand = score => ({
+  lo: score && parseFloat(score[COLUMNS.CPR.LO]),
+  hi: score && parseFloat(score[COLUMNS.CPR.HI]),
+});
+
 export function SingleMetric({
   onLoadData,
   metric,
@@ -94,16 +125,7 @@ export function SingleMetric({
     // kick off loading of data
     onLoadData(metric);
   }, []);
-  let column = '';
-  let color = '';
-  if (metric.type === 'esr' || metric.metricType === 'indicators') {
-    const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-    ({ column } = currentBenchmark);
-    color = 'esr';
-  } else if (metric.type === 'cpr') {
-    column = COLUMNS.CPR.MEAN;
-    color = metric.metricType === 'rights' ? metric.dimension : metric.key;
-  }
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   const currentSort = sort || 'score';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
@@ -112,7 +134,7 @@ export function SingleMetric({
     sort: currentSort,
     order: currentSortOrder,
     scores,
-    column,
+    column: metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
   });
   return (
     <MainColumn>
@@ -134,7 +156,7 @@ export function SingleMetric({
         />
       </Box>
       <Styled
-        pad={{ vertical: 'large', right: 'large' }}
+        pad={{ vertical: 'large', right: 'xlarge' }}
         direction="column"
         fill="horizontal"
       >
@@ -144,6 +166,7 @@ export function SingleMetric({
             noBorder
             align="end"
             pad={{ right: 'medium' }}
+            flex={{ shrink: 0 }}
           >
             <Text size="small" style={{ fontWeight: 600 }}>
               <FormattedMessage {...rootMessages.labels.score} />
@@ -181,6 +204,7 @@ export function SingleMetric({
                 <CountryWrap
                   width="150px"
                   align="end"
+                  flex={{ shrink: 0 }}
                   pad={{ right: 'medium' }}
                 >
                   <CountryButton
@@ -201,29 +225,31 @@ export function SingleMetric({
                 <BarWrap flex>
                   {(metric.type === 'esr' ||
                     metric.metricType === 'indicators') && (
-                    <BarHorizontal
-                      omitMinMaxLabels
+                    <Bar
+                      showLabels={false}
                       level={3}
-                      color={color}
-                      value={parseFloat(s[column])}
-                      minValue={0}
-                      maxValue={100}
-                      unit="%"
-                      stripes={standard === 'hi'}
+                      data={{
+                        color: 'esr',
+                        refValues: getDimensionRefs(s, currentBenchmark),
+                        value: getESRDimensionValue(s, currentBenchmark),
+                        maxValue: 100,
+                        unit: '%',
+                        stripes: standard === 'hi',
+                      }}
                     />
                   )}
                   {metric.type === 'cpr' && (
-                    <BarBulletHorizontal
-                      omitMinMaxLabels
+                    <BarBullet
+                      // color = metric.metricType === 'rights' ? metric.dimension : metric.key;
                       level={2}
-                      color={color}
-                      value={parseFloat(s[column])}
-                      band={{
-                        lo: parseFloat(s[COLUMNS.CPR.LO]),
-                        hi: parseFloat(s[COLUMNS.CPR.HI]),
+                      showLabels={false}
+                      data={{
+                        color: metric.dimension || metric.key,
+                        value: getCPRDimensionValue(s),
+                        maxValue: 10,
+                        unit: '',
+                        band: getBand(s),
                       }}
-                      minValue={0}
-                      maxValue={10}
                     />
                   )}
                 </BarWrap>
