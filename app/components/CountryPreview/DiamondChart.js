@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Text } from 'grommet';
 
-import BarBarMultiple from 'components/Bars/BarMultiple';
+import BarMultiple from 'components/Bars/BarMultiple';
 import Bar from 'components/Bars/Bar';
 
 const WIDTH = 116;
@@ -91,7 +91,7 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
               first={index === 0}
               last={index === list.length - 1}
             >
-              <BarBarMultiple
+              <BarMultiple
                 dataMultiple={rightGroup}
                 showLabels={showLabels}
                 rotate={45}

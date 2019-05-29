@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
-import BarHorizontal from 'components/Bars/Bar';
-import BarBulletHorizontal from 'components/Bars/BarBullet';
+import Bar from 'components/Bars/Bar';
+import BarBullet from 'components/Bars/BarBullet';
 
 import { COLUMNS } from 'containers/App/constants';
 
@@ -116,10 +116,10 @@ function DimensionPanel({
       >
         <AnnotateBetter />
         {dimension.type === 'cpr' && (
-          <BarBulletHorizontal data={data} showLabels showScore />
+          <BarBullet data={data} showLabels showScore />
         )}
         {dimension.type === 'esr' && (
-          <BarHorizontal
+          <Bar
             data={data}
             showLabels
             showScore

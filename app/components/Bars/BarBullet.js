@@ -1,6 +1,6 @@
 /**
  *
- * BarBulletHorizontal
+ * BarBullet
  *
  */
 
@@ -68,7 +68,7 @@ const BarBand = styled.div`
   opacity: 0.4;
 `;
 
-function BarBulletHorizontal({ data, level = 1, showLabels, showScore }) {
+function BarBullet({ data, level = 1, showLabels, showScore }) {
   const { color, value, maxValue, unit, band } = data;
   return (
     <Wrapper>
@@ -138,11 +138,11 @@ function BarBulletHorizontal({ data, level = 1, showLabels, showScore }) {
   );
 }
 
-BarBulletHorizontal.propTypes = {
+BarBullet.propTypes = {
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   level: PropTypes.number,
   showLabels: PropTypes.bool,
   showScore: PropTypes.bool,
 };
 
-export default BarBulletHorizontal;
+export default BarBullet;
