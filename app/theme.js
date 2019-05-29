@@ -64,12 +64,15 @@ const theme = {
       highlight3: '#AD6500', // AA
       focus: 'transparent',
       selected: 'brand',
+      empowermentTrans: 'rgba(38, 32, 100, 0.3)', // AA
       empowerment: '#262064', // AA
       empowermentDark: '#262064', // AA
       empowermentCloud: '#262064', // AA
+      physintTrans: 'rgba(108, 63, 153, 0.3)', // AA
       physint: '#6C3F99', // AA large
       physintDark: '#6C3F99', // AA
       physintCloud: '#6C3F99', // AA
+      esrTrans: 'rgba(39, 170, 225, 0.3)', // AA large
       esr: '#27AAE1', // AA large
       esrDark: '#027AC0', // AA
       esrCloud: '#004f8f', // AA

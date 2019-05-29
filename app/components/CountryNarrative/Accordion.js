@@ -24,9 +24,10 @@ function Accordion({ head, content, buttonText, level }) {
         <Box fill="horizontal" direction="column">
           {head}
         </Box>
-        <Box width="200px">
+        <Box width="200px" flex={{ shrink: 0 }}>
           <Box
             width="200px"
+            flex={{ shrink: 0 }}
             direction="row"
             align="center"
             gap="xxsmall"
