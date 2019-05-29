@@ -76,13 +76,27 @@ const BarValue = styled.div`
 // prettier-ignore
 const MarkValue = styled.div`
   position: absolute;
-  top: -1px;
   width: 3px;
-  height: ${props => props.height}px;
-  margin-left: -${({ lineStyle }) => (lineStyle === 'solid' ? '2' : '2')}px;
-  border-right: ${({ lineStyle }) => (lineStyle === 'solid' ? '1' : '2')}px
-    ${({ lineStyle }) => (lineStyle === 'solid' ? 'solid' : 'dotted')};
-  border-color: ${props => props.theme.global.colors['dark-2']};
+  ${({ lineStyle }) => lineStyle === 'solid'
+    ? css`
+      top: -1px;
+      height: ${props => props.height}px;
+      margin-left: -1.5px;
+      border-right: 1px solid;
+      border-color: ${props => props.theme.global.colors['dark-2']};
+    `
+    : css`
+      top: ${props => props.height < 10 ? '-3' : '-1'}px;
+      height: ${props => props.height + (props.height < 10 ? 2 : 0)}px;
+      margin-left: -1px;
+      background-image: linear-gradient(
+        ${props => props.theme.global.colors['dark-2']} 50%,
+        rgba(255, 255, 255, 0) 0%
+      );
+      background-position: right;
+      background-size: 2px 4px;
+      background-repeat: repeat-y;
+    `}
 `;
 
 // level:
@@ -101,7 +115,7 @@ function Bar({
 }) {
   const { color, value, refValues, maxValue, stripes = false, unit } = data;
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
-  // console.log(refValues)
+
   // prettier-ignore
   return (
     <Wrapper>
@@ -147,6 +161,7 @@ function Bar({
               rotate={rotate}
               benchmarkKey={theRefValue.key}
               above={annotateBenchmarkAbove}
+              margin="1px"
             />
           )}
           {!value && data && level < 3 && (

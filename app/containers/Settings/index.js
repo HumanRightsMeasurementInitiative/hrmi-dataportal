@@ -156,6 +156,7 @@ export function Settings({
                   style: benchmark === 'best' ? 'solid' : 'dashed',
                   color: 'light-2',
                 }}
+                horizontal={route === 'metric' || route === 'country'}
               />
             )}
             {showStandard({ route, match }) && (
@@ -169,6 +170,7 @@ export function Settings({
                   style: standard === 'core' ? 'solid' : 'stripes',
                   color: 'esr',
                 }}
+                horizontal={route === 'metric' || route === 'country'}
               />
             )}
             {showAnyHINote({ route, match, metricInfo, country, standard }) && (

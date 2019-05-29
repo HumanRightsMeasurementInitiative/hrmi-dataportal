@@ -18,21 +18,44 @@ const HEIGHT = 20;
 const heightRotated = HEIGHT * 2 ** (1 / 2); // height * sqrt(2)
 const SquareWrap = styled.div`
   display: block;
-  height: ${heightRotated}px;
-  width: ${heightRotated}px;
-  padding-top: ${(heightRotated - HEIGHT) / 2}px;
+  height: ${({ rotated }) => (rotated ? heightRotated : HEIGHT / 2)}px;
+  width: ${({ rotated }) => (rotated ? heightRotated : HEIGHT * 1.5)}px;
+  padding-top: ${({ rotated }) =>
+    rotated ? (heightRotated - HEIGHT) / 2 : 0}px;
+  padding-right: ${({ rotated }) =>
+    rotated ? (heightRotated - HEIGHT) / 2 : 0}px;
   margin: 0 0 0 auto;
 `;
 const Square = styled.div`
   display: block;
-  width: ${HEIGHT}px;
-  height: ${HEIGHT}px;
+  width: ${({ rotated }) => (rotated ? HEIGHT : HEIGHT * 1.5)}px;
+  height: ${({ rotated }) => (rotated ? HEIGHT : HEIGHT / 2)}px;
   margin: 0 auto;
-  transform: rotate(-45deg);
+  ${({ rotated }) =>
+    rotated &&
+    css`
+      transform: rotate(-45deg);
+    `};
   background-color: ${({ theme, color }) => theme.global.colors[color]};
-  border-right: 1px ${({ lineStyle }) => lineStyle || 'solid'};
-  border-color: ${({ theme, type }) =>
-    type === 'line' ? theme.global.colors['dark-2'] : 'transparent'};
+  ${({ lineStyle, type }) =>
+    lineStyle === 'solid' &&
+    type === 'line' &&
+    css`
+      border-right: 1px solid;
+      border-color: ${props => props.theme.global.colors['dark-2']};
+    `}
+  ${({ lineStyle, type }) =>
+    lineStyle !== 'solid' &&
+    type === 'line' &&
+    css`
+      background-image: linear-gradient(
+        ${props => props.theme.global.colors['dark-2']} 50%,
+        rgba(255, 255, 255, 0) 0%
+      );
+      background-position: right;
+      background-size: 2px 4px;
+      background-repeat: repeat-y;
+    `}
   ${({ type, lineStyle, theme, color }) =>
     type === 'square' &&
     lineStyle === 'stripes' &&
@@ -52,7 +75,14 @@ const Square = styled.div`
     `}
 `;
 
-function SettingsToggle({ options, onActivate, active, setting, square }) {
+function SettingsToggle({
+  options,
+  onActivate,
+  active,
+  setting,
+  square,
+  horizontal = false,
+}) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -60,7 +90,7 @@ function SettingsToggle({ options, onActivate, active, setting, square }) {
           pad={{ left: size === 'xlarge' ? 'large' : 'medium' }}
           direction="column"
         >
-          <Box direction="row" align="center" margin={{ right: 'xsmall' }}>
+          <Box direction="row" align="center">
             <Box pad={{ vertical: 'small' }} direction="row">
               <Text size="small" style={{ fontWeight: 600 }}>
                 <FormattedMessage {...rootMessages.settings[setting].name} />
@@ -81,8 +111,9 @@ function SettingsToggle({ options, onActivate, active, setting, square }) {
               )}
             </Box>
             {square && (
-              <SquareWrap>
+              <SquareWrap rotated={!horizontal}>
                 <Square
+                  rotated={!horizontal}
                   color={square.color}
                   type={square.type}
                   lineStyle={square.style}
@@ -121,6 +152,7 @@ SettingsToggle.propTypes = {
   options: PropTypes.array.isRequired,
   square: PropTypes.object,
   tooltip: PropTypes.node,
+  horizontal: PropTypes.bool,
 };
 
 export default SettingsToggle;

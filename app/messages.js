@@ -18,6 +18,14 @@ export default defineMessages({
       id: `${scope}.labels.hiCountry`,
       defaultMessage: 'HI',
     },
+    better: {
+      id: `${scope}.labels.better`,
+      defaultMessage: 'Better',
+    },
+    worse: {
+      id: `${scope}.labels.worse`,
+      defaultMessage: 'Worse',
+    },
   },
   tooltip: {
     empowerment: {

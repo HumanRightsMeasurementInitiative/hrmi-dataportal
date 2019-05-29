@@ -22,12 +22,12 @@ function AnnotateBenchmark({
   intl,
   rotate,
   benchmarkKey,
-  multiple = false,
+  margin,
   above = false,
 }) {
   // prettier-ignore
   return (
-    <AnnotateRef rotate={rotate} multiple={multiple} above={above}>
+    <AnnotateRef rotate={rotate} margin={margin} above={above}>
       <AnnotateRefLine above={above}/>
       <AnnotateRefInner above={above}>
         <Text size="xsmall">
@@ -50,7 +50,7 @@ function AnnotateBenchmark({
 }
 
 AnnotateBenchmark.propTypes = {
-  multiple: PropTypes.bool,
+  margin: PropTypes.string,
   benchmarkKey: PropTypes.string,
   above: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
