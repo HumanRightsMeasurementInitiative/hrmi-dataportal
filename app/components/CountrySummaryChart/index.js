@@ -21,13 +21,14 @@ import Source from 'components/Source';
 import DimensionChart from './DimensionChart';
 import RightsChart from './RightsChart';
 import RightsScoreItem from './RightsScoreItem';
+import DimensionTitle from './DimensionTitle';
 
 const RightsType = styled(Box)``;
 const RightsScoresWrapperTable = styled.div`
   display: table;
 `;
 const RightsScoresWrapper = props => (
-  <Box direction="column" {...props} width="200px" />
+  <Box direction="column" {...props} width="200px" flex={{ shrink: 0 }} />
 );
 const ChartArea = props => (
   <Box direction="column" fill="horizontal" {...props} />
@@ -63,35 +64,27 @@ function CountrySummaryChart({
               <FormattedMessage {...rootMessages['rights-types'].cpr} />
             </RightsTypeHeading>
             {scale === 'd' && (
-              <DimensionChart
-                dimensionKey="empowerment"
-                data={dimensions && dimensions.empowerment}
-                maxValue={10}
-                column={COLUMNS.CPR.MEAN}
-              />
+              <DimensionChart data={dimensions && dimensions.empowerment} />
             )}
             {scale === 'd' && (
-              <DimensionChart
-                dimensionKey="physint"
-                data={dimensions && dimensions.physint}
-                maxValue={10}
-                column={COLUMNS.CPR.MEAN}
+              <DimensionChart data={dimensions && dimensions.physint} />
+            )}
+            {scale === 'r' && (
+              <RightsChart
+                data={{
+                  rights: empowerRights,
+                  type: 'cpr',
+                  dimension: 'empowerment',
+                }}
               />
             )}
             {scale === 'r' && (
               <RightsChart
-                dimensionKey="empowerment"
-                data={empowerRights}
-                maxValue={10}
-                column={COLUMNS.CPR.MEAN}
-              />
-            )}
-            {scale === 'r' && (
-              <RightsChart
-                dimensionKey="physint"
-                data={physintRights}
-                maxValue={10}
-                column={COLUMNS.CPR.MEAN}
+                data={{
+                  rights: physintRights,
+                  type: 'cpr',
+                  dimension: 'physint',
+                }}
               />
             )}
           </RightsType>
@@ -101,48 +94,31 @@ function CountrySummaryChart({
             </RightsTypeHeading>
             {scale === 'd' && (
               <DimensionChart
-                dimensionKey="esr"
                 data={dimensions && dimensions.esr}
-                maxValue={100}
-                unit="%"
-                column={currentBenchmark.column}
+                benchmark={currentBenchmark}
                 standard={standard}
-                refColumns={
-                  // prettier-ignore
-                  currentBenchmark.key === 'adjusted'
-                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                    : [
-                      { value: 100, style: 'solid', key: 'adjusted' },
-                      { column: currentBenchmark.refColumn, style: 'dotted', key: 'best' },
-                    ]
-                }
               />
             )}
             {scale === 'r' && (
               <RightsChart
-                dimensionKey="esr"
-                data={esrRights}
-                maxValue={100}
-                column={currentBenchmark.column}
+                data={{
+                  rights: esrRights,
+                  type: 'esr',
+                  dimension: 'esr',
+                }}
+                benchmark={currentBenchmark}
                 standard={standard}
-                refColumns={
-                  // prettier-ignore
-                  currentBenchmark.key === 'adjusted'
-                    ? [{ value: 100, style: 'dotted', key: 'adjusted' }]
-                    : [
-                      { value: 100, style: 'solid', key: 'adjusted' },
-                      { column: currentBenchmark.refColumn, style: 'dotted', key: 'best' },
-                    ]
-                }
               />
             )}
           </RightsType>
-          <Box pad={{ top: 'medium' }}>
+          <Box pad={{ top: 'small' }}>
             <ScaleToggle />
           </Box>
         </ChartArea>
         {scale === 'r' && (
           <RightsScoresWrapper>
+            <RightsTypeHeading>&nbsp;</RightsTypeHeading>
+            <DimensionTitle>&nbsp;</DimensionTitle>
             <RightsScoresWrapperTable>
               {empowerRights &&
                 empowerRights.map(right => (
