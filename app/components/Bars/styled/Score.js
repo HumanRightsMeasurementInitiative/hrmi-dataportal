@@ -33,7 +33,7 @@ const Styled = styled.div`
   }};
   margin-left: ${({ rotate }) => (rotate ? '5px' : 0)};
   display: table;
-  z-index: 10;
+  z-index: ${({ rotate }) => (rotate ? 10 : 0)};
   transform-origin: bottom left;
 `;
 
