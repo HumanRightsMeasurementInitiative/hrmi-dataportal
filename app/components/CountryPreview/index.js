@@ -69,7 +69,11 @@ const getDimensionRefs = (dim, scores, standard, benchmark) => {
     const col = benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
-      { value: score && score[col], style: 'dotted', key: 'adjusted' },
+      {
+        value: score && parseFloat(score[col]),
+        style: 'dotted',
+        key: 'adjusted',
+      },
     ];
   }
   return false;
@@ -81,7 +85,7 @@ const getDimensionValue = (dim, scores, standard, benchmark) => {
     scores.cpr[dim.key] &&
     scores.cpr[dim.key].length > 0
   ) {
-    return scores.cpr[dim.key][0][COLUMNS.CPR.MEAN];
+    return parseFloat(scores.cpr[dim.key][0][COLUMNS.CPR.MEAN]);
   }
   if (
     dim.type === 'esr' &&
@@ -91,7 +95,7 @@ const getDimensionValue = (dim, scores, standard, benchmark) => {
   ) {
     const score = scores.esr[dim.key].find(s => s.standard === standard.code);
     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-    return score && score[col];
+    return score && parseFloat(score[col]);
   }
   return false;
 };
