@@ -55,7 +55,7 @@ const Styled = styled(Box)`
 const WrapAnnotateBetter = styled.div`
   position: absolute;
   left: ${({ theme }) => theme.global.edgeSize.small};
-  right: ${({ theme }) => theme.global.edgeSize.small};
+  right: ${({ theme }) => theme.global.edgeSize.medium};
   top: -2px;
 `;
 
