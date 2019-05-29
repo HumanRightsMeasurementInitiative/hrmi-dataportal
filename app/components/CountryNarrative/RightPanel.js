@@ -2,56 +2,76 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
-import { Text, Box } from 'grommet';
-import BarHorizontal from 'components/BarHorizontal';
-import BarBulletHorizontal from 'components/BarBulletHorizontal';
+import { Box } from 'grommet';
+import Bar from 'components/Bars/Bar';
+import BarBullet from 'components/Bars/BarBullet';
+import { COLUMNS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
-import formatScore from 'utils/format-score';
 
 import ButtonText from 'styled/ButtonText';
 
 import AccordionPanelHeading from './AccordionPanelHeading';
 import TabLinks from './TabLinks';
 
-const RightScoreText = props => (
-  <Text
-    weight="bold"
-    size="small"
-    alignSelf="end"
-    margin={{ right: '52px' }}
-    {...props}
-  />
-);
-
 const ButtonTextHeading = styled(ButtonText)`
   text-decoration: none;
 `;
 
+const getDimensionValue = (data, benchmark) => {
+  if (data.type === 'cpr' && data.score) {
+    return data.score[COLUMNS.CPR.MEAN];
+  }
+  if (data.type === 'esr' && data.score) {
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return data.score && data.score[col];
+  }
+  return false;
+};
+
+const getDimensionRefs = (score, benchmark) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    const col = benchmark.refColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        value: score && score[col],
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
+const getBand = score => ({
+  lo: score && parseFloat(score[COLUMNS.CPR.LO]),
+  hi: score && parseFloat(score[COLUMNS.CPR.HI]),
+});
+
 function RightPanel({
   right,
-  column,
-  refColumns,
+  benchmark,
   isSubright,
-  columnLo,
-  columnHi,
   onMetricClick,
   standard,
   hasAtRisk = true,
   intl,
 }) {
-  const value =
-    right.score && right.score[column] && parseFloat(right.score[column]);
-  const refValues =
-    refColumns &&
-    right.score &&
-    refColumns.map(refColumn => ({
-      value: refColumn.value || right.score[refColumn.column],
-      style: refColumn.style,
-      key: refColumn.key,
-    }));
+  const data = {
+    ...right,
+    color: right.dimension,
+    value: getDimensionValue(right, benchmark),
+    band: right.type === 'cpr' && getBand(right.score),
+    refValues: right.type === 'esr' && getDimensionRefs(right.score, benchmark),
+    maxValue: right.type === 'esr' ? '100' : '10',
+    stripes: right.type === 'esr' && standard === 'hi',
+    unit: right.type === 'esr' ? '%' : '',
+  };
   return (
-    <Box pad={{ vertical: 'xxsmall', horizontal: 'none' }} fill="horizontal">
+    <Box pad={{ vertical: 'xsmall', horizontal: 'none' }} fill="horizontal">
       <Box
         direction="row"
         align="center"
@@ -70,7 +90,7 @@ function RightPanel({
               key: right.key,
               value: 0,
               label: intl.formatMessage(rootMessages.tabs.trend),
-              skip: !value,
+              skip: !data.value,
             },
             {
               key: right.key,
@@ -86,43 +106,31 @@ function RightPanel({
           ]}
         />
       </Box>
-      {right.type === 'esr' && (
-        <BarHorizontal
-          level={isSubright ? 3 : 2}
-          color={right.dimension}
-          value={value}
-          minValue={0}
-          maxValue={100}
-          data={right}
-          unit="%"
-          stripes={standard === 'hi'}
-          refValues={refValues}
-        />
-      )}
-      {right.type === 'cpr' && (
-        <BarBulletHorizontal
-          level={isSubright ? 3 : 2}
-          color={right.dimension}
-          value={parseFloat(value)}
-          band={{
-            lo: right.score && parseFloat(right.score[columnLo]),
-            hi: right.score && parseFloat(right.score[columnHi]),
-          }}
-          minValue={0}
-          maxValue={10}
-          data={right}
-          noData={!value}
-        />
-      )}
-      <RightScoreText color={`${right.dimension}Dark`}>
-        {value && formatScore(value)}
-      </RightScoreText>
+      <Box
+        pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
+        fill="horizontal"
+        style={{ position: 'relative' }}
+      >
+        {right.type === 'esr' && (
+          <Bar level={isSubright ? 3 : 2} data={data} showScore showLabels />
+        )}
+        {right.type === 'cpr' && (
+          <BarBullet
+            level={isSubright ? 3 : 2}
+            data={data}
+            showLabels
+            showScore
+            bandOnHover
+          />
+        )}
+      </Box>
     </Box>
   );
 }
 RightPanel.propTypes = {
   onMetricClick: PropTypes.func,
   right: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
   column: PropTypes.string,
   isSubright: PropTypes.bool,

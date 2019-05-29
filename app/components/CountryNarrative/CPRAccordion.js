@@ -6,8 +6,6 @@ import { Box } from 'grommet';
 
 import HowToRead from 'components/HowToRead';
 
-import { COLUMNS } from 'containers/App/constants';
-
 import rootMessages from 'messages';
 
 import { lowerCase } from 'utils/string';
@@ -35,9 +33,6 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
           head={
             <DimensionPanel
               dimension={dimension}
-              column={COLUMNS.CPR.MEAN}
-              columnLo={COLUMNS.CPR.LO}
-              columnHi={COLUMNS.CPR.HI}
               onMetricClick={onMetricClick}
               hasAtRisk
             />
@@ -54,13 +49,10 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                       <Box border="top" direction="row" key={right.key}>
                         <RightPanel
                           right={right}
-                          column={COLUMNS.CPR.MEAN}
-                          columnLo={COLUMNS.CPR.LO}
-                          columnHi={COLUMNS.CPR.HI}
                           onMetricClick={onMetricClick}
                           hasAtRisk
                         />
-                        <Box width="200px" />
+                        <Box width="200px" flex={{ shrink: 0 }} />
                       </Box>
                     );
                   }
@@ -77,9 +69,6 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                         head={
                           <RightPanel
                             right={right}
-                            column={COLUMNS.CPR.MEAN}
-                            columnLo={COLUMNS.CPR.LO}
-                            columnHi={COLUMNS.CPR.HI}
                             onMetricClick={onMetricClick}
                           />
                         }
@@ -93,14 +82,11 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                               >
                                 <RightPanel
                                   right={subright}
-                                  column={COLUMNS.CPR.MEAN}
-                                  columnLo={COLUMNS.CPR.LO}
-                                  columnHi={COLUMNS.CPR.HI}
                                   isSubright
                                   onMetricClick={onMetricClick}
                                   hasAtRisk
                                 />
-                                <Box width="200px" />
+                                <Box width="200px" flex={{ shrink: 0 }} />
                               </Box>
                             ))}
                           </div>

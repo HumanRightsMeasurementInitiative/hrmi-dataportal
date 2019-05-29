@@ -1,41 +1,21 @@
 /**
  *
- * BarBulletHorizontal
+ * BarBullet
  *
  */
 
-// TODO:
-// styled-components.browser.esm.js?bce9:1504 Over 200 classes were generated for component BarBulletHorizontal__MarkValue.
-// Consider using the attrs method, together with a style object for frequently changed styles.
-// Example:
-//   const Component = styled.div.attrs({
-//     style: ({ background }) => ({
-//       background,
-//     }),
-//   })`width: 100%;`
-//
-//   <Component />
-
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, Text } from 'grommet';
-import { FormattedMessage } from 'react-intl';
-import rootMessages from 'messages';
+import { Text } from 'grommet';
 
-const Wrapper = props => (
-  <Box direction="row" {...props} align="center" fill="horizontal" />
-);
+import Wrapper from './styled/BarWrapper';
+import MinLabel from './styled/MinLabel';
+import MaxLabel from './styled/MaxLabel';
+import Score from './styled/Score';
 
-const MinLabel = props => (
-  <Box {...props} width="25px" pad={{ right: 'xsmall' }} />
-);
-const MaxLabel = props => (
-  <Box {...props} width="55px" pad={{ left: 'xsmall' }} />
-);
-const BarWrapper = props => (
-  <Box {...props} fill="horizontal" pad={{ vertical: 'xsmall' }} />
-);
+const BarWrapper = styled.div``;
+
 // level:
 const HEIGHT = [50, 35, 20, 14];
 const MARK_WIDTH = [4, 4, 3, 3];
@@ -55,24 +35,6 @@ const BarReference = styled.div`
   width: 100%;
   height: 4px;
   background-color: ${props => props.theme.global.colors['light-2']};
-`;
-
-const BarReferenceNoData = styled.div`
-  position: absolute;
-  display: block;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: ${props => HEIGHT[props.level]}px;
-  background-color: 'transparent';
-  border: 1px solid;
-  border-color: ${props => props.theme.global.colors['light-4']};
-`;
-
-const NoData = styled.div`
-  position: absolute;
-  left: 2px;
-  top: ${props => (props.level > 1 ? -5 : 4)}px;
 `;
 
 const BarValue = styled.div`
@@ -103,42 +65,39 @@ const BarBand = styled.div`
   top: ${props => props.height / 2 - props.height * 0.35}px;
   height: ${props => props.height * 0.7}px;
   background-color: ${props => props.theme.global.colors[props.color]};
-  opacity: 0.4;
+  opacity: ${({ active }) => (active ? 0.3 : 0.4)};
 `;
 
-function BarBulletHorizontal({
-  minValue,
-  maxValue,
-  value,
-  color,
-  band,
-  noData,
-  unit,
+function BarBullet({
+  data,
   level = 1,
-  omitMinMaxLabels,
+  showLabels,
+  showScore,
+  scoreOnHover,
+  bandOnHover,
 }) {
+  const [hover, setHover] = useState(false);
+
+  const { color, value, maxValue, unit, band } = data;
   return (
-    <Wrapper>
-      {!omitMinMaxLabels && (
-        <MinLabel>
-          <Text size="small" alignSelf="end">
-            {minValue}
-          </Text>
-        </MinLabel>
-      )}
+    <Wrapper
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      {showLabels && <MinLabel>0</MinLabel>}
       <BarWrapper>
         <BarAnchor height={HEIGHT[level]}>
-          {!noData && <BarReference />}
-          {noData && <BarReferenceNoData level={level} />}
-          {!noData && (
+          {value && <BarReference />}
+          {value && (
             <BarValue
               height={HEIGHT[level]}
               style={{ width: `${(value / maxValue) * 100}%` }}
             />
           )}
-          {!noData && (
+          {value && (
             <BarBand
               color={color}
+              active={hover}
               height={HEIGHT[level]}
               lo={(band.lo / maxValue) * 100}
               hi={(band.hi / maxValue) * 100}
@@ -149,7 +108,7 @@ function BarBulletHorizontal({
               }}
             />
           )}
-          {!noData && (
+          {value && (
             <MarkValue
               color={color}
               height={HEIGHT[level]}
@@ -157,30 +116,54 @@ function BarBulletHorizontal({
               style={{ left: `${(value / maxValue) * 100}%` }}
             />
           )}
-          {!noData && (
+          {value && (
             <MarkBound
               color={color}
               height={HEIGHT[level]}
               style={{ left: `${(band.lo / maxValue) * 100}%` }}
             />
           )}
-          {!noData && (
+          {value && (
             <MarkBound
               color={color}
               height={HEIGHT[level]}
               style={{ left: `${(band.hi / maxValue) * 100}%` }}
             />
           )}
-          {noData && (
-            <NoData level={level}>
-              <Text size="small">
-                <FormattedMessage {...rootMessages.charts.noData} />
-              </Text>
-            </NoData>
+          {hover && bandOnHover && (
+            <>
+              <Score
+                score={band.lo}
+                left={(band.lo / maxValue) * 100}
+                color={color}
+                level={2}
+                direction={scoreOnHover || 'bottom'}
+                secondary
+                align="right"
+              />
+              <Score
+                score={band.hi}
+                left={(band.hi / maxValue) * 100}
+                color={color}
+                level={2}
+                direction={scoreOnHover || 'bottom'}
+                secondary
+                align="left"
+              />
+            </>
+          )}
+          {(showScore || (hover && scoreOnHover)) && (
+            <Score
+              score={value}
+              left={(value / maxValue) * 100}
+              color={color}
+              level={scoreOnHover ? 1 : level}
+              direction={scoreOnHover || 'bottom'}
+            />
           )}
         </BarAnchor>
       </BarWrapper>
-      {!omitMinMaxLabels && (
+      {showLabels && (
         <MaxLabel>
           <Text size="small">
             {unit ? `${maxValue}${unit}` : `${maxValue}`}
@@ -191,18 +174,13 @@ function BarBulletHorizontal({
   );
 }
 
-BarBulletHorizontal.propTypes = {
-  color: PropTypes.string,
-  unit: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  values: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  minValue: PropTypes.number,
-  maxValue: PropTypes.number,
-  noData: PropTypes.bool,
-  band: PropTypes.object,
-  multiple: PropTypes.bool,
+BarBullet.propTypes = {
+  data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   level: PropTypes.number,
-  omitMinMaxLabels: PropTypes.bool,
+  showLabels: PropTypes.bool,
+  showScore: PropTypes.bool,
+  scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  bandOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
-export default BarBulletHorizontal;
+export default BarBullet;

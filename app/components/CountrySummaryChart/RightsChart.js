@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Box } from 'grommet';
 import { COLUMNS } from 'containers/App/constants';
 
-import BarMultipleHorizontal from 'components/Bars/BarMultiple';
+import BarMultiple from 'components/Bars/BarMultiple';
 import DimensionTitle from './DimensionTitle';
 import AnnotateBetter from './AnnotateBetter';
 
@@ -64,7 +64,7 @@ function RightsChart({ data, standard, benchmark }) {
           fill="horizontal"
           style={{ position: 'relative' }}
         >
-          <BarMultipleHorizontal
+          <BarMultiple
             dataMultiple={dataMultiple}
             showLabels
             totalHeight={36}

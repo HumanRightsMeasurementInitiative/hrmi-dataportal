@@ -6,8 +6,14 @@ export default styled.div`
   width: 1px;
   border-right: 1px solid;
   border-color: ${({ theme }) => theme.global.colors['dark-4']};
-  ${({ above }) =>
-    above
+  ${({ above, relative, align }) => {
+    if (relative) return css`
+      bottom: 2px;
+      height: 3px;
+      left: ${align === 'right' ? 'auto' : '-1px'};
+      right: ${align === 'right' ? '-1px' : 'auto'};
+    `;
+    return above
       ? css`
         bottom: 2px;
         right: -1px;
@@ -19,5 +25,6 @@ export default styled.div`
         top: 0;
         left: 1px;
         text-align: left;
-      `}
+      `;
+  }}
 `;

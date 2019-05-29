@@ -2,47 +2,77 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { Text, Box } from 'grommet';
-import BarHorizontal from 'components/BarHorizontal';
-import BarBulletHorizontal from 'components/BarBulletHorizontal';
+import { Box } from 'grommet';
+import Bar from 'components/Bars/Bar';
+import BarBullet from 'components/Bars/BarBullet';
+
+import { COLUMNS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
 
-import formatScore from 'utils/format-score';
 import ButtonText from 'styled/ButtonText';
 
+import AnnotateBetter from './AnnotateBetter';
 import AccordionPanelHeading from './AccordionPanelHeading';
 import TabLinks from './TabLinks';
-
-const DimensionScoreText = props => (
-  <Text weight="bold" {...props} alignSelf="end" margin={{ right: '52px' }} />
-);
 
 const ButtonTextHeading = styled(ButtonText)`
   text-decoration: none;
 `;
 
+const getDimensionValue = (data, benchmark) => {
+  if (data.type === 'cpr' && data.score) {
+    return data.score[COLUMNS.CPR.MEAN];
+  }
+  if (data.type === 'esr' && data.score) {
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return data.score && data.score[col];
+  }
+  return false;
+};
+
+const getDimensionRefs = (score, benchmark) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    const col = benchmark.refColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        value: score && score[col],
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
+const getBand = score => ({
+  lo: score && parseFloat(score[COLUMNS.CPR.LO]),
+  hi: score && parseFloat(score[COLUMNS.CPR.HI]),
+});
+
 function DimensionPanel({
   dimension,
-  column,
-  refColumns,
-  columnLo,
-  columnHi,
+  benchmark,
   standard,
   onMetricClick,
   hasAtRisk = true,
   intl,
 }) {
-  const { score, type, key } = dimension;
-  const value = score && score[column] && parseFloat(score[column]);
-  const refValues =
-    refColumns &&
-    score &&
-    refColumns.map(refColumn => ({
-      value: refColumn.value || score[refColumn.column],
-      style: refColumn.style,
-      key: refColumn.key,
-    }));
+  const { key } = dimension;
+  const data = {
+    ...dimension,
+    color: dimension.key,
+    value: getDimensionValue(dimension, benchmark),
+    band: dimension.type === 'cpr' && getBand(dimension.score),
+    refValues:
+      dimension.type === 'esr' && getDimensionRefs(dimension.score, benchmark),
+    maxValue: dimension.type === 'esr' ? '100' : '10',
+    stripes: dimension.type === 'esr' && standard === 'hi',
+    unit: dimension.type === 'esr' ? '%' : '',
+  };
   return (
     <Box pad={{ vertical: 'small', horizontal: 'none' }} fill="horizontal">
       <Box
@@ -63,7 +93,7 @@ function DimensionPanel({
               key,
               value: 0,
               label: intl.formatMessage(rootMessages.tabs.trend),
-              skip: !value,
+              skip: !data.value,
             },
             {
               key,
@@ -79,47 +109,36 @@ function DimensionPanel({
           ]}
         />
       </Box>
-      {type === 'esr' && (
-        <BarHorizontal
-          color={key}
-          value={value}
-          minValue={0}
-          maxValue={100}
-          data={dimension}
-          unit="%"
-          stripes={standard === 'hi'}
-          refValues={refValues}
-        />
-      )}
-      {type === 'cpr' && (
-        <BarBulletHorizontal
-          color={key}
-          value={value}
-          band={{
-            lo: score && parseFloat(score[columnLo]),
-            hi: score && parseFloat(score[columnHi]),
-          }}
-          minValue={0}
-          maxValue={10}
-          noData={!value}
-        />
-      )}
-      <DimensionScoreText color={`${key}Dark`}>
-        {value && formatScore(value)}
-      </DimensionScoreText>
+      <Box
+        pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
+        fill="horizontal"
+        style={{ position: 'relative' }}
+      >
+        <AnnotateBetter />
+        {dimension.type === 'cpr' && (
+          <BarBullet data={data} showLabels showScore bandOnHover />
+        )}
+        {dimension.type === 'esr' && (
+          <Bar
+            data={data}
+            showLabels
+            showScore
+            annotateBenchmarkAbove
+            showBenchmark={!!data.value}
+            showAllBenchmarkAnnotations
+          />
+        )}
+      </Box>
     </Box>
   );
 }
 DimensionPanel.propTypes = {
   dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
-  column: PropTypes.string,
-  columnLo: PropTypes.string,
-  columnHi: PropTypes.string,
+  benchmark: PropTypes.string,
   onMetricClick: PropTypes.func,
   hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
-  refColumns: PropTypes.array,
 };
 
 export default injectIntl(DimensionPanel);
