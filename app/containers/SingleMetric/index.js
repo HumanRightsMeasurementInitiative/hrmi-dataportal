@@ -187,7 +187,11 @@ export function SingleMetric({
                 : '10'}
             </Text>
             {metric.type === 'esr' && (
-              <AnnotateBenchmark benchmarkKey={benchmark} above />
+              <AnnotateBenchmark
+                benchmarkKey={benchmark}
+                above
+                margin="0 2px"
+              />
             )}
           </BarWrap>
         </Box>
