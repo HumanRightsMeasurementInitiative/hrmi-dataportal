@@ -21,13 +21,14 @@ import Source from 'components/Source';
 import DimensionChart from './DimensionChart';
 import RightsChart from './RightsChart';
 import RightsScoreItem from './RightsScoreItem';
+import DimensionTitle from './DimensionTitle';
 
 const RightsType = styled(Box)``;
 const RightsScoresWrapperTable = styled.div`
   display: table;
 `;
 const RightsScoresWrapper = props => (
-  <Box direction="column" {...props} width="200px" />
+  <Box direction="column" {...props} width="200px" flex={{ shrink: 0 }} />
 );
 const ChartArea = props => (
   <Box direction="column" fill="horizontal" {...props} />
@@ -110,12 +111,14 @@ function CountrySummaryChart({
               />
             )}
           </RightsType>
-          <Box pad={{ top: 'medium' }}>
+          <Box pad={{ top: 'small' }}>
             <ScaleToggle />
           </Box>
         </ChartArea>
         {scale === 'r' && (
           <RightsScoresWrapper>
+            <RightsTypeHeading>&nbsp;</RightsTypeHeading>
+            <DimensionTitle>&nbsp;</DimensionTitle>
             <RightsScoresWrapperTable>
               {empowerRights &&
                 empowerRights.map(right => (

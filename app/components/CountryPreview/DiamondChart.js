@@ -21,13 +21,8 @@ const BarWrapRotated = styled.div`
 `;
 
 const BarWrapInner = styled.div`
-  margin: 3px 0;
-  &:first-child {
-    margin-top: 0;
-  }
-  &:last-child {
-    margin-bottom: 0;
-  }
+  margin-top: ${({ first }) => (first ? 0 : 4)}px;
+  margin-bottom: ${({ last }) => (last ? 0 : 4)}px;
 `;
 
 const AnnotateBetter = styled.div`
@@ -74,8 +69,12 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
           </AnnotateBetter>
         )}
         {dimensions &&
-          dimensions.map(dim => (
-            <BarWrapInner key={dim.key}>
+          dimensions.map((dim, index, list) => (
+            <BarWrapInner
+              key={dim.key}
+              first={index === 0}
+              last={index === list.length - 1}
+            >
               <Bar
                 data={dim}
                 showLabels={showLabels}
@@ -86,8 +85,12 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
             </BarWrapInner>
           ))}
         {rightGroups &&
-          rightGroups.map(rightGroup => (
-            <BarWrapInner key={rightGroup.key}>
+          rightGroups.map((rightGroup, index, list) => (
+            <BarWrapInner
+              key={rightGroup.key}
+              first={index === 0}
+              last={index === list.length - 1}
+            >
               <BarBarMultiple
                 dataMultiple={rightGroup}
                 showLabels={showLabels}

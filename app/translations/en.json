@@ -130,6 +130,8 @@
   "hrmi.components.HowToRead.labelShort": "How to read",
   "hrmi.labels.score": "Score",
   "hrmi.labels.hiCountry": "HI",
+  "hrmi.labels.better": "Better",
+  "hrmi.labels.worse": "Worse",
   "hrmi.tabs.countries": "Explore {count}countries",
   "hrmi.tabs.metrics": "Explore human rights metrics",
   "hrmi.tabs.singleMetric": "Explore metric",

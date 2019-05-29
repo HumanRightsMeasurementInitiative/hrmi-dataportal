@@ -18,9 +18,12 @@ function DimensionTitle({ dimensionKey }) {
   return (
     <Box direction="row" align="center" pad={{ vertical: 'xsmall' }}>
       <StyledDimensionHeading>
-        <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
+        {dimensionKey && (
+          <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
+        )}
+        {!dimensionKey && <span>&nbsp;</span>}
       </StyledDimensionHeading>
-      <DimensionTooltip dimensionKey={dimensionKey} />
+      {dimensionKey && <DimensionTooltip dimensionKey={dimensionKey} />}
     </Box>
   );
 }

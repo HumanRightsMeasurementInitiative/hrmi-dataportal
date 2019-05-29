@@ -15,14 +15,26 @@ import MinLabel from './styled/MinLabel';
 import MaxLabel from './styled/MaxLabel';
 import WrapTooltip from './styled/WrapTooltip';
 
+const PAD_BOTTOM = 1;
+const PAD_TOP = 0;
 const BarWrapInner = styled.div`
-  padding: 1px 0;
+  padding-bottom: ${PAD_BOTTOM}px;
+`;
+
+const Styled = styled(Wrapper)`
+  height: ${({ heightTotal }) => heightTotal}px;
 `;
 
 // level:
-const HEIGHT = 7;
+const HEIGHT = 8;
 
-function BarMultiple({ dataMultiple, showLabels, rotate, totalHeight }) {
+function BarMultiple({
+  dataMultiple,
+  showLabels,
+  rotate,
+  totalHeight,
+  annotateBenchmarkAbove,
+}) {
   const {
     color,
     data,
@@ -32,16 +44,22 @@ function BarMultiple({ dataMultiple, showLabels, rotate, totalHeight }) {
     tooltip,
     benchmark,
   } = dataMultiple;
-  console.log(dataMultiple);
-  const heightTotal = totalHeight || HEIGHT;
-  const heightIndividual =
-    data && (heightTotal - 3 * (data.length - 1)) / data.length;
+  const barCount = data ? data.length : 1;
+  const barGap = (PAD_BOTTOM + PAD_TOP) * (barCount - 1);
+  const heightTotal = totalHeight || (HEIGHT + PAD_BOTTOM) * barCount;
+  const heightIndividual = totalHeight
+    ? barCount && (heightTotal - barGap) / barCount
+    : HEIGHT;
   return (
-    <Wrapper>
+    <Styled heightTotal={heightTotal}>
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
       {data &&
-        data.map(datum => (
-          <BarWrapInner key={datum.key}>
+        data.map((datum, index, list) => (
+          <BarWrapInner
+            key={datum.key}
+            first={index === 0}
+            last={index === list.length - 1}
+          >
             <Bar
               data={{
                 ...datum,
@@ -55,12 +73,17 @@ function BarMultiple({ dataMultiple, showLabels, rotate, totalHeight }) {
               showBenchmark={false}
               rotate={rotate}
               showIncompleteAction={false}
-              height={heightIndividual}
+              height={Math.round(heightIndividual)}
             />
           </BarWrapInner>
         ))}
       {showLabels && !!benchmark && (
-        <AnnotateBenchmark rotate={rotate} benchmarkKey={benchmark} multiple />
+        <AnnotateBenchmark
+          rotate={rotate}
+          benchmarkKey={benchmark}
+          above={annotateBenchmarkAbove}
+          margin={annotateBenchmarkAbove ? '0px 2px' : '0'}
+        />
       )}
       {showLabels && (
         <MaxLabel rotate={rotate} bottom={tooltip}>
@@ -68,13 +91,14 @@ function BarMultiple({ dataMultiple, showLabels, rotate, totalHeight }) {
         </MaxLabel>
       )}
       {tooltip && <WrapTooltip>{tooltip}</WrapTooltip>}
-    </Wrapper>
+    </Styled>
   );
 }
 
 BarMultiple.propTypes = {
   dataMultiple: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   showLabels: PropTypes.bool,
+  annotateBenchmarkAbove: PropTypes.bool,
   totalHeight: PropTypes.number,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
