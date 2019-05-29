@@ -1,18 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Box, Text } from 'grommet';
 
 import Bar from 'components/Bars/Bar';
 import { COLUMNS } from 'containers/App/constants';
+import AnnotateBetter from 'components/AnnotateBetterWorse';
 import formatScoreMax from 'utils/format-score-max';
 import DimensionTitle from './DimensionTitle';
-import AnnotateBetter from './AnnotateBetter';
 
 const DimensionScoreWrapper = props => (
   <Box {...props} width="200px" flex={{ shrink: 0 }} />
 );
 const DimensionScoreText = props => <Text weight="bold" {...props} />;
 const BarWrap = props => <Box direction="row" {...props} align="center" />;
+
+const WrapAnnotateBetter = styled.div`
+  position: absolute;
+  left: ${({ theme }) => theme.global.edgeSize.medium};
+  right: ${({ theme }) => theme.global.edgeSize.large};
+  top: 100%;
+  margin-top: -4px;
+`;
 
 const getDimensionRefs = (score, benchmark) => {
   if (benchmark && benchmark.key === 'adjusted') {
@@ -23,7 +32,7 @@ const getDimensionRefs = (score, benchmark) => {
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
-        value: score && score[col],
+        value: score && parseFloat(score[col]),
         style: 'dotted',
         key: 'adjusted',
       },
@@ -34,11 +43,11 @@ const getDimensionRefs = (score, benchmark) => {
 
 const getDimensionValue = (data, benchmark) => {
   if (data.type === 'cpr' && data.score) {
-    return data.score[COLUMNS.CPR.MEAN];
+    return parseFloat(data.score[COLUMNS.CPR.MEAN]);
   }
   if (data.type === 'esr' && data.score) {
     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-    return data.score && data.score[col];
+    return parseFloat(data.score[col]);
   }
   return false;
 };
@@ -70,7 +79,9 @@ function DimensionChart({ data, benchmark, standard }) {
             annotateBenchmarkAbove
             showBenchmark={!!dim.value}
           />
-          <AnnotateBetter />
+          <WrapAnnotateBetter>
+            <AnnotateBetter absolute />
+          </WrapAnnotateBetter>
         </Box>
         <DimensionScoreWrapper>
           <DimensionScoreText color={`${data.key}Dark`}>

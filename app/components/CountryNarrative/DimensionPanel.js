@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Box } from 'grommet';
 import Bar from 'components/Bars/Bar';
 import BarBullet from 'components/Bars/BarBullet';
+import AnnotateBetter from 'components/AnnotateBetterWorse';
 
 import { COLUMNS } from 'containers/App/constants';
 
@@ -12,21 +13,27 @@ import rootMessages from 'messages';
 
 import ButtonText from 'styled/ButtonText';
 
-import AnnotateBetter from './AnnotateBetter';
 import AccordionPanelHeading from './AccordionPanelHeading';
 import TabLinks from './TabLinks';
 
 const ButtonTextHeading = styled(ButtonText)`
   text-decoration: none;
 `;
+const WrapAnnotateBetter = styled.div`
+  position: absolute;
+  left: ${({ theme }) => theme.global.edgeSize.medium};
+  right: ${({ theme }) => theme.global.edgeSize.large};
+  bottom: 0;
+  margin-top: -4px;
+`;
 
 const getDimensionValue = (data, benchmark) => {
   if (data.type === 'cpr' && data.score) {
-    return data.score[COLUMNS.CPR.MEAN];
+    return parseFloat(data.score[COLUMNS.CPR.MEAN]);
   }
   if (data.type === 'esr' && data.score) {
     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-    return data.score && data.score[col];
+    return parseFloat(data.score[col]);
   }
   return false;
 };
@@ -40,7 +47,7 @@ const getDimensionRefs = (score, benchmark) => {
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
-        value: score && score[col],
+        value: score && parseFloat(score[col]),
         style: 'dotted',
         key: 'adjusted',
       },
@@ -114,7 +121,9 @@ function DimensionPanel({
         fill="horizontal"
         style={{ position: 'relative' }}
       >
-        <AnnotateBetter />
+        <WrapAnnotateBetter>
+          <AnnotateBetter />
+        </WrapAnnotateBetter>
         {dimension.type === 'cpr' && (
           <BarBullet data={data} showLabels showScore bandOnHover />
         )}
@@ -135,7 +144,7 @@ function DimensionPanel({
 DimensionPanel.propTypes = {
   dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
-  benchmark: PropTypes.string,
+  benchmark: PropTypes.object,
   onMetricClick: PropTypes.func,
   hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
