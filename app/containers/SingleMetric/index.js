@@ -76,8 +76,12 @@ const CountryWrap = styled(Box)`
   border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
 `;
 
-const DEPENDENCIES = []; // ['countries', 'cprScores', 'esrScores'];
-const DEPENDENCIES_INDICATORS = []; // ['countries', 'esrIndicatorScores'];
+const DEPENDENCIES = ['countries', 'cprScores', 'esrScores', 'esrIndicators'];
+const DEPENDENCIES_INDICATORS = [
+  'countries',
+  'esrIndicators',
+  'esrIndicatorScores',
+];
 
 const getESRDimensionValue = (score, benchmark) => {
   if (score) {
@@ -134,7 +138,7 @@ export function SingleMetric({
   useEffect(() => {
     // kick off loading of data
     onLoadData(metric);
-  }, []);
+  });
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   const currentSort = sort || 'score';

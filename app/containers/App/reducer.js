@@ -15,8 +15,10 @@ import {
   PAGES,
   LOAD_DATA_ERROR,
   LOAD_DATA_SUCCESS,
+  DATA_REQUESTED,
   LOAD_CONTENT_ERROR,
   LOAD_CONTENT_SUCCESS,
+  CONTENT_REQUESTED,
 } from './constants';
 
 // The initial state of the App
@@ -32,6 +34,15 @@ export const initialState = {
   // record return time
   dataReady: DATA_RESOURCES.reduce((memo, resource) => {
     memo[resource.key] = false;
+    return memo;
+  }, {}),
+  // record request time
+  dataRequested: DATA_RESOURCES.reduce((memo, resource) => {
+    memo[resource.key] = false;
+    return memo;
+  }, {}),
+  contentRequested: PAGES.reduce((memo, key) => {
+    memo[key] = false;
     return memo;
   }, {}),
   content: PAGES.reduce((memo, key) => {
@@ -61,12 +72,19 @@ const appReducer = (state = initialState, action) =>
           draft.closeTarget = action.payload.location;
         }
         break;
+      case DATA_REQUESTED:
+        draft.dataRequested[action.key] = action.time;
+        break;
       case LOAD_DATA_SUCCESS:
-        console.log('data loaded', action.key);
         draft.data[action.key] = action.data;
         draft.dataReady[action.key] = action.time;
         break;
       case LOAD_DATA_ERROR:
+        console.log('Error loading data... giving up!', action.key);
+        draft.dataRequested[action.key] = action.time;
+        break;
+      case CONTENT_REQUESTED:
+        draft.contentRequested[action.key] = action.time;
         break;
       case LOAD_CONTENT_SUCCESS:
         draft.content[action.key] = {
@@ -76,11 +94,13 @@ const appReducer = (state = initialState, action) =>
         draft.contentReady[action.key] = action.time;
         break;
       case LOAD_CONTENT_ERROR:
-        console.log('LOAD_CONTENT_ERROR');
+        console.log('Error loading content... giving up!', action.key);
+        draft.contentRequested[action.key] = action.time;
         break;
       case CHANGE_LOCALE:
         draft.content = initialState.content;
         draft.contentReady = initialState.contentReady;
+        draft.contentRequested = initialState.contentRequested;
         break;
     }
   });

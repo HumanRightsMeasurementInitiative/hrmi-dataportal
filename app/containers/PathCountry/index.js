@@ -47,16 +47,18 @@ import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
 
-const DEPENDENCIES = []; // [
-//   'countries',
-//   'cprScores',
-//   'esrScores',
-//   'esrIndicatorScores',
-//   'esrIndicators',
-//   'atRisk',
-//   'auxIndicators',
-// ];
+const DEPENDENCIES = [
+  'countries',
+  'esrIndicators',
+  'cprScores',
+  'esrScores',
+  'esrIndicatorScores',
+  'auxIndicators',
+  'atRisk',
+];
 
 export function PathCountry({
   intl,
@@ -77,6 +79,8 @@ export function PathCountry({
   dimensionAverages,
   auxIndicators,
 }) {
+  useInjectSaga({ key: 'app', saga });
+
   useEffect(() => {
     // kick off loading of data
     onLoadData();

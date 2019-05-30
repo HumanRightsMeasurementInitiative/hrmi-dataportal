@@ -18,11 +18,17 @@ import Close from 'containers/Close';
 import HTMLWrapper from 'components/HTMLWrapper';
 import Loading from 'components/Loading';
 
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
+
 export function PathPage({ match, onLoadContent, content, closeTarget }) {
+  useInjectSaga({ key: 'app', saga });
+
   useEffect(() => {
     // kick off loading of page content
     onLoadContent(match.params.page);
-  }, []);
+  });
+
   return (
     <div>
       <Helmet>

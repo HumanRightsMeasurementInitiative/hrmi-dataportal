@@ -128,6 +128,8 @@
   "hrmi.components.ReadMore.less": "Show less",
   "hrmi.components.HowToRead.label": "How to read this chart",
   "hrmi.components.HowToRead.labelShort": "How to read",
+  "hrmi.components.CountryPreview.hiForCore": "High income country: best use the 'high income' standard",
+  "hrmi.components.CountryPreview.liForHi": "Low and middle income country: best use the 'low and middle income' standard",
   "hrmi.labels.score": "Score",
   "hrmi.labels.hiCountry": "HI",
   "hrmi.labels.better": "Better",
