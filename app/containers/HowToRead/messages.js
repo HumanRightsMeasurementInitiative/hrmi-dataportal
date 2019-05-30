@@ -123,6 +123,34 @@ export default defineMessages({
       },
     },
   },
+  trendCPR: {
+    intro: {
+      id: `${scope}.trendCPR.intro`,
+      defaultMessage:
+        'Each civil and political right metric has been produced from responses to a survey of in-country human rights experts. How the expert options changed over time can be seen in the time charts.',
+    },
+    rangeTitle: {
+      id: `${scope}.trendCPR.rangeTitle`,
+      defaultMessage: 'How to interpet the uncertainty bands',
+    },
+    largeRange: {
+      id: `${scope}.trendCPR.largeRange`,
+      defaultMessage:
+        'A large range indicate more uncertainty about what the true score is because the experts scored the country for a right very differently. ',
+    },
+    smallRange: {
+      id: `${scope}.trendCPR.smallRange`,
+      defaultMessage:
+        'A small range indicate less uncertainty since most experts scored the country similar. ',
+    },
+  },
+  trendESR: {
+    intro: {
+      id: `${scope}.trendESR.intro`,
+      defaultMessage:
+        'Economic and social right scores range from 0 to 100% and are based on underlying indicators. The better the score the longer the bar.',
+    },
+  },
   simpleBar: {
     intro: {
       id: `${scope}.simpleBar.intro`,
