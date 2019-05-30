@@ -27,7 +27,7 @@ export function PathPage({ match, onLoadContent, content, closeTarget }) {
   useEffect(() => {
     // kick off loading of page content
     onLoadContent(match.params.page);
-  });
+  }, [match.params.page]);
 
   return (
     <div>

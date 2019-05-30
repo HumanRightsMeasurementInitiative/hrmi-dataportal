@@ -138,7 +138,7 @@ export function SingleMetric({
   useEffect(() => {
     // kick off loading of data
     onLoadData(metric);
-  });
+  }, [metric]);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   const currentSort = sort || 'score';
