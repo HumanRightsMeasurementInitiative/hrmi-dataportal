@@ -78,7 +78,7 @@ export default defineMessages({
       intro: {
         id: `${scope}.summary.dimensions.intro`,
         defaultMessage:
-          "Each chart shows the Human Rights Performance of each country at a glance. Countries' scores are visualised for our 3 categories of Human Rights:",
+          "Countries' scores are visualised for our 3 categories of Human Rights:",
       },
       empowerment: {
         id: `${scope}.summary.dimensions.empower`,
@@ -100,7 +100,7 @@ export default defineMessages({
       intro: {
         id: `${scope}.summary.rights.intro`,
         defaultMessage:
-          "Each chart shows the Human Rights Performance of each country at a glance. Countries' scores are visualised for our 12 Human Rights, grouped and colour-coded in our 3 categories of rights:",
+          "Countries' scores are visualised for our 12 Human Rights, grouped and colour-coded in our 3 categories of rights:",
       },
       rightsListTitle: {
         id: `${scope}.summary.rights.rightsListTitle`,
