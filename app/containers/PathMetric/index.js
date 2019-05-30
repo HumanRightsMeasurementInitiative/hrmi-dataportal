@@ -127,8 +127,8 @@ export function PathMetric({
               title: intl.formatMessage(rootMessages.tabs.singleMetric),
               content: <SingleMetric metric={metric} />,
               howToRead: {
-                context: 'PathMetric',
-                chart: 'Bar',
+                contxt: 'PathMetric',
+                chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
                 data: metric.type,
               },
             },

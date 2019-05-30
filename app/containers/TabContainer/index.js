@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import { getTabSearch, getModalTabSearch } from 'containers/App/selectors';
 import { setTab, setModalTab } from 'containers/App/actions';
-import HowToRead from 'components/HowToRead';
+import HowToRead from 'containers/HowToRead';
 import ColumnTitle from 'styled/ColumnTitle';
 import ColumnHeader from 'styled/ColumnHeader';
 import ColumnContent from 'styled/ColumnContent';
@@ -55,7 +55,10 @@ function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
                       <Tab title={tab.title} key={tab.key}>
                         {tab.howToRead && (
                           <HowToReadWrapper>
-                            <HowToRead {...tab.howToRead} />
+                            <HowToRead
+                              htr={`tab-${tab.key}`}
+                              {...tab.howToRead}
+                            />
                           </HowToReadWrapper>
                         )}
                         <ColumnContent>{tab.content}</ColumnContent>
@@ -74,7 +77,10 @@ function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
                         margin={{ left: 'auto' }}
                         pad={{ right: 'medium' }}
                       >
-                        <HowToRead {...tabsWithContent[0].howToRead} />
+                        <HowToRead
+                          htr={`tab-${tabsWithContent[0].key}`}
+                          {...tabsWithContent[0].howToRead}
+                        />
                       </Box>
                     )}
                   </ColumnHeader>
@@ -86,6 +92,7 @@ function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
               <Box
                 width={size === 'medium' ? '280px' : '360px'}
                 direction="column"
+                flex={{ shrink: 0 }}
               >
                 <ColumnHeader>
                   <ColumnTitle>

@@ -4,7 +4,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
 
-import HowToRead from 'components/HowToRead';
+import HowToRead from 'containers/HowToRead';
 
 import rootMessages from 'messages';
 
@@ -22,7 +22,12 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
   return (
     <Styled margin={{ top: 'medium' }}>
       <Box alignSelf="end">
-        <HowToRead chart="Bullet" context="CountryNarrative" data="cpr" />
+        <HowToRead
+          chart="Bullet"
+          contxt="narrative"
+          data={dimension.key}
+          htr={`bullet-${dimension.key}`}
+        />
       </Box>
       <Box elevation="small" margin={{ top: 'xsmall' }}>
         <Accordion

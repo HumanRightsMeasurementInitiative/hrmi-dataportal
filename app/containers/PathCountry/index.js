@@ -157,7 +157,7 @@ export function PathCountry({
               key: 'report',
               title: intl.formatMessage(rootMessages.tabs.report),
               howToRead: {
-                context: 'PathCountry',
+                contxt: 'PathCountry',
                 chart: 'Summary',
                 data: scale,
               },
@@ -184,7 +184,7 @@ export function PathCountry({
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
               howToRead: {
-                context: 'PathCountry',
+                contxt: 'PathCountry',
                 chart: 'WordCloud',
                 data: 'atRisk',
               },

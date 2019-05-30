@@ -5,7 +5,7 @@ import { Box } from 'grommet';
 const Styled = styled(Box)`
   margin: 0 auto;
   width: 100%;
-  max-width: 1600px;
+  max-width: ${({ theme }) => theme.maxWidth || '1600px'};
   position: relative;
   min-height: auto;
 `;

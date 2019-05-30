@@ -1246,3 +1246,7 @@ export const getAuxIndicatorsForCountry = createSelector(
     data &&
     data.find(d => d.country_code === country && quasiEquals(d.year, year)),
 );
+export const getHowToRead = createSelector(
+  getGlobal,
+  global => global.howToRead,
+);

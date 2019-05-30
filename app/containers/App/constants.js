@@ -31,6 +31,9 @@ export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 export const SET_TAB = 'hrmi/App/SET_TAB';
 export const SET_MODALTAB = 'hrmi/App/SET_MODALTAB';
 
+// state actions
+export const OPEN_HOW_TO = 'hrmi/App/OPEN_HOW_TO';
+
 export const COLUMNS = {
   CPR: {
     MEAN: 'mean',
