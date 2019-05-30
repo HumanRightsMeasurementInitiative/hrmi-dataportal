@@ -93,7 +93,7 @@ export const PAGES = ['about', 'methodology'];
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countri.csv',
+    file: 'countries.csv',
   },
   {
     key: 'esrIndicators',
