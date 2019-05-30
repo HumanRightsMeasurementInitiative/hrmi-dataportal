@@ -16,8 +16,8 @@ import {
   getRouterSearchParams,
   getCountry,
   getStandardSearch,
-  getDataByKey,
-  getContentByKey,
+  getContentReadyByKey,
+  getDataReadyByKey,
   getDataRequestedByKey,
   getContentRequestedByKey,
 } from './selectors';
@@ -81,7 +81,7 @@ export function* loadDataSaga({ key }) {
   if (resourceIndex > -1) {
     // requestedSelector returns the times that entities where fetched from the API
     const requestedAt = yield select(getDataRequestedByKey, key);
-    const ready = yield select(getDataByKey, key);
+    const ready = yield select(getDataReadyByKey, key);
     // If haven't loaded yet, do so now.
     if (!requestedAt && !ready) {
       const url = `${DATA_URL}/${DATA_RESOURCES[resourceIndex].file}`;
@@ -115,7 +115,7 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
   const pageIndex = PAGES.indexOf(key);
   if (pageIndex > -1 || contentType === 'atrisk') {
     const requestedAt = yield select(getContentRequestedByKey, key);
-    const ready = yield select(getContentByKey, key);
+    const ready = yield select(getContentReadyByKey, key);
     // If haven't loaded yet, do so now.
     if (!requestedAt && !ready) {
       const requestLocale = yield locale || select(getLocale);
@@ -332,7 +332,7 @@ export default function* defaultSaga() {
     LOAD_DATA_IF_NEEDED,
     autoRestart(loadDataSaga, loadDataErrorHandler, MAX_LOAD_ATTEMPTS),
   );
-  yield takeLatest(
+  yield takeEvery(
     LOAD_CONTENT_IF_NEEDED,
     autoRestart(loadContentSaga, loadContentErrorHandler, MAX_LOAD_ATTEMPTS),
   );
