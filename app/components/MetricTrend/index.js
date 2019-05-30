@@ -48,6 +48,7 @@ function MetricTrend({
   onSetBenchmark,
   onSetStandard,
 }) {
+  if (!maxYear) return null;
   const yAxisRange = [0, maxValue];
   let xAxisRange = [
     new Date(`${2015 - 0.5}`).getTime(),
