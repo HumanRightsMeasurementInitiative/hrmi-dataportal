@@ -58,8 +58,8 @@ export function App({ match }) {
   return (
     <AppWrapper>
       <Helmet
-        titleTemplate="%s - HRMI Data Portal v.2"
-        defaultTitle="HRMI Data Portal v.2"
+        titleTemplate="%s - HRMI Data Portal v2"
+        defaultTitle="HRMI Data Portal v2"
       >
         <meta
           name="description"
