@@ -208,7 +208,7 @@ export function CountryMetric({
               key: 'trend',
               title: intl.formatMessage(rootMessages.tabs.trend),
               howToRead: {
-                context: 'CountryMetric',
+                contxt: 'CountryMetric',
                 chart: 'Trend',
                 data: metric.type,
               },
@@ -241,7 +241,7 @@ export function CountryMetric({
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
               howToRead: {
-                context: 'CountryMetric',
+                contxt: 'CountryMetric',
                 chart: 'WordCloud',
                 data: 'atRisk',
               },

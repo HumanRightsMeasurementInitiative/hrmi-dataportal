@@ -23,6 +23,7 @@ import {
   SET_BENCHMARK,
   SET_TAB,
   SET_MODALTAB,
+  OPEN_HOW_TO,
 } from './constants';
 
 /**
@@ -163,5 +164,11 @@ export function navigate(location, args) {
     type: NAVIGATE,
     location,
     args,
+  };
+}
+export function openHowToRead(args) {
+  return {
+    type: OPEN_HOW_TO,
+    layer: args,
   };
 }

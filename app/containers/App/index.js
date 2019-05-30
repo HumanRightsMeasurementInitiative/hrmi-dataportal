@@ -22,6 +22,7 @@ import PathMetric from 'containers/PathMetric';
 import PathCountry from 'containers/PathCountry';
 import PathPage from 'containers/PathPage';
 import PathNotFoundPage from 'containers/PathNotFoundPage';
+import HowToReadLayer from 'containers/HowToRead/HowToReadLayer';
 
 import ScrollToTop from './ScrollToTop';
 
@@ -84,6 +85,7 @@ export function App({ match }) {
           </Switch>
         </Main>
         <Settings />
+        <HowToReadLayer />
       </ScrollToTop>
       <GlobalStyle />
     </AppWrapper>

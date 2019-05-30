@@ -19,12 +19,14 @@ import {
   LOAD_CONTENT_ERROR,
   LOAD_CONTENT_SUCCESS,
   CONTENT_REQUESTED,
+  OPEN_HOW_TO,
 } from './constants';
 
 // The initial state of the App
 export const initialState = {
   loading: false,
   error: false,
+  howToRead: false,
   /* eslint-disable no-param-reassign */
   // the data
   data: DATA_RESOURCES.reduce((memo, resource) => {
@@ -71,6 +73,7 @@ const appReducer = (state = initialState, action) =>
         if (action.payload.location.pathname.indexOf('page') === -1) {
           draft.closeTarget = action.payload.location;
         }
+        draft.howToRead = false;
         break;
       case DATA_REQUESTED:
         draft.dataRequested[action.key] = action.time;
@@ -101,6 +104,9 @@ const appReducer = (state = initialState, action) =>
         draft.content = initialState.content;
         draft.contentReady = initialState.contentReady;
         draft.contentRequested = initialState.contentRequested;
+        break;
+      case OPEN_HOW_TO:
+        draft.howToRead = action.layer;
         break;
     }
   });

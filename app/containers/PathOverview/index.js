@@ -98,7 +98,7 @@ export function PathOverview({
                 />
               ),
               howToRead: {
-                context: 'PathOverview',
+                contxt: 'PathOverview',
                 chart: 'Diamonds',
                 data: scale,
               },

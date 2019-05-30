@@ -185,7 +185,12 @@ const theme = {
     border: '1px solid',
     fontWeight: 600,
   },
-  maxWidth: '1200px',
+  layer: {
+    border: {
+      radius: 0,
+    },
+  },
+  maxWidth: '1600px',
 };
 
 /**
