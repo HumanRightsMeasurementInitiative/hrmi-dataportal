@@ -92,7 +92,7 @@ export function WordCloud({ data, showTitle, dimension, intl }) {
               </Box>
             ))}
       </Words>
-      <Source center />
+      {data.scores.length > 0 && <Source center />}
     </Styled>
   );
 }

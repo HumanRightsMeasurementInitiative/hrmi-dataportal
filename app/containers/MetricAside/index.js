@@ -52,7 +52,7 @@ export function MetricAside({
   useEffect(() => {
     // kick off loading of data
     onLoadData(metric);
-  });
+  }, [metric]);
 
   const { metricType } = metric;
 

@@ -75,14 +75,18 @@ const StyledButtonText = styled(ButtonText)`
   text-decoration: none;
 `;
 
+const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
+
 const hasSubrights = metric => {
-  const subrights = RIGHTS.filter(r => r.aggregate === metric.key);
+  const subrights = getSubrights(metric);
   return subrights.length > 0;
 };
 
 const hasAnalysis = metric =>
-  (metric.metricType === 'rights' && !hasSubrights(metric)) ||
+  metric.metricType === 'rights' ||
   (metric.metricType === 'dimensions' && metric.key === 'esr');
+const hasSubrightAnalysis = metric =>
+  metric.metricType === 'rights' && hasSubrights(metric);
 
 const generateKey = (metricCode, countryCode) => {
   const metric = getMetricDetails(metricCode);
@@ -90,6 +94,9 @@ const generateKey = (metricCode, countryCode) => {
     if (metric.metricType === 'rights') {
       if (metric.type === 'esr') {
         return `esr/${countryCode}`;
+      }
+      if (hasSubrights(metric)) {
+        return getSubrights(metric).map(sr => `${sr.key}/${countryCode}`);
       }
       return `${metricCode}/${countryCode}`;
     }
@@ -127,6 +134,7 @@ export function CountryMetric({
   intl,
   atRisk,
   atRiskAnalysis,
+  atRiskAnalysisSubrights,
   onLoadContent,
   scores,
   hasAtRisk,
@@ -148,8 +156,7 @@ export function CountryMetric({
     const key = generateKey(metricCode, countryCode);
     if (key && hasAtRisk) onLoadContent(key);
     onLoadData();
-  }, []);
-
+  }, [metricCode, countryCode, hasAtRisk]);
   const metric = getMetricDetails(metricCode);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const countryTitle =
@@ -243,8 +250,10 @@ export function CountryMetric({
                   data={atRisk}
                   metric={metric}
                   atRiskAnalysis={atRiskAnalysis}
+                  atRiskAnalysisSubrights={atRiskAnalysisSubrights}
                   locale={intl.locale}
                   hasAnalysis={hasAnalysis(metric)}
+                  hasSubrightAnalysis={hasSubrightAnalysis(metric)}
                 />
               ),
             },
@@ -307,6 +316,10 @@ CountryMetric.propTypes = {
   maxYearCPR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  atRiskAnalysisSubrights: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.bool,
+  ]),
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -326,8 +339,31 @@ const mapStateToProps = createStructuredSelector({
       country: countryCode,
       metric: metricCode,
     }),
-  atRiskAnalysis: (state, { countryCode, metricCode }) =>
-    getContentByKey(state, generateKey(metricCode, countryCode)),
+  atRiskAnalysis: (state, { countryCode, metricCode }) => {
+    const metric = getMetricDetails(metricCode);
+    return (
+      !hasSubrights(metric) &&
+      getContentByKey(state, generateKey(metricCode, countryCode))
+    );
+  },
+  atRiskAnalysisSubrights: (state, { countryCode, metricCode }) => {
+    const metric = getMetricDetails(metricCode);
+    if (hasSubrights(metric)) {
+      const subrights = getSubrights(metric);
+      // console.log(subrights)
+      return subrights.map(sr => {
+        const content = getContentByKey(
+          state,
+          generateKey(sr.key, countryCode),
+        );
+        return {
+          ...content,
+          key: sr.key,
+        };
+      });
+    }
+    return false;
+  },
   hasAtRisk: (state, { countryCode }) => getHasCountryCPR(state, countryCode),
   scores: (state, { countryCode, metricCode }) => {
     const metric = getMetricDetails(metricCode);
@@ -381,7 +417,11 @@ export function mapDispatchToProps(dispatch) {
       );
     },
     onLoadContent: path => {
-      dispatch(loadContentIfNeeded(path, 'atrisk'));
+      if (Array.isArray(path)) {
+        path.forEach(p => dispatch(loadContentIfNeeded(p, 'atrisk')));
+      } else {
+        dispatch(loadContentIfNeeded(path, 'atrisk'));
+      }
     },
     onTabClick: index => dispatch(setModalTab(index)),
     onSelectCountry: country => dispatch(selectCountry(country)),
