@@ -248,6 +248,15 @@ const getDataRequested = createSelector(
   getGlobal,
   global => global.dataRequested,
 );
+const getContentReady = createSelector(
+  getGlobal,
+  global => global.contentReady,
+);
+
+const getDataReady = createSelector(
+  getGlobal,
+  global => global.dataReady,
+);
 // requested data / content
 export const getDataRequestedByKey = createSelector(
   (state, key) => key,
@@ -258,6 +267,17 @@ export const getContentRequestedByKey = createSelector(
   (state, key) => key,
   getContentRequested,
   (key, requested) => requested[key],
+);
+// requested data / content
+export const getDataReadyByKey = createSelector(
+  (state, key) => key,
+  getDataReady,
+  (key, ready) => ready[key],
+);
+export const getContentReadyByKey = createSelector(
+  (state, key) => key,
+  getContentReady,
+  (key, ready) => ready[key],
 );
 
 // helper functions
