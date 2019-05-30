@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -20,6 +20,7 @@ import {
   getAssessedSearch,
   getScaleSearch,
 } from 'containers/App/selectors';
+import { loadDataIfNeeded } from 'containers/App/actions';
 
 import OverviewMetrics from 'containers/OverviewMetrics';
 import OverviewCountries from 'containers/OverviewCountries';
@@ -35,8 +36,18 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 
 import { filterByAssessment } from 'utils/scores';
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
 
 import messages from './messages';
+
+const DEPENDENCIES = [
+  'countries',
+  'esrIndicators',
+  'cprScores',
+  'esrScores',
+  'esrIndicatorScores',
+];
 
 export function PathOverview({
   countries,
@@ -45,7 +56,15 @@ export function PathOverview({
   standard,
   assessed,
   scale,
+  onLoadData,
 }) {
+  useInjectSaga({ key: 'app', saga });
+
+  useEffect(() => {
+    // kick off loading of data
+    onLoadData();
+  }, []);
+
   if (!countries) return null;
 
   const standardDetails = STANDARDS.find(s => s.key === standard);
@@ -102,6 +121,7 @@ export function PathOverview({
 }
 
 PathOverview.propTypes = {
+  onLoadData: PropTypes.func.isRequired,
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,
@@ -117,10 +137,17 @@ const mapStateToProps = createStructuredSelector({
   assessed: state => getAssessedSearch(state),
   scale: state => getScaleSearch(state),
 });
+export function mapDispatchToProps(dispatch) {
+  return {
+    onLoadData: () => {
+      DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
+    },
+  };
+}
 
 const withConnect = connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 );
 
 export default compose(withConnect)(injectIntl(PathOverview));

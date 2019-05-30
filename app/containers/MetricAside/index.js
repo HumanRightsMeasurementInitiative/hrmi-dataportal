@@ -23,7 +23,8 @@ import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 import UL from 'styled/UL';
 import ButtonText from 'styled/ButtonText';
-
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -35,7 +36,7 @@ const Pad = styled.div`
   padding-bottom: 16px;
 `;
 
-const DEPENDENCIES_INDICATORS = []; // ['esrIndicators'];
+const DEPENDENCIES_INDICATORS = ['esrIndicators'];
 
 export function MetricAside({
   metric,
@@ -46,10 +47,12 @@ export function MetricAside({
   onSelectMetric,
   intl,
 }) {
+  useInjectSaga({ key: 'app', saga });
+
   useEffect(() => {
     // kick off loading of data
     onLoadData(metric);
-  }, []);
+  });
 
   const { metricType } = metric;
 

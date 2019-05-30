@@ -7,17 +7,13 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { compose } from 'redux';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
 import GlobalStyle from 'global-styles';
-
-import { useInjectSaga } from 'utils/injectSaga';
 
 import Header from 'containers/Header';
 import Settings from 'containers/Settings';
@@ -26,23 +22,10 @@ import PathMetric from 'containers/PathMetric';
 import PathCountry from 'containers/PathCountry';
 import PathPage from 'containers/PathPage';
 import PathNotFoundPage from 'containers/PathNotFoundPage';
+
 import ScrollToTop from './ScrollToTop';
 
-import { loadDataIfNeeded } from './actions';
-
-import saga from './saga';
-
 import { DEFAULT_LOCALE } from '../../i18n';
-
-const DEPENDENCIES = [
-  'countries',
-  'cprScores',
-  'esrScores',
-  'esrIndicatorScores',
-  'esrIndicators',
-  'auxIndicators',
-  'atRisk',
-];
 
 const AppWrapper = styled.div`
   &:focus {
@@ -69,15 +52,8 @@ const Main = styled.main`
  *
  */
 
-export function App({ match, onLoadData }) {
+export function App({ match }) {
   const locale = match.params ? match.params.locale : DEFAULT_LOCALE;
-
-  useInjectSaga({ key: 'app', saga });
-
-  useEffect(() => {
-    // kick off loading of data
-    onLoadData();
-  }, []);
 
   return (
     <AppWrapper>
@@ -116,20 +92,6 @@ export function App({ match, onLoadData }) {
 
 App.propTypes = {
   match: PropTypes.object,
-  onLoadData: PropTypes.func.isRequired,
 };
 
-export function mapDispatchToProps(dispatch) {
-  return {
-    onLoadData: () => {
-      DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
-    },
-  };
-}
-
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
-
-export default compose(withConnect)(App);
+export default App;

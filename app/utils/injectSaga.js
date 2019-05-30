@@ -47,8 +47,10 @@ export default ({ key, saga, mode }) => WrappedComponent => {
 };
 
 const useInjectSaga = ({ key, saga, mode }) => {
+  console.log('useInjectSaga');
   const context = React.useContext(ReactReduxContext);
   React.useEffect(() => {
+    console.log('useInjectSaga: useEffect');
     const injectors = getInjectors(context.store);
     injectors.injectSaga(key, { saga, mode });
 

@@ -63,7 +63,8 @@ import {
   setStandard,
   setBenchmark,
 } from 'containers/App/actions';
-
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
 const PageTitle = props => <Heading level="2" margin="none" {...props} />;
 
 const StyledPageTitle = styled(PageTitle)`
@@ -107,8 +108,15 @@ const getColour = metric => {
   }
   return 'esr';
 };
-const DEPENDENCIES = []; // []; // ['auxIndicators', 'atRisk', 'esrIndicators'];
-
+const DEPENDENCIES = [
+  'countries',
+  'esrIndicators',
+  'cprScores',
+  'esrScores',
+  'esrIndicatorScores',
+  'auxIndicators',
+  'atRisk',
+];
 export function CountryMetric({
   metricCode,
   countryCode,
@@ -135,6 +143,7 @@ export function CountryMetric({
   onSetBenchmark,
   onSetStandard,
 }) {
+  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     const key = generateKey(metricCode, countryCode);
     if (key && hasAtRisk) onLoadContent(key);

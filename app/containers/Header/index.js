@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -19,7 +19,10 @@ import Icon from 'components/Icon';
 
 import LocaleToggle from 'containers/LocaleToggle';
 import { PAGES } from 'containers/App/constants';
-import { navigate } from 'containers/App/actions';
+import { navigate, loadDataIfNeeded } from 'containers/App/actions';
+
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -157,8 +160,16 @@ const SecondaryDropButton = styled(Button)`
     background-color: ${({ theme }) => theme.global.colors['dark-2']};
   }
 `;
+const DEPENDENCIES = ['countries'];
 
-export function Header({ nav, intl }) {
+export function Header({ nav, intl, onLoadData }) {
+  useInjectSaga({ key: 'app', saga });
+
+  useEffect(() => {
+    // kick off loading of page content
+    onLoadData();
+  }, []);
+
   const [showMenu, setShowMenu] = useState(false);
   const [showCountries, setShowCountries] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
@@ -314,10 +325,14 @@ export function Header({ nav, intl }) {
 Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
+  onLoadData: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
+  onLoadData: () => {
+    DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
+  },
   // navigate to location
   nav: location => {
     dispatch(navigate(location, { keepTab: true }));

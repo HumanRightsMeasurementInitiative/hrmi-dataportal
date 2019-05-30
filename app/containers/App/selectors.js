@@ -239,6 +239,27 @@ export const getDataByKey = createSelector(
   (key, data) => data[key],
 );
 
+const getContentRequested = createSelector(
+  getGlobal,
+  global => global.contentRequested,
+);
+
+const getDataRequested = createSelector(
+  getGlobal,
+  global => global.dataRequested,
+);
+// requested data / content
+export const getDataRequestedByKey = createSelector(
+  (state, key) => key,
+  getDataRequested,
+  (key, requested) => requested[key],
+);
+export const getContentRequestedByKey = createSelector(
+  (state, key) => key,
+  getContentRequested,
+  (key, requested) => requested[key],
+);
+
 // helper functions
 const sortByNumber = (data, column, asc = true) => {
   const reverse = asc ? 1 : -1;
