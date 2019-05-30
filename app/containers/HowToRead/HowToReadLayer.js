@@ -18,6 +18,8 @@ import HTRSummaryDimensions from './HTRSummaryDimensions';
 import HTRSummaryRights from './HTRSummaryRights';
 import HTRBulletCPR from './HTRBulletCPR';
 import HTRBarESR from './HTRBarESR';
+import HTRTrendESR from './HTRTrendESR';
+import HTRTrendCPR from './HTRTrendCPR';
 import messages from './messages';
 
 const ButtonWrap = styled.div`
@@ -57,9 +59,6 @@ function HowToReadLayer({ layer, theme, onClose }) {
   if (!layer) return null;
 
   const { contxt, chart, data } = layer;
-  console.log('Context', contxt);
-  console.log('Chart', chart);
-  console.log('Data', data);
   return (
     <Layer
       onEsc={() => onClose()}
@@ -99,6 +98,8 @@ function HowToReadLayer({ layer, theme, onClose }) {
               <HTRBulletCPR contxt={contxt} dimension={data} />
             )}
             {chart === 'Bar' && <HTRBarESR contxt={contxt} />}
+            {chart === 'Trend' && data === 'esr' && <HTRTrendESR />}
+            {chart === 'Trend' && data === 'cpr' && <HTRTrendCPR />}
           </Box>
         )}
       </ResponsiveContext.Consumer>
