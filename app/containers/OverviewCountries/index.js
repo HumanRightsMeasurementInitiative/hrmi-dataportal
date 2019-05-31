@@ -24,7 +24,11 @@ import {
   getSortSearch,
   getSortOrderSearch,
 } from 'containers/App/selectors';
-import { navigate, selectCountry } from 'containers/App/actions';
+import {
+  navigate,
+  selectCountry,
+  highlightCountry,
+} from 'containers/App/actions';
 
 import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 
@@ -59,6 +63,7 @@ export function OverviewCountries({
   sortOrder,
   onSortSelect,
   onOrderChange,
+  onCountryHover,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -116,6 +121,7 @@ export function OverviewCountries({
                 benchmark={benchmarkDetails}
                 onSelectCountry={() => onSelectCountry(c.country_code)}
                 indicators={indicators}
+                onCountryHover={code => onCountryHover(code)}
               />
             )}
           </InfiniteScroll>
@@ -146,6 +152,7 @@ OverviewCountries.propTypes = {
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
+  onCountryHover: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -168,6 +175,7 @@ export function mapDispatchToProps(dispatch) {
         navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
       ),
     onSelectCountry: country => dispatch(selectCountry(country)),
+    onCountryHover: country => dispatch(highlightCountry(country)),
     onAddFilter: (key, value) =>
       dispatch(
         navigate(

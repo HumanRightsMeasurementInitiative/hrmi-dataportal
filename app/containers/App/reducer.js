@@ -20,6 +20,7 @@ import {
   LOAD_CONTENT_SUCCESS,
   CONTENT_REQUESTED,
   OPEN_HOW_TO,
+  HIGHLIGHT_COUNTRY,
 } from './constants';
 
 // The initial state of the App
@@ -27,6 +28,7 @@ export const initialState = {
   loading: false,
   error: false,
   howToRead: false,
+  highlightCountry: false,
   /* eslint-disable no-param-reassign */
   // the data
   data: DATA_RESOURCES.reduce((memo, resource) => {
@@ -107,6 +109,9 @@ const appReducer = (state = initialState, action) =>
         break;
       case OPEN_HOW_TO:
         draft.howToRead = action.layer;
+        break;
+      case HIGHLIGHT_COUNTRY:
+        draft.highlightCountry = action.country;
         break;
     }
   });

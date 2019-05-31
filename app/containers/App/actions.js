@@ -24,6 +24,7 @@ import {
   SET_TAB,
   SET_MODALTAB,
   OPEN_HOW_TO,
+  HIGHLIGHT_COUNTRY,
 } from './constants';
 
 /**
@@ -170,5 +171,11 @@ export function openHowToRead(args) {
   return {
     type: OPEN_HOW_TO,
     layer: args,
+  };
+}
+export function highlightCountry(country) {
+  return {
+    type: HIGHLIGHT_COUNTRY,
+    country,
   };
 }

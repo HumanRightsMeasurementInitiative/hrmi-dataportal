@@ -1250,3 +1250,13 @@ export const getHowToRead = createSelector(
   getGlobal,
   global => global.howToRead,
 );
+export const getHighlightCountry = createSelector(
+  getGlobal,
+  global => global.highlightCountry,
+);
+
+export const getDependenciesReady = createSelector(
+  (state, dependencies) => dependencies,
+  getDataReady,
+  (dependencies, data) => dependencies.reduce((m, d) => !!data[d] && m, true),
+);
