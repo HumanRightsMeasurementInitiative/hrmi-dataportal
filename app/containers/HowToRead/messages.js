@@ -171,7 +171,24 @@ export default defineMessages({
     },
     rangeTitle: {
       id: `${scope}.bullet.rangeTitle`,
-      defaultMessage: 'How to interpet the uncertainty bands',
+      defaultMessage: 'How to interpet the scores and uncertainty bands',
+    },
+    scores: {
+      id: `${scope}.bullet.scores`,
+      defaultMessage:
+        'While the average score is represented by the thick line in the middle, the coloured bar represents the uncertainty about the true score, and ranges from the 10<sup>th</sup> percentile on the lower (left) end to the 90<sup>th</sup> percentile on the higher (right) end. ',
+    },
+    scoreAverage: {
+      id: `${scope}.bullet.scoreAverage`,
+      defaultMessage: 'Average score ',
+    },
+    score10: {
+      id: `${scope}.bullet.score10`,
+      defaultMessage: '10th percentile ',
+    },
+    score90: {
+      id: `${scope}.bullet.score90`,
+      defaultMessage: '90th percentile ',
     },
     longBars: {
       id: `${scope}.bullet.longBars`,
