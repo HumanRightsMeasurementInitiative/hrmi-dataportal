@@ -201,6 +201,7 @@ export function CountryPreview({
   indicators,
   intl,
   showAnnotation,
+  onCountryHover,
 }) {
   if (!country) return null;
   return (
@@ -210,7 +211,13 @@ export function CountryPreview({
       alignContent="center"
     >
       {country && (
-        <Button onClick={() => onSelectCountry(country.country_code)}>
+        <Button
+          onClick={() => onSelectCountry(country.country_code)}
+          onMouseOver={() => onCountryHover(country.country_code)}
+          onFocus={() => onCountryHover(country.country_code)}
+          onMouseOut={() => onCountryHover(false)}
+          onBlur={() => onCountryHover(false)}
+        >
           {scale === 'd' && (
             <div>
               <DiamondChart
@@ -268,6 +275,7 @@ export function CountryPreview({
 CountryPreview.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onSelectCountry: PropTypes.func,
+  onCountryHover: PropTypes.func,
   country: PropTypes.object,
   indicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scores: PropTypes.object,

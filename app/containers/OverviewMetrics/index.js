@@ -36,22 +36,31 @@ const Option = styled(Button)`
   width: 100%;
 `;
 
-const getScoresForDimension = (countries, dimension, scores, standard) =>
-  countries &&
-  scores &&
-  countries.map(c => {
-    const countryScores = scores[dimension.type][c.country_code];
-    const countryMetric = (countryScores && countryScores[dimension.key]) || [
-      { country_code: c.country_code },
-    ];
-    if (dimension.type === 'esr') {
-      // prettier-ignore
-      return countryMetric.find(
-        s => s.standard === standard.code && s.group === 'All',
-      ) || { country_code: c.country_code };
+const getScoresForMetric = (
+  scale,
+  metric,
+  scoresByCountry,
+  standard,
+  countryCodes,
+) =>
+  Object.values(scoresByCountry).reduce((memo, sc) => {
+    if (!sc[metric.key]) return memo;
+    if (metric.type === 'cpr') {
+      return memo.concat(
+        sc[metric.key].filter(
+          scm => countryCodes.indexOf(scm.country_code) > -1,
+        ),
+      );
     }
-    return countryMetric[0];
-  });
+    return memo.concat(
+      sc[metric.key].filter(
+        scm =>
+          countryCodes.indexOf(scm.country_code) > -1 &&
+          scm.standard === standard.code &&
+          scm.group === 'All',
+      ),
+    );
+  }, []);
 
 export function OverviewMetrics({
   scale,
@@ -60,11 +69,43 @@ export function OverviewMetrics({
   countries,
   standard,
   benchmark,
+  dataReady,
+  highlightCountry,
 }) {
   // console.log(countries && countries.length)
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
 
+  let scoresByMetric;
+  if (scale === 'r') {
+    scoresByMetric = RIGHTS.filter(r => typeof r.aggregate === 'undefined').map(
+      right => ({
+        ...right,
+        scores: getScoresForMetric(
+          scale,
+          right,
+          scoresAllCountries[right.type],
+          standardDetails,
+          countries.map(c => c.country_code),
+        ),
+      }),
+    );
+  } else {
+    scoresByMetric = DIMENSIONS.map(dim => ({
+      ...dim,
+      scores: getScoresForMetric(
+        scale,
+        dim,
+        scoresAllCountries[dim.type],
+        standardDetails,
+        countries.map(c => c.country_code),
+      ),
+    }));
+  }
+  const maxScores = scoresByMetric.reduce(
+    (memo, sm) => Math.max(memo, sm.scores.length),
+    0,
+  );
   return (
     <Box pad="medium">
       {RIGHTS_TYPES.map(type => {
@@ -115,12 +156,12 @@ export function OverviewMetrics({
                             ? benchmarkDetails.column
                             : COLUMNS.CPR.MEAN
                         }
-                        data={getScoresForDimension(
-                          countries,
-                          d,
-                          scoresAllCountries,
-                          standardDetails,
-                        )}
+                        maxScores={maxScores}
+                        highlightCountry={highlightCountry}
+                        data={
+                          dataReady &&
+                          scoresByMetric.find(sm => sm.key === d.key)
+                        }
                       />
                     )}
                   </Option>
@@ -140,17 +181,17 @@ export function OverviewMetrics({
                             level={2}
                             maxValue={r.type === 'esr' ? 100 : 10}
                             color={r.dimension}
+                            maxScores={maxScores}
                             column={
                               r.type === 'esr'
                                 ? benchmarkDetails.column
                                 : COLUMNS.CPR.MEAN
                             }
-                            data={getScoresForDimension(
-                              countries,
-                              r,
-                              scoresAllCountries,
-                              standardDetails,
-                            )}
+                            highlightCountry={highlightCountry}
+                            data={
+                              dataReady &&
+                              scoresByMetric.find(sm => sm.key === r.key)
+                            }
                           />
                         </Option>
                       </div>
@@ -169,9 +210,11 @@ OverviewMetrics.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  highlightCountry: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSelectMetric: PropTypes.func,
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  dataReady: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
