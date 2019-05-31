@@ -8,23 +8,24 @@ import BarMultiple from 'components/Bars/BarMultiple';
 import Bar from 'components/Bars/Bar';
 import rootMessages from 'messages';
 
-const WIDTH = 116;
-const heightRotated = WIDTH * 2 ** (1 / 2); // height * sqrt(2)
+const WIDTH = [80, 116];
+const MARGINS = 4;
+const heightRotated = w => w * 2 ** (1 / 2); // height * sqrt(2)
 const Styled = styled.div`
-  height: ${heightRotated}px;
-  padding-top: ${(heightRotated - WIDTH) / 2}px;
+  height: ${({ w }) => heightRotated(w)}px;
+  padding-top: ${({ w }) => (heightRotated(w) - w) / 2}px;
 `;
 const BarWrapRotated = styled.div`
   display: block;
-  width: ${WIDTH}px;
+  width: ${({ w }) => w}px;
   margin: 0 auto;
   transform: rotate(-45deg);
   position: relative;
 `;
 
 const BarWrapInner = styled.div`
-  margin-top: ${({ first }) => (first ? 0 : 4)}px;
-  margin-bottom: ${({ last }) => (last ? 0 : 4)}px;
+  margin-top: ${({ first }) => (first ? 0 : MARGINS)}px;
+  margin-bottom: ${({ last }) => (last ? 0 : MARGINS)}px;
 `;
 
 const AnnotateBetter = styled.div`
@@ -58,11 +59,19 @@ const AnnotateBetterInner = styled.div`
   transform: rotate(45deg);
 `;
 
-export function DiamondChart({ dimensions, rightGroups, showLabels }) {
+export function DiamondChart({
+  dimensions,
+  rightGroups,
+  showLabels,
+  hideZeroLabels = false,
+  hoverEnabled = true,
+  small = false,
+}) {
   if (!dimensions && !rightGroups) return null;
+  const w = small ? WIDTH[0] : WIDTH[1];
   return (
-    <Styled>
-      <BarWrapRotated>
+    <Styled w={w}>
+      <BarWrapRotated w={w}>
         {showLabels && (
           <AnnotateBetter>
             <AnnotateBetterInner>
@@ -81,11 +90,13 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
             >
               <Bar
                 data={dim}
-                showLabels={showLabels}
+                showLabels={(!hideZeroLabels || dim.value > 0) && showLabels}
                 showBenchmark={showLabels}
                 rotate={45}
                 showIncompleteAction={false}
                 scoreOnHover="top"
+                hoverEnabled={hoverEnabled}
+                height={(w - MARGINS * 2) / list.length}
               />
             </BarWrapInner>
           ))}
@@ -98,9 +109,10 @@ export function DiamondChart({ dimensions, rightGroups, showLabels }) {
             >
               <BarMultiple
                 dataMultiple={rightGroup}
-                showLabels={showLabels}
+                showLabels={showLabels && !!rightGroup.showLabels}
                 rotate={45}
                 scoreOnHover="top"
+                heightIndividual={(w - MARGINS * 2) / 12}
               />
             </BarWrapInner>
           ))}
@@ -113,6 +125,9 @@ DiamondChart.propTypes = {
   rightGroups: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   dimensions: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   showLabels: PropTypes.bool,
+  hideZeroLabels: PropTypes.bool,
+  hoverEnabled: PropTypes.bool,
+  small: PropTypes.bool,
 };
 
 export default DiamondChart;

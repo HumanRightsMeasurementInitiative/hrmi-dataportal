@@ -119,6 +119,7 @@ function Bar({
   annotateBenchmarkAbove = false,
   showAllBenchmarkAnnotations = false,
   scoreOnHover = false,
+  hoverEnabled = true,
 }) {
   const [hover, setHover] = useState(false);
   const {
@@ -131,7 +132,8 @@ function Bar({
     title,
   } = data;
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
-
+  const hasValue = !!value || value === 0;
+  const h = height || HEIGHT[level];
   // prettier-ignore
   return (
     <Wrapper>
@@ -140,36 +142,36 @@ function Bar({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <BarReference height={height || HEIGHT[level]} noData={!value}>
-          {!value && (
+        <BarReference height={h} noData={!hasValue}>
+          {!hasValue && (
             <BarNoValue
-              height={height || HEIGHT[level]}
+              height={h}
               color={color}
             />
           )}
-          {value && (
+          {hasValue && (
             <BarValue
-              height={height || HEIGHT[level]}
-              active={hover}
+              height={h}
+              active={hover && hoverEnabled}
               color={color}
               style={{ width: `${(value / maxValue) * 100}%` }}
               stripes={stripes}
             />
           )}
-          {value &&
+          {hasValue &&
             refValues &&
             refValues.map(ref => (
               <MarkValue
-                height={height || HEIGHT[level]}
+                height={h}
                 key={ref.key}
                 lineStyle={ref.style}
                 style={{ left: `${(ref.value / maxValue) * 100}%` }}
                 level={level}
               />
             ))}
-          {!value && refValues && !!theRefValue &&(
+          {!hasValue && refValues && !!theRefValue &&(
             <MarkValue
-              height={height || HEIGHT[level]}
+              height={h}
               key={theRefValue.key}
               lineStyle={theRefValue.style}
               style={{ left: `${(theRefValue.value / maxValue) * 100}%` }}
@@ -197,7 +199,7 @@ function Bar({
               />
             ))
           }
-          {!value && data && level < 3 && (
+          {!hasValue && data && level < 3 && (
             <NoData level={level}>
               <Text size="xsmall">
                 {getNoDataMessage(intl, data)}
@@ -206,7 +208,7 @@ function Bar({
             </NoData>
           )}
         </BarReference>
-        {(showScore || (hover && scoreOnHover)) && value && (
+        {(showScore || (hover && scoreOnHover && hoverEnabled)) && hasValue && (
           <Score
             rotate={rotate}
             score={value}
@@ -236,6 +238,7 @@ Bar.propTypes = {
   showLabels: PropTypes.bool,
   showScore: PropTypes.bool,
   showBenchmark: PropTypes.bool,
+  hoverEnabled: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   intl: intlShape.isRequired,

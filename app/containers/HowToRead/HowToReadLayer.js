@@ -78,7 +78,7 @@ function HowToReadLayer({ layer, theme, onClose }) {
             overflow="auto"
             style={{ position: 'relative' }}
           >
-            <Heading level={4}>
+            <Heading level={3}>
               <FormattedMessage {...messages.label} />
             </Heading>
             <ButtonWrap>
