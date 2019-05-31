@@ -57,7 +57,6 @@ function HowToReadLayer({ layer, theme, onClose }) {
   }, []);
 
   if (!layer) return null;
-
   const { contxt, chart, data } = layer;
   return (
     <Layer
@@ -91,9 +90,6 @@ function HowToReadLayer({ layer, theme, onClose }) {
             {chart === 'Diamonds' && data === 'r' && <HTROverviewRights />}
             {chart === 'Summary' && data === 'd' && <HTRSummaryDimensions />}
             {chart === 'Summary' && data === 'r' && <HTRSummaryRights />}
-            {chart === 'Bullet' && contxt === 'narrative' && (
-              <HTRBulletCPR contxt={contxt} dimension={data} />
-            )}
             {chart === 'Bullet' && (
               <HTRBulletCPR contxt={contxt} dimension={data} />
             )}

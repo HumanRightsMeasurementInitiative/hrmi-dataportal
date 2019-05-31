@@ -6,6 +6,7 @@ export default function(code) {
     return {
       metricType: 'dimensions',
       metricTypeSingle: 'dimension',
+      color: dimension.key,
       ...dimension,
     };
   }
@@ -14,6 +15,7 @@ export default function(code) {
     return {
       metricType: 'rights',
       metricTypeSingle: 'right',
+      color: right.dimension,
       ...right,
     };
   }
@@ -22,6 +24,7 @@ export default function(code) {
     return {
       metricType: 'indicators',
       metricTypeSingle: 'indicator',
+      color: 'esr',
       ...indicator,
     };
   }

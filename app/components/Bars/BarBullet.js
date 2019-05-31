@@ -75,10 +75,13 @@ function BarBullet({
   showScore,
   scoreOnHover,
   bandOnHover,
+  annotate,
+  direction,
+  annotateOnHover,
+  hoverEnabled = true,
 }) {
   const [hover, setHover] = useState(false);
-
-  const { color, value, maxValue, unit, band } = data;
+  const { color, value, maxValue, unit, band, labels } = data;
   return (
     <Wrapper
       onMouseEnter={() => setHover(true)}
@@ -97,7 +100,7 @@ function BarBullet({
           {value && (
             <BarBand
               color={color}
-              active={hover}
+              active={hover && hoverEnabled}
               height={HEIGHT[level]}
               lo={(band.lo / maxValue) * 100}
               hi={(band.hi / maxValue) * 100}
@@ -128,6 +131,38 @@ function BarBullet({
               color={color}
               height={HEIGHT[level]}
               style={{ left: `${(band.hi / maxValue) * 100}%` }}
+            />
+          )}
+          {((hover && annotateOnHover) || annotate) && (
+            <Score
+              left={(band.lo / maxValue) * 100}
+              color={color}
+              level={Math.max(2, level)}
+              direction={direction || 'top'}
+              secondary
+              align="right"
+              title={labels && labels.lo}
+            />
+          )}
+          {((hover && annotateOnHover) || annotate) && (
+            <Score
+              left={(band.hi / maxValue) * 100}
+              color={color}
+              level={Math.max(2, level)}
+              direction={direction || 'top'}
+              secondary
+              align="left"
+              title={labels && labels.hi}
+            />
+          )}
+          {((hover && annotateOnHover) || annotate) && (
+            <Score
+              left={(value / maxValue) * 100}
+              color={color}
+              level={1}
+              direction={direction || 'bottom'}
+              secondary
+              title={labels && labels.value}
             />
           )}
           {band.lo && hover && bandOnHover && (
@@ -179,8 +214,12 @@ BarBullet.propTypes = {
   level: PropTypes.number,
   showLabels: PropTypes.bool,
   showScore: PropTypes.bool,
+  hoverEnabled: PropTypes.bool,
+  direction: PropTypes.string,
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   bandOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  annotateOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  annotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default BarBullet;

@@ -129,7 +129,7 @@ export function PathMetric({
               howToRead: {
                 contxt: 'PathMetric',
                 chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
-                data: metric.type,
+                data: metric.color,
               },
             },
             {

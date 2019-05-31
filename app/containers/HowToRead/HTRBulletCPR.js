@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  injectIntl,
+  intlShape,
+  FormattedMessage,
+  FormattedHTMLMessage,
+} from 'react-intl';
 import styled from 'styled-components';
-import { Paragraph, Heading } from 'grommet';
+import { Paragraph, Heading, Box } from 'grommet';
+import BarBullet from 'components/Bars/BarBullet';
+import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
 
 import messages from './messages';
 
 const Styled = styled.div``;
 
-function HTRBulletCPR({ contxt, dimension }) {
-  console.log(dimension);
+function HTRBulletCPR({ contxt, dimension, intl }) {
+  const level = contxt === 'narrative' ? 1 : 2;
   return (
     <Styled>
       <Paragraph>
@@ -18,16 +25,115 @@ function HTRBulletCPR({ contxt, dimension }) {
       <Heading level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
+      <Box pad={{ horizontal: 'small', top: 'small', bottom: 'medium' }}>
+        <Box flex style={{ position: 'relative' }}>
+          <BarBullet
+            level={level}
+            showLabels
+            annotate
+            hoverEnabled={false}
+            data={{
+              color: dimension,
+              value: 5,
+              maxValue: 10,
+              unit: '',
+              band: {
+                lo: 3.5,
+                hi: 6.5,
+              },
+              labels: {
+                value: intl.formatMessage(messages.bullet.scoreAverage),
+                lo: intl.formatMessage(messages.bullet.score10),
+                hi: intl.formatMessage(messages.bullet.score90),
+              },
+            }}
+          />
+          <AnnotateBetterWorse absolute />
+        </Box>
+      </Box>
       <Paragraph>
-        <FormattedMessage {...messages.bullet.longBars} />
+        <FormattedHTMLMessage {...messages.bullet.scores} />
       </Paragraph>
+      <Box pad={{ horizontal: 'small', top: 'small', bottom: 'small' }}>
+        <BarBullet
+          level={level}
+          showLabels
+          hoverEnabled={false}
+          data={{
+            color: dimension,
+            value: 7,
+            maxValue: 10,
+            unit: '',
+            band: {
+              lo: 5,
+              hi: 9,
+            },
+          }}
+        />
+      </Box>
       <Paragraph>
-        <FormattedMessage {...messages.bullet.shortBars} />
+        <FormattedHTMLMessage {...messages.bullet.longBars} />
+      </Paragraph>
+      <Box pad={{ horizontal: 'small', top: 'small', bottom: 'small' }}>
+        <BarBullet
+          level={level}
+          showLabels
+          hoverEnabled={false}
+          data={{
+            color: dimension,
+            value: 7,
+            maxValue: 10,
+            unit: '',
+            band: {
+              lo: 6,
+              hi: 8,
+            },
+          }}
+        />
+      </Box>
+      <Paragraph>
+        <FormattedHTMLMessage {...messages.bullet.shortBars} />
       </Paragraph>
       {contxt !== 'narrative' && (
-        <Paragraph>
-          <FormattedMessage {...messages.bullet.countryComparison} />
-        </Paragraph>
+        <>
+          <Box pad={{ horizontal: 'small', top: 'small', bottom: 'xsmall' }}>
+            <BarBullet
+              level={level}
+              showLabels
+              hoverEnabled={false}
+              data={{
+                color: dimension,
+                value: 8,
+                maxValue: 10,
+                unit: '',
+                band: {
+                  lo: 6.5,
+                  hi: 9.5,
+                },
+              }}
+            />
+          </Box>
+          <Box pad={{ horizontal: 'small', top: 'none', bottom: 'small' }}>
+            <BarBullet
+              level={level}
+              showLabels
+              hoverEnabled={false}
+              data={{
+                color: dimension,
+                value: 5.5,
+                maxValue: 10,
+                unit: '',
+                band: {
+                  lo: 4,
+                  hi: 7,
+                },
+              }}
+            />
+          </Box>
+          <Paragraph>
+            <FormattedHTMLMessage {...messages.bullet.countryComparison} />
+          </Paragraph>
+        </>
       )}
     </Styled>
   );
@@ -36,6 +142,7 @@ function HTRBulletCPR({ contxt, dimension }) {
 HTRBulletCPR.propTypes = {
   contxt: PropTypes.string,
   dimension: PropTypes.string,
+  intl: intlShape.isRequired,
 };
 
-export default HTRBulletCPR;
+export default injectIntl(HTRBulletCPR);
