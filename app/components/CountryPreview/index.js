@@ -205,11 +205,7 @@ export function CountryPreview({
 }) {
   if (!country) return null;
   return (
-    <Box
-      pad={{ horizontal: 'small', vertical: 'medium' }}
-      width="250px"
-      alignContent="center"
-    >
+    <Box pad="none" width="250px" alignContent="center">
       {country && (
         <Button
           onClick={() => onSelectCountry(country.country_code)}
@@ -218,8 +214,12 @@ export function CountryPreview({
           onMouseOut={() => onCountryHover(false)}
           onBlur={() => onCountryHover(false)}
         >
-          {scale === 'd' && (
-            <div>
+          <Box
+            pad={{ horizontal: 'small', vertical: 'medium' }}
+            width="250px"
+            alignContent="center"
+          >
+            {scale === 'd' && (
               <DiamondChart
                 dimensions={getDimensions(
                   scores,
@@ -233,10 +233,8 @@ export function CountryPreview({
                 benchmark={benchmark}
                 showLabels={showAnnotation}
               />
-            </div>
-          )}
-          {scale === 'r' && (
-            <div>
+            )}
+            {scale === 'r' && (
               <DiamondChart
                 rightGroups={getRightGroups(
                   scores,
@@ -250,21 +248,23 @@ export function CountryPreview({
                 benchmark={benchmark}
                 showLabels={showAnnotation}
               />
-            </div>
-          )}
-          <Box pad={{ top: 'small' }}>
-            <Text textAlign="center" alignSelf="center">
-              <strong>
-                <FormattedMessage
-                  {...rootMessages.countries[country.country_code]}
-                />
-                {country && country.high_income_country === '1' && (
-                  <span>
-                    {` (${intl.formatMessage(rootMessages.labels.hiCountry)})`}
-                  </span>
-                )}
-              </strong>
-            </Text>
+            )}
+            <Box pad={{ top: 'small' }}>
+              <Text textAlign="center" alignSelf="center">
+                <strong>
+                  <FormattedMessage
+                    {...rootMessages.countries[country.country_code]}
+                  />
+                  {country && country.high_income_country === '1' && (
+                    <span>
+                      {` (${intl.formatMessage(
+                        rootMessages.labels.hiCountry,
+                      )})`}
+                    </span>
+                  )}
+                </strong>
+              </Text>
+            </Box>
           </Box>
         </Button>
       )}
