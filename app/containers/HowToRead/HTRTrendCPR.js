@@ -8,8 +8,8 @@ import messages from './messages';
 
 const Styled = styled.div``;
 
-function HTRTrendCPR({ dimension }) {
-  console.log(dimension);
+// function HTRTrendCPR({ dimension }) {
+function HTRTrendCPR() {
   return (
     <Styled>
       <Paragraph>

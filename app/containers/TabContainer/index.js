@@ -30,7 +30,6 @@ const HowToReadWrapper = styled.div`
 //     box-shadow: 0 0 8px 1px rgba(0,0,0,0.1);
 
 function TabContainer({ tabs, tabIndex, onTabClick, aside = true, modal }) {
-  console.log(tabs);
   return (
     <ResponsiveContext.Consumer>
       {size => {
