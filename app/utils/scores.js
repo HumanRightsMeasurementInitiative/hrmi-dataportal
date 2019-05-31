@@ -1,4 +1,5 @@
 import messages from 'messages';
+import { RIGHTS } from 'containers/App/constants';
 
 export const getRightsScoresForDimension = (
   rights,
@@ -6,11 +7,18 @@ export const getRightsScoresForDimension = (
   keepSubrights = false,
 ) =>
   rights &&
-  Object.values(rights).filter(
-    r =>
-      r.dimension === dimensionKey &&
-      (keepSubrights || typeof r.aggregate === 'undefined'),
-  );
+  Object.values(rights)
+    .filter(
+      r =>
+        r.dimension === dimensionKey &&
+        (keepSubrights || typeof r.aggregate === 'undefined'),
+    )
+    .sort((a, b) =>
+      RIGHTS.map(r => r.key).indexOf(a.key) >
+      RIGHTS.map(r => r.key).indexOf(b.key)
+        ? 1
+        : -1,
+    );
 
 export const hasCPR = data =>
   data && data.empowerment && !!data.empowerment.score;

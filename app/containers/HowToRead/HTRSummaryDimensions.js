@@ -2,9 +2,12 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
-import { Text, Paragraph, Heading } from 'grommet';
-
+import { Text, Paragraph, Heading, Box } from 'grommet';
 import { DIMENSIONS } from 'containers/App/constants';
+import Bar from 'components/Bars/Bar';
+import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
+import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
+
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -18,12 +21,50 @@ function HTRSummaryDimensions({ intl }) {
       </Paragraph>
       {DIMENSIONS.map(d => (
         <span key={d.key}>
-          <Heading level={4}>
+          <Heading level={4} margin={{ bottom: 'none' }}>
             <FormattedMessage {...rootMessages.dimensions[d.key]} />
           </Heading>
-          <Paragraph>
-            <FormattedMessage {...messages.summary.dimensions[d.key]} />
-          </Paragraph>
+          <Box direction="row" align="center">
+            <Box
+              width="50%"
+              flex={{ shrink: 0 }}
+              pad={{ left: 'small', right: 'medium' }}
+            >
+              <Box style={{ position: 'relative' }}>
+                {d.type === 'esr' && (
+                  <AnnotateBenchmark
+                    tooltip={false}
+                    label={intl.formatMessage(
+                      rootMessages.settings.benchmark.name,
+                    )}
+                    above
+                    align="right"
+                    relative
+                    left={100}
+                    margin="1px"
+                  />
+                )}
+                <Bar
+                  data={{
+                    value: d.type === 'cpr' ? 8 : 75,
+                    unit: d.type === 'esr' ? '%' : '',
+                    maxValue: d.type === 'cpr' ? 10 : 100,
+                    color: d.key,
+                    refValues: d.type === 'esr' && [
+                      { value: 100, style: 'solid', key: 'best' },
+                    ],
+                  }}
+                  showLabels
+                />
+                <AnnotateBetterWorse absolute />
+              </Box>
+            </Box>
+            <Box width="50%" flex={{ shrink: 0 }} pad={{ left: 'medium' }}>
+              <Paragraph>
+                <FormattedMessage {...messages.summary.dimensions[d.key]} />
+              </Paragraph>
+            </Box>
+          </Box>
           {d.key === 'esr' && (
             <>
               <Paragraph>
