@@ -19,7 +19,6 @@ import BarBullet from 'components/Bars/BarBullet';
 import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 import MainColumn from 'styled/MainColumn';
-import Button from 'styled/Button';
 
 import { sortScores } from 'utils/scores';
 
@@ -36,7 +35,6 @@ import {
   getSortSearch,
   getSortOrderSearch,
   getCountries,
-  getIndicatorInfo,
   getOECDSearch,
 } from 'containers/App/selectors';
 
@@ -47,6 +45,8 @@ import CountrySort from 'components/CountrySort';
 
 import rootMessages from 'messages';
 // import messages from './messages';
+
+import CountryButton from './CountryButton';
 
 const Styled = styled(Box)`
   margin: 0 auto;
@@ -60,12 +60,11 @@ const WrapAnnotateBetter = styled.div`
 `;
 
 // prettier-ignore
-const CountryButton = styled(Button)`
-  text-align: right;
-  padding: 3px 0;
+const StyledScoreText = styled(Text)`
+  padding: 0 5px;
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
-    padding: 6px 0;
+    padding: 0 8px;
   }
 `;
 
@@ -133,12 +132,12 @@ export function SingleMetric({
   onOrderChange,
   onCountryClick,
   countries,
-  metricInfo,
 }) {
   useEffect(() => {
     // kick off loading of data
     onLoadData(metric);
   }, [metric]);
+
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   const currentSort = sort || 'score';
@@ -176,15 +175,15 @@ export function SingleMetric({
       >
         <Box direction="row" align="end" pad={{ bottom: 'xsmall' }}>
           <CountryWrap
-            width="150px"
+            width="160px"
             noBorder
             align="end"
-            pad={{ right: 'medium' }}
+            pad={{ right: 'small' }}
             flex={{ shrink: 0 }}
           >
-            <Text size="small" style={{ fontWeight: 600 }}>
+            <StyledScoreText size="small" style={{ fontWeight: 600 }}>
               <FormattedMessage {...rootMessages.labels.score} />
-            </Text>
+            </StyledScoreText>
           </CountryWrap>
           <BarWrap
             flex
@@ -217,12 +216,11 @@ export function SingleMetric({
           </BarWrap>
         </Box>
         {sortedScores &&
+          countries &&
           sortedScores.map(s => {
-            const country =
-              (metric.type === 'esr' ||
-                (metric.metricType === 'indicators' &&
-                  metricInfo.standard === 'Core')) &&
-              countries.find(c => c.country_code === s.country_code);
+            const country = countries.find(
+              c => c.country_code === s.country_code,
+            );
             return (
               <Box
                 key={s.country_code}
@@ -231,25 +229,20 @@ export function SingleMetric({
                 border="right"
               >
                 <CountryWrap
-                  width="150px"
+                  width="160px"
                   align="end"
                   flex={{ shrink: 0 }}
-                  pad={{ right: 'medium' }}
+                  pad={{ right: 'small' }}
                 >
-                  <CountryButton
-                    onClick={() => onCountryClick(s.country_code, metric.key)}
-                  >
-                    <FormattedMessage
-                      {...rootMessages.countries[s.country_code]}
+                  {country && (
+                    <CountryButton
+                      onCountryClick={() =>
+                        onCountryClick(s.country_code, metric.key)
+                      }
+                      country={country}
+                      metric={metric}
                     />
-                    {country && country.high_income_country === '1' && (
-                      <span>
-                        {` (${intl.formatMessage(
-                          rootMessages.labels.hiCountry,
-                        )})`}
-                      </span>
-                    )}
-                  </CountryButton>
+                  )}
                 </CountryWrap>
                 <BarWrap flex>
                   {(metric.type === 'esr' ||
@@ -313,7 +306,6 @@ SingleMetric.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   onCountryClick: PropTypes.func,
-  metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -330,12 +322,6 @@ const mapStateToProps = createStructuredSelector({
     }
     if (metric.metricType === 'indicators') {
       return getIndicatorScores(state, metric.key);
-    }
-    return false;
-  },
-  metricInfo: (state, { metric }) => {
-    if (metric.metricType === 'indicators') {
-      return getIndicatorInfo(state, metric.code);
     }
     return false;
   },

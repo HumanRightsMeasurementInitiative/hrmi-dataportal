@@ -4,10 +4,10 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // import { FormattedMessage } from 'react-intl';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Box } from 'grommet';
 import {
   FlexibleWidthXYPlot,
@@ -17,9 +17,10 @@ import {
   LineMarkSeries,
   AreaSeries,
   HorizontalGridLines,
-  // Hint,
+  Hint,
 } from 'react-vis';
 import { timeFormat } from 'd3-time-format';
+import formatScore from 'utils/format-score';
 
 import Source from 'components/Source';
 
@@ -33,14 +34,26 @@ import SettingsToggle from 'containers/Settings/SettingsToggle';
 
 import WrapPlot from 'styled/WrapPlot';
 
+const PlotHint = styled.div`
+  color: ${({ color }) => color};
+  background: ${({ theme }) => theme.global.colors.white};
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  border-radius: ${({ theme }) => theme.global.edgeSize.xxsmall};
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+  font-weight: 700;
+`;
+
 function MetricTrend({
   scores,
   column,
   maxYear,
+  minYear,
   maxValue,
   percentage,
   rangeColumns,
   color,
+  colorHint,
   benchmark,
   standard,
   hasBenchmarkOption,
@@ -48,39 +61,30 @@ function MetricTrend({
   onSetBenchmark,
   onSetStandard,
 }) {
+  const [highlight, setHighlight] = useState(false);
   if (!maxYear) return null;
-  const yAxisRange = [0, maxValue];
-  let xAxisRange = [
-    new Date(`${2015 - 0.5}`).getTime(),
-    new Date(`${parseInt(maxYear, 10) + 0.5}`).getTime(),
-  ];
-  let dataForceYRange = [
-    { x: xAxisRange[0], y: yAxisRange[0] },
-    { x: xAxisRange[1], y: yAxisRange[1] },
+
+  // dummy data to force the area plot from 0
+  const dataForceYRange = [
+    { x: new Date(`${parseInt(minYear, 10) - 0.4}`).getTime(), y: 0 },
+    { x: new Date(`${parseInt(maxYear, 10) + 0.8}`).getTime(), y: maxValue },
   ];
   const rangeUpper = [];
   const rangeLower = [];
   const xyData = [];
+  const tickValuesX = [];
+  const tickValuesY = percentage
+    ? [0, 20, 40, 60, 80, 100]
+    : [0, 2, 4, 6, 8, 10];
+
   const hasScores = scores && scores.length > 0;
   if (hasScores) {
     const scoresSorted = scores.sort((a, b) =>
       parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
     );
-    const minYear = parseInt(scoresSorted[0].year, 10);
-    // axis ranges
-    xAxisRange = [
-      new Date(`${minYear - 0.5}`).getTime(),
-      new Date(`${parseInt(maxYear, 10) + 0.5}`).getTime(),
-    ];
-
-    // dummy data to force the area plot from 0
-    dataForceYRange = [
-      { x: xAxisRange[0], y: yAxisRange[0] },
-      { x: xAxisRange[1], y: yAxisRange[1] },
-    ];
 
     /* eslint-disable no-plusplus */
-    for (let y = minYear; y <= parseInt(maxYear, 10); y++) {
+    for (let y = parseInt(minYear, 10); y <= parseInt(maxYear, 10); y++) {
       const score = scoresSorted.reduce((memo, s) => {
         const scoreYear = parseInt(s.year, 10);
         if (scoreYear === y) return s;
@@ -108,6 +112,9 @@ function MetricTrend({
       }
     }
   }
+  for (let y = parseInt(minYear, 10); y <= parseInt(maxYear, 10); y++) {
+    tickValuesX.push(new Date(`${y}`).getTime());
+  }
 
   /* eslint-ensable no-plusplus */
   return (
@@ -116,7 +123,10 @@ function MetricTrend({
         <FlexibleWidthXYPlot
           height={400}
           xType="time"
-          margin={{ bottom: 30, right: 13 }}
+          margin={{ bottom: 30, right: 0 }}
+          onMouseLeave={() => {
+            setHighlight(false);
+          }}
         >
           <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
           {hasScores && rangeColumns && (
@@ -136,13 +146,13 @@ function MetricTrend({
               }}
             />
           )}
-          <HorizontalGridLines />
+          <HorizontalGridLines tickValues={tickValuesY} />
           <XAxis
             tickFormat={timeFormat('%Y')}
-            tickTotal={hasScores ? xyData.length : 2}
             style={{
               ticks: { strokeWidth: 1 },
             }}
+            tickValues={tickValuesX}
             tickPadding={2}
           />
           <YAxis
@@ -151,6 +161,7 @@ function MetricTrend({
               ticks: { strokeWidth: 1 },
             }}
             tickSize={3}
+            tickValues={tickValuesY}
             tickPadding={2}
           />
           {hasScores && rangeColumns && (
@@ -167,6 +178,7 @@ function MetricTrend({
           )}
           {hasScores && (
             <LineMarkSeries
+              size={3}
               style={{
                 stroke: color,
                 strokeWidth: 2,
@@ -175,13 +187,27 @@ function MetricTrend({
                 fill: color,
               }}
               data={xyData}
+              onNearestX={(point, { index }) => setHighlight({ point, index })}
             />
+          )}
+          {highlight && highlight.point && (
+            <Hint
+              value={highlight.point}
+              align={{ vertical: 'top', horizontal: 'left' }}
+              style={{
+                transform: 'translateX(50%)',
+              }}
+            >
+              <PlotHint color={colorHint}>
+                {`${formatScore(highlight.point.y)}${percentage ? '%' : ''}`}
+              </PlotHint>
+            </Hint>
           )}
         </FlexibleWidthXYPlot>
       </WrapPlot>
       {(hasBenchmarkOption || hasStandardOption) && (
         <Box direction="row" pad={{ horizontal: 'medium' }}>
-          {hasScores && hasBenchmarkOption && (
+          {hasBenchmarkOption && (
             <SettingsToggle
               setting="benchmark"
               active={benchmark}
@@ -209,7 +235,9 @@ MetricTrend.propTypes = {
   rangeColumns: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   column: PropTypes.string,
   maxYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   color: PropTypes.string,
+  colorHint: PropTypes.string,
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
   benchmark: PropTypes.string,

@@ -15,14 +15,21 @@ import ReadMore from 'components/ReadMore';
 import rootMessages from 'messages';
 import messages from './messages';
 
-function MetricAbout({ metric, metricInfo, standard, intl }) {
+function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
   const { metricType } = metric;
   return (
     <Box direction="column" pad={{ left: 'medium', vertical: 'medium' }}>
       <Heading level={4} margin={{ vertical: 'xsmall' }}>
         <FormattedMessage {...messages.title[metricType]} />
       </Heading>
-      {rootMessages[`${metricType}-about`] && (
+      {rootMessages[`${metricType}-about`] && fullInfo && (
+        <div>
+          <FormattedMessage
+            {...rootMessages[`${metricType}-about`][metric.key]}
+          />
+        </div>
+      )}
+      {rootMessages[`${metricType}-about`] && !fullInfo && (
         <ReadMore
           message={intl.formatMessage(
             rootMessages[`${metricType}-about`][metric.key],
@@ -81,6 +88,7 @@ function MetricAbout({ metric, metricInfo, standard, intl }) {
 MetricAbout.propTypes = {
   metric: PropTypes.object,
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  fullInfo: PropTypes.bool,
   standard: PropTypes.object,
   intl: intlShape.isRequired,
 };

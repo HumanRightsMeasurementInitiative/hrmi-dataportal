@@ -14,8 +14,6 @@ import { compose } from 'redux';
 import styled, { withTheme } from 'styled-components';
 import { Heading, Box } from 'grommet';
 
-import rootMessages from 'messages';
-
 import CountryMetricPeople from 'components/CountryMetricPeople';
 import CountryAbout from 'components/CountryAbout';
 import MetricTrend from 'components/MetricTrend';
@@ -51,6 +49,8 @@ import {
   getIndicatorInfo,
   getMaxYearESR,
   getMaxYearCPR,
+  getMinYearESR,
+  getMinYearCPR,
 } from 'containers/App/selectors';
 
 import {
@@ -65,15 +65,16 @@ import {
 } from 'containers/App/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
+
+import rootMessages from 'messages';
+
 const PageTitle = props => <Heading level="2" margin="none" {...props} />;
 
 const StyledPageTitle = styled(PageTitle)`
   font-weight: ${({ base }) => (base ? 400 : 600)};
 `;
 
-const StyledButtonText = styled(ButtonText)`
-  text-decoration: none;
-`;
+const StyledButtonText = styled(ButtonText)``;
 
 const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
 
@@ -147,6 +148,8 @@ export function CountryMetric({
   standard,
   maxYearESR,
   maxYearCPR,
+  minYearESR,
+  minYearCPR,
   theme,
   onSetBenchmark,
   onSetStandard,
@@ -180,6 +183,9 @@ export function CountryMetric({
             }
           />
           <Box direction="column" align="start">
+            <StyledPageTitle base level="2">
+              {base === 'metric' ? metricTitle : countryTitle}
+            </StyledPageTitle>
             <StyledButtonText
               onClick={() => {
                 if (base === 'metric') {
@@ -193,9 +199,6 @@ export function CountryMetric({
                 {base === 'metric' ? countryTitle : metricTitle}
               </StyledPageTitle>
             </StyledButtonText>
-            <StyledPageTitle base level="2">
-              {base === 'metric' ? metricTitle : countryTitle}
-            </StyledPageTitle>
           </Box>
         </ContentMaxWidth>
       </ContentContainer>
@@ -215,10 +218,12 @@ export function CountryMetric({
               content: (
                 <MetricTrend
                   color={theme.global.colors[getColour(metric)]}
+                  colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
                   scores={scores}
                   percentage={isESR}
                   maxValue={isESR ? 100 : 11}
                   maxYear={isESR ? maxYearESR : maxYearCPR}
+                  minYear={isESR ? minYearESR : minYearCPR}
                   column={isESR ? currentBenchmark.column : COLUMNS.CPR.MEAN}
                   rangeColumns={
                     !isESR && {
@@ -271,6 +276,7 @@ export function CountryMetric({
                   <MetricAbout
                     metric={metric}
                     metricInfo={metricInfo}
+                    fullInfo
                     standard={
                       metric.metricType === 'indicators'
                         ? STANDARDS.find(s => metricInfo.standard === s.code)
@@ -314,6 +320,8 @@ CountryMetric.propTypes = {
   hasAtRisk: PropTypes.bool,
   maxYearESR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   maxYearCPR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  minYearESR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  minYearCPR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysisSubrights: PropTypes.oneOfType([
@@ -330,6 +338,8 @@ CountryMetric.propTypes = {
 const mapStateToProps = createStructuredSelector({
   maxYearESR: state => getMaxYearESR(state),
   maxYearCPR: state => getMaxYearCPR(state),
+  minYearESR: state => getMinYearESR(state),
+  minYearCPR: state => getMinYearCPR(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),

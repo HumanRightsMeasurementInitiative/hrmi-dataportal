@@ -55,7 +55,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
             />
           </Text>
         </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
+        <Box margin={{ vertical: 'xsmall' }}>
           <ol>
             <li>
               <Text size="small">
@@ -82,7 +82,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
               </Text>
             </li>
           </ol>
-        </Paragraph>
+        </Box>
         <ButtonText onClick={() => navMethodology()}>
           <Text size="small">
             <FormattedMessage {...messages.methodology} />
