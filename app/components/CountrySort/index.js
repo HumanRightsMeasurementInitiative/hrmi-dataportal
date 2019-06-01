@@ -47,7 +47,7 @@ export function CountrySort({
         onClose={() => setOptionsOpen(false)}
         onOpen={() => setOptionsOpen(true)}
         open={optionsOpen}
-        dropProps={{ align: { top: 'bottom', right: 'right' } }}
+        dropProps={{ align: { top: 'bottom', right: 'right' }, stretch: false }}
         dropContent={
           <SortOptions
             options={options}

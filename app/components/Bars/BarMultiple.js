@@ -90,7 +90,7 @@ function BarMultiple({
           rotate={rotate}
           benchmarkKey={benchmark}
           above={annotateBenchmarkAbove}
-          margin={annotateBenchmarkAbove ? '0px 2px' : '0'}
+          margin={annotateBenchmarkAbove ? '0px 1px' : '0'}
         />
       )}
       {showLabels && (
