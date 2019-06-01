@@ -116,7 +116,7 @@ export function PathCountry({
       )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
-          <Close topRight />
+          <Close float />
           <Box direction="column">
             {country && incomeGroup && (
               <HeaderLinks

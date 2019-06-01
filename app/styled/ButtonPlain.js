@@ -32,5 +32,6 @@ export default styled.button`
     background-color: transparent;
     box-shadow: none;
     border-radius: 0;
+    outline: none;
   }
 `;

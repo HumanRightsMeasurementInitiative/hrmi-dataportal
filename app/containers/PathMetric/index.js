@@ -90,7 +90,7 @@ export function PathMetric({
       )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
-          <Close topRight />
+          <Close float />
           <Box direction="column">
             {ancestors.length > 0 && (
               <HeaderLinks
