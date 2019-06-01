@@ -1,5 +1,5 @@
 import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
+import { push, replace } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
 import extend from 'lodash/extend';
 import 'whatwg-fetch';
@@ -203,7 +203,7 @@ export function* setScaleSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
-  yield put(push(`${path}?${searchParams.toString()}`));
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 
 export function* setStandardSaga({ value }) {
@@ -213,7 +213,7 @@ export function* setStandardSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
-  yield put(push(`${path}?${searchParams.toString()}`));
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 
 export function* setBenchmarkSaga({ value }) {
@@ -223,7 +223,7 @@ export function* setBenchmarkSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
-  yield put(push(`${path}?${searchParams.toString()}`));
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 export function* setTabSaga({ value }) {
   // get URL search params

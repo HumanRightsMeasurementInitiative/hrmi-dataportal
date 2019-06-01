@@ -79,10 +79,12 @@ export function OverviewMetrics({
   // console.log(countries && countries.length)
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
-  let scoresByMetric;
-  if (scale === 'r') {
-    scoresByMetric = RIGHTS.filter(r => typeof r.aggregate === 'undefined').map(
-      right => ({
+  let scoresByMetric = [];
+  if (countries) {
+    if (scale === 'r') {
+      scoresByMetric = RIGHTS.filter(
+        r => typeof r.aggregate === 'undefined',
+      ).map(right => ({
         ...right,
         scores: getScoresForMetric(
           scale,
@@ -91,19 +93,19 @@ export function OverviewMetrics({
           standardDetails,
           countries.map(c => c.country_code),
         ),
-      }),
-    );
-  } else {
-    scoresByMetric = DIMENSIONS.map(dim => ({
-      ...dim,
-      scores: getScoresForMetric(
-        scale,
-        dim,
-        scoresAllCountries[dim.type],
-        standardDetails,
-        countries.map(c => c.country_code),
-      ),
-    }));
+      }));
+    } else {
+      scoresByMetric = DIMENSIONS.map(dim => ({
+        ...dim,
+        scores: getScoresForMetric(
+          scale,
+          dim,
+          scoresAllCountries[dim.type],
+          standardDetails,
+          countries.map(c => c.country_code),
+        ),
+      }));
+    }
   }
   const maxScores = scoresByMetric.reduce(
     (memo, sm) => Math.max(memo, sm.scores.length),

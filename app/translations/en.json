@@ -172,6 +172,7 @@
   "hrmi.labels.better": "Better",
   "hrmi.labels.worse": "Worse",
   "hrmi.labels.loading": "Loading...",
+  "hrmi.labels.atRiskFor": "People at risk for",
   "hrmi.tabs.countries": "Explore {count}countries",
   "hrmi.tabs.metrics": "Explore human rights metrics",
   "hrmi.tabs.singleMetric": "Explore metric",

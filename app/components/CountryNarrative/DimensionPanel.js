@@ -133,7 +133,7 @@ function DimensionPanel({
             showLabels
             showScore
             annotateBenchmarkAbove
-            showBenchmark={!!data.value}
+            showBenchmark
             showAllBenchmarkAnnotations
           />
         )}

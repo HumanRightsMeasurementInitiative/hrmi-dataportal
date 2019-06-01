@@ -134,12 +134,7 @@ function Bar({
         onMouseLeave={() => setHover(false)}
       >
         <BarReference height={h} noData={!hasValue}>
-          {!hasValue && (
-            <BarNoValue
-              height={h}
-              color={color}
-            />
-          )}
+          {!hasValue && <BarNoValue height={h} color={color} />}
           {hasValue && (
             <BarValue
               height={h}
@@ -169,7 +164,10 @@ function Bar({
               level={level}
             />
           )}
-          {showBenchmark && refValues && !!theRefValue && !showAllBenchmarkAnnotations && (
+          {showBenchmark &&
+            refValues &&
+            !!theRefValue &&
+            !showAllBenchmarkAnnotations && (
             <AnnotateBenchmark
               rotate={rotate}
               benchmarkKey={theRefValue.key}
@@ -177,13 +175,16 @@ function Bar({
               margin="1px"
             />
           )}
-          {showBenchmark && showAllBenchmarkAnnotations && refValues && annotateBenchmarkAbove &&
-            refValues.map(ref => (
+          {showBenchmark &&
+            showAllBenchmarkAnnotations &&
+            refValues &&
+            annotateBenchmarkAbove &&
+            refValues.filter(ref => !!ref.value).map((ref, index, list) => (
               <AnnotateBenchmark
                 relative
                 key={ref.key}
                 left={(ref.value / maxValue) * 100}
-                align={ref.key === 'best' ? 'left' : 'right'}
+                align={list.length > 1 && index === 0 ? 'left' : 'right'}
                 benchmarkKey={ref.key}
                 above
                 margin="1px"

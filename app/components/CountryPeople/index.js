@@ -31,7 +31,7 @@ const StyledDimensionHeading = styled(DimensionHeading)`
   font-weight: normal;
 `;
 const RightHeading = props => (
-  <Heading level={4} margin={{ vertical: '15px' }} {...props} />
+  <Heading level={4} margin={{ top: 'none', bottom: '15px' }} {...props} />
 );
 const StyledRightHeading = styled(RightHeading)`
   font-weight: normal;
@@ -64,15 +64,17 @@ function CountryPeople({ data, countryTitle, countryCode, intl }) {
             {dim.rights &&
               Object.values(dim.rights).map(i => (
                 <div key={i.key}>
-                  <StyledRightHeading>
-                    <FormattedMessage {...rootMessages.rights[i.key]} />
-                  </StyledRightHeading>
+                  {Object.values(i.atRiskData).length > 1 && (
+                    <StyledRightHeading>
+                      <FormattedMessage {...rootMessages.rights[i.key]} />
+                    </StyledRightHeading>
+                  )}
                   {Object.values(i.atRiskData).map((d, index, array) => (
                     <WordCloud
                       key={d.code}
                       data={d}
                       dimension={i.dimension}
-                      showTitle={array.length > 1}
+                      subright={array.length > 1}
                     />
                   ))}
                 </div>

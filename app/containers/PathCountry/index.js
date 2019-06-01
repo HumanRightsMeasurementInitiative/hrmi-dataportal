@@ -107,7 +107,7 @@ export function PathCountry({
       {match.params.metric && (
         <Layer
           full
-          margin="small"
+          margin={{ horizontal: 'large', top: 'large', bottom: 'small' }}
           onEsc={() => onCloseMetricOverlay(countryCode)}
           onClickOutside={() => onCloseMetricOverlay(countryCode)}
         >
@@ -210,6 +210,7 @@ export function PathCountry({
                   country={country}
                   auxIndicators={auxIndicators}
                   onCategoryClick={onCategoryClick}
+                  showFAQs
                 />
               ),
             },
