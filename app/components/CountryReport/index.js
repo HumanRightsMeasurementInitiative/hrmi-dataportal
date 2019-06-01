@@ -33,6 +33,8 @@ function CountryReport({
   atRiskData,
   onAtRiskClick,
   reference,
+  esrYear,
+  cprYear,
 }) {
   return (
     <MainColumn>
@@ -52,6 +54,8 @@ function CountryReport({
         rights={rights}
         benchmark={benchmark}
         standard={standard}
+        esrYear={esrYear}
+        cprYear={cprYear}
       />
       <CountryNarrative
         dimensions={dimensions}
@@ -64,6 +68,8 @@ function CountryReport({
         atRiskData={atRiskData}
         onAtRiskClick={onAtRiskClick}
         reference={reference}
+        esrYear={esrYear}
+        cprYear={cprYear}
       />
     </MainColumn>
   );
@@ -83,6 +89,8 @@ CountryReport.propTypes = {
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
+  esrYear: PropTypes.number,
+  cprYear: PropTypes.number,
 };
 
 export default injectIntl(CountryReport);

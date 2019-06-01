@@ -85,6 +85,8 @@ function CountryNarrative({
   standard,
   intl,
   reference,
+  esrYear,
+  cprYear,
 }) {
   if (!dimensions || !rights || !indicators) {
     return null;
@@ -106,6 +108,7 @@ function CountryNarrative({
       <RightsType>
         <RightsTypeHeading>
           <FormattedMessage {...rootMessages['rights-types'].cpr} />
+          {` (${cprYear})`}
         </RightsTypeHeading>
         {dimensions.empowerment && dimensions.empowerment.score && (
           <Dimension>
@@ -146,6 +149,7 @@ function CountryNarrative({
       <RightsType>
         <RightsTypeHeading>
           <FormattedMessage {...rootMessages['rights-types'].esr} />
+          {` (${esrYear})`}
         </RightsTypeHeading>
         <Dimension>
           <StyledDimensionHeading>
@@ -247,6 +251,8 @@ CountryNarrative.propTypes = {
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
+  esrYear: PropTypes.number,
+  cprYear: PropTypes.number,
 };
 
 export default injectIntl(CountryNarrative);

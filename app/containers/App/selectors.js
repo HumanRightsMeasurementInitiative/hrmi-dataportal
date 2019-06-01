@@ -309,12 +309,12 @@ export const getMinYearCPR = createSelector(
   getCPRScores,
   scores => calcMinYear(scores),
 );
-const getESRYear = createSelector(
+export const getESRYear = createSelector(
   getYearESRSearch,
   getMaxYearESR,
   (searchYear, maxYear) => parseInt(searchYear || maxYear, 10),
 );
-const getCPRYear = createSelector(
+export const getCPRYear = createSelector(
   getYearCPRSearch,
   getMaxYearCPR,
   (searchYear, maxYear) => parseInt(searchYear || maxYear, 10),
