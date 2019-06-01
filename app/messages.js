@@ -26,6 +26,10 @@ export default defineMessages({
       id: `${scope}.labels.worse`,
       defaultMessage: 'Worse',
     },
+    loading: {
+      id: `${scope}.labels.loading`,
+      defaultMessage: 'Loading...',
+    },
   },
   tooltip: {
     empowerment: {

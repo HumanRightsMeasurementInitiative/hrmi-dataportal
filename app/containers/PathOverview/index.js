@@ -60,7 +60,7 @@ export function PathOverview({
   scale,
   onLoadData,
   dataReady,
-  highlightCountry,
+  activeCountry,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -98,6 +98,7 @@ export function PathOverview({
                 <OverviewCountries
                   countries={filteredCountries}
                   scoresAllCountries={scoresAllCountries}
+                  dataReady={dataReady}
                 />
               ),
               howToRead: {
@@ -114,7 +115,7 @@ export function PathOverview({
                   countries={filteredCountries}
                   scoresAllCountries={scoresAllCountries}
                   dataReady={dataReady}
-                  highlightCountry={highlightCountry}
+                  activeCountry={activeCountry}
                 />
               ),
             },
@@ -134,7 +135,7 @@ PathOverview.propTypes = {
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  highlightCountry: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  activeCountry: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -144,7 +145,7 @@ const mapStateToProps = createStructuredSelector({
   assessed: state => getAssessedSearch(state),
   scale: state => getScaleSearch(state),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  highlightCountry: state => getHighlightCountry(state),
+  activeCountry: state => getHighlightCountry(state),
 });
 export function mapDispatchToProps(dispatch) {
   return {

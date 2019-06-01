@@ -34,6 +34,10 @@ import MetricPreviewChart from './MetricPreviewChart';
 
 const Option = styled(Button)`
   width: 100%;
+  padding-bottom: 10px;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const getScoresForMetric = (
@@ -70,12 +74,11 @@ export function OverviewMetrics({
   standard,
   benchmark,
   dataReady,
-  highlightCountry,
+  activeCountry,
 }) {
   // console.log(countries && countries.length)
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
-
   let scoresByMetric;
   if (scale === 'r') {
     scoresByMetric = RIGHTS.filter(r => typeof r.aggregate === 'undefined').map(
@@ -157,11 +160,12 @@ export function OverviewMetrics({
                             : COLUMNS.CPR.MEAN
                         }
                         maxScores={maxScores}
-                        highlightCountry={highlightCountry}
+                        activeCountry={activeCountry}
                         data={
                           dataReady &&
                           scoresByMetric.find(sm => sm.key === d.key)
                         }
+                        loading={!dataReady}
                       />
                     )}
                   </Option>
@@ -187,7 +191,7 @@ export function OverviewMetrics({
                                 ? benchmarkDetails.column
                                 : COLUMNS.CPR.MEAN
                             }
-                            highlightCountry={highlightCountry}
+                            activeCountry={activeCountry}
                             data={
                               dataReady &&
                               scoresByMetric.find(sm => sm.key === r.key)
@@ -210,7 +214,7 @@ OverviewMetrics.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  highlightCountry: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  activeCountry: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSelectMetric: PropTypes.func,
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
