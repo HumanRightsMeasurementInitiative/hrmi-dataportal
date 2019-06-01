@@ -109,7 +109,7 @@ export function DiamondChart({
             >
               <BarMultiple
                 dataMultiple={rightGroup}
-                showLabels={showLabels && !!rightGroup.showLabels}
+                showLabels={showLabels}
                 rotate={45}
                 scoreOnHover="top"
                 heightIndividual={(w - MARGINS * 2) / 12}

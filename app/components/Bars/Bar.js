@@ -7,9 +7,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Text } from 'grommet';
-import { injectIntl, intlShape } from 'react-intl';
 import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
+import NoDataHint from 'components/NoDataHint';
 
 import Wrapper from './styled/BarWrapper';
 import MinLabel from './styled/MinLabel';
@@ -17,7 +16,6 @@ import MaxLabelOriginal from './styled/MaxLabel';
 import AnnotateBenchmark from './AnnotateBenchmark';
 import WrapTooltip from './styled/WrapTooltip';
 import Score from './styled/Score';
-
 const MaxLabel = styled(MaxLabelOriginal)`
   top: ${({ bottom }) => (bottom ? 105 : 50)}%;
 `;
@@ -33,12 +31,6 @@ const BarReference = styled.div`
     props.noData ? 'transparent' : props.theme.global.colors['light-2']};
   border: 1px solid;
   border-color: transparent;
-`;
-
-const NoData = styled.div`
-  position: absolute;
-  left: 2px;
-  top: ${props => (props.level > 1 ? -5 : 4)}px;
 `;
 
 const BarNoValue = styled.div`
@@ -112,7 +104,6 @@ function Bar({
   showLabels = false,
   showScore = false,
   showBenchmark = false,
-  intl,
   rotate,
   showIncompleteAction = true,
   height,
@@ -200,12 +191,14 @@ function Bar({
             ))
           }
           {!hasValue && data && level < 3 && (
-            <NoData level={level}>
-              <Text size="xsmall">
-                {getNoDataMessage(intl, data)}
-                {showIncompleteAction && getIncompleteDataActionMessage(intl, data)}
-              </Text>
-            </NoData>
+            <NoDataHint
+              hints={[
+                getNoDataMessage(data),
+                showIncompleteAction
+                  ? getIncompleteDataActionMessage(data)
+                  : null,
+              ]}
+            />
           )}
         </BarReference>
         {(showScore || (hover && scoreOnHover && hoverEnabled)) && hasValue && (
@@ -241,10 +234,9 @@ Bar.propTypes = {
   hoverEnabled: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  intl: intlShape.isRequired,
   annotateBenchmarkAbove: PropTypes.bool,
   showAllBenchmarkAnnotations: PropTypes.bool,
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
-export default injectIntl(Bar);
+export default Bar;

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Box, InfiniteScroll } from 'grommet';
+import { Box, InfiniteScroll, Text } from 'grommet';
 
 import {
   getRegionSearch,
@@ -32,6 +32,7 @@ import {
 
 import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 
+import Loading from 'components/Loading';
 import Source from 'components/Source';
 import CountryPreview from 'components/CountryPreview';
 import CountrySort from 'components/CountrySort';
@@ -64,6 +65,7 @@ export function OverviewCountries({
   onSortSelect,
   onOrderChange,
   onCountryHover,
+  dataReady,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -101,33 +103,43 @@ export function OverviewCountries({
         />
       </Box>
       {sortedCountries && scoresAllCountries && (
-        <Box
-          direction="row"
-          wrap
-          width="100%"
-          pad={{ bottom: 'medium', top: 'small' }}
-        >
-          <InfiniteScroll items={sortedCountries} step={30} show={0}>
-            {(c, index) => (
-              <CountryPreview
-                showAnnotation={index === 0}
-                key={c.country_code}
-                country={c}
-                scale={scale}
-                scores={getScoresForCountry(c.country_code, scoresAllCountries)}
-                standard={standardDetails}
-                otherStandard={otherStandardDetails}
-                defaultStandard={isDefaultStandard(c, standardDetails)}
-                benchmark={benchmarkDetails}
-                onSelectCountry={() => onSelectCountry(c.country_code)}
-                indicators={indicators}
-                onCountryHover={code => onCountryHover(code)}
-              />
-            )}
-          </InfiniteScroll>
+        <Box width="100%" pad={{ bottom: 'medium', top: 'small' }}>
+          {!dataReady && <Loading />}
+          {dataReady && sortedCountries && sortedCountries.length === 0 && (
+            <Text>
+              We could not find any countries for your filter settings
+            </Text>
+          )}
+          {dataReady && sortedCountries && sortedCountries.length > 0 && (
+            <Box direction="row" wrap>
+              <InfiniteScroll items={sortedCountries} step={30} show={0}>
+                {(c, index) => (
+                  <CountryPreview
+                    showAnnotation={index === 0}
+                    key={c.country_code}
+                    country={c}
+                    scale={scale}
+                    scores={getScoresForCountry(
+                      c.country_code,
+                      scoresAllCountries,
+                    )}
+                    standard={standardDetails}
+                    otherStandard={otherStandardDetails}
+                    defaultStandard={isDefaultStandard(c, standardDetails)}
+                    benchmark={benchmarkDetails}
+                    onSelectCountry={() => onSelectCountry(c.country_code)}
+                    indicators={indicators}
+                    onCountryHover={code => onCountryHover(code)}
+                  />
+                )}
+              </InfiniteScroll>
+            </Box>
+          )}
+          {dataReady && sortedCountries && sortedCountries.length > 0 && (
+            <Source />
+          )}
         </Box>
       )}
-      <Source />
     </MainColumn>
   );
 }
@@ -153,6 +165,7 @@ OverviewCountries.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   onCountryHover: PropTypes.func,
+  dataReady: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
