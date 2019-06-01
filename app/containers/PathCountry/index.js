@@ -40,6 +40,8 @@ import {
   getPeopleAtRiskForCountry,
   getDimensionAverages,
   getAuxIndicatorsForCountry,
+  getESRYear,
+  getCPRYear,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
@@ -78,6 +80,8 @@ export function PathCountry({
   standard,
   dimensionAverages,
   auxIndicators,
+  esrYear,
+  cprYear,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -177,6 +181,8 @@ export function PathCountry({
                   onMetricClick={(metric, tab) =>
                     onMetricClick(countryCode, metric, tab)
                   }
+                  esrYear={esrYear}
+                  cprYear={cprYear}
                 />
               ),
             },
@@ -233,6 +239,8 @@ PathCountry.propTypes = {
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  esrYear: PropTypes.number,
+  cprYear: PropTypes.number,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -247,6 +255,8 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
+  esrYear: state => getESRYear(state),
+  cprYear: state => getCPRYear(state),
   dimensionAverages: state => getDimensionAverages(state),
   auxIndicators: (state, { match }) =>
     getAuxIndicatorsForCountry(state, match.params.country),

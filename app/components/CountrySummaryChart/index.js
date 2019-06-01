@@ -44,6 +44,8 @@ function CountrySummaryChart({
   scale,
   rights,
   standard,
+  esrYear,
+  cprYear,
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
@@ -62,6 +64,7 @@ function CountrySummaryChart({
           <RightsType>
             <RightsTypeHeading>
               <FormattedMessage {...rootMessages['rights-types'].cpr} />
+              {` (${cprYear})`}
             </RightsTypeHeading>
             {scale === 'd' && (
               <DimensionChart data={dimensions && dimensions.empowerment} />
@@ -91,6 +94,7 @@ function CountrySummaryChart({
           <RightsType>
             <RightsTypeHeading>
               <FormattedMessage {...rootMessages['rights-types'].esr} />
+              {` (${esrYear})`}
             </RightsTypeHeading>
             {scale === 'd' && (
               <DimensionChart
@@ -173,6 +177,8 @@ CountrySummaryChart.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  esrYear: PropTypes.number,
+  cprYear: PropTypes.number,
 };
 
 export default CountrySummaryChart;
