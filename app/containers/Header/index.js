@@ -17,7 +17,7 @@ import ContentContainer from 'styled/ContentContainer';
 
 import Icon from 'components/Icon';
 
-import LocaleToggle from 'containers/LocaleToggle';
+// import LocaleToggle from 'containers/LocaleToggle';
 import { PAGES } from 'containers/App/constants';
 import { navigate, loadDataIfNeeded } from 'containers/App/actions';
 
@@ -141,13 +141,17 @@ const ToggleMenu = styled(Button)`
     display: none;
   }
 `;
-// prettier-ignore
-const LocaleToggleWrap = styled.span`
-  display: block;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
-    display: inline;
-  }
-`;
+// // prettier-ignore
+// const LocaleToggleWrap = styled.span`
+//   display: block;
+//   @media (min-width: ${props => props.theme.breakpoints.medium}) {
+//     display: inline;
+//   }
+// `;            <span>
+//               <LocaleToggleWrap>
+//                 <LocaleToggle />
+//               </LocaleToggleWrap>
+//             </span>
 
 const SecondaryDropButton = styled(Button)`
   height: 56px;
@@ -204,11 +208,6 @@ export function Header({ nav, intl, onLoadData }) {
             {showMenu && <Close />}
           </ToggleMenu>
           <MenuList visible={showMenu}>
-            <span>
-              <LocaleToggleWrap>
-                <LocaleToggle />
-              </LocaleToggleWrap>
-            </span>
             <span>
               {PAGES &&
                 PAGES.map(page => (
