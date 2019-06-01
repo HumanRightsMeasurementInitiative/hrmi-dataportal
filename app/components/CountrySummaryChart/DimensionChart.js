@@ -73,12 +73,7 @@ function DimensionChart({ data, benchmark, standard }) {
           fill="horizontal"
           style={{ position: 'relative' }}
         >
-          <Bar
-            data={dim}
-            showLabels
-            annotateBenchmarkAbove
-            showBenchmark={!!dim.value}
-          />
+          <Bar data={dim} showLabels annotateBenchmarkAbove showBenchmark />
           <WrapAnnotateBetter>
             <AnnotateBetter absolute />
           </WrapAnnotateBetter>

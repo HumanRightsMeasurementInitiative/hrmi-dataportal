@@ -30,6 +30,10 @@ export default defineMessages({
       id: `${scope}.labels.loading`,
       defaultMessage: 'Loading...',
     },
+    atRiksFor: {
+      id: `${scope}.labels.atRiskFor`,
+      defaultMessage: 'People at risk for',
+    },
   },
   tooltip: {
     empowerment: {

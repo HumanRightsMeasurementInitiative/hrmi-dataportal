@@ -41,7 +41,13 @@ const prepPopulationValue = (value, intl) => {
   };
 };
 
-function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
+function CountryAbout({
+  intl,
+  country,
+  auxIndicators,
+  onCategoryClick,
+  showFAQs,
+}) {
   if (!auxIndicators || !country) return null;
   const incomeCode =
     country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
@@ -150,15 +156,18 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
           </Button>
         </Box>
       </Box>
-      <FAQs
-        questions={['scale', 'year', 'standards', 'benchmarks', 'indicators']}
-      />
+      {showFAQs && (
+        <FAQs
+          questions={['scale', 'year', 'standards', 'benchmarks', 'indicators']}
+        />
+      )}
     </Box>
   );
 }
 
 CountryAbout.propTypes = {
   onCategoryClick: PropTypes.func,
+  showFAQs: PropTypes.bool,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,

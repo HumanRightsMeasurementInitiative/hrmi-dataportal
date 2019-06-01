@@ -68,12 +68,11 @@ export function PathOverview({
     // kick off loading of data
     onLoadData();
   }, []);
-  if (!countries) return null;
 
   const standardDetails = STANDARDS.find(s => s.key === standard);
   // prettier-ignore
   const filteredCountries = assessed
-    ? countries.filter(c =>
+    ? countries && countries.filter(c =>
       filterByAssessment(c, scoresAllCountries, assessed, standardDetails),
     )
     : countries;
