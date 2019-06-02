@@ -77,7 +77,7 @@ export default defineMessages({
     },
     measureIndicators: {
       id: `${scope}.answers.measureIndicators`,
-      defaultMessage: 'TODO: how are indicator scores calculated from raw data',
+      defaultMessage: ' ',
     },
     measureRightESR: {
       id: `${scope}.answers.measureRightESR`,
@@ -115,7 +115,7 @@ export default defineMessages({
     },
     measureDimensionCPR: {
       id: `${scope}.answers.measureDimensionCPR`,
-      defaultMessage: 'TODO: CPR dimensions are calculated...',
+      defaultMessage: ' ',
     },
   },
 });
