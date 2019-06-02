@@ -34,6 +34,14 @@ export default defineMessages({
       id: `${scope}.labels.atRiskFor`,
       defaultMessage: 'People at risk for',
     },
+    allCountries: {
+      id: `${scope}.labels.allCountries`,
+      defaultMessage: 'All countries',
+    },
+    allMetrics: {
+      id: `${scope}.labels.allMetrics`,
+      defaultMessage: 'All metrics',
+    },
   },
   tooltip: {
     empowerment: {
