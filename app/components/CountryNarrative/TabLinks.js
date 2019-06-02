@@ -11,6 +11,7 @@ const TabLink = styled(ButtonText)`
   font-weight: 400;
   padding: 0 5px;
   text-decoration: none;
+  color: ${({ theme }) => theme.global.colors['dark-3']};
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
     padding: 0 10px;

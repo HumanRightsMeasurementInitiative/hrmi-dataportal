@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default styled.ul`
-  padding-left: 1.1em;
+export default styled.ol`
+  padding-left: 2em;
   margin-bottom: 0.5em;
 `;

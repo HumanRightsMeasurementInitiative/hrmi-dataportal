@@ -9,7 +9,7 @@ export default styled(Button)`
   width: ${({ small }) => (small ? 30 : 50)}px;
   height: ${({ small }) => (small ? 30 : 50)}px;
   text-align: center;
-  padding: 0;
+  padding: ${({ small }) => (small ? 2 : 0)}px;
   box-shadow: ${({ float }) => float ? '0 0 3px 1px rgba(0, 0, 0, 0.15)' : ''};
   &:hover{
     color: ${({ theme }) => theme.global.colors.white};
@@ -31,6 +31,6 @@ export default styled(Button)`
   }
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
-    padding: 0;
+    padding: ${({ small }) => (small ? 2 : 0)}px;
   }
 `;

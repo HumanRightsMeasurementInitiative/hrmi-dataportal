@@ -13,6 +13,7 @@ import { Heading } from 'grommet';
 
 import CountrySummaryChart from 'components/CountrySummaryChart';
 import CountryNarrative from 'components/CountryNarrative';
+import LoadingIndicator from 'components/LoadingIndicator';
 import MainColumn from 'styled/MainColumn';
 
 import { needsArticle, isPlural } from 'utils/narrative';
@@ -35,42 +36,48 @@ function CountryReport({
   reference,
   esrYear,
   cprYear,
+  dataReady,
 }) {
   return (
     <MainColumn>
-      <Heading level={2}>
-        <FormattedMessage
-          {...messages.title}
-          values={{
-            country: countryTitle,
-            isPlural: isPlural(intl.locale, country.country_code),
-            needsArticle: needsArticle(intl.locale, country.country_code),
-          }}
-        />
-      </Heading>
-      <CountrySummaryChart
-        scale={scale}
-        dimensions={dimensions}
-        rights={rights}
-        benchmark={benchmark}
-        standard={standard}
-        esrYear={esrYear}
-        cprYear={cprYear}
-      />
-      <CountryNarrative
-        dimensions={dimensions}
-        rights={rights}
-        indicators={indicators}
-        country={country}
-        benchmark={benchmark}
-        standard={standard}
-        onMetricClick={onMetricClick}
-        atRiskData={atRiskData}
-        onAtRiskClick={onAtRiskClick}
-        reference={reference}
-        esrYear={esrYear}
-        cprYear={cprYear}
-      />
+      {!dataReady && <LoadingIndicator />}
+      {dataReady && (
+        <>
+          <Heading level={2}>
+            <FormattedMessage
+              {...messages.title}
+              values={{
+                country: countryTitle,
+                isPlural: isPlural(intl.locale, country.country_code),
+                needsArticle: needsArticle(intl.locale, country.country_code),
+              }}
+            />
+          </Heading>
+          <CountrySummaryChart
+            scale={scale}
+            dimensions={dimensions}
+            rights={rights}
+            benchmark={benchmark}
+            standard={standard}
+            esrYear={esrYear}
+            cprYear={cprYear}
+          />
+          <CountryNarrative
+            dimensions={dimensions}
+            rights={rights}
+            indicators={indicators}
+            country={country}
+            benchmark={benchmark}
+            standard={standard}
+            onMetricClick={onMetricClick}
+            atRiskData={atRiskData}
+            onAtRiskClick={onAtRiskClick}
+            reference={reference}
+            esrYear={esrYear}
+            cprYear={cprYear}
+          />
+        </>
+      )}
     </MainColumn>
   );
 }
@@ -91,6 +98,7 @@ CountryReport.propTypes = {
   intl: intlShape.isRequired,
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
+  dataReady: PropTypes.bool,
 };
 
 export default injectIntl(CountryReport);

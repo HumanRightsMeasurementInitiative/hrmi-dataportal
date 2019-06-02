@@ -70,7 +70,7 @@ function NoDataHint({ hint, hints }) {
           hints
             .filter(h => !!h)
             .map((h, index) => (
-              <StyledText size="xsmall" color="dark-4" key={h}>
+              <StyledText size="xxsmall" color="dark-4" key={h}>
                 {index > 0 && '('}
                 {renderMessage(h)}
                 {index > 0 && ')'}

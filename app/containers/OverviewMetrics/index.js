@@ -124,6 +124,7 @@ export function OverviewMetrics({
                 bottom: 'xsmall',
                 horizontal: 'none',
               }}
+              color="dark-3"
             >
               <FormattedMessage {...rootMessages['rights-types'][type]} />
             </Heading>

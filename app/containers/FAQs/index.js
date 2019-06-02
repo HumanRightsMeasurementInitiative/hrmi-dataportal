@@ -18,7 +18,7 @@ import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
 import StandardOverlay from 'components/Tooltip/StandardOverlay';
 
 import ButtonIcon from 'styled/ButtonIcon';
-import ButtonText from 'styled/ButtonText';
+import MethodologyLink from './MethodologyLink';
 
 import messages from './messages';
 
@@ -83,11 +83,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
             </li>
           </ol>
         </Box>
-        <ButtonText onClick={() => navMethodology()}>
-          <Text size="small">
-            <FormattedMessage {...messages.methodology} />
-          </Text>
-        </ButtonText>
+        <MethodologyLink onClick={() => navMethodology()} />
       </>
     );
   }
@@ -95,11 +91,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
     return (
       <>
         <StandardOverlay />
-        <ButtonText onClick={() => navMethodology()}>
-          <Text size="small">
-            <FormattedMessage {...messages.methodology} />
-          </Text>
-        </ButtonText>
+        <MethodologyLink onClick={() => navMethodology()} />
       </>
     );
   }
@@ -107,11 +99,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
     return (
       <>
         <BenchmarkOverlay />
-        <ButtonText onClick={() => navMethodology()}>
-          <Text size="small">
-            <FormattedMessage {...messages.methodology} />
-          </Text>
-        </ButtonText>
+        <MethodologyLink onClick={() => navMethodology()} />
       </>
     );
   }
@@ -124,11 +112,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
             values={{ metric }}
           />
         </Text>
-        <ButtonText onClick={() => navMethodology()}>
-          <Text size="small">
-            <FormattedMessage {...messages.methodology} />
-          </Text>
-        </ButtonText>
+        <MethodologyLink onClick={() => navMethodology()} />
       </Paragraph>
     </>
   );
@@ -138,7 +122,7 @@ function FAQs({ questions, intl, metric, navMethodology }) {
   const [actives, setActive] = useState([]);
   const validQuestions = questions.filter(q => QUESTIONS.includes(q));
   return (
-    <Box pad={{ vertical: 'medium' }}>
+    <Box pad={{ vertical: 'large' }}>
       <Accordion
         multiple
         activeIndex={actives}

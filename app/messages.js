@@ -9,6 +9,13 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
+  hints: {
+    noResults: {
+      id: `${scope}.hints.noResults`,
+      defaultMessage:
+        'We could not find any countries for your filter settings',
+    },
+  },
   labels: {
     score: {
       id: `${scope}.labels.score`,

@@ -29,7 +29,6 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 import ContentContainer from 'styled/ContentContainer';
-import ContentMaxWidth from 'styled/ContentMaxWidth';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -75,6 +74,23 @@ const StyledPageTitle = styled(PageTitle)`
 `;
 
 const StyledButtonText = styled(ButtonText)``;
+
+const StyledContent = styled(Box)`
+  margin: 0 auto;
+  width: 1200px;
+  max-width: 100%;
+  position: relative;
+  min-height: auto;
+`;
+
+const Content = props => (
+  <StyledContent
+    direction="row"
+    align="center"
+    pad={{ horizontal: 'large' }}
+    {...props}
+  />
+);
 
 const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
 
@@ -175,9 +191,10 @@ export function CountryMetric({
         <meta name="description" content="Description of Country Metric page" />
       </Helmet>
       <ContentContainer direction="column" header>
-        <ContentMaxWidth>
+        <Content>
           <Close
             topRight
+            float={false}
             onClick={() =>
               onClose(base, base === 'country' ? countryCode : metricCode)
             }
@@ -200,9 +217,9 @@ export function CountryMetric({
               </StyledPageTitle>
             </StyledButtonText>
           </Box>
-        </ContentMaxWidth>
+        </Content>
       </ContentContainer>
-      <ContentMaxWidth>
+      <Content>
         <TabContainer
           aside={false}
           modal
@@ -210,11 +227,11 @@ export function CountryMetric({
             {
               key: 'trend',
               title: intl.formatMessage(rootMessages.tabs.trend),
-              howToRead: {
-                contxt: 'CountryMetric',
-                chart: 'Trend',
-                data: metric.type,
-              },
+              // howToRead: {
+              //   contxt: 'CountryMetric',
+              //   chart: 'Trend',
+              //   data: metric.type,
+              // },
               content: (
                 <MetricTrend
                   color={theme.global.colors[getColour(metric)]}
@@ -245,11 +262,11 @@ export function CountryMetric({
             {
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-              howToRead: {
-                contxt: 'CountryMetric',
-                chart: 'WordCloud',
-                data: 'atRisk',
-              },
+              // howToRead: {
+              //   contxt: 'CountryMetric',
+              //   chart: 'WordCloud',
+              //   data: 'atRisk',
+              // },
               content: hasAtRisk && metric.metricType !== 'indicators' && (
                 <CountryMetricPeople
                   data={atRisk}
@@ -297,7 +314,7 @@ export function CountryMetric({
             },
           ]}
         />
-      </ContentMaxWidth>
+      </Content>
     </Box>
   );
 }

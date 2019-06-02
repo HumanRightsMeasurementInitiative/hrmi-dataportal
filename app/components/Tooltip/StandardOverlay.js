@@ -2,32 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import { Text, Paragraph } from 'grommet';
+import { Paragraph } from 'grommet';
 import rootMessages from 'messages';
 
 function StandardOverlay({ intl, size = 'small' }) {
   return (
     <>
-      <Paragraph margin={{ vertical: 'xsmall' }}>
-        <Text size="xsmall">
-          <FormattedMessage {...rootMessages.tooltip.standard.intro} />
-        </Text>
+      <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
+        <FormattedMessage {...rootMessages.tooltip.standard.intro} />
       </Paragraph>
-      <Paragraph margin={{ vertical: 'xsmall' }}>
-        <Text size={size} style={{ fontWeight: 600 }}>
+      <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
+        <span style={{ fontWeight: 600 }}>
           {`${intl.formatMessage(rootMessages.settings.standard.core)}: `}
-        </Text>
-        <Text size="xsmall">
-          {intl.formatMessage(rootMessages.tooltip.standard.core)}
-        </Text>
+        </span>
+        <span>{intl.formatMessage(rootMessages.tooltip.standard.core)}</span>
       </Paragraph>
-      <Paragraph margin={{ vertical: 'xsmall' }}>
-        <Text size={size} style={{ fontWeight: 600 }}>
+      <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
+        <span style={{ fontWeight: 600 }}>
           {`${intl.formatMessage(rootMessages.settings.standard.hi)}: `}
-        </Text>
-        <Text size={size}>
+        </span>
+        <span>
           <FormattedMessage {...rootMessages.tooltip.standard.hi} />
-        </Text>
+        </span>
       </Paragraph>
     </>
   );

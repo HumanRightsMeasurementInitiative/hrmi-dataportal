@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
-import { SettingsOption } from 'grommet-icons';
+import Icon from 'components/Icon';
 import {
   getRouterRoute,
   getRouterMatch,
@@ -153,7 +153,7 @@ export function Settings({
       )}
       <SettingsIconWrap>
         <SettingsIconWrapInner>
-          <SettingsOption size="xlarge" color="dark-3" />
+          <Icon name="SETTINGS" />
         </SettingsIconWrapInner>
       </SettingsIconWrap>
       <ResponsiveContext.Consumer>

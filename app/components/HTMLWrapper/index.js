@@ -13,6 +13,7 @@ const HTMLWrapper = ({ innerhtml }) => (
   /* eslint-disable react/no-danger */
   <div
     className="hrmi-html"
+    style={{ maxWidth: '700px' }}
     dangerouslySetInnerHTML={{ __html: setLinkTarget(innerhtml) }}
   />
   /* eslint-enable react/no-danger */

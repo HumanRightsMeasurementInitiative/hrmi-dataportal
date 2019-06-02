@@ -7,10 +7,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Box, InfiniteScroll, Text } from 'grommet';
+import { Box, InfiniteScroll } from 'grommet';
 
 import {
   getRegionSearch,
@@ -38,8 +38,11 @@ import CountryPreview from 'components/CountryPreview';
 import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
 import MainColumn from 'styled/MainColumn';
+import Hint from 'styled/Hint';
 
 import { sortCountries, getScoresForCountry } from 'utils/scores';
+
+import rootMessages from 'messages';
 
 export const isDefaultStandard = (country, standardDetails) =>
   (country.high_income_country === '0' && standardDetails.key === 'core') ||
@@ -106,9 +109,9 @@ export function OverviewCountries({
         <Box width="100%" pad={{ bottom: 'medium', top: 'small' }}>
           {!dataReady && <LoadingIndicator />}
           {dataReady && sortedCountries && sortedCountries.length === 0 && (
-            <Text>
-              We could not find any countries for your filter settings
-            </Text>
+            <Hint italic>
+              <FormattedMessage {...rootMessages.hints.noResults} />
+            </Hint>
           )}
           {dataReady && sortedCountries && sortedCountries.length > 0 && (
             <Box direction="row" wrap>

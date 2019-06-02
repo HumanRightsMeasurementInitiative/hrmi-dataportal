@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Drop, Button, Text } from 'grommet';
+import { Box, Drop, Button } from 'grommet';
 import { CircleInformation } from 'grommet-icons';
 import styled from 'styled-components';
 
 const StyledDrop = styled(Drop)`
   margin: 0 0 13px;
   overflow: visible;
+  font-size: ${({ theme }) => theme.text.xsmall.size};
+  line-height: ${({ theme }) => theme.text.xsmall.height};
   &:after {
     content: '';
     position: absolute;
@@ -69,7 +71,7 @@ function Tooltip({
             style={{ maxWidth }}
           >
             {component}
-            {!component && <Text size="small">{text}</Text>}
+            {!component && <span>{text}</span>}
           </Box>
         </StyledDrop>
       )}
