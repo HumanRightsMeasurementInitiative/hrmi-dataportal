@@ -50,19 +50,21 @@ const scaleOpacity = scaleLinear()
   .range([0.66, 1]);
 
 const RightHeading = props => (
-  <Heading margin={{ top: 'none', bottom: '15px' }} {...props} />
+  <Heading margin={{ top: 'none', bottom: 'medium' }} {...props} />
 );
-const StyledRightHeading = styled(RightHeading)`
-  font-weight: normal;
-`;
+const StyledRightHeading = styled(RightHeading)``;
 const StyledRightHeadingAbove = styled(Text)`
   font-size: 14px;
   margin-top: 10px;
 `;
 
-export function WordCloud({ data, subright, dimension, intl }) {
+export function WordCloud({ data, subright, dimension, intl, border = true }) {
   return (
-    <Styled direction="column" pad={{ bottom: 'large' }} border="bottom">
+    <Styled
+      direction="column"
+      pad={{ bottom: 'large', top: 'xsmall' }}
+      border={border ? 'top' : false}
+    >
       <StyledRightHeadingAbove>
         <FormattedMessage {...rootMessages.labels.atRiksFor} />
       </StyledRightHeadingAbove>
@@ -113,6 +115,7 @@ WordCloud.propTypes = {
   data: PropTypes.object,
   dimension: PropTypes.string,
   subright: PropTypes.bool,
+  border: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

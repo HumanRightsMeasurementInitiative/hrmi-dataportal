@@ -42,6 +42,7 @@ import {
   getAuxIndicatorsForCountry,
   getESRYear,
   getCPRYear,
+  getDependenciesReady,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
@@ -82,6 +83,7 @@ export function PathCountry({
   auxIndicators,
   esrYear,
   cprYear,
+  dataReady,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -106,8 +108,8 @@ export function PathCountry({
       </Helmet>
       {match.params.metric && (
         <Layer
-          full
-          margin={{ horizontal: 'large', top: 'large', bottom: 'small' }}
+          full="vertical"
+          margin={{ top: 'large', bottom: 'ms' }}
           onEsc={() => onCloseMetricOverlay(countryCode)}
           onClickOutside={() => onCloseMetricOverlay(countryCode)}
         >
@@ -187,17 +189,18 @@ export function PathCountry({
                   }
                   esrYear={esrYear}
                   cprYear={cprYear}
+                  dataReady={dataReady}
                 />
               ),
             },
             {
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-              howToRead: {
-                contxt: 'PathCountry',
-                chart: 'WordCloud',
-                data: 'atRisk',
-              },
+              // howToRead: {
+              //   contxt: 'PathCountry',
+              //   chart: 'WordCloud',
+              //   data: 'atRisk',
+              // },
               content: hasCPR(dimensions) && (
                 <CountryPeople
                   data={atRisk}
@@ -246,10 +249,12 @@ PathCountry.propTypes = {
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
+  dataReady: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   country: (state, { match }) => getCountry(state, match.params.country),
+  dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   indicators: (state, { match }) =>
     getIndicatorsForCountry(state, match.params.country),
   rights: (state, { match }) =>

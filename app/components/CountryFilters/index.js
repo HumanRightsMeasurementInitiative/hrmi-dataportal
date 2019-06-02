@@ -63,20 +63,6 @@ const getFilterOptions = (
       },
     ];
   }
-  if (!assessed && filterGroups.indexOf('assessed') > -1) {
-    groups = [
-      ...groups,
-      {
-        group: 'assessed',
-        label: intl.formatMessage(messages.assessedFilterOptionGroup),
-        options: ASSESSED_FILTERS.map(a => ({
-          key: 'assessed',
-          value: a,
-          label: intl.formatMessage(rootMessages.assessedFilters[a]),
-        })),
-      },
-    ];
-  }
   if (!oecd && filterGroups.indexOf('oecd') > -1) {
     groups = [
       ...groups,
@@ -87,6 +73,20 @@ const getFilterOptions = (
           key: 'oecd',
           value: a,
           label: intl.formatMessage(rootMessages.oecd[a]),
+        })),
+      },
+    ];
+  }
+  if (!assessed && filterGroups.indexOf('assessed') > -1) {
+    groups = [
+      ...groups,
+      {
+        group: 'assessed',
+        label: intl.formatMessage(messages.assessedFilterOptionGroup),
+        options: ASSESSED_FILTERS.map(a => ({
+          key: 'assessed',
+          value: a,
+          label: intl.formatMessage(rootMessages.assessedFilters[a]),
         })),
       },
     ];
@@ -110,10 +110,10 @@ export function CountryFilters({
     region: filterGroups.indexOf('region') > -1 && regionFilterValue,
     income: filterGroups.indexOf('income') > -1 && incomeFilterValue,
     assessed: filterGroups.indexOf('assessed') > -1 && assessedFilterValue,
-    oecd: filterGroups.indexOf('region') > -1 && oecdFilterValue,
+    oecd: filterGroups.indexOf('oecd') > -1 && oecdFilterValue,
   };
-  const setAllFilters = Object.values(setFilters).reduce(
-    (memo, set) => memo && set,
+  const setAllFilters = filterGroups.reduce(
+    (memo, filter) => memo && setFilters[filter],
     true,
   );
   return (

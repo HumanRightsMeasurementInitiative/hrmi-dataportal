@@ -26,7 +26,7 @@ function ESRAccordion({
   intl,
 }) {
   return (
-    <Styled margin={{ top: 'medium' }}>
+    <Styled margin={{ bottom: 'medium' }}>
       <Box alignSelf="end">
         <HowToRead
           chart="Bar"

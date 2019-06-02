@@ -20,7 +20,7 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
   const parentRights = rights.filter(r => typeof r.aggregate === 'undefined');
   const subrights = rights.filter(r => typeof r.aggregate !== 'undefined');
   return (
-    <Styled margin={{ top: 'medium' }}>
+    <Styled margin={{ bottom: 'medium' }}>
       <Box alignSelf="end">
         <HowToRead
           chart="Bullet"

@@ -7,19 +7,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-// import styled from 'styled-components';
 import { Heading, Box } from 'grommet';
-
+import styled from 'styled-components';
 import { STANDARDS } from 'containers/App/constants';
 import ReadMore from 'components/ReadMore';
+import UL from 'styled/UL';
 import rootMessages from 'messages';
 import messages from './messages';
 
+const StyledUL = styled(UL)`
+  margin-top: 0;
+`;
 function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
   const { metricType } = metric;
   return (
-    <Box direction="column" pad={{ left: 'medium', vertical: 'medium' }}>
-      <Heading level={4} margin={{ vertical: 'xsmall' }}>
+    <Box
+      direction="column"
+      pad={{ left: 'medium', top: 'small', bottom: 'medium' }}
+    >
+      <Heading level={5} margin={{ vertical: 'xsmall' }}>
         <FormattedMessage {...messages.title[metricType]} />
       </Heading>
       {rootMessages[`${metricType}-about`] && fullInfo && (
@@ -43,22 +49,22 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
               <FormattedMessage {...messages.titleSource} />
             </Heading>
             <Box>
-              <ul>
+              <StyledUL>
                 {metricInfo.source.split(',').map(source => (
                   <li key={source}>
                     <FormattedMessage {...rootMessages.sources[source]} />
                   </li>
                 ))}
-              </ul>
+              </StyledUL>
             </Box>
           </Box>
           <Box>
-            <Heading level={4} margin={{ vertical: 'xsmall' }}>
+            <Heading level={5} margin={{ vertical: 'xsmall' }}>
               <FormattedMessage {...messages.titleStandards} />
             </Heading>
             <Box>
               {metricInfo.standard === 'Both' && (
-                <ul>
+                <StyledUL>
                   {STANDARDS.map(s => (
                     <li key={s.key}>
                       <FormattedMessage
@@ -66,16 +72,16 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
                       />
                     </li>
                   ))}
-                </ul>
+                </StyledUL>
               )}
               {metricInfo.standard !== 'Both' && standard && (
-                <ul>
+                <StyledUL>
                   <li>
                     <FormattedMessage
                       {...rootMessages.settings.standard[standard.key]}
                     />
                   </li>
-                </ul>
+                </StyledUL>
               )}
             </Box>
           </Box>

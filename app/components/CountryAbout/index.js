@@ -52,11 +52,15 @@ function CountryAbout({
   const incomeCode =
     country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
   return (
-    <Box direction="column" pad={{ left: 'medium', vertical: 'medium' }}>
+    <Box
+      direction="column"
+      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
+      style={{ maxWidth: '500px' }}
+    >
       <Heading level={3}>
         <FormattedMessage {...messages.title} />
       </Heading>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage
@@ -77,7 +81,7 @@ function CountryAbout({
           </Text>
         </Box>
       </Box>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage
@@ -102,7 +106,7 @@ function CountryAbout({
           </Text>
         </Box>
       </Box>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage {...messages.region} />
@@ -122,7 +126,7 @@ function CountryAbout({
           </Button>
         </Box>
       </Box>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage {...messages.oecd} />
@@ -142,7 +146,7 @@ function CountryAbout({
           </Button>
         </Box>
       </Box>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage {...messages.income} />

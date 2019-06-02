@@ -146,7 +146,12 @@ function MetricTrend({
               }}
             />
           )}
-          <HorizontalGridLines tickValues={tickValuesY} />
+          <HorizontalGridLines
+            tickValues={tickValuesY}
+            style={{
+              stroke: 'rgba(136, 150, 160, 0.2)',
+            }}
+          />
           <XAxis
             tickFormat={timeFormat('%Y')}
             style={{

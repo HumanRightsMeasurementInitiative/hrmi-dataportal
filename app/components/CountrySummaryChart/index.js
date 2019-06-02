@@ -23,7 +23,9 @@ import RightsChart from './RightsChart';
 import RightsScoreItem from './RightsScoreItem';
 import DimensionTitle from './DimensionTitle';
 
-const RightsType = styled(Box)``;
+const RightsType = styled(Box)`
+  margin-bottom: 12px;
+`;
 const RightsScoresWrapperTable = styled.div`
   display: table;
 `;
@@ -35,7 +37,7 @@ const ChartArea = props => (
 );
 
 const RightsTypeHeading = props => (
-  <Heading level={4} margin={{ vertical: '5px' }} {...props} />
+  <Heading level={4} margin={{ vertical: 'none' }} {...props} />
 );
 
 function CountrySummaryChart({
@@ -58,7 +60,12 @@ function CountrySummaryChart({
   const esrRights = scale === 'r' && getRightsScoresForDimension(rights, 'esr');
 
   return (
-    <Box direction="column" pad={{ bottom: 'large' }} border="bottom">
+    <Box
+      direction="column"
+      pad={{ bottom: 'large' }}
+      margin={{ bottom: 'large' }}
+      border="bottom"
+    >
       <Box direction="row">
         <ChartArea>
           <RightsType>
@@ -115,7 +122,7 @@ function CountrySummaryChart({
               />
             )}
           </RightsType>
-          <Box pad={{ top: 'small' }}>
+          <Box pad={{ top: 'none' }}>
             <ScaleToggle />
           </Box>
         </ChartArea>

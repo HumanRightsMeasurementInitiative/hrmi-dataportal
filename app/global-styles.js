@@ -28,8 +28,12 @@ const GlobalStyle = createGlobalStyle`
   label {
     line-height: 1.5;
   }
+  p {
+    margin: 0.5em 0;
+  }
 
   .hrmi-html p {
+    margin: 1em 0;
     &:first-child {
       font-size: 1.2em;
       line-height: 1.4;

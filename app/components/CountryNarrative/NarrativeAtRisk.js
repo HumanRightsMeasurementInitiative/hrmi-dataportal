@@ -9,6 +9,7 @@ import {
   TableRow,
   TableCell,
   Text,
+  Box,
 } from 'grommet';
 
 // import formatScore from 'utils/format-score';
@@ -92,46 +93,68 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
       <Paragraph>
         <FormattedMessage {...messages.atRisk.start} values={messageValues} />
       </Paragraph>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableCell scope="col" border="bottom">
-              <Text>{intl.formatMessage(messages.atRisk.tableGroupLabel)}</Text>
-            </TableCell>
-            <TableCell scope="col" border="bottom">
-              <Text>
-                {intl.formatMessage(messages.atRisk.tableRightsLabel)}
-              </Text>
-            </TableCell>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {rows.map(r => (
-            <TableRow key={r.group}>
-              <TableCell verticalAlign="top">
-                <Text>
-                  <FormattedMessage
-                    {...rootMessages['people-at-risk'][r.group]}
-                  />
+      <Box
+        elevation="small"
+        margin={{ vertical: 'small' }}
+        pad={{ bottom: 'small', top: 'xsmall' }}
+      >
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableCell
+                scope="col"
+                pad={{ top: 'small', left: 'medium', bottom: 'xsmall' }}
+                border="bottom"
+              >
+                <Text size="medium" style={{ fontWeight: 600 }}>
+                  {intl.formatMessage(messages.atRisk.tableGroupLabel)}
                 </Text>
               </TableCell>
-              <TableCell verticalAlign="top">
-                <ul>
+              <TableCell
+                scope="col"
+                pad={{ top: 'small', right: 'medium', bottom: 'xsmall' }}
+                border="bottom"
+              >
+                <Text size="medium" style={{ fontWeight: 600 }}>
+                  {intl.formatMessage(messages.atRisk.tableRightsLabel)}
+                </Text>
+              </TableCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows.map((r, index) => (
+              <TableRow key={r.group}>
+                <TableCell
+                  verticalAlign="top"
+                  border={index === 0 ? false : 'top'}
+                  pad={{ left: 'medium', vertical: 'small' }}
+                >
+                  <Text size="small" style={{ fontWeight: 600 }}>
+                    <FormattedMessage
+                      {...rootMessages['people-at-risk'][r.group]}
+                    />
+                  </Text>
+                </TableCell>
+                <TableCell
+                  verticalAlign="top"
+                  border={index === 0 ? false : 'top'}
+                  pad={{ right: 'medium', vertical: 'small' }}
+                >
                   {r.rights.map(right => (
-                    <li key={right}>
-                      <Text>
+                    <div key={right}>
+                      <Text size="small">
                         <FormattedMessage
                           {...rootMessages['rights-short'][right]}
                         />
                       </Text>
-                    </li>
+                    </div>
                   ))}
-                </ul>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Box>
       <Paragraph>
         <FormattedMessage
           {...messages.atRisk.end.beforeLink}
