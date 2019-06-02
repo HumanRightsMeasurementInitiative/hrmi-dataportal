@@ -47,6 +47,12 @@ const Styled = styled(Box)`
     `}
 `;
 
+const StyledButtonIcon = styled(ButtonIcon)`
+  background: ${({ theme }) => theme.global.colors.highlight};
+  &:hover {
+    background: ${({ theme }) => theme.global.colors.highlight2};
+  }
+`;
 // <FormattedMessage {...messages.label} />
 function Close({
   onClose,
@@ -54,7 +60,7 @@ function Close({
   keepTab = false,
   onClick,
   topRight,
-  float,
+  float = true,
 }) {
   return (
     <Styled
@@ -80,7 +86,7 @@ function Close({
           <FormattedMessage {...messages.label} />
         </Text>
       </StyledTextButton>
-      <ButtonIcon
+      <StyledButtonIcon
         float={float}
         onClick={() =>
           // prettier-ignore
@@ -92,8 +98,8 @@ function Close({
             })
         }
       >
-        <CloseIcon size="xlarge" color="white" />
-      </ButtonIcon>
+        <CloseIcon size="xlarge" color="dark" />
+      </StyledButtonIcon>
     </Styled>
   );
 }

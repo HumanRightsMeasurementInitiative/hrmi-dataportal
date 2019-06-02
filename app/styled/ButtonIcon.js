@@ -10,7 +10,7 @@ export default styled(Button)`
   height: ${({ small }) => (small ? 30 : 50)}px;
   text-align: center;
   padding: 0;
-  box-shadow: ${({ float }) => float ? '0px -3px 3px rgba(0, 0, 0, 0.15)' : ''};
+  box-shadow: ${({ float }) => float ? '0 0 3px 1px rgba(0, 0, 0, 0.15)' : ''};
   &:hover{
     color: ${({ theme }) => theme.global.colors.white};
     background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-2' : 'dark-1']};

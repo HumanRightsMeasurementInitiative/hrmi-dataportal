@@ -7,13 +7,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { Box, Button, Drop, ResponsiveContext, TextInput } from 'grommet';
 import { Menu, Close, FormClose, Search } from 'grommet-icons';
 
+import { getRouterMatch } from 'containers/App/selectors';
+
 import ContentContainer from 'styled/ContentContainer';
+import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 
 import Icon from 'components/Icon';
 
@@ -86,19 +90,6 @@ const TitleButton = styled(Button)`
     color: ${props => props.theme.global.colors['light-3']};
   }
 `;
-// prettier-ignore
-const NavButton = styled(Button)`
-  height: 44px;
-  padding: 5px 10px;
-  color: ${props => props.theme.global.colors.white};
-  display: block;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
-    display: inline-block;
-  }
-  &:hover {
-    color: ${props => props.theme.global.colors['light-3']};
-  }
-`;
 
 // prettier-ignore
 const MenuList = styled.div`
@@ -141,7 +132,6 @@ const ToggleMenu = styled(Button)`
     display: none;
   }
 `;
-// // prettier-ignore
 // const LocaleToggleWrap = styled.span`
 //   display: block;
 //   @media (min-width: ${props => props.theme.breakpoints.medium}) {
@@ -153,20 +143,24 @@ const ToggleMenu = styled(Button)`
 //               </LocaleToggleWrap>
 //             </span>
 
+// prettier-ignore
 const SecondaryDropButton = styled(Button)`
   height: 56px;
-  padding: 5px 40px;
+  padding: 5px 10px;
+  min-width: 160px;
   background-color: ${({ active, theme }) =>
     active ? theme.global.colors['dark-2'] : 'transparent'};
-  border-right: 2px solid;
+  border-right: ${({ last }) => last ? 2 : 1}px solid;
+  border-left: ${({ first }) => first ? 0 : 1}px solid;
   border-color: ${({ theme }) => theme.global.colors['dark-2']};
   &:hover {
-    background-color: ${({ theme }) => theme.global.colors['dark-2']};
+    background-color: ${({ active, theme }) =>
+    theme.global.colors[active ? 'dark-2' : 'dark-3']};
   }
 `;
 const DEPENDENCIES = ['countries'];
 
-export function Header({ nav, intl, onLoadData }) {
+export function Header({ nav, intl, onLoadData, match }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -211,16 +205,17 @@ export function Header({ nav, intl, onLoadData }) {
             <span>
               {PAGES &&
                 PAGES.map(page => (
-                  <NavButton
-                    plain
+                  <ButtonNavPrimary
                     key={page}
+                    active={page === match}
+                    disabled={page === match}
                     onClick={() => {
                       setShowMenu(false);
                       nav(`page/${page}`);
                     }}
                   >
                     <FormattedMessage {...rootMessages.page[page]} />
-                  </NavButton>
+                  </ButtonNavPrimary>
                 ))}
             </span>
           </MenuList>
@@ -231,6 +226,7 @@ export function Header({ nav, intl, onLoadData }) {
           <NavBarBottom>
             <SecondaryDropButton
               plain
+              first
               active={showCountries}
               onClick={() => {
                 setShowMetrics(false);
@@ -253,6 +249,7 @@ export function Header({ nav, intl, onLoadData }) {
               </Drop>
             )}
             <SecondaryDropButton
+              last
               plain
               active={showMetrics}
               onClick={() => {
@@ -282,7 +279,6 @@ export function Header({ nav, intl, onLoadData }) {
               align="center"
               pad={{ horizontal: 'small', vertical: 'xsmall' }}
               round="small"
-              border={{ side: 'all' }}
               margin={{ horizontal: 'medium' }}
               ref={searchRef}
             >
@@ -324,6 +320,7 @@ export function Header({ nav, intl, onLoadData }) {
 Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
+  match: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
@@ -338,8 +335,12 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
+const mapStateToProps = createStructuredSelector({
+  match: state => getRouterMatch(state),
+});
+
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 
