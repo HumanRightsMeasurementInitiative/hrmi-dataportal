@@ -127,6 +127,10 @@ export function PathCountry({
                 onItemClick={(key, value) => onCategoryClick(key, value)}
                 items={[
                   {
+                    key: 'all',
+                    label: intl.formatMessage(rootMessages.labels.allCountries),
+                  },
+                  {
                     key: 'region',
                     value: country.region_code,
                     label: intl.formatMessage(
@@ -272,7 +276,7 @@ export function mapDispatchToProps(dispatch) {
       const deleteParams = ['income', 'region', 'assessed'];
       dispatch(
         navigate(
-          { pathname: '', search: `?${key}=${value}` },
+          { pathname: '', search: key === 'all' ? '' : `?${key}=${value}` },
           {
             replace: false,
             deleteParams: deleteParams.filter(p => p !== key),
