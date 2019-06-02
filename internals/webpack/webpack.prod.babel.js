@@ -116,11 +116,11 @@ module.exports = require('./webpack.base.babel')({
     }),
 
     new WebpackPwaManifest({
-      name: 'React Boilerplate',
-      short_name: 'React BP',
-      description: 'My React Boilerplate-based project!',
-      background_color: '#fafafa',
-      theme_color: '#b1624d',
+      name: 'HRMI Data Portal',
+      short_name: 'HRMI',
+      description: '',
+      background_color: '#fff',
+      theme_color: '#ffffff',
       inject: true,
       ios: true,
       icons: [

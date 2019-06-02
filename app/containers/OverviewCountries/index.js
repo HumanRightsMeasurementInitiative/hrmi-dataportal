@@ -32,7 +32,7 @@ import {
 
 import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 
-import Loading from 'components/Loading';
+import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
 import CountryPreview from 'components/CountryPreview';
 import CountrySort from 'components/CountrySort';
@@ -104,7 +104,7 @@ export function OverviewCountries({
       </Box>
       {sortedCountries && scoresAllCountries && (
         <Box width="100%" pad={{ bottom: 'medium', top: 'small' }}>
-          {!dataReady && <Loading />}
+          {!dataReady && <LoadingIndicator />}
           {dataReady && sortedCountries && sortedCountries.length === 0 && (
             <Text>
               We could not find any countries for your filter settings
