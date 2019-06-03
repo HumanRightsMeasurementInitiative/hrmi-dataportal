@@ -31,6 +31,10 @@ import DiamondChart from './DiamondChart';
 // `;
 
 const Button = styled(ButtonPlain)`
+  margin: 0 auto;
+  @media (min-width: 520px) {
+    margin: 0;
+  }
   &:hover {
     text-decoration: underline;
   }
@@ -216,7 +220,7 @@ export function CountryPreview({
 }) {
   if (!country) return null;
   return (
-    <Box pad="none" width="250px" alignContent="center">
+    <Box pad="none" basis="250px" alignContent="center" flex={{ grow: 1 }}>
       {country && (
         <Button
           onClick={() => onSelectCountry(country.country_code)}

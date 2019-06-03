@@ -184,6 +184,7 @@ export function CountryMetric({
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
 
+  // prettier-ignore
   return (
     <Box overflow="auto" direction="column">
       <Helmet>
@@ -232,17 +233,21 @@ export function CountryMetric({
               //   chart: 'WordCloud',
               //   data: 'atRisk',
               // },
-              content: hasAtRisk && metric.metricType !== 'indicators' && (
-                <CountryMetricPeople
-                  data={atRisk}
-                  metric={metric}
-                  atRiskAnalysis={atRiskAnalysis}
-                  atRiskAnalysisSubrights={atRiskAnalysisSubrights}
-                  locale={intl.locale}
-                  hasAnalysis={hasAnalysis(metric)}
-                  hasSubrightAnalysis={hasSubrightAnalysis(metric)}
-                />
-              ),
+              content:
+                hasAtRisk &&
+                metric.metricType !== 'indicators' &&
+                (props => (
+                  <CountryMetricPeople
+                    data={atRisk}
+                    metric={metric}
+                    atRiskAnalysis={atRiskAnalysis}
+                    atRiskAnalysisSubrights={atRiskAnalysisSubrights}
+                    locale={intl.locale}
+                    hasAnalysis={hasAnalysis(metric)}
+                    hasSubrightAnalysis={hasSubrightAnalysis(metric)}
+                    {...props}
+                  />
+                )),
             },
             {
               key: 'trend',
@@ -252,7 +257,7 @@ export function CountryMetric({
               //   chart: 'Trend',
               //   data: metric.type,
               // },
-              content: (
+              content: props => (
                 <MetricTrend
                   color={theme.global.colors[getColour(metric)]}
                   colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
@@ -276,6 +281,7 @@ export function CountryMetric({
                   onSetStandard={onSetStandard}
                   standard={standard}
                   benchmark={benchmark}
+                  {...props}
                 />
               ),
             },
@@ -288,8 +294,8 @@ export function CountryMetric({
                   ? rootMessages[metric.metricType][metricCode]
                   : rootMessages.countries[countryCode],
               )}`,
-              content:
-                base === 'country' ? (
+              content: base === 'country'
+                ? props => (
                   <MetricAbout
                     metric={metric}
                     metricInfo={metricInfo}
@@ -299,18 +305,19 @@ export function CountryMetric({
                         ? STANDARDS.find(s => metricInfo.standard === s.code)
                         : null
                     }
+                    {...props}
                   />
-                ) : (
-                  <>
-                    {country && auxIndicators && (
-                      <CountryAbout
-                        country={country}
-                        auxIndicators={auxIndicators}
-                        onCategoryClick={onCategoryClick}
-                      />
-                    )}
-                  </>
-                ),
+                )
+                : props =>
+                  country &&
+                  auxIndicators && (
+                    <CountryAbout
+                      country={country}
+                      auxIndicators={auxIndicators}
+                      onCategoryClick={onCategoryClick}
+                      {...props}
+                    />
+                  ),
             },
           ]}
         />

@@ -113,7 +113,7 @@ export function PathMetric({
             {
               key: 'singleMetric',
               title: intl.formatMessage(rootMessages.tabs.singleMetric),
-              content: <SingleMetric metric={metric} />,
+              content: props => <SingleMetric {...props} metric={metric} />,
               howToRead: {
                 contxt: 'PathMetric',
                 chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
@@ -123,7 +123,9 @@ export function PathMetric({
             {
               key: 'about',
               title: intl.formatMessage(rootMessages.tabs.about),
-              content: <MetricAside metric={metric} ancestors={ancestors} />,
+              content: props => (
+                <MetricAside {...props} metric={metric} ancestors={ancestors} />
+              ),
             },
           ]}
         />

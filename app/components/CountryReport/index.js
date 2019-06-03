@@ -37,9 +37,10 @@ function CountryReport({
   esrYear,
   cprYear,
   dataReady,
+  hasAside,
 }) {
   return (
-    <MainColumn>
+    <MainColumn hasAside={hasAside}>
       {!dataReady && <LoadingIndicator />}
       {dataReady && (
         <>
@@ -86,6 +87,7 @@ CountryReport.propTypes = {
   countryTitle: PropTypes.string,
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
+  hasAside: PropTypes.bool,
   reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

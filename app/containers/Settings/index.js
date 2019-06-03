@@ -40,7 +40,7 @@ const Styled = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 90px;
+  height: ${({ theme }) => theme.sizes.settings.height}px;
   background-color: ${({ theme }) => theme.global.colors.white};
   box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.15);
 `;
@@ -70,7 +70,7 @@ const SetScaleWrap = styled.div`
   z-index: 1;
 `;
 
-const showSettings = ({ route, match, tabIndex }) => {
+export const showSettings = ({ route, match, tabIndex }) => {
   if (route === 'page') return false;
   if (route === 'metric') {
     const metricDetails = getMetricDetails(match);

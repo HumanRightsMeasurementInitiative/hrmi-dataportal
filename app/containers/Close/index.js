@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -34,7 +34,7 @@ const Styled = styled(Box)`
     css`
       position: absolute;
       top: 0;
-      right: 0;
+      right: ${props.theme.global.edgeSize.large};
       z-index: 10;
     `}
   ${props =>
@@ -42,8 +42,14 @@ const Styled = styled(Box)`
     css`
       position: fixed;
       top: 115px;
-      right: 10px;
+      right: 15px;
       z-index: 10;
+      @media (min-width: ${props.theme.breakpoints.xlarge}) {
+        padding-right: 15px;
+      }
+      @media (min-width: ${props.theme.breakpoints.xxlarge}) {
+        padding-right: 40px;
+      }
     `}
 `;
 
@@ -62,30 +68,43 @@ function Close({
   topRight,
   float = true,
 }) {
+  const [scrollTop, setScrollTop] = useState(0);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrollTop(window.pageYOffset);
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
     <Styled
       direction="row"
-      pad={{ right: 'large', top: 'medium' }}
+      pad={{ top: 'medium' }}
       align="center"
       topRight={topRight}
       float={float}
     >
-      <StyledTextButton
-        hoverColor="dark"
-        onClick={() =>
-          // prettier-ignore
-          onClick
-            ? onClick()
-            : onClose(closeTarget || '', {
-              keepTab,
-              needsLocale: !closeTarget,
-            })
-        }
-      >
-        <Text size="small">
-          <FormattedMessage {...messages.label} />
-        </Text>
-      </StyledTextButton>
+      {(!float || scrollTop === 0) && (
+        <StyledTextButton
+          hoverColor="dark"
+          onClick={() =>
+            // prettier-ignore
+            onClick
+              ? onClick()
+              : onClose(closeTarget || '', {
+                keepTab,
+                needsLocale: !closeTarget,
+              })
+          }
+        >
+          <Text size="small">
+            <FormattedMessage {...messages.label} />
+          </Text>
+        </StyledTextButton>
+      )}
       <StyledButtonIcon
         float={float}
         onClick={() =>

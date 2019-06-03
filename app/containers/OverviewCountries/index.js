@@ -69,6 +69,7 @@ export function OverviewCountries({
   onOrderChange,
   onCountryHover,
   dataReady,
+  hasAside,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -86,7 +87,7 @@ export function OverviewCountries({
     scores: scoresAllCountries,
   });
   return (
-    <MainColumn>
+    <MainColumn hasAside={hasAside}>
       <Box direction="row">
         <CountryFilters
           regionFilterValue={regionFilterValue}
@@ -106,7 +107,11 @@ export function OverviewCountries({
         />
       </Box>
       {sortedCountries && scoresAllCountries && (
-        <Box width="100%" pad={{ bottom: 'medium', top: 'small' }}>
+        <Box
+          width="100%"
+          pad={{ bottom: 'medium', top: 'small' }}
+          align="center"
+        >
           {!dataReady && <LoadingIndicator />}
           {dataReady && sortedCountries && sortedCountries.length === 0 && (
             <Hint italic>
@@ -169,6 +174,7 @@ OverviewCountries.propTypes = {
   onOrderChange: PropTypes.func,
   onCountryHover: PropTypes.func,
   dataReady: PropTypes.bool,
+  hasAside: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

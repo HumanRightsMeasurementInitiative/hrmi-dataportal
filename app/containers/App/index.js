@@ -36,7 +36,7 @@ const AppWrapper = styled.div`
 
 const Main = styled.main`
   min-height: 100%;
-  padding-top: 100px;
+  padding-top: ${({ theme }) => theme.sizes.header.height}px;
   padding-bottom: 80px;
   &:focus {
     outline: none;
