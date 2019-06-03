@@ -20,7 +20,11 @@ import { lowerCase } from 'utils/string';
 import FAQs from 'containers/FAQs';
 import MetricAbout from 'components/MetricAbout';
 import { STANDARDS, RIGHTS, INDICATORS } from 'containers/App/constants';
-import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
+import {
+  getIndicatorInfo,
+  getESRIndicators,
+  getBenchmarkSearch,
+} from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 import Button from 'styled/Button';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -69,6 +73,7 @@ export function MetricAside({
   allIndicators,
   onLoadData,
   onSelectMetric,
+  benchmark,
   intl,
 }) {
   useInjectSaga({ key: 'app', saga });
@@ -117,10 +122,16 @@ export function MetricAside({
         );
       }),
     }));
-    questions = [...questions, 'measureRightESR', 'standards', 'benchmarks'];
+    if (benchmark === 'adjusted') {
+      questions = [...questions, 'measureRightESR'];
+    }
+    questions = [...questions, 'standards', 'benchmarks'];
   }
   if (metricType === 'indicators') {
-    questions = [...questions, 'measureIndicators', 'indicators'];
+    // if (benchmark === 'adjusted') {
+    //   questions = [...questions, 'measureIndicators'];
+    // }
+    questions = [...questions, 'indicators'];
   }
 
   return (
@@ -233,9 +244,11 @@ MetricAside.propTypes = {
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   intl: intlShape.isRequired,
   ancestors: PropTypes.array,
+  benchmark: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
+  benchmark: state => getBenchmarkSearch(state),
   metricInfo: (state, { metric }) => {
     if (metric.metricType === 'indicators') {
       return getIndicatorInfo(state, metric.code);
