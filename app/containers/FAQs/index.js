@@ -112,8 +112,8 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
             values={{ metric }}
           />
         </Text>
-        <MethodologyLink onClick={() => navMethodology()} />
       </Paragraph>
+      <MethodologyLink onClick={() => navMethodology()} />
     </>
   );
 };
