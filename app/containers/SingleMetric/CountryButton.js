@@ -18,11 +18,15 @@ const Styled = styled(Button)`
 `;
 
 function CountryButton({ country, metric, onCountryClick }) {
+  // prettier-ignore
   return (
     <>
       <Styled onClick={() => onCountryClick(country.country_code, metric.key)}>
         <FormattedMessage {...rootMessages.countries[country.country_code]} />
-        {country && country.high_income_country === '1' && (
+        {metric &&
+          (metric.type === 'esr' || metric.metricType === 'indicators') &&
+          country &&
+          country.high_income_country === '1' && (
           <span>
             {` (`}
             <FormattedMessage {...rootMessages.labels.hiCountry} />
