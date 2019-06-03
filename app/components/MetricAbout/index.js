@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { STANDARDS } from 'containers/App/constants';
 import ReadMore from 'components/ReadMore';
 import UL from 'styled/UL';
+import WrapAsideTop from 'styled/WrapAsideTop';
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -25,23 +26,25 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
       direction="column"
       pad={{ left: 'medium', top: 'small', bottom: 'medium' }}
     >
-      <Heading level={5} margin={{ vertical: 'xsmall' }}>
-        <FormattedMessage {...messages.title[metricType]} />
-      </Heading>
-      {rootMessages[`${metricType}-about`] && fullInfo && (
-        <div>
-          <FormattedMessage
-            {...rootMessages[`${metricType}-about`][metric.key]}
+      <WrapAsideTop>
+        <Heading level={5} margin={{ vertical: 'xsmall' }}>
+          <FormattedMessage {...messages.title[metricType]} />
+        </Heading>
+        {rootMessages[`${metricType}-about`] && fullInfo && (
+          <div>
+            <FormattedMessage
+              {...rootMessages[`${metricType}-about`][metric.key]}
+            />
+          </div>
+        )}
+        {rootMessages[`${metricType}-about`] && !fullInfo && (
+          <ReadMore
+            message={intl.formatMessage(
+              rootMessages[`${metricType}-about`][metric.key],
+            )}
           />
-        </div>
-      )}
-      {rootMessages[`${metricType}-about`] && !fullInfo && (
-        <ReadMore
-          message={intl.formatMessage(
-            rootMessages[`${metricType}-about`][metric.key],
-          )}
-        />
-      )}
+        )}
+      </WrapAsideTop>
       {metricType === 'indicators' && metricInfo && (
         <>
           <Box>

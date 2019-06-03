@@ -1,11 +1,55 @@
 import { css } from 'styled-components';
+
+export const SIZES = {
+  header: {
+    height: 100,
+  },
+  aside: {
+    width: [0, 0, 280, 360, 440],
+  },
+  settings: {
+    height: 90,
+  },
+};
 // theme defining breakpoints, colors, sizes, grid gutters
 // breakpoints:
 // < 720px (45em): small (mobile)
 // 0: < 960px (60em): medium (tablet portrait)
 // 1: < 1152px (72em): large (tablet landscape, desktop)
 // 2: > 1152px (72em): xlarge
-const myBreakpoints = [720, 992, 1152, 10000];
+// const myBreakpoints = [720, 992, 1152, 10000];
+export const BREAKPOINTS = {
+  small: {
+    min: 0,
+    max: 720, // inclusive
+    name: 'mobile',
+    index: 0,
+  },
+  medium: {
+    min: 720, // exclusive
+    max: 992,
+    name: 'tablet (portrait)',
+    index: 1,
+  },
+  large: {
+    min: 992, // exclusive
+    max: 1152,
+    name: 'laptop/tablet (landscape)',
+    index: 2,
+  },
+  xlarge: {
+    min: 1152, // exclusive
+    max: 1728,
+    name: 'desktop',
+    index: 3,
+  },
+  xxlarge: {
+    min: 1728, // exclusive
+    max: 99999999,
+    name: 'large desktop',
+    index: 4,
+  },
+};
 
 const text = {
   xxlarge: { size: '30px', height: '36px', maxWidth: '700px' },
@@ -17,14 +61,16 @@ const text = {
   xxsmall: { size: '12px', height: '14px', maxWidth: '400px' },
 };
 const theme = {
+  sizes: SIZES,
   // used for grommet
   text,
   paragraph: text,
   breakpoints: {
-    small: `${myBreakpoints[0]}px`, // max
-    medium: `${myBreakpoints[0]}px`, // min
-    large: `${myBreakpoints[1]}px`, // min
-    xlarge: `${myBreakpoints[2]}px`, // min
+    small: `${BREAKPOINTS.small.max}px`, // max
+    medium: `${BREAKPOINTS.medium.min}px`, // min
+    large: `${BREAKPOINTS.large.min}px`, // min
+    xlarge: `${BREAKPOINTS.xlarge.min}px`, // min
+    xxlarge: `${BREAKPOINTS.xxlarge.min}px`, // min
   },
   icon: {
     size: {
@@ -92,16 +138,16 @@ const theme = {
     },
     breakpoints: {
       small: {
-        value: myBreakpoints[0],
+        value: BREAKPOINTS.small.max,
       },
       medium: {
-        value: myBreakpoints[1],
+        value: BREAKPOINTS.medium.max,
       },
       large: {
-        value: myBreakpoints[2],
+        value: BREAKPOINTS.large.max,
       },
       xlarge: {
-        value: myBreakpoints[3],
+        value: BREAKPOINTS.xlarge.max,
       },
       xxlarge: {},
     },

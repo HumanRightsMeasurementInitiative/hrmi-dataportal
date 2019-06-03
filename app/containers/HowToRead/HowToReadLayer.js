@@ -12,6 +12,8 @@ import { getHowToRead } from 'containers/App/selectors';
 import { openHowToRead } from 'containers/App/actions';
 import ButtonIcon from 'styled/ButtonIcon';
 
+import { getWindowDimensions, getFloatingAsideWidth } from 'utils/responsive';
+
 import HTROverviewDimensions from './HTROverviewDimensions';
 import HTROverviewRights from './HTROverviewRights';
 import HTRSummaryDimensions from './HTRSummaryDimensions';
@@ -27,21 +29,6 @@ const ButtonWrap = styled.div`
   top: 1em;
   right: 1em;
 `;
-
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
-const getWidth = (size, theme, { width }) => {
-  const asideWidth = size === 'medium' ? 280 : 360;
-  const maxWidth = parseInt(theme.maxWidth, 10);
-  const padding = parseInt(theme.global.edgeSize.large, 10);
-  return asideWidth + padding + Math.max(0, (width - maxWidth) / 2);
-};
 
 function HowToReadLayer({ layer, theme, onClose }) {
   const [windowDimensions, setWindowDimensions] = useState(
@@ -70,7 +57,7 @@ function HowToReadLayer({ layer, theme, onClose }) {
         {size => (
           <Box
             elevation="large"
-            width={`${getWidth(size, theme, windowDimensions)}px`}
+            width={`${getFloatingAsideWidth(size, theme, windowDimensions)}px`}
             direction="column"
             flex={{ shrink: 0 }}
             pad="medium"

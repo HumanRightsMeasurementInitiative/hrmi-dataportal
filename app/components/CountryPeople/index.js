@@ -25,9 +25,9 @@ const RightHeading = props => (
   <Heading level={4} margin={{ top: 'small', bottom: 'none' }} {...props} />
 );
 
-function CountryPeople({ data, countryTitle, countryCode, intl }) {
+function CountryPeople({ data, countryTitle, countryCode, intl, hasAside }) {
   return (
-    <MainColumn>
+    <MainColumn hasAside={hasAside}>
       <Heading level={2}>
         <FormattedMessage
           {...messages.title}
@@ -84,6 +84,7 @@ function CountryPeople({ data, countryTitle, countryCode, intl }) {
 CountryPeople.propTypes = {
   countryCode: PropTypes.string,
   countryTitle: PropTypes.string,
+  hasAside: PropTypes.bool,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   intl: intlShape.isRequired,
 };

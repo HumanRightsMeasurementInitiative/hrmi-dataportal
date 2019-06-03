@@ -137,6 +137,7 @@ export function SingleMetric({
   onCountryClick,
   countries,
   dataReady,
+  hasAside,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -155,7 +156,7 @@ export function SingleMetric({
     column: metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
   });
   return (
-    <MainColumn>
+    <MainColumn hasAside={hasAside}>
       <Box direction="row">
         <CountryFilters
           regionFilterValue={regionFilterValue}
@@ -303,6 +304,7 @@ SingleMetric.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   metric: PropTypes.object.isRequired,
+  hasAside: PropTypes.bool,
   standard: PropTypes.string,
   benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
