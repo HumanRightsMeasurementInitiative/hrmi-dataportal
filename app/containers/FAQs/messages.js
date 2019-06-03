@@ -37,7 +37,7 @@ export default defineMessages({
       defaultMessage: 'Why aren’t the same indicators used for all countries?',
     },
     measureIndicators: {
-      id: `${scope}.questions.measureRightESR`,
+      id: `${scope}.questions.measureIndicators`,
       defaultMessage:
         'How does the HRMI methodology calculate the {metric} score from raw data?',
     },
