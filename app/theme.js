@@ -9,6 +9,7 @@ export const SIZES = {
   },
   settings: {
     height: 90,
+    heightCollapsed: 40,
   },
 };
 // theme defining breakpoints, colors, sizes, grid gutters

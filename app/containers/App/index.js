@@ -69,6 +69,7 @@ export function App({ match }) {
       </Helmet>
       <ScrollToTop>
         <Header />
+        <HowToReadLayer />
         <Main>
           <Switch>
             <Route exact path={`/${locale}`} component={PathOverview} />
@@ -85,7 +86,6 @@ export function App({ match }) {
           </Switch>
         </Main>
         <Settings />
-        <HowToReadLayer />
       </ScrollToTop>
       <GlobalStyle />
     </AppWrapper>
