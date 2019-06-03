@@ -104,5 +104,9 @@ function Key() {
     </ResponsiveContext.Consumer>
   );
 }
+//
+// Key.propTypes = {
+//   fullSize: PropTypes.bool,
+// };
 
 export default Key;

@@ -178,6 +178,8 @@
   "hrmi.hints.noResults": "We could not find any countries for your current filter settings",
   "hrmi.tabs.countries": "Explore {count}countries",
   "hrmi.tabs.metrics": "Explore human rights metrics",
+  "hrmi.tabs.countriesMobile": "Explore countries",
+  "hrmi.tabs.metricsMobile": "Explore metrics",
   "hrmi.tabs.singleMetric": "Explore metric",
   "hrmi.tabs.report": "Report",
   "hrmi.tabs.people-at-risk": "People at risk",

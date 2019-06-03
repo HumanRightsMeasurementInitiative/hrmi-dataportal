@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Drop, Button } from 'grommet';
+import { Box, Drop, Button, ResponsiveContext } from 'grommet';
 import { CircleInformation } from 'grommet-icons';
 import styled from 'styled-components';
+import { isMinSize } from 'utils/responsive';
 
 const StyledDrop = styled(Drop)`
   margin: 0 0 13px;
@@ -37,45 +38,55 @@ function Tooltip({
   const [open, setOpen] = useState(false);
   const button = useRef(null);
   return (
-    <>
-      <Button
-        as={insideButton ? 'span' : 'button'}
-        plain
-        icon={icon || <CircleInformation size={iconSize} color="highlight2" />}
-        ref={button}
-        onMouseEnter={() => setOver(true)}
-        onMouseLeave={() => setOver(false)}
-        onClick={evt => {
-          if (evt) evt.preventDefault();
-          if (evt) evt.stopPropagation();
-          setOpen(!open);
-        }}
-        onFocus={() => {}}
-        onBlur={() => {}}
-        margin={margin || { horizontal: 'xsmall' }}
-        style={{
-          WebkitAppearance: 'none',
-          MozAppearance: 'none',
-        }}
-      />
-      {button.current && (over || open) && (
-        <StyledDrop
-          align={{ bottom: 'top' }}
-          elevation="small"
-          target={button.current}
-          onClickOutside={() => setOpen(false)}
-        >
-          <Box
-            pad={{ vertical: 'xsmall', horizontal: 'small' }}
-            background="dark-1"
-            style={{ maxWidth }}
-          >
-            {component}
-            {!component && <span>{text}</span>}
-          </Box>
-        </StyledDrop>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <>
+          <Button
+            as={insideButton ? 'span' : 'button'}
+            plain
+            icon={
+              icon || <CircleInformation size={iconSize} color="highlight2" />
+            }
+            ref={button}
+            onClick={evt => {
+              if (evt) evt.preventDefault();
+              if (evt) evt.stopPropagation();
+              setOpen(!open);
+            }}
+            onMouseEnter={
+              isMinSize(size, 'medium') ? () => setOver(true) : null
+            }
+            onMouseLeave={
+              isMinSize(size, 'medium') ? () => setOver(false) : null
+            }
+            onFocus={isMinSize(size, 'medium') ? () => setOver(true) : null}
+            onBlur={isMinSize(size, 'medium') ? () => setOver(false) : null}
+            margin={margin || { horizontal: 'xsmall' }}
+            style={{
+              WebkitAppearance: 'none',
+              MozAppearance: 'none',
+            }}
+          />
+          {button.current && (over || open) && (
+            <StyledDrop
+              align={{ bottom: 'top' }}
+              elevation="small"
+              target={button.current}
+              onClickOutside={() => setOpen(false)}
+            >
+              <Box
+                pad={{ vertical: 'xsmall', horizontal: 'small' }}
+                background="dark-1"
+                style={{ maxWidth }}
+              >
+                {component}
+                {!component && <span>{text}</span>}
+              </Box>
+            </StyledDrop>
+          )}
+        </>
       )}
-    </>
+    </ResponsiveContext.Consumer>
   );
 }
 

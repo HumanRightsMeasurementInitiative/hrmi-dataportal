@@ -196,7 +196,7 @@ export function MetricAside({
               <>
                 {children.map(as => (
                   <Pad key={as.key}>
-                    <Text>
+                    <Text size="small">
                       {`'${intl.formatMessage(
                         rootMessages.settings.standard[as.key],
                       )}' ${lowerCase(

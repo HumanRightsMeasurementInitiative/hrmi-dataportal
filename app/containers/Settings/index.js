@@ -4,14 +4,13 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Box, Text, ResponsiveContext } from 'grommet';
+import { Box, ResponsiveContext, Button, Layer } from 'grommet';
 import Icon from 'components/Icon';
 import {
   getRouterRoute,
@@ -23,26 +22,25 @@ import {
   getCountry,
 } from 'containers/App/selectors';
 
-import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
-
 import { setStandard, setBenchmark } from 'containers/App/actions';
 
 import getMetricDetails from 'utils/metric-details';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
-import rootMessages from 'messages';
-import messages from './messages';
-import Key from './Key';
-import SettingsToggle from './SettingsToggle';
 import ScaleToggle from './ScaleToggle';
+import SettingsInner from './SettingsInner';
 
 const Styled = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: ${({ theme }) => theme.sizes.settings.height}px;
+  height: ${({ theme }) => theme.sizes.settings.heightCollapsed}px;
   background-color: ${({ theme }) => theme.global.colors.white};
   box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.15);
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    height: ${({ theme }) => theme.sizes.settings.height}px;
+  }
 `;
 
 const SettingsIconWrapInner = styled.div`
@@ -53,21 +51,41 @@ const SettingsIconWrapInner = styled.div`
 const SettingsIconWrap = styled.div`
   position: absolute;
   right: 0;
+  left: 0;
   top: 0;
   bottom: 0;
-  width: 120px;
   text-align: center;
   display: table;
+  width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.global.colors['light-1']};
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    width: 120px;
+    left: auto;
+  }
 `;
 
 const SetScaleWrap = styled.div`
   position: absolute;
-  left: ${({ theme }) => theme.global.edgeSize.medium};
-  bottom: 100%;
-  transform: translateY(20%);
+  width: 100%;
+  text-align: center;
+  bottom: 130%;
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    text-align: left;
+    left: ${({ theme }) => theme.global.edgeSize.medium};
+  }
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    transform: translateY(20%);
+    bottom: 100%;
+  }
   z-index: 1;
+`;
+
+const StyledButton = styled(Button)`
+  background-color: ${({ theme }) => theme.global.colors['light-1']};
+  width: 100%;
+  height: ${({ theme }) => theme.sizes.settings.heightCollapsed}px;
+  text-align: center;
 `;
 
 export const showSettings = ({ route, match, tabIndex }) => {
@@ -87,49 +105,6 @@ const showScale = ({ route }) => {
   if (route === 'country') return false;
   return true;
 };
-const showDimensionKey = ({ route }) => {
-  if (route === 'metric') return false;
-  if (route === 'country') return false;
-  return true;
-};
-const showHINote = ({ route, match }) => {
-  const metricDetails = getMetricDetails(match);
-  if (metricDetails && metricDetails.metricType === 'indicators') return false;
-  if (route === 'country') return false;
-  return true;
-};
-const showHIIndicatorNote = ({ match, metricInfo }) => {
-  const metricDetails = getMetricDetails(match);
-  if (
-    metricDetails &&
-    metricDetails.metricType === 'indicators' &&
-    metricInfo &&
-    metricInfo.standard === 'Core'
-  ) {
-    return true;
-  }
-  return false;
-};
-const showHICountryNote = ({ route, country, standard }) => {
-  if (
-    route === 'country' &&
-    country.high_income_country === '1' &&
-    standard !== 'hi'
-  ) {
-    return true;
-  }
-  return false;
-};
-
-const showAnyHINote = args =>
-  showHINote(args) || showHIIndicatorNote(args) || showHICountryNote(args);
-
-const showStandard = ({ match }) => {
-  const metricDetails = getMetricDetails(match);
-  if (metricDetails && metricDetails.metricType === 'indicators') return false;
-  return true;
-};
-const showBenchmark = () => true;
 
 export function Settings({
   route,
@@ -139,10 +114,10 @@ export function Settings({
   tabIndex,
   onSetStandard,
   onSetBenchmark,
-  intl,
   metricInfo,
   country,
 }) {
+  const [open, setOpen] = useState(false);
   if (!showSettings({ route, match, tabIndex })) return null;
   return (
     <Styled>
@@ -151,94 +126,71 @@ export function Settings({
           <ScaleToggle />
         </SetScaleWrap>
       )}
-      <SettingsIconWrap>
-        <SettingsIconWrapInner>
-          <Icon name="SETTINGS" />
-        </SettingsIconWrapInner>
-      </SettingsIconWrap>
       <ResponsiveContext.Consumer>
         {size => (
-          <Box
-            direction="row"
-            height="90px"
-            width="full"
-            pad={{ left: size === 'xlarge' ? 'medium' : 'small' }}
-            align="start"
-            style={{ position: 'relative' }}
-          >
-            {showDimensionKey({ route, match }) && <Key />}
-            {showBenchmark() && (
-              <SettingsToggle
-                setting="benchmark"
-                active={benchmark}
-                onActivate={onSetBenchmark}
-                options={BENCHMARKS}
-                square={{
-                  type: 'line',
-                  style: benchmark === 'best' ? 'solid' : 'dashed',
-                  color: 'light-2',
-                }}
-                horizontal={route === 'metric' || route === 'country'}
-              />
+          <>
+            {isMaxSize(size, 'medium') && (
+              <StyledButton onClick={() => setOpen(true)}>
+                <Icon name="SETTINGS" />
+                <span>More settings</span>
+              </StyledButton>
             )}
-            {showStandard({ route, match }) && (
-              <SettingsToggle
-                setting="standard"
-                active={standard}
-                onActivate={onSetStandard}
-                options={STANDARDS}
-                square={{
-                  type: 'square',
-                  style: standard === 'core' ? 'solid' : 'stripes',
-                  color: 'esr',
-                }}
-                horizontal={route === 'metric' || route === 'country'}
-              />
+            {isMinSize(size, 'large') && (
+              <SettingsIconWrap>
+                <SettingsIconWrapInner>
+                  <Icon name="SETTINGS" />
+                </SettingsIconWrapInner>
+              </SettingsIconWrap>
             )}
-            {showAnyHINote({ route, match, metricInfo, country, standard }) && (
+            {isMinSize(size, 'large') && (
               <Box
-                pad={{
-                  top: 'small',
-                  left: size === 'xlarge' ? 'large' : 'medium',
-                }}
-                direction="column"
-                style={{
-                  maxWidth: size === 'xlarge' ? '300px' : '240px',
-                }}
+                direction="row"
+                height="90px"
+                width="full"
+                pad={{ left: size === 'xlarge' ? 'medium' : 'small' }}
+                align="start"
+                style={{ position: 'relative' }}
               >
-                <Box pad={{ bottom: 'xsmall' }}>
-                  <Text style={{ fontWeight: 600 }} size="small">
-                    {showHINote({ route, match }) && (
-                      <span>
-                        {`(${intl.formatMessage(
-                          rootMessages.labels.hiCountry,
-                        )}): ${intl.formatMessage(messages.hi.title)}`}
-                      </span>
-                    )}
-                    {showHIIndicatorNote({ route, match, metricInfo }) && (
-                      <FormattedMessage {...messages.hi.title} />
-                    )}
-                    {showHICountryNote({ route, country, standard }) && (
-                      <FormattedMessage {...messages.hi.title} />
-                    )}
-                  </Text>
-                </Box>
-                <Box>
-                  <Text size="xsmall">
-                    {showHINote({ route, match }) && (
-                      <FormattedMessage {...messages.hi.text} />
-                    )}
-                    {showHIIndicatorNote({ route, match, metricInfo }) && (
-                      <FormattedMessage {...messages.hi.textIndicator} />
-                    )}
-                    {showHICountryNote({ route, country, standard }) && (
-                      <FormattedMessage {...messages.hi.text} />
-                    )}
-                  </Text>
-                </Box>
+                <SettingsInner
+                  route={route}
+                  match={match}
+                  benchmark={benchmark}
+                  onSetBenchmark={onSetBenchmark}
+                  standard={standard}
+                  onSetStandard={onSetStandard}
+                  metricInfo={metricInfo}
+                  country={country}
+                  size={size}
+                />
               </Box>
             )}
-          </Box>
+            {isMaxSize(size, 'medium') && open && (
+              <Layer full animate={false}>
+                <Box fill>
+                  <Box pad="large" flex overflow="auto">
+                    <SettingsInner
+                      route={route}
+                      match={match}
+                      benchmark={benchmark}
+                      onSetBenchmark={onSetBenchmark}
+                      standard={standard}
+                      onSetStandard={onSetStandard}
+                      metricInfo={metricInfo}
+                      country={country}
+                      size={size}
+                      fullSize
+                    />
+                  </Box>
+                  <Box as="footer" justify="end" direction="row" align="center">
+                    <StyledButton onClick={() => setOpen(false)}>
+                      <Icon name="SETTINGS" />
+                      <span>Close settings</span>
+                    </StyledButton>
+                  </Box>
+                </Box>
+              </Layer>
+            )}
+          </>
         )}
       </ResponsiveContext.Consumer>
     </Styled>
@@ -254,7 +206,6 @@ Settings.propTypes = {
   tabIndex: PropTypes.number,
   onSetStandard: PropTypes.func,
   onSetBenchmark: PropTypes.func,
-  intl: intlShape.isRequired,
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
@@ -299,4 +250,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(Settings));
+export default compose(withConnect)(Settings);

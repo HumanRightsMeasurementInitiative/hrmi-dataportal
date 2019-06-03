@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box, Button, TextInput } from 'grommet';
 import { Close, Search, FormClose } from 'grommet-icons';
-
+import { isMinSize } from 'utils/responsive';
 // prettier-ignore
 const Top = styled.div`
   background-color: ${({ theme }) => theme.global.colors['dark-2']};
@@ -18,14 +18,21 @@ class NavTop extends React.Component {
   }
 
   componentDidMount() {
-    this.textInput.current.focus();
+    if (this.textInput && this.textInput.current)
+      this.textInput.current.focus();
   }
 
   render() {
-    const { search, onClose, onSearch, placeholder = 'search' } = this.props;
+    const {
+      search,
+      onClose,
+      onSearch,
+      placeholder = 'search',
+      size,
+    } = this.props;
     return (
       <Top>
-        <Box pad="small" direction="row">
+        <Box pad="small" direction="row" fill="vertical" align="center">
           <Box
             background="dark-1"
             width="large"
@@ -41,7 +48,7 @@ class NavTop extends React.Component {
               onChange={evt => evt && evt.target && onSearch(evt.target.value)}
               placeholder={placeholder}
               pad="xsmall"
-              ref={this.textInput}
+              ref={isMinSize(size, 'medium') && this.textInput}
             />
             {search && search.length > 0 && (
               <Button onClick={() => onSearch('')} pad="xsmall">
@@ -66,6 +73,7 @@ NavTop.propTypes = {
   onSearch: PropTypes.func,
   search: PropTypes.string,
   placeholder: PropTypes.string,
+  size: PropTypes.string,
 };
 
 export default NavTop;
