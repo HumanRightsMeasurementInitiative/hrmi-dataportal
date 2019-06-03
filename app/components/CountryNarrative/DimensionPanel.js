@@ -99,14 +99,14 @@ function DimensionPanel({
             {
               key,
               value: 0,
-              label: intl.formatMessage(rootMessages.tabs.trend),
-              skip: !data.value,
+              label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              skip: !hasAtRisk,
             },
             {
               key,
-              value: 1,
-              label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-              skip: !hasAtRisk,
+              value: hasAtRisk ? 1 : 0,
+              label: intl.formatMessage(rootMessages.tabs.trend),
+              skip: !data.value,
             },
             {
               key,

@@ -225,6 +225,26 @@ export function CountryMetric({
           modal
           tabs={[
             {
+              key: 'atrisk',
+              title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              // howToRead: {
+              //   contxt: 'CountryMetric',
+              //   chart: 'WordCloud',
+              //   data: 'atRisk',
+              // },
+              content: hasAtRisk && metric.metricType !== 'indicators' && (
+                <CountryMetricPeople
+                  data={atRisk}
+                  metric={metric}
+                  atRiskAnalysis={atRiskAnalysis}
+                  atRiskAnalysisSubrights={atRiskAnalysisSubrights}
+                  locale={intl.locale}
+                  hasAnalysis={hasAnalysis(metric)}
+                  hasSubrightAnalysis={hasSubrightAnalysis(metric)}
+                />
+              ),
+            },
+            {
               key: 'trend',
               title: intl.formatMessage(rootMessages.tabs.trend),
               // howToRead: {
@@ -256,26 +276,6 @@ export function CountryMetric({
                   onSetStandard={onSetStandard}
                   standard={standard}
                   benchmark={benchmark}
-                />
-              ),
-            },
-            {
-              key: 'atrisk',
-              title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-              // howToRead: {
-              //   contxt: 'CountryMetric',
-              //   chart: 'WordCloud',
-              //   data: 'atRisk',
-              // },
-              content: hasAtRisk && metric.metricType !== 'indicators' && (
-                <CountryMetricPeople
-                  data={atRisk}
-                  metric={metric}
-                  atRiskAnalysis={atRiskAnalysis}
-                  atRiskAnalysisSubrights={atRiskAnalysisSubrights}
-                  locale={intl.locale}
-                  hasAnalysis={hasAnalysis(metric)}
-                  hasSubrightAnalysis={hasSubrightAnalysis(metric)}
                 />
               ),
             },
