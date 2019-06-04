@@ -140,7 +140,7 @@ export function MetricAside({
         metricInfo={metricInfo}
         standard={standard}
       />
-      <Box direction="column" pad={{ bottom: 'medium', left: 'medium' }}>
+      <Box direction="column" pad={{ bottom: 'medium', horizontal: 'medium' }}>
         {metricType !== 'dimensions' && (
           <Pad>
             <Heading

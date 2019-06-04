@@ -17,18 +17,19 @@ import { navigate } from 'containers/App/actions';
 
 import Button from 'styled/Button';
 import ButtonIcon from 'styled/ButtonIcon';
+import Visible from 'styled/Visible';
 
 import messages from './messages';
 
 const StyledTextButton = styled(Button)`
   color: ${({ theme }) => theme.global.colors.dark};
-  padding: 0;
+  padding: 0 10px 0 0;
   &:hover {
     color: ${({ theme }) => theme.global.colors['dark-1']};
     background-color: transparent;
   }
   @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
-    padding: 0;
+    padding: 0 10px 0 0;
   }
 `;
 
@@ -39,7 +40,7 @@ const Styled = styled(Box)`
       position: absolute;
       top: 0;
       right: ${props.theme.global.edgeSize.large};
-      z-index: 10;
+      z-index: 8;
     `}
   ${props =>
     props.float &&
@@ -95,22 +96,24 @@ function Close({
       float={float}
     >
       {text && (!float || scrollTop === 0) && (
-        <StyledTextButton
-          hoverColor="dark"
-          onClick={() =>
-            // prettier-ignore
-            onClick
-              ? onClick()
-              : onClose(closeTarget || '', {
-                keepTab,
-                needsLocale: !closeTarget,
-              })
-          }
-        >
-          <Text size="small">
-            <FormattedMessage {...messages.label} />
-          </Text>
-        </StyledTextButton>
+        <Visible min="medium">
+          <StyledTextButton
+            hoverColor="dark"
+            onClick={() =>
+              // prettier-ignore
+              onClick
+                ? onClick()
+                : onClose(closeTarget || '', {
+                  keepTab,
+                  needsLocale: !closeTarget,
+                })
+            }
+          >
+            <Text size="small">
+              <FormattedMessage {...messages.label} />
+            </Text>
+          </StyledTextButton>
+        </Visible>
       )}
       <StyledButtonIcon
         subtle={plain}
