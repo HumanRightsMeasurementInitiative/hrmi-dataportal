@@ -41,16 +41,26 @@ const prepPopulationValue = (value, intl) => {
   };
 };
 
-function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
+function CountryAbout({
+  intl,
+  country,
+  auxIndicators,
+  onCategoryClick,
+  showFAQs,
+}) {
   if (!auxIndicators || !country) return null;
   const incomeCode =
     country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
   return (
-    <Box direction="column" pad={{ left: 'medium', vertical: 'medium' }}>
+    <Box
+      direction="column"
+      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
+      style={{ maxWidth: '500px' }}
+    >
       <Heading level={3}>
         <FormattedMessage {...messages.title} />
       </Heading>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage
@@ -71,7 +81,7 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
           </Text>
         </Box>
       </Box>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage
@@ -96,7 +106,7 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
           </Text>
         </Box>
       </Box>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage {...messages.region} />
@@ -116,7 +126,7 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
           </Button>
         </Box>
       </Box>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage {...messages.oecd} />
@@ -136,7 +146,7 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
           </Button>
         </Box>
       </Box>
-      <Box direction="row">
+      <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
             <FormattedMessage {...messages.income} />
@@ -150,15 +160,18 @@ function CountryAbout({ intl, country, auxIndicators, onCategoryClick }) {
           </Button>
         </Box>
       </Box>
-      <FAQs
-        questions={['scale', 'year', 'standards', 'benchmarks', 'indicators']}
-      />
+      {showFAQs && (
+        <FAQs
+          questions={['scale', 'year', 'standards', 'benchmarks', 'indicators']}
+        />
+      )}
     </Box>
   );
 }
 
 CountryAbout.propTypes = {
   onCategoryClick: PropTypes.func,
+  showFAQs: PropTypes.bool,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,

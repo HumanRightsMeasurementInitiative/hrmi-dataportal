@@ -12,7 +12,9 @@ import DimensionTitle from './DimensionTitle';
 const DimensionScoreWrapper = props => (
   <Box {...props} width="200px" flex={{ shrink: 0 }} />
 );
-const DimensionScoreText = props => <Text weight="bold" {...props} />;
+const DimensionScoreText = props => (
+  <Text weight="bold" size="large" {...props} />
+);
 const BarWrap = props => <Box direction="row" {...props} align="center" />;
 
 const WrapAnnotateBetter = styled.div`
@@ -28,15 +30,7 @@ const getDimensionRefs = (score, benchmark) => {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refColumn;
-    return [
-      { value: 100, style: 'solid', key: 'best' },
-      {
-        value: score && parseFloat(score[col]),
-        style: 'dotted',
-        key: 'adjusted',
-      },
-    ];
+    return [{ value: 100, style: 'solid', key: 'best' }];
   }
   return false;
 };
@@ -73,12 +67,7 @@ function DimensionChart({ data, benchmark, standard }) {
           fill="horizontal"
           style={{ position: 'relative' }}
         >
-          <Bar
-            data={dim}
-            showLabels
-            annotateBenchmarkAbove
-            showBenchmark={!!dim.value}
-          />
+          <Bar data={dim} showLabels annotateBenchmarkAbove showBenchmark />
           <WrapAnnotateBetter>
             <AnnotateBetter absolute />
           </WrapAnnotateBetter>

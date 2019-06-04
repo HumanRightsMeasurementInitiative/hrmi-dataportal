@@ -22,7 +22,7 @@ const BarWrapInner = styled.div`
 `;
 
 const Styled = styled(Wrapper)`
-  height: ${({ heightTotal }) => heightTotal}px;
+  height: ${({ ht }) => ht}px;
 `;
 
 // level:
@@ -33,6 +33,7 @@ function BarMultiple({
   showLabels,
   rotate,
   totalHeight,
+  heightIndividual,
   annotateBenchmarkAbove,
   scoreOnHover,
 }) {
@@ -47,12 +48,17 @@ function BarMultiple({
   } = dataMultiple;
   const barCount = data ? data.length : 1;
   const barGap = (PAD_BOTTOM + PAD_TOP) * (barCount - 1);
-  const heightTotal = totalHeight || (HEIGHT + PAD_BOTTOM) * barCount;
-  const heightIndividual = totalHeight
-    ? barCount && (heightTotal - barGap) / barCount
-    : HEIGHT;
+  let ht;
+  let hi;
+  if (totalHeight) {
+    ht = totalHeight;
+    hi = barCount && (ht - barGap) / barCount;
+  } else {
+    hi = heightIndividual - PAD_BOTTOM || HEIGHT;
+    ht = (hi + PAD_BOTTOM) * barCount;
+  }
   return (
-    <Styled heightTotal={heightTotal}>
+    <Styled ht={ht}>
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
       {data &&
         data.map((datum, index, list) => (
@@ -74,7 +80,7 @@ function BarMultiple({
               showBenchmark={false}
               rotate={rotate}
               showIncompleteAction={false}
-              height={Math.round(heightIndividual)}
+              height={Math.round(hi)}
               scoreOnHover={scoreOnHover}
             />
           </BarWrapInner>
@@ -84,7 +90,7 @@ function BarMultiple({
           rotate={rotate}
           benchmarkKey={benchmark}
           above={annotateBenchmarkAbove}
-          margin={annotateBenchmarkAbove ? '0px 2px' : '0'}
+          margin={annotateBenchmarkAbove ? '0px 1px' : '0'}
         />
       )}
       {showLabels && (
@@ -102,6 +108,7 @@ BarMultiple.propTypes = {
   showLabels: PropTypes.bool,
   annotateBenchmarkAbove: PropTypes.bool,
   totalHeight: PropTypes.number,
+  heightIndividual: PropTypes.number,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };

@@ -99,14 +99,14 @@ function SettingsToggle({
               {setting === 'standard' && (
                 <Tooltip
                   iconSize="medium"
-                  maxWidth="400px"
+                  maxWidth="320px"
                   component={<StandardOverlay />}
                 />
               )}
               {setting === 'benchmark' && (
                 <Tooltip
                   iconSize="medium"
-                  maxWidth="400px"
+                  maxWidth="320px"
                   component={<BenchmarkOverlay />}
                 />
               )}

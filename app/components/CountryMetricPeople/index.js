@@ -13,8 +13,9 @@ import rootMessages from 'messages';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import HTMLWrapper from 'components/HTMLWrapper';
-import Loading from 'components/Loading';
+import Loading from 'components/LoadingIndicator';
 import WordCloud from 'components/WordCloud';
+import Hint from 'styled/Hint';
 
 import messages from './messages';
 
@@ -23,16 +24,34 @@ const Styled = styled(Box)``;
 const RightHeading = props => (
   <Heading level={4} margin={{ vertical: '15px' }} {...props} />
 );
-const StyledRightHeading = styled(RightHeading)`
-  font-weight: normal;
-`;
+const StyledRightHeading = styled(RightHeading)``;
+
+const renderAnalysis = (atRiskAnalysis, intl) => (
+  <Box>
+    {atRiskAnalysis && atRiskAnalysis.content && (
+      <>
+        {atRiskAnalysis.locale !== intl.locale && (
+          <Paragraph>
+            <Hint italic>
+              <FormattedMessage {...messages.noAnalysisInLanguage} />
+            </Hint>
+          </Paragraph>
+        )}
+        <HTMLWrapper innerhtml={atRiskAnalysis.content} />
+      </>
+    )}
+    {(!atRiskAnalysis || !atRiskAnalysis.content) && <Loading />}
+  </Box>
+);
 
 function CountryMetricPeople({
   data,
   metric,
   atRiskAnalysis,
+  atRiskAnalysisSubrights,
   intl,
   hasAnalysis,
+  hasSubrightAnalysis,
 }) {
   return (
     <Styled pad="medium" direction="column">
@@ -41,14 +60,23 @@ function CountryMetricPeople({
           <Paragraph>
             <FormattedMessage {...messages.introRight} />
           </Paragraph>
-          {Object.values(data).map((d, index, array) => (
-            <WordCloud
-              key={d.code}
-              data={d}
-              dimension={metric.dimension}
-              showTitle={array.length > 1}
-            />
-          ))}
+          <Box pad={{ top: 'medium' }}>
+            {Object.values(data).map((d, index, array) => {
+              const analysisSR =
+                hasSubrightAnalysis &&
+                atRiskAnalysisSubrights.find(sra => sra.key === d.subright);
+              return (
+                <span key={d.code}>
+                  <WordCloud
+                    data={d}
+                    dimension={metric.dimension}
+                    showTitle={array.length > 1}
+                  />
+                  {analysisSR && renderAnalysis(analysisSR, intl)}
+                </span>
+              );
+            })}
+          </Box>
         </Box>
       )}
       {metric.metricType === 'dimensions' && (
@@ -56,47 +84,44 @@ function CountryMetricPeople({
           <Paragraph>
             <FormattedMessage {...messages.introDimension} />
           </Paragraph>
-          {Object.values(data).map(i => (
-            <div key={i.key}>
-              <StyledRightHeading>
-                <FormattedMessage {...rootMessages.rights[i.key]} />
-              </StyledRightHeading>
-              {Object.values(i.atRiskData).map((d, index, array) => (
-                <WordCloud
-                  key={d.code}
-                  data={d}
-                  dimension={i.dimension}
-                  showTitle={array.length > 1}
-                />
-              ))}
-            </div>
-          ))}
+          <Box pad={{ top: 'medium' }}>
+            {Object.values(data).map(i => (
+              <div key={i.key}>
+                {Object.values(i.atRiskData).length > 1 && (
+                  <StyledRightHeading>
+                    <FormattedMessage {...rootMessages.rights[i.key]} />
+                  </StyledRightHeading>
+                )}
+                {Object.values(i.atRiskData).map((d, index, array) => (
+                  <WordCloud
+                    key={d.code}
+                    data={d}
+                    dimension={i.dimension}
+                    subright={array.length > 1}
+                  />
+                ))}
+              </div>
+            ))}
+          </Box>
         </Box>
       )}
-      {hasAnalysis && (
-        <Box>
-          {atRiskAnalysis && (
-            <span>
-              {atRiskAnalysis.locale !== intl.locale && (
-                <Paragraph>
-                  <FormattedMessage {...messages.noAnalysisInLanguage} />
-                </Paragraph>
-              )}
-              <HTMLWrapper innerhtml={atRiskAnalysis.content} />
-            </span>
-          )}
-          {!atRiskAnalysis && <Loading />}
-        </Box>
-      )}
+      {hasAnalysis &&
+        !hasSubrightAnalysis &&
+        renderAnalysis(atRiskAnalysis, intl)}
     </Styled>
   );
 }
 
 CountryMetricPeople.propTypes = {
   hasAnalysis: PropTypes.bool,
+  hasSubrightAnalysis: PropTypes.bool,
   metric: PropTypes.object,
   data: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  atRiskAnalysisSubrights: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.bool,
+  ]),
   intl: intlShape.isRequired,
 };
 

@@ -49,16 +49,30 @@ const scaleOpacity = scaleLinear()
   .domain([0, 1])
   .range([0.66, 1]);
 
-export function WordCloud({ data, showTitle, dimension, intl }) {
+const RightHeading = props => (
+  <Heading margin={{ top: 'none', bottom: 'medium' }} {...props} />
+);
+const StyledRightHeading = styled(RightHeading)``;
+const StyledRightHeadingAbove = styled(Text)`
+  font-size: 14px;
+  margin-top: 10px;
+`;
+
+export function WordCloud({ data, subright, dimension, intl, border = true }) {
   return (
-    <Styled direction="column" pad={{ bottom: 'large' }} border="bottom">
-      {showTitle && (
-        <Heading level={5}>
-          <FormattedMessage
-            {...rootMessages.rights[data.subright || data.right]}
-          />
-        </Heading>
-      )}
+    <Styled
+      direction="column"
+      pad={{ bottom: 'large', top: 'xsmall' }}
+      border={border ? 'top' : false}
+    >
+      <StyledRightHeadingAbove>
+        <FormattedMessage {...rootMessages.labels.atRiksFor} />
+      </StyledRightHeadingAbove>
+      <StyledRightHeading level={subright ? 5 : 4}>
+        <FormattedMessage
+          {...rootMessages.rights[data.subright || data.right]}
+        />
+      </StyledRightHeading>
       {data.scores.length === 0 && (
         <Text>
           <FormattedMessage {...messages.noGroupData} />
@@ -92,7 +106,7 @@ export function WordCloud({ data, showTitle, dimension, intl }) {
               </Box>
             ))}
       </Words>
-      <Source center />
+      {data.scores.length > 0 && <Source center />}
     </Styled>
   );
 }
@@ -100,7 +114,8 @@ export function WordCloud({ data, showTitle, dimension, intl }) {
 WordCloud.propTypes = {
   data: PropTypes.object,
   dimension: PropTypes.string,
-  showTitle: PropTypes.bool,
+  subright: PropTypes.bool,
+  border: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

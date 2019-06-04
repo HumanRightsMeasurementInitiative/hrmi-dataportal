@@ -13,10 +13,12 @@
 export const LOAD_DATA_IF_NEEDED = 'hrmi/App/LOAD_DATA_IF_NEEDED';
 export const LOAD_DATA_SUCCESS = 'hrmi/App/LOAD_DATA_SUCCESS';
 export const LOAD_DATA_ERROR = 'hrmi/App/LOAD_DATA_ERROR';
+export const DATA_REQUESTED = 'hrmi/App/DATA_REQUESTED';
 export const DATA_READY = 'hrmi/App/DATA_READY';
 export const LOAD_CONTENT_IF_NEEDED = 'hrmi/App/LOAD_CONTENT_IF_NEEDED';
 export const LOAD_CONTENT_SUCCESS = 'hrmi/App/LOAD_CONTENT_SUCCESS';
 export const LOAD_CONTENT_ERROR = 'hrmi/App/LOAD_CONTENT_ERROR';
+export const CONTENT_REQUESTED = 'hrmi/App/CONTENT_REQUESTED';
 export const CONTENT_READY = 'hrmi/App/CONTENT_READY';
 
 // navigation actions
@@ -28,6 +30,10 @@ export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
 export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 export const SET_TAB = 'hrmi/App/SET_TAB';
 export const SET_MODALTAB = 'hrmi/App/SET_MODALTAB';
+
+// state actions
+export const OPEN_HOW_TO = 'hrmi/App/OPEN_HOW_TO';
+export const HIGHLIGHT_COUNTRY = 'hrmi/App/HIGHLIGHT_COUNTRY';
 
 export const COLUMNS = {
   CPR: {

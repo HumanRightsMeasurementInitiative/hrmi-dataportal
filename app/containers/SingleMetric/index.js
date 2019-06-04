@@ -19,7 +19,7 @@ import BarBullet from 'components/Bars/BarBullet';
 import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 import MainColumn from 'styled/MainColumn';
-import Button from 'styled/Button';
+import Hint from 'styled/Hint';
 
 import { sortScores } from 'utils/scores';
 
@@ -36,17 +36,20 @@ import {
   getSortSearch,
   getSortOrderSearch,
   getCountries,
-  getIndicatorInfo,
   getOECDSearch,
+  getDependenciesReady,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import { BENCHMARKS, COLUMNS, COUNTRY_SORTS } from 'containers/App/constants';
 import CountryFilters from 'components/CountryFilters';
 import CountrySort from 'components/CountrySort';
+import LoadingIndicator from 'components/LoadingIndicator';
 
 import rootMessages from 'messages';
 // import messages from './messages';
+
+import CountryButton from './CountryButton';
 
 const Styled = styled(Box)`
   margin: 0 auto;
@@ -60,12 +63,11 @@ const WrapAnnotateBetter = styled.div`
 `;
 
 // prettier-ignore
-const CountryButton = styled(Button)`
-  text-align: right;
-  padding: 3px 0;
+const StyledScoreText = styled(Text)`
+  padding: 0 5px;
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
-    padding: 6px 0;
+    padding: 0 8px;
   }
 `;
 
@@ -76,8 +78,13 @@ const CountryWrap = styled(Box)`
   border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
 `;
 
-const DEPENDENCIES = []; // ['countries', 'cprScores', 'esrScores'];
-const DEPENDENCIES_INDICATORS = []; // ['countries', 'esrIndicatorScores'];
+const DEPENDENCIES = [
+  'countries',
+  'cprScores',
+  'esrScores',
+  'esrIndicators',
+  'esrIndicatorScores',
+];
 
 const getESRDimensionValue = (score, benchmark) => {
   if (score) {
@@ -129,12 +136,13 @@ export function SingleMetric({
   onOrderChange,
   onCountryClick,
   countries,
-  metricInfo,
+  dataReady,
 }) {
   useEffect(() => {
     // kick off loading of data
-    onLoadData(metric);
+    onLoadData();
   }, []);
+
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   const currentSort = sort || 'score';
@@ -165,127 +173,128 @@ export function SingleMetric({
           onOrderToggle={onOrderChange}
         />
       </Box>
-      <Styled
-        pad={{ vertical: 'large', right: 'xlarge' }}
-        direction="column"
-        fill="horizontal"
-      >
-        <Box direction="row" align="end" pad={{ bottom: 'xsmall' }}>
-          <CountryWrap
-            width="150px"
-            noBorder
-            align="end"
-            pad={{ right: 'medium' }}
-            flex={{ shrink: 0 }}
-          >
-            <Text size="small" style={{ fontWeight: 600 }}>
-              <FormattedMessage {...rootMessages.labels.score} />
-            </Text>
-          </CountryWrap>
-          <BarWrap
-            flex
-            direction="row"
-            style={{ position: 'relative' }}
-            align="center"
-          >
-            <Text size="small" style={{ transform: 'translateX(-50%)' }}>
-              0
-            </Text>
-            <Text
-              size="small"
-              margin={{ left: 'auto' }}
-              style={{ transform: 'translateX(50%)' }}
+      {!dataReady && <LoadingIndicator />}
+      {dataReady && sortedScores && sortedScores.length === 0 && (
+        <Hint italic>
+          <FormattedMessage {...rootMessages.hints.noResults} />
+        </Hint>
+      )}
+      {dataReady && sortedScores && sortedScores.length > 0 && (
+        <Styled
+          pad={{ vertical: 'large', right: 'xlarge' }}
+          direction="column"
+          fill="horizontal"
+        >
+          <Box direction="row" align="end" pad={{ bottom: 'xsmall' }}>
+            <CountryWrap
+              width="160px"
+              noBorder
+              align="end"
+              pad={{ right: 'small' }}
+              flex={{ shrink: 0 }}
             >
-              {metric.type === 'esr' || metric.metricType === 'indicators'
-                ? '100%'
-                : '10'}
-            </Text>
-            <WrapAnnotateBetter>
-              <AnnotateBetter />
-            </WrapAnnotateBetter>
-            {metric.type === 'esr' && (
-              <AnnotateBenchmark
-                benchmarkKey={benchmark}
-                above
-                margin="0 2px"
-              />
-            )}
-          </BarWrap>
-        </Box>
-        {sortedScores &&
-          sortedScores.map(s => {
-            const country =
-              (metric.type === 'esr' ||
-                (metric.metricType === 'indicators' &&
-                  metricInfo.standard === 'Core')) &&
-              countries.find(c => c.country_code === s.country_code);
-            return (
-              <Box
-                key={s.country_code}
-                direction="row"
-                align="center"
-                border="right"
+              <StyledScoreText size="small" style={{ fontWeight: 600 }}>
+                <FormattedMessage {...rootMessages.labels.score} />
+              </StyledScoreText>
+            </CountryWrap>
+            <BarWrap
+              flex
+              direction="row"
+              style={{ position: 'relative' }}
+              align="center"
+            >
+              <Text size="small" style={{ transform: 'translateX(-50%)' }}>
+                0
+              </Text>
+              <Text
+                size="small"
+                margin={{ left: 'auto' }}
+                style={{ transform: 'translateX(50%)' }}
               >
-                <CountryWrap
-                  width="150px"
-                  align="end"
-                  flex={{ shrink: 0 }}
-                  pad={{ right: 'medium' }}
+                {metric.type === 'esr' || metric.metricType === 'indicators'
+                  ? '100%'
+                  : '10'}
+              </Text>
+              <WrapAnnotateBetter>
+                <AnnotateBetter />
+              </WrapAnnotateBetter>
+              {metric.type === 'esr' && (
+                <AnnotateBenchmark
+                  benchmarkKey={benchmark}
+                  above
+                  margin="0 2px"
+                />
+              )}
+            </BarWrap>
+          </Box>
+          {sortedScores &&
+            sortedScores.map(s => {
+              const country = countries.find(
+                c => c.country_code === s.country_code,
+              );
+              return (
+                <Box
+                  key={s.country_code}
+                  direction="row"
+                  align="center"
+                  border="right"
                 >
-                  <CountryButton
-                    onClick={() => onCountryClick(s.country_code, metric.key)}
+                  <CountryWrap
+                    width="160px"
+                    align="end"
+                    flex={{ shrink: 0 }}
+                    pad={{ right: 'small' }}
                   >
-                    <FormattedMessage
-                      {...rootMessages.countries[s.country_code]}
-                    />
-                    {country && country.high_income_country === '1' && (
-                      <span>
-                        {` (${intl.formatMessage(
-                          rootMessages.labels.hiCountry,
-                        )})`}
-                      </span>
+                    {country && (
+                      <CountryButton
+                        onCountryClick={() =>
+                          onCountryClick(s.country_code, metric.key)
+                        }
+                        country={country}
+                        metric={metric}
+                      />
                     )}
-                  </CountryButton>
-                </CountryWrap>
-                <BarWrap flex>
-                  {(metric.type === 'esr' ||
-                    metric.metricType === 'indicators') && (
-                    <Bar
-                      showLabels={false}
-                      level={2}
-                      data={{
-                        color: 'esr',
-                        refValues: getDimensionRefs(s, currentBenchmark),
-                        value: getESRDimensionValue(s, currentBenchmark),
-                        maxValue: 100,
-                        unit: '%',
-                        stripes: standard === 'hi',
-                      }}
-                      scoreOnHover="top"
-                    />
-                  )}
-                  {metric.type === 'cpr' && (
-                    <BarBullet
-                      // color = metric.metricType === 'rights' ? metric.dimension : metric.key;
-                      level={2}
-                      showLabels={false}
-                      data={{
-                        color: metric.dimension || metric.key,
-                        value: getCPRDimensionValue(s),
-                        maxValue: 10,
-                        unit: '',
-                        band: getBand(s),
-                      }}
-                      scoreOnHover="top"
-                      bandOnHover="top"
-                    />
-                  )}
-                </BarWrap>
-              </Box>
-            );
-          })}
-      </Styled>
-      <Source />
+                  </CountryWrap>
+                  <BarWrap flex>
+                    {(metric.type === 'esr' ||
+                      metric.metricType === 'indicators') && (
+                      <Bar
+                        showLabels={false}
+                        level={2}
+                        data={{
+                          color: 'esr',
+                          refValues: getDimensionRefs(s, currentBenchmark),
+                          value: getESRDimensionValue(s, currentBenchmark),
+                          maxValue: 100,
+                          unit: '%',
+                          stripes: standard === 'hi',
+                        }}
+                        scoreOnHover="top"
+                      />
+                    )}
+                    {metric.type === 'cpr' && (
+                      <BarBullet
+                        // color = metric.metricType === 'rights' ? metric.dimension : metric.key;
+                        level={2}
+                        showLabels={false}
+                        data={{
+                          color: metric.dimension || metric.key,
+                          value: getCPRDimensionValue(s),
+                          maxValue: 10,
+                          unit: '',
+                          band: getBand(s),
+                        }}
+                        scoreOnHover="top"
+                        bandOnHover="top"
+                      />
+                    )}
+                  </BarWrap>
+                </Box>
+              );
+            })}
+          <Source />
+        </Styled>
+      )}
     </MainColumn>
   );
 }
@@ -309,10 +318,11 @@ SingleMetric.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   onCountryClick: PropTypes.func,
-  metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  dataReady: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
+  dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   scores: (state, { metric }) => {
     if (metric.metricType === 'dimensions') {
       return metric.type === 'esr'
@@ -329,12 +339,6 @@ const mapStateToProps = createStructuredSelector({
     }
     return false;
   },
-  metricInfo: (state, { metric }) => {
-    if (metric.metricType === 'indicators') {
-      return getIndicatorInfo(state, metric.code);
-    }
-    return false;
-  },
   countries: state => getCountries(state),
   benchmark: state => getBenchmarkSearch(state),
   standard: state => getStandardSearch(state),
@@ -347,14 +351,8 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLoadData: metric => {
-      if (metric.metricType === 'indicators') {
-        return DEPENDENCIES_INDICATORS.forEach(key =>
-          dispatch(loadDataIfNeeded(key)),
-        );
-      }
-      return DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
-    },
+    onLoadData: () =>
+      DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
     onRemoveFilter: key =>
       dispatch(navigate({}, { replace: false, deleteParams: [key] })),
     onAddFilter: (key, value) =>

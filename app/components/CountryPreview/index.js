@@ -7,11 +7,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Box, Text } from 'grommet';
+// import { Emergency } from 'grommet-icons';
 import styled from 'styled-components';
-import { Button, Box, Text } from 'grommet';
-import { Emergency } from 'grommet-icons';
-
-import Tooltip from 'components/Tooltip';
+// import Tooltip from 'components/Tooltip';
 
 import {
   DIMENSIONS,
@@ -20,13 +19,25 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 
+import ButtonPlain from 'styled/ButtonPlain';
+
 import rootMessages from 'messages';
-import messages from './messages';
+// import messages from './messages';
 
 import DiamondChart from './DiamondChart';
 
-const StyledEmergency = styled(Emergency)`
-  fill: ${({ theme }) => theme.global.colors.highlight2} !important;
+// const StyledEmergency = styled(Emergency)`
+//   fill: ${({ theme }) => theme.global.colors.highlight2} !important;
+// `;
+
+const Button = styled(ButtonPlain)`
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+const CountryLabel = styled.span`
+  font-weight: 700;
+  color: ${({ theme }) => theme.global.colors.dark};
 `;
 
 const hasScoreRights = (metricScores, standard) => {
@@ -63,17 +74,17 @@ const getDimensionRefs = (dim, scores, standard, benchmark) => {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best' && scores.esr) {
-    const score =
-      scores.esr[dim.key] &&
-      scores.esr[dim.key].find(s => s.standard === standard.code);
-    const col = benchmark.refColumn;
+    // const score =
+    //   scores.esr[dim.key] &&
+    //   scores.esr[dim.key].find(s => s.standard === standard.code);
+    // const col = benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
-      {
-        value: score && parseFloat(score[col]),
-        style: 'dotted',
-        key: 'adjusted',
-      },
+      // {
+      //   value: score && parseFloat(score[col]),
+      //   style: 'dotted',
+      //   key: 'adjusted',
+      // },
     ];
   }
   return false;
@@ -99,29 +110,29 @@ const getDimensionValue = (dim, scores, standard, benchmark) => {
   }
   return false;
 };
-const getTooltip = (standard, country, intl) => {
-  if (country.high_income_country === '1' && standard.key === 'core') {
-    return (
-      <Tooltip
-        icon={<StyledEmergency size="small" />}
-        text={intl.formatMessage(messages.hiForCore)}
-        insideButton
-        maxWidth="150px"
-      />
-    );
-  }
-  if (country.high_income_country === '0' && standard.key === 'hi') {
-    return (
-      <Tooltip
-        icon={<StyledEmergency size="small" />}
-        text={intl.formatMessage(messages.loForHi)}
-        insideButton
-        maxWidth="150px"
-      />
-    );
-  }
-  return null;
-};
+// const getTooltip = (standard, country, intl) => {
+//   if (country.high_income_country === '1' && standard.key === 'core') {
+//     return (
+//       <Tooltip
+//         icon={<StyledEmergency size="small" />}
+//         text={intl.formatMessage(messages.hiForCore)}
+//         insideButton
+//         maxWidth="150px"
+//       />
+//     );
+//   }
+//   if (country.high_income_country === '0' && standard.key === 'hi') {
+//     return (
+//       <Tooltip
+//         icon={<StyledEmergency size="small" />}
+//         text={intl.formatMessage(messages.loForHi)}
+//         insideButton
+//         maxWidth="150px"
+//       />
+//     );
+//   }
+//   return null;
+// };
 const getDimensions = (
   scores,
   standard,
@@ -132,7 +143,7 @@ const getDimensions = (
   intl,
 ) =>
   DIMENSIONS.map(dim => ({
-    tooltip: dim.type === 'esr' && getTooltip(standard, country, intl),
+    // tooltip: dim.type === 'esr' && getTooltip(standard, country, intl),
     key: dim.key,
     color: dim.key,
     value: getDimensionValue(dim, scores, standard, benchmark),
@@ -172,7 +183,7 @@ const getRightGroups = (
   intl,
 ) =>
   DIMENSIONS.map(dim => ({
-    tooltip: dim.type === 'esr' && getTooltip(standard, country, intl),
+    // tooltip: dim.type === 'esr' && getTooltip(standard, country, intl),
     benchmark: dim.type === 'esr' && benchmark && benchmark.key,
     key: dim.key,
     color: dim.key,
@@ -201,18 +212,25 @@ export function CountryPreview({
   indicators,
   intl,
   showAnnotation,
+  onCountryHover,
 }) {
   if (!country) return null;
   return (
-    <Box
-      pad={{ horizontal: 'small', vertical: 'medium' }}
-      width="250px"
-      alignContent="center"
-    >
+    <Box pad="none" width="250px" alignContent="center">
       {country && (
-        <Button onClick={() => onSelectCountry(country.country_code)}>
-          {scale === 'd' && (
-            <div>
+        <Button
+          onClick={() => onSelectCountry(country.country_code)}
+          onMouseOver={() => onCountryHover(country.country_code)}
+          onFocus={() => onCountryHover(country.country_code)}
+          onMouseOut={() => onCountryHover(false)}
+          onBlur={() => onCountryHover(false)}
+        >
+          <Box
+            pad={{ horizontal: 'small', vertical: 'medium' }}
+            width="250px"
+            alignContent="center"
+          >
+            {scale === 'd' && (
               <DiamondChart
                 dimensions={getDimensions(
                   scores,
@@ -226,10 +244,8 @@ export function CountryPreview({
                 benchmark={benchmark}
                 showLabels={showAnnotation}
               />
-            </div>
-          )}
-          {scale === 'r' && (
-            <div>
+            )}
+            {scale === 'r' && (
               <DiamondChart
                 rightGroups={getRightGroups(
                   scores,
@@ -243,21 +259,23 @@ export function CountryPreview({
                 benchmark={benchmark}
                 showLabels={showAnnotation}
               />
-            </div>
-          )}
-          <Box pad={{ top: 'small' }}>
-            <Text textAlign="center" alignSelf="center">
-              <strong>
-                <FormattedMessage
-                  {...rootMessages.countries[country.country_code]}
-                />
-                {country && country.high_income_country === '1' && (
-                  <span>
-                    {` (${intl.formatMessage(rootMessages.labels.hiCountry)})`}
-                  </span>
-                )}
-              </strong>
-            </Text>
+            )}
+            <Box pad={{ top: 'small' }}>
+              <Text textAlign="center" alignSelf="center">
+                <CountryLabel>
+                  <FormattedMessage
+                    {...rootMessages.countries[country.country_code]}
+                  />
+                  {country && country.high_income_country === '1' && (
+                    <span>
+                      {` (${intl.formatMessage(
+                        rootMessages.labels.hiCountry,
+                      )})`}
+                    </span>
+                  )}
+                </CountryLabel>
+              </Text>
+            </Box>
           </Box>
         </Button>
       )}
@@ -268,10 +286,12 @@ export function CountryPreview({
 CountryPreview.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onSelectCountry: PropTypes.func,
+  onCountryHover: PropTypes.func,
   country: PropTypes.object,
   indicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scores: PropTypes.object,
   scale: PropTypes.string,
+  isActive: PropTypes.bool,
   standard: PropTypes.object,
   otherStandard: PropTypes.object,
   isDefaultStandard: PropTypes.bool,

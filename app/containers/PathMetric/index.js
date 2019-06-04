@@ -11,7 +11,6 @@ import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import { Layer, Box } from 'grommet';
-import { FormNext } from 'grommet-icons';
 
 import CountryMetric from 'containers/CountryMetric';
 import Close from 'containers/Close';
@@ -44,7 +43,7 @@ export function PathMetric({
     rootMessages[metric.metricType][metric.key],
   );
 
-  const ancestors = [];
+  const ancestors = [{ key: 'all' }];
 
   if (metric.metricType === 'rights') {
     ancestors.push({
@@ -77,7 +76,7 @@ export function PathMetric({
       {match.params.country && (
         <Layer
           full
-          margin="small"
+          margin={{ horizontal: 'large', top: 'large', bottom: 'small' }}
           onEsc={() => onCloseMetricOverlay(metricCode)}
           onClickOutside={() => onCloseMetricOverlay(metricCode)}
         >
@@ -90,31 +89,20 @@ export function PathMetric({
       )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
-          <Close topRight />
+          <Close float />
           <Box direction="column">
-            {ancestors.length > 0 && (
-              <HeaderLinks
-                onItemClick={key => onMetricClick(key)}
-                spacer={<FormNext />}
-                items={ancestors.map(ancestor => ({
-                  key: ancestor.key,
-                  label: intl.formatMessage(
-                    rootMessages[ancestor.type][ancestor.key],
-                  ),
-                }))}
-              />
-            )}
-            {ancestors.length === 0 && (
-              <HeaderLinks
-                onItemClick={() => false}
-                items={[
-                  {
-                    key: 'x',
-                    label: '',
-                  },
-                ]}
-              />
-            )}
+            <HeaderLinks
+              onItemClick={key => onMetricClick(key)}
+              breadcrumb
+              items={ancestors.map(ancestor => ({
+                key: ancestor.key,
+                label: intl.formatMessage(
+                  ancestor.key === 'all'
+                    ? rootMessages.labels.allMetrics
+                    : rootMessages[ancestor.type][ancestor.key],
+                ),
+              }))}
+            />
             <PageTitle>{metricTitle}</PageTitle>
           </Box>
         </ContentMaxWidth>
@@ -127,9 +115,9 @@ export function PathMetric({
               title: intl.formatMessage(rootMessages.tabs.singleMetric),
               content: <SingleMetric metric={metric} />,
               howToRead: {
-                context: 'PathMetric',
-                chart: 'Bar',
-                data: metric.type,
+                contxt: 'PathMetric',
+                chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
+                data: metric.color,
               },
             },
             {
@@ -153,7 +141,8 @@ PathMetric.propTypes = {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onMetricClick: code => dispatch(navigate({ pathname: `/metric/${code}` })),
+    onMetricClick: code =>
+      dispatch(navigate({ pathname: code === 'all' ? '' : `/metric/${code}` })),
     onCloseMetricOverlay: code =>
       dispatch(
         navigate(

@@ -27,6 +27,8 @@ function AnnotateBenchmark({
   relative = false,
   left,
   align,
+  label,
+  tooltip = true,
 }) {
   // prettier-ignore
   return (
@@ -38,16 +40,24 @@ function AnnotateBenchmark({
       left={left}
       align={align}
     >
-      <AnnotateRefLine above={above || relative} relative={relative} align={align} />
-      <AnnotateRefInner above={above || relative} relative={relative}>
-        <Text size="xsmall" color="dark-3">
-          {`${intl.formatMessage(
+      <AnnotateRefLine
+        above={above || relative}
+        relative={relative}
+        align={align}
+      />
+      <AnnotateRefInner
+        above={above || relative}
+        relative={relative}
+        style={{ textAlign: align }}
+      >
+        <Text size="xsmall" color="dark-3" style={{ textAlign: align }}>
+          {label || `${intl.formatMessage(
             rootMessages.settings.benchmark[benchmarkKey]
           )} ${relative ? '' : lowerCase(intl.formatMessage(
             rootMessages.settings.benchmark.nameShort
           ))}`}
         </Text>
-        {!relative &&
+        {!relative && tooltip &&
           <Tooltip
             insideButton
             margin={above ? { left: 'xsmall' } : { top: 'xsmall' }}
@@ -67,7 +77,9 @@ AnnotateBenchmark.propTypes = {
   align: PropTypes.string,
   above: PropTypes.bool,
   relative: PropTypes.bool,
+  tooltip: PropTypes.bool,
   left: PropTypes.number,
+  label: PropTypes.string,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   intl: intlShape.isRequired,
 };

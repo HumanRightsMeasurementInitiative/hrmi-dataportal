@@ -33,7 +33,6 @@ class NavTop extends React.Component {
             align="center"
             pad={{ horizontal: 'small', vertical: 'xsmall' }}
             round="small"
-            border={{ side: 'all' }}
             margin={{ right: 'small' }}
           >
             <TextInput

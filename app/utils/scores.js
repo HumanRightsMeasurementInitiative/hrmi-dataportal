@@ -1,4 +1,5 @@
 import messages from 'messages';
+import { RIGHTS } from 'containers/App/constants';
 
 export const getRightsScoresForDimension = (
   rights,
@@ -6,11 +7,18 @@ export const getRightsScoresForDimension = (
   keepSubrights = false,
 ) =>
   rights &&
-  Object.values(rights).filter(
-    r =>
-      r.dimension === dimensionKey &&
-      (keepSubrights || typeof r.aggregate === 'undefined'),
-  );
+  Object.values(rights)
+    .filter(
+      r =>
+        r.dimension === dimensionKey &&
+        (keepSubrights || typeof r.aggregate === 'undefined'),
+    )
+    .sort((a, b) =>
+      RIGHTS.map(r => r.key).indexOf(a.key) >
+      RIGHTS.map(r => r.key).indexOf(b.key)
+        ? 1
+        : -1,
+    );
 
 export const hasCPR = data =>
   data && data.empowerment && !!data.empowerment.score;
@@ -22,45 +30,33 @@ const hasDataAlternate = data =>
   data.hasScoreRightsAlternate ||
   data.hasScoreIndicatorsAlternate;
 
-export const getNoDataMessage = (intl, data = false) => {
+export const getNoDataMessage = (data = false) => {
+  if (!data) return null;
   if (isDataIncomplete(data)) {
-    return intl.formatMessage(messages.charts.incompleteData);
+    return 'incompleteData';
   }
   if (hasDataAlternate(data)) {
-    return intl.formatMessage(messages.charts.noDataForStandard);
+    return 'noDataForStandard';
   }
-  return intl.formatMessage(messages.charts.noData);
+  return 'noData';
 };
 
-export const getIncompleteDataActionMessage = (intl, data) => {
+export const getIncompleteDataActionMessage = data => {
+  if (!data) return null;
   if (data.hasScoreAlternate) {
-    return ` (${intl.formatMessage(
-      messages.charts.incompleteData.changeStandard,
-    )})`;
+    return 'changeStandard';
   }
   if (data.hasScoreRights) {
-    return ` (${intl.formatMessage(
-      messages.charts.incompleteData.drillDownRights,
-    )})`;
+    return 'drillDownRights';
   }
   if (data.hasScoreAlternateRights) {
-    return ` (${intl.formatMessage(
-      messages.charts.incompleteData.changeStandard,
-    )} & ${intl.formatMessage(
-      messages.charts.incompleteData.drillDownRights,
-    )})`;
+    return 'changeStandard';
   }
   if (data.hasScoreIndicators) {
-    return ` (${intl.formatMessage(
-      messages.charts.incompleteData.drillDownIndicators,
-    )})`;
+    return 'drillDownIndicators';
   }
   if (data.hasScoreIndicatorsAlternate) {
-    return ` (${intl.formatMessage(
-      messages.charts.incompleteData.changeStandard,
-    )} & ${intl.formatMessage(
-      messages.charts.incompleteData.drillDownIndicators,
-    )})`;
+    return 'changeStandard';
   }
   return '';
 };

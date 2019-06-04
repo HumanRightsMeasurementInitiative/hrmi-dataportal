@@ -10,31 +10,63 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
+import styled from 'styled-components';
+import { intlShape, injectIntl } from 'react-intl';
 
 import { loadContentIfNeeded } from 'containers/App/actions';
 import { getContentByKey, getCloseTarget } from 'containers/App/selectors';
 
 import Close from 'containers/Close';
 import HTMLWrapper from 'components/HTMLWrapper';
-import Loading from 'components/Loading';
+import LoadingIndicator from 'components/LoadingIndicator';
+import ContentWrap from 'styled/ContentWrap';
+import ContentContainer from 'styled/ContentContainer';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
+import { Heading } from 'grommet';
 
-export function PathPage({ match, onLoadContent, content, closeTarget }) {
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
+
+import rootMessages from 'messages';
+
+const StyledContent = styled.div`
+  max-width: 700px;
+  margin: 0 auto;
+`;
+
+export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
+  useInjectSaga({ key: 'app', saga });
+
   useEffect(() => {
     // kick off loading of page content
     onLoadContent(match.params.page);
-  }, []);
+  }, [match.params.page]);
+  const page = match && match.params.page;
+  const pageTitle = intl.formatMessage(rootMessages.page[page]);
+
   return (
-    <div>
+    <ContentWrap>
       <Helmet>
-        <title>Page</title>
+        <title>{pageTitle}</title>
         <meta name="description" content="Description of Page" />
       </Helmet>
-      <Close closeTarget={closeTarget} keepTab />
-      <div>
-        {content && <HTMLWrapper innerhtml={content.content} />}
-        {!content && <Loading />}
-      </div>
-    </div>
+      <ContentContainer direction="column" header>
+        <Close closeTarget={closeTarget} keepTab topRight />
+        <ContentMaxWidth>
+          <StyledContent>
+            <Heading
+              margin={{ top: 'small', bottom: 'medium' }}
+              style={{ fontWeight: 400 }}
+              level={1}
+            >
+              {pageTitle}
+            </Heading>
+            {content && <HTMLWrapper innerhtml={content.content} />}
+            {!content && <LoadingIndicator />}
+          </StyledContent>
+        </ContentMaxWidth>
+      </ContentContainer>
+    </ContentWrap>
   );
 }
 
@@ -43,6 +75,7 @@ PathPage.propTypes = {
   onLoadContent: PropTypes.func,
   closeTarget: PropTypes.object,
   content: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -63,4 +96,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(PathPage);
+export default compose(withConnect)(injectIntl(PathPage));

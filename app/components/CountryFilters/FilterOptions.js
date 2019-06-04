@@ -4,13 +4,15 @@ import { Text } from 'grommet';
 import styled from 'styled-components';
 
 import DropOption from 'styled/DropOption';
+import Hint from 'styled/Hint';
 
 const Styled = styled.div`
   padding-bottom: 16px;
 `;
 
 // prettier-ignore
-const GroupLabel = styled.div`
+const GroupLabel = styled(Hint)`
+  display: block;
   padding-left: 5px;
   padding-top: 10px;
   padding-bottom: 2px;

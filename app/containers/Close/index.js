@@ -35,17 +35,40 @@ const Styled = styled(Box)`
       position: absolute;
       top: 0;
       right: 0;
+      z-index: 10;
+    `}
+  ${props =>
+    props.float &&
+    css`
+      position: fixed;
+      top: 115px;
+      right: 10px;
+      z-index: 10;
     `}
 `;
 
+const StyledButtonIcon = styled(ButtonIcon)`
+  background: ${({ theme }) => theme.global.colors.highlight};
+  &:hover {
+    background: ${({ theme }) => theme.global.colors.highlight2};
+  }
+`;
 // <FormattedMessage {...messages.label} />
-function Close({ onClose, closeTarget, keepTab = false, onClick, topRight }) {
+function Close({
+  onClose,
+  closeTarget,
+  keepTab = false,
+  onClick,
+  topRight,
+  float = true,
+}) {
   return (
     <Styled
       direction="row"
       pad={{ right: 'large', top: 'medium' }}
       align="center"
       topRight={topRight}
+      float={float}
     >
       <StyledTextButton
         hoverColor="dark"
@@ -63,7 +86,8 @@ function Close({ onClose, closeTarget, keepTab = false, onClick, topRight }) {
           <FormattedMessage {...messages.label} />
         </Text>
       </StyledTextButton>
-      <ButtonIcon
+      <StyledButtonIcon
+        float={float}
         onClick={() =>
           // prettier-ignore
           onClick
@@ -74,8 +98,8 @@ function Close({ onClose, closeTarget, keepTab = false, onClick, topRight }) {
             })
         }
       >
-        <CloseIcon size="xlarge" color="white" />
-      </ButtonIcon>
+        <CloseIcon size="xlarge" color="dark" />
+      </StyledButtonIcon>
     </Styled>
   );
 }
@@ -86,6 +110,7 @@ Close.propTypes = {
   closeTarget: PropTypes.object,
   keepTab: PropTypes.bool,
   topRight: PropTypes.bool,
+  float: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {

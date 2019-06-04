@@ -6,8 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Heading, Paragraph } from 'grommet';
+import { Heading, Paragraph, Box } from 'grommet';
 
 import rootMessages from 'messages';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -19,23 +18,12 @@ import { needsArticle, isPlural } from 'utils/narrative';
 
 import messages from './messages';
 
-// const Styled = styled(Box)`
-//   margin: 0 auto;
-//   max-width: 1000px;
-// `;
-
 const DimensionHeading = props => (
-  <Heading level={3} margin={{ vertical: '15px' }} {...props} />
+  <Heading level={3} margin={{ top: 'small', bottom: 'none' }} {...props} />
 );
-const StyledDimensionHeading = styled(DimensionHeading)`
-  font-weight: normal;
-`;
 const RightHeading = props => (
-  <Heading level={4} margin={{ vertical: '15px' }} {...props} />
+  <Heading level={4} margin={{ top: 'small', bottom: 'none' }} {...props} />
 );
-const StyledRightHeading = styled(RightHeading)`
-  font-weight: normal;
-`;
 
 function CountryPeople({ data, countryTitle, countryCode, intl }) {
   return (
@@ -57,27 +45,37 @@ function CountryPeople({ data, countryTitle, countryCode, intl }) {
       </div>
       {data &&
         data.map(dim => (
-          <div key={dim.key}>
-            <StyledDimensionHeading>
+          <Box key={dim.key} border="top" margin={{ top: 'large' }}>
+            <DimensionHeading>
               <FormattedMessage {...rootMessages.dimensions[dim.key]} />
-            </StyledDimensionHeading>
+            </DimensionHeading>
             {dim.rights &&
-              Object.values(dim.rights).map(i => (
-                <div key={i.key}>
-                  <StyledRightHeading>
-                    <FormattedMessage {...rootMessages.rights[i.key]} />
-                  </StyledRightHeading>
-                  {Object.values(i.atRiskData).map((d, index, array) => (
-                    <WordCloud
-                      key={d.code}
-                      data={d}
-                      dimension={i.dimension}
-                      showTitle={array.length > 1}
-                    />
-                  ))}
+              Object.values(dim.rights).map((right, index) => (
+                <div key={right.key}>
+                  {Object.values(right.atRiskData).length > 1 && (
+                    <Box border="top">
+                      <RightHeading margin={{ bottom: 'none' }}>
+                        <FormattedMessage {...rootMessages.rights[right.key]} />
+                      </RightHeading>
+                    </Box>
+                  )}
+                  {Object.values(right.atRiskData).map(
+                    (d, indexInner, array) => (
+                      <WordCloud
+                        key={d.code}
+                        data={d}
+                        dimension={right.dimension}
+                        subright={array.length > 1}
+                        border={
+                          (array.length === 1 && index > 0) ||
+                          (array.length > 1 && indexInner > 0)
+                        }
+                      />
+                    ),
+                  )}
                 </div>
               ))}
-          </div>
+          </Box>
         ))}
     </MainColumn>
   );

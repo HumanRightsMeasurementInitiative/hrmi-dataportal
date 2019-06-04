@@ -14,8 +14,6 @@ import { compose } from 'redux';
 import styled, { withTheme } from 'styled-components';
 import { Heading, Box } from 'grommet';
 
-import rootMessages from 'messages';
-
 import CountryMetricPeople from 'components/CountryMetricPeople';
 import CountryAbout from 'components/CountryAbout';
 import MetricTrend from 'components/MetricTrend';
@@ -31,7 +29,6 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 import ContentContainer from 'styled/ContentContainer';
-import ContentMaxWidth from 'styled/ContentMaxWidth';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -51,6 +48,8 @@ import {
   getIndicatorInfo,
   getMaxYearESR,
   getMaxYearCPR,
+  getMinYearESR,
+  getMinYearCPR,
 } from 'containers/App/selectors';
 
 import {
@@ -63,6 +62,10 @@ import {
   setStandard,
   setBenchmark,
 } from 'containers/App/actions';
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
+
+import rootMessages from 'messages';
 
 const PageTitle = props => <Heading level="2" margin="none" {...props} />;
 
@@ -70,18 +73,37 @@ const StyledPageTitle = styled(PageTitle)`
   font-weight: ${({ base }) => (base ? 400 : 600)};
 `;
 
-const StyledButtonText = styled(ButtonText)`
-  text-decoration: none;
+const StyledButtonText = styled(ButtonText)``;
+
+const StyledContent = styled(Box)`
+  margin: 0 auto;
+  width: 1200px;
+  max-width: 100%;
+  position: relative;
+  min-height: auto;
 `;
 
+const Content = props => (
+  <StyledContent
+    direction="row"
+    align="center"
+    pad={{ horizontal: 'large' }}
+    {...props}
+  />
+);
+
+const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
+
 const hasSubrights = metric => {
-  const subrights = RIGHTS.filter(r => r.aggregate === metric.key);
+  const subrights = getSubrights(metric);
   return subrights.length > 0;
 };
 
 const hasAnalysis = metric =>
-  (metric.metricType === 'rights' && !hasSubrights(metric)) ||
+  metric.metricType === 'rights' ||
   (metric.metricType === 'dimensions' && metric.key === 'esr');
+const hasSubrightAnalysis = metric =>
+  metric.metricType === 'rights' && hasSubrights(metric);
 
 const generateKey = (metricCode, countryCode) => {
   const metric = getMetricDetails(metricCode);
@@ -89,6 +111,9 @@ const generateKey = (metricCode, countryCode) => {
     if (metric.metricType === 'rights') {
       if (metric.type === 'esr') {
         return `esr/${countryCode}`;
+      }
+      if (hasSubrights(metric)) {
+        return getSubrights(metric).map(sr => `${sr.key}/${countryCode}`);
       }
       return `${metricCode}/${countryCode}`;
     }
@@ -107,8 +132,15 @@ const getColour = metric => {
   }
   return 'esr';
 };
-const DEPENDENCIES = []; // []; // ['auxIndicators', 'atRisk', 'esrIndicators'];
-
+const DEPENDENCIES = [
+  'countries',
+  'esrIndicators',
+  'cprScores',
+  'esrScores',
+  'esrIndicatorScores',
+  'auxIndicators',
+  'atRisk',
+];
 export function CountryMetric({
   metricCode,
   countryCode,
@@ -119,6 +151,7 @@ export function CountryMetric({
   intl,
   atRisk,
   atRiskAnalysis,
+  atRiskAnalysisSubrights,
   onLoadContent,
   scores,
   hasAtRisk,
@@ -131,16 +164,18 @@ export function CountryMetric({
   standard,
   maxYearESR,
   maxYearCPR,
+  minYearESR,
+  minYearCPR,
   theme,
   onSetBenchmark,
   onSetStandard,
 }) {
+  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     const key = generateKey(metricCode, countryCode);
     if (key && hasAtRisk) onLoadContent(key);
     onLoadData();
-  }, []);
-
+  }, [metricCode, countryCode, hasAtRisk]);
   const metric = getMetricDetails(metricCode);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const countryTitle =
@@ -156,14 +191,18 @@ export function CountryMetric({
         <meta name="description" content="Description of Country Metric page" />
       </Helmet>
       <ContentContainer direction="column" header>
-        <ContentMaxWidth>
+        <Content>
           <Close
             topRight
+            float={false}
             onClick={() =>
               onClose(base, base === 'country' ? countryCode : metricCode)
             }
           />
           <Box direction="column" align="start">
+            <StyledPageTitle base level="2">
+              {base === 'metric' ? metricTitle : countryTitle}
+            </StyledPageTitle>
             <StyledButtonText
               onClick={() => {
                 if (base === 'metric') {
@@ -177,32 +216,51 @@ export function CountryMetric({
                 {base === 'metric' ? countryTitle : metricTitle}
               </StyledPageTitle>
             </StyledButtonText>
-            <StyledPageTitle base level="2">
-              {base === 'metric' ? metricTitle : countryTitle}
-            </StyledPageTitle>
           </Box>
-        </ContentMaxWidth>
+        </Content>
       </ContentContainer>
-      <ContentMaxWidth>
+      <Content>
         <TabContainer
           aside={false}
           modal
           tabs={[
             {
+              key: 'atrisk',
+              title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              // howToRead: {
+              //   contxt: 'CountryMetric',
+              //   chart: 'WordCloud',
+              //   data: 'atRisk',
+              // },
+              content: hasAtRisk && metric.metricType !== 'indicators' && (
+                <CountryMetricPeople
+                  data={atRisk}
+                  metric={metric}
+                  atRiskAnalysis={atRiskAnalysis}
+                  atRiskAnalysisSubrights={atRiskAnalysisSubrights}
+                  locale={intl.locale}
+                  hasAnalysis={hasAnalysis(metric)}
+                  hasSubrightAnalysis={hasSubrightAnalysis(metric)}
+                />
+              ),
+            },
+            {
               key: 'trend',
               title: intl.formatMessage(rootMessages.tabs.trend),
-              howToRead: {
-                context: 'CountryMetric',
-                chart: 'Trend',
-                data: metric.type,
-              },
+              // howToRead: {
+              //   contxt: 'CountryMetric',
+              //   chart: 'Trend',
+              //   data: metric.type,
+              // },
               content: (
                 <MetricTrend
                   color={theme.global.colors[getColour(metric)]}
+                  colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
                   scores={scores}
                   percentage={isESR}
                   maxValue={isESR ? 100 : 11}
                   maxYear={isESR ? maxYearESR : maxYearCPR}
+                  minYear={isESR ? minYearESR : minYearCPR}
                   column={isESR ? currentBenchmark.column : COLUMNS.CPR.MEAN}
                   rangeColumns={
                     !isESR && {
@@ -222,24 +280,6 @@ export function CountryMetric({
               ),
             },
             {
-              key: 'atrisk',
-              title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-              howToRead: {
-                context: 'CountryMetric',
-                chart: 'WordCloud',
-                data: 'atRisk',
-              },
-              content: hasAtRisk && metric.metricType !== 'indicators' && (
-                <CountryMetricPeople
-                  data={atRisk}
-                  metric={metric}
-                  atRiskAnalysis={atRiskAnalysis}
-                  locale={intl.locale}
-                  hasAnalysis={hasAnalysis(metric)}
-                />
-              ),
-            },
-            {
               key: 'about',
               title: `${intl.formatMessage(
                 rootMessages.tabs.about,
@@ -253,6 +293,7 @@ export function CountryMetric({
                   <MetricAbout
                     metric={metric}
                     metricInfo={metricInfo}
+                    fullInfo
                     standard={
                       metric.metricType === 'indicators'
                         ? STANDARDS.find(s => metricInfo.standard === s.code)
@@ -273,7 +314,7 @@ export function CountryMetric({
             },
           ]}
         />
-      </ContentMaxWidth>
+      </Content>
     </Box>
   );
 }
@@ -296,8 +337,14 @@ CountryMetric.propTypes = {
   hasAtRisk: PropTypes.bool,
   maxYearESR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   maxYearCPR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  minYearESR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  minYearCPR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  atRiskAnalysisSubrights: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.bool,
+  ]),
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -308,6 +355,8 @@ CountryMetric.propTypes = {
 const mapStateToProps = createStructuredSelector({
   maxYearESR: state => getMaxYearESR(state),
   maxYearCPR: state => getMaxYearCPR(state),
+  minYearESR: state => getMinYearESR(state),
+  minYearCPR: state => getMinYearCPR(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
@@ -317,8 +366,31 @@ const mapStateToProps = createStructuredSelector({
       country: countryCode,
       metric: metricCode,
     }),
-  atRiskAnalysis: (state, { countryCode, metricCode }) =>
-    getContentByKey(state, generateKey(metricCode, countryCode)),
+  atRiskAnalysis: (state, { countryCode, metricCode }) => {
+    const metric = getMetricDetails(metricCode);
+    return (
+      !hasSubrights(metric) &&
+      getContentByKey(state, generateKey(metricCode, countryCode))
+    );
+  },
+  atRiskAnalysisSubrights: (state, { countryCode, metricCode }) => {
+    const metric = getMetricDetails(metricCode);
+    if (hasSubrights(metric)) {
+      const subrights = getSubrights(metric);
+      // console.log(subrights)
+      return subrights.map(sr => {
+        const content = getContentByKey(
+          state,
+          generateKey(sr.key, countryCode),
+        );
+        return {
+          ...content,
+          key: sr.key,
+        };
+      });
+    }
+    return false;
+  },
   hasAtRisk: (state, { countryCode }) => getHasCountryCPR(state, countryCode),
   scores: (state, { countryCode, metricCode }) => {
     const metric = getMetricDetails(metricCode);
@@ -372,7 +444,11 @@ export function mapDispatchToProps(dispatch) {
       );
     },
     onLoadContent: path => {
-      dispatch(loadContentIfNeeded(path, 'atrisk'));
+      if (Array.isArray(path)) {
+        path.forEach(p => dispatch(loadContentIfNeeded(p, 'atrisk')));
+      } else {
+        dispatch(loadContentIfNeeded(path, 'atrisk'));
+      }
     },
     onTabClick: index => dispatch(setModalTab(index)),
     onSelectCountry: country => dispatch(selectCountry(country)),
