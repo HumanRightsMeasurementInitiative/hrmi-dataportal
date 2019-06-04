@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styled, { css } from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
@@ -65,24 +65,30 @@ const DimensionWrap = styled(DimensionBox)`
     `}
 `;
 
-function Key() {
+function Key({ inModal }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box
-          pad={{ left: 'xsmall', top: 'ms', bottom: 'medium' }}
+          pad={{
+            left: 'xsmall',
+            top: inModal ? 'medium' : 'ms',
+            bottom: 'medium',
+          }}
           direction="column"
           border={{
             color: 'light-4',
             style: 'solid',
-            side: 'right',
+            side: inModal ? 'bottom' : 'right',
             size: '2px',
           }}
+          margin={inModal ? { bottom: 'medium' } : 'none'}
+          flex={{ shrink: 0 }}
         >
           {DIMENSIONS.map(d => (
             <DimensionWrap
               key={d.key}
-              hasTriangle={d.key === 'esr'}
+              hasTriangle={!inModal && d.key === 'esr'}
               pad={{ right: size === 'xlarge' ? 'medium' : 'xsmall' }}
             >
               <SquareWrap>
@@ -104,9 +110,9 @@ function Key() {
     </ResponsiveContext.Consumer>
   );
 }
-//
-// Key.propTypes = {
-//   fullSize: PropTypes.bool,
-// };
+
+Key.propTypes = {
+  inModal: PropTypes.bool,
+};
 
 export default Key;

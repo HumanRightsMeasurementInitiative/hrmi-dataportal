@@ -22,9 +22,13 @@ import messages from './messages';
 
 const StyledTextButton = styled(Button)`
   color: ${({ theme }) => theme.global.colors.dark};
+  padding: 0;
   &:hover {
     color: ${({ theme }) => theme.global.colors['dark-1']};
     background-color: transparent;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+    padding: 0;
   }
 `;
 
@@ -54,7 +58,8 @@ const Styled = styled(Box)`
 `;
 
 const StyledButtonIcon = styled(ButtonIcon)`
-  background: ${({ theme }) => theme.global.colors.highlight};
+  background: ${({ theme, subtle }) =>
+    subtle ? 'transparent' : theme.global.colors.highlight};
   &:hover {
     background: ${({ theme }) => theme.global.colors.highlight2};
   }
@@ -67,6 +72,8 @@ function Close({
   onClick,
   topRight,
   float = true,
+  text = true,
+  plain = false,
 }) {
   const [scrollTop, setScrollTop] = useState(0);
 
@@ -82,12 +89,12 @@ function Close({
   return (
     <Styled
       direction="row"
-      pad={{ top: 'medium' }}
+      pad={topRight || float ? { top: 'medium' } : 'none'}
       align="center"
       topRight={topRight}
       float={float}
     >
-      {(!float || scrollTop === 0) && (
+      {text && (!float || scrollTop === 0) && (
         <StyledTextButton
           hoverColor="dark"
           onClick={() =>
@@ -106,6 +113,7 @@ function Close({
         </StyledTextButton>
       )}
       <StyledButtonIcon
+        subtle={plain}
         float={float}
         onClick={() =>
           // prettier-ignore
@@ -130,6 +138,8 @@ Close.propTypes = {
   keepTab: PropTypes.bool,
   topRight: PropTypes.bool,
   float: PropTypes.bool,
+  text: PropTypes.bool,
+  plain: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {

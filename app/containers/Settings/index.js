@@ -9,9 +9,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Box, ResponsiveContext, Button, Layer } from 'grommet';
+import { Box, ResponsiveContext, Button, Layer, Text, Heading } from 'grommet';
 import Icon from 'components/Icon';
+import Close from 'containers/Close';
 import {
   getRouterRoute,
   getRouterMatch,
@@ -26,6 +28,8 @@ import { setStandard, setBenchmark } from 'containers/App/actions';
 
 import getMetricDetails from 'utils/metric-details';
 import { isMinSize, isMaxSize } from 'utils/responsive';
+
+import messages from './messages';
 
 import ScaleToggle from './ScaleToggle';
 import SettingsInner from './SettingsInner';
@@ -132,7 +136,9 @@ export function Settings({
             {isMaxSize(size, 'medium') && (
               <StyledButton onClick={() => setOpen(true)}>
                 <Icon name="SETTINGS" />
-                <span>More settings</span>
+                <Text>
+                  <FormattedMessage {...messages.mobile.open} />
+                </Text>
               </StyledButton>
             )}
             {isMinSize(size, 'large') && (
@@ -167,6 +173,26 @@ export function Settings({
             {isMaxSize(size, 'medium') && open && (
               <Layer full animate={false}>
                 <Box fill>
+                  <Box
+                    direction="row"
+                    as="header"
+                    elevation="small"
+                    justify="between"
+                    align="center"
+                    pad={{ horizontal: 'large', vertical: 'small' }}
+                  >
+                    <Heading level={6} margin="none">
+                      <FormattedMessage {...messages.mobile.title} />
+                    </Heading>
+                    <Box>
+                      <Close
+                        onClick={() => setOpen(false)}
+                        float={false}
+                        text={false}
+                        plain
+                      />
+                    </Box>
+                  </Box>
                   <Box pad="large" flex overflow="auto">
                     <SettingsInner
                       route={route}
@@ -178,13 +204,21 @@ export function Settings({
                       metricInfo={metricInfo}
                       country={country}
                       size={size}
-                      fullSize
+                      inModal
                     />
                   </Box>
-                  <Box as="footer" justify="end" direction="row" align="center">
+                  <Box
+                    as="footer"
+                    justify="end"
+                    direction="row"
+                    align="center"
+                    elevation="small"
+                  >
                     <StyledButton onClick={() => setOpen(false)}>
                       <Icon name="SETTINGS" />
-                      <span>Close settings</span>
+                      <Text>
+                        <FormattedMessage {...messages.mobile.close} />
+                      </Text>
                     </StyledButton>
                   </Box>
                 </Box>
