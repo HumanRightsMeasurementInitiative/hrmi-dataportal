@@ -94,7 +94,7 @@ export function OverviewCountries({
             direction="row"
             justify="between"
             align={isMinSize(size, 'medium') ? 'center' : 'start'}
-            margin={{ vertical: isMinSize(size, 'medium') ? 0 : 'small' }}
+            margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
           >
             <CountryFilters
               regionFilterValue={regionFilterValue}

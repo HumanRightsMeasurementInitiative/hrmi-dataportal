@@ -50,7 +50,11 @@ const scaleOpacity = scaleLinear()
   .range([0.66, 1]);
 
 const RightHeading = props => (
-  <Heading margin={{ top: 'none', bottom: 'medium' }} {...props} />
+  <Heading
+    responsive={false}
+    margin={{ top: 'none', bottom: 'medium' }}
+    {...props}
+  />
 );
 const StyledRightHeading = styled(RightHeading)``;
 const StyledRightHeadingAbove = styled(Text)`

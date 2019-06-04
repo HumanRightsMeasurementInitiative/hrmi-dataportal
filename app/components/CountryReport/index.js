@@ -44,7 +44,7 @@ function CountryReport({
       {!dataReady && <LoadingIndicator />}
       {dataReady && (
         <>
-          <Heading level={2}>
+          <Heading responsive={false} level={2}>
             <FormattedMessage
               {...messages.title}
               values={{

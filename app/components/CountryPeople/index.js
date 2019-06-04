@@ -19,16 +19,26 @@ import { needsArticle, isPlural } from 'utils/narrative';
 import messages from './messages';
 
 const DimensionHeading = props => (
-  <Heading level={3} margin={{ top: 'small', bottom: 'none' }} {...props} />
+  <Heading
+    responsive={false}
+    level={3}
+    margin={{ top: 'small', bottom: 'none' }}
+    {...props}
+  />
 );
 const RightHeading = props => (
-  <Heading level={4} margin={{ top: 'small', bottom: 'none' }} {...props} />
+  <Heading
+    responsive={false}
+    level={4}
+    margin={{ top: 'small', bottom: 'none' }}
+    {...props}
+  />
 );
 
 function CountryPeople({ data, countryTitle, countryCode, intl, hasAside }) {
   return (
     <MainColumn hasAside={hasAside}>
-      <Heading level={2}>
+      <Heading responsive={false} level={2}>
         <FormattedMessage
           {...messages.title}
           values={{

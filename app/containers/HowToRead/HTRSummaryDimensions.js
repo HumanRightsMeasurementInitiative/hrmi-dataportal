@@ -21,7 +21,7 @@ function HTRSummaryDimensions({ intl }) {
       </Paragraph>
       {DIMENSIONS.map(d => (
         <span key={d.key}>
-          <Heading level={4} margin={{ bottom: 'none' }}>
+          <Heading responsive={false} level={4} margin={{ bottom: 'none' }}>
             <FormattedMessage {...rootMessages.dimensions[d.key]} />
           </Heading>
           <Box direction="row" align="center">

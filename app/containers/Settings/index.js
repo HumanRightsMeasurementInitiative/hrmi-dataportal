@@ -181,7 +181,7 @@ export function Settings({
                     align="center"
                     pad={{ horizontal: 'large', vertical: 'small' }}
                   >
-                    <Heading level={6} margin="none">
+                    <Heading responsive={false} level={6} margin="none">
                       <FormattedMessage {...messages.mobile.title} />
                     </Heading>
                     <Box>

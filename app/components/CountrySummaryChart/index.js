@@ -37,7 +37,12 @@ const ChartArea = props => (
 );
 
 const RightsTypeHeading = props => (
-  <Heading level={4} margin={{ vertical: 'none' }} {...props} />
+  <Heading
+    responsive={false}
+    level={4}
+    margin={{ vertical: 'none' }}
+    {...props}
+  />
 );
 
 function CountrySummaryChart({
