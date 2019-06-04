@@ -63,6 +63,7 @@ function RightsChart({ data, standard, benchmark }) {
           pad={{ vertical: 'xsmall', left: 'medium', right: 'large' }}
           fill="horizontal"
           style={{ position: 'relative' }}
+          responsive={false}
         >
           <BarMultiple
             dataMultiple={dataMultiple}

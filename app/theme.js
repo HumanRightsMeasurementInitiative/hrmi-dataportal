@@ -176,24 +176,40 @@ const theme = {
         },
       },
       3: {
+        small: {
+          size: '18px',
+          height: '22px',
+        },
         medium: {
           size: '24px',
           height: '30px',
         },
       },
       4: {
+        small: {
+          size: '16px',
+          height: '20px',
+        },
         medium: {
           size: '20px',
           height: '26px',
         },
       },
       5: {
+        small: {
+          size: '14px',
+          height: '20px',
+        },
         medium: {
           size: '16px',
           height: '22px',
         },
       },
       6: {
+        small: {
+          size: '13px',
+          height: '16px',
+        },
         medium: {
           size: '14px',
           height: '20px',
