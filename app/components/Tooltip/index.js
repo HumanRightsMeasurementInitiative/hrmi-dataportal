@@ -32,7 +32,14 @@ const renderContent = (maxWidth, component, text, onClose) => (
     style={{ maxWidth }}
   >
     {onClose && (
-      <Button onClick={onClose} margin={{ left: 'auto' }}>
+      <Button
+        onClick={evt => {
+          if (evt) evt.preventDefault();
+          if (evt) evt.stopPropagation();
+          onClose();
+        }}
+        margin={{ left: 'auto' }}
+      >
         <Close color="white" size="large" />
       </Button>
     )}

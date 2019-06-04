@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Box, InfiniteScroll } from 'grommet';
+import { Box, InfiniteScroll, ResponsiveContext } from 'grommet';
 
 import {
   getRegionSearch,
@@ -39,7 +39,7 @@ import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
-
+import { isMinSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
 
 import rootMessages from 'messages';
@@ -88,24 +88,33 @@ export function OverviewCountries({
   });
   return (
     <MainColumn hasAside={hasAside}>
-      <Box direction="row">
-        <CountryFilters
-          regionFilterValue={regionFilterValue}
-          onRemoveFilter={onRemoveFilter}
-          onAddFilter={onAddFilter}
-          incomeFilterValue={incomeFilterValue}
-          assessedFilterValue={assessedFilterValue}
-          oecdFilterValue={oecdFilterValue}
-          filterGroups={['income', 'region', 'assessed', 'oecd']}
-        />
-        <CountrySort
-          sort={currentSort}
-          options={['name', 'assessment']}
-          order={currentSortOrder}
-          onSortSelect={onSortSelect}
-          onOrderToggle={onOrderChange}
-        />
-      </Box>
+      <ResponsiveContext.Consumer>
+        {size => (
+          <Box
+            direction="row"
+            justify="between"
+            align={isMinSize(size, 'medium') ? 'center' : 'start'}
+            margin={{ vertical: isMinSize(size, 'medium') ? 0 : 'small' }}
+          >
+            <CountryFilters
+              regionFilterValue={regionFilterValue}
+              onRemoveFilter={onRemoveFilter}
+              onAddFilter={onAddFilter}
+              incomeFilterValue={incomeFilterValue}
+              assessedFilterValue={assessedFilterValue}
+              oecdFilterValue={oecdFilterValue}
+              filterGroups={['income', 'region', 'assessed', 'oecd']}
+            />
+            <CountrySort
+              sort={currentSort}
+              options={['name', 'assessment']}
+              order={currentSortOrder}
+              onSortSelect={onSortSelect}
+              onOrderToggle={onOrderChange}
+            />
+          </Box>
+        )}
+      </ResponsiveContext.Consumer>
       {sortedCountries && scoresAllCountries && (
         <Box
           width="100%"
@@ -119,7 +128,7 @@ export function OverviewCountries({
             </Hint>
           )}
           {dataReady && sortedCountries && sortedCountries.length > 0 && (
-            <Box direction="row" wrap>
+            <Box direction="row" wrap overflow="hidden">
               <InfiniteScroll items={sortedCountries} step={30} show={0}>
                 {(c, index) => (
                   <CountryPreview

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, Text } from 'grommet';
+import { Box } from 'grommet';
 import { FormClose } from 'grommet-icons';
 
 import { truncateText } from 'utils/string';
@@ -12,11 +12,12 @@ const StyledButton = styled(Button)`
   border-radius: 99999px;
   background-color: ${({ theme }) => theme.global.colors.highlight};
   color: ${({ theme }) => theme.global.colors.dark};
-  padding: 4px 12px;
+  padding: 1px 6px;
   font-weight: 600;
-  margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
   border: 1px solid;
   border-color: transparent;
+  font-size: ${({ theme }) => theme.text.small.size};
+  margin-top: ${({ theme }) => theme.global.edgeSize.xxsmall};
   &:hover {
     background-color: ${({ theme }) => theme.global.colors.white};
     color: ${({ theme }) => theme.global.colors.dark};
@@ -29,18 +30,21 @@ const StyledButton = styled(Button)`
     color: ${({ theme }) => theme.global.colors.dark};
     border-color: ${({ theme }) => theme.global.colors.highlight2};
   }
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.medium}) {
+    margin-top: 0;
+    margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
     padding: 4px 8px 4px 16px;
+    font-size: ${({ theme }) => theme.text.medium.size};
   }
 `;
+const StyledText = styled.span``;
 
 const IconWrap = styled(Box)``;
 
 const ActiveFilterButton = ({ label, onRemove }) => (
   <StyledButton onClick={() => onRemove()} title={label}>
     <Box direction="row" align="center" gap="small">
-      <Text>{truncateText(label, 10)}</Text>
+      <StyledText>{truncateText(label, 10)}</StyledText>
       <IconWrap round background="white">
         <FormClose color="dark" size="large" />
       </IconWrap>
