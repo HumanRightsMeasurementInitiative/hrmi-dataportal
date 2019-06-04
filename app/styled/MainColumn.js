@@ -15,7 +15,11 @@ function MainColumn(props) {
   return (
     <Styled
       direction="column"
-      pad={{ right: props.hasAside && 'medium', bottom: 'xlarge' }}
+      pad={
+        props.hasAside
+          ? { right: 'medium', bottom: 'xlarge' }
+          : { bottom: 'xlarge' }
+      }
       {...props}
     />
   );
