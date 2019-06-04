@@ -40,6 +40,9 @@ import {
   getPeopleAtRiskForCountry,
   getDimensionAverages,
   getAuxIndicatorsForCountry,
+  getESRYear,
+  getCPRYear,
+  getDependenciesReady,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
@@ -47,16 +50,18 @@ import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
+import { useInjectSaga } from 'utils/injectSaga';
+import saga from 'containers/App/saga';
 
-const DEPENDENCIES = []; // [
-//   'countries',
-//   'cprScores',
-//   'esrScores',
-//   'esrIndicatorScores',
-//   'esrIndicators',
-//   'atRisk',
-//   'auxIndicators',
-// ];
+const DEPENDENCIES = [
+  'countries',
+  'esrIndicators',
+  'cprScores',
+  'esrScores',
+  'esrIndicatorScores',
+  'auxIndicators',
+  'atRisk',
+];
 
 export function PathCountry({
   intl,
@@ -76,7 +81,12 @@ export function PathCountry({
   standard,
   dimensionAverages,
   auxIndicators,
+  esrYear,
+  cprYear,
+  dataReady,
 }) {
+  useInjectSaga({ key: 'app', saga });
+
   useEffect(() => {
     // kick off loading of data
     onLoadData();
@@ -98,8 +108,8 @@ export function PathCountry({
       </Helmet>
       {match.params.metric && (
         <Layer
-          full
-          margin="small"
+          full="vertical"
+          margin={{ top: 'large', bottom: 'ms' }}
           onEsc={() => onCloseMetricOverlay(countryCode)}
           onClickOutside={() => onCloseMetricOverlay(countryCode)}
         >
@@ -112,12 +122,16 @@ export function PathCountry({
       )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
-          <Close topRight />
+          <Close float />
           <Box direction="column">
             {country && incomeGroup && (
               <HeaderLinks
                 onItemClick={(key, value) => onCategoryClick(key, value)}
                 items={[
+                  {
+                    key: 'all',
+                    label: intl.formatMessage(rootMessages.labels.allCountries),
+                  },
                   {
                     key: 'region',
                     value: country.region_code,
@@ -153,7 +167,7 @@ export function PathCountry({
               key: 'report',
               title: intl.formatMessage(rootMessages.tabs.report),
               howToRead: {
-                context: 'PathCountry',
+                contxt: 'PathCountry',
                 chart: 'Summary',
                 data: scale,
               },
@@ -173,17 +187,20 @@ export function PathCountry({
                   onMetricClick={(metric, tab) =>
                     onMetricClick(countryCode, metric, tab)
                   }
+                  esrYear={esrYear}
+                  cprYear={cprYear}
+                  dataReady={dataReady}
                 />
               ),
             },
             {
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-              howToRead: {
-                context: 'PathCountry',
-                chart: 'WordCloud',
-                data: 'atRisk',
-              },
+              // howToRead: {
+              //   contxt: 'PathCountry',
+              //   chart: 'WordCloud',
+              //   data: 'atRisk',
+              // },
               content: hasCPR(dimensions) && (
                 <CountryPeople
                   data={atRisk}
@@ -200,6 +217,7 @@ export function PathCountry({
                   country={country}
                   auxIndicators={auxIndicators}
                   onCategoryClick={onCategoryClick}
+                  showFAQs
                 />
               ),
             },
@@ -229,10 +247,14 @@ PathCountry.propTypes = {
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  esrYear: PropTypes.number,
+  cprYear: PropTypes.number,
+  dataReady: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   country: (state, { match }) => getCountry(state, match.params.country),
+  dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   indicators: (state, { match }) =>
     getIndicatorsForCountry(state, match.params.country),
   rights: (state, { match }) =>
@@ -243,6 +265,8 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
+  esrYear: state => getESRYear(state),
+  cprYear: state => getCPRYear(state),
   dimensionAverages: state => getDimensionAverages(state),
   auxIndicators: (state, { match }) =>
     getAuxIndicatorsForCountry(state, match.params.country),
@@ -257,7 +281,7 @@ export function mapDispatchToProps(dispatch) {
       const deleteParams = ['income', 'region', 'assessed'];
       dispatch(
         navigate(
-          { pathname: '', search: `?${key}=${value}` },
+          { pathname: '', search: key === 'all' ? '' : `?${key}=${value}` },
           {
             replace: false,
             deleteParams: deleteParams.filter(p => p !== key),

@@ -37,7 +37,7 @@ export default defineMessages({
       defaultMessage: 'Why aren’t the same indicators used for all countries?',
     },
     measureIndicators: {
-      id: `${scope}.questions.measureRightESR`,
+      id: `${scope}.questions.measureIndicators`,
       defaultMessage:
         'How does the HRMI methodology calculate the {metric} score from raw data?',
     },
@@ -77,7 +77,7 @@ export default defineMessages({
     },
     measureIndicators: {
       id: `${scope}.answers.measureIndicators`,
-      defaultMessage: 'TODO: how are indicator scores calculated from raw data',
+      defaultMessage: ' ',
     },
     measureRightESR: {
       id: `${scope}.answers.measureRightESR`,
@@ -115,7 +115,7 @@ export default defineMessages({
     },
     measureDimensionCPR: {
       id: `${scope}.answers.measureDimensionCPR`,
-      defaultMessage: 'TODO: CPR dimensions are calculated...',
+      defaultMessage: ' ',
     },
   },
 });

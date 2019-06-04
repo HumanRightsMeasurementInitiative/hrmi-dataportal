@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
 
-import HowToRead from 'components/HowToRead';
+import HowToRead from 'containers/HowToRead';
 
 import { lowerCase } from 'utils/string';
 import rootMessages from 'messages';
@@ -26,12 +26,13 @@ function ESRAccordion({
   intl,
 }) {
   return (
-    <Styled margin={{ top: 'medium' }}>
+    <Styled margin={{ bottom: 'medium' }}>
       <Box alignSelf="end">
         <HowToRead
-          chart="SingleBar"
-          context="CountryNarrative"
+          chart="Bar"
+          contxt="narrative"
           data={benchmark.key}
+          htr={`bullet-${dimension.key}`}
         />
       </Box>
       <Box elevation="small" margin={{ top: 'xsmall' }}>

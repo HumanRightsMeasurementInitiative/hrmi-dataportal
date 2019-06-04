@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Box, InfiniteScroll } from 'grommet';
@@ -24,17 +24,25 @@ import {
   getSortSearch,
   getSortOrderSearch,
 } from 'containers/App/selectors';
-import { navigate, selectCountry } from 'containers/App/actions';
+import {
+  navigate,
+  selectCountry,
+  highlightCountry,
+} from 'containers/App/actions';
 
 import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 
+import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
 import CountryPreview from 'components/CountryPreview';
 import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
 import MainColumn from 'styled/MainColumn';
+import Hint from 'styled/Hint';
 
 import { sortCountries, getScoresForCountry } from 'utils/scores';
+
+import rootMessages from 'messages';
 
 export const isDefaultStandard = (country, standardDetails) =>
   (country.high_income_country === '0' && standardDetails.key === 'core') ||
@@ -59,6 +67,8 @@ export function OverviewCountries({
   sortOrder,
   onSortSelect,
   onOrderChange,
+  onCountryHover,
+  dataReady,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -96,32 +106,43 @@ export function OverviewCountries({
         />
       </Box>
       {sortedCountries && scoresAllCountries && (
-        <Box
-          direction="row"
-          wrap
-          width="100%"
-          pad={{ bottom: 'medium', top: 'small' }}
-        >
-          <InfiniteScroll items={sortedCountries} step={30} show={0}>
-            {(c, index) => (
-              <CountryPreview
-                showAnnotation={index === 0}
-                key={c.country_code}
-                country={c}
-                scale={scale}
-                scores={getScoresForCountry(c.country_code, scoresAllCountries)}
-                standard={standardDetails}
-                otherStandard={otherStandardDetails}
-                defaultStandard={isDefaultStandard(c, standardDetails)}
-                benchmark={benchmarkDetails}
-                onSelectCountry={() => onSelectCountry(c.country_code)}
-                indicators={indicators}
-              />
-            )}
-          </InfiniteScroll>
+        <Box width="100%" pad={{ bottom: 'medium', top: 'small' }}>
+          {!dataReady && <LoadingIndicator />}
+          {dataReady && sortedCountries && sortedCountries.length === 0 && (
+            <Hint italic>
+              <FormattedMessage {...rootMessages.hints.noResults} />
+            </Hint>
+          )}
+          {dataReady && sortedCountries && sortedCountries.length > 0 && (
+            <Box direction="row" wrap>
+              <InfiniteScroll items={sortedCountries} step={30} show={0}>
+                {(c, index) => (
+                  <CountryPreview
+                    showAnnotation={index === 0}
+                    key={c.country_code}
+                    country={c}
+                    scale={scale}
+                    scores={getScoresForCountry(
+                      c.country_code,
+                      scoresAllCountries,
+                    )}
+                    standard={standardDetails}
+                    otherStandard={otherStandardDetails}
+                    defaultStandard={isDefaultStandard(c, standardDetails)}
+                    benchmark={benchmarkDetails}
+                    onSelectCountry={() => onSelectCountry(c.country_code)}
+                    indicators={indicators}
+                    onCountryHover={code => onCountryHover(code)}
+                  />
+                )}
+              </InfiniteScroll>
+            </Box>
+          )}
+          {dataReady && sortedCountries && sortedCountries.length > 0 && (
+            <Source />
+          )}
         </Box>
       )}
-      <Source />
     </MainColumn>
   );
 }
@@ -146,6 +167,8 @@ OverviewCountries.propTypes = {
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
+  onCountryHover: PropTypes.func,
+  dataReady: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -168,6 +191,7 @@ export function mapDispatchToProps(dispatch) {
         navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
       ),
     onSelectCountry: country => dispatch(selectCountry(country)),
+    onCountryHover: country => dispatch(highlightCountry(country)),
     onAddFilter: (key, value) =>
       dispatch(
         navigate(

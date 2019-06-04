@@ -20,7 +20,7 @@ const SortOptions = ({ options, onSelect, active }) => (
           <Box align="center" direction="row">
             <FormattedMessage {...messages.sortOptions[option]} />
             {active === option && (
-              <Box margin={{ left: 'auto' }}>
+              <Box margin={{ left: 'xsmall' }}>
                 <Checkmark color="dark-4" />
               </Box>
             )}

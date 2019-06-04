@@ -6,6 +6,8 @@ import { Paragraph } from 'grommet';
 import formatScore from 'utils/format-score';
 import { needsArticle, isPlural, getESRScoreRange } from 'utils/narrative';
 
+import OL from 'styled/OL';
+
 import { BENCHMARKS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
@@ -55,7 +57,7 @@ function NarrativeESR({ country, score, intl, someData }) {
         <Paragraph>
           <FormattedMessage {...messages.esr.start} values={messageValues} />
         </Paragraph>
-        <ol>
+        <OL>
           <li>
             <Paragraph>
               <FormattedMessage
@@ -102,7 +104,7 @@ function NarrativeESR({ country, score, intl, someData }) {
               />
             </Paragraph>
           </li>
-        </ol>
+        </OL>
       </>
     );
   }

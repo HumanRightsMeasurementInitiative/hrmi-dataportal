@@ -23,7 +23,9 @@ import RightsChart from './RightsChart';
 import RightsScoreItem from './RightsScoreItem';
 import DimensionTitle from './DimensionTitle';
 
-const RightsType = styled(Box)``;
+const RightsType = styled(Box)`
+  margin-bottom: 12px;
+`;
 const RightsScoresWrapperTable = styled.div`
   display: table;
 `;
@@ -35,7 +37,7 @@ const ChartArea = props => (
 );
 
 const RightsTypeHeading = props => (
-  <Heading level={4} margin={{ vertical: '5px' }} {...props} />
+  <Heading level={4} margin={{ vertical: 'none' }} {...props} />
 );
 
 function CountrySummaryChart({
@@ -44,6 +46,8 @@ function CountrySummaryChart({
   scale,
   rights,
   standard,
+  esrYear,
+  cprYear,
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
@@ -56,12 +60,18 @@ function CountrySummaryChart({
   const esrRights = scale === 'r' && getRightsScoresForDimension(rights, 'esr');
 
   return (
-    <Box direction="column" pad={{ bottom: 'large' }} border="bottom">
+    <Box
+      direction="column"
+      pad={{ bottom: 'large' }}
+      margin={{ bottom: 'large' }}
+      border="bottom"
+    >
       <Box direction="row">
         <ChartArea>
           <RightsType>
             <RightsTypeHeading>
               <FormattedMessage {...rootMessages['rights-types'].cpr} />
+              {` (${cprYear})`}
             </RightsTypeHeading>
             {scale === 'd' && (
               <DimensionChart data={dimensions && dimensions.empowerment} />
@@ -91,6 +101,7 @@ function CountrySummaryChart({
           <RightsType>
             <RightsTypeHeading>
               <FormattedMessage {...rootMessages['rights-types'].esr} />
+              {` (${esrYear})`}
             </RightsTypeHeading>
             {scale === 'd' && (
               <DimensionChart
@@ -111,7 +122,7 @@ function CountrySummaryChart({
               />
             )}
           </RightsType>
-          <Box pad={{ top: 'small' }}>
+          <Box pad={{ top: 'none' }}>
             <ScaleToggle />
           </Box>
         </ChartArea>
@@ -173,6 +184,8 @@ CountrySummaryChart.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  esrYear: PropTypes.number,
+  cprYear: PropTypes.number,
 };
 
 export default CountrySummaryChart;

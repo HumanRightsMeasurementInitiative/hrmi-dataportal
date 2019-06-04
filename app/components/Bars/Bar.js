@@ -7,9 +7,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Text } from 'grommet';
-import { injectIntl, intlShape } from 'react-intl';
 import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
+import NoDataHint from 'components/NoDataHint';
 
 import Wrapper from './styled/BarWrapper';
 import MinLabel from './styled/MinLabel';
@@ -17,7 +16,6 @@ import MaxLabelOriginal from './styled/MaxLabel';
 import AnnotateBenchmark from './AnnotateBenchmark';
 import WrapTooltip from './styled/WrapTooltip';
 import Score from './styled/Score';
-
 const MaxLabel = styled(MaxLabelOriginal)`
   top: ${({ bottom }) => (bottom ? 105 : 50)}%;
 `;
@@ -31,14 +29,9 @@ const BarReference = styled.div`
   width: 100%;
   background-color: ${props =>
     props.noData ? 'transparent' : props.theme.global.colors['light-2']};
-  border: 1px solid;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
   border-color: transparent;
-`;
-
-const NoData = styled.div`
-  position: absolute;
-  left: 2px;
-  top: ${props => (props.level > 1 ? -5 : 4)}px;
 `;
 
 const BarNoValue = styled.div`
@@ -112,13 +105,13 @@ function Bar({
   showLabels = false,
   showScore = false,
   showBenchmark = false,
-  intl,
   rotate,
   showIncompleteAction = true,
   height,
   annotateBenchmarkAbove = false,
   showAllBenchmarkAnnotations = false,
   scoreOnHover = false,
+  hoverEnabled = true,
 }) {
   const [hover, setHover] = useState(false);
   const {
@@ -131,7 +124,8 @@ function Bar({
     title,
   } = data;
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
-
+  const hasValue = !!value || value === 0;
+  const h = height || HEIGHT[level];
   // prettier-ignore
   return (
     <Wrapper>
@@ -140,43 +134,41 @@ function Bar({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <BarReference height={height || HEIGHT[level]} noData={!value}>
-          {!value && (
-            <BarNoValue
-              height={height || HEIGHT[level]}
-              color={color}
-            />
-          )}
-          {value && (
+        <BarReference height={h} noData={!hasValue}>
+          {!hasValue && <BarNoValue height={h} color={color} />}
+          {hasValue && (
             <BarValue
-              height={height || HEIGHT[level]}
-              active={hover}
+              height={h}
+              active={hover && hoverEnabled}
               color={color}
               style={{ width: `${(value / maxValue) * 100}%` }}
               stripes={stripes}
             />
           )}
-          {value &&
+          {hasValue &&
             refValues &&
             refValues.map(ref => (
               <MarkValue
-                height={height || HEIGHT[level]}
+                height={h}
                 key={ref.key}
                 lineStyle={ref.style}
                 style={{ left: `${(ref.value / maxValue) * 100}%` }}
                 level={level}
               />
             ))}
-          {!value && refValues && !!theRefValue &&(
+          {!hasValue && refValues && !!theRefValue &&(
             <MarkValue
-              height={height || HEIGHT[level]}
+              height={h}
               key={theRefValue.key}
               lineStyle={theRefValue.style}
               style={{ left: `${(theRefValue.value / maxValue) * 100}%` }}
               level={level}
             />
           )}
-          {showBenchmark && refValues && !!theRefValue && !showAllBenchmarkAnnotations && (
+          {showBenchmark &&
+            refValues &&
+            !!theRefValue &&
+            !showAllBenchmarkAnnotations && (
             <AnnotateBenchmark
               rotate={rotate}
               benchmarkKey={theRefValue.key}
@@ -184,29 +176,34 @@ function Bar({
               margin="1px"
             />
           )}
-          {showBenchmark && showAllBenchmarkAnnotations && refValues && annotateBenchmarkAbove &&
-            refValues.map(ref => (
+          {showBenchmark &&
+            showAllBenchmarkAnnotations &&
+            refValues &&
+            annotateBenchmarkAbove &&
+            refValues.filter(ref => !!ref.value).map((ref, index, list) => (
               <AnnotateBenchmark
                 relative
                 key={ref.key}
                 left={(ref.value / maxValue) * 100}
-                align={ref.key === 'best' ? 'left' : 'right'}
+                align={list.length > 1 && index === 0 ? 'left' : 'right'}
                 benchmarkKey={ref.key}
                 above
                 margin="1px"
               />
             ))
           }
-          {!value && data && level < 3 && (
-            <NoData level={level}>
-              <Text size="xsmall">
-                {getNoDataMessage(intl, data)}
-                {showIncompleteAction && getIncompleteDataActionMessage(intl, data)}
-              </Text>
-            </NoData>
+          {!hasValue && data && level < 3 && (
+            <NoDataHint
+              hints={[
+                getNoDataMessage(data),
+                showIncompleteAction
+                  ? getIncompleteDataActionMessage(data)
+                  : null,
+              ]}
+            />
           )}
         </BarReference>
-        {(showScore || (hover && scoreOnHover)) && value && (
+        {(showScore || (hover && scoreOnHover && hoverEnabled)) && hasValue && (
           <Score
             rotate={rotate}
             score={value}
@@ -236,12 +233,12 @@ Bar.propTypes = {
   showLabels: PropTypes.bool,
   showScore: PropTypes.bool,
   showBenchmark: PropTypes.bool,
+  hoverEnabled: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  intl: intlShape.isRequired,
   annotateBenchmarkAbove: PropTypes.bool,
   showAllBenchmarkAnnotations: PropTypes.bool,
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
-export default injectIntl(Bar);
+export default Bar;

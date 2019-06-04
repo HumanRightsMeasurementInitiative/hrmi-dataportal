@@ -239,6 +239,47 @@ export const getDataByKey = createSelector(
   (key, data) => data[key],
 );
 
+const getContentRequested = createSelector(
+  getGlobal,
+  global => global.contentRequested,
+);
+
+const getDataRequested = createSelector(
+  getGlobal,
+  global => global.dataRequested,
+);
+const getContentReady = createSelector(
+  getGlobal,
+  global => global.contentReady,
+);
+
+const getDataReady = createSelector(
+  getGlobal,
+  global => global.dataReady,
+);
+// requested data / content
+export const getDataRequestedByKey = createSelector(
+  (state, key) => key,
+  getDataRequested,
+  (key, requested) => requested[key],
+);
+export const getContentRequestedByKey = createSelector(
+  (state, key) => key,
+  getContentRequested,
+  (key, requested) => requested[key],
+);
+// requested data / content
+export const getDataReadyByKey = createSelector(
+  (state, key) => key,
+  getDataReady,
+  (key, ready) => ready[key],
+);
+export const getContentReadyByKey = createSelector(
+  (state, key) => key,
+  getContentReady,
+  (key, ready) => ready[key],
+);
+
 // helper functions
 const sortByNumber = (data, column, asc = true) => {
   const reverse = asc ? 1 : -1;
@@ -268,12 +309,12 @@ export const getMinYearCPR = createSelector(
   getCPRScores,
   scores => calcMinYear(scores),
 );
-const getESRYear = createSelector(
+export const getESRYear = createSelector(
   getYearESRSearch,
   getMaxYearESR,
   (searchYear, maxYear) => parseInt(searchYear || maxYear, 10),
 );
-const getCPRYear = createSelector(
+export const getCPRYear = createSelector(
   getYearCPRSearch,
   getMaxYearCPR,
   (searchYear, maxYear) => parseInt(searchYear || maxYear, 10),
@@ -296,7 +337,7 @@ export const getCountriesFiltered = createSelector(
     countries &&
     countries
       .filter(c => !region || c.region_code === region)
-      .filter(c => !oecd || c.OECD_country === oecd)
+      .filter(c => oecd === false || quasiEquals(c.OECD_country, oecd))
       .filter(
         c =>
           !income ||
@@ -351,8 +392,9 @@ export const getCPRDimensionScores = createSelector(
   getCountriesFiltered,
   getRegionSearch,
   getIncomeSearch,
+  getOECDSearch,
   getCPRYear,
-  (metric, scores, countries, region, income, year) => {
+  (metric, scores, countries, region, income, oecd, year) => {
     // make sure a metric is set
     const dimension = !!metric && DIMENSIONS.find(d => d.key === metric);
     return (
@@ -363,7 +405,7 @@ export const getCPRDimensionScores = createSelector(
         s =>
           s.metric_code === dimension.code &&
           quasiEquals(s.year, year) &&
-          (!(region || income) ||
+          (!(region || income || oecd) ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
     );
@@ -377,6 +419,7 @@ export const getESRRightScores = createSelector(
   getCountriesFiltered,
   getRegionSearch,
   getIncomeSearch,
+  getOECDSearch,
   getStandardSearch,
   getGroupSearch,
   getESRYear,
@@ -386,6 +429,7 @@ export const getESRRightScores = createSelector(
     countries,
     region,
     income,
+    oecd,
     standardSearch,
     groupSearch,
     year,
@@ -403,7 +447,7 @@ export const getESRRightScores = createSelector(
           s.standard === standard.code &&
           s.metric_code === right.code &&
           quasiEquals(s.year, year) &&
-          (!(region || income) ||
+          (!(region || income || oecd) ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
     );
@@ -417,8 +461,9 @@ export const getCPRRightScores = createSelector(
   getCountriesFiltered,
   getRegionSearch,
   getIncomeSearch,
+  getOECDSearch,
   getCPRYear,
-  (metric, scores, countries, region, income, year) => {
+  (metric, scores, countries, region, income, oecd, year) => {
     const right = !!metric && RIGHTS.find(d => d.key === metric);
     return (
       scores &&
@@ -428,7 +473,7 @@ export const getCPRRightScores = createSelector(
         s =>
           s.metric_code === right.code &&
           quasiEquals(s.year, year) &&
-          (!(region || income) ||
+          (!(region || income || oecd) ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
     );
@@ -441,9 +486,10 @@ export const getIndicatorScores = createSelector(
   getCountriesFiltered,
   getRegionSearch,
   getIncomeSearch,
+  getOECDSearch,
   getGroupSearch,
   getESRYear,
-  (metric, scores, countries, region, income, groupSearch, year) => {
+  (metric, scores, countries, region, income, oecd, groupSearch, year) => {
     if (scores && countries) {
       const indicator = metric && INDICATORS.find(d => d.key === metric);
       const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
@@ -453,7 +499,7 @@ export const getIndicatorScores = createSelector(
           s =>
             s.group === group.code &&
             s.metric_code === indicator.code &&
-            (!(region || income) ||
+            (!(region || income || oecd) ||
               countries.map(c => c.country_code).indexOf(s.country_code) > -1),
         );
         // then get the most recent year for each country
@@ -1204,4 +1250,18 @@ export const getAuxIndicatorsForCountry = createSelector(
   (country, data, year) =>
     data &&
     data.find(d => d.country_code === country && quasiEquals(d.year, year)),
+);
+export const getHowToRead = createSelector(
+  getGlobal,
+  global => global.howToRead,
+);
+export const getHighlightCountry = createSelector(
+  getGlobal,
+  global => global.highlightCountry,
+);
+
+export const getDependenciesReady = createSelector(
+  (state, dependencies) => dependencies,
+  getDataReady,
+  (dependencies, data) => dependencies.reduce((m, d) => !!data[d] && m, true),
 );

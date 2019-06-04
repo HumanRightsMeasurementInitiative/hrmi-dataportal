@@ -72,15 +72,17 @@ function Score({
         {title && (
           <Text
             color={`${color}Dark`}
-            size="xsmall"
-            style={{ fontWeight: 400 }}
+            size={score ? 'xsmall' : getSize(level)}
+            style={{ fontWeight: score || level > 1 ? 400 : 600 }}
           >
             {title}
           </Text>
         )}
-        <Text color={`${color}Dark`} size={getSize(level)}>
-          {score && `${formatScore(score)}${unit}`}
-        </Text>
+        {score && (
+          <Text color={`${color}Dark`} size={getSize(level)}>
+            {score && `${formatScore(score)}${unit}`}
+          </Text>
+        )}
       </Box>
     </Styled>
   );

@@ -1,5 +1,5 @@
 import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
+import { push, replace } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
 import extend from 'lodash/extend';
 import 'whatwg-fetch';
@@ -16,10 +16,15 @@ import {
   getRouterSearchParams,
   getCountry,
   getStandardSearch,
-  getDataByKey,
-  getContentByKey,
+  getContentReadyByKey,
+  getDataReadyByKey,
+  getDataRequestedByKey,
+  getContentRequestedByKey,
 } from './selectors';
+
 import {
+  dataRequested,
+  contentRequested,
   dataLoaded,
   dataLoadingError,
   contentLoaded,
@@ -74,12 +79,15 @@ const autoRestart = (generator, handleError, maxTries = MAX_LOAD_ATTEMPTS) =>
 export function* loadDataSaga({ key }) {
   const resourceIndex = DATA_RESOURCES.map(r => r.key).indexOf(key);
   if (resourceIndex > -1) {
-    const url = `${DATA_URL}/${DATA_RESOURCES[resourceIndex].file}`;
-    const ready = yield select(getDataByKey, key);
+    // requestedSelector returns the times that entities where fetched from the API
+    const requestedAt = yield select(getDataRequestedByKey, key);
+    const ready = yield select(getDataReadyByKey, key);
     // If haven't loaded yet, do so now.
-    if (!ready) {
+    if (!requestedAt && !ready) {
+      const url = `${DATA_URL}/${DATA_RESOURCES[resourceIndex].file}`;
       try {
         // First record that we are requesting
+        yield put(dataRequested(key, Date.now()));
         const response = yield fetch(url);
         const responseOk = yield response.ok;
         if (responseOk && typeof response.text === 'function') {
@@ -87,12 +95,15 @@ export function* loadDataSaga({ key }) {
           if (responseBody) {
             yield put(dataLoaded(key, csvParse(responseBody), Date.now()));
           } else {
+            yield put(dataRequested(key, false));
             throw new Error(response.statusText);
           }
         } else {
+          yield put(dataRequested(key, false));
           throw new Error(response.statusText);
         }
       } catch (err) {
+        yield put(dataRequested(key, false));
         // throw error
         throw new Error(err);
       }
@@ -103,13 +114,15 @@ export function* loadDataSaga({ key }) {
 export function* loadContentSaga({ key, contentType = 'page', locale }) {
   const pageIndex = PAGES.indexOf(key);
   if (pageIndex > -1 || contentType === 'atrisk') {
-    const requestLocale = yield locale || select(getLocale);
-    const url = `${PAGES_URL}${requestLocale}/${key}/`;
-    const ready = yield select(getContentByKey, key);
+    const requestedAt = yield select(getContentRequestedByKey, key);
+    const ready = yield select(getContentReadyByKey, key);
     // If haven't loaded yet, do so now.
-    if (!ready) {
+    if (!requestedAt && !ready) {
+      const requestLocale = yield locale || select(getLocale);
+      const url = `${PAGES_URL}${requestLocale}/${key}/`;
       try {
         // First record that we are requesting
+        yield put(contentRequested(key, Date.now()));
         const response = yield fetch(url);
         const responseOk = yield response.ok;
         if (responseOk && typeof response.text === 'function') {
@@ -119,19 +132,23 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
               contentLoaded(key, responseBody, Date.now(), requestLocale),
             );
           } else {
+            yield put(contentRequested(key, false));
             throw new Error(response.statusText);
           }
         } else if (
-          contentType === 'atrisk' &&
           quasiEquals(response.status, 404) &&
+          contentType === 'atrisk' &&
           requestLocale !== DEFAULT_LOCALE
         ) {
+          yield put(contentRequested(key, false));
           yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
         } else {
+          yield put(contentRequested(key, false));
           throw new Error(response.statusText);
         }
       } catch (err) {
         // throw error
+        yield put(contentRequested(key, false));
         throw new Error(err);
       }
     }
@@ -186,7 +203,7 @@ export function* setScaleSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
-  yield put(push(`${path}?${searchParams.toString()}`));
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 
 export function* setStandardSaga({ value }) {
@@ -196,7 +213,7 @@ export function* setStandardSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
-  yield put(push(`${path}?${searchParams.toString()}`));
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 
 export function* setBenchmarkSaga({ value }) {
@@ -206,7 +223,7 @@ export function* setBenchmarkSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
-  yield put(push(`${path}?${searchParams.toString()}`));
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 export function* setTabSaga({ value }) {
   // get URL search params
@@ -315,7 +332,7 @@ export default function* defaultSaga() {
     LOAD_DATA_IF_NEEDED,
     autoRestart(loadDataSaga, loadDataErrorHandler, MAX_LOAD_ATTEMPTS),
   );
-  yield takeLatest(
+  yield takeEvery(
     LOAD_CONTENT_IF_NEEDED,
     autoRestart(loadContentSaga, loadContentErrorHandler, MAX_LOAD_ATTEMPTS),
   );

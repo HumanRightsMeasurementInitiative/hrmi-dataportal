@@ -9,10 +9,12 @@ import {
   LOAD_DATA_SUCCESS,
   LOAD_DATA_ERROR,
   DATA_READY,
+  DATA_REQUESTED,
   LOAD_CONTENT_IF_NEEDED,
   LOAD_CONTENT_SUCCESS,
   LOAD_CONTENT_ERROR,
   CONTENT_READY,
+  CONTENT_REQUESTED,
   SELECT_COUNTRY,
   SELECT_METRIC,
   NAVIGATE,
@@ -21,6 +23,8 @@ import {
   SET_BENCHMARK,
   SET_TAB,
   SET_MODALTAB,
+  OPEN_HOW_TO,
+  HIGHLIGHT_COUNTRY,
 } from './constants';
 
 /**
@@ -38,6 +42,14 @@ export function dataLoaded(key, data, time) {
   return {
     type: LOAD_DATA_SUCCESS,
     data,
+    key,
+    time,
+  };
+}
+
+export function dataRequested(key, time) {
+  return {
+    type: DATA_REQUESTED,
     key,
     time,
   };
@@ -66,7 +78,13 @@ export function loadContentIfNeeded(key, contentType, locale) {
     locale,
   };
 }
-
+export function contentRequested(key, time) {
+  return {
+    type: CONTENT_REQUESTED,
+    key,
+    time,
+  };
+}
 export function contentLoaded(key, content, time, locale) {
   return {
     type: LOAD_CONTENT_SUCCESS,
@@ -147,5 +165,17 @@ export function navigate(location, args) {
     type: NAVIGATE,
     location,
     args,
+  };
+}
+export function openHowToRead(args) {
+  return {
+    type: OPEN_HOW_TO,
+    layer: args,
+  };
+}
+export function highlightCountry(country) {
+  return {
+    type: HIGHLIGHT_COUNTRY,
+    country,
   };
 }

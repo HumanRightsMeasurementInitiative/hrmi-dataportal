@@ -23,15 +23,7 @@ const getDimensionRefs = (score, standard, benchmark) => {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refColumn;
-    return [
-      { value: 100, style: 'solid', key: 'best' },
-      {
-        value: score && parseFloat(score[col]),
-        style: 'dotted',
-        key: 'adjusted',
-      },
-    ];
+    return [{ value: 100, style: 'solid', key: 'best' }];
   }
   return false;
 };

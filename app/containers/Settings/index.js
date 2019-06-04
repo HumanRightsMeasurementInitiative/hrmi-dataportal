@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
-
+import Icon from 'components/Icon';
 import {
   getRouterRoute,
   getRouterMatch,
@@ -41,6 +41,25 @@ const Styled = styled.div`
   left: 0;
   width: 100%;
   height: 90px;
+  background-color: ${({ theme }) => theme.global.colors.white};
+  box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.15);
+`;
+
+const SettingsIconWrapInner = styled.div`
+  display: table-cell;
+  vertical-align: middle;
+`;
+
+const SettingsIconWrap = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  text-align: center;
+  display: table;
+  height: 100%;
+  background-color: ${({ theme }) => theme.global.colors['light-1']};
 `;
 
 const SetScaleWrap = styled.div`
@@ -48,6 +67,7 @@ const SetScaleWrap = styled.div`
   left: ${({ theme }) => theme.global.edgeSize.medium};
   bottom: 100%;
   transform: translateY(20%);
+  z-index: 1;
 `;
 
 const showSettings = ({ route, match, tabIndex }) => {
@@ -131,18 +151,20 @@ export function Settings({
           <ScaleToggle />
         </SetScaleWrap>
       )}
+      <SettingsIconWrap>
+        <SettingsIconWrapInner>
+          <Icon name="SETTINGS" />
+        </SettingsIconWrapInner>
+      </SettingsIconWrap>
       <ResponsiveContext.Consumer>
         {size => (
           <Box
             direction="row"
-            background="white"
             height="90px"
             width="full"
-            pad={{ horizontal: size === 'xlarge' ? 'medium' : 'small' }}
+            pad={{ left: size === 'xlarge' ? 'medium' : 'small' }}
             align="start"
-            style={{
-              boxShadow: '0px -3px 6px rgba(0, 0, 0, 0.15)',
-            }}
+            style={{ position: 'relative' }}
           >
             {showDimensionKey({ route, match }) && <Key />}
             {showBenchmark() && (
