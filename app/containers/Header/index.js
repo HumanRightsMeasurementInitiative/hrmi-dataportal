@@ -22,6 +22,7 @@ import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 import Icon from 'components/Icon';
 
 import LocaleToggle from 'containers/LocaleToggle';
+import { appLocales } from 'i18n';
 import { PAGES } from 'containers/App/constants';
 import { navigate, loadDataIfNeeded } from 'containers/App/actions';
 
@@ -198,11 +199,13 @@ export function Header({ nav, intl, onLoadData, match }) {
             {showMenu && <Close />}
           </ToggleMenu>
           <MenuList visible={showMenu}>
-            <span>
-              <LocaleToggleWrap>
-                <LocaleToggle />
-              </LocaleToggleWrap>
-            </span>
+            {appLocales.length > 1 && (
+              <span>
+                <LocaleToggleWrap>
+                  <LocaleToggle />
+                </LocaleToggleWrap>
+              </span>
+            )}
             <span>
               {PAGES &&
                 PAGES.map(page => (
