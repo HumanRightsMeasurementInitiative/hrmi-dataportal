@@ -156,12 +156,20 @@ const theme = {
   heading: {
     level: {
       1: {
+        small: {
+          size: '24px',
+          height: '28px',
+        },
         medium: {
           size: '42px',
           height: '48px',
         },
       },
       2: {
+        small: {
+          size: '20px',
+          height: '24px',
+        },
         medium: {
           size: '30px',
           height: '36px',

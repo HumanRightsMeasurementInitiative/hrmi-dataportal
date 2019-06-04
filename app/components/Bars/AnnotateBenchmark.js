@@ -63,6 +63,7 @@ function AnnotateBenchmark({
             margin={above ? { left: 'xsmall' } : { top: 'xsmall' }}
             iconSize="medium"
             maxWidth="300px"
+            large
             component={<BenchmarkOverlay size="xsmall" />}
           />
         }

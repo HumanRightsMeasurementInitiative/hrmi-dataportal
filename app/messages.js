@@ -125,6 +125,16 @@ export default defineMessages({
       id: `${scope}.tabs.metrics`,
       defaultMessage: 'Explore by metric',
     },
+    mobile: {
+      countries: {
+        id: `${scope}.tabs.mobile.countries`,
+        defaultMessage: 'Explore countries',
+      },
+      metrics: {
+        id: `${scope}.tabs.mobile.metrics`,
+        defaultMessage: 'Explore metrics',
+      },
+    },
     report: {
       id: `${scope}.tabs.report`,
       defaultMessage: 'Report',

@@ -20,15 +20,22 @@ import ColumnHeader from 'styled/ColumnHeader';
 import ColumnContent from 'styled/ColumnContent';
 import {
   isMinSize,
+  isMaxSize,
   getAsideWidth,
   getWindowDimensions,
   getFloatingAsideWidth,
 } from 'utils/responsive';
 import { SIZES } from 'theme';
 const HowToReadWrapper = styled.div`
-  position: absolute;
-  right: ${({ theme }) => theme.global.edgeSize.medium};
-  top: 0;
+  position: relative;
+  right: 0px;
+  top: 4px;
+  text-align: right;
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    position: absolute;
+    right: ${({ theme }) => theme.global.edgeSize.medium};
+    top: 0;
+  }
 `;
 
 const FixedAside = styled.div`
@@ -120,7 +127,12 @@ function TabContainer({
                     }
                   >
                     {mainTabs.slice().map(tab => (
-                      <Tab title={tab.title} key={tab.key}>
+                      <Tab
+                        title={
+                          isMaxSize(size, 'medium') && tab.titleMobile
+                            ? tab.titleMobile
+                            : tab.title} key={tab.key}
+                      >
                         {tab.howToRead && (
                           <HowToReadWrapper>
                             <HowToRead
