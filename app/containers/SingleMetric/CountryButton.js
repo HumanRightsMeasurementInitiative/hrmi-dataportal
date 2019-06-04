@@ -10,10 +10,14 @@ import rootMessages from 'messages';
 // prettier-ignore
 const Styled = styled(Button)`
   text-align: right;
-  padding: 3px 5px;
+  padding: 2px 3px;
+  line-height: 16px;
+  min-height: 26px;
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
-    padding: 6px 8px;
+    padding: 2px 8px;
+    min-height: 40px;
+    line-height: 19px;
   }
 `;
 

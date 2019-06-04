@@ -5,7 +5,8 @@ export default styled.button`
   display: inline-block;
   padding: 4px 8px;
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')} !important;
-  font-size: 0.9em;
+  font-size: 13px;
+  line-height: 16px;
   text-align: center;
   vertical-align: middle;
   touch-action: manipulation;
@@ -36,7 +37,8 @@ export default styled.button`
   }
   @media (min-width: ${({ theme }) =>
     theme.breakpoints ? theme.breakpoints.small : '769px'}) {
-    font-size: 1em;
+    font-size: 16px;
+    line-height: 20px;
     padding: 6px 12px;
   }
 `;
