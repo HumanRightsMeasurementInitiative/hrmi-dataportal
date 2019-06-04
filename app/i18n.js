@@ -9,28 +9,28 @@
  */
 const addLocaleData = require('react-intl').addLocaleData; //eslint-disable-line
 const enLocaleData = require('react-intl/locale-data/en');
-const esLocaleData = require('react-intl/locale-data/es');
-const ptLocaleData = require('react-intl/locale-data/pt');
-const frLocaleData = require('react-intl/locale-data/fr');
+// const esLocaleData = require('react-intl/locale-data/es');
+// const ptLocaleData = require('react-intl/locale-data/pt');
+// const frLocaleData = require('react-intl/locale-data/fr');
 
 const enTranslationMessages = require('./translations/en.json');
-const esTranslationMessages = require('./translations/es.json');
-const ptTranslationMessages = require('./translations/pt.json');
-const frTranslationMessages = require('./translations/fr.json');
+const esTranslationMessages = false; // require('./translations/es.json');
+const ptTranslationMessages = false; // require('./translations/pt.json');
+const frTranslationMessages = false; // require('./translations/fr.json');
 
 addLocaleData(enLocaleData);
-addLocaleData(esLocaleData);
-addLocaleData(ptLocaleData);
-addLocaleData(frLocaleData);
+// addLocaleData(esLocaleData);
+// addLocaleData(ptLocaleData);
+// addLocaleData(frLocaleData);
 
 const DEFAULT_LOCALE = 'en';
 
 // prettier-ignore
 const appLocales = [
   'en',
-  'es',
-  'pt',
-  'fr',
+  // 'es',
+  // 'pt',
+  // 'fr',
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -50,9 +50,15 @@ const formatTranslationMessages = (locale, messages) => {
 
 const translationMessages = {
   en: formatTranslationMessages('en', enTranslationMessages),
-  es: formatTranslationMessages('es', esTranslationMessages),
-  pt: formatTranslationMessages('pt', ptTranslationMessages),
-  fr: formatTranslationMessages('fr', frTranslationMessages),
+  es:
+    esTranslationMessages &&
+    formatTranslationMessages('es', esTranslationMessages),
+  pt:
+    ptTranslationMessages &&
+    formatTranslationMessages('pt', ptTranslationMessages),
+  fr:
+    frTranslationMessages &&
+    formatTranslationMessages('fr', frTranslationMessages),
 };
 
 exports.appLocales = appLocales;
