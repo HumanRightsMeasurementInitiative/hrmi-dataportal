@@ -162,12 +162,22 @@ export default defineMessages({
       defaultMessage:
         "Higher scores indicate greater fulfilment of a country's obligations for this human right.",
     },
+    drilldownHint: {
+      id: `${scope}.bullet.drilldownHint`,
+      defaultMessage:
+        'To explore the individual rights and underlying indicators in more detail, click on the down arrow.',
+    },
   },
   bullet: {
     intro: {
       id: `${scope}.bullet.intro`,
       defaultMessage:
         'Each civil and political right metric has been produced from responses to a survey of in-country human rights experts. The better the score, the further it is mapped to the right.',
+    },
+    drilldownHint: {
+      id: `${scope}.bullet.drilldownHint`,
+      defaultMessage:
+        'To explore the individual rights in more detail, click on the down arrow.',
     },
     rangeTitle: {
       id: `${scope}.bullet.rangeTitle`,

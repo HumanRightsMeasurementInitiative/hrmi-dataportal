@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { Paragraph, Heading, Box } from 'grommet';
 import BarBullet from 'components/Bars/BarBullet';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
+import Hint from 'styled/Hint';
 
 import messages from './messages';
 
@@ -22,6 +23,13 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
       <Paragraph>
         <FormattedMessage {...messages.bullet.intro} />
       </Paragraph>
+      {contxt === 'narrative' && (
+        <Paragraph>
+          <Hint italic>
+            <FormattedMessage {...messages.bullet.drilldownHint} />
+          </Hint>
+        </Paragraph>
+      )}
       <Heading level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
