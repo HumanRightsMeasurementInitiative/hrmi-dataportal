@@ -6,6 +6,7 @@ import { Text, Paragraph, Box } from 'grommet';
 import Bar from 'components/Bars/Bar';
 import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
+import Hint from 'styled/Hint';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -15,6 +16,13 @@ const Styled = styled.div``;
 function HTRBarESR({ contxt, intl }) {
   return (
     <Styled>
+      {contxt === 'narrative' && (
+        <Paragraph>
+          <Hint italic>
+            <FormattedMessage {...messages.simpleBar.drilldownHint} />
+          </Hint>
+        </Paragraph>
+      )}
       <Box direction="row" align="center">
         <Box
           width="50%"

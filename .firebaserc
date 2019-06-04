@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "hrmi-dataportal"
+    "default": "hrmi-dataportal",
+    "dev": "hrmi-dataportal-dev"
   }
 }
