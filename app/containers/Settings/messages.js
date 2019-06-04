@@ -25,4 +25,18 @@ export default defineMessages({
         'For these countries it is best to use the high income assessment standard.',
     },
   },
+  mobile: {
+    open: {
+      id: `${scope}.mobile.open`,
+      defaultMessage: 'More settings & key',
+    },
+    close: {
+      id: `${scope}.mobile.close`,
+      defaultMessage: 'Close settings',
+    },
+    title: {
+      id: `${scope}.mobile.title`,
+      defaultMessage: 'Chart settings & key',
+    },
+  },
 });

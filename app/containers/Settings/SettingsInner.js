@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import { Box, Text } from 'grommet';
 
 import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
@@ -19,6 +19,11 @@ import rootMessages from 'messages';
 import messages from './messages';
 import Key from './Key';
 import SettingsToggle from './SettingsToggle';
+import ScaleToggle from './ScaleToggle';
+
+const SetScaleWrap = styled.div`
+  text-align: center;
+`;
 
 const showDimensionKey = ({ route }) => {
   if (route === 'metric') return false;
@@ -64,6 +69,7 @@ const showStandard = ({ match }) => {
 };
 const showBenchmark = () => true;
 
+// prettier-ignore
 export function SettingsInner({
   route,
   match,
@@ -75,11 +81,16 @@ export function SettingsInner({
   metricInfo,
   country,
   size,
-  fullSize,
+  inModal,
 }) {
   return (
     <>
-      {showDimensionKey({ route, match }) && <Key fullSize={fullSize} />}
+      {inModal && (
+        <SetScaleWrap>
+          <ScaleToggle />
+        </SetScaleWrap>
+      )}
+      {showDimensionKey({ route, match }) && <Key inModal={inModal} />}
       {showBenchmark() && (
         <SettingsToggle
           setting="benchmark"
@@ -92,7 +103,7 @@ export function SettingsInner({
             color: 'light-2',
           }}
           horizontal={route === 'metric' || route === 'country'}
-          fullSize={fullSize}
+          inModal={inModal}
         />
       )}
       {showStandard({ route, match }) && (
@@ -107,7 +118,7 @@ export function SettingsInner({
             color: 'esr',
           }}
           horizontal={route === 'metric' || route === 'country'}
-          fullSize={fullSize}
+          inModal={inModal}
         />
       )}
       {showAnyHINote({
@@ -118,14 +129,19 @@ export function SettingsInner({
         standard,
       }) && (
         <Box
-          pad={{
-            top: 'small',
-            left: size === 'xlarge' ? 'large' : 'medium',
-          }}
+          pad={
+            inModal
+              ? { vertical: 'medium' }
+              : {
+                top: 'small',
+                left: size === 'xlarge' ? 'large' : 'medium',
+              }
+          }
           direction="column"
           style={{
             maxWidth: size === 'xlarge' ? '300px' : '240px',
           }}
+          flex={{ shrink: 0 }}
         >
           <Box pad={{ bottom: 'xsmall' }}>
             <Text style={{ fontWeight: 600 }} size="small">
@@ -169,7 +185,7 @@ SettingsInner.propTypes = {
   match: PropTypes.string.isRequired,
   standard: PropTypes.string,
   benchmark: PropTypes.string,
-  fullSize: PropTypes.bool,
+  inModal: PropTypes.bool,
   size: PropTypes.string,
   tabIndex: PropTypes.number,
   onSetStandard: PropTypes.func,

@@ -83,13 +83,19 @@ function SettingsToggle({
   setting,
   square,
   horizontal = false,
+  inModal = false,
 }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box
-          pad={{ left: size === 'xlarge' ? 'large' : 'medium' }}
+          pad={
+            inModal
+              ? { vertical: 'medium' }
+              : { left: size === 'xlarge' ? 'large' : 'medium' }
+          }
           direction="column"
+          flex={{ shrink: 0 }}
         >
           <Box direction="row" align="center">
             <Box pad={{ vertical: 'small' }} direction="row">
@@ -99,14 +105,14 @@ function SettingsToggle({
               {setting === 'standard' && (
                 <Tooltip
                   iconSize="medium"
-                  maxWidth="320px"
+                  large
                   component={<StandardOverlay />}
                 />
               )}
               {setting === 'benchmark' && (
                 <Tooltip
                   iconSize="medium"
-                  maxWidth="320px"
+                  large
                   component={<BenchmarkOverlay />}
                 />
               )}
@@ -154,6 +160,7 @@ SettingsToggle.propTypes = {
   square: PropTypes.object,
   tooltip: PropTypes.node,
   horizontal: PropTypes.bool,
+  inModal: PropTypes.bool,
 };
 
 export default SettingsToggle;
