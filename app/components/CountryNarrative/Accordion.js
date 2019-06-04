@@ -16,6 +16,13 @@ const StyledTextButton = styled(Button)`
   }
 `;
 
+const StyledButtonIcon = styled(ButtonIcon)`
+  background-color: ${({ theme }) => theme.global.colors['light-3']};
+  &:hover {
+    background-color: ${({ theme }) => theme.global.colors['light-5']};
+  }
+`;
+
 function Accordion({ head, content, buttonText, level }) {
   const [open, setOpen] = useState(false);
   return (
@@ -37,10 +44,10 @@ function Accordion({ head, content, buttonText, level }) {
             <StyledTextButton onClick={() => setOpen(!open)}>
               <Text size={level > 1 ? 'xsmall' : 'small'}>{buttonText}</Text>
             </StyledTextButton>
-            <ButtonIcon subtle onClick={() => setOpen(!open)}>
+            <StyledButtonIcon subtle onClick={() => setOpen(!open)}>
               {!open && <Down size="xlarge" />}
               {open && <Up size="xlarge" />}
-            </ButtonIcon>
+            </StyledButtonIcon>
           </Box>
         </Box>
       </Box>
