@@ -50,9 +50,15 @@ const formatTranslationMessages = (locale, messages) => {
 
 const translationMessages = {
   en: formatTranslationMessages('en', enTranslationMessages),
-  es: formatTranslationMessages('es', esTranslationMessages),
-  pt: formatTranslationMessages('pt', ptTranslationMessages),
-  fr: formatTranslationMessages('fr', frTranslationMessages),
+  es:
+    esTranslationMessages &&
+    formatTranslationMessages('es', esTranslationMessages),
+  pt:
+    ptTranslationMessages &&
+    formatTranslationMessages('pt', ptTranslationMessages),
+  fr:
+    frTranslationMessages &&
+    formatTranslationMessages('fr', frTranslationMessages),
 };
 
 exports.appLocales = appLocales;

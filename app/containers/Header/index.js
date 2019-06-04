@@ -22,7 +22,8 @@ import { isMinSize } from 'utils/responsive';
 
 import Icon from 'components/Icon';
 
-// import LocaleToggle from 'containers/LocaleToggle';
+import LocaleToggle from 'containers/LocaleToggle';
+import { appLocales } from 'i18n';
 import { PAGES } from 'containers/App/constants';
 import { navigate, loadDataIfNeeded } from 'containers/App/actions';
 
@@ -136,16 +137,12 @@ const ToggleMenu = styled(Button)`
     display: none;
   }
 `;
-// const LocaleToggleWrap = styled.span`
-//   display: block;
-//   @media (min-width: ${props => props.theme.breakpoints.medium}) {
-//     display: inline;
-//   }
-// `;            <span>
-//               <LocaleToggleWrap>
-//                 <LocaleToggle />
-//               </LocaleToggleWrap>
-//             </span>
+const LocaleToggleWrap = styled.span`
+  display: block;
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    display: inline;
+  }
+`;
 
 // prettier-ignore
 const SecondaryDropButton = styled(Button)`
@@ -210,6 +207,13 @@ export function Header({ nav, intl, onLoadData, match }) {
             {showMenu && <Close />}
           </ToggleMenu>
           <MenuList visible={showMenu}>
+            {appLocales.length > 1 && (
+              <span>
+                <LocaleToggleWrap>
+                  <LocaleToggle />
+                </LocaleToggleWrap>
+              </span>
+            )}
             <span>
               {PAGES &&
                 PAGES.map(page => (
