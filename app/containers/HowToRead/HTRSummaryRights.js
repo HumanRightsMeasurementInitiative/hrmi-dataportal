@@ -46,7 +46,7 @@ function HTRSummaryRights({ intl }) {
         };
         return (
           <span key={d.key}>
-            <Heading level={4} margin={{ bottom: 'none' }}>
+            <Heading responsive={false} level={4} margin={{ bottom: 'none' }}>
               <FormattedMessage {...rootMessages.dimensions[d.key]} />
             </Heading>
             <Box direction="row" align="center">
@@ -83,7 +83,11 @@ function HTRSummaryRights({ intl }) {
                 </Paragraph>
               </Box>
             </Box>
-            <Heading level={6} margin={{ vertical: 'xxsmall' }}>
+            <Heading
+              responsive={false}
+              level={6}
+              margin={{ vertical: 'xxsmall' }}
+            >
               <FormattedMessage {...messages.summary.rights.rightsListTitle} />
             </Heading>
             <StyledUL>

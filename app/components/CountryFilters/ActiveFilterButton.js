@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box } from 'grommet';
+import { Box, ResponsiveContext } from 'grommet';
 import { FormClose } from 'grommet-icons';
 
 import { truncateText } from 'utils/string';
@@ -42,14 +42,20 @@ const StyledText = styled.span``;
 const IconWrap = styled(Box)``;
 
 const ActiveFilterButton = ({ label, onRemove }) => (
-  <StyledButton onClick={() => onRemove()} title={label}>
-    <Box direction="row" align="center" gap="small">
-      <StyledText>{truncateText(label, 10)}</StyledText>
-      <IconWrap round background="white">
-        <FormClose color="dark" size="large" />
-      </IconWrap>
-    </Box>
-  </StyledButton>
+  <ResponsiveContext.Consumer>
+    {size => (
+      <StyledButton onClick={() => onRemove()} title={label}>
+        <Box direction="row" align="center" gap="small">
+          <StyledText>
+            {truncateText(label, size === 'small' ? 6 : 10)}
+          </StyledText>
+          <IconWrap round background="white">
+            <FormClose color="dark" size="large" />
+          </IconWrap>
+        </Box>
+      </StyledButton>
+    )}
+  </ResponsiveContext.Consumer>
 );
 
 ActiveFilterButton.propTypes = {

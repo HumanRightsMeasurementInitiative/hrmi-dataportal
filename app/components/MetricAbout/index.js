@@ -27,7 +27,7 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
       pad={{ left: 'medium', top: 'small', bottom: 'medium' }}
     >
       <WrapAsideTop>
-        <Heading level={5} margin={{ vertical: 'xsmall' }}>
+        <Heading responsive={false} level={5} margin={{ vertical: 'xsmall' }}>
           <FormattedMessage {...messages.title[metricType]} />
         </Heading>
         {rootMessages[`${metricType}-about`] && fullInfo && (
@@ -48,7 +48,11 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
       {metricType === 'indicators' && metricInfo && (
         <>
           <Box>
-            <Heading level={5} margin={{ vertical: 'xsmall' }}>
+            <Heading
+              responsive={false}
+              level={5}
+              margin={{ vertical: 'xsmall' }}
+            >
               <FormattedMessage {...messages.titleSource} />
             </Heading>
             <Box>
@@ -62,7 +66,11 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
             </Box>
           </Box>
           <Box>
-            <Heading level={5} margin={{ vertical: 'xsmall' }}>
+            <Heading
+              responsive={false}
+              level={5}
+              margin={{ vertical: 'xsmall' }}
+            >
               <FormattedMessage {...messages.titleStandards} />
             </Heading>
             <Box>

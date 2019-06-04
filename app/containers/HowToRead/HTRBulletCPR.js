@@ -30,7 +30,7 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
           </Hint>
         </Paragraph>
       )}
-      <Heading level={4}>
+      <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
       <Box pad={{ horizontal: 'small', top: 'small', bottom: 'medium' }}>

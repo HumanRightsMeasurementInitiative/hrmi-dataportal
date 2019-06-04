@@ -15,7 +15,7 @@ function HTRTrendCPR() {
       <Paragraph>
         <FormattedMessage {...messages.trendCPR.intro} />
       </Paragraph>
-      <Heading level={4}>
+      <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.trendCPR.rangeTitle} />
       </Heading>
       <Paragraph>

@@ -12,7 +12,11 @@ import { getHowToRead } from 'containers/App/selectors';
 import { openHowToRead } from 'containers/App/actions';
 import ButtonIcon from 'styled/ButtonIcon';
 
-import { getWindowDimensions, getFloatingAsideWidth } from 'utils/responsive';
+import {
+  isMaxSize,
+  getWindowDimensions,
+  getFloatingAsideWidth,
+} from 'utils/responsive';
 
 import HTROverviewDimensions from './HTROverviewDimensions';
 import HTROverviewRights from './HTROverviewRights';
@@ -46,15 +50,15 @@ function HowToReadLayer({ layer, theme, onClose }) {
   if (!layer) return null;
   const { contxt, chart, data } = layer;
   return (
-    <Layer
-      onEsc={() => onClose()}
-      onClickOutside={() => onClose()}
-      modal={false}
-      position="right"
-      full="vertical"
-    >
-      <ResponsiveContext.Consumer>
-        {size => (
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Layer
+          onEsc={() => onClose()}
+          onClickOutside={() => onClose()}
+          modal={isMaxSize(size, 'medium')}
+          position="right"
+          full="vertical"
+        >
           <Box
             elevation="large"
             width={`${getFloatingAsideWidth(size, theme, windowDimensions)}px`}
@@ -84,9 +88,9 @@ function HowToReadLayer({ layer, theme, onClose }) {
             {chart === 'Trend' && data === 'esr' && <HTRTrendESR />}
             {chart === 'Trend' && data === 'cpr' && <HTRTrendCPR />}
           </Box>
-        )}
-      </ResponsiveContext.Consumer>
-    </Layer>
+        </Layer>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

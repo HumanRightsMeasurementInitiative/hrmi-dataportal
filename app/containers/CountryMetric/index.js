@@ -67,7 +67,9 @@ import saga from 'containers/App/saga';
 
 import rootMessages from 'messages';
 
-const PageTitle = props => <Heading level="2" margin="none" {...props} />;
+const PageTitle = props => (
+  <Heading responsive={false} level="2" margin="none" {...props} />
+);
 
 const StyledPageTitle = styled(PageTitle)`
   font-weight: ${({ base }) => (base ? 400 : 600)};

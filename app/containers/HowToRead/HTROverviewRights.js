@@ -57,7 +57,7 @@ function HTROverviewRights({ intl }) {
       </Paragraph>
       {DIMENSIONS.map((d, index) => (
         <span key={d.key}>
-          <Heading level={4}>
+          <Heading responsive={false} level={4}>
             <FormattedMessage {...rootMessages.dimensions[d.key]} />
           </Heading>
           <Box direction="row" align="center">
@@ -80,7 +80,11 @@ function HTROverviewRights({ intl }) {
               </Paragraph>
             </Box>
           </Box>
-          <Heading level={6} margin={{ vertical: 'xxsmall' }}>
+          <Heading
+            responsive={false}
+            level={6}
+            margin={{ vertical: 'xxsmall' }}
+          >
             <FormattedMessage {...messages.overview.rights.rightsListTitle} />
           </Heading>
           <StyledUL>

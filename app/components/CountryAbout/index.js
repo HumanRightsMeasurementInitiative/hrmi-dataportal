@@ -57,7 +57,7 @@ function CountryAbout({
       pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
       style={{ maxWidth: '500px' }}
     >
-      <Heading level={3}>
+      <Heading responsive={false} level={3}>
         <FormattedMessage {...messages.title} />
       </Heading>
       <Box direction="row" margin={{ bottom: 'xsmall' }}>
