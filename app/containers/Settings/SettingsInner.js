@@ -25,9 +25,13 @@ const SetScaleWrap = styled.div`
   text-align: center;
 `;
 
-const showDimensionKey = ({ route }) => {
+const showScaleInModal = ({ route }) => {
   if (route === 'metric') return false;
-  if (route === 'country') return false;
+  return true;
+};
+const showDimensionKey = ({ route, inModal }) => {
+  if (route === 'metric') return false;
+  if (route === 'country') return inModal;
   return true;
 };
 const showHINote = ({ route, match }) => {
@@ -85,12 +89,12 @@ export function SettingsInner({
 }) {
   return (
     <>
-      {inModal && (
+      {showScaleInModal({ route, match }) && inModal && (
         <SetScaleWrap>
           <ScaleToggle />
         </SetScaleWrap>
       )}
-      {showDimensionKey({ route, match }) && <Key inModal={inModal} />}
+      {showDimensionKey({ route, match, inModal }) && <Key inModal={inModal} />}
       {showBenchmark() && (
         <SettingsToggle
           setting="benchmark"

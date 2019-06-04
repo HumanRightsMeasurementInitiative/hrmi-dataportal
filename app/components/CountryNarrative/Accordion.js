@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Box, Collapsible, Text } from 'grommet';
+import { Box, Collapsible, Text, ResponsiveContext } from 'grommet';
+import { isMinSize } from 'utils/responsive';
 import { Down, Up } from 'grommet-icons';
 
 import Button from 'styled/Button';
@@ -26,33 +27,54 @@ const StyledButtonIcon = styled(ButtonIcon)`
 function Accordion({ head, content, buttonText, level }) {
   const [open, setOpen] = useState(false);
   return (
-    <Box direction="column">
-      <Box direction="row" align="center">
-        <Box fill="horizontal" direction="column">
-          {head}
-        </Box>
-        <Box width="200px" flex={{ shrink: 0 }}>
-          <Box
-            width="200px"
-            flex={{ shrink: 0 }}
-            direction="row"
-            align="center"
-            gap="xxsmall"
-            justify="end"
-            pad={{ right: 'small' }}
-          >
-            <StyledTextButton onClick={() => setOpen(!open)}>
-              <Text size={level > 1 ? 'xsmall' : 'small'}>{buttonText}</Text>
-            </StyledTextButton>
-            <StyledButtonIcon subtle onClick={() => setOpen(!open)}>
-              {!open && <Down size="xlarge" />}
-              {open && <Up size="xlarge" />}
-            </StyledButtonIcon>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box direction="column">
+          <Box direction="row" align="center">
+            <Box fill="horizontal" direction="column">
+              {head}
+            </Box>
+            <Box
+              width={isMinSize(size, 'medium') ? '200px' : '50px'}
+              flex={{ shrink: 0 }}
+            >
+              <Box
+                width={isMinSize(size, 'medium') ? '200px' : '50px'}
+                flex={{ shrink: 0 }}
+                direction="row"
+                align="center"
+                gap="xxsmall"
+                justify="end"
+                pad={{ right: 'small' }}
+              >
+                {isMinSize(size, 'medium') && (
+                  <StyledTextButton onClick={() => setOpen(!open)}>
+                    <Text size={level > 1 ? 'xsmall' : 'small'}>
+                      {buttonText}
+                    </Text>
+                  </StyledTextButton>
+                )}
+                <StyledButtonIcon
+                  subtle
+                  onClick={() => setOpen(!open)}
+                  small={!isMinSize(size, 'medium')}
+                >
+                  {!open && (
+                    <Down
+                      size={isMinSize(size, 'medium') ? 'xlarge' : 'large'}
+                    />
+                  )}
+                  {open && (
+                    <Up size={isMinSize(size, 'medium') ? 'xlarge' : 'large'} />
+                  )}
+                </StyledButtonIcon>
+              </Box>
+            </Box>
           </Box>
+          <Collapsible open={open}>{content}</Collapsible>
         </Box>
-      </Box>
-      <Collapsible open={open}>{content}</Collapsible>
-    </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

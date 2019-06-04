@@ -28,7 +28,7 @@ export default defineMessages({
   mobile: {
     open: {
       id: `${scope}.mobile.open`,
-      defaultMessage: 'More settings & key',
+      defaultMessage: 'All settings & key',
     },
     close: {
       id: `${scope}.mobile.close`,

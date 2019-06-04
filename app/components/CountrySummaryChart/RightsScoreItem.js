@@ -21,12 +21,19 @@ const RightsScoresWrapperCellScore = styled.div`
   display: table-cell;
   border-bottom: 1px solid;
   border-bottom-color: inherit;
+  text-align: center;
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    text-align: left;
+  }
 `;
 const RightsScoresWrapperCellLabel = styled.div`
-  display: table-cell;
-  border-bottom: 1px solid;
-  padding-bottom: 7px;
-  border-bottom-color: inherit;
+  display: none;
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    border-bottom: 1px solid;
+    padding-bottom: 7px;
+    border-bottom-color: inherit;
+    display: table-cell;
+  }
 `;
 const RightScoreText = props => <Text weight="bold" size="small" {...props} />;
 const RightLabelText = styled.span`
