@@ -12,15 +12,22 @@ import ButtonIcon from 'styled/ButtonIcon';
 const StyledTextButton = styled(Button)`
   color: ${({ theme }) => theme.global.colors.dark};
   &:hover {
-    color: ${({ theme }) => theme.global.colors['dark-1']};
+    color: ${({ theme }) => theme.global.colors.highlight2};
     background-color: transparent;
   }
 `;
 
+// prettier-ignore
 const StyledButtonIcon = styled(ButtonIcon)`
-  background-color: ${({ theme }) => theme.global.colors['light-3']};
+  background-color: ${({ theme, level }) =>
+    theme.global.colors[level > 1 ? 'light-1' : 'highlight']};
   &:hover {
-    background-color: ${({ theme }) => theme.global.colors['light-5']};
+    background-color: ${({ theme, level }) =>
+    theme.global.colors[level > 1 ? 'highlight' : 'highlight2']};
+  }
+  &:focus {
+    background-color: ${({ theme, level }) =>
+    theme.global.colors[level > 1 ? 'light-1' : 'highlight']};};
   }
 `;
 
@@ -56,16 +63,23 @@ function Accordion({ head, content, buttonText, level }) {
                 )}
                 <StyledButtonIcon
                   subtle
+                  level={level}
                   onClick={() => setOpen(!open)}
                   small={!isMinSize(size, 'medium')}
                 >
                   {!open && (
                     <Down
+                      color="dark-1"
+                      level={level}
                       size={isMinSize(size, 'medium') ? 'xlarge' : 'large'}
                     />
                   )}
                   {open && (
-                    <Up size={isMinSize(size, 'medium') ? 'xlarge' : 'large'} />
+                    <Up
+                      color="dark-1"
+                      level={level}
+                      size={isMinSize(size, 'medium') ? 'xlarge' : 'large'}
+                    />
                   )}
                 </StyledButtonIcon>
               </Box>
