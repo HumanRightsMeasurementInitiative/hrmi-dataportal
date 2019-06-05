@@ -53,9 +53,11 @@ function CountryAbout({
   const incomeCode =
     country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
   const hasCurrentGDP =
+    currentGDP &&
     currentGDP[COLUMNS.AUX.GDP_CURRENT] &&
     currentGDP[COLUMNS.AUX.GDP_CURRENT] !== '';
   const hasPopulation =
+    auxIndicators &&
     auxIndicators[COLUMNS.AUX.POPULATION] &&
     auxIndicators[COLUMNS.AUX.POPULATION] !== '';
   return (
