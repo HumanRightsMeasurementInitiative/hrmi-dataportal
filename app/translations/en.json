@@ -4,7 +4,7 @@
   "hrmi.containers.Header.metrics": "Rights",
   "hrmi.containers.Header.search.countrySearch": "Search country",
   "hrmi.containers.Header.search.metricSearch": "Search right",
-  "hrmi.containers.Header.search.allSearch": "Search country or right",
+  "hrmi.containers.Header.search.allSearch": "Search country, right or indicator",
   "hrmi.containers.Header.search.noResults": "We are sorry! Your search did not return any results.",
   "hrmi.containers.Header.download.button": "Download data",
   "hrmi.containers.Header.download.title": "Accreditation and copyright",
