@@ -356,6 +356,7 @@ export function Header({ nav, intl, onLoadData, match }) {
                   pad={{ horizontal: 'small', vertical: 'xsmall' }}
                   round="small"
                   ref={searchRef}
+                  style={{ maxWidth: '500px' }}
                 >
                   <TextInput
                     plain
