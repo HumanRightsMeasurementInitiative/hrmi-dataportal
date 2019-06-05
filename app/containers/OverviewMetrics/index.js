@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
 import { Button, Heading, Box, Text, ResponsiveContext } from 'grommet';
-// import { FormClose } from 'grommet-icons';
+import { FormNext } from 'grommet-icons';
 
 import {
   getScaleSearch,
@@ -29,7 +29,6 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 import rootMessages from 'messages';
-import { FormNext } from 'grommet-icons';
 import { isMaxSize } from 'utils/responsive';
 import MetricPreviewChart from './MetricPreviewChart';
 
@@ -77,7 +76,6 @@ export function OverviewMetrics({
   dataReady,
   activeCountry,
 }) {
-  // console.log(countries && countries.length)
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
   let scoresByMetric = [];
@@ -231,6 +229,7 @@ export function OverviewMetrics({
                                   dataReady &&
                                   scoresByMetric.find(sm => sm.key === r.key)
                                 }
+                                loading={!dataReady}
                               />
                             </Option>
                           </div>

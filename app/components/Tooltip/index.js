@@ -30,6 +30,10 @@ const renderContent = (maxWidth, component, text, onClose) => (
     pad={{ vertical: 'xsmall', horizontal: 'small' }}
     background="dark-1"
     style={{ maxWidth }}
+    onClick={evt => {
+      if (evt) evt.preventDefault();
+      if (evt) evt.stopPropagation();
+    }}
   >
     {onClose && (
       <Button
