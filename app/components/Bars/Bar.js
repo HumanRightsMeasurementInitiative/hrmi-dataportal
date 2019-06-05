@@ -112,7 +112,6 @@ function Bar({
   showIncompleteAction = true,
   height,
   annotateBenchmarkAbove = false,
-  padAnnotateBenchmarkAbove = true,
   showAllBenchmarkAnnotations = false,
   scoreOnHover = false,
   hoverEnabled = true,
@@ -131,13 +130,9 @@ function Bar({
   const hasValue = !!value || value === 0;
   const h = height || HEIGHT[level];
 
-  const padAnnotationAbove =
-    showBenchmark && refValues && annotateBenchmarkAbove;
-
   // prettier-ignore
   return (
     <Wrapper
-      padAnnotationAbove={padAnnotationAbove && padAnnotateBenchmarkAbove}
       responsive={false}
     >
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
@@ -147,7 +142,7 @@ function Bar({
             onTouchStart={evt => {
               if (evt) evt.preventDefault();
               if (evt) evt.stopPropagation();
-              setHover(true);
+              setHover(!hover);
             }}
             onClick={evt => {
               if (isMaxSize(size, 'small')){
@@ -264,7 +259,6 @@ Bar.propTypes = {
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   annotateBenchmarkAbove: PropTypes.bool,
   showAllBenchmarkAnnotations: PropTypes.bool,
-  padAnnotateBenchmarkAbove: PropTypes.bool,
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 

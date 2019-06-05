@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Paragraph, Heading } from 'grommet';
+import { Heading } from 'grommet';
+
+import HTRParagraph from './HTRParagraph';
 
 import messages from './messages';
 
@@ -12,18 +14,18 @@ const Styled = styled.div``;
 function HTRTrendCPR() {
   return (
     <Styled>
-      <Paragraph>
+      <HTRParagraph>
         <FormattedMessage {...messages.trendCPR.intro} />
-      </Paragraph>
+      </HTRParagraph>
       <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.trendCPR.rangeTitle} />
       </Heading>
-      <Paragraph>
+      <HTRParagraph>
         <FormattedMessage {...messages.trendCPR.largeRange} />
-      </Paragraph>
-      <Paragraph>
+      </HTRParagraph>
+      <HTRParagraph>
         <FormattedMessage {...messages.trendCPR.smallRange} />
-      </Paragraph>
+      </HTRParagraph>
     </Styled>
   );
 }

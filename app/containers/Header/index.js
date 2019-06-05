@@ -92,19 +92,22 @@ const NavBarBottom = props => (
 
 const BrandButton = styled(Button)`
   height: 44px;
-  width: 120px;
   padding: 1px 5px;
-  margin-right: -5px;
+  width: 100px;
+  margin-right: -10px;
   color: ${props => props.theme.global.colors.white};
   &:hover {
     color: ${props => props.theme.global.colors['light-3']};
   }
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    width: 120px;
+    margin-right: -5px;
+  }
 `;
 const TitleButton = styled(Button)`
   height: 44px;
-  width: 120px;
   padding: 1px 5px;
-  margin-right: -5px;
+  margin-right: 10px;
   color: ${props => props.theme.global.colors.white};
   &:hover {
     color: ${props => props.theme.global.colors['light-3']};
@@ -122,7 +125,7 @@ const MenuList = styled.div`
   width: 100%;
   z-index: 99999;
   background: ${props => props.theme.global.colors['dark-2']};
-  padding: ${({ theme }) => theme.global.edgeSize.medium};
+  padding: ${({ theme }) => theme.global.edgeSize.medium} 0;
   @media (min-width: ${props => props.theme.breakpoints.medium}) {
     padding: 0;
     position: relative;
@@ -152,12 +155,6 @@ const ToggleMenu = styled(Button)`
   text-align: center;
   @media (min-width: ${props => props.theme.breakpoints.medium}) {
     display: none;
-  }
-`;
-const LocaleToggleWrap = styled.span`
-  display: block;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
-    display: inline;
   }
 `;
 
@@ -200,107 +197,104 @@ export function Header({ nav, intl, onLoadData, match }) {
   const searchRef = useRef(null);
   const downloadRef = useRef(null);
   return (
-    <Styled role="banner">
-      <div>
-        <NavBarTop>
-          <BrandButton
-            plain
-            onClick={() => {
-              setShowMenu(false);
-              nav({ pathname: '', search: '' });
-            }}
-          >
-            <Icon name="BRAND" />
-          </BrandButton>
-          <TitleButton
-            plain
-            onClick={() => {
-              setShowMenu(false);
-              nav({ pathname: '', search: '' });
-            }}
-          >
-            <FormattedMessage {...messages.appTitle} />
-          </TitleButton>
-          <ToggleMenu plain onClick={() => setShowMenu(!showMenu)}>
-            {!showMenu && <Menu />}
-            {showMenu && <Close />}
-          </ToggleMenu>
-          <MenuList visible={showMenu}>
-            {appLocales.length > 1 && (
-              <span>
-                <LocaleToggleWrap>
-                  <LocaleToggle />
-                </LocaleToggleWrap>
-              </span>
-            )}
-            <span>
-              {PAGES &&
-                PAGES.map(page => (
-                  <ButtonNavPrimary
-                    key={page}
-                    active={page === match}
-                    disabled={page === match}
-                    onClick={() => {
-                      setShowMenu(false);
-                      nav(`page/${page}`);
-                    }}
-                  >
-                    <FormattedMessage {...rootMessages.page[page]} />
-                  </ButtonNavPrimary>
-                ))}
-            </span>
-            <ButtonNavPrimaryDrop
-              ref={downloadRef}
-              dropped={showDownload}
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Styled role="banner">
+          <NavBarTop>
+            <BrandButton
+              plain
               onClick={() => {
-                setShowDownload(!showDownload);
+                setShowMenu(false);
+                nav({ pathname: '', search: '' });
               }}
             >
-              <FormattedMessage {...messages.download.button} />
-              {showDownload && <FormUp />}
-              {!showDownload && <FormDown />}
-            </ButtonNavPrimaryDrop>
-            {showDownload && (
-              <Drop
-                align={{ top: 'bottom', right: 'right' }}
-                target={downloadRef.current}
-                onClickOutside={() => setShowDownload(false)}
-                elevation="small"
-              >
-                <Box
-                  pad={{ vertical: 'medium', horizontal: 'medium' }}
-                  background="dark-1"
-                  style={{ maxWidth: '100%', width: '500px' }}
-                >
-                  <Heading
-                    level={4}
-                    margin={{ top: 'small', bottom: 'xsmall' }}
-                  >
-                    <FormattedMessage {...messages.download.title} />
-                  </Heading>
-                  <Paragraph margin={{ vertical: 'small' }}>
-                    <FormattedMessage {...messages.download.paragraph} />
-                  </Paragraph>
-                  <Paragraph margin={{ top: 'small', bottom: 'medium' }}>
-                    <FormattedMessage {...messages.download.attribution} />
-                    <FormattedMessage {...messages.download.attributionURL} />
-                  </Paragraph>
-                  <ButtonHighlight
-                    href={intl.formatMessage(messages.download.downloadURL)}
-                    target="_blank"
-                    as="a"
-                    style={{ margin: '0 auto' }}
-                  >
-                    <FormattedMessage {...messages.download.downloadAnchor} />
-                  </ButtonHighlight>
-                </Box>
-              </Drop>
+              <Icon name="BRAND" />
+            </BrandButton>
+            <TitleButton
+              plain
+              onClick={() => {
+                setShowMenu(false);
+                nav({ pathname: '', search: '' });
+              }}
+            >
+              <FormattedMessage {...messages.appTitle} />
+            </TitleButton>
+            {size === 'small' && (
+              <Box margin={{ left: 'auto', right: 'large' }}>
+                <LocaleToggle />
+              </Box>
             )}
-          </MenuList>
-        </NavBarTop>
-      </div>
-      <ResponsiveContext.Consumer>
-        {size => (
+            <ToggleMenu plain onClick={() => setShowMenu(!showMenu)}>
+              {!showMenu && <Menu />}
+              {showMenu && <Close />}
+            </ToggleMenu>
+            <MenuList visible={showMenu}>
+              {appLocales.length > 1 && size !== 'small' && <LocaleToggle />}
+              <span>
+                {PAGES &&
+                  PAGES.map(page => (
+                    <ButtonNavPrimary
+                      key={page}
+                      active={page === match}
+                      disabled={page === match}
+                      onClick={() => {
+                        setShowMenu(false);
+                        nav(`page/${page}`);
+                      }}
+                    >
+                      <FormattedMessage {...rootMessages.page[page]} />
+                    </ButtonNavPrimary>
+                  ))}
+              </span>
+              <ButtonNavPrimaryDrop
+                ref={downloadRef}
+                active={showDownload}
+                onClick={() => {
+                  setShowDownload(!showDownload);
+                }}
+              >
+                <FormattedMessage {...messages.download.button} />
+                {showDownload && <FormUp />}
+                {!showDownload && <FormDown />}
+              </ButtonNavPrimaryDrop>
+              {showDownload && (
+                <Drop
+                  align={{ top: 'bottom', right: 'right' }}
+                  target={downloadRef.current}
+                  onClickOutside={() => setShowDownload(false)}
+                  elevation="small"
+                >
+                  <Box
+                    pad={{ vertical: 'medium', horizontal: 'medium' }}
+                    background="dark-1"
+                    style={{ maxWidth: '100%', width: '500px' }}
+                  >
+                    <Heading
+                      level={4}
+                      margin={{ top: 'small', bottom: 'xsmall' }}
+                    >
+                      <FormattedMessage {...messages.download.title} />
+                    </Heading>
+                    <Paragraph margin={{ vertical: 'small' }}>
+                      <FormattedMessage {...messages.download.paragraph} />
+                    </Paragraph>
+                    <Paragraph margin={{ top: 'small', bottom: 'medium' }}>
+                      <FormattedMessage {...messages.download.attribution} />
+                      <FormattedMessage {...messages.download.attributionURL} />
+                    </Paragraph>
+                    <ButtonHighlight
+                      href={intl.formatMessage(messages.download.downloadURL)}
+                      target="_blank"
+                      as="a"
+                      style={{ margin: '0 auto' }}
+                    >
+                      <FormattedMessage {...messages.download.downloadAnchor} />
+                    </ButtonHighlight>
+                  </Box>
+                </Drop>
+              )}
+            </MenuList>
+          </NavBarTop>
           <NavBarBottom>
             <SecondaryDropButton
               plain
@@ -391,9 +385,9 @@ export function Header({ nav, intl, onLoadData, match }) {
               </Drop>
             )}
           </NavBarBottom>
-        )}
-      </ResponsiveContext.Consumer>
-    </Styled>
+        </Styled>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

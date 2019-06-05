@@ -6,6 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 import { Heading, Paragraph, Box } from 'grommet';
 
 import rootMessages from 'messages';
@@ -34,11 +36,20 @@ const RightHeading = props => (
     {...props}
   />
 );
+// prettier-ignore
+const StyledHeading = styled(Heading)`
+  font-size: ${({ theme, level = 1 }) => theme.heading.level[level].small.size};
+  line-height: ${({ theme, level = 1 }) => theme.heading.level[level].small.height};
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    font-size: ${({ theme, level = 1 }) => theme.heading.level[level].medium.size};
+    line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
+  }
+`;
 
 function CountryPeople({ data, countryTitle, countryCode, intl, hasAside }) {
   return (
     <MainColumn hasAside={hasAside}>
-      <Heading responsive={false} level={2}>
+      <StyledHeading responsive={false} level={2}>
         <FormattedMessage
           {...messages.title}
           values={{
@@ -47,12 +58,10 @@ function CountryPeople({ data, countryTitle, countryCode, intl, hasAside }) {
             needsArticle: needsArticle(intl.locale, countryCode),
           }}
         />
-      </Heading>
-      <div>
-        <Paragraph>
-          <FormattedMessage {...messages.intro} />
-        </Paragraph>
-      </div>
+      </StyledHeading>
+      <Paragraph>
+        <FormattedMessage {...messages.intro} />
+      </Paragraph>
       {data &&
         data.map(dim => (
           <Box key={dim.key} border="top" margin={{ top: 'large' }}>

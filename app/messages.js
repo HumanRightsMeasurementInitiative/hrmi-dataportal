@@ -134,6 +134,14 @@ export default defineMessages({
         id: `${scope}.tabs.mobile.metrics`,
         defaultMessage: 'Explore metrics',
       },
+      'people-at-risk': {
+        id: `${scope}.tabs.mobile.people-at-risk`,
+        defaultMessage: 'At risk',
+      },
+      trend: {
+        id: `${scope}.tabs.trend`,
+        defaultMessage: 'Trend',
+      },
     },
     report: {
       id: `${scope}.tabs.report`,

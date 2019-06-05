@@ -39,8 +39,11 @@ const Styled = styled(Box)`
     css`
       position: absolute;
       top: 0;
-      right: ${props.theme.global.edgeSize.large};
       z-index: 8;
+      right: ${props.theme.global.edgeSize.small};
+      @media (min-width: ${props.theme.breakpoints.medium}) {
+        right: ${props.theme.global.edgeSize.large};
+      }
     `}
   ${props =>
     props.float &&
@@ -48,7 +51,7 @@ const Styled = styled(Box)`
       position: fixed;
       top: 115px;
       right: 15px;
-      z-index: 10;
+      z-index: 8;
       @media (min-width: ${props.theme.breakpoints.xlarge}) {
         padding-right: 15px;
       }

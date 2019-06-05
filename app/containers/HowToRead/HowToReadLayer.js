@@ -68,6 +68,7 @@ function HowToReadLayer({ layer, theme, onClose }) {
             fill="vertical"
             overflow="auto"
             style={{ position: 'relative' }}
+            responsive={false}
           >
             <Heading level={3}>
               <FormattedMessage {...messages.label} />

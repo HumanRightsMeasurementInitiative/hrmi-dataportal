@@ -58,32 +58,48 @@ function DimensionChart({ data, benchmark, standard, scoreWidth }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box pad={{ bottom: 'medium' }}>
+        <>
           <DimensionTitle dimensionKey={data.key} />
-          <BarWrap>
-            <Box
-              pad={{ vertical: 'xsmall', left: 'medium', right: 'large' }}
-              fill="horizontal"
-              style={{ position: 'relative' }}
-              responsive={false}
-            >
-              <Bar data={dim} showLabels annotateBenchmarkAbove showBenchmark />
-              <WrapAnnotateBetter>
-                <AnnotateBetter absolute />
-              </WrapAnnotateBetter>
-            </Box>
-            <DimensionScoreWrapper width={scoreWidth}>
-              <Text
-                weight="bold"
-                size={isMinSize(size, 'medium') ? 'large' : 'medium'}
-                color={`${data.key}Dark`}
+          <Box
+            pad={{ vertical: '24px' }}
+            style={{
+              marginTop:
+                isMinSize(size, 'medium') || data.type !== 'esr'
+                  ? '-24px'
+                  : '-6px',
+            }}
+            responsive={false}
+          >
+            <BarWrap>
+              <Box
+                pad={{ vertical: 'xsmall', left: 'medium', right: 'large' }}
+                fill="horizontal"
+                style={{ position: 'relative' }}
+                responsive={false}
               >
-                {dim.value && formatScoreMax(dim.value, maxValue)}
-                {!dim.value && 'N/A'}
-              </Text>
-            </DimensionScoreWrapper>
-          </BarWrap>
-        </Box>
+                <Bar
+                  data={dim}
+                  showLabels
+                  annotateBenchmarkAbove
+                  showBenchmark
+                />
+                <WrapAnnotateBetter>
+                  <AnnotateBetter absolute />
+                </WrapAnnotateBetter>
+              </Box>
+              <DimensionScoreWrapper width={scoreWidth}>
+                <Text
+                  weight="bold"
+                  size={isMinSize(size, 'medium') ? 'large' : 'medium'}
+                  color={`${data.key}Dark`}
+                >
+                  {dim.value && formatScoreMax(dim.value, maxValue)}
+                  {!dim.value && 'N/A'}
+                </Text>
+              </DimensionScoreWrapper>
+            </BarWrap>
+          </Box>
+        </>
       )}
     </ResponsiveContext.Consumer>
   );
