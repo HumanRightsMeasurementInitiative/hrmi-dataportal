@@ -199,7 +199,6 @@ export function Header({ nav, intl, onLoadData, match }) {
   const metricTarget = useRef(null);
   const searchRef = useRef(null);
   const downloadRef = useRef(null);
-  console.log(showDownload);
   return (
     <Styled role="banner">
       <div>
