@@ -19,7 +19,7 @@ import {
   HorizontalGridLines,
   Hint,
 } from 'react-vis';
-import { timeFormat } from 'd3-time-format';
+import { utcFormat as timeFormat } from 'd3-time-format';
 import formatScore from 'utils/format-score';
 
 import Source from 'components/Source';
