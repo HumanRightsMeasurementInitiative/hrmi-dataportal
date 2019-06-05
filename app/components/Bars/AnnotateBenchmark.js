@@ -52,7 +52,17 @@ function AnnotateBenchmark({
             relative={relative}
             style={{ textAlign: align }}
           >
-            <Text size="xsmall" color="dark-3" style={{ textAlign: align, display: 'block' }}>
+            <Text
+              size="xsmall"
+              color="dark-3"
+              style={
+                {
+                  textAlign: align,
+                  display: above ? 'inline ': 'block',
+                  verticalAlign: 'middle',
+                }
+              }
+            >
               {label || `${intl.formatMessage(
                 rootMessages.settings.benchmark[benchmarkKey]
               )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(

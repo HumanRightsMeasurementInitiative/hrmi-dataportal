@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { DropButton, Box } from 'grommet';
+import { DropButton, Box, ResponsiveContext } from 'grommet';
 import { FormDown, FormUp, Checkmark } from 'grommet-icons';
 import DropOption from 'styled/DropOption';
 
@@ -21,8 +21,24 @@ import { changeLocale } from 'containers/LanguageProvider/actions';
 
 import messages from './messages';
 
-const Styled = styled.span`
-  padding: 0 5px;
+const Styled = styled.span``;
+// prettier-ignore
+const StyledDropButton = styled(DropButton)`
+  height: 44px;
+  padding: 5px 10px;
+  background-color: ${({ theme, active }) => active ? theme.global.colors['dark-3'] : 'transparent' };
+  &:hover {
+    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+  }
+  &:visited {
+    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+  }
+  &:focus {
+    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+  }
 `;
 
 const DropContent = ({ active, options, onSelect }) => (
@@ -52,24 +68,33 @@ export function LocaleToggle({ intl, locale, onLocaleToggle }) {
   const [open, setOpen] = useState(false);
   return (
     <Styled>
-      <DropButton
-        plain
-        reverse
-        gap="xxsmall"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        dropProps={{ align: { top: 'bottom', right: 'right' } }}
-        icon={open ? <FormUp /> : <FormDown />}
-        label={`${intl.formatMessage(messages.language)}
-          ${LANGUAGES.short[locale]}`}
-        dropContent={
-          <DropContent
-            active={locale}
-            options={appLocales}
-            onSelect={onLocaleToggle}
+      <ResponsiveContext.Consumer>
+        {size => (
+          <StyledDropButton
+            plain
+            reverse
+            gap="xxsmall"
+            active={open}
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
+            dropProps={{ align: { top: 'bottom', right: 'right' } }}
+            icon={open ? <FormUp /> : <FormDown />}
+            label={
+              size === 'small'
+                ? `${LANGUAGES.short[locale]}`
+                : `${intl.formatMessage(messages.language)}
+              ${LANGUAGES.short[locale]}`
+            }
+            dropContent={
+              <DropContent
+                active={locale}
+                options={appLocales}
+                onSelect={onLocaleToggle}
+              />
+            }
           />
-        }
-      />
+        )}
+      </ResponsiveContext.Consumer>
     </Styled>
   );
 }

@@ -13,7 +13,7 @@ import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 // import messages from './messages';
-import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
+import { BENCHMARKS } from 'containers/App/constants';
 import ScaleToggle from 'containers/Settings/ScaleToggle';
 import { getRightsScoresForDimension } from 'utils/scores';
 
@@ -21,18 +21,10 @@ import Source from 'components/Source';
 
 import DimensionChart from './DimensionChart';
 import RightsChart from './RightsChart';
-import RightsScoreItem from './RightsScoreItem';
-import DimensionTitle from './DimensionTitle';
 
 const RightsType = styled(Box)`
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 `;
-const RightsScoresWrapperTable = styled.div`
-  display: table;
-`;
-const RightsScoresWrapper = props => (
-  <Box direction="column" flex={{ shrink: 0 }} {...props} />
-);
 const ChartArea = props => (
   <Box direction="column" fill="horizontal" {...props} />
 );
@@ -109,6 +101,7 @@ function CountrySummaryChart({
                       type: 'cpr',
                       dimension: 'empowerment',
                     }}
+                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
                   />
                 )}
                 {scale === 'r' && (
@@ -118,6 +111,7 @@ function CountrySummaryChart({
                       type: 'cpr',
                       dimension: 'physint',
                     }}
+                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
                   />
                 )}
               </RightsType>
@@ -143,60 +137,14 @@ function CountrySummaryChart({
                     }}
                     benchmark={currentBenchmark}
                     standard={standard}
+                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
                   />
                 )}
               </RightsType>
-              <Box pad={{ top: 'none' }}>
+              <Box pad={{ top: 'xsmall' }}>
                 <ScaleToggle />
               </Box>
             </ChartArea>
-            {scale === 'r' && (
-              <RightsScoresWrapper
-                width={isMinSize(size, 'medium') ? '200px' : '50px'}
-              >
-                <RightsTypeHeading>&nbsp;</RightsTypeHeading>
-                <DimensionTitle>&nbsp;</DimensionTitle>
-                <RightsScoresWrapperTable>
-                  {empowerRights &&
-                    empowerRights.map(right => (
-                      <RightsScoreItem
-                        key={right.key}
-                        dimensionKey="empowerment"
-                        maxValue={10}
-                        right={{
-                          key: right.key,
-                          value: right.score && right.score[COLUMNS.CPR.MEAN],
-                        }}
-                      />
-                    ))}
-                  {physintRights &&
-                    physintRights.map(right => (
-                      <RightsScoreItem
-                        key={right.key}
-                        dimensionKey="physint"
-                        maxValue={10}
-                        right={{
-                          key: right.key,
-                          value: right.score && right.score[COLUMNS.CPR.MEAN],
-                        }}
-                      />
-                    ))}
-                  {esrRights &&
-                    esrRights.map(right => (
-                      <RightsScoreItem
-                        key={right.key}
-                        dimensionKey="esr"
-                        maxValue={100}
-                        right={{
-                          key: right.key,
-                          value:
-                            right.score && right.score[currentBenchmark.column],
-                        }}
-                      />
-                    ))}
-                </RightsScoresWrapperTable>
-              </RightsScoresWrapper>
-            )}
           </Box>
           <Source />
         </Box>

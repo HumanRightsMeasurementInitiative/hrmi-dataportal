@@ -22,6 +22,8 @@ const RightsScoresWrapperCellScore = styled.div`
   border-bottom: 1px solid;
   border-bottom-color: inherit;
   text-align: center;
+  vertical-align: middle;
+  padding: 3px 0;
   @media (min-width: ${props => props.theme.breakpoints.medium}) {
     text-align: left;
   }
@@ -29,8 +31,9 @@ const RightsScoresWrapperCellScore = styled.div`
 const RightsScoresWrapperCellLabel = styled.div`
   display: none;
   @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    vertical-align: middle;
     border-bottom: 1px solid;
-    padding-bottom: 7px;
+    padding: 3px 0;
     border-bottom-color: inherit;
     display: table-cell;
   }

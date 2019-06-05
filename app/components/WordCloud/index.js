@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Text, Box } from 'grommet';
+import { Heading, Text, Box, ResponsiveContext } from 'grommet';
 import { scaleLinear } from 'd3-scale';
 import Tooltip from 'components/Tooltip';
 import Source from 'components/Source';
@@ -33,6 +33,8 @@ const Tag = styled(Box)`
 
 const MAX_SIZE = 42;
 const MIN_SIZE = 14;
+const MAX_SIZE_MOBILE = 33;
+const MIN_SIZE_MOBILE = 11;
 
 const scaleFontWeight = value => {
   if (value >= 0.9) return 900;
@@ -44,6 +46,9 @@ const scaleFontWeight = value => {
 const scaleFont = scaleLinear()
   .domain([0, 1])
   .range([MIN_SIZE / MAX_SIZE, 1]);
+const scaleFontMobile = scaleLinear()
+  .domain([0, 1])
+  .range([MIN_SIZE_MOBILE / MAX_SIZE_MOBILE, 1]);
 
 const scaleOpacity = scaleLinear()
   .domain([0, 1])
@@ -64,54 +69,62 @@ const StyledRightHeadingAbove = styled(Text)`
 
 export function WordCloud({ data, subright, dimension, intl, border = true }) {
   return (
-    <Styled
-      direction="column"
-      pad={{ bottom: 'large', top: 'xsmall' }}
-      border={border ? 'top' : false}
-    >
-      <StyledRightHeadingAbove>
-        <FormattedMessage {...rootMessages.labels.atRiksFor} />
-      </StyledRightHeadingAbove>
-      <StyledRightHeading level={subright ? 5 : 4}>
-        <FormattedMessage
-          {...rootMessages.rights[data.subright || data.right]}
-        />
-      </StyledRightHeading>
-      {data.scores.length === 0 && (
-        <Text>
-          <FormattedMessage {...messages.noGroupData} />
-        </Text>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Styled
+          direction="column"
+          pad={{ bottom: 'large', top: 'xsmall' }}
+          border={border ? 'top' : false}
+        >
+          <StyledRightHeadingAbove>
+            <FormattedMessage {...rootMessages.labels.atRiksFor} />
+          </StyledRightHeadingAbove>
+          <StyledRightHeading level={subright ? 5 : 4}>
+            <FormattedMessage
+              {...rootMessages.rights[data.subright || data.right]}
+            />
+          </StyledRightHeading>
+          {data.scores.length === 0 && (
+            <Text>
+              <FormattedMessage {...messages.noGroupData} />
+            </Text>
+          )}
+          <Words direction="column" align="center">
+            {data.scores.length > 0 &&
+              data.scores
+                .sort((a, b) => (a.proportion > b.proportion ? -1 : 1))
+                .map((s, index) => (
+                  <Box direction="row" align="center" key={s.people_code}>
+                    <Tag
+                      key={s.people_code}
+                      weight={scaleFontWeight(s.proportion)}
+                      opacity={scaleOpacity(s.proportion)}
+                      size={
+                        size === 'small'
+                          ? scaleFontMobile(s.proportion) * MAX_SIZE_MOBILE
+                          : scaleFont(s.proportion) * MAX_SIZE
+                      }
+                      color={`${dimension}Cloud`}
+                      direction="row"
+                      align="center"
+                    >
+                      {`${intl.formatMessage(
+                        rootMessages['people-at-risk'][s.people_code],
+                      )} (${Math.round(100 * s.proportion)}%)`}
+                    </Tag>
+                    {index === 0 && (
+                      <Tooltip
+                        iconSize="large"
+                        text={intl.formatMessage(messages.tooltip)}
+                      />
+                    )}
+                  </Box>
+                ))}
+          </Words>
+          {data.scores.length > 0 && <Source center />}
+        </Styled>
       )}
-      <Words direction="column" align="center">
-        {data.scores.length > 0 &&
-          data.scores
-            .sort((a, b) => (a.proportion > b.proportion ? -1 : 1))
-            .map((s, index) => (
-              <Box direction="row" align="center" key={s.people_code}>
-                <Tag
-                  key={s.people_code}
-                  weight={scaleFontWeight(s.proportion)}
-                  opacity={scaleOpacity(s.proportion)}
-                  size={scaleFont(s.proportion) * MAX_SIZE}
-                  color={`${dimension}Cloud`}
-                  direction="row"
-                  align="center"
-                >
-                  {`${intl.formatMessage(
-                    rootMessages['people-at-risk'][s.people_code],
-                  )} (${Math.round(100 * s.proportion)}%)`}
-                </Tag>
-                {index === 0 && (
-                  <Tooltip
-                    iconSize="large"
-                    text={intl.formatMessage(messages.tooltip)}
-                  />
-                )}
-              </Box>
-            ))}
-      </Words>
-      {data.scores.length > 0 && <Source center />}
-    </Styled>
+    </ResponsiveContext.Consumer>
   );
 }
 

@@ -136,7 +136,10 @@ export function Settings({
             {isMaxSize(size, 'medium') && (
               <StyledButton onClick={() => setOpen(true)}>
                 <Icon name="SETTINGS" />
-                <Text>
+                <Text
+                  margin={{ horizontal: 'small' }}
+                  style={{ verticalAlign: 'middle' }}
+                >
                   <FormattedMessage {...messages.mobile.open} />
                 </Text>
               </StyledButton>
@@ -181,7 +184,7 @@ export function Settings({
                     align="center"
                     pad={{ horizontal: 'large', vertical: 'small' }}
                   >
-                    <Heading responsive={false} level={6} margin="none">
+                    <Heading responsive={false} level={4} margin="none">
                       <FormattedMessage {...messages.mobile.title} />
                     </Heading>
                     <Box>
@@ -216,7 +219,10 @@ export function Settings({
                   >
                     <StyledButton onClick={() => setOpen(false)}>
                       <Icon name="SETTINGS" />
-                      <Text>
+                      <Text
+                        margin={{ horizontal: 'small' }}
+                        style={{ verticalAlign: 'middle' }}
+                      >
                         <FormattedMessage {...messages.mobile.close} />
                       </Text>
                     </StyledButton>

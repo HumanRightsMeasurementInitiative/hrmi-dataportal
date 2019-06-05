@@ -2,7 +2,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
-import { Text, Paragraph, Heading, Box } from 'grommet';
+import { Text, Heading, Box } from 'grommet';
 import DiamondChart from 'components/CountryPreview/DiamondChart';
 
 import { DIMENSIONS, RIGHTS } from 'containers/App/constants';
@@ -10,6 +10,7 @@ import { rightsForDimension } from 'utils/rights';
 import UL from 'styled/UL';
 import rootMessages from 'messages';
 import messages from './messages';
+import HTRParagraph from './HTRParagraph';
 
 const Styled = styled.div``;
 const StyledUL = styled(UL)`
@@ -52,9 +53,9 @@ const getRightGroups = (d, i) => {
 function HTROverviewRights({ intl }) {
   return (
     <Styled>
-      <Paragraph>
+      <HTRParagraph>
         <FormattedMessage {...messages.overview.rights.intro} />
-      </Paragraph>
+      </HTRParagraph>
       {DIMENSIONS.map((d, index) => (
         <span key={d.key}>
           <Heading responsive={false} level={4}>
@@ -75,59 +76,54 @@ function HTROverviewRights({ intl }) {
               />
             </Box>
             <Box width="50%" flex={{ shrink: 0 }} pad={{ left: 'medium' }}>
-              <Paragraph>
+              <HTRParagraph>
                 <FormattedMessage {...messages.overview.rights[d.key]} />
-              </Paragraph>
+              </HTRParagraph>
             </Box>
           </Box>
           <Heading
             responsive={false}
             level={6}
-            margin={{ vertical: 'xxsmall' }}
+            margin={{ top: 'xsmall', bottom: '0' }}
           >
             <FormattedMessage {...messages.overview.rights.rightsListTitle} />
           </Heading>
           <StyledUL>
             {rightsForDimension(d.key).map(r => (
               <StyledLI key={r.key}>
-                <Text size="small">
+                <Text size="xsmall">
                   <FormattedMessage {...rootMessages.rights[r.key]} />
                 </Text>
               </StyledLI>
             ))}
           </StyledUL>
           {d.key === 'esr' && (
-            <>
-              <Paragraph>
+            <Box margin={{ top: 'small' }} responsive={false}>
+              <HTRParagraph>
                 <FormattedMessage {...messages.general.benchmarkIntro} />
-                <Text
-                  style={{ fontWeight: 600 }}
-                  margin={{ horizontal: 'xsmall' }}
-                >
+                <span style={{ fontWeight: 600, margin: '0 3px' }}>
                   <FormattedMessage {...rootMessages.settings.benchmark.name} />
-                </Text>
-              </Paragraph>
-              <Paragraph margin={{ vertical: 'xsmall' }}>
-                <Text size="small" style={{ fontWeight: 600 }}>
+                </span>
+              </HTRParagraph>
+              <HTRParagraph margin={{ vertical: 'xsmall' }}>
+                <span style={{ fontWeight: 600 }}>
                   {`${intl.formatMessage(
                     rootMessages.settings.benchmark.adjusted,
                   )}: `}
-                </Text>
-                <Text size="small">
-                  {intl.formatMessage(rootMessages.tooltip.benchmark.adjusted)}
-                </Text>
-              </Paragraph>
-              <Paragraph margin={{ vertical: 'xsmall' }}>
-                <Text size="small" style={{ fontWeight: 600 }}>
+                </span>
+                <FormattedMessage
+                  {...rootMessages.tooltip.benchmark.adjusted}
+                />
+              </HTRParagraph>
+              <HTRParagraph margin={{ vertical: 'xsmall' }}>
+                <span style={{ fontWeight: 600 }}>
                   {`${intl.formatMessage(
                     rootMessages.settings.benchmark.best,
                   )}: `}
-                </Text>
-                <Text size="small">
-                  <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
-                </Text>
-              </Paragraph>
-            </>
+                </span>
+                <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
+              </HTRParagraph>
+            </Box>
           )}
         </span>
       ))}

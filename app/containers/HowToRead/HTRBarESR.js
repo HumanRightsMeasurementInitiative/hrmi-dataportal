@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
-import { Text, Paragraph, Box } from 'grommet';
+import { Box } from 'grommet';
 import Bar from 'components/Bars/Bar';
 import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
@@ -10,24 +10,25 @@ import Hint from 'styled/Hint';
 
 import rootMessages from 'messages';
 import messages from './messages';
-
+import HTRParagraph from './HTRParagraph';
 const Styled = styled.div``;
 
 function HTRBarESR({ contxt, intl }) {
   return (
     <Styled>
       {contxt === 'narrative' && (
-        <Paragraph>
+        <HTRParagraph>
           <Hint italic>
             <FormattedMessage {...messages.simpleBar.drilldownHint} />
           </Hint>
-        </Paragraph>
+        </HTRParagraph>
       )}
-      <Box direction="row" align="center">
+      <Box direction="row" align="center" responsive={false}>
         <Box
           width="50%"
           flex={{ shrink: 0 }}
           pad={{ left: 'small', right: 'medium' }}
+          responsive={false}
         >
           <Box style={{ position: 'relative' }}>
             <AnnotateBenchmark
@@ -54,37 +55,37 @@ function HTRBarESR({ contxt, intl }) {
           </Box>
         </Box>
         <Box width="50%" flex={{ shrink: 0 }} pad={{ left: 'medium' }}>
-          <Paragraph>
+          <HTRParagraph>
             <FormattedMessage {...messages.simpleBar.intro} />
-          </Paragraph>
+          </HTRParagraph>
         </Box>
       </Box>
-      <Paragraph>
-        <FormattedMessage {...messages.general.benchmarkIntro} />
-        <Text style={{ fontWeight: 600 }} margin={{ horizontal: 'xsmall' }}>
-          <FormattedMessage {...rootMessages.settings.benchmark.name} />
-        </Text>
-      </Paragraph>
-      <Paragraph margin={{ vertical: 'xsmall' }}>
-        <Text size="small" style={{ fontWeight: 600 }}>
-          {`${intl.formatMessage(rootMessages.settings.benchmark.adjusted)}: `}
-        </Text>
-        <Text size="small">
-          {intl.formatMessage(rootMessages.tooltip.benchmark.adjusted)}
-        </Text>
-      </Paragraph>
-      <Paragraph margin={{ vertical: 'xsmall' }}>
-        <Text size="small" style={{ fontWeight: 600 }}>
-          {`${intl.formatMessage(rootMessages.settings.benchmark.best)}: `}
-        </Text>
-        <Text size="small">
+      <Box margin={{ top: 'small' }} responsive={false}>
+        <HTRParagraph>
+          <FormattedMessage {...messages.general.benchmarkIntro} />
+          <span style={{ fontWeight: 600, margin: '0 3px' }}>
+            <FormattedMessage {...rootMessages.settings.benchmark.name} />
+          </span>
+        </HTRParagraph>
+        <HTRParagraph margin={{ vertical: 'xsmall' }}>
+          <span style={{ fontWeight: 600 }}>
+            {`${intl.formatMessage(
+              rootMessages.settings.benchmark.adjusted,
+            )}: `}
+          </span>
+          <FormattedMessage {...rootMessages.tooltip.benchmark.adjusted} />
+        </HTRParagraph>
+        <HTRParagraph margin={{ vertical: 'xsmall' }}>
+          <span style={{ fontWeight: 600 }}>
+            {`${intl.formatMessage(rootMessages.settings.benchmark.best)}: `}
+          </span>
           <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
-        </Text>
-      </Paragraph>
+        </HTRParagraph>
+      </Box>
       {contxt !== 'narrative' && (
-        <Paragraph>
+        <HTRParagraph>
           <FormattedMessage {...messages.simpleBar.countryComparison} />
-        </Paragraph>
+        </HTRParagraph>
       )}
     </Styled>
   );
