@@ -92,7 +92,7 @@
   "hrmi.components.CountryAbout.populationValue": "{value}{abbrev, select, millions {m} thousands {k} other {}}",
   "hrmi.components.CountryAbout.gdp": "GDP/capita ({year})",
   "hrmi.components.CountryAbout.gdpValue": "${value}",
-  "hrmi.components.CountryAbout.gdpHint": " (2011 PPP dollars)",
+  "hrmi.components.CountryAbout.gdpHint": " (current PPP dollars)",
   "hrmi.components.CountryAbout.oecd": "OECD status",
   "hrmi.components.CountryAbout.region": "Region",
   "hrmi.components.CountryAbout.income": "Income group",
