@@ -4,7 +4,7 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git://github.com/react-boilerplate/react-boilerplate.git"
+    "url": "git://github.com/HumanRightsMeasurement/hrmi-dataportal"
   },
   "engines": {
     "npm": ">=5",
@@ -47,7 +47,8 @@
   "browserslist": [
     "last 2 versions",
     "> 1%",
-    "IE 10"
+    "IE 10",
+    "Safari 11"
   ],
   "lint-staged": {
     "*.js": [
