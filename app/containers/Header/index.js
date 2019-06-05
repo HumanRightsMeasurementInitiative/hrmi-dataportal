@@ -11,14 +11,31 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Box, Button, Drop, ResponsiveContext, TextInput } from 'grommet';
-import { Menu, Close, FormClose, Search } from 'grommet-icons';
+import {
+  Box,
+  Button,
+  Drop,
+  ResponsiveContext,
+  TextInput,
+  Heading,
+  Paragraph,
+} from 'grommet';
+import {
+  Menu,
+  Close,
+  FormClose,
+  Search,
+  FormDown,
+  FormUp,
+} from 'grommet-icons';
 
 import { getRouterMatch } from 'containers/App/selectors';
 
 import ContentContainer from 'styled/ContentContainer';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 import { isMinSize } from 'utils/responsive';
+import ButtonNavPrimaryDrop from 'styled/ButtonNavPrimaryDrop';
+import ButtonHighlight from 'styled/ButtonHighlight';
 
 import Icon from 'components/Icon';
 
@@ -176,10 +193,13 @@ export function Header({ nav, intl, onLoadData, match }) {
   const [showMenu, setShowMenu] = useState(false);
   const [showCountries, setShowCountries] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
+  const [showDownload, setShowDownload] = useState(false);
   const [search, setSearch] = useState('');
   const countryTarget = useRef(null);
   const metricTarget = useRef(null);
   const searchRef = useRef(null);
+  const downloadRef = useRef(null);
+  console.log(showDownload);
   return (
     <Styled role="banner">
       <div>
@@ -230,6 +250,53 @@ export function Header({ nav, intl, onLoadData, match }) {
                   </ButtonNavPrimary>
                 ))}
             </span>
+            <ButtonNavPrimaryDrop
+              ref={downloadRef}
+              dropped={showDownload}
+              onClick={() => {
+                setShowDownload(!showDownload);
+              }}
+            >
+              <FormattedMessage {...messages.download.button} />
+              {showDownload && <FormUp />}
+              {!showDownload && <FormDown />}
+            </ButtonNavPrimaryDrop>
+            {showDownload && (
+              <Drop
+                align={{ top: 'bottom', right: 'right' }}
+                target={downloadRef.current}
+                onClickOutside={() => setShowDownload(false)}
+                elevation="small"
+              >
+                <Box
+                  pad={{ vertical: 'medium', horizontal: 'medium' }}
+                  background="dark-1"
+                  style={{ maxWidth: '100%', width: '500px' }}
+                >
+                  <Heading
+                    level={4}
+                    margin={{ top: 'small', bottom: 'xsmall' }}
+                  >
+                    <FormattedMessage {...messages.download.title} />
+                  </Heading>
+                  <Paragraph margin={{ vertical: 'small' }}>
+                    <FormattedMessage {...messages.download.paragraph} />
+                  </Paragraph>
+                  <Paragraph margin={{ top: 'small', bottom: 'medium' }}>
+                    <FormattedMessage {...messages.download.attribution} />
+                    <FormattedMessage {...messages.download.attributionURL} />
+                  </Paragraph>
+                  <ButtonHighlight
+                    href={intl.formatMessage(messages.download.downloadURL)}
+                    target="_blank"
+                    as="a"
+                    style={{ margin: '0 auto' }}
+                  >
+                    <FormattedMessage {...messages.download.downloadAnchor} />
+                  </ButtonHighlight>
+                </Box>
+              </Drop>
+            )}
           </MenuList>
         </NavBarTop>
       </div>
