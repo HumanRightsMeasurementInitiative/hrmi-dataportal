@@ -8,10 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Box, Text, ResponsiveContext } from 'grommet';
-// import { Emergency } from 'grommet-icons';
+import { FormNext } from 'grommet-icons';
 import styled from 'styled-components';
 // import Tooltip from 'components/Tooltip';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import {
   DIMENSIONS,
@@ -225,7 +225,7 @@ export function CountryPreview({
       {size => (
         <Box
           pad="none"
-          basis={isMinSize(size, 'medium') ? '250px' : '300px'}
+          basis={isMinSize(size, 'medium') ? '250px' : '280px'}
           alignContent="center"
           flex={{ grow: 1 }}
         >
@@ -239,7 +239,7 @@ export function CountryPreview({
             >
               <Box
                 pad={{ horizontal: 'small', vertical: 'medium' }}
-                width={isMinSize(size, 'medium') ? '250px' : '300px'}
+                width={isMinSize(size, 'medium') ? '250px' : '280px'}
                 alignContent="center"
               >
                 {scale === 'd' && (
@@ -285,6 +285,7 @@ export function CountryPreview({
                           )})`}
                         </span>
                       )}
+                      {isMaxSize(size, 'medium') && <FormNext size="medium" />}
                     </CountryLabel>
                   </Text>
                 </Box>

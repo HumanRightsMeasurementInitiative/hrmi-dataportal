@@ -39,7 +39,7 @@ import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
 
 import rootMessages from 'messages';
@@ -87,9 +87,9 @@ export function OverviewCountries({
     scores: scoresAllCountries,
   });
   return (
-    <MainColumn hasAside={hasAside}>
-      <ResponsiveContext.Consumer>
-        {size => (
+    <ResponsiveContext.Consumer>
+      {size => (
+        <MainColumn hasAside={hasAside}>
           <Box
             direction="row"
             justify="between"
@@ -113,51 +113,57 @@ export function OverviewCountries({
               onOrderToggle={onOrderChange}
             />
           </Box>
-        )}
-      </ResponsiveContext.Consumer>
-      {sortedCountries && scoresAllCountries && (
-        <Box
-          width="100%"
-          pad={{ bottom: 'medium', top: 'small' }}
-          align="center"
-        >
-          {!dataReady && <LoadingIndicator />}
-          {dataReady && sortedCountries && sortedCountries.length === 0 && (
-            <Hint italic>
-              <FormattedMessage {...rootMessages.hints.noResults} />
-            </Hint>
-          )}
-          {dataReady && sortedCountries && sortedCountries.length > 0 && (
-            <Box direction="row" wrap overflow="hidden">
-              <InfiniteScroll items={sortedCountries} step={30} show={0}>
-                {(c, index) => (
-                  <CountryPreview
-                    showAnnotation={index === 0}
-                    key={c.country_code}
-                    country={c}
-                    scale={scale}
-                    scores={getScoresForCountry(
-                      c.country_code,
-                      scoresAllCountries,
+          {sortedCountries && scoresAllCountries && (
+            <Box
+              width="100%"
+              pad={{ bottom: 'medium', top: 'small' }}
+              align="center"
+            >
+              {!dataReady && <LoadingIndicator />}
+              {dataReady && sortedCountries && sortedCountries.length === 0 && (
+                <Hint italic>
+                  <FormattedMessage {...rootMessages.hints.noResults} />
+                </Hint>
+              )}
+              {dataReady && sortedCountries && sortedCountries.length > 0 && (
+                <Box
+                  direction="row"
+                  wrap
+                  overflow="hidden"
+                  pad={isMaxSize(size, 'medium') ? '40px 0 0' : '40px 0 0'}
+                  margin={isMaxSize(size, 'medium') ? '0' : '-20px 0 0'}
+                >
+                  <InfiniteScroll items={sortedCountries} step={30} show={0}>
+                    {(c, index) => (
+                      <CountryPreview
+                        showAnnotation={index === 0}
+                        key={c.country_code}
+                        country={c}
+                        scale={scale}
+                        scores={getScoresForCountry(
+                          c.country_code,
+                          scoresAllCountries,
+                        )}
+                        standard={standardDetails}
+                        otherStandard={otherStandardDetails}
+                        defaultStandard={isDefaultStandard(c, standardDetails)}
+                        benchmark={benchmarkDetails}
+                        onSelectCountry={() => onSelectCountry(c.country_code)}
+                        indicators={indicators}
+                        onCountryHover={code => onCountryHover(code)}
+                      />
                     )}
-                    standard={standardDetails}
-                    otherStandard={otherStandardDetails}
-                    defaultStandard={isDefaultStandard(c, standardDetails)}
-                    benchmark={benchmarkDetails}
-                    onSelectCountry={() => onSelectCountry(c.country_code)}
-                    indicators={indicators}
-                    onCountryHover={code => onCountryHover(code)}
-                  />
-                )}
-              </InfiniteScroll>
+                  </InfiniteScroll>
+                </Box>
+              )}
+              {dataReady && sortedCountries && sortedCountries.length > 0 && (
+                <Source />
+              )}
             </Box>
           )}
-          {dataReady && sortedCountries && sortedCountries.length > 0 && (
-            <Source />
-          )}
-        </Box>
+        </MainColumn>
       )}
-    </MainColumn>
+    </ResponsiveContext.Consumer>
   );
 }
 
