@@ -40,6 +40,7 @@ import {
   getPeopleAtRiskForCountry,
   getDimensionAverages,
   getAuxIndicatorsForCountry,
+  getCountryCurrentGDP,
   getESRYear,
   getCPRYear,
   getDependenciesReady,
@@ -81,6 +82,7 @@ export function PathCountry({
   standard,
   dimensionAverages,
   auxIndicators,
+  currentGDP,
   esrYear,
   cprYear,
   dataReady,
@@ -220,6 +222,7 @@ export function PathCountry({
                   {...props}
                   country={country}
                   auxIndicators={auxIndicators}
+                  currentGDP={currentGDP}
                   onCategoryClick={onCategoryClick}
                   showFAQs
                 />
@@ -251,6 +254,7 @@ PathCountry.propTypes = {
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
   dataReady: PropTypes.bool,
@@ -272,6 +276,8 @@ const mapStateToProps = createStructuredSelector({
   esrYear: state => getESRYear(state),
   cprYear: state => getCPRYear(state),
   dimensionAverages: state => getDimensionAverages(state),
+  currentGDP: (state, { match }) =>
+    getCountryCurrentGDP(state, match.params.country),
   auxIndicators: (state, { match }) =>
     getAuxIndicatorsForCountry(state, match.params.country),
 });
