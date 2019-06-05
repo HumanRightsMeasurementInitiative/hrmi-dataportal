@@ -31,6 +31,24 @@ const StyledButtonIcon = styled(ButtonIcon)`
   }
 `;
 
+// const StyledButtonIcon = styled(ButtonIcon)`
+//   border: 1px solid ${({ theme }) => theme.global.colors.highlight};
+//   &:hover {
+//     background-color: ${({ theme, level }) =>
+//     theme.global.colors[level > 1 ? 'transparent' : 'highlight']};
+//   }
+//   &:focus {
+//     background-color: transparent;
+//   }
+// `;
+//
+// const StyledDown = styled(Down)`
+//   stroke: ${({ theme }) => theme.global.colors.highlight};
+//   ${StyledButtonIcon}:hover & {
+//     stroke: ${({ theme }) => theme.global.colors['dark-1']};
+//   }
+// `;
+
 function Accordion({ head, content, buttonText, level }) {
   const [open, setOpen] = useState(false);
   return (
