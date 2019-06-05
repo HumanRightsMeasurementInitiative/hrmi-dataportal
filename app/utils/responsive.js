@@ -58,6 +58,5 @@ export const getFloatingAsideWidth = (size, theme, { width }) => {
   const asideWidth = parseInt(getAsideWidth(size), 10);
   const maxWidth = parseInt(theme.maxWidth, 10);
   const padding = parseInt(theme.global.edgeSize.large, 10);
-  console.log(asideWidth, width, padding, maxWidth);
   return asideWidth + padding + Math.max(0, (width - maxWidth) / 2);
 };
