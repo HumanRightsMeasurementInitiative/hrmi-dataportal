@@ -13,7 +13,9 @@ import { isMinSize } from 'utils/responsive';
 
 import Accordion from './Accordion';
 import DimensionPanel from './DimensionPanel';
+import DimensionPanelTop from './DimensionPanelTop';
 import RightPanel from './RightPanel';
+import RightPanelTop from './RightPanelTop';
 
 const Styled = styled(Box)``;
 
@@ -38,6 +40,13 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                 intl.formatMessage(rootMessages.metricTypes.rights),
               )}`}
               level={1}
+              top={
+                <DimensionPanelTop
+                  dimension={dimension}
+                  onMetricClick={onMetricClick}
+                  hasAtRisk
+                />
+              }
               head={
                 <DimensionPanel
                   dimension={dimension}
@@ -79,6 +88,12 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                               ),
                             )}`}
                             level={2}
+                            top={
+                              <RightPanelTop
+                                right={right}
+                                onMetricClick={onMetricClick}
+                              />
+                            }
                             head={
                               <RightPanel
                                 right={right}

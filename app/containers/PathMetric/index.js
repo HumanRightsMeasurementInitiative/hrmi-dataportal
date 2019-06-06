@@ -80,7 +80,7 @@ export function PathMetric({
             <Layer
               full
               margin={{
-                top: isMinSize(size, 'large') ? 'large' : 'small',
+                top: isMinSize(size, 'xlarge') ? 'large' : 'small',
                 bottom: 'ms',
               }}
               onEsc={() => onCloseMetricOverlay(metricCode)}

@@ -22,7 +22,7 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-import { Heading } from 'grommet';
+import PageTitle from 'styled/PageTitle';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
@@ -30,8 +30,13 @@ import saga from 'containers/App/saga';
 import rootMessages from 'messages';
 
 const StyledContent = styled.div`
-  max-width: 700px;
-  margin: 0 auto;
+  margin-top: 30px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    margin-top: 20px;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    margin-top: 15px;
+  }
 `;
 
 export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
@@ -52,16 +57,9 @@ export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
       </Helmet>
       <ContentContainer direction="column" header>
         <Close closeTarget={closeTarget} keepTab topRight />
-        <ContentMaxWidth>
+        <ContentMaxWidth maxWidth="700px">
           <StyledContent>
-            <Heading
-              responsive={false}
-              margin={{ top: 'small', bottom: 'medium' }}
-              style={{ fontWeight: 400 }}
-              level={1}
-            >
-              {pageTitle}
-            </Heading>
+            <PageTitle level={1}>{pageTitle}</PageTitle>
             {content && <HTMLWrapper innerhtml={content.content} />}
             {!content && <LoadingIndicator />}
           </StyledContent>

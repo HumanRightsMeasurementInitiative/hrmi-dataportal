@@ -47,6 +47,7 @@ const ButtonRelative = styled(Button)`
   margin: 0.5em 0;
   font-weight: 600;
   font-size: ${({ theme }) => theme.text.small.size};
+  text-align: left;
   &:hover {
     color: ${({ theme }) => theme.global.colors.text.light};
     background-color: ${({ theme }) => theme.global.colors.highlight};
@@ -138,8 +139,6 @@ export function MetricAside({
     questions = [...questions, 'indicators'];
   }
 
-  console.log(metric);
-
   return (
     <Box direction="column">
       <MetricAbout
@@ -147,7 +146,11 @@ export function MetricAside({
         metricInfo={metricInfo}
         standard={standard}
       />
-      <Box direction="column" pad={{ bottom: 'medium', horizontal: 'medium' }}>
+      <Box
+        direction="column"
+        pad={{ bottom: 'medium', horizontal: 'medium' }}
+        justify="start"
+      >
         {metricType !== 'dimensions' && (
           <Pad>
             <Heading

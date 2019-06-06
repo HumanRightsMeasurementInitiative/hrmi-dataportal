@@ -241,7 +241,6 @@ export function Header({ nav, intl, onLoadData, match }) {
             <TitleButton
               plain
               onClick={() => {
-                console.log(size);
                 setShowMenu(false);
                 nav({ pathname: '', search: '' });
               }}

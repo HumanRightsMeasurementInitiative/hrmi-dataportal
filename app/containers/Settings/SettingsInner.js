@@ -13,7 +13,6 @@ import { Box, Text } from 'grommet';
 import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 
 import getMetricDetails from 'utils/metric-details';
-// import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 import messages from './messages';

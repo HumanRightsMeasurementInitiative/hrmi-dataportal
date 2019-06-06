@@ -49,13 +49,21 @@ const StyledButtonIcon = styled(ButtonIcon)`
 //   }
 // `;
 
-function Accordion({ head, content, buttonText, level }) {
+function Accordion({ head, top, content, buttonText, level }) {
   const [open, setOpen] = useState(false);
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box direction="column">
-          <Box direction="row" align="center">
+          <Box
+            direction="row"
+            align="center"
+            pad={{ top: 'small', horizontal: 'none' }}
+            fill="horizontal"
+          >
+            {top}
+          </Box>
+          <Box direction="row" align="center" pad={{ bottom: 'small' }}>
             <Box fill="horizontal" direction="column">
               {head}
             </Box>
@@ -70,7 +78,7 @@ function Accordion({ head, content, buttonText, level }) {
                 align="center"
                 gap="xxsmall"
                 justify="end"
-                pad={{ right: 'small' }}
+                pad={{ right: 'small', bottom: 'small' }}
               >
                 {isMinSize(size, 'medium') && (
                   <StyledTextButton onClick={() => setOpen(!open)}>
@@ -89,14 +97,14 @@ function Accordion({ head, content, buttonText, level }) {
                     <Down
                       color="dark-1"
                       level={level}
-                      size={isMinSize(size, 'medium') ? 'xlarge' : 'large'}
+                      size={isMinSize(size, 'medium') ? 'xlarge' : 'medium'}
                     />
                   )}
                   {open && (
                     <Up
                       color="dark-1"
                       level={level}
-                      size={isMinSize(size, 'medium') ? 'xlarge' : 'large'}
+                      size={isMinSize(size, 'medium') ? 'xlarge' : 'medium'}
                     />
                   )}
                 </StyledButtonIcon>
@@ -111,6 +119,7 @@ function Accordion({ head, content, buttonText, level }) {
 }
 
 Accordion.propTypes = {
+  top: PropTypes.node,
   head: PropTypes.node,
   content: PropTypes.node,
   buttonText: PropTypes.string,

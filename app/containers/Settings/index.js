@@ -56,15 +56,18 @@ const SettingsIconWrapInner = styled.div`
 const SettingsIconWrap = styled.div`
   position: absolute;
   right: 0;
-  left: 0;
   top: 0;
   bottom: 0;
   text-align: center;
-  display: table;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.global.colors['light-1']};
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+  display: none;
+  @media (min-width: 1024px) {
+    display: table;
+    width: 60px;
+  }
+  @media (min-width: 1228px) {
     width: 120px;
     left: auto;
   }
@@ -157,7 +160,10 @@ export function Settings({
                 direction="row"
                 height="90px"
                 width="full"
-                pad={{ left: size === 'xlarge' ? 'medium' : 'small' }}
+                pad={{
+                  left: isMinSize(size, 'xlarge') ? 'medium' : 'small',
+                  top: 'xsmall',
+                }}
                 align="start"
                 style={{ position: 'relative' }}
               >
