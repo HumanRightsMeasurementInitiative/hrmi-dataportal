@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 const breakpoint = props => {
   if (props.min || props.min === 'small') {
-    return props.theme.breakpoints[props.min];
+    return props.theme.breakpointsMin[props.min];
   }
-  return props.theme.breakpoints.small;
+  return props.theme.breakpointsMin.medium;
 };
 
 /**

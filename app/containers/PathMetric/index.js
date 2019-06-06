@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Helmet } from 'react-helmet';
-import { Layer, Box } from 'grommet';
+import { Layer, Box, ResponsiveContext } from 'grommet';
 
 import CountryMetric from 'containers/CountryMetric';
 import Close from 'containers/Close';
@@ -28,6 +28,7 @@ import HeaderLinks from 'components/HeaderLinks';
 import rootMessages from 'messages';
 
 import getMetricDetails from 'utils/metric-details';
+import { isMinSize } from 'utils/responsive';
 
 import { navigate } from 'containers/App/actions';
 
@@ -74,18 +75,25 @@ export function PathMetric({
         <meta name="description" content="Description of metric" />
       </Helmet>
       {match.params.country && (
-        <Layer
-          full
-          margin={{ horizontal: 'large', top: 'large', bottom: 'small' }}
-          onEsc={() => onCloseMetricOverlay(metricCode)}
-          onClickOutside={() => onCloseMetricOverlay(metricCode)}
-        >
-          <CountryMetric
-            metricCode={metricCode}
-            countryCode={match.params.country}
-            base="metric"
-          />
-        </Layer>
+        <ResponsiveContext.Consumer>
+          {size => (
+            <Layer
+              full
+              margin={{
+                top: isMinSize(size, 'large') ? 'large' : 'small',
+                bottom: 'ms',
+              }}
+              onEsc={() => onCloseMetricOverlay(metricCode)}
+              onClickOutside={() => onCloseMetricOverlay(metricCode)}
+            >
+              <CountryMetric
+                metricCode={metricCode}
+                countryCode={match.params.country}
+                base="metric"
+              />
+            </Layer>
+          )}
+        </ResponsiveContext.Consumer>
       )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>

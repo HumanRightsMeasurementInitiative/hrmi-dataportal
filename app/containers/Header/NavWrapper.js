@@ -13,7 +13,7 @@ export default styled.div`
   background-color: ${({ theme }) => theme.global.colors.white};
   color: ${({ theme }) => theme.global.colors.text.light};
   z-index: 1000;
-  @media (min-width: ${({ theme }) => theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     position: relative;
     width: 400px;
   }

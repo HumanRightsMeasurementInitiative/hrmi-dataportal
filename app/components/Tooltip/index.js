@@ -83,7 +83,14 @@ function Tooltip({
               onClick={evt => {
                 if (evt) evt.preventDefault();
                 if (evt) evt.stopPropagation();
+                console.log('click');
                 setOpen(!open);
+              }}
+              onTouchStart={evt => {
+                if (evt) evt.preventDefault();
+                if (evt) evt.stopPropagation();
+                console.log('touchstart');
+                setOpen(true);
               }}
               onMouseEnter={
                 isMinSize(size, 'medium') ? () => setOver(true) : null
@@ -113,7 +120,6 @@ function Tooltip({
               <Layer
                 position="center"
                 elevation="small"
-                onClickOutside={() => setOpen(false)}
                 responsive={false}
                 onEsc={() => setOpen(false)}
                 full="horizontal"

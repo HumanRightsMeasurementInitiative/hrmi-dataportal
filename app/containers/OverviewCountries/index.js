@@ -93,7 +93,7 @@ export function OverviewCountries({
           <Box
             direction="row"
             justify="between"
-            align={isMinSize(size, 'medium') ? 'center' : 'start'}
+            align={isMinSize(size, 'large') ? 'center' : 'start'}
             margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
           >
             <CountryFilters
@@ -116,8 +116,9 @@ export function OverviewCountries({
           {sortedCountries && scoresAllCountries && (
             <Box
               width="100%"
-              pad={{ bottom: 'medium', top: 'small' }}
+              pad={{ bottom: 'medium', top: size === 'small' ? 'xsmall' : '0' }}
               align="center"
+              responsive={false}
             >
               {!dataReady && <LoadingIndicator />}
               {dataReady && sortedCountries && sortedCountries.length === 0 && (
@@ -129,7 +130,7 @@ export function OverviewCountries({
                 <Box
                   direction="row"
                   wrap
-                  overflow="hidden"
+                  overflow={isMaxSize(size, 'medium') ? 'hidden' : 'auto'}
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '40px 0 0'}
                   margin={isMaxSize(size, 'medium') ? '0' : '-20px 0 0'}
                 >

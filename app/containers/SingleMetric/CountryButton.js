@@ -13,8 +13,7 @@ const Styled = styled(Button)`
   padding: 2px 3px;
   line-height: 16px;
   min-height: 26px;
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 2px 8px;
     min-height: 40px;
     line-height: 19px;

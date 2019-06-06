@@ -31,7 +31,7 @@ const HowToReadWrapper = styled.div`
   right: 0px;
   top: 4px;
   text-align: right;
-  @media (min-width: ${props => props.theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     position: absolute;
     right: ${({ theme }) => theme.global.edgeSize.medium};
     top: 0;

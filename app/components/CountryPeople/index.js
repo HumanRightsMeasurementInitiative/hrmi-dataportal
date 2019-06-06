@@ -40,7 +40,7 @@ const RightHeading = props => (
 const StyledHeading = styled(Heading)`
   font-size: ${({ theme, level = 1 }) => theme.heading.level[level].small.size};
   line-height: ${({ theme, level = 1 }) => theme.heading.level[level].small.height};
-  @media (min-width: ${props => props.theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     font-size: ${({ theme, level = 1 }) => theme.heading.level[level].medium.size};
     line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
   }

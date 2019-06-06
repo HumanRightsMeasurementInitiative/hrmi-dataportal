@@ -11,8 +11,7 @@ import rootMessages from 'messages';
 const Styled = styled(Button)`
   text-align: right;
   padding: 3px 5px;
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 6px 8px;
   }
 `;

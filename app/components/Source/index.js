@@ -12,7 +12,7 @@ const Styled = styled(Hint)`
   line-height: 16px;
   margin-top: 1em;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     font-size: 14px;
     line-height: 20px;
   }

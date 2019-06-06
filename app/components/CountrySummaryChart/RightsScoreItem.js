@@ -24,13 +24,13 @@ const RightsScoresWrapperCellScore = styled.div`
   text-align: center;
   vertical-align: middle;
   padding: 3px 0;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     text-align: left;
   }
 `;
 const RightsScoresWrapperCellLabel = styled.div`
   display: none;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     vertical-align: middle;
     border-bottom: 1px solid;
     padding: 3px 0;
