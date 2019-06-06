@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import styled, { withTheme } from 'styled-components';
-import { Heading, Box } from 'grommet';
+import { Box } from 'grommet';
 
 import CountryMetricPeople from 'components/CountryMetricPeople';
 import CountryAbout from 'components/CountryAbout';
@@ -64,10 +64,13 @@ import {
 } from 'containers/App/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
+import PageTitle from 'styled/PageTitle';
 
 import rootMessages from 'messages';
 
-const PageTitle = props => <Heading level="2" margin="none" {...props} />;
+// const PageTitle = props => (
+//   <Heading responsive={false} level="2" margin="none" {...props} />
+// );
 
 const StyledPageTitle = styled(PageTitle)`
   font-weight: ${({ base }) => (base ? 400 : 600)};
@@ -81,16 +84,22 @@ const StyledContent = styled(Box)`
   max-width: 100%;
   position: relative;
   min-height: auto;
+  padding: 0 ${({ theme }) => theme.global.edgeSize.small};
+  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+    padding: 0 ${({ theme }) => theme.global.edgeSize.large};
+  }
 `;
 
 const Content = props => (
-  <StyledContent
-    direction="row"
-    align="center"
-    pad={{ horizontal: 'large' }}
-    {...props}
-  />
+  <StyledContent direction="row" align="center" responsive={false} {...props} />
 );
+
+const TitleWrap = styled(Box)`
+  padding-top: ${({ theme }) => theme.global.edgeSize.small};
+  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+    padding-top: 0;
+  }
+`;
 
 const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
 
@@ -184,6 +193,7 @@ export function CountryMetric({
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
 
+  // prettier-ignore
   return (
     <Box overflow="auto" direction="column">
       <Helmet>
@@ -199,7 +209,7 @@ export function CountryMetric({
               onClose(base, base === 'country' ? countryCode : metricCode)
             }
           />
-          <Box direction="column" align="start">
+          <TitleWrap direction="column" align="start" responsive={false}>
             <StyledPageTitle base level="2">
               {base === 'metric' ? metricTitle : countryTitle}
             </StyledPageTitle>
@@ -216,7 +226,7 @@ export function CountryMetric({
                 {base === 'metric' ? countryTitle : metricTitle}
               </StyledPageTitle>
             </StyledButtonText>
-          </Box>
+          </TitleWrap>
         </Content>
       </ContentContainer>
       <Content>
@@ -227,32 +237,42 @@ export function CountryMetric({
             {
               key: 'atrisk',
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+              titleMobile: intl.formatMessage(
+                rootMessages.tabs['people-at-risk'],
+              ),
               // howToRead: {
               //   contxt: 'CountryMetric',
               //   chart: 'WordCloud',
               //   data: 'atRisk',
               // },
-              content: hasAtRisk && metric.metricType !== 'indicators' && (
-                <CountryMetricPeople
-                  data={atRisk}
-                  metric={metric}
-                  atRiskAnalysis={atRiskAnalysis}
-                  atRiskAnalysisSubrights={atRiskAnalysisSubrights}
-                  locale={intl.locale}
-                  hasAnalysis={hasAnalysis(metric)}
-                  hasSubrightAnalysis={hasSubrightAnalysis(metric)}
-                />
-              ),
+              content:
+                hasAtRisk &&
+                metric.metricType !== 'indicators' &&
+                (props => (
+                  <CountryMetricPeople
+                    data={atRisk}
+                    metric={metric}
+                    atRiskAnalysis={atRiskAnalysis}
+                    atRiskAnalysisSubrights={atRiskAnalysisSubrights}
+                    locale={intl.locale}
+                    hasAnalysis={hasAnalysis(metric)}
+                    hasSubrightAnalysis={hasSubrightAnalysis(metric)}
+                    {...props}
+                  />
+                )),
             },
             {
               key: 'trend',
               title: intl.formatMessage(rootMessages.tabs.trend),
+              titleMobile: intl.formatMessage(
+                rootMessages.tabs.mobile.trend,
+              ),
               // howToRead: {
               //   contxt: 'CountryMetric',
               //   chart: 'Trend',
               //   data: metric.type,
               // },
-              content: (
+              content: props => (
                 <MetricTrend
                   color={theme.global.colors[getColour(metric)]}
                   colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
@@ -276,6 +296,7 @@ export function CountryMetric({
                   onSetStandard={onSetStandard}
                   standard={standard}
                   benchmark={benchmark}
+                  {...props}
                 />
               ),
             },
@@ -288,8 +309,11 @@ export function CountryMetric({
                   ? rootMessages[metric.metricType][metricCode]
                   : rootMessages.countries[countryCode],
               )}`,
-              content:
-                base === 'country' ? (
+              titleMobile: `${intl.formatMessage(
+                rootMessages.tabs.about,
+              )}`,
+              content: base === 'country'
+                ? props => (
                   <MetricAbout
                     metric={metric}
                     metricInfo={metricInfo}
@@ -299,18 +323,19 @@ export function CountryMetric({
                         ? STANDARDS.find(s => metricInfo.standard === s.code)
                         : null
                     }
+                    {...props}
                   />
-                ) : (
-                  <>
-                    {country && auxIndicators && (
-                      <CountryAbout
-                        country={country}
-                        auxIndicators={auxIndicators}
-                        onCategoryClick={onCategoryClick}
-                      />
-                    )}
-                  </>
-                ),
+                )
+                : props =>
+                  country &&
+                  auxIndicators && (
+                    <CountryAbout
+                      country={country}
+                      auxIndicators={auxIndicators}
+                      onCategoryClick={onCategoryClick}
+                      {...props}
+                    />
+                  ),
             },
           ]}
         />

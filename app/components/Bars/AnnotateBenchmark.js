@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text } from 'grommet';
+import { Text, ResponsiveContext } from 'grommet';
 import { injectIntl, intlShape } from 'react-intl';
 import { lowerCase } from 'utils/string';
 import rootMessages from 'messages';
@@ -32,42 +32,57 @@ function AnnotateBenchmark({
 }) {
   // prettier-ignore
   return (
-    <AnnotateRef
-      rotate={rotate}
-      margin={margin}
-      above={above}
-      relative={relative}
-      left={left}
-      align={align}
-    >
-      <AnnotateRefLine
-        above={above || relative}
-        relative={relative}
-        align={align}
-      />
-      <AnnotateRefInner
-        above={above || relative}
-        relative={relative}
-        style={{ textAlign: align }}
-      >
-        <Text size="xsmall" color="dark-3" style={{ textAlign: align }}>
-          {label || `${intl.formatMessage(
-            rootMessages.settings.benchmark[benchmarkKey]
-          )} ${relative ? '' : lowerCase(intl.formatMessage(
-            rootMessages.settings.benchmark.nameShort
-          ))}`}
-        </Text>
-        {!relative && tooltip &&
-          <Tooltip
-            insideButton
-            margin={above ? { left: 'xsmall' } : { top: 'xsmall' }}
-            iconSize="medium"
-            maxWidth="300px"
-            component={<BenchmarkOverlay size="xsmall" />}
+    <ResponsiveContext.Consumer>
+      {size => (
+        <AnnotateRef
+          rotate={rotate}
+          margin={margin}
+          above={above}
+          relative={relative}
+          left={left}
+          align={align}
+        >
+          <AnnotateRefLine
+            above={above || relative}
+            relative={relative}
+            align={align}
           />
-        }
-      </AnnotateRefInner>
-    </AnnotateRef>
+          <AnnotateRefInner
+            above={above || relative}
+            relative={relative}
+            style={{ textAlign: align }}
+          >
+            <Text
+              size="xsmall"
+              color="dark-3"
+              style={
+                {
+                  textAlign: align,
+                  display: above ? 'inline ': 'block',
+                  verticalAlign: 'middle',
+                }
+              }
+            >
+              {label || `${intl.formatMessage(
+                rootMessages.settings.benchmark[benchmarkKey]
+              )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(
+                rootMessages.settings.benchmark.nameShort
+              ))}`}
+            </Text>
+            {!relative && tooltip &&
+              <Tooltip
+                insideButton
+                margin={above ? { left: 'xsmall' } : { top: 'xsmall' }}
+                iconSize="medium"
+                maxWidth="300px"
+                large
+                component={<BenchmarkOverlay size="xsmall" />}
+              />
+            }
+          </AnnotateRefInner>
+        </AnnotateRef>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

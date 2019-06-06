@@ -55,6 +55,7 @@ export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
         <ContentMaxWidth>
           <StyledContent>
             <Heading
+              responsive={false}
               margin={{ top: 'small', bottom: 'medium' }}
               style={{ fontWeight: 400 }}
               level={1}

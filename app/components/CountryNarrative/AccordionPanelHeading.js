@@ -16,5 +16,11 @@ const Styled = styled(Heading)`
 `;
 
 export default function(props) {
-  return <Styled margin={{ vertical: '2px', right: 'small' }} {...props} />;
+  return (
+    <Styled
+      responsive={false}
+      margin={{ vertical: '2px', right: 'small' }}
+      {...props}
+    />
+  );
 }

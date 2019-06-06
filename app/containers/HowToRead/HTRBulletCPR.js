@@ -7,11 +7,12 @@ import {
   FormattedHTMLMessage,
 } from 'react-intl';
 import styled from 'styled-components';
-import { Paragraph, Heading, Box } from 'grommet';
+import { Heading, Box } from 'grommet';
 import BarBullet from 'components/Bars/BarBullet';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
 import Hint from 'styled/Hint';
 
+import HTRParagraph from './HTRParagraph';
 import messages from './messages';
 
 const Styled = styled.div``;
@@ -20,20 +21,23 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
   const level = contxt === 'narrative' ? 1 : 2;
   return (
     <Styled>
-      <Paragraph>
+      <HTRParagraph>
         <FormattedMessage {...messages.bullet.intro} />
-      </Paragraph>
+      </HTRParagraph>
       {contxt === 'narrative' && (
-        <Paragraph>
+        <HTRParagraph>
           <Hint italic>
             <FormattedMessage {...messages.bullet.drilldownHint} />
           </Hint>
-        </Paragraph>
+        </HTRParagraph>
       )}
-      <Heading level={4}>
+      <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
-      <Box pad={{ horizontal: 'small', top: 'small', bottom: 'medium' }}>
+      <Box
+        pad={{ horizontal: 'small', top: 'xsmall', bottom: 'medium' }}
+        responsive={false}
+      >
         <Box flex style={{ position: 'relative' }}>
           <BarBullet
             level={level}
@@ -59,10 +63,13 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
           <AnnotateBetterWorse absolute />
         </Box>
       </Box>
-      <Paragraph>
-        <FormattedHTMLMessage {...messages.bullet.scores} />
-      </Paragraph>
-      <Box pad={{ horizontal: 'small', top: 'small', bottom: 'small' }}>
+      <HTRParagraph above>
+        <FormattedHTMLMessage {...messages.bullet.longBars} />
+      </HTRParagraph>
+      <Box
+        pad={{ horizontal: 'small', top: 'xsmall', bottom: 'small' }}
+        responsive={false}
+      >
         <BarBullet
           level={level}
           showLabels
@@ -79,10 +86,13 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
           }}
         />
       </Box>
-      <Paragraph>
-        <FormattedHTMLMessage {...messages.bullet.longBars} />
-      </Paragraph>
-      <Box pad={{ horizontal: 'small', top: 'small', bottom: 'small' }}>
+      <HTRParagraph above>
+        <FormattedHTMLMessage {...messages.bullet.shortBars} />
+      </HTRParagraph>
+      <Box
+        pad={{ horizontal: 'small', top: 'xsmall', bottom: 'small' }}
+        responsive={false}
+      >
         <BarBullet
           level={level}
           showLabels
@@ -99,12 +109,15 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
           }}
         />
       </Box>
-      <Paragraph>
-        <FormattedHTMLMessage {...messages.bullet.shortBars} />
-      </Paragraph>
       {contxt !== 'narrative' && (
         <>
-          <Box pad={{ horizontal: 'small', top: 'small', bottom: 'xsmall' }}>
+          <HTRParagraph above>
+            <FormattedHTMLMessage {...messages.bullet.countryComparison} />
+          </HTRParagraph>
+          <Box
+            pad={{ horizontal: 'small', top: 'small', bottom: 'xsmall' }}
+            responsive={false}
+          >
             <BarBullet
               level={level}
               showLabels
@@ -121,7 +134,10 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
               }}
             />
           </Box>
-          <Box pad={{ horizontal: 'small', top: 'none', bottom: 'small' }}>
+          <Box
+            pad={{ horizontal: 'small', top: 'none', bottom: 'small' }}
+            responsive={false}
+          >
             <BarBullet
               level={level}
               showLabels
@@ -138,9 +154,6 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
               }}
             />
           </Box>
-          <Paragraph>
-            <FormattedHTMLMessage {...messages.bullet.countryComparison} />
-          </Paragraph>
         </>
       )}
     </Styled>

@@ -2,13 +2,13 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
-import { Text, Paragraph, Heading, Box } from 'grommet';
+import { Heading, Box } from 'grommet';
 import DiamondChart from 'components/CountryPreview/DiamondChart';
 
 import { DIMENSIONS } from 'containers/App/constants';
 import rootMessages from 'messages';
 import messages from './messages';
-
+import HTRParagraph from './HTRParagraph';
 const Styled = styled.div``;
 
 const randomValue = (min, max) => Math.random() * (max - min) + min;
@@ -28,12 +28,12 @@ const getDimensions = (d, i) => {
 function HTROverviewDimensions({ intl }) {
   return (
     <Styled>
-      <Paragraph>
+      <HTRParagraph>
         <FormattedMessage {...messages.overview.dimensions.intro} />
-      </Paragraph>
+      </HTRParagraph>
       {DIMENSIONS.map((d, index) => (
         <span key={d.key}>
-          <Heading level={4} margin={{ bottom: 'none' }}>
+          <Heading responsive={false} level={4} margin={{ bottom: 'none' }}>
             <FormattedMessage {...rootMessages.dimensions[d.key]} />
           </Heading>
           <Box direction="row" align="center">
@@ -51,43 +51,38 @@ function HTROverviewDimensions({ intl }) {
               />
             </Box>
             <Box width="50%" flex={{ shrink: 0 }} pad={{ left: 'medium' }}>
-              <Paragraph>
+              <HTRParagraph>
                 <FormattedMessage {...messages.overview.dimensions[d.key]} />
-              </Paragraph>
+              </HTRParagraph>
             </Box>
           </Box>
           {d.key === 'esr' && (
-            <>
-              <Paragraph>
+            <Box margin={{ top: 'small' }} responsive={false}>
+              <HTRParagraph>
                 <FormattedMessage {...messages.general.benchmarkIntro} />
-                <Text
-                  style={{ fontWeight: 600 }}
-                  margin={{ horizontal: 'xsmall' }}
-                >
+                <span style={{ fontWeight: 600, margin: '0 3px' }}>
                   <FormattedMessage {...rootMessages.settings.benchmark.name} />
-                </Text>
-              </Paragraph>
-              <Paragraph margin={{ vertical: 'xsmall' }}>
-                <Text size="small" style={{ fontWeight: 600 }}>
+                </span>
+              </HTRParagraph>
+              <HTRParagraph margin={{ vertical: 'xsmall' }}>
+                <span style={{ fontWeight: 600 }}>
                   {`${intl.formatMessage(
                     rootMessages.settings.benchmark.adjusted,
                   )}: `}
-                </Text>
-                <Text size="small">
-                  {intl.formatMessage(rootMessages.tooltip.benchmark.adjusted)}
-                </Text>
-              </Paragraph>
-              <Paragraph margin={{ vertical: 'xsmall' }}>
-                <Text size="small" style={{ fontWeight: 600 }}>
+                </span>
+                <FormattedMessage
+                  {...rootMessages.tooltip.benchmark.adjusted}
+                />
+              </HTRParagraph>
+              <HTRParagraph margin={{ vertical: 'xsmall' }}>
+                <span style={{ fontWeight: 600 }}>
                   {`${intl.formatMessage(
                     rootMessages.settings.benchmark.best,
                   )}: `}
-                </Text>
-                <Text size="small">
-                  <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
-                </Text>
-              </Paragraph>
-            </>
+                </span>
+                <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
+              </HTRParagraph>
+            </Box>
           )}
         </span>
       ))}

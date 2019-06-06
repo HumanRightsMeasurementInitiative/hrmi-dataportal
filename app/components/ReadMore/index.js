@@ -10,7 +10,7 @@ import messages from './messages';
 
 const Styled = styled.div``;
 const MoreWrap = styled.div`
-  text-align: right;
+  text-align: left;
 `;
 const TextWrap = styled.div``;
 

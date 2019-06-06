@@ -5,6 +5,10 @@ import ButtonText from 'styled/ButtonText';
 import { Box } from 'grommet';
 // prettier-ignore
 const Styled = styled(Box)`
+  display: none;
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    display: flex;
+  }
 `;
 // prettier-ignore
 const TabLink = styled(ButtonText)`

@@ -6,10 +6,11 @@ export default styled(Button)`
   border-radius: 99999px;
   background-color: ${({ theme, active }) =>
     active ? theme.global.colors.highlight : theme.global.colors.white};
-  padding: 10px 12px;
+  padding: 10px 10px;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
   font-weight: 600;
-  min-width: 120px;
+  min-width: 110px;
+  font-size: 15px;
   margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
   &:last-child {
     margin-right: 0;
@@ -26,8 +27,8 @@ export default styled(Button)`
   box-shadow: 0px 2px 10px rgba(0,0,0,0.40);
     outline-color: transparent;
   }
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+    min-width: 120px;
     padding: 10px 20px;
   }
 `;

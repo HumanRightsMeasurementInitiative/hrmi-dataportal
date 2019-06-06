@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
+import { FormNext } from 'grommet-icons';
 import Bar from 'components/Bars/Bar';
 import BarBullet from 'components/Bars/BarBullet';
 import { COLUMNS } from 'containers/App/constants';
@@ -10,6 +11,7 @@ import { COLUMNS } from 'containers/App/constants';
 import rootMessages from 'messages';
 
 import ButtonText from 'styled/ButtonText';
+import Hidden from 'styled/Hidden';
 
 import AccordionPanelHeading from './AccordionPanelHeading';
 import TabLinks from './TabLinks';
@@ -80,6 +82,9 @@ function RightPanel({
         <ButtonTextHeading onClick={() => onMetricClick(right.key)}>
           <AccordionPanelHeading level={isSubright ? 6 : 5}>
             <FormattedMessage {...rootMessages['rights-short'][right.key]} />
+            <Hidden min="medium">
+              <FormNext size="large" />
+            </Hidden>
           </AccordionPanelHeading>
         </ButtonTextHeading>
         <TabLinks
@@ -110,6 +115,7 @@ function RightPanel({
         pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
         fill="horizontal"
         style={{ position: 'relative' }}
+        responsive={false}
       >
         {right.type === 'esr' && (
           <Bar level={isSubright ? 3 : 2} data={data} showScore showLabels />

@@ -6,6 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 import { Heading, Paragraph, Box } from 'grommet';
 
 import rootMessages from 'messages';
@@ -19,16 +21,35 @@ import { needsArticle, isPlural } from 'utils/narrative';
 import messages from './messages';
 
 const DimensionHeading = props => (
-  <Heading level={3} margin={{ top: 'small', bottom: 'none' }} {...props} />
+  <Heading
+    responsive={false}
+    level={3}
+    margin={{ top: 'small', bottom: 'none' }}
+    {...props}
+  />
 );
 const RightHeading = props => (
-  <Heading level={4} margin={{ top: 'small', bottom: 'none' }} {...props} />
+  <Heading
+    responsive={false}
+    level={4}
+    margin={{ top: 'small', bottom: 'none' }}
+    {...props}
+  />
 );
+// prettier-ignore
+const StyledHeading = styled(Heading)`
+  font-size: ${({ theme, level = 1 }) => theme.heading.level[level].small.size};
+  line-height: ${({ theme, level = 1 }) => theme.heading.level[level].small.height};
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    font-size: ${({ theme, level = 1 }) => theme.heading.level[level].medium.size};
+    line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
+  }
+`;
 
-function CountryPeople({ data, countryTitle, countryCode, intl }) {
+function CountryPeople({ data, countryTitle, countryCode, intl, hasAside }) {
   return (
-    <MainColumn>
-      <Heading level={2}>
+    <MainColumn hasAside={hasAside}>
+      <StyledHeading responsive={false} level={2}>
         <FormattedMessage
           {...messages.title}
           values={{
@@ -37,12 +58,10 @@ function CountryPeople({ data, countryTitle, countryCode, intl }) {
             needsArticle: needsArticle(intl.locale, countryCode),
           }}
         />
-      </Heading>
-      <div>
-        <Paragraph>
-          <FormattedMessage {...messages.intro} />
-        </Paragraph>
-      </div>
+      </StyledHeading>
+      <Paragraph>
+        <FormattedMessage {...messages.intro} />
+      </Paragraph>
       {data &&
         data.map(dim => (
           <Box key={dim.key} border="top" margin={{ top: 'large' }}>
@@ -84,6 +103,7 @@ function CountryPeople({ data, countryTitle, countryCode, intl }) {
 CountryPeople.propTypes = {
   countryCode: PropTypes.string,
   countryTitle: PropTypes.string,
+  hasAside: PropTypes.bool,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   intl: intlShape.isRequired,
 };

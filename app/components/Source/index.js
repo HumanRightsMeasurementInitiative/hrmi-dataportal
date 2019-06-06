@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
+import Hint from 'styled/Hint';
+
 import messages from './messages';
 
-const Styled = styled.div`
-  font-size: 0.9em;
-  color: ${({ theme }) => theme.global.colors['dark-4']};
+const Styled = styled(Hint)`
+  font-size: 13px;
+  line-height: 16px;
   margin-top: 1em;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `;
 
 function Source({ center = false }) {

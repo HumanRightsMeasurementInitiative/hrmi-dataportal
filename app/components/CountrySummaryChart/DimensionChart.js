@@ -1,20 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, Text } from 'grommet';
+import { Box, Text, ResponsiveContext } from 'grommet';
 
 import Bar from 'components/Bars/Bar';
 import { COLUMNS } from 'containers/App/constants';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 import formatScoreMax from 'utils/format-score-max';
+import { isMinSize } from 'utils/responsive';
+
 import DimensionTitle from './DimensionTitle';
 
-const DimensionScoreWrapper = props => (
-  <Box {...props} width="200px" flex={{ shrink: 0 }} />
-);
-const DimensionScoreText = props => (
-  <Text weight="bold" size="large" {...props} />
-);
+const DimensionScoreWrapper = props => <Box {...props} flex={{ shrink: 0 }} />;
 const BarWrap = props => <Box direction="row" {...props} align="center" />;
 
 const WrapAnnotateBetter = styled.div`
@@ -46,7 +43,7 @@ const getDimensionValue = (data, benchmark) => {
   return false;
 };
 
-function DimensionChart({ data, benchmark, standard }) {
+function DimensionChart({ data, benchmark, standard, scoreWidth }) {
   if (!data) return null;
   const maxValue = data.type === 'cpr' ? 10 : 100;
   const dim = {
@@ -59,33 +56,59 @@ function DimensionChart({ data, benchmark, standard }) {
     unit: data.type === 'esr' ? '%' : '',
   };
   return (
-    <Box pad={{ bottom: 'medium' }}>
-      <DimensionTitle dimensionKey={data.key} />
-      <BarWrap>
-        <Box
-          pad={{ vertical: 'xsmall', left: 'medium', right: 'large' }}
-          fill="horizontal"
-          style={{ position: 'relative' }}
-        >
-          <Bar data={dim} showLabels annotateBenchmarkAbove showBenchmark />
-          <WrapAnnotateBetter>
-            <AnnotateBetter absolute />
-          </WrapAnnotateBetter>
-        </Box>
-        <DimensionScoreWrapper>
-          <DimensionScoreText color={`${data.key}Dark`}>
-            {dim.value && formatScoreMax(dim.value, maxValue)}
-            {!dim.value && 'N/A'}
-          </DimensionScoreText>
-        </DimensionScoreWrapper>
-      </BarWrap>
-    </Box>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <>
+          <DimensionTitle dimensionKey={data.key} />
+          <Box
+            pad={{ vertical: '24px' }}
+            style={{
+              marginTop:
+                isMinSize(size, 'medium') || data.type !== 'esr'
+                  ? '-24px'
+                  : '-6px',
+            }}
+            responsive={false}
+          >
+            <BarWrap>
+              <Box
+                pad={{ vertical: 'xsmall', left: 'medium', right: 'large' }}
+                fill="horizontal"
+                style={{ position: 'relative' }}
+                responsive={false}
+              >
+                <Bar
+                  data={dim}
+                  showLabels
+                  annotateBenchmarkAbove
+                  showBenchmark
+                />
+                <WrapAnnotateBetter>
+                  <AnnotateBetter absolute />
+                </WrapAnnotateBetter>
+              </Box>
+              <DimensionScoreWrapper width={scoreWidth}>
+                <Text
+                  weight="bold"
+                  size={isMinSize(size, 'medium') ? 'large' : 'medium'}
+                  color={`${data.key}Dark`}
+                >
+                  {dim.value && formatScoreMax(dim.value, maxValue)}
+                  {!dim.value && 'N/A'}
+                </Text>
+              </DimensionScoreWrapper>
+            </BarWrap>
+          </Box>
+        </>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 
 DimensionChart.propTypes = {
   benchmark: PropTypes.object,
   standard: PropTypes.string,
+  scoreWidth: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
