@@ -2,37 +2,41 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from 'styled/Button';
-import { Text } from 'grommet';
+import { Box } from 'grommet';
 import { FormNext } from 'grommet-icons';
 // prettier-ignore
-const HeaderCategories = styled.div`
-  margin: 0;
+const HeaderCategories = styled(Box)`
+  margin: 0 50px 0 0;
 `;
-// prettier-ignore
+
 const CategoryLink = styled(Button)`
   padding: 0 3px;
   color: ${({ theme }) => theme.global.colors['dark-3']};
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
-    padding: 0 3px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+    padding: 0 6px;
   }
 `;
 const IconWrap = styled.span`
-  position: relative;
-  top: 1px;
+  margin-top: -3px;
 `;
 const SepWrap = styled.span`
-  padding: 2px 6px;
-  font-size: 12px;
+  padding: 0 3px;
+  font-size: 10px;
+  line-height: 10px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+    padding: 0 4px;
+    font-size: 12px;
+    line-height: 12px;
+  }
 `;
 
 function HeaderLinks({ items, onItemClick, breadcrumb }) {
   return (
-    <HeaderCategories>
+    <HeaderCategories direction="row" wrap>
       {items.map((item, index, list) => (
-        <span key={item.key}>
+        <Box key={item.key} direction="row" align="center">
           <CategoryLink onClick={() => onItemClick(item.key, item.value)}>
-            <Text size="small">{item.label}</Text>
+            {item.label}
           </CategoryLink>
           {!breadcrumb && index < list.length - 1 && <SepWrap>|</SepWrap>}
           {breadcrumb && (
@@ -40,7 +44,7 @@ function HeaderLinks({ items, onItemClick, breadcrumb }) {
               <FormNext />
             </IconWrap>
           )}
-        </span>
+        </Box>
       ))}
     </HeaderCategories>
   );

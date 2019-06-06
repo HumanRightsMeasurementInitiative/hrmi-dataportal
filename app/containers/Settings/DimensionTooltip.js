@@ -17,7 +17,7 @@ function DimensionTooltip({ intl, dimensionKey }) {
       text={intl.formatMessage(rootMessages.tooltip[dimensionKey], {
         count: rights.length,
       })}
-      maxWidth="300px"
+      large
       component={
         <>
           <FormattedMessage

@@ -50,8 +50,7 @@ const ButtonRelative = styled(Button)`
     background-color: ${({ theme }) => theme.global.colors.highlight};
     outline-color: transparent;
   }
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
     padding: 2px 10px;
     padding-left: ${({ previous }) => previous ? 3 : 10}px;
     padding-right: ${({ previous }) => previous ? 10 : 3}px;
@@ -141,10 +140,14 @@ export function MetricAside({
         metricInfo={metricInfo}
         standard={standard}
       />
-      <Box direction="column" pad={{ bottom: 'medium', left: 'medium' }}>
+      <Box direction="column" pad={{ bottom: 'medium', horizontal: 'medium' }}>
         {metricType !== 'dimensions' && (
           <Pad>
-            <Heading level={5} margin={{ vertical: 'xsmall' }}>
+            <Heading
+              responsive={false}
+              level={5}
+              margin={{ vertical: 'xsmall' }}
+            >
               <FormattedMessage {...messages.titleParent[metricType]} />
             </Heading>
             <ButtonRelative
@@ -165,7 +168,11 @@ export function MetricAside({
         )}
         {metricType !== 'indicators' && children.length > 0 && (
           <Pad>
-            <Heading level={5} margin={{ vertical: 'xsmall' }}>
+            <Heading
+              responsive={false}
+              level={5}
+              margin={{ vertical: 'xsmall' }}
+            >
               {metricType === 'dimensions' && (
                 <FormattedMessage {...messages.titleChildren[metricType]} />
               )}
@@ -196,7 +203,7 @@ export function MetricAside({
               <>
                 {children.map(as => (
                   <Pad key={as.key}>
-                    <Text>
+                    <Text size="small">
                       {`'${intl.formatMessage(
                         rootMessages.settings.standard[as.key],
                       )}' ${lowerCase(

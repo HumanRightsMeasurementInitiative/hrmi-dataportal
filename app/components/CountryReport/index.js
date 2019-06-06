@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { Heading } from 'grommet';
@@ -19,6 +19,16 @@ import MainColumn from 'styled/MainColumn';
 import { needsArticle, isPlural } from 'utils/narrative';
 
 import messages from './messages';
+
+// prettier-ignore
+const StyledHeading = styled(Heading)`
+  font-size: ${({ theme, level = 1 }) => theme.heading.level[level].small.size};
+  line-height: ${({ theme, level = 1 }) => theme.heading.level[level].small.height};
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    font-size: ${({ theme, level = 1 }) => theme.heading.level[level].medium.size};
+    line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
+  }
+`;
 
 function CountryReport({
   countryTitle,
@@ -37,13 +47,14 @@ function CountryReport({
   esrYear,
   cprYear,
   dataReady,
+  hasAside,
 }) {
   return (
-    <MainColumn>
+    <MainColumn hasAside={hasAside}>
       {!dataReady && <LoadingIndicator />}
       {dataReady && (
         <>
-          <Heading level={2}>
+          <StyledHeading responsive={false} level={2}>
             <FormattedMessage
               {...messages.title}
               values={{
@@ -52,7 +63,7 @@ function CountryReport({
                 needsArticle: needsArticle(intl.locale, country.country_code),
               }}
             />
-          </Heading>
+          </StyledHeading>
           <CountrySummaryChart
             scale={scale}
             dimensions={dimensions}
@@ -86,6 +97,7 @@ CountryReport.propTypes = {
   countryTitle: PropTypes.string,
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
+  hasAside: PropTypes.bool,
   reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

@@ -4,10 +4,11 @@ import styled from 'styled-components';
 
 import { injectIntl, intlShape } from 'react-intl';
 
-import { Box, DropButton } from 'grommet';
+import { Box, DropButton, ResponsiveContext, Text } from 'grommet';
 import { FormDown, FormUp, Ascend, Descend } from 'grommet-icons';
 
 import ButtonIcon from 'styled/ButtonIcon';
+import { isMinSize } from 'utils/responsive';
 
 import messages from './messages';
 import SortOptions from './SortOptions';
@@ -34,39 +35,58 @@ export function CountrySort({
   const [optionsOpen, setOptionsOpen] = useState(false);
 
   return (
-    <Box direction="row" pad="xsmall" margin={{ left: 'auto' }} align="center">
-      <StyledDropButton
-        plain
-        reverse
-        gap="xxsmall"
-        margin={{ horizontal: 'small' }}
-        icon={optionsOpen ? <FormUp /> : <FormDown />}
-        label={`${intl.formatMessage(messages.sortBy)} ${intl.formatMessage(
-          messages.sortOptions[sort],
-        )}`}
-        onClose={() => setOptionsOpen(false)}
-        onOpen={() => setOptionsOpen(true)}
-        open={optionsOpen}
-        dropProps={{ align: { top: 'bottom', right: 'right' }, stretch: false }}
-        dropContent={
-          <SortOptions
-            options={options}
-            active={sort}
-            onSelect={value => {
-              setOptionsOpen(false);
-              onSortSelect(value);
-            }}
-          />
-        }
-      />
-      <StyledButtonIcon
-        subtle
-        onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
-      >
-        {order === 'asc' && <Ascend />}
-        {order === 'desc' && <Descend />}
-      </StyledButtonIcon>
-    </Box>
+    <ResponsiveContext.Consumer>
+      {size => {
+        // prettier-ignore
+        const label = isMinSize(size, 'large')
+          ? `${intl.formatMessage(messages.sortBy)} ${intl.formatMessage(messages.sortOptions[sort])}`
+          : (
+            <Text size="small">
+              {`${intl.formatMessage(messages.sortOptions[sort])}`}
+            </Text>
+          );
+        return (
+          <Box direction="row" pad="xsmall" align="center">
+            <StyledDropButton
+              plain
+              reverse
+              gap="xxsmall"
+              margin={
+                isMinSize(size, 'large')
+                  ? { horizontal: 'small' }
+                  : { horizontal: 'hair' }
+              }
+              icon={optionsOpen ? <FormUp /> : <FormDown />}
+              label={label}
+              onClose={() => setOptionsOpen(false)}
+              onOpen={() => setOptionsOpen(true)}
+              open={optionsOpen}
+              dropProps={{
+                align: { top: 'bottom', right: 'right' },
+                stretch: false,
+              }}
+              dropContent={
+                <SortOptions
+                  options={options}
+                  active={sort}
+                  onSelect={value => {
+                    setOptionsOpen(false);
+                    onSortSelect(value);
+                  }}
+                />
+              }
+            />
+            <StyledButtonIcon
+              subtle
+              onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
+            >
+              {order === 'asc' && <Ascend />}
+              {order === 'desc' && <Descend />}
+            </StyledButtonIcon>
+          </Box>
+        );
+      }}
+    </ResponsiveContext.Consumer>
   );
 }
 

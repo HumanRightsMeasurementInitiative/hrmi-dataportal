@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -17,14 +17,19 @@ import { navigate } from 'containers/App/actions';
 
 import Button from 'styled/Button';
 import ButtonIcon from 'styled/ButtonIcon';
+import Visible from 'styled/Visible';
 
 import messages from './messages';
 
 const StyledTextButton = styled(Button)`
   color: ${({ theme }) => theme.global.colors.dark};
+  padding: 0 10px 0 0;
   &:hover {
     color: ${({ theme }) => theme.global.colors['dark-1']};
     background-color: transparent;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+    padding: 0 10px 0 0;
   }
 `;
 
@@ -34,21 +39,31 @@ const Styled = styled(Box)`
     css`
       position: absolute;
       top: 0;
-      right: 0;
-      z-index: 10;
+      z-index: 8;
+      right: ${props.theme.global.edgeSize.small};
+      @media (min-width: ${props.theme.breakpoints.medium}) {
+        right: ${props.theme.global.edgeSize.large};
+      }
     `}
   ${props =>
     props.float &&
     css`
       position: fixed;
       top: 115px;
-      right: 10px;
-      z-index: 10;
+      right: 15px;
+      z-index: 8;
+      @media (min-width: ${props.theme.breakpoints.xlarge}) {
+        padding-right: 15px;
+      }
+      @media (min-width: ${props.theme.breakpoints.xxlarge}) {
+        padding-right: 40px;
+      }
     `}
 `;
 
 const StyledButtonIcon = styled(ButtonIcon)`
-  background: ${({ theme }) => theme.global.colors.highlight};
+  background: ${({ theme, subtle }) =>
+    subtle ? 'transparent' : theme.global.colors.highlight};
   &:hover {
     background: ${({ theme }) => theme.global.colors.highlight2};
   }
@@ -61,32 +76,50 @@ function Close({
   onClick,
   topRight,
   float = true,
+  text = true,
+  plain = false,
 }) {
+  const [scrollTop, setScrollTop] = useState(0);
+
+  useEffect(() => {
+    function handleScroll() {
+      setScrollTop(window.pageYOffset);
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   return (
     <Styled
       direction="row"
-      pad={{ right: 'large', top: 'medium' }}
+      pad={topRight || float ? { top: 'medium' } : 'none'}
       align="center"
       topRight={topRight}
       float={float}
     >
-      <StyledTextButton
-        hoverColor="dark"
-        onClick={() =>
-          // prettier-ignore
-          onClick
-            ? onClick()
-            : onClose(closeTarget || '', {
-              keepTab,
-              needsLocale: !closeTarget,
-            })
-        }
-      >
-        <Text size="small">
-          <FormattedMessage {...messages.label} />
-        </Text>
-      </StyledTextButton>
+      {text && (!float || scrollTop === 0) && (
+        <Visible min="medium">
+          <StyledTextButton
+            hoverColor="dark"
+            onClick={() =>
+              // prettier-ignore
+              onClick
+                ? onClick()
+                : onClose(closeTarget || '', {
+                  keepTab,
+                  needsLocale: !closeTarget,
+                })
+            }
+          >
+            <Text size="small">
+              <FormattedMessage {...messages.label} />
+            </Text>
+          </StyledTextButton>
+        </Visible>
+      )}
       <StyledButtonIcon
+        subtle={plain}
         float={float}
         onClick={() =>
           // prettier-ignore
@@ -111,6 +144,8 @@ Close.propTypes = {
   keepTab: PropTypes.bool,
   topRight: PropTypes.bool,
   float: PropTypes.bool,
+  text: PropTypes.bool,
+  plain: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {

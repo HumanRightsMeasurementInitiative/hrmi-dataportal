@@ -135,6 +135,7 @@ function FAQs({ questions, intl, metric, navMethodology }) {
               <Box direction="row" gap="xsmall" align="center">
                 <Box>
                   <Heading
+                    responsive={false}
                     level={6}
                     margin={{ vertical: 'xsmall' }}
                     style={{ fontWeight: 'normal' }}

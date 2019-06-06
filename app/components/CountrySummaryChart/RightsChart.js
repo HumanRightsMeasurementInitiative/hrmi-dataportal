@@ -1,14 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box } from 'grommet';
+import { Box, ResponsiveContext } from 'grommet';
 import { COLUMNS } from 'containers/App/constants';
 
 import BarMultiple from 'components/Bars/BarMultiple';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
+import { isMinSize } from 'utils/responsive';
 import DimensionTitle from './DimensionTitle';
+import RightsScoreItem from './RightsScoreItem';
 
-const BarWrap = props => <Box direction="row" {...props} align="center" />;
+const RightsScoresWrapperTable = styled.div`
+  display: table;
+  margin: -24px 0;
+`;
 
 const WrapAnnotateBetter = styled.div`
   position: absolute;
@@ -37,7 +42,8 @@ const getDimensionValue = (data, benchmark) => {
   }
   return false;
 };
-function RightsChart({ data, standard, benchmark }) {
+
+function RightsChart({ data, standard, benchmark, scoreWidth }) {
   if (!data) return null;
   const dataMultiple = {
     color: data.dimension,
@@ -56,32 +62,69 @@ function RightsChart({ data, standard, benchmark }) {
       })),
   };
   return (
-    <Box pad={{ bottom: 'medium' }}>
-      <DimensionTitle dimensionKey={data.dimension} />
-      <BarWrap>
-        <Box
-          pad={{ vertical: 'xsmall', left: 'medium', right: 'large' }}
-          fill="horizontal"
-          style={{ position: 'relative' }}
-        >
-          <BarMultiple
-            dataMultiple={dataMultiple}
-            showLabels
-            totalHeight={36}
-            annotateBenchmarkAbove
-          />
-          <WrapAnnotateBetter>
-            <AnnotateBetter absolute />
-          </WrapAnnotateBetter>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box>
+          <DimensionTitle dimensionKey={data.dimension} />
+          <Box
+            direction="row"
+            align="center"
+            style={{
+              marginTop:
+                isMinSize(size, 'medium') || data.type !== 'esr'
+                  ? '-24px'
+                  : '-6px',
+            }}
+          >
+            <Box
+              fill="horizontal"
+              pad={{ vertical: '24px' }}
+              responsive={false}
+            >
+              <Box
+                pad={{ vertical: 'xsmall', left: 'medium', right: 'large' }}
+                fill="horizontal"
+                style={{ position: 'relative' }}
+                responsive={false}
+              >
+                <BarMultiple
+                  dataMultiple={dataMultiple}
+                  showLabels
+                  totalHeight={36}
+                  annotateBenchmarkAbove={data.type === 'esr'}
+                />
+                <WrapAnnotateBetter>
+                  <AnnotateBetter absolute />
+                </WrapAnnotateBetter>
+              </Box>
+            </Box>
+            <Box flex={{ shrink: 0 }} width={scoreWidth}>
+              <RightsScoresWrapperTable>
+                {dataMultiple.data &&
+                  dataMultiple.data.map(right => (
+                    <RightsScoreItem
+                      key={right.key}
+                      dimensionKey={data.dimension}
+                      maxValue={dataMultiple.maxValue}
+                      right={{
+                        key: right.key,
+                        value: right.value,
+                      }}
+                    />
+                  ))}
+              </RightsScoresWrapperTable>
+            </Box>
+          </Box>
         </Box>
-      </BarWrap>
-    </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 
 RightsChart.propTypes = {
   benchmark: PropTypes.object,
   standard: PropTypes.string,
+  scoreWidth: PropTypes.string,
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
