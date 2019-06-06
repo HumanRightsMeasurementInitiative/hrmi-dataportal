@@ -12,7 +12,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 
-import { Box, Layer } from 'grommet';
+import { Box, Layer, ResponsiveContext } from 'grommet';
 
 import rootMessages from 'messages';
 
@@ -52,6 +52,7 @@ import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
+import { isMinSize } from 'utils/responsive';
 import saga from 'containers/App/saga';
 
 const DEPENDENCIES = [
@@ -109,18 +110,25 @@ export function PathCountry({
         <meta name="description" content="Description of Country page" />
       </Helmet>
       {match.params.metric && (
-        <Layer
-          full="vertical"
-          margin={{ top: 'large', bottom: 'ms' }}
-          onEsc={() => onCloseMetricOverlay(countryCode)}
-          onClickOutside={() => onCloseMetricOverlay(countryCode)}
-        >
-          <CountryMetric
-            metricCode={match.params.metric}
-            countryCode={countryCode}
-            base="country"
-          />
-        </Layer>
+        <ResponsiveContext.Consumer>
+          {size => (
+            <Layer
+              full="vertical"
+              margin={{
+                top: isMinSize(size, 'xlarge') ? 'large' : 'small',
+                bottom: 'ms',
+              }}
+              onEsc={() => onCloseMetricOverlay(countryCode)}
+              onClickOutside={() => onCloseMetricOverlay(countryCode)}
+            >
+              <CountryMetric
+                metricCode={match.params.metric}
+                countryCode={countryCode}
+                base="country"
+              />
+            </Layer>
+          )}
+        </ResponsiveContext.Consumer>
       )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
@@ -224,7 +232,9 @@ export function PathCountry({
                   auxIndicators={auxIndicators}
                   currentGDP={currentGDP}
                   onCategoryClick={onCategoryClick}
-                  showFAQs
+                  showFAQs={
+                    props && (props.activeTab === 0 || props.activeTab === 2)
+                  }
                 />
               ),
             },
@@ -240,6 +250,7 @@ PathCountry.propTypes = {
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
+  activeTab: PropTypes.number,
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
   onCloseMetricOverlay: PropTypes.func,

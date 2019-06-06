@@ -15,6 +15,10 @@ export default defineMessages({
       defaultMessage:
         'What category score was this human rights score used for?',
     },
+    subrights: {
+      id: `${scope}.titleParent.subrights`,
+      defaultMessage: 'What human rights score was this score used for?',
+    },
     indicators: {
       id: `${scope}.titleParent.indicators`,
       defaultMessage: 'What human rights score was this indicator used for?',

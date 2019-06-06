@@ -29,8 +29,7 @@ export default styled(Button)`
     box-shadow: none;
     border-radius: 0;
   }
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     font-size: 1em;
     padding: 0;
   }

@@ -13,6 +13,14 @@ const MoreWrap = styled.div`
   text-align: left;
 `;
 const TextWrap = styled.div``;
+const StyledButtonText = styled(ButtonText)`
+  font-size: 14px;
+  line-height: 18px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    font-size: 16px;
+    line-height: 21px;
+  }
+`;
 
 const LIMIT = 180;
 
@@ -24,9 +32,9 @@ function ReadMore({ message }) {
       <TextWrap>{text}</TextWrap>
       {(more || text.length !== message.length) && (
         <MoreWrap>
-          <ButtonText onClick={() => setMore(!more)}>
+          <StyledButtonText onClick={() => setMore(!more)}>
             <FormattedMessage {...messages[more ? 'less' : 'more']} />
-          </ButtonText>
+          </StyledButtonText>
         </MoreWrap>
       )}
     </Styled>

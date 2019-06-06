@@ -31,7 +31,7 @@ const HowToReadWrapper = styled.div`
   right: 0px;
   top: 4px;
   text-align: right;
-  @media (min-width: ${props => props.theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     position: absolute;
     right: ${({ theme }) => theme.global.edgeSize.medium};
     top: 0;
@@ -142,7 +142,7 @@ function TabContainer({
                           </HowToReadWrapper>
                         )}
                         <ColumnContent>
-                          {tab.content({ hasAside })}
+                          {tab.content({ hasAside, activeTab: tabIndex })}
                         </ColumnContent>
                       </Tab>
                     ))}
@@ -167,7 +167,7 @@ function TabContainer({
                     )}
                   </ColumnHeader>
                   <ColumnContent>
-                    {mainTabs[0].content({ hasAside })}
+                    {mainTabs[0].content({ hasAside, activeTab: tabIndex })}
                   </ColumnContent>
                 </Box>
               )}
@@ -188,7 +188,7 @@ function TabContainer({
                 )}
                 {!fixedAside && (
                   <ColumnContent>
-                    {asideTab.content()}
+                    {asideTab.content({ activeTab: tabIndex })}
                   </ColumnContent>
                 )}
               </Box>
@@ -202,7 +202,7 @@ function TabContainer({
                   <ColumnTitle>&nbsp;</ColumnTitle>
                 </ColumnHeader>
                 <ColumnContent style={{ width: getAsideWidth(size)}}>
-                  {asideTab.content()}
+                  {asideTab.content({ activeTab: tabIndex })}
                 </ColumnContent>
               </FixedAside>
             )}

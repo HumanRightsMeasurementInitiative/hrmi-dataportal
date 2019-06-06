@@ -27,7 +27,7 @@ export default styled(Button)`
   box-shadow: 0px 2px 10px rgba(0,0,0,0.40);
     outline-color: transparent;
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     min-width: 120px;
     padding: 10px 20px;
   }

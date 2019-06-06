@@ -28,7 +28,7 @@ const StyledTextButton = styled(Button)`
     color: ${({ theme }) => theme.global.colors['dark-1']};
     background-color: transparent;
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0 10px 0 0;
   }
 `;
@@ -41,7 +41,7 @@ const Styled = styled(Box)`
       top: 0;
       z-index: 8;
       right: ${props.theme.global.edgeSize.small};
-      @media (min-width: ${props.theme.breakpoints.medium}) {
+      @media (min-width: ${props.theme.breakpointsMin.medium}) {
         right: ${props.theme.global.edgeSize.large};
       }
     `}
@@ -52,10 +52,10 @@ const Styled = styled(Box)`
       top: 115px;
       right: 15px;
       z-index: 8;
-      @media (min-width: ${props.theme.breakpoints.xlarge}) {
+      @media (min-width: ${props.theme.breakpointsMin.xlarge}) {
         padding-right: 15px;
       }
-      @media (min-width: ${props.theme.breakpoints.xxlarge}) {
+      @media (min-width: ${props.theme.breakpointsMin.xxlarge}) {
         padding-right: 40px;
       }
     `}

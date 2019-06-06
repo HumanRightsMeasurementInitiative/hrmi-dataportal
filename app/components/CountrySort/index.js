@@ -8,7 +8,7 @@ import { Box, DropButton, ResponsiveContext, Text } from 'grommet';
 import { FormDown, FormUp, Ascend, Descend } from 'grommet-icons';
 
 import ButtonIcon from 'styled/ButtonIcon';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import messages from './messages';
 import SortOptions from './SortOptions';
@@ -20,8 +20,12 @@ const StyledDropButton = styled(DropButton)`
 `;
 
 const StyledButtonIcon = styled(ButtonIcon)`
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 export function CountrySort({
@@ -38,15 +42,19 @@ export function CountrySort({
     <ResponsiveContext.Consumer>
       {size => {
         // prettier-ignore
-        const label = isMinSize(size, 'large')
+        const label = size !== 'small'
           ? `${intl.formatMessage(messages.sortBy)} ${intl.formatMessage(messages.sortOptions[sort])}`
           : (
-            <Text size="small">
+            <Text size="xsmall">
               {`${intl.formatMessage(messages.sortOptions[sort])}`}
             </Text>
           );
         return (
-          <Box direction="row" pad="xsmall" align="center">
+          <Box
+            direction="row"
+            pad={isMaxSize(size, 'medium') ? { top: 'xsmall' } : 'none'}
+            align="center"
+          >
             <StyledDropButton
               plain
               reverse
@@ -80,8 +88,12 @@ export function CountrySort({
               subtle
               onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
             >
-              {order === 'asc' && <Ascend />}
-              {order === 'desc' && <Descend />}
+              {order === 'asc' && (
+                <Ascend size={size === 'small' ? 'small' : 'large'} />
+              )}
+              {order === 'desc' && (
+                <Descend size={size === 'small' ? 'small' : 'large'} />
+              )}
             </StyledButtonIcon>
           </Box>
         );

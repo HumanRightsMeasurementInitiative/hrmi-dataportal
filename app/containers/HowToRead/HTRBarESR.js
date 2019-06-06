@@ -30,7 +30,11 @@ function HTRBarESR({ contxt, intl }) {
           pad={{ left: 'small', right: 'medium' }}
           responsive={false}
         >
-          <Box style={{ position: 'relative' }}>
+          <Box
+            style={{ position: 'relative' }}
+            margin={{ bottom: 'medium' }}
+            responsive={false}
+          >
             <AnnotateBenchmark
               tooltip={false}
               label={intl.formatMessage(rootMessages.settings.benchmark.name)}

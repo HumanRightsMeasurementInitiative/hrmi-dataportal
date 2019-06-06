@@ -225,7 +225,7 @@ export function CountryPreview({
       {size => (
         <Box
           pad="none"
-          basis={isMinSize(size, 'medium') ? '250px' : '280px'}
+          basis={isMinSize(size, 'large') ? '250px' : '280px'}
           alignContent="center"
           flex={{ grow: 1 }}
         >
@@ -239,7 +239,7 @@ export function CountryPreview({
             >
               <Box
                 pad={{ horizontal: 'small', vertical: 'medium' }}
-                width={isMinSize(size, 'medium') ? '250px' : '280px'}
+                width={isMinSize(size, 'large') ? '250px' : '280px'}
                 alignContent="center"
               >
                 {scale === 'd' && (

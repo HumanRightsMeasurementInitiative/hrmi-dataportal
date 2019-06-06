@@ -82,8 +82,9 @@ function Key({ inModal }) {
             side: inModal ? 'bottom' : 'right',
             size: '2px',
           }}
-          margin={inModal ? { bottom: 'medium' } : 'none'}
+          margin={inModal ? { bottom: 'small' } : 'none'}
           flex={{ shrink: 0 }}
+          responsive={false}
         >
           {DIMENSIONS.map(d => (
             <DimensionWrap

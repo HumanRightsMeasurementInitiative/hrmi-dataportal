@@ -33,7 +33,7 @@ import { getRouterMatch } from 'containers/App/selectors';
 
 import ContentContainer from 'styled/ContentContainer';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 import ButtonNavPrimaryDrop from 'styled/ButtonNavPrimaryDrop';
 import ButtonHighlight from 'styled/ButtonHighlight';
 
@@ -99,7 +99,7 @@ const BrandButton = styled(Button)`
   &:hover {
     color: ${props => props.theme.global.colors['light-3']};
   }
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     width: 120px;
     margin-right: -5px;
   }
@@ -126,7 +126,8 @@ const MenuList = styled.div`
   z-index: 99999;
   background: ${props => props.theme.global.colors['dark-2']};
   padding: ${({ theme }) => theme.global.edgeSize.medium} 0;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  overflow: auto;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 0;
     position: relative;
     z-index: 300;
@@ -153,7 +154,7 @@ const ToggleMenu = styled(Button)`
   height: 44px;
   background-color: transparent;
   text-align: center;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     display: none;
   }
 `;
@@ -173,11 +174,37 @@ const SecondaryDropButton = styled(Button)`
     background-color: ${({ active, theme }) =>
     theme.global.colors[active ? 'dark-2' : 'dark-3']};
   }
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     width: auto;
   }
 `;
 const DEPENDENCIES = ['countries'];
+
+const renderDownload = (intl, isFullWidth) => (
+  <Box
+    pad={{ vertical: 'medium', horizontal: 'medium' }}
+    background="dark-1"
+    style={{ maxWidth: '100%', width: isFullWidth ? '100%' : '500px' }}
+  >
+    <Heading level={4} margin={{ top: 'small', bottom: 'xsmall' }}>
+      <FormattedMessage {...messages.download.title} />
+    </Heading>
+    <Paragraph margin={{ vertical: 'small' }}>
+      <FormattedMessage {...messages.download.paragraph} />
+    </Paragraph>
+    <Paragraph margin={{ top: 'small', bottom: 'medium' }}>
+      <FormattedMessage {...messages.download.attribution} />
+      <FormattedMessage {...messages.download.attributionURL} />
+    </Paragraph>
+    <ButtonHighlight
+      href={intl.formatMessage(messages.download.downloadURL)}
+      as="a"
+      style={{ margin: '0 auto' }}
+    >
+      <FormattedMessage {...messages.download.downloadAnchor} />
+    </ButtonHighlight>
+  </Box>
+);
 
 export function Header({ nav, intl, onLoadData, match }) {
   useInjectSaga({ key: 'app', saga });
@@ -219,7 +246,7 @@ export function Header({ nav, intl, onLoadData, match }) {
             >
               <FormattedMessage {...messages.appTitle} />
             </TitleButton>
-            {size === 'small' && (
+            {isMaxSize(size, 'medium') && (
               <Box margin={{ left: 'auto', right: 'large' }}>
                 <LocaleToggle />
               </Box>
@@ -229,7 +256,9 @@ export function Header({ nav, intl, onLoadData, match }) {
               {showMenu && <Close />}
             </ToggleMenu>
             <MenuList visible={showMenu}>
-              {appLocales.length > 1 && size !== 'small' && <LocaleToggle />}
+              {appLocales.length > 1 && isMinSize(size, 'large') && (
+                <LocaleToggle />
+              )}
               <span>
                 {PAGES &&
                   PAGES.map(page => (
@@ -257,41 +286,18 @@ export function Header({ nav, intl, onLoadData, match }) {
                 {showDownload && <FormUp />}
                 {!showDownload && <FormDown />}
               </ButtonNavPrimaryDrop>
-              {showDownload && (
+              {showDownload && isMinSize(size, 'large') && (
                 <Drop
                   align={{ top: 'bottom', right: 'right' }}
                   target={downloadRef.current}
                   onClickOutside={() => setShowDownload(false)}
                   elevation="small"
                 >
-                  <Box
-                    pad={{ vertical: 'medium', horizontal: 'medium' }}
-                    background="dark-1"
-                    style={{ maxWidth: '100%', width: '500px' }}
-                  >
-                    <Heading
-                      level={4}
-                      margin={{ top: 'small', bottom: 'xsmall' }}
-                    >
-                      <FormattedMessage {...messages.download.title} />
-                    </Heading>
-                    <Paragraph margin={{ vertical: 'small' }}>
-                      <FormattedMessage {...messages.download.paragraph} />
-                    </Paragraph>
-                    <Paragraph margin={{ top: 'small', bottom: 'medium' }}>
-                      <FormattedMessage {...messages.download.attribution} />
-                      <FormattedMessage {...messages.download.attributionURL} />
-                    </Paragraph>
-                    <ButtonHighlight
-                      href={intl.formatMessage(messages.download.downloadURL)}
-                      target="_blank"
-                      as="a"
-                      style={{ margin: '0 auto' }}
-                    >
-                      <FormattedMessage {...messages.download.downloadAnchor} />
-                    </ButtonHighlight>
-                  </Box>
+                  {renderDownload(intl)}
                 </Drop>
+              )}
+              {showDownload && isMaxSize(size, 'medium') && (
+                <div>{renderDownload(intl, true)}</div>
               )}
             </MenuList>
           </NavBarTop>

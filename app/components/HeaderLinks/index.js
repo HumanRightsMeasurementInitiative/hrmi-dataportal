@@ -11,9 +11,11 @@ const HeaderCategories = styled(Box)`
 
 const CategoryLink = styled(Button)`
   padding: 0 3px;
+  padding-left: ${({ firstChild }) => (firstChild ? 0 : 3)}px;
   color: ${({ theme }) => theme.global.colors['dark-3']};
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0 6px;
+    padding-left: ${({ firstChild }) => (firstChild ? 2 : 6)}px;
   }
 `;
 const IconWrap = styled.span`
@@ -23,7 +25,7 @@ const SepWrap = styled.span`
   padding: 0 3px;
   font-size: 10px;
   line-height: 10px;
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0 4px;
     font-size: 12px;
     line-height: 12px;
@@ -35,7 +37,10 @@ function HeaderLinks({ items, onItemClick, breadcrumb }) {
     <HeaderCategories direction="row" wrap>
       {items.map((item, index, list) => (
         <Box key={item.key} direction="row" align="center">
-          <CategoryLink onClick={() => onItemClick(item.key, item.value)}>
+          <CategoryLink
+            onClick={() => onItemClick(item.key, item.value)}
+            firstChild={index === 0}
+          >
             {item.label}
           </CategoryLink>
           {!breadcrumb && index < list.length - 1 && <SepWrap>|</SepWrap>}

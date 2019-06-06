@@ -48,6 +48,7 @@ export function ScaleToggle({ scale, onSetScale, intl }) {
 }
 
 ScaleToggle.propTypes = {
+  // inModal: PropTypes.bool,
   scale: PropTypes.string,
   onSetScale: PropTypes.func,
   intl: intlShape.isRequired,

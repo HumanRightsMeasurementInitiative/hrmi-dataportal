@@ -74,6 +74,8 @@ function HTRSummaryRights({ intl }) {
                     position: 'relative',
                     marginTop: d.type === 'esr' ? '26px' : 0,
                   }}
+                  margin={{ bottom: 'medium' }}
+                  responsive={false}
                 >
                   {d.type === 'esr' && (
                     <AnnotateBenchmark

@@ -61,10 +61,14 @@ function HowToReadLayer({ layer, theme, onClose }) {
         >
           <Box
             elevation="large"
-            width={`${getFloatingAsideWidth(size, theme, windowDimensions)}px`}
+            width={
+              isMaxSize(size, 'medium')
+                ? '100%'
+                : `${getFloatingAsideWidth(size, theme, windowDimensions)}px`
+            }
             direction="column"
             flex={{ shrink: 0 }}
-            pad="medium"
+            pad={isMaxSize(size, 'medium') ? 'small' : 'medium'}
             fill="vertical"
             overflow="auto"
             style={{ position: 'relative' }}

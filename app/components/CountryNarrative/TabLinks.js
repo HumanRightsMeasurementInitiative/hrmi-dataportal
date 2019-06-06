@@ -6,7 +6,7 @@ import { Box } from 'grommet';
 // prettier-ignore
 const Styled = styled(Box)`
   display: none;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     display: flex;
   }
 `;
@@ -16,8 +16,7 @@ const TabLink = styled(ButtonText)`
   padding: 0 5px;
   text-decoration: none;
   color: ${({ theme }) => theme.global.colors['dark-3']};
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0 10px;
   }
 `;

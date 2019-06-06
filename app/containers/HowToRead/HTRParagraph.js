@@ -7,7 +7,7 @@ const Styled = styled(Paragraph)`
   line-height: 16px;
   margin-top: ${({ above }) => (above ? 20 : 0)}px;
   margin-bottom: ${({ above }) => (above ? 0 : 20)}px;
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     font-size: 14px;
     line-height: 18px;
   }

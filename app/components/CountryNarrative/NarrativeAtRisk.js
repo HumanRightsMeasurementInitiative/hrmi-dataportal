@@ -97,13 +97,19 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
         elevation="small"
         margin={{ vertical: 'small' }}
         pad={{ bottom: 'small', top: 'xsmall' }}
+        fill="horizontal"
       >
         <Table>
           <TableHeader>
             <TableRow>
               <TableCell
                 scope="col"
-                pad={{ top: 'small', left: 'medium', bottom: 'xsmall' }}
+                pad={{
+                  top: 'small',
+                  left: 'medium',
+                  bottom: 'xsmall',
+                  right: 'small',
+                }}
                 border="bottom"
               >
                 <Text size="medium" style={{ fontWeight: 600 }}>
@@ -127,7 +133,7 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
                 <TableCell
                   verticalAlign="top"
                   border={index === 0 ? false : 'top'}
-                  pad={{ left: 'medium', vertical: 'small' }}
+                  pad={{ left: 'medium', vertical: 'small', right: 'small' }}
                 >
                   <Text size="small" style={{ fontWeight: 600 }}>
                     <FormattedMessage
