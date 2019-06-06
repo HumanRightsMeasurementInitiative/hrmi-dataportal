@@ -246,7 +246,7 @@ export function Header({ nav, intl, onLoadData, match }) {
             >
               <FormattedMessage {...messages.appTitle} />
             </TitleButton>
-            {isMaxSize(size, 'medium') && (
+            {appLocales.length > 1 && isMaxSize(size, 'medium') && (
               <Box margin={{ left: 'auto', right: 'large' }}>
                 <LocaleToggle />
               </Box>
