@@ -12,7 +12,7 @@
   "hrmi.containers.Header.download.attribution": "Please attribute the Human Rights Measurement Initiative and link back to our website: ",
   "hrmi.containers.Header.download.attributionURL": "humanrightsmeasurement.org",
   "hrmi.containers.Header.download.downloadAnchor": "Agree & download (zip)",
-  "hrmi.containers.Header.download.downloadURL": "//hrmi-dataportal-data.unfolddata.com/data/hrmi-data-download.zip",
+  "hrmi.containers.Header.download.downloadURL": "//data-store.humanrightsmeasurement.org/data/hrmi-data-download.zip",
   "hrmi.containers.LocaleToggle.language": "Language: ",
   "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.containers.MetricAside.titleParent.rights": "What category score was this human rights score used for?",
