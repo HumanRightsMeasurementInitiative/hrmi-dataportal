@@ -22,7 +22,12 @@ import messages from './messages';
 const Styled = styled(Box)``;
 
 const RightHeading = props => (
-  <Heading level={4} margin={{ vertical: '15px' }} {...props} />
+  <Heading
+    responsive={false}
+    level={4}
+    margin={{ vertical: '15px' }}
+    {...props}
+  />
 );
 const StyledRightHeading = styled(RightHeading)``;
 

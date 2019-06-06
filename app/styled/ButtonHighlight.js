@@ -6,7 +6,7 @@ export default styled(Button)`
   border-radius: 999999px;
   color: ${({ theme }) => theme.global.colors['dark-1']};
   background-color: ${({ theme }) => theme.global.colors.highlight};
-  padding: 1px 6px;
+  padding: 4px 6px;
   margin: ${({ theme }) => theme.global.edgeSize.xxsmall};
   font-weight: 600;
   &:hover {

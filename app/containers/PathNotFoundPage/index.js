@@ -14,7 +14,7 @@ import messages from './messages';
 export default function PathNotFound() {
   return (
     <article>
-      <Heading>
+      <Heading responsive={false}>
         <FormattedMessage {...messages.header} />
       </Heading>
     </article>

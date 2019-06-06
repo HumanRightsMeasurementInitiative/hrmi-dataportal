@@ -7,10 +7,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Box, Text } from 'grommet';
-// import { Emergency } from 'grommet-icons';
+import { Box, Text, ResponsiveContext } from 'grommet';
+import { FormNext } from 'grommet-icons';
 import styled from 'styled-components';
 // import Tooltip from 'components/Tooltip';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import {
   DIMENSIONS,
@@ -31,6 +32,10 @@ import DiamondChart from './DiamondChart';
 // `;
 
 const Button = styled(ButtonPlain)`
+  margin: 0 auto;
+  @media (min-width: 520px) {
+    margin: 0;
+  }
   &:hover {
     text-decoration: underline;
   }
@@ -216,70 +221,80 @@ export function CountryPreview({
 }) {
   if (!country) return null;
   return (
-    <Box pad="none" width="250px" alignContent="center">
-      {country && (
-        <Button
-          onClick={() => onSelectCountry(country.country_code)}
-          onMouseOver={() => onCountryHover(country.country_code)}
-          onFocus={() => onCountryHover(country.country_code)}
-          onMouseOut={() => onCountryHover(false)}
-          onBlur={() => onCountryHover(false)}
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box
+          pad="none"
+          basis={isMinSize(size, 'medium') ? '250px' : '280px'}
+          alignContent="center"
+          flex={{ grow: 1 }}
         >
-          <Box
-            pad={{ horizontal: 'small', vertical: 'medium' }}
-            width="250px"
-            alignContent="center"
-          >
-            {scale === 'd' && (
-              <DiamondChart
-                dimensions={getDimensions(
-                  scores,
-                  standard,
-                  benchmark,
-                  otherStandard,
-                  indicators,
-                  country,
-                  intl,
-                )}
-                benchmark={benchmark}
-                showLabels={showAnnotation}
-              />
-            )}
-            {scale === 'r' && (
-              <DiamondChart
-                rightGroups={getRightGroups(
-                  scores,
-                  standard,
-                  benchmark,
-                  otherStandard,
-                  indicators,
-                  country,
-                  intl,
-                )}
-                benchmark={benchmark}
-                showLabels={showAnnotation}
-              />
-            )}
-            <Box pad={{ top: 'small' }}>
-              <Text textAlign="center" alignSelf="center">
-                <CountryLabel>
-                  <FormattedMessage
-                    {...rootMessages.countries[country.country_code]}
+          {country && (
+            <Button
+              onClick={() => onSelectCountry(country.country_code)}
+              onMouseOver={() => onCountryHover(country.country_code)}
+              onFocus={() => onCountryHover(country.country_code)}
+              onMouseOut={() => onCountryHover(false)}
+              onBlur={() => onCountryHover(false)}
+            >
+              <Box
+                pad={{ horizontal: 'small', vertical: 'medium' }}
+                width={isMinSize(size, 'medium') ? '250px' : '280px'}
+                alignContent="center"
+              >
+                {scale === 'd' && (
+                  <DiamondChart
+                    dimensions={getDimensions(
+                      scores,
+                      standard,
+                      benchmark,
+                      otherStandard,
+                      indicators,
+                      country,
+                      intl,
+                    )}
+                    benchmark={benchmark}
+                    showLabels={showAnnotation}
                   />
-                  {country && country.high_income_country === '1' && (
-                    <span>
-                      {` (${intl.formatMessage(
-                        rootMessages.labels.hiCountry,
-                      )})`}
-                    </span>
-                  )}
-                </CountryLabel>
-              </Text>
-            </Box>
-          </Box>
-        </Button>
+                )}
+                {scale === 'r' && (
+                  <DiamondChart
+                    rightGroups={getRightGroups(
+                      scores,
+                      standard,
+                      benchmark,
+                      otherStandard,
+                      indicators,
+                      country,
+                      intl,
+                    )}
+                    benchmark={benchmark}
+                    showLabels={showAnnotation}
+                  />
+                )}
+                <Box pad={{ top: 'small' }}>
+                  <Text textAlign="center" alignSelf="center">
+                    <CountryLabel>
+                      <FormattedMessage
+                        {...rootMessages.countries[country.country_code]}
+                      />
+                      {country && country.high_income_country === '1' && (
+                        <span>
+                          {` (${intl.formatMessage(
+                            rootMessages.labels.hiCountry,
+                          )})`}
+                        </span>
+                      )}
+                      {isMaxSize(size, 'medium') && <FormNext size="medium" />}
+                    </CountryLabel>
+                  </Text>
+                </Box>
+              </Box>
+            </Button>
+          )}
+        </Box>
       )}
-    </Box>
+    </ResponsiveContext.Consumer>
   );
 }
 

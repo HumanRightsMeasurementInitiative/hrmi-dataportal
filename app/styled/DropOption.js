@@ -4,11 +4,13 @@ import Button from 'styled/Button';
 // prettier-ignore
 export default styled(Button)`
   text-align: left;
-  padding: 2px 5px;
+  padding: 6px 12px;
   border-top: 1px solid ${({ theme }) => theme.global.colors.border.light };
   color: ${({ theme, active }) => active ? theme.global.colors['dark-4'] : theme.global.colors['dark-1']};
   display: block;
   width: 100%;
+  font-size: 14px;
+  line-height: 18px;
   &:last-child {
     border-bottom: 1px solid
       ${({ theme, noBorderLast }) => noBorderLast

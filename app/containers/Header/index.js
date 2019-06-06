@@ -33,6 +33,7 @@ import { getRouterMatch } from 'containers/App/selectors';
 
 import ContentContainer from 'styled/ContentContainer';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
+import { isMinSize } from 'utils/responsive';
 import ButtonNavPrimaryDrop from 'styled/ButtonNavPrimaryDrop';
 import ButtonHighlight from 'styled/ButtonHighlight';
 
@@ -43,6 +44,7 @@ import { appLocales } from 'i18n';
 import { PAGES } from 'containers/App/constants';
 import { navigate, loadDataIfNeeded } from 'containers/App/actions';
 
+// import { isMinSize, isMaxSize } from 'utils/responsive';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
 
@@ -57,9 +59,9 @@ const Styled = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 8;
+  z-index: 9;
   width: 100%;
-  height: 100px;
+  height: ${({ theme }) => theme.sizes.header.height}px;
   color: ${props => props.theme.global.colors.white};
 `;
 
@@ -90,19 +92,22 @@ const NavBarBottom = props => (
 
 const BrandButton = styled(Button)`
   height: 44px;
-  width: 120px;
   padding: 1px 5px;
-  margin-right: -5px;
+  width: 100px;
+  margin-right: -10px;
   color: ${props => props.theme.global.colors.white};
   &:hover {
     color: ${props => props.theme.global.colors['light-3']};
   }
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    width: 120px;
+    margin-right: -5px;
+  }
 `;
 const TitleButton = styled(Button)`
   height: 44px;
-  width: 120px;
   padding: 1px 5px;
-  margin-right: -5px;
+  margin-right: 10px;
   color: ${props => props.theme.global.colors.white};
   &:hover {
     color: ${props => props.theme.global.colors['light-3']};
@@ -119,8 +124,10 @@ const MenuList = styled.div`
   bottom: 0;
   width: 100%;
   z-index: 99999;
-  background: ${props => props.theme.global.colors['dark-1']};
+  background: ${props => props.theme.global.colors['dark-2']};
+  padding: ${({ theme }) => theme.global.edgeSize.medium} 0;
   @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    padding: 0;
     position: relative;
     z-index: 300;
     top: auto;
@@ -150,18 +157,13 @@ const ToggleMenu = styled(Button)`
     display: none;
   }
 `;
-const LocaleToggleWrap = styled.span`
-  display: block;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
-    display: inline;
-  }
-`;
 
 // prettier-ignore
 const SecondaryDropButton = styled(Button)`
   height: 56px;
   padding: 5px 10px;
   min-width: 160px;
+  width: 50%;
   background-color: ${({ active, theme }) =>
     active ? theme.global.colors['dark-2'] : 'transparent'};
   border-right: ${({ last }) => last ? 2 : 1}px solid;
@@ -170,6 +172,9 @@ const SecondaryDropButton = styled(Button)`
   &:hover {
     background-color: ${({ active, theme }) =>
     theme.global.colors[active ? 'dark-2' : 'dark-3']};
+  }
+  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+    width: auto;
   }
 `;
 const DEPENDENCIES = ['countries'];
@@ -191,109 +196,105 @@ export function Header({ nav, intl, onLoadData, match }) {
   const metricTarget = useRef(null);
   const searchRef = useRef(null);
   const downloadRef = useRef(null);
-  console.log(showDownload);
   return (
-    <Styled role="banner">
-      <div>
-        <NavBarTop>
-          <BrandButton
-            plain
-            onClick={() => {
-              setShowMenu(false);
-              nav({ pathname: '', search: '' });
-            }}
-          >
-            <Icon name="BRAND" />
-          </BrandButton>
-          <TitleButton
-            plain
-            onClick={() => {
-              setShowMenu(false);
-              nav({ pathname: '', search: '' });
-            }}
-          >
-            <FormattedMessage {...messages.appTitle} />
-          </TitleButton>
-          <ToggleMenu plain onClick={() => setShowMenu(!showMenu)}>
-            {!showMenu && <Menu />}
-            {showMenu && <Close />}
-          </ToggleMenu>
-          <MenuList visible={showMenu}>
-            {appLocales.length > 1 && (
-              <span>
-                <LocaleToggleWrap>
-                  <LocaleToggle />
-                </LocaleToggleWrap>
-              </span>
-            )}
-            <span>
-              {PAGES &&
-                PAGES.map(page => (
-                  <ButtonNavPrimary
-                    key={page}
-                    active={page === match}
-                    disabled={page === match}
-                    onClick={() => {
-                      setShowMenu(false);
-                      nav(`page/${page}`);
-                    }}
-                  >
-                    <FormattedMessage {...rootMessages.page[page]} />
-                  </ButtonNavPrimary>
-                ))}
-            </span>
-            <ButtonNavPrimaryDrop
-              ref={downloadRef}
-              dropped={showDownload}
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Styled role="banner">
+          <NavBarTop>
+            <BrandButton
+              plain
               onClick={() => {
-                setShowDownload(!showDownload);
+                setShowMenu(false);
+                nav({ pathname: '', search: '' });
               }}
             >
-              <FormattedMessage {...messages.download.button} />
-              {showDownload && <FormUp />}
-              {!showDownload && <FormDown />}
-            </ButtonNavPrimaryDrop>
-            {showDownload && (
-              <Drop
-                align={{ top: 'bottom', right: 'right' }}
-                target={downloadRef.current}
-                onClickOutside={() => setShowDownload(false)}
-                elevation="small"
-              >
-                <Box
-                  pad={{ vertical: 'medium', horizontal: 'medium' }}
-                  background="dark-1"
-                  style={{ maxWidth: '100%', width: '500px' }}
-                >
-                  <Heading
-                    level={4}
-                    margin={{ top: 'small', bottom: 'xsmall' }}
-                  >
-                    <FormattedMessage {...messages.download.title} />
-                  </Heading>
-                  <Paragraph margin={{ vertical: 'small' }}>
-                    <FormattedMessage {...messages.download.paragraph} />
-                  </Paragraph>
-                  <Paragraph margin={{ top: 'small', bottom: 'medium' }}>
-                    <FormattedMessage {...messages.download.attribution} />
-                    <FormattedMessage {...messages.download.attributionURL} />
-                  </Paragraph>
-                  <ButtonHighlight
-                    href={intl.formatMessage(messages.download.downloadURL)}
-                    target="_blank"
-                    as="a"
-                    style={{ margin: '0 auto' }}
-                  >
-                    <FormattedMessage {...messages.download.downloadAnchor} />
-                  </ButtonHighlight>
-                </Box>
-              </Drop>
+              <Icon name="BRAND" />
+            </BrandButton>
+            <TitleButton
+              plain
+              onClick={() => {
+                setShowMenu(false);
+                nav({ pathname: '', search: '' });
+              }}
+            >
+              <FormattedMessage {...messages.appTitle} />
+            </TitleButton>
+            {size === 'small' && (
+              <Box margin={{ left: 'auto', right: 'large' }}>
+                <LocaleToggle />
+              </Box>
             )}
-          </MenuList>
-        </NavBarTop>
-      </div>
-      <ResponsiveContext.Consumer>
-        {size => (
+            <ToggleMenu plain onClick={() => setShowMenu(!showMenu)}>
+              {!showMenu && <Menu />}
+              {showMenu && <Close />}
+            </ToggleMenu>
+            <MenuList visible={showMenu}>
+              {appLocales.length > 1 && size !== 'small' && <LocaleToggle />}
+              <span>
+                {PAGES &&
+                  PAGES.map(page => (
+                    <ButtonNavPrimary
+                      key={page}
+                      active={page === match}
+                      disabled={page === match}
+                      onClick={() => {
+                        setShowMenu(false);
+                        nav(`page/${page}`);
+                      }}
+                    >
+                      <FormattedMessage {...rootMessages.page[page]} />
+                    </ButtonNavPrimary>
+                  ))}
+              </span>
+              <ButtonNavPrimaryDrop
+                ref={downloadRef}
+                active={showDownload}
+                onClick={() => {
+                  setShowDownload(!showDownload);
+                }}
+              >
+                <FormattedMessage {...messages.download.button} />
+                {showDownload && <FormUp />}
+                {!showDownload && <FormDown />}
+              </ButtonNavPrimaryDrop>
+              {showDownload && (
+                <Drop
+                  align={{ top: 'bottom', right: 'right' }}
+                  target={downloadRef.current}
+                  onClickOutside={() => setShowDownload(false)}
+                  elevation="small"
+                >
+                  <Box
+                    pad={{ vertical: 'medium', horizontal: 'medium' }}
+                    background="dark-1"
+                    style={{ maxWidth: '100%', width: '500px' }}
+                  >
+                    <Heading
+                      level={4}
+                      margin={{ top: 'small', bottom: 'xsmall' }}
+                    >
+                      <FormattedMessage {...messages.download.title} />
+                    </Heading>
+                    <Paragraph margin={{ vertical: 'small' }}>
+                      <FormattedMessage {...messages.download.paragraph} />
+                    </Paragraph>
+                    <Paragraph margin={{ top: 'small', bottom: 'medium' }}>
+                      <FormattedMessage {...messages.download.attribution} />
+                      <FormattedMessage {...messages.download.attributionURL} />
+                    </Paragraph>
+                    <ButtonHighlight
+                      href={intl.formatMessage(messages.download.downloadURL)}
+                      target="_blank"
+                      as="a"
+                      style={{ margin: '0 auto' }}
+                    >
+                      <FormattedMessage {...messages.download.downloadAnchor} />
+                    </ButtonHighlight>
+                  </Box>
+                </Drop>
+              )}
+            </MenuList>
+          </NavBarTop>
           <NavBarBottom>
             <SecondaryDropButton
               plain
@@ -308,15 +309,18 @@ export function Header({ nav, intl, onLoadData, match }) {
               ref={countryTarget}
             />
             {showCountries && size === 'small' && (
-              <NavCountry onClose={() => setShowCountries(false)} />
+              <NavCountry onClose={() => setShowCountries(false)} size={size} />
             )}
-            {showCountries && size !== 'small' && (
+            {showCountries && isMinSize(size, 'medium') && (
               <Drop
                 align={{ top: 'bottom', left: 'left' }}
                 target={countryTarget.current}
                 onClickOutside={() => setShowCountries(false)}
               >
-                <NavCountry onClose={() => setShowCountries(false)} />
+                <NavCountry
+                  onClose={() => setShowCountries(false)}
+                  size={size}
+                />
               </Drop>
             )}
             <SecondaryDropButton
@@ -332,47 +336,47 @@ export function Header({ nav, intl, onLoadData, match }) {
               ref={metricTarget}
             />
             {showMetrics && size === 'small' && (
-              <NavMetric onClose={() => setShowMetrics(false)} />
+              <NavMetric onClose={() => setShowMetrics(false)} size={size} />
             )}
-            {showMetrics && size !== 'small' && (
+            {showMetrics && isMinSize(size, 'medium') && (
               <Drop
                 align={{ top: 'bottom', left: 'left' }}
                 target={metricTarget.current}
                 onClickOutside={() => setShowMetrics(false)}
               >
-                <NavMetric onClose={() => setShowMetrics(false)} />
+                <NavMetric onClose={() => setShowMetrics(false)} size={size} />
               </Drop>
             )}
-            <Box
-              background="dark-1"
-              width="large"
-              direction="row"
-              align="center"
-              pad={{ horizontal: 'small', vertical: 'xsmall' }}
-              round="small"
-              margin={{ horizontal: 'medium' }}
-              ref={searchRef}
-            >
-              <TextInput
-                plain
-                value={search}
-                onChange={evt =>
-                  evt && evt.target && setSearch(evt.target.value)
-                }
-                placeholder={intl.formatMessage(messages.search.allSearch)}
-                pad="xsmall"
-              />
-              {search && search.length > 0 && (
-                <Button onClick={() => setSearch('')} pad="xsmall">
-                  <FormClose />
-                </Button>
-              )}
-              {(!search || search.length === 0) && <Search />}
-            </Box>
-            {search.length > 1 && size === 'small' && (
-              <SearchResults onClose={() => setSearch('')} search={search} />
+            {isMinSize(size, 'medium') && (
+              <Box flex={{ grow: 1 }} margin={{ horizontal: 'medium' }}>
+                <Box
+                  background="dark-1"
+                  direction="row"
+                  align="center"
+                  pad={{ horizontal: 'small', vertical: 'xsmall' }}
+                  round="small"
+                  ref={searchRef}
+                  style={{ maxWidth: '500px' }}
+                >
+                  <TextInput
+                    plain
+                    value={search}
+                    onChange={evt =>
+                      evt && evt.target && setSearch(evt.target.value)
+                    }
+                    placeholder={intl.formatMessage(messages.search.allSearch)}
+                    pad="xsmall"
+                  />
+                  {search && search.length > 0 && (
+                    <Button onClick={() => setSearch('')} pad="xsmall">
+                      <FormClose />
+                    </Button>
+                  )}
+                  {(!search || search.length === 0) && <Search />}
+                </Box>
+              </Box>
             )}
-            {search.length > 1 && size !== 'small' && (
+            {search.length > 1 && isMinSize(size, 'medium') && (
               <Drop
                 align={{ top: 'bottom', left: 'left' }}
                 target={searchRef.current}
@@ -382,9 +386,9 @@ export function Header({ nav, intl, onLoadData, match }) {
               </Drop>
             )}
           </NavBarBottom>
-        )}
-      </ResponsiveContext.Consumer>
-    </Styled>
+        </Styled>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

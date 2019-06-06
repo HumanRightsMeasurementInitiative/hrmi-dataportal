@@ -82,8 +82,8 @@ export const LANGUAGES = {
 };
 
 // URLs for external resources loaded on request
-export const DATA_URL = '//hrmi-dataportal-data.unfolddata.com/data';
-export const PAGES_URL = '//hrmi-dataportal-content.unfolddata.com/';
+export const DATA_URL = '//unfolddata.github.io/hrmi-dataportal-data/data';
+export const PAGES_URL = '//unfolddata.github.io/hrmi-dataportal-content/';
 
 export const PAGES = ['about', 'methodology'];
 

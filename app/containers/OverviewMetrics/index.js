@@ -11,8 +11,8 @@ import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { Button, Heading, Box, Text } from 'grommet';
-// import { FormClose } from 'grommet-icons';
+import { Button, Heading, Box, Text, ResponsiveContext } from 'grommet';
+import { FormNext } from 'grommet-icons';
 
 import {
   getScaleSearch,
@@ -29,7 +29,7 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 import rootMessages from 'messages';
-
+import { isMaxSize } from 'utils/responsive';
 import MetricPreviewChart from './MetricPreviewChart';
 
 const Option = styled(Button)`
@@ -76,7 +76,6 @@ export function OverviewMetrics({
   dataReady,
   activeCountry,
 }) {
-  // console.log(countries && countries.length)
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
   let scoresByMetric = [];
@@ -112,104 +111,138 @@ export function OverviewMetrics({
     0,
   );
   return (
-    <Box pad="medium">
-      {RIGHTS_TYPES.map(type => {
-        const dimensions = DIMENSIONS.filter(d => d.type === type);
-        return (
-          <Box key={type} pad={{ bottom: 'medium', top: 'none' }}>
-            <Heading
-              level={6}
-              margin={{
-                top: 'none',
-                bottom: 'xsmall',
-                horizontal: 'none',
-              }}
-              color="dark-3"
-            >
-              <FormattedMessage {...rootMessages['rights-types'][type]} />
-            </Heading>
-            {dimensions.map(d => {
-              const rights =
-                scale === 'r' &&
-                RIGHTS.filter(
-                  r =>
-                    r.dimension === d.key && typeof r.aggregate === 'undefined',
-                );
-              return (
-                <Box key={d.key} pad={{ bottom: 'xsmall', top: 'none' }}>
-                  <Option
-                    plain
-                    onClick={() => {
-                      onSelectMetric(d.key);
-                    }}
-                  >
-                    <Heading
-                      level={5}
-                      margin={{
-                        vertical: 'xsmall',
-                        horizontal: 'none',
-                      }}
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box pad="medium">
+          {RIGHTS_TYPES.map(type => {
+            const dimensions = DIMENSIONS.filter(d => d.type === type);
+            return (
+              <Box
+                key={type}
+                pad={{ bottom: 'medium', top: 'none' }}
+                responsive={false}
+              >
+                <Heading
+                  responsive={false}
+                  level={6}
+                  margin={{
+                    top: 'none',
+                    bottom: 'xsmall',
+                    horizontal: 'none',
+                  }}
+                  color="dark-3"
+                >
+                  <FormattedMessage {...rootMessages['rights-types'][type]} />
+                </Heading>
+                {dimensions.map(d => {
+                  const rights =
+                    scale === 'r' &&
+                    RIGHTS.filter(
+                      r =>
+                        r.dimension === d.key &&
+                        typeof r.aggregate === 'undefined',
+                    );
+                  return (
+                    <Box
+                      key={d.key}
+                      pad={{ bottom: 'xsmall', top: 'none' }}
+                      responsive={false}
+                      align="start"
                     >
-                      <FormattedMessage {...rootMessages.dimensions[d.key]} />
-                    </Heading>
-                    {!rights && (
-                      <MetricPreviewChart
-                        maxValue={d.type === 'esr' ? 100 : 10}
-                        level={1}
-                        color={d.key}
-                        column={
-                          d.type === 'esr'
-                            ? benchmarkDetails.column
-                            : COLUMNS.CPR.MEAN
-                        }
-                        maxScores={maxScores}
-                        activeCountry={activeCountry}
-                        data={
-                          dataReady &&
-                          scoresByMetric.find(sm => sm.key === d.key)
-                        }
-                        loading={!dataReady}
-                      />
-                    )}
-                  </Option>
-                  {rights &&
-                    rights.map(r => (
-                      <div key={r.key}>
+                      <Option
+                        plain
+                        onClick={() => {
+                          onSelectMetric(d.key);
+                        }}
+                      >
+                        <Heading
+                          responsive={false}
+                          level={5}
+                          margin={{
+                            vertical: 'xsmall',
+                            horizontal: 'none',
+                          }}
+                        >
+                          <FormattedMessage
+                            {...rootMessages.dimensions[d.key]}
+                          />
+                          {isMaxSize(size, 'medium') && (
+                            <FormNext size="medium" />
+                          )}
+                        </Heading>
+                      </Option>
+                      {!rights && (
                         <Option
                           plain
                           onClick={() => {
-                            onSelectMetric(r.key);
+                            onSelectMetric(d.key);
                           }}
                         >
-                          <Text size="small">
-                            <FormattedMessage {...rootMessages.rights[r.key]} />
-                          </Text>
                           <MetricPreviewChart
-                            level={2}
-                            maxValue={r.type === 'esr' ? 100 : 10}
-                            color={r.dimension}
-                            maxScores={maxScores}
+                            maxValue={d.type === 'esr' ? 100 : 10}
+                            level={1}
+                            color={d.key}
                             column={
-                              r.type === 'esr'
+                              d.type === 'esr'
                                 ? benchmarkDetails.column
                                 : COLUMNS.CPR.MEAN
                             }
+                            maxScores={maxScores}
                             activeCountry={activeCountry}
                             data={
                               dataReady &&
-                              scoresByMetric.find(sm => sm.key === r.key)
+                              scoresByMetric.find(sm => sm.key === d.key)
                             }
+                            loading={!dataReady}
                           />
                         </Option>
-                      </div>
-                    ))}
-                </Box>
-              );
-            })}
-          </Box>
-        );
-      })}
-    </Box>
+                      )}
+                      {rights &&
+                        rights.map(r => (
+                          <div key={r.key} style={{ width: '100%' }}>
+                            <Option
+                              plain
+                              onClick={() => {
+                                onSelectMetric(r.key);
+                              }}
+                            >
+                              <Text size="small">
+                                <FormattedMessage
+                                  {...rootMessages.rights[r.key]}
+                                />
+                                {isMaxSize(size, 'medium') && (
+                                  <FormNext size="small" />
+                                )}
+                              </Text>
+                              <MetricPreviewChart
+                                level={2}
+                                maxValue={r.type === 'esr' ? 100 : 10}
+                                color={r.dimension}
+                                maxScores={maxScores}
+                                column={
+                                  r.type === 'esr'
+                                    ? benchmarkDetails.column
+                                    : COLUMNS.CPR.MEAN
+                                }
+                                activeCountry={activeCountry}
+                                data={
+                                  dataReady &&
+                                  scoresByMetric.find(sm => sm.key === r.key)
+                                }
+                                loading={!dataReady}
+                              />
+                            </Option>
+                          </div>
+                        ))}
+                    </Box>
+                  );
+                })}
+              </Box>
+            );
+          })}
+        </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

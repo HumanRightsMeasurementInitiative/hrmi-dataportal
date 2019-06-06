@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export default styled.div`
-  padding-right: 50px;
-  padding-left: 50px;
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    padding-right: 50px;
+    padding-left: 50px;
+  }
 `;

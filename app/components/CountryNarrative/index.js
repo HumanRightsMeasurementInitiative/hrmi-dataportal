@@ -34,11 +34,21 @@ const Dimension = styled(Box)`
 `;
 
 const RightsTypeHeading = props => (
-  <Heading level={3} margin={{ vertical: '5px' }} {...props} />
+  <Heading
+    responsive={false}
+    level={3}
+    margin={{ vertical: '5px' }}
+    {...props}
+  />
 );
 
 const DimensionHeading = props => (
-  <Heading level={4} margin={{ vertical: '5px' }} {...props} />
+  <Heading
+    responsive={false}
+    level={4}
+    margin={{ vertical: '5px' }}
+    {...props}
+  />
 );
 const StyledDimensionHeading = styled(DimensionHeading)``;
 

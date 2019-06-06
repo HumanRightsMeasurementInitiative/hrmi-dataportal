@@ -173,8 +173,9 @@ export function PathCountry({
                 chart: 'Summary',
                 data: scale,
               },
-              content: (
+              content: props => (
                 <CountryReport
+                  {...props}
                   countryTitle={countryTitle}
                   dimensions={dimensions}
                   rights={rights}
@@ -203,19 +204,22 @@ export function PathCountry({
               //   chart: 'WordCloud',
               //   data: 'atRisk',
               // },
-              content: hasCPR(dimensions) && (
-                <CountryPeople
-                  data={atRisk}
-                  countryTitle={countryTitle}
-                  countryCode={countryCode}
-                />
-              ),
+              content: props =>
+                hasCPR(dimensions) && (
+                  <CountryPeople
+                    {...props}
+                    data={atRisk}
+                    countryTitle={countryTitle}
+                    countryCode={countryCode}
+                  />
+                ),
             },
             {
               key: 'about',
               title: intl.formatMessage(rootMessages.tabs.about),
-              content: (
+              content: props => (
                 <CountryAbout
+                  {...props}
                   country={country}
                   auxIndicators={auxIndicators}
                   currentGDP={currentGDP}

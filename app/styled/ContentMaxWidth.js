@@ -8,13 +8,10 @@ const Styled = styled(Box)`
   max-width: ${({ theme }) => theme.maxWidth || '1600px'};
   position: relative;
   min-height: auto;
+  padding: 0 ${({ theme }) => theme.global.edgeSize.small};
+  @media (min-width: ${props => props.theme.breakpoints.large}) {
+    padding: 0 ${({ theme }) => theme.global.edgeSize.large};
+  }
 `;
 
-export default props => (
-  <Styled
-    direction="row"
-    align="center"
-    pad={{ horizontal: 'large' }}
-    {...props}
-  />
-);
+export default props => <Styled direction="row" align="center" {...props} />;
