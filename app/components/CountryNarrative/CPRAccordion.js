@@ -63,18 +63,32 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                       );
                       if (rightSubrights.length === 0) {
                         return (
-                          <Box border="top" direction="row" key={right.key}>
-                            <RightPanel
-                              right={right}
-                              onMetricClick={onMetricClick}
-                              hasAtRisk
-                            />
+                          <Box border="top" key={right.key}>
                             <Box
-                              width={
-                                isMinSize(size, 'medium') ? '200px' : '50px'
-                              }
-                              flex={{ shrink: 0 }}
-                            />
+                              direction="row"
+                              align="center"
+                              pad={{ top: 'small', horizontal: 'none' }}
+                              fill="horizontal"
+                            >
+                              <RightPanelTop
+                                right={right}
+                                onMetricClick={onMetricClick}
+                                hasAtRisk
+                              />
+                            </Box>
+                            <Box direction="row">
+                              <RightPanel
+                                right={right}
+                                onMetricClick={onMetricClick}
+                                hasAtRisk
+                              />
+                              <Box
+                                width={
+                                  isMinSize(size, 'medium') ? '200px' : '50px'
+                                }
+                                flex={{ shrink: 0 }}
+                              />
+                            </Box>
                           </Box>
                         );
                       }
