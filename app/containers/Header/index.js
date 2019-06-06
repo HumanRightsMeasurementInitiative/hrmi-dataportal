@@ -198,7 +198,6 @@ const renderDownload = (intl, isFullWidth) => (
     </Paragraph>
     <ButtonHighlight
       href={intl.formatMessage(messages.download.downloadURL)}
-      target="_blank"
       as="a"
       style={{ margin: '0 auto' }}
     >
