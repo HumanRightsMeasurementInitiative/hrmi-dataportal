@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
-import { Box, Text, Drop, ResponsiveContext, Layer } from 'grommet';
+import { Box, Drop, ResponsiveContext, Layer } from 'grommet';
 import { Close, Add } from 'grommet-icons';
 
 import ButtonIcon from 'styled/ButtonIcon';
@@ -24,10 +24,11 @@ import messages from './messages';
 
 const StyledButtonIcon = styled(ButtonIcon)`
   position: absolute;
-  top: 2px;
-  right: 2px;
+  top: 4px;
+  right: 4px;
   width: 40px;
   height: 40px;
+  background: ${({ theme }) => theme.global.colors['light-1']};
 `;
 
 const getFilterOptions = (
@@ -96,7 +97,10 @@ const getFilterOptions = (
 };
 
 const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
-  <Box pad={{ horizontal: 'none', top: 'small', bottom: 'none' }}>
+  <Box
+    pad={{ horizontal: 'none', top: 'small', bottom: 'none' }}
+    overflow="auto"
+  >
     <StyledButtonIcon subtle onClick={() => setFilterOpen(false)}>
       <Close size="large" />
     </StyledButtonIcon>
@@ -132,14 +136,21 @@ export function CountryFilters({
     (memo, filter) => memo && setFilters[filter],
     true,
   );
-
+  const setAnyFilters = filterGroups.reduce(
+    (memo, filter) => memo || !!setFilters[filter],
+    false,
+  );
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box
           direction={isMinSize(size, 'medium') ? 'row' : 'column'}
           width={isMinSize(size, 'medium') ? 'auto' : '50%'}
-          pad={{ vertical: 'small' }}
+          pad={
+            isMinSize(size, 'medium')
+              ? { vertical: 'small' }
+              : { vertical: 'medium' }
+          }
           align="start"
           margin={isMinSize(size, 'medium') ? 'none' : { top: '-6px' }}
         >
@@ -173,7 +184,9 @@ export function CountryFilters({
           )}
           {!setAllFilters && (
             <Box
-              margin={isMinSize(size, 'medium') ? 'none' : { top: 'small' }}
+              margin={
+                size === 'small' && setAnyFilters ? { top: 'small' } : 'none'
+              }
               align="start"
             >
               <FilterDropButton
@@ -189,15 +202,11 @@ export function CountryFilters({
                 {isMinSize(size, 'medium') && (
                   <Box direction="row" align="center" gap="xsmall">
                     <Add />
-                    <Text>
-                      <FormattedMessage {...messages.addFilter} />
-                    </Text>
+                    <FormattedMessage {...messages.addFilter} />
                   </Box>
                 )}
                 {isMaxSize(size, 'small') && (
-                  <Text size="small">
-                    <FormattedMessage {...messages.addFilter.mobile} />
-                  </Text>
+                  <FormattedMessage {...messages.addFilter.mobile} />
                 )}
               </FilterDropButton>
               {isMinSize(size, 'large') && filterOpen && (
