@@ -4,7 +4,7 @@ import Button from 'styled/Button';
 // prettier-ignore
 export default styled(Button)`
   text-align: left;
-  padding: 6px 12px;
+  padding: 10px;
   border-top: 1px solid ${({ theme }) => theme.global.colors.border.light };
   color: ${({ theme, active }) => active ? theme.global.colors['dark-4'] : theme.global.colors['dark-1']};
   display: block;

@@ -8,6 +8,7 @@ import { Box, Heading } from 'grommet';
 import { DIMENSIONS, RIGHTS, INDICATORS } from 'containers/App/constants';
 import { getCountries } from 'containers/App/selectors';
 import { selectCountry, selectMetric } from 'containers/App/actions';
+import Hint from 'styled/Hint';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -34,7 +35,9 @@ export function SearchResults({
   return (
     <Box direction="column" pad="medium">
       {!hasCountries && !hasMetrics && (
-        <FormattedMessage {...messages.search.noResults} />
+        <Hint italic>
+          <FormattedMessage {...messages.search.noResults} />
+        </Hint>
       )}
       {hasCountries && (
         <div>

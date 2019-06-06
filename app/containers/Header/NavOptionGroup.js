@@ -14,7 +14,7 @@ export function NavOptionGroup({ label, options, onClick }) {
   return (
     <NavOptionWrap>
       {label && (
-        <Text color="dark-4" size="small">
+        <Text color="dark-4" size="small" pad={{ bottom: '2px' }}>
           {label}
         </Text>
       )}

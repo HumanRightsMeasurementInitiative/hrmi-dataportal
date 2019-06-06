@@ -4,6 +4,20 @@ import styled from 'styled-components';
 import { Box, Button, TextInput } from 'grommet';
 import { Close, Search, FormClose } from 'grommet-icons';
 import { isMinSize } from 'utils/responsive';
+
+import ButtonIcon from 'styled/ButtonIcon';
+const StyledButtonIcon = styled(ButtonIcon)`
+  background: transparent;
+  &:hover {
+    background: transparent;
+  }
+  &:active {
+    background: transparent;
+  }
+  &:focus {
+    background: transparent;
+  }
+`;
 // prettier-ignore
 const Top = styled.div`
   background-color: ${({ theme }) => theme.global.colors['dark-2']};
@@ -32,7 +46,17 @@ class NavTop extends React.Component {
     } = this.props;
     return (
       <Top>
-        <Box pad="small" direction="row" fill="vertical" align="center">
+        <Box
+          pad={{
+            left: size === 'small' ? 'small' : 'medium',
+            vertical: 'small',
+            right: size === 'small' ? 'none' : 'xsmall',
+          }}
+          direction="row"
+          fill="vertical"
+          align="center"
+          responsive={false}
+        >
           <Box
             background="dark-1"
             width="large"
@@ -57,10 +81,13 @@ class NavTop extends React.Component {
             )}
             {(!search || search.length === 0) && <Search />}
           </Box>
-          <Box pad={{ horizontal: 'medium', vertical: 'xsmall' }}>
-            <Button onClick={() => onClose()}>
+          <Box
+            pad={{ left: 'medium', vertical: 'xsmall' }}
+            flex={{ shrink: 0 }}
+          >
+            <StyledButtonIcon onClick={() => onClose()}>
               <Close color="white" size="large" />
-            </Button>
+            </StyledButtonIcon>
           </Box>
         </Box>
       </Top>
