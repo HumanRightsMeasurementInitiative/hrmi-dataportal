@@ -19,7 +19,7 @@ export default styled(Button)`
     outline-color: transparent;
     border-radius: 999999px;
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 5px 15px;
   }
 `;

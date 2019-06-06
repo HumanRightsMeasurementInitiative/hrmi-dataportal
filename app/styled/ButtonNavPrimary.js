@@ -11,7 +11,7 @@ export default styled(Button)`
   border-top: 1px solid;
   border-color: ${({ theme }) => theme.global.colors['light-4']};
   background-color: ${({ theme, active }) => active ? theme.global.colors['light-3'] : 'transparent' };
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     display: inline-block;
     height: 44px;
     padding: 5px 10px;

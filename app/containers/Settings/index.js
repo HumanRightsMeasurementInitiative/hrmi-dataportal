@@ -42,7 +42,8 @@ const Styled = styled.div`
   height: ${({ theme }) => theme.sizes.settings.heightCollapsed}px;
   background-color: ${({ theme }) => theme.global.colors.white};
   box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.15);
-  @media (min-width: ${props => props.theme.breakpoints.large}) {
+  z-index: 5;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     height: ${({ theme }) => theme.sizes.settings.height}px;
   }
 `;
@@ -55,15 +56,18 @@ const SettingsIconWrapInner = styled.div`
 const SettingsIconWrap = styled.div`
   position: absolute;
   right: 0;
-  left: 0;
   top: 0;
   bottom: 0;
   text-align: center;
-  display: table;
   width: 100%;
   height: 100%;
   background-color: ${({ theme }) => theme.global.colors['light-1']};
-  @media (min-width: ${props => props.theme.breakpoints.large}) {
+  display: none;
+  @media (min-width: 1024px) {
+    display: table;
+    width: 60px;
+  }
+  @media (min-width: 1228px) {
     width: 120px;
     left: auto;
   }
@@ -74,11 +78,11 @@ const SetScaleWrap = styled.div`
   width: 100%;
   text-align: center;
   bottom: 130%;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     text-align: left;
     left: ${({ theme }) => theme.global.edgeSize.medium};
   }
-  @media (min-width: ${props => props.theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     transform: translateY(20%);
     bottom: 100%;
   }
@@ -156,7 +160,10 @@ export function Settings({
                 direction="row"
                 height="90px"
                 width="full"
-                pad={{ left: size === 'xlarge' ? 'medium' : 'small' }}
+                pad={{
+                  left: isMinSize(size, 'xlarge') ? 'medium' : 'small',
+                  top: 'xsmall',
+                }}
                 align="start"
                 style={{ position: 'relative' }}
               >

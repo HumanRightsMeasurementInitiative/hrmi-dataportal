@@ -13,7 +13,6 @@ import { Box, Text } from 'grommet';
 import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 
 import getMetricDetails from 'utils/metric-details';
-// import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -23,6 +22,9 @@ import ScaleToggle from './ScaleToggle';
 
 const SetScaleWrap = styled.div`
   text-align: center;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    text-align: left;
+  }
 `;
 
 const showScaleInModal = ({ route }) => {
@@ -91,7 +93,7 @@ export function SettingsInner({
     <>
       {showScaleInModal({ route, match }) && inModal && (
         <SetScaleWrap>
-          <ScaleToggle />
+          <ScaleToggle inModal />
         </SetScaleWrap>
       )}
       {showDimensionKey({ route, match, inModal }) && <Key inModal={inModal} />}

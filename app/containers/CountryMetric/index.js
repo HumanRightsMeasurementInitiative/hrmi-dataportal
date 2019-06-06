@@ -85,7 +85,7 @@ const StyledContent = styled(Box)`
   position: relative;
   min-height: auto;
   padding: 0 ${({ theme }) => theme.global.edgeSize.small};
-  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 0 ${({ theme }) => theme.global.edgeSize.large};
   }
 `;
@@ -96,7 +96,7 @@ const Content = props => (
 
 const TitleWrap = styled(Box)`
   padding-top: ${({ theme }) => theme.global.edgeSize.small};
-  @media (min-width: ${({ theme }) => theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding-top: 0;
   }
 `;

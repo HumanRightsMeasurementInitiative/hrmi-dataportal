@@ -20,8 +20,7 @@ export default styled(Button)`
     background-color: ${({ theme }) => theme.global.colors['light-5']};
     outline-color: transparent;
   }
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 1px 10px;
   }
 `;

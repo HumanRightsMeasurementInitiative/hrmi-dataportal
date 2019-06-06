@@ -3,7 +3,7 @@ import Button from './Button';
 // prettier-ignore
 export default styled(Button)`
   display: block;
-  @media (min-width: ${props => props.theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     display: inline-block;
     height: 44px;
   }

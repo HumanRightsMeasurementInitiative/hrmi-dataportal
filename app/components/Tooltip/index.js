@@ -25,15 +25,16 @@ const StyledDrop = styled(Drop)`
   }
 `;
 
-const renderContent = (maxWidth, component, text, onClose) => (
+const renderContent = (maxWidth, component, text, onClose, inModal) => (
   <Box
-    pad={{ vertical: 'xsmall', horizontal: 'small' }}
+    pad={{ vertical: 'small', horizontal: 'small' }}
     background="dark-1"
     style={{ maxWidth }}
     onClick={evt => {
       if (evt) evt.preventDefault();
       if (evt) evt.stopPropagation();
     }}
+    align={inModal ? 'center' : 'start'}
   >
     {onClose && (
       <Button
@@ -113,13 +114,18 @@ function Tooltip({
               <Layer
                 position="center"
                 elevation="small"
-                onClickOutside={() => setOpen(false)}
                 responsive={false}
                 onEsc={() => setOpen(false)}
                 full="horizontal"
                 animate={false}
               >
-                {renderContent('100%', component, text, () => setOpen(false))}
+                {renderContent(
+                  '100%',
+                  component,
+                  text,
+                  () => setOpen(false),
+                  true,
+                )}
               </Layer>
             )}
           </>

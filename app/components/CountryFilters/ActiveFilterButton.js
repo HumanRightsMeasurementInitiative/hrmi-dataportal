@@ -7,16 +7,15 @@ import { FormClose } from 'grommet-icons';
 import { truncateText } from 'utils/string';
 import Button from 'styled/Button';
 
-// prettier-ignore
 const StyledButton = styled(Button)`
   border-radius: 99999px;
   background-color: ${({ theme }) => theme.global.colors.highlight};
   color: ${({ theme }) => theme.global.colors.dark};
-  padding: 1px 6px;
+  padding: 3px 3px 3px 8px;
   font-weight: 600;
   border: 1px solid;
   border-color: transparent;
-  font-size: ${({ theme }) => theme.text.small.size};
+  font-size: ${({ theme }) => theme.text.xsmall.size};
   margin-top: ${({ theme }) => theme.global.edgeSize.xxsmall};
   &:hover {
     background-color: ${({ theme }) => theme.global.colors.white};
@@ -30,7 +29,7 @@ const StyledButton = styled(Button)`
     color: ${({ theme }) => theme.global.colors.dark};
     border-color: ${({ theme }) => theme.global.colors.highlight2};
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     margin-top: 0;
     margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
     padding: 4px 8px 4px 16px;
@@ -50,7 +49,10 @@ const ActiveFilterButton = ({ label, onRemove }) => (
             {truncateText(label, size === 'small' ? 6 : 10)}
           </StyledText>
           <IconWrap round background="white">
-            <FormClose color="dark" size="large" />
+            <FormClose
+              color="dark"
+              size={size === 'small' ? 'medium' : 'large'}
+            />
           </IconWrap>
         </Box>
       </StyledButton>

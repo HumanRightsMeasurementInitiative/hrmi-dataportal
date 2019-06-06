@@ -45,9 +45,9 @@ export default defineMessages({
       defaultMessage: 'Agree & download',
     },
     downloadURL: {
-      id: `${scope}.download.attributionURL`,
+      id: `${scope}.download.downloadURL`,
       defaultMessage:
-        '//hrmi-dataportal-data.unfolddata.com/data/hrmi-data-download.zip',
+        '//data-store.humanrightsmeasurement.org/data/hrmi-data-download.zip',
     },
   },
   countries: {

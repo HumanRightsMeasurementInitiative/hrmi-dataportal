@@ -5,11 +5,11 @@ import { Box } from 'grommet';
 const Styled = styled(Box)`
   margin: 0 auto;
   width: 100%;
-  max-width: ${({ theme }) => theme.maxWidth || '1600px'};
+  max-width: ${({ theme, maxWidth }) => maxWidth || theme.maxWidth || '1600px'};
   position: relative;
   min-height: auto;
   padding: 0 ${({ theme }) => theme.global.edgeSize.small};
-  @media (min-width: ${props => props.theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 0 ${({ theme }) => theme.global.edgeSize.large};
   }
 `;

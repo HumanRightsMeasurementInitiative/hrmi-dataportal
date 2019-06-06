@@ -11,7 +11,9 @@ import { isMinSize } from 'utils/responsive';
 import rootMessages from 'messages';
 import Accordion from './Accordion';
 import DimensionPanel from './DimensionPanel';
+import DimensionPanelTop from './DimensionPanelTop';
 import RightPanel from './RightPanel';
+import RightPanelTop from './RightPanelTop';
 import IndicatorPanel from './IndicatorPanel';
 
 const Styled = styled(Box)``;
@@ -42,6 +44,15 @@ function ESRAccordion({
             <Accordion
               buttonText={`${rights.length} rights`}
               level={1}
+              top={
+                <DimensionPanelTop
+                  dimension={dimension}
+                  onMetricClick={onMetricClick}
+                  standard={standard}
+                  benchmark={benchmark}
+                  hasAtRisk={hasAtRisk}
+                />
+              }
               head={
                 <DimensionPanel
                   dimension={dimension}
@@ -67,6 +78,15 @@ function ESRAccordion({
                               ),
                             )}`}
                             level={2}
+                            top={
+                              <RightPanelTop
+                                right={right}
+                                benchmark={benchmark}
+                                onMetricClick={onMetricClick}
+                                standard={standard}
+                                hasAtRisk={hasAtRisk}
+                              />
+                            }
                             head={
                               <RightPanel
                                 right={right}

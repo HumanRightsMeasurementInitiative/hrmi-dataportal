@@ -91,11 +91,12 @@ function SettingsToggle({
         <Box
           pad={
             inModal
-              ? { vertical: 'medium' }
+              ? { vertical: 'small' }
               : { left: size === 'xlarge' ? 'large' : 'medium' }
           }
           direction="column"
           flex={{ shrink: 0 }}
+          responsive={false}
         >
           <Box direction="row" align="center">
             <Box pad={{ vertical: 'small' }} direction="row">

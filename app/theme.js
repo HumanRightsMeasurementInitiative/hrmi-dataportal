@@ -73,6 +73,13 @@ const theme = {
     xlarge: `${BREAKPOINTS.xlarge.min}px`, // min
     xxlarge: `${BREAKPOINTS.xxlarge.min}px`, // min
   },
+  breakpointsMin: {
+    small: `${BREAKPOINTS.small.max + 1}px`, // max
+    medium: `${BREAKPOINTS.medium.min + 1}px`, // min
+    large: `${BREAKPOINTS.large.min + 1}px`, // min
+    xlarge: `${BREAKPOINTS.xlarge.min + 1}px`, // min
+    xxlarge: `${BREAKPOINTS.xxlarge.min + 1}px`, // min
+  },
   icon: {
     size: {
       small: '12px',
@@ -161,6 +168,10 @@ const theme = {
           height: '28px',
         },
         medium: {
+          size: '30px',
+          height: '36px',
+        },
+        large: {
           size: '42px',
           height: '48px',
         },
@@ -171,6 +182,10 @@ const theme = {
           height: '24px',
         },
         medium: {
+          size: '24px',
+          height: '30px',
+        },
+        large: {
           size: '30px',
           height: '36px',
         },
@@ -181,6 +196,10 @@ const theme = {
           height: '22px',
         },
         medium: {
+          size: '21px',
+          height: '25px',
+        },
+        large: {
           size: '24px',
           height: '30px',
         },

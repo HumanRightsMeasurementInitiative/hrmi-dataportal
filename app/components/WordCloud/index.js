@@ -12,6 +12,7 @@ import { Heading, Text, Box, ResponsiveContext } from 'grommet';
 import { scaleLinear } from 'd3-scale';
 import Tooltip from 'components/Tooltip';
 import Source from 'components/Source';
+import Hint from 'styled/Hint';
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -85,9 +86,9 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
             />
           </StyledRightHeading>
           {data.scores.length === 0 && (
-            <Text>
+            <Hint italic>
               <FormattedMessage {...messages.noGroupData} />
-            </Text>
+            </Hint>
           )}
           <Words direction="column" align="center">
             {data.scores.length > 0 &&

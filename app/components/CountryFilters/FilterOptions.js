@@ -13,11 +13,10 @@ const Styled = styled.div`
 // prettier-ignore
 const GroupLabel = styled(Hint)`
   display: block;
-  padding-left: 5px;
+  padding-left: 10px;
   padding-top: 10px;
   padding-bottom: 2px;
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium }) {
     padding-left: 16px;
     padding-top: 15px;
     padding-bottom: 3px;
