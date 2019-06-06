@@ -51,46 +51,55 @@ function HowToReadLayer({ layer, theme, onClose }) {
   const { contxt, chart, data } = layer;
   return (
     <ResponsiveContext.Consumer>
-      {size => (
-        <Layer
-          onEsc={() => onClose()}
-          onClickOutside={() => onClose()}
-          modal={isMaxSize(size, 'medium')}
-          position="right"
-          full="vertical"
-        >
-          <Box
-            elevation="large"
-            width={`${getFloatingAsideWidth(size, theme, windowDimensions)}px`}
-            direction="column"
-            flex={{ shrink: 0 }}
-            pad="medium"
-            fill="vertical"
-            overflow="auto"
-            style={{ position: 'relative' }}
-            responsive={false}
+      {size => {
+        console.log(isMaxSize(size, 'medium'), size);
+        return (
+          <Layer
+            onEsc={() => onClose()}
+            onClickOutside={() => onClose()}
+            modal={isMaxSize(size, 'medium')}
+            position="right"
+            full="vertical"
           >
-            <Heading level={3}>
-              <FormattedMessage {...messages.label} />
-            </Heading>
-            <ButtonWrap>
-              <ButtonIcon onClick={() => onClose()}>
-                <CloseIcon size="xlarge" color="white" />
-              </ButtonIcon>
-            </ButtonWrap>
-            {chart === 'Diamonds' && data === 'd' && <HTROverviewDimensions />}
-            {chart === 'Diamonds' && data === 'r' && <HTROverviewRights />}
-            {chart === 'Summary' && data === 'd' && <HTRSummaryDimensions />}
-            {chart === 'Summary' && data === 'r' && <HTRSummaryRights />}
-            {chart === 'Bullet' && (
-              <HTRBulletCPR contxt={contxt} dimension={data} />
-            )}
-            {chart === 'Bar' && <HTRBarESR contxt={contxt} />}
-            {chart === 'Trend' && data === 'esr' && <HTRTrendESR />}
-            {chart === 'Trend' && data === 'cpr' && <HTRTrendCPR />}
-          </Box>
-        </Layer>
-      )}
+            <Box
+              elevation="large"
+              width={
+                isMaxSize(size, 'medium')
+                  ? '100%'
+                  : `${getFloatingAsideWidth(size, theme, windowDimensions)}px`
+              }
+              direction="column"
+              flex={{ shrink: 0 }}
+              pad={isMaxSize(size, 'medium') ? 'small' : 'medium'}
+              fill="vertical"
+              overflow="auto"
+              style={{ position: 'relative' }}
+              responsive={false}
+            >
+              <Heading level={3}>
+                <FormattedMessage {...messages.label} />
+              </Heading>
+              <ButtonWrap>
+                <ButtonIcon onClick={() => onClose()}>
+                  <CloseIcon size="xlarge" color="white" />
+                </ButtonIcon>
+              </ButtonWrap>
+              {chart === 'Diamonds' && data === 'd' && (
+                <HTROverviewDimensions />
+              )}
+              {chart === 'Diamonds' && data === 'r' && <HTROverviewRights />}
+              {chart === 'Summary' && data === 'd' && <HTRSummaryDimensions />}
+              {chart === 'Summary' && data === 'r' && <HTRSummaryRights />}
+              {chart === 'Bullet' && (
+                <HTRBulletCPR contxt={contxt} dimension={data} />
+              )}
+              {chart === 'Bar' && <HTRBarESR contxt={contxt} />}
+              {chart === 'Trend' && data === 'esr' && <HTRTrendESR />}
+              {chart === 'Trend' && data === 'cpr' && <HTRTrendCPR />}
+            </Box>
+          </Layer>
+        );
+      }}
     </ResponsiveContext.Consumer>
   );
 }

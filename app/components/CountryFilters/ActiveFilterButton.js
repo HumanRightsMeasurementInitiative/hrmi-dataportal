@@ -29,7 +29,7 @@ const StyledButton = styled(Button)`
     color: ${({ theme }) => theme.global.colors.dark};
     border-color: ${({ theme }) => theme.global.colors.highlight2};
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     margin-top: 0;
     margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
     padding: 4px 8px 4px 16px;

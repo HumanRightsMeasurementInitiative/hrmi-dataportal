@@ -144,15 +144,12 @@ export function CountryFilters({
     <ResponsiveContext.Consumer>
       {size => (
         <Box
-          direction={isMinSize(size, 'medium') ? 'row' : 'column'}
-          width={isMinSize(size, 'medium') ? 'auto' : '50%'}
-          pad={
-            isMinSize(size, 'medium')
-              ? { vertical: 'small' }
-              : { vertical: 'medium' }
-          }
+          direction={isMinSize(size, 'large') ? 'row' : 'column'}
+          width={isMinSize(size, 'large') ? 'auto' : '50%'}
+          responsive={false}
+          pad={{ vertical: 'small' }}
           align="start"
-          margin={isMinSize(size, 'medium') ? 'none' : { top: '-6px' }}
+          margin={isMinSize(size, 'large') ? 'none' : { top: '-6px' }}
         >
           {setFilters.region && (
             <ActiveFilterButton
@@ -185,7 +182,9 @@ export function CountryFilters({
           {!setAllFilters && (
             <Box
               margin={
-                size === 'small' && setAnyFilters ? { top: 'small' } : 'none'
+                isMaxSize(size, 'medium') && setAnyFilters
+                  ? { top: 'small' }
+                  : 'none'
               }
               align="start"
             >
@@ -196,16 +195,16 @@ export function CountryFilters({
                 }}
                 ref={countryTarget}
                 style={{
-                  textAlign: isMinSize(size, 'medium') ? 'left' : 'center',
+                  textAlign: isMinSize(size, 'large') ? 'left' : 'center',
                 }}
               >
-                {isMinSize(size, 'medium') && (
+                {isMinSize(size, 'large') && (
                   <Box direction="row" align="center" gap="xsmall">
                     <Add />
                     <FormattedMessage {...messages.addFilter} />
                   </Box>
                 )}
-                {isMaxSize(size, 'small') && (
+                {isMaxSize(size, 'medium') && (
                   <FormattedMessage {...messages.addFilter.mobile} />
                 )}
               </FilterDropButton>
@@ -231,7 +230,7 @@ export function CountryFilters({
                   )}
                 </Drop>
               )}
-              {isMaxSize(size, 'medium') && filterOpen && (
+              {isMaxSize(size, 'large') && filterOpen && (
                 <Layer full animate={false}>
                   {renderContent(
                     getFilterOptions(

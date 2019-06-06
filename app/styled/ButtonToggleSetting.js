@@ -24,8 +24,7 @@ export default styled(Button)`
     active ? theme.global.colors['dark-2'] : theme.global.colors['light-5']};
     outline-color: transparent;
   }
-  @media (min-width: ${({ theme }) =>
-    theme.breakpoints ? theme.breakpoints.small : '769px'}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 3px 10px;
   }
 `;

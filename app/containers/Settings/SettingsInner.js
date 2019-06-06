@@ -23,6 +23,9 @@ import ScaleToggle from './ScaleToggle';
 
 const SetScaleWrap = styled.div`
   text-align: center;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    text-align: left;
+  }
 `;
 
 const showScaleInModal = ({ route }) => {
@@ -91,7 +94,7 @@ export function SettingsInner({
     <>
       {showScaleInModal({ route, match }) && inModal && (
         <SetScaleWrap>
-          <ScaleToggle />
+          <ScaleToggle inModal />
         </SetScaleWrap>
       )}
       {showDimensionKey({ route, match, inModal }) && <Key inModal={inModal} />}

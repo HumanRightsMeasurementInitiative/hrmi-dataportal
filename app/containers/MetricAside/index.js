@@ -55,7 +55,7 @@ const ButtonRelative = styled(Button)`
     background-color: ${({ theme }) => theme.global.colors.highlight};
     outline-color: transparent;
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 2px 10px;
     padding-left: ${({ previous }) => previous ? 3 : 10}px;
     padding-right: ${({ previous }) => previous ? 10 : 3}px;

@@ -35,7 +35,7 @@ export default styled.button`
     box-shadow: none;
     border-radius: 0;
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     font-size: 16px;
     line-height: 20px;
     padding: 6px 12px;

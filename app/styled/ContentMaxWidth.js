@@ -9,7 +9,7 @@ const Styled = styled(Box)`
   position: relative;
   min-height: auto;
   padding: 0 ${({ theme }) => theme.global.edgeSize.small};
-  @media (min-width: ${props => props.theme.breakpoints.large}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 0 ${({ theme }) => theme.global.edgeSize.large};
   }
 `;

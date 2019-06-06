@@ -38,7 +38,12 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
         pad={{ horizontal: 'small', top: 'xsmall', bottom: 'medium' }}
         responsive={false}
       >
-        <Box flex style={{ position: 'relative' }}>
+        <Box
+          flex
+          style={{ position: 'relative' }}
+          margin={{ bottom: 'medium' }}
+          responsive={false}
+        >
           <BarBullet
             level={level}
             showLabels

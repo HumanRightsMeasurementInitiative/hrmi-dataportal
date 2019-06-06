@@ -16,7 +16,7 @@ const TextWrap = styled.div``;
 const StyledButtonText = styled(ButtonText)`
   font-size: 14px;
   line-height: 18px;
-  @media (min-width: ${({ theme }) => theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     font-size: 16px;
     line-height: 21px;
   }

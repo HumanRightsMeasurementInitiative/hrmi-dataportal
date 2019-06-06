@@ -19,9 +19,14 @@ const StyledDimensionHeading = styled(DimensionHeading)`
   font-weight: normal;
 `;
 
+const Styled = styled(Box)`
+  position: relative;
+  z-index: 1;
+`;
+
 function DimensionTitle({ dimensionKey }) {
   return (
-    <Box direction="row" align="center" pad={{ vertical: 'xsmall' }}>
+    <Styled direction="row" align="center" pad={{ vertical: 'xsmall' }}>
       <StyledDimensionHeading>
         {dimensionKey && (
           <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />
@@ -29,7 +34,7 @@ function DimensionTitle({ dimensionKey }) {
         {!dimensionKey && <span>&nbsp;</span>}
       </StyledDimensionHeading>
       {dimensionKey && <DimensionTooltip dimensionKey={dimensionKey} />}
-    </Box>
+    </Styled>
   );
 }
 

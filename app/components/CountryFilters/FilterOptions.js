@@ -16,7 +16,7 @@ const GroupLabel = styled(Hint)`
   padding-left: 10px;
   padding-top: 10px;
   padding-bottom: 2px;
-  @media (min-width: ${({ theme }) => theme.breakpoints.medium }) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium }) {
     padding-left: 16px;
     padding-top: 15px;
     padding-bottom: 3px;

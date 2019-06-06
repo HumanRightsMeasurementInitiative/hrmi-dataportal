@@ -8,7 +8,7 @@ import { Box, DropButton, ResponsiveContext, Text } from 'grommet';
 import { FormDown, FormUp, Ascend, Descend } from 'grommet-icons';
 
 import ButtonIcon from 'styled/ButtonIcon';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import messages from './messages';
 import SortOptions from './SortOptions';
@@ -22,7 +22,7 @@ const StyledDropButton = styled(DropButton)`
 const StyledButtonIcon = styled(ButtonIcon)`
   width: 30px;
   height: 30px;
-  @media (min-width: ${({ theme }) => theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     width: 35px;
     height: 35px;
   }
@@ -52,7 +52,7 @@ export function CountrySort({
         return (
           <Box
             direction="row"
-            pad={size === 'small' ? { top: 'xsmall' } : 'none'}
+            pad={isMaxSize(size, 'medium') ? { top: 'xsmall' } : 'none'}
             align="center"
           >
             <StyledDropButton
@@ -60,7 +60,7 @@ export function CountrySort({
               reverse
               gap="xxsmall"
               margin={
-                isMinSize(size, 'medium')
+                isMinSize(size, 'large')
                   ? { horizontal: 'small' }
                   : { horizontal: 'hair' }
               }

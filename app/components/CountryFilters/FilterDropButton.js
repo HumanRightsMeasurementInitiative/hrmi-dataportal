@@ -19,7 +19,7 @@ export default styled(Button)`
     color: ${({ theme }) => theme.global.colors.dark};
     background-color: ${({ theme }) => theme.global.colors['light-4']};
   }
-  @media (min-width: ${({ theme }) => theme.breakpoints.medium}) {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 5px 16px 5px 12px;
     font-size: ${({ theme }) => theme.text.medium.size};
   }
