@@ -26,7 +26,12 @@ const Styled = styled(Box)`
 
 function DimensionTitle({ dimensionKey }) {
   return (
-    <Styled direction="row" align="center" pad={{ vertical: 'xsmall' }}>
+    <Styled
+      direction="row"
+      align="center"
+      pad={{ vertical: 'xsmall' }}
+      margin={{ right: 'auto' }}
+    >
       <StyledDimensionHeading>
         {dimensionKey && (
           <FormattedMessage {...rootMessages.dimensions[dimensionKey]} />

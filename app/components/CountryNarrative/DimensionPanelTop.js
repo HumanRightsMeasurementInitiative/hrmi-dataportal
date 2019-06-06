@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
-import Bar from 'components/Bars/Bar';
-import BarBullet from 'components/Bars/BarBullet';
-import AnnotateBetter from 'components/AnnotateBetterWorse';
+import { FormNext } from 'grommet-icons';
 
 import { COLUMNS } from 'containers/App/constants';
 
-const WrapAnnotateBetter = styled.div`
-  position: absolute;
-  left: ${({ theme }) => theme.global.edgeSize.medium};
-  right: ${({ theme }) => theme.global.edgeSize.large};
-  bottom: 0;
-  margin-top: -4px;
+import rootMessages from 'messages';
+
+import ButtonText from 'styled/ButtonText';
+import Hidden from 'styled/Hidden';
+
+import AccordionPanelHeading from './AccordionPanelHeading';
+import TabLinks from './TabLinks';
+
+const ButtonTextHeading = styled(ButtonText)`
+  text-decoration: none;
 `;
 
 const getDimensionValue = (data, benchmark) => {
@@ -49,7 +52,15 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-function DimensionPanel({ dimension, benchmark, standard }) {
+function DimensionPanelTop({
+  dimension,
+  benchmark,
+  standard,
+  onMetricClick,
+  hasAtRisk = true,
+  intl,
+}) {
+  const { key } = dimension;
   const data = {
     ...dimension,
     color: dimension.key,
@@ -63,35 +74,51 @@ function DimensionPanel({ dimension, benchmark, standard }) {
   };
   return (
     <Box
-      pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
-      fill="horizontal"
-      style={{ position: 'relative' }}
-      responsive={false}
+      direction="row"
+      align="center"
+      pad={{ vertical: 'none', horizontal: 'small' }}
     >
-      <WrapAnnotateBetter>
-        <AnnotateBetter />
-      </WrapAnnotateBetter>
-      {dimension.type === 'cpr' && (
-        <BarBullet data={data} showLabels showScore bandOnHover />
-      )}
-      {dimension.type === 'esr' && (
-        <Bar
-          data={data}
-          showLabels
-          showScore
-          annotateBenchmarkAbove
-          showBenchmark
-          showAllBenchmarkAnnotations
-          padAnnotateBenchmarkAbove={false}
-        />
-      )}
+      <ButtonTextHeading onClick={() => onMetricClick(key)}>
+        <AccordionPanelHeading level={4}>
+          <FormattedMessage {...rootMessages.dimensions[key]} />
+          <Hidden min="medium">
+            <FormNext size="large" />
+          </Hidden>
+        </AccordionPanelHeading>
+      </ButtonTextHeading>
+      <TabLinks
+        level={1}
+        onItemClick={onMetricClick}
+        items={[
+          {
+            key,
+            value: 0,
+            label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+            skip: !hasAtRisk,
+          },
+          {
+            key,
+            value: hasAtRisk ? 1 : 0,
+            label: intl.formatMessage(rootMessages.tabs.trend),
+            skip: !data.value,
+          },
+          {
+            key,
+            value: hasAtRisk ? 2 : 1,
+            label: intl.formatMessage(rootMessages.tabs.about),
+          },
+        ]}
+      />
     </Box>
   );
 }
-DimensionPanel.propTypes = {
+DimensionPanelTop.propTypes = {
   dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
   benchmark: PropTypes.object,
+  onMetricClick: PropTypes.func,
+  hasAtRisk: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
-export default DimensionPanel;
+export default injectIntl(DimensionPanelTop);

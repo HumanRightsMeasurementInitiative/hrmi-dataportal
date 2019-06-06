@@ -35,8 +35,12 @@ const GlobalStyle = createGlobalStyle`
   .hrmi-html p {
     margin: 1em 0;
     &:first-child {
-      font-size: 1.2em;
-      line-height: 1.4;
+      font-size: 1.1em;
+      line-height: 1.3;
+      @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+        font-size: 1.2em;
+        line-height: 1.4;
+      }
     }
   }
   .hrmi-html a {

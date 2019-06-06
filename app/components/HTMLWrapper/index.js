@@ -8,12 +8,12 @@ import setLinkTarget from 'utils/set-link-target';
  *
  * @return {Component} HTMLWrapper
  */
+
 const HTMLWrapper = ({ innerhtml }) => (
   // required for setting inner HTML (from markdown content)
   /* eslint-disable react/no-danger */
   <div
     className="hrmi-html"
-    style={{ maxWidth: '700px' }}
     dangerouslySetInnerHTML={{ __html: setLinkTarget(innerhtml) }}
   />
   /* eslint-enable react/no-danger */

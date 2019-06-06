@@ -230,7 +230,7 @@ export function CountryFilters({
                   )}
                 </Drop>
               )}
-              {isMaxSize(size, 'large') && filterOpen && (
+              {isMaxSize(size, 'medium') && filterOpen && (
                 <Layer full animate={false}>
                   {renderContent(
                     getFilterOptions(
