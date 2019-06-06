@@ -130,7 +130,7 @@ export function OverviewCountries({
                 <Box
                   direction="row"
                   wrap
-                  overflow={isMaxSize(size, 'medium') ? 'hidden' : 'auto'}
+                  overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '40px 0 0'}
                   margin={isMaxSize(size, 'medium') ? '0' : '-20px 0 0'}
                 >
