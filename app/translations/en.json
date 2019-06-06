@@ -16,6 +16,7 @@
   "hrmi.containers.LocaleToggle.language": "Language: ",
   "hrmi.containers.NotFoundPage.header": "Page not found.",
   "hrmi.containers.MetricAside.titleParent.rights": "What category score was this human rights score used for?",
+  "hrmi.containers.MetricAside.titleParent.subrights": "What human rights score was this score used for?",
   "hrmi.containers.MetricAside.titleParent.indicators": "What human rights score was this indicator used for?",
   "hrmi.containers.MetricAside.titleChildren.dimensions": "What human rights were used to calculate this category score?",
   "hrmi.containers.MetricAside.titleChildren.rights.esr": "What indicators were used to measure this human right?",

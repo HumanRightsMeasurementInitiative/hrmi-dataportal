@@ -32,13 +32,18 @@ import saga from 'containers/App/saga';
 import rootMessages from 'messages';
 import messages from './messages';
 
+const TextRelative = styled.span`
+  vertical-align: middle;
+`;
 // prettier-ignore
 const ButtonRelative = styled(Button)`
   display: block;
   border-radius: 3px;
   color: ${({ theme }) => theme.global.colors.text.light};
   background-color: ${({ theme }) => theme.global.colors['light-3']};
-  padding: 1px 4px;
+  padding: 2px 6px;
+  padding-left: ${({ previous }) => previous ? 2 : 6}px;
+  padding-right: ${({ previous }) => previous ? 6 : 2}px;
   margin: 0.5em 0;
   font-weight: 600;
   font-size: ${({ theme }) => theme.text.small.size};
@@ -133,6 +138,8 @@ export function MetricAside({
     questions = [...questions, 'indicators'];
   }
 
+  console.log(metric);
+
   return (
     <Box direction="column">
       <MetricAbout
@@ -148,7 +155,12 @@ export function MetricAside({
               level={5}
               margin={{ vertical: 'xsmall' }}
             >
-              <FormattedMessage {...messages.titleParent[metricType]} />
+              {typeof metric.aggregate === 'undefined' && (
+                <FormattedMessage {...messages.titleParent[metricType]} />
+              )}
+              {typeof metric.aggregate !== 'undefined' && (
+                <FormattedMessage {...messages.titleParent.subrights} />
+              )}
             </Heading>
             <ButtonRelative
               onClick={evt => {
@@ -158,11 +170,13 @@ export function MetricAside({
               previous
             >
               <FormPrevious size="large" />
-              <FormattedMessage
-                {...rootMessages[ancestors[ancestors.length - 1].type][
-                  ancestors[ancestors.length - 1].key
-                ]}
-              />
+              <TextRelative>
+                <FormattedMessage
+                  {...rootMessages[ancestors[ancestors.length - 1].type][
+                    ancestors[ancestors.length - 1].key
+                  ]}
+                />
+              </TextRelative>
             </ButtonRelative>
           </Pad>
         )}
@@ -193,7 +207,9 @@ export function MetricAside({
                       onSelectMetric(child.key);
                     }}
                   >
-                    <FormattedMessage {...rootMessages.rights[child.key]} />
+                    <TextRelative>
+                      <FormattedMessage {...rootMessages.rights[child.key]} />
+                    </TextRelative>
                     <FormNext size="large" />
                   </ButtonRelative>
                 ))}
@@ -219,9 +235,11 @@ export function MetricAside({
                             onSelectMetric(child.key);
                           }}
                         >
-                          <FormattedMessage
-                            {...rootMessages.indicators[child.key]}
-                          />
+                          <TextRelative>
+                            <FormattedMessage
+                              {...rootMessages.indicators[child.key]}
+                            />
+                          </TextRelative>
                           <FormNext size="large" />
                         </ButtonRelative>
                       ))}
