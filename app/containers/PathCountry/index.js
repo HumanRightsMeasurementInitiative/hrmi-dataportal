@@ -232,7 +232,9 @@ export function PathCountry({
                   auxIndicators={auxIndicators}
                   currentGDP={currentGDP}
                   onCategoryClick={onCategoryClick}
-                  showFAQs
+                  showFAQs={
+                    props && (props.activeTab === 0 || props.activeTab === 2)
+                  }
                 />
               ),
             },
@@ -248,6 +250,7 @@ PathCountry.propTypes = {
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
+  activeTab: PropTypes.number,
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
   onCloseMetricOverlay: PropTypes.func,
