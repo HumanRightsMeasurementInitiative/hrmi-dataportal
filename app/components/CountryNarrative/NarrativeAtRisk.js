@@ -97,6 +97,7 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
         elevation="small"
         margin={{ vertical: 'small' }}
         pad={{ bottom: 'small', top: 'xsmall' }}
+        fill="horizontal"
       >
         <Table>
           <TableHeader>
