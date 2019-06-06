@@ -20,8 +20,12 @@ const StyledDropButton = styled(DropButton)`
 `;
 
 const StyledButtonIcon = styled(ButtonIcon)`
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
+  @media (min-width: ${({ theme }) => theme.breakpoints.medium}) {
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 export function CountrySort({
@@ -38,21 +42,25 @@ export function CountrySort({
     <ResponsiveContext.Consumer>
       {size => {
         // prettier-ignore
-        const label = isMinSize(size, 'large')
+        const label = size !== 'small'
           ? `${intl.formatMessage(messages.sortBy)} ${intl.formatMessage(messages.sortOptions[sort])}`
           : (
-            <Text size="small">
+            <Text size="xsmall">
               {`${intl.formatMessage(messages.sortOptions[sort])}`}
             </Text>
           );
         return (
-          <Box direction="row" pad="xsmall" align="center">
+          <Box
+            direction="row"
+            pad={size === 'small' ? { top: 'xsmall' } : 'none'}
+            align="center"
+          >
             <StyledDropButton
               plain
               reverse
               gap="xxsmall"
               margin={
-                isMinSize(size, 'large')
+                isMinSize(size, 'medium')
                   ? { horizontal: 'small' }
                   : { horizontal: 'hair' }
               }
@@ -80,8 +88,12 @@ export function CountrySort({
               subtle
               onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
             >
-              {order === 'asc' && <Ascend />}
-              {order === 'desc' && <Descend />}
+              {order === 'asc' && (
+                <Ascend size={size === 'small' ? 'small' : 'large'} />
+              )}
+              {order === 'desc' && (
+                <Descend size={size === 'small' ? 'small' : 'large'} />
+              )}
             </StyledButtonIcon>
           </Box>
         );
