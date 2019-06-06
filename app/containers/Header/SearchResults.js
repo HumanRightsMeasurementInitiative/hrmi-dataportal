@@ -38,7 +38,7 @@ export function SearchResults({
       )}
       {hasCountries && (
         <div>
-          <Heading level="5" margin={{ bottom: 'xsmall' }}>
+          <Heading responsive={false} level="5" margin={{ bottom: 'xsmall' }}>
             <FormattedMessage {...messages.countries} />
           </Heading>
           <NavOptionGroup
@@ -52,7 +52,7 @@ export function SearchResults({
       )}
       {hasMetrics && (
         <div>
-          <Heading level="5" margin={{ bottom: 'xsmall' }}>
+          <Heading responsive={false} level="5" margin={{ bottom: 'xsmall' }}>
             <FormattedMessage {...messages.metrics} />
           </Heading>
           {dimensions.length > 0 && (

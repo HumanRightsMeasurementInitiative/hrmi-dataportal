@@ -36,7 +36,7 @@ const AppWrapper = styled.div`
 
 const Main = styled.main`
   min-height: 100%;
-  padding-top: 100px;
+  padding-top: ${({ theme }) => theme.sizes.header.height}px;
   padding-bottom: 80px;
   &:focus {
     outline: none;
@@ -69,6 +69,7 @@ export function App({ match }) {
       </Helmet>
       <ScrollToTop>
         <Header />
+        <HowToReadLayer />
         <Main>
           <Switch>
             <Route exact path={`/${locale}`} component={PathOverview} />
@@ -85,7 +86,6 @@ export function App({ match }) {
           </Switch>
         </Main>
         <Settings />
-        <HowToReadLayer />
       </ScrollToTop>
       <GlobalStyle />
     </AppWrapper>

@@ -17,7 +17,13 @@ import NavOptionGroup from './NavOptionGroup';
 
 import messages from './messages';
 
-export function NavCountry({ countries, onSelectCountry, intl, onClose }) {
+export function NavCountry({
+  countries,
+  onSelectCountry,
+  intl,
+  onClose,
+  size,
+}) {
   const [search, setSearch] = useState('');
 
   const sorted = countries && prepCountries(countries, search, intl);
@@ -29,6 +35,7 @@ export function NavCountry({ countries, onSelectCountry, intl, onClose }) {
         search={search}
         onSearch={s => setSearch(s)}
         placeholder={intl.formatMessage(messages.search.countrySearch)}
+        size={size}
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
@@ -56,6 +63,7 @@ NavCountry.propTypes = {
   // currentCountry: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   intl: intlShape.isRequired,
+  size: PropTypes.string,
 };
 
 const mapStateToProps = state => ({

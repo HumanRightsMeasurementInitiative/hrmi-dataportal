@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Box, InfiniteScroll } from 'grommet';
+import { Box, InfiniteScroll, ResponsiveContext } from 'grommet';
 
 import {
   getRegionSearch,
@@ -39,7 +39,7 @@ import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
-
+import { isMinSize, isMaxSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
 
 import rootMessages from 'messages';
@@ -69,6 +69,7 @@ export function OverviewCountries({
   onOrderChange,
   onCountryHover,
   dataReady,
+  hasAside,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -86,64 +87,83 @@ export function OverviewCountries({
     scores: scoresAllCountries,
   });
   return (
-    <MainColumn>
-      <Box direction="row">
-        <CountryFilters
-          regionFilterValue={regionFilterValue}
-          onRemoveFilter={onRemoveFilter}
-          onAddFilter={onAddFilter}
-          incomeFilterValue={incomeFilterValue}
-          assessedFilterValue={assessedFilterValue}
-          oecdFilterValue={oecdFilterValue}
-          filterGroups={['income', 'region', 'assessed', 'oecd']}
-        />
-        <CountrySort
-          sort={currentSort}
-          options={['name', 'assessment']}
-          order={currentSortOrder}
-          onSortSelect={onSortSelect}
-          onOrderToggle={onOrderChange}
-        />
-      </Box>
-      {sortedCountries && scoresAllCountries && (
-        <Box width="100%" pad={{ bottom: 'medium', top: 'small' }}>
-          {!dataReady && <LoadingIndicator />}
-          {dataReady && sortedCountries && sortedCountries.length === 0 && (
-            <Hint italic>
-              <FormattedMessage {...rootMessages.hints.noResults} />
-            </Hint>
-          )}
-          {dataReady && sortedCountries && sortedCountries.length > 0 && (
-            <Box direction="row" wrap>
-              <InfiniteScroll items={sortedCountries} step={30} show={0}>
-                {(c, index) => (
-                  <CountryPreview
-                    showAnnotation={index === 0}
-                    key={c.country_code}
-                    country={c}
-                    scale={scale}
-                    scores={getScoresForCountry(
-                      c.country_code,
-                      scoresAllCountries,
+    <ResponsiveContext.Consumer>
+      {size => (
+        <MainColumn hasAside={hasAside}>
+          <Box
+            direction="row"
+            justify="between"
+            align={isMinSize(size, 'medium') ? 'center' : 'start'}
+            margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
+          >
+            <CountryFilters
+              regionFilterValue={regionFilterValue}
+              onRemoveFilter={onRemoveFilter}
+              onAddFilter={onAddFilter}
+              incomeFilterValue={incomeFilterValue}
+              assessedFilterValue={assessedFilterValue}
+              oecdFilterValue={oecdFilterValue}
+              filterGroups={['income', 'region', 'assessed', 'oecd']}
+            />
+            <CountrySort
+              sort={currentSort}
+              options={['name', 'assessment']}
+              order={currentSortOrder}
+              onSortSelect={onSortSelect}
+              onOrderToggle={onOrderChange}
+            />
+          </Box>
+          {sortedCountries && scoresAllCountries && (
+            <Box
+              width="100%"
+              pad={{ bottom: 'medium', top: 'small' }}
+              align="center"
+            >
+              {!dataReady && <LoadingIndicator />}
+              {dataReady && sortedCountries && sortedCountries.length === 0 && (
+                <Hint italic>
+                  <FormattedMessage {...rootMessages.hints.noResults} />
+                </Hint>
+              )}
+              {dataReady && sortedCountries && sortedCountries.length > 0 && (
+                <Box
+                  direction="row"
+                  wrap
+                  overflow="hidden"
+                  pad={isMaxSize(size, 'medium') ? '40px 0 0' : '40px 0 0'}
+                  margin={isMaxSize(size, 'medium') ? '0' : '-20px 0 0'}
+                >
+                  <InfiniteScroll items={sortedCountries} step={30} show={0}>
+                    {(c, index) => (
+                      <CountryPreview
+                        showAnnotation={index === 0}
+                        key={c.country_code}
+                        country={c}
+                        scale={scale}
+                        scores={getScoresForCountry(
+                          c.country_code,
+                          scoresAllCountries,
+                        )}
+                        standard={standardDetails}
+                        otherStandard={otherStandardDetails}
+                        defaultStandard={isDefaultStandard(c, standardDetails)}
+                        benchmark={benchmarkDetails}
+                        onSelectCountry={() => onSelectCountry(c.country_code)}
+                        indicators={indicators}
+                        onCountryHover={code => onCountryHover(code)}
+                      />
                     )}
-                    standard={standardDetails}
-                    otherStandard={otherStandardDetails}
-                    defaultStandard={isDefaultStandard(c, standardDetails)}
-                    benchmark={benchmarkDetails}
-                    onSelectCountry={() => onSelectCountry(c.country_code)}
-                    indicators={indicators}
-                    onCountryHover={code => onCountryHover(code)}
-                  />
-                )}
-              </InfiniteScroll>
+                  </InfiniteScroll>
+                </Box>
+              )}
+              {dataReady && sortedCountries && sortedCountries.length > 0 && (
+                <Source />
+              )}
             </Box>
           )}
-          {dataReady && sortedCountries && sortedCountries.length > 0 && (
-            <Source />
-          )}
-        </Box>
+        </MainColumn>
       )}
-    </MainColumn>
+    </ResponsiveContext.Consumer>
   );
 }
 
@@ -169,6 +189,7 @@ OverviewCountries.propTypes = {
   onOrderChange: PropTypes.func,
   onCountryHover: PropTypes.func,
   dataReady: PropTypes.bool,
+  hasAside: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

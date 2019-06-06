@@ -45,67 +45,80 @@ function CountryAbout({
   intl,
   country,
   auxIndicators,
+  currentGDP,
   onCategoryClick,
   showFAQs,
 }) {
-  if (!auxIndicators || !country) return null;
+  if (!country) return null;
   const incomeCode =
     country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
+  const hasCurrentGDP =
+    currentGDP &&
+    currentGDP[COLUMNS.AUX.GDP_CURRENT] &&
+    currentGDP[COLUMNS.AUX.GDP_CURRENT] !== '';
+  const hasPopulation =
+    auxIndicators &&
+    auxIndicators[COLUMNS.AUX.POPULATION] &&
+    auxIndicators[COLUMNS.AUX.POPULATION] !== '';
   return (
     <Box
       direction="column"
-      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
+      pad={{ horizontal: 'medium', bottom: 'medium', top: 'small' }}
       style={{ maxWidth: '500px' }}
     >
-      <Heading level={3}>
+      <Heading responsive={false} level={3}>
         <FormattedMessage {...messages.title} />
       </Heading>
-      <Box direction="row" margin={{ bottom: 'xsmall' }}>
-        <Box width="50%">
-          <Label>
-            <FormattedMessage
-              {...messages.population}
-              values={{ year: auxIndicators.year }}
-            />
-          </Label>
+      {hasPopulation && (
+        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+          <Box width="50%">
+            <Label>
+              <FormattedMessage
+                {...messages.population}
+                values={{ year: auxIndicators.year }}
+              />
+            </Label>
+          </Box>
+          <Box width="50%">
+            <Text>
+              <FormattedMessage
+                {...messages.populationValue}
+                values={prepPopulationValue(
+                  auxIndicators[COLUMNS.AUX.POPULATION],
+                  intl,
+                )}
+              />
+            </Text>
+          </Box>
         </Box>
-        <Box width="50%">
-          <Text>
-            <FormattedMessage
-              {...messages.populationValue}
-              values={prepPopulationValue(
-                auxIndicators[COLUMNS.AUX.POPULATION],
-                intl,
-              )}
-            />
-          </Text>
+      )}
+      {hasCurrentGDP && (
+        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+          <Box width="50%">
+            <Label>
+              <FormattedMessage
+                {...messages.gdp}
+                values={{ year: currentGDP.year }}
+              />
+            </Label>
+          </Box>
+          <Box direction="column" width="50%">
+            <Text>
+              <FormattedMessage
+                {...messages.gdpValue}
+                values={{
+                  value: intl.formatNumber(
+                    roundValue(currentGDP[COLUMNS.AUX.GDP_CURRENT], 0),
+                  ),
+                }}
+              />
+            </Text>
+            <Text size="small">
+              <FormattedMessage {...messages.gdpHint} />
+            </Text>
+          </Box>
         </Box>
-      </Box>
-      <Box direction="row" margin={{ bottom: 'xsmall' }}>
-        <Box width="50%">
-          <Label>
-            <FormattedMessage
-              {...messages.gdp}
-              values={{ year: auxIndicators.year }}
-            />
-          </Label>
-        </Box>
-        <Box direction="column" width="50%">
-          <Text>
-            <FormattedMessage
-              {...messages.gdpValue}
-              values={{
-                value: intl.formatNumber(
-                  roundValue(auxIndicators[COLUMNS.AUX.GDP], 0),
-                ),
-              }}
-            />
-          </Text>
-          <Text size="small">
-            <FormattedMessage {...messages.gdpHint} />
-          </Text>
-        </Box>
-      </Box>
+      )}
       <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
@@ -174,6 +187,7 @@ CountryAbout.propTypes = {
   showFAQs: PropTypes.bool,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,
 };
 

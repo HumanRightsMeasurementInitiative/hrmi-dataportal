@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
+import { FormNext } from 'grommet-icons';
+
 import Bar from 'components/Bars/Bar';
 import { COLUMNS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
 
 import ButtonText from 'styled/ButtonText';
+import Hidden from 'styled/Hidden';
 
 import AccordionPanelHeading from './AccordionPanelHeading';
 import TabLinks from './TabLinks';
@@ -68,6 +71,9 @@ function IndicatorPanel({
         <ButtonTextHeading onClick={() => onMetricClick(indicator.key)}>
           <AccordionPanelHeading level={6}>
             <FormattedMessage {...rootMessages.indicators[indicator.key]} />
+            <Hidden min="medium">
+              <FormNext size="large" />
+            </Hidden>
           </AccordionPanelHeading>
         </ButtonTextHeading>
         <TabLinks
@@ -92,6 +98,7 @@ function IndicatorPanel({
         pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
         fill="horizontal"
         style={{ position: 'relative' }}
+        responsive={false}
       >
         <Bar level={3} data={data} showScore showLabels />
       </Box>

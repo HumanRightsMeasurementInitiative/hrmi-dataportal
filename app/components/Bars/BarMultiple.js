@@ -10,7 +10,7 @@ import styled from 'styled-components';
 
 import Bar from './Bar';
 import AnnotateBenchmark from './AnnotateBenchmark';
-import Wrapper from './styled/BarWrapper';
+import BarWrapper from './styled/BarWrapper';
 import MinLabel from './styled/MinLabel';
 import MaxLabel from './styled/MaxLabel';
 import WrapTooltip from './styled/WrapTooltip';
@@ -21,7 +21,7 @@ const BarWrapInner = styled.div`
   padding-bottom: ${PAD_BOTTOM}px;
 `;
 
-const Styled = styled(Wrapper)`
+const Wrapper = styled(BarWrapper)`
   height: ${({ ht }) => ht}px;
 `;
 
@@ -57,8 +57,9 @@ function BarMultiple({
     hi = heightIndividual - PAD_BOTTOM || HEIGHT;
     ht = (hi + PAD_BOTTOM) * barCount;
   }
+
   return (
-    <Styled ht={ht}>
+    <Wrapper ht={ht}>
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
       {data &&
         data.map((datum, index, list) => (
@@ -99,7 +100,7 @@ function BarMultiple({
         </MaxLabel>
       )}
       {tooltip && <WrapTooltip>{tooltip}</WrapTooltip>}
-    </Styled>
+    </Wrapper>
   );
 }
 

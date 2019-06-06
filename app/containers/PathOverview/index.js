@@ -93,11 +93,15 @@ export function PathOverview({
               title: intl.formatMessage(rootMessages.tabs.countries, {
                 count: filteredCountries ? `${filteredCountries.length} ` : '',
               }),
-              content: (
+              titleMobile: intl.formatMessage(
+                rootMessages.tabs.mobile.countries,
+              ),
+              content: props => (
                 <OverviewCountries
                   countries={filteredCountries}
                   scoresAllCountries={scoresAllCountries}
                   dataReady={dataReady}
+                  {...props}
                 />
               ),
               howToRead: {
@@ -109,12 +113,14 @@ export function PathOverview({
             {
               key: 'metrics',
               title: intl.formatMessage(rootMessages.tabs.metrics),
-              content: (
+              titleMobile: intl.formatMessage(rootMessages.tabs.mobile.metrics),
+              content: props => (
                 <OverviewMetrics
                   countries={filteredCountries}
                   scoresAllCountries={scoresAllCountries}
                   dataReady={dataReady}
                   activeCountry={activeCountry}
+                  {...props}
                 />
               ),
             },

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
+import { FormNext } from 'grommet-icons';
 import Bar from 'components/Bars/Bar';
 import BarBullet from 'components/Bars/BarBullet';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
@@ -12,6 +13,7 @@ import { COLUMNS } from 'containers/App/constants';
 import rootMessages from 'messages';
 
 import ButtonText from 'styled/ButtonText';
+import Hidden from 'styled/Hidden';
 
 import AccordionPanelHeading from './AccordionPanelHeading';
 import TabLinks from './TabLinks';
@@ -90,6 +92,9 @@ function DimensionPanel({
         <ButtonTextHeading onClick={() => onMetricClick(key)}>
           <AccordionPanelHeading level={4}>
             <FormattedMessage {...rootMessages.dimensions[key]} />
+            <Hidden min="medium">
+              <FormNext size="large" />
+            </Hidden>
           </AccordionPanelHeading>
         </ButtonTextHeading>
         <TabLinks
@@ -120,6 +125,7 @@ function DimensionPanel({
         pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
         fill="horizontal"
         style={{ position: 'relative' }}
+        responsive={false}
       >
         <WrapAnnotateBetter>
           <AnnotateBetter />
@@ -135,6 +141,7 @@ function DimensionPanel({
             annotateBenchmarkAbove
             showBenchmark
             showAllBenchmarkAnnotations
+            padAnnotateBenchmarkAbove={false}
           />
         )}
       </Box>

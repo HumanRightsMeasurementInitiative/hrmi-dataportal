@@ -1251,6 +1251,22 @@ export const getAuxIndicatorsForCountry = createSelector(
     data &&
     data.find(d => d.country_code === country && quasiEquals(d.year, year)),
 );
+export const getCountryCurrentGDP = createSelector(
+  (state, country) => country,
+  getAuxIndicators,
+  (country, data) => {
+    if (!data) return false;
+    const sortedCurrentGDP = data
+      .filter(d => d.country_code === country && d[COLUMNS.AUX.GDP_CURRENT])
+      .sort((a, b) =>
+        parseInt(a[COLUMNS.AUX.GDP_CURRENT], 10) >
+        parseInt(b[COLUMNS.AUX.GDP_CURRENT], 10)
+          ? 1
+          : -1,
+      );
+    return sortedCurrentGDP.length > 0 ? sortedCurrentGDP[0] : false;
+  },
+);
 export const getHowToRead = createSelector(
   getGlobal,
   global => global.howToRead,

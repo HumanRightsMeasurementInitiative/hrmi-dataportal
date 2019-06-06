@@ -8,7 +8,12 @@ import DimensionTooltip from 'containers/Settings/DimensionTooltip';
 import rootMessages from 'messages';
 
 const DimensionHeading = props => (
-  <Heading level={5} margin={{ vertical: 'none' }} {...props} />
+  <Heading
+    responsive={false}
+    level={5}
+    margin={{ vertical: 'none' }}
+    {...props}
+  />
 );
 const StyledDimensionHeading = styled(DimensionHeading)`
   font-weight: normal;

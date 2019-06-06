@@ -125,6 +125,24 @@ export default defineMessages({
       id: `${scope}.tabs.metrics`,
       defaultMessage: 'Explore by metric',
     },
+    mobile: {
+      countries: {
+        id: `${scope}.tabs.mobile.countries`,
+        defaultMessage: 'Explore countries',
+      },
+      metrics: {
+        id: `${scope}.tabs.mobile.metrics`,
+        defaultMessage: 'Explore metrics',
+      },
+      'people-at-risk': {
+        id: `${scope}.tabs.mobile.people-at-risk`,
+        defaultMessage: 'At risk',
+      },
+      trend: {
+        id: `${scope}.tabs.trend`,
+        defaultMessage: 'Trend',
+      },
+    },
     report: {
       id: `${scope}.tabs.report`,
       defaultMessage: 'Report',
