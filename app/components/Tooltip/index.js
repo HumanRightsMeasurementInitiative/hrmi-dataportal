@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Box, Drop, Button, ResponsiveContext, Layer } from 'grommet';
 import { CircleInformation, Close } from 'grommet-icons';
 import styled from 'styled-components';
-import { isMinSize, isMaxSize } from 'utils/responsive';
 
 const StyledDrop = styled(Drop)`
   margin: 0 0 13px;
@@ -71,7 +70,7 @@ function Tooltip({
   return (
     <ResponsiveContext.Consumer>
       {size => {
-        const openModal = large && isMaxSize(size, 'medium');
+        const openModal = large && size === 'small';
         return (
           <>
             <Button
@@ -86,14 +85,10 @@ function Tooltip({
                 if (evt) evt.stopPropagation();
                 setOpen(!open);
               }}
-              onMouseEnter={
-                isMinSize(size, 'medium') ? () => setOver(true) : null
-              }
-              onMouseLeave={
-                isMinSize(size, 'medium') ? () => setOver(false) : null
-              }
-              onFocus={isMinSize(size, 'medium') ? () => setOver(true) : null}
-              onBlur={isMinSize(size, 'medium') ? () => setOver(false) : null}
+              onMouseEnter={!openModal ? () => setOver(true) : null}
+              onMouseLeave={!openModal ? () => setOver(false) : null}
+              onFocus={!openModal ? () => setOver(true) : null}
+              onBlur={!openModal ? () => setOver(false) : null}
               margin={margin || { horizontal: 'xsmall' }}
               style={{
                 WebkitAppearance: 'none',
