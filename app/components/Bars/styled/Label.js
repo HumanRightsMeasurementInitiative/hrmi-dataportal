@@ -8,4 +8,6 @@ export default styled.div`
   display: table;
   text-align: center;
   color: ${({ theme }) => theme.global.colors['dark-3']};
+  width: auto;
+  white-space: nowrap;
 `;
