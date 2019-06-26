@@ -1,24 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import styled from 'styled-components';
 import { Box } from 'grommet';
-import { FormNext } from 'grommet-icons';
 
 import Bar from 'components/Bars/Bar';
 import { COLUMNS } from 'containers/App/constants';
-
-import rootMessages from 'messages';
-
-import ButtonText from 'styled/ButtonText';
-import Hidden from 'styled/Hidden';
-
-import AccordionPanelHeading from './AccordionPanelHeading';
-import TabLinks from './TabLinks';
-
-const ButtonTextHeading = styled(ButtonText)`
-  text-decoration: none;
-`;
 
 const getDimensionValue = (data, benchmark) => {
   if (data.score) {
@@ -45,13 +30,7 @@ const getDimensionRefs = (score, benchmark) => {
   }
   return false;
 };
-function IndicatorPanel({
-  indicator,
-  benchmark,
-  standard,
-  onMetricClick,
-  intl,
-}) {
+function IndicatorPanel({ indicator, benchmark, standard }) {
   const data = {
     ...indicator,
     color: 'esr',
@@ -62,46 +41,13 @@ function IndicatorPanel({
     unit: '%',
   };
   return (
-    <Box pad={{ vertical: 'xxsmall', horizontal: 'none' }} fill="horizontal">
-      <Box
-        direction="row"
-        align="center"
-        pad={{ vertical: 'none', horizontal: 'small' }}
-      >
-        <ButtonTextHeading onClick={() => onMetricClick(indicator.key)}>
-          <AccordionPanelHeading level={6}>
-            <FormattedMessage {...rootMessages.indicators[indicator.key]} />
-            <Hidden min="medium">
-              <FormNext size="large" />
-            </Hidden>
-          </AccordionPanelHeading>
-        </ButtonTextHeading>
-        <TabLinks
-          level={3}
-          onItemClick={onMetricClick}
-          items={[
-            {
-              key: indicator.key,
-              value: 0,
-              label: intl.formatMessage(rootMessages.tabs.trend),
-              skip: !data.value,
-            },
-            {
-              key: indicator.key,
-              value: 1,
-              label: intl.formatMessage(rootMessages.tabs.about),
-            },
-          ]}
-        />
-      </Box>
-      <Box
-        pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
-        fill="horizontal"
-        style={{ position: 'relative' }}
-        responsive={false}
-      >
-        <Bar level={3} data={data} showScore showLabels />
-      </Box>
+    <Box
+      pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}
+      fill="horizontal"
+      style={{ position: 'relative' }}
+      responsive={false}
+    >
+      <Bar level={3} data={data} showScore showLabels />
     </Box>
   );
 }
@@ -109,8 +55,6 @@ IndicatorPanel.propTypes = {
   indicator: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   benchmark: PropTypes.object,
   standard: PropTypes.string,
-  onMetricClick: PropTypes.func,
-  intl: intlShape.isRequired,
 };
 
-export default injectIntl(IndicatorPanel);
+export default IndicatorPanel;
