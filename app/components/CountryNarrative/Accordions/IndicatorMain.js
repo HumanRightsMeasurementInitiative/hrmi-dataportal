@@ -30,7 +30,7 @@ const getDimensionRefs = (score, benchmark) => {
   }
   return false;
 };
-function IndicatorPanel({ indicator, benchmark, standard }) {
+function IndicatorMain({ indicator, benchmark, standard }) {
   const data = {
     ...indicator,
     color: 'esr',
@@ -51,10 +51,10 @@ function IndicatorPanel({ indicator, benchmark, standard }) {
     </Box>
   );
 }
-IndicatorPanel.propTypes = {
+IndicatorMain.propTypes = {
   indicator: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   benchmark: PropTypes.object,
   standard: PropTypes.string,
 };
 
-export default IndicatorPanel;
+export default IndicatorMain;

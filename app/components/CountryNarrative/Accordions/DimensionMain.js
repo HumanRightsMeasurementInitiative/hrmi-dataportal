@@ -49,7 +49,7 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-function DimensionPanel({ dimension, benchmark, standard }) {
+function DimensionMain({ dimension, benchmark, standard }) {
   const data = {
     ...dimension,
     color: dimension.key,
@@ -88,10 +88,10 @@ function DimensionPanel({ dimension, benchmark, standard }) {
     </Box>
   );
 }
-DimensionPanel.propTypes = {
+DimensionMain.propTypes = {
   dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
   benchmark: PropTypes.object,
 };
 
-export default DimensionPanel;
+export default DimensionMain;

@@ -12,7 +12,7 @@ import rootMessages from 'messages';
 import ButtonText from 'styled/ButtonText';
 import Hidden from 'styled/Hidden';
 
-import AccordionPanelHeading from './AccordionPanelHeading';
+import PanelHeading from './PanelHeading';
 import TabLinks from './TabLinks';
 
 const ButtonTextHeading = styled(ButtonText)`
@@ -20,7 +20,10 @@ const ButtonTextHeading = styled(ButtonText)`
 `;
 
 const getDimensionValue = (data, benchmark) => {
-  if (data.score) {
+  if (data.type === 'cpr' && data.score) {
+    return parseFloat(data.score[COLUMNS.CPR.MEAN]);
+  }
+  if (data.type === 'esr' && data.score) {
     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
     return parseFloat(data.score[col]);
   }
@@ -32,7 +35,7 @@ const getDimensionRefs = (score, benchmark) => {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refIndicatorColumn;
+    const col = benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
@@ -44,21 +47,30 @@ const getDimensionRefs = (score, benchmark) => {
   }
   return false;
 };
-function IndicatorPanelTop({
-  indicator,
+const getBand = score => ({
+  lo: score && parseFloat(score[COLUMNS.CPR.LO]),
+  hi: score && parseFloat(score[COLUMNS.CPR.HI]),
+});
+
+function DimensionTop({
+  dimension,
   benchmark,
   standard,
   onMetricClick,
+  hasAtRisk = true,
   intl,
 }) {
+  const { key } = dimension;
   const data = {
-    ...indicator,
-    color: 'esr',
-    value: getDimensionValue(indicator, benchmark),
-    refValues: getDimensionRefs(indicator.score, benchmark),
-    maxValue: '100',
-    stripes: standard === 'hi',
-    unit: '%',
+    ...dimension,
+    color: dimension.key,
+    value: getDimensionValue(dimension, benchmark),
+    band: dimension.type === 'cpr' && getBand(dimension.score),
+    refValues:
+      dimension.type === 'esr' && getDimensionRefs(dimension.score, benchmark),
+    maxValue: dimension.type === 'esr' ? '100' : '10',
+    stripes: dimension.type === 'esr' && standard === 'hi',
+    unit: dimension.type === 'esr' ? '%' : '',
   };
   return (
     <Box
@@ -66,27 +78,33 @@ function IndicatorPanelTop({
       align="center"
       pad={{ vertical: 'none', horizontal: 'small' }}
     >
-      <ButtonTextHeading onClick={() => onMetricClick(indicator.key)}>
-        <AccordionPanelHeading level={6}>
-          <FormattedMessage {...rootMessages.indicators[indicator.key]} />
+      <ButtonTextHeading onClick={() => onMetricClick(key)}>
+        <PanelHeading level={4}>
+          <FormattedMessage {...rootMessages.dimensions[key]} />
           <Hidden min="medium">
             <FormNext size="large" />
           </Hidden>
-        </AccordionPanelHeading>
+        </PanelHeading>
       </ButtonTextHeading>
       <TabLinks
-        level={3}
+        level={1}
         onItemClick={onMetricClick}
         items={[
           {
-            key: indicator.key,
+            key,
             value: 0,
+            label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+            skip: !hasAtRisk,
+          },
+          {
+            key,
+            value: hasAtRisk ? 1 : 0,
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
           },
           {
-            key: indicator.key,
-            value: 1,
+            key,
+            value: hasAtRisk ? 2 : 1,
             label: intl.formatMessage(rootMessages.tabs.about),
           },
         ]}
@@ -94,12 +112,13 @@ function IndicatorPanelTop({
     </Box>
   );
 }
-IndicatorPanelTop.propTypes = {
-  indicator: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  benchmark: PropTypes.object,
+DimensionTop.propTypes = {
+  dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
+  benchmark: PropTypes.object,
   onMetricClick: PropTypes.func,
+  hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(IndicatorPanelTop);
+export default injectIntl(DimensionTop);
