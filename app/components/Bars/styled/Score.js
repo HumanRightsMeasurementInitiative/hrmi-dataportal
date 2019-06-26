@@ -35,6 +35,8 @@ const Styled = styled.div`
   display: table;
   z-index: ${({ rotate }) => (rotate ? 10 : 0)};
   transform-origin: bottom left;
+  width: auto;
+  white-space: nowrap;
 `;
 
 const getSize = level => {

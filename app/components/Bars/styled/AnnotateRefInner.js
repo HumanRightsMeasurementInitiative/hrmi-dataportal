@@ -23,4 +23,6 @@ export default styled.div`
   font-size: 12px;
   line-height: 12px;
   color: ${({ theme }) => theme.global.colors['dark-3']};
+  width: auto;
+  white-space: nowrap;
 `;
