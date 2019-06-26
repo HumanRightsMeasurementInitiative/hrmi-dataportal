@@ -69,6 +69,20 @@ const StyledRightHeadingAbove = styled(Text)`
 `;
 
 export function WordCloud({ data, subright, dimension, intl, border = true }) {
+  const scores =
+    data.scores &&
+    data.scores.length > 0 &&
+    data.scores.sort((a, b) => {
+      if (a.proportion === b.proportion) {
+        return intl.formatMessage(
+          rootMessages['people-at-risk'][a.people_code],
+        ) > intl.formatMessage(rootMessages['people-at-risk'][b.people_code])
+          ? 1
+          : -1;
+      }
+      return a.proportion > b.proportion ? -1 : 1;
+    });
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -85,44 +99,42 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
               {...rootMessages.rights[data.subright || data.right]}
             />
           </StyledRightHeading>
-          {data.scores.length === 0 && (
+          {!scores && (
             <Hint italic>
               <FormattedMessage {...messages.noGroupData} />
             </Hint>
           )}
           <Words direction="column" align="center">
-            {data.scores.length > 0 &&
-              data.scores
-                .sort((a, b) => (a.proportion > b.proportion ? -1 : 1))
-                .map((s, index) => (
-                  <Box direction="row" align="center" key={s.people_code}>
-                    <Tag
-                      key={s.people_code}
-                      weight={scaleFontWeight(s.proportion)}
-                      opacity={scaleOpacity(s.proportion)}
-                      size={
-                        size === 'small'
-                          ? scaleFontMobile(s.proportion) * MAX_SIZE_MOBILE
-                          : scaleFont(s.proportion) * MAX_SIZE
-                      }
-                      color={`${dimension}Cloud`}
-                      direction="row"
-                      align="center"
-                    >
-                      {`${intl.formatMessage(
-                        rootMessages['people-at-risk'][s.people_code],
-                      )} (${Math.round(100 * s.proportion)}%)`}
-                    </Tag>
-                    {index === 0 && (
-                      <Tooltip
-                        iconSize="large"
-                        text={intl.formatMessage(messages.tooltip)}
-                      />
-                    )}
-                  </Box>
-                ))}
+            {scores &&
+              scores.map((s, index) => (
+                <Box direction="row" align="center" key={s.people_code}>
+                  <Tag
+                    key={s.people_code}
+                    weight={scaleFontWeight(s.proportion)}
+                    opacity={scaleOpacity(s.proportion)}
+                    size={
+                      size === 'small'
+                        ? scaleFontMobile(s.proportion) * MAX_SIZE_MOBILE
+                        : scaleFont(s.proportion) * MAX_SIZE
+                    }
+                    color={`${dimension}Cloud`}
+                    direction="row"
+                    align="center"
+                  >
+                    {`${intl.formatMessage(
+                      rootMessages['people-at-risk'][s.people_code],
+                    )} (${Math.round(100 * s.proportion)}%)`}
+                  </Tag>
+                  {index === 0 && (
+                    <Tooltip
+                      iconSize="large"
+                      text={intl.formatMessage(messages.tooltip)}
+                    />
+                  )}
+                </Box>
+              ))}
           </Words>
-          {data.scores.length > 0 && <Source center />}
+          {scores && <Source center />}
         </Styled>
       )}
     </ResponsiveContext.Consumer>
