@@ -42,6 +42,8 @@ const PlotHint = styled.div`
   border-radius: ${({ theme }) => theme.global.edgeSize.xxsmall};
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
   font-weight: 700;
+  width: auto;
+  white-space: nowrap;
 `;
 
 const isEven = n => n % 2 === 0;
