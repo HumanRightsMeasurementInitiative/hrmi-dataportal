@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Box, ResponsiveContext } from 'grommet';
 import { isMinSize } from 'utils/responsive';
 
-function PanelSimple({ head, top, level }) {
+function PanelSimple({ main, top, level }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -18,7 +18,7 @@ function PanelSimple({ head, top, level }) {
             {top}
           </Box>
           <Box direction="row">
-            {head}
+            {main}
             <Box
               width={isMinSize(size, 'medium') ? '200px' : '50px'}
               flex={{ shrink: 0 }}
@@ -32,7 +32,7 @@ function PanelSimple({ head, top, level }) {
 
 PanelSimple.propTypes = {
   top: PropTypes.node,
-  head: PropTypes.node,
+  main: PropTypes.node,
   level: PropTypes.number,
 };
 

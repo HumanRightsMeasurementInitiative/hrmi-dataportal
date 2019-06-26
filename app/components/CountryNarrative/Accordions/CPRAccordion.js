@@ -10,12 +10,12 @@ import rootMessages from 'messages';
 
 import { lowerCase } from 'utils/string';
 
-import Accordion from './Accordion';
+import PanelAccordion from './PanelAccordion';
 import PanelSimple from './PanelSimple';
-import DimensionPanel from './DimensionPanel';
-import DimensionPanelTop from './DimensionPanelTop';
-import RightPanel from './RightPanel';
-import RightPanelTop from './RightPanelTop';
+import DimensionMain from './DimensionMain';
+import DimensionTop from './DimensionTop';
+import RightMain from './RightMain';
+import RightTop from './RightTop';
 
 const Styled = styled(Box)``;
 
@@ -33,20 +33,20 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
         />
       </Box>
       <Box elevation="small" margin={{ top: 'xsmall' }}>
-        <Accordion
+        <PanelAccordion
           buttonText={`${parentRights.length} ${lowerCase(
             intl.formatMessage(rootMessages.metricTypes.rights),
           )}`}
           level={1}
           top={
-            <DimensionPanelTop
+            <DimensionTop
               dimension={dimension}
               onMetricClick={onMetricClick}
               hasAtRisk
             />
           }
-          head={
-            <DimensionPanel
+          main={
+            <DimensionMain
               dimension={dimension}
               onMetricClick={onMetricClick}
               hasAtRisk
@@ -64,14 +64,14 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                       <PanelSimple
                         level={2}
                         top={
-                          <RightPanelTop
+                          <RightTop
                             right={right}
                             onMetricClick={onMetricClick}
                             hasAtRisk
                           />
                         }
-                        head={
-                          <RightPanel
+                        main={
+                          <RightMain
                             right={right}
                             onMetricClick={onMetricClick}
                             hasAtRisk
@@ -83,7 +83,7 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
 
                   return (
                     <Box border="top" key={right.key}>
-                      <Accordion
+                      <PanelAccordion
                         buttonText={`${rightSubrights.length} ${lowerCase(
                           intl.formatMessage(
                             rootMessages.metricTypes.subrights,
@@ -91,13 +91,13 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                         )}`}
                         level={2}
                         top={
-                          <RightPanelTop
+                          <RightTop
                             right={right}
                             onMetricClick={onMetricClick}
                           />
                         }
-                        head={
-                          <RightPanel
+                        main={
+                          <RightMain
                             right={right}
                             onMetricClick={onMetricClick}
                           />
@@ -109,15 +109,15 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                                 level={3}
                                 key={subright.key}
                                 top={
-                                  <RightPanelTop
+                                  <RightTop
                                     right={subright}
                                     onMetricClick={onMetricClick}
                                     hasAtRisk
                                     isSubright
                                   />
                                 }
-                                head={
-                                  <RightPanel
+                                main={
+                                  <RightMain
                                     right={subright}
                                     onMetricClick={onMetricClick}
                                     hasAtRisk

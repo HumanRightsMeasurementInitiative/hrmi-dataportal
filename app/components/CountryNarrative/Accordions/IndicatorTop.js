@@ -12,7 +12,7 @@ import rootMessages from 'messages';
 import ButtonText from 'styled/ButtonText';
 import Hidden from 'styled/Hidden';
 
-import AccordionPanelHeading from './AccordionPanelHeading';
+import PanelHeading from './PanelHeading';
 import TabLinks from './TabLinks';
 
 const ButtonTextHeading = styled(ButtonText)`
@@ -20,10 +20,7 @@ const ButtonTextHeading = styled(ButtonText)`
 `;
 
 const getDimensionValue = (data, benchmark) => {
-  if (data.type === 'cpr' && data.score) {
-    return parseFloat(data.score[COLUMNS.CPR.MEAN]);
-  }
-  if (data.type === 'esr' && data.score) {
+  if (data.score) {
     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
     return parseFloat(data.score[col]);
   }
@@ -35,7 +32,7 @@ const getDimensionRefs = (score, benchmark) => {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refColumn;
+    const col = benchmark.refIndicatorColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
@@ -47,30 +44,15 @@ const getDimensionRefs = (score, benchmark) => {
   }
   return false;
 };
-const getBand = score => ({
-  lo: score && parseFloat(score[COLUMNS.CPR.LO]),
-  hi: score && parseFloat(score[COLUMNS.CPR.HI]),
-});
-
-function DimensionPanelTop({
-  dimension,
-  benchmark,
-  standard,
-  onMetricClick,
-  hasAtRisk = true,
-  intl,
-}) {
-  const { key } = dimension;
+function IndicatorTop({ indicator, benchmark, standard, onMetricClick, intl }) {
   const data = {
-    ...dimension,
-    color: dimension.key,
-    value: getDimensionValue(dimension, benchmark),
-    band: dimension.type === 'cpr' && getBand(dimension.score),
-    refValues:
-      dimension.type === 'esr' && getDimensionRefs(dimension.score, benchmark),
-    maxValue: dimension.type === 'esr' ? '100' : '10',
-    stripes: dimension.type === 'esr' && standard === 'hi',
-    unit: dimension.type === 'esr' ? '%' : '',
+    ...indicator,
+    color: 'esr',
+    value: getDimensionValue(indicator, benchmark),
+    refValues: getDimensionRefs(indicator.score, benchmark),
+    maxValue: '100',
+    stripes: standard === 'hi',
+    unit: '%',
   };
   return (
     <Box
@@ -78,33 +60,27 @@ function DimensionPanelTop({
       align="center"
       pad={{ vertical: 'none', horizontal: 'small' }}
     >
-      <ButtonTextHeading onClick={() => onMetricClick(key)}>
-        <AccordionPanelHeading level={4}>
-          <FormattedMessage {...rootMessages.dimensions[key]} />
+      <ButtonTextHeading onClick={() => onMetricClick(indicator.key)}>
+        <PanelHeading level={6}>
+          <FormattedMessage {...rootMessages.indicators[indicator.key]} />
           <Hidden min="medium">
             <FormNext size="large" />
           </Hidden>
-        </AccordionPanelHeading>
+        </PanelHeading>
       </ButtonTextHeading>
       <TabLinks
-        level={1}
+        level={3}
         onItemClick={onMetricClick}
         items={[
           {
-            key,
+            key: indicator.key,
             value: 0,
-            label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-            skip: !hasAtRisk,
-          },
-          {
-            key,
-            value: hasAtRisk ? 1 : 0,
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
           },
           {
-            key,
-            value: hasAtRisk ? 2 : 1,
+            key: indicator.key,
+            value: 1,
             label: intl.formatMessage(rootMessages.tabs.about),
           },
         ]}
@@ -112,13 +88,12 @@ function DimensionPanelTop({
     </Box>
   );
 }
-DimensionPanelTop.propTypes = {
-  dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  standard: PropTypes.string,
+IndicatorTop.propTypes = {
+  indicator: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   benchmark: PropTypes.object,
+  standard: PropTypes.string,
   onMetricClick: PropTypes.func,
-  hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(DimensionPanelTop);
+export default injectIntl(IndicatorTop);

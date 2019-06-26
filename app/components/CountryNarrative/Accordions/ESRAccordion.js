@@ -8,14 +8,14 @@ import HowToRead from 'containers/HowToRead';
 
 import { lowerCase } from 'utils/string';
 import rootMessages from 'messages';
-import Accordion from './Accordion';
+import PanelAccordion from './PanelAccordion';
 import PanelSimple from './PanelSimple';
-import DimensionPanel from './DimensionPanel';
-import DimensionPanelTop from './DimensionPanelTop';
-import RightPanel from './RightPanel';
-import RightPanelTop from './RightPanelTop';
-import IndicatorPanel from './IndicatorPanel';
-import IndicatorPanelTop from './IndicatorPanelTop';
+import DimensionMain from './DimensionMain';
+import DimensionTop from './DimensionTop';
+import RightMain from './RightMain';
+import RightTop from './RightTop';
+import IndicatorMain from './IndicatorMain';
+import IndicatorTop from './IndicatorTop';
 
 const Styled = styled(Box)``;
 
@@ -40,11 +40,11 @@ function ESRAccordion({
         />
       </Box>
       <Box elevation="small" margin={{ top: 'xsmall' }}>
-        <Accordion
+        <PanelAccordion
           buttonText={`${rights.length} rights`}
           level={1}
           top={
-            <DimensionPanelTop
+            <DimensionTop
               dimension={dimension}
               onMetricClick={onMetricClick}
               standard={standard}
@@ -52,8 +52,8 @@ function ESRAccordion({
               hasAtRisk={hasAtRisk}
             />
           }
-          head={
-            <DimensionPanel
+          main={
+            <DimensionMain
               dimension={dimension}
               onMetricClick={onMetricClick}
               standard={standard}
@@ -70,7 +70,7 @@ function ESRAccordion({
                   );
                   return (
                     <Box border="top" key={right.key}>
-                      <Accordion
+                      <PanelAccordion
                         buttonText={`${rightIndicators.length} ${lowerCase(
                           intl.formatMessage(
                             rootMessages.metricTypes.indicators,
@@ -78,7 +78,7 @@ function ESRAccordion({
                         )}`}
                         level={2}
                         top={
-                          <RightPanelTop
+                          <RightTop
                             right={right}
                             benchmark={benchmark}
                             onMetricClick={onMetricClick}
@@ -86,8 +86,8 @@ function ESRAccordion({
                             hasAtRisk={hasAtRisk}
                           />
                         }
-                        head={
-                          <RightPanel
+                        main={
+                          <RightMain
                             right={right}
                             benchmark={benchmark}
                             onMetricClick={onMetricClick}
@@ -102,15 +102,15 @@ function ESRAccordion({
                                 level={3}
                                 key={indicator.key}
                                 top={
-                                  <IndicatorPanelTop
+                                  <IndicatorTop
                                     indicator={indicator}
                                     benchmark={benchmark}
                                     onMetricClick={onMetricClick}
                                     standard={standard}
                                   />
                                 }
-                                head={
-                                  <IndicatorPanel
+                                main={
+                                  <IndicatorMain
                                     indicator={indicator}
                                     benchmark={benchmark}
                                     onMetricClick={onMetricClick}
