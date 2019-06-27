@@ -98,15 +98,14 @@ export function PathCountry({
   useEffect(() => {
     // kick off loading of data
     onLoadData();
-  }, []);
-  useEffect(() => {
     if (match.params.metric) {
       disableBodyScroll(layerRef.current);
     }
     return () => {
       clearAllBodyScrollLocks();
     };
-  });
+  }, [match]);
+
   const countryCode = match.params.country;
 
   const incomeGroup =
@@ -126,7 +125,6 @@ export function PathCountry({
         <ResponsiveContext.Consumer>
           {size => (
             <Layer
-              ref={layerRef}
               full="vertical"
               margin={{
                 top: isMinSize(size, 'xlarge') ? 'large' : 'small',
@@ -142,6 +140,7 @@ export function PathCountry({
               }}
             >
               <CountryMetric
+                ref={layerRef}
                 metricCode={match.params.metric}
                 countryCode={countryCode}
                 base="country"
