@@ -91,7 +91,7 @@ const StyledContent = styled(Box)`
 `;
 
 const Content = props => (
-  <StyledContent direction="row" align="center" responsive={false} {...props} />
+  <StyledContent direction="row" responsive={false} {...props} />
 );
 
 const TitleWrap = styled(Box)`
