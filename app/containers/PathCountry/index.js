@@ -4,13 +4,18 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from 'body-scroll-lock';
 
 import { Box, Layer, ResponsiveContext } from 'grommet';
 
@@ -88,12 +93,21 @@ export function PathCountry({
   cprYear,
   dataReady,
 }) {
+  const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
+  useEffect(() => {
+    // kick off loading of data
+    if (match.params.metric) {
+      disableBodyScroll(layerRef);
+    }
+    return () => {
+      clearAllBodyScrollLocks();
+    };
+  });
   const countryCode = match.params.country;
 
   const incomeGroup =
@@ -113,13 +127,20 @@ export function PathCountry({
         <ResponsiveContext.Consumer>
           {size => (
             <Layer
+              ref={layerRef}
               full="vertical"
               margin={{
                 top: isMinSize(size, 'xlarge') ? 'large' : 'small',
                 bottom: 'ms',
               }}
-              onEsc={() => onCloseMetricOverlay(countryCode)}
-              onClickOutside={() => onCloseMetricOverlay(countryCode)}
+              onEsc={() => {
+                enableBodyScroll(layerRef);
+                onCloseMetricOverlay(countryCode);
+              }}
+              onClickOutside={() => {
+                enableBodyScroll(layerRef);
+                onCloseMetricOverlay(countryCode);
+              }}
             >
               <CountryMetric
                 metricCode={match.params.metric}
