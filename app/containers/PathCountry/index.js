@@ -100,9 +100,8 @@ export function PathCountry({
     onLoadData();
   }, []);
   useEffect(() => {
-    // kick off loading of data
     if (match.params.metric) {
-      disableBodyScroll(layerRef);
+      disableBodyScroll(layerRef.current);
     }
     return () => {
       clearAllBodyScrollLocks();
@@ -134,11 +133,11 @@ export function PathCountry({
                 bottom: 'ms',
               }}
               onEsc={() => {
-                enableBodyScroll(layerRef);
+                enableBodyScroll(layerRef.current);
                 onCloseMetricOverlay(countryCode);
               }}
               onClickOutside={() => {
-                enableBodyScroll(layerRef);
+                enableBodyScroll(layerRef.current);
                 onCloseMetricOverlay(countryCode);
               }}
             >
