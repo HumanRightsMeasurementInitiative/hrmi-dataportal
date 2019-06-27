@@ -62,6 +62,7 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                   if (rightSubrights.length === 0) {
                     return (
                       <PanelSimple
+                        key={right.key}
                         level={2}
                         top={
                           <RightTop
