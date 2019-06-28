@@ -78,7 +78,7 @@ export function PathMetric({
         <ResponsiveContext.Consumer>
           {size => (
             <Layer
-              full
+              full="vertical"
               margin={{
                 top: isMinSize(size, 'xlarge') ? 'large' : 'small',
                 bottom: 'ms',
