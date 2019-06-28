@@ -4,18 +4,13 @@
  *
  */
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import {
-  disableBodyScroll,
-  enableBodyScroll,
-  clearAllBodyScrollLocks,
-} from 'body-scroll-lock';
 
 import { Box, Layer, ResponsiveContext } from 'grommet';
 
@@ -93,18 +88,12 @@ export function PathCountry({
   cprYear,
   dataReady,
 }) {
-  const layerRef = useRef();
+  // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     // kick off loading of data
     onLoadData();
-    if (match.params.metric) {
-      disableBodyScroll(layerRef.current);
-    }
-    return () => {
-      clearAllBodyScrollLocks();
-    };
-  }, [match]);
+  }, []);
 
   const countryCode = match.params.country;
 
@@ -114,6 +103,10 @@ export function PathCountry({
 
   const countryTitle =
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
+
+  const onCloseLayer = () => {
+    onCloseMetricOverlay(countryCode);
+  };
 
   return (
     <ContentWrap>
@@ -130,17 +123,10 @@ export function PathCountry({
                 top: isMinSize(size, 'xlarge') ? 'large' : 'small',
                 bottom: 'ms',
               }}
-              onEsc={() => {
-                enableBodyScroll(layerRef.current);
-                onCloseMetricOverlay(countryCode);
-              }}
-              onClickOutside={() => {
-                enableBodyScroll(layerRef.current);
-                onCloseMetricOverlay(countryCode);
-              }}
+              onEsc={onCloseLayer}
+              onClickOutside={onCloseLayer}
             >
               <CountryMetric
-                ref={layerRef}
                 metricCode={match.params.metric}
                 countryCode={countryCode}
                 base="country"

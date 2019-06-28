@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
@@ -13,6 +13,11 @@ import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import styled, { withTheme } from 'styled-components';
 import { Box } from 'grommet';
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from 'body-scroll-lock';
 
 import CountryMetricPeople from 'components/CountryMetricPeople';
 import CountryAbout from 'components/CountryAbout';
@@ -179,12 +184,27 @@ export function CountryMetric({
   onSetBenchmark,
   onSetStandard,
 }) {
+  const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     const key = generateKey(metricCode, countryCode);
     if (key && hasAtRisk) onLoadContent(key);
     onLoadData();
   }, [metricCode, countryCode, hasAtRisk]);
+
+  useEffect(() => {
+    if (layerRef && layerRef.current) {
+      disableBodyScroll(layerRef.current);
+    }
+    return () => {
+      clearAllBodyScrollLocks();
+      // make sure overflow is really set back to auto
+      setTimeout(() => {
+        document.body.setAttribute('style', 'overflow:auto');
+      }, 0);
+    };
+  }, [layerRef]);
+
   const metric = getMetricDetails(metricCode);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const countryTitle =
@@ -195,7 +215,7 @@ export function CountryMetric({
 
   // prettier-ignore
   return (
-    <Box overflow="auto" direction="column">
+    <Box overflow="auto" direction="column" ref={layerRef}>
       <Helmet>
         <title>{`${countryTitle} - ${metricTitle}`}</title>
         <meta name="description" content="Description of Country Metric page" />
@@ -205,9 +225,10 @@ export function CountryMetric({
           <Close
             topRight
             float={false}
-            onClick={() =>
-              onClose(base, base === 'country' ? countryCode : metricCode)
-            }
+            onClick={() => {
+              enableBodyScroll(layerRef.current);
+              onClose(base, base === 'country' ? countryCode : metricCode);
+            }}
           />
           <TitleWrap direction="column" align="start" responsive={false}>
             <StyledPageTitle base level="2">
