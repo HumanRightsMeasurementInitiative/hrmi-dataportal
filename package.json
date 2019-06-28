@@ -67,6 +67,7 @@
   "dependencies": {
     "@babel/polyfill": "7.4.3",
     "@rebass/grid": "^6.0.0",
+    "body-scroll-lock": "^2.6.1",
     "chalk": "^2.4.2",
     "compression": "1.7.4",
     "connected-react-router": "6.4.0",
