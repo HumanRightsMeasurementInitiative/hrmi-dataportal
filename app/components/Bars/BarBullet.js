@@ -81,9 +81,22 @@ function BarBullet({
   hoverEnabled = true,
 }) {
   const [hover, setHover] = useState(false);
+  const [touched, setTouched] = useState(false);
   const { color, value, maxValue, unit, band, labels } = data;
   return (
     <Wrapper
+      onTouchStart={() => {
+        setTouched(true);
+        setTimeout(() => setTouched(false), 1000);
+        setHover(!hover);
+        setTimeout(() => setHover(false), 5000);
+      }}
+      onClick={evt => {
+        if (touched) {
+          if (evt) evt.preventDefault();
+          if (evt) evt.stopPropagation();
+        }
+      }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

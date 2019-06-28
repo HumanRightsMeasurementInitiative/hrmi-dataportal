@@ -7,10 +7,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { ResponsiveContext } from 'grommet';
 
 import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
-import { isMaxSize } from 'utils/responsive';
 import NoDataHint from 'components/NoDataHint';
 
 import Wrapper from './styled/BarWrapper';
@@ -117,6 +115,7 @@ function Bar({
   hoverEnabled = true,
 }) {
   const [hover, setHover] = useState(false);
+  const [touched, setTouched] = useState(false);
   const {
     color,
     value,
@@ -136,107 +135,104 @@ function Bar({
       responsive={false}
     >
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
-      <ResponsiveContext.Consumer>
-        {size => (
-          <BarWrapper
-            onTouchStart={evt => {
-              if (evt) evt.preventDefault();
-              if (evt) evt.stopPropagation();
-              setHover(!hover);
-            }}
-            onClick={evt => {
-              if (isMaxSize(size, 'small')){
-                if (evt) evt.preventDefault();
-                if (evt) evt.stopPropagation();
-              }
-            }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-          >
-            <BarReference height={h} noData={!hasValue}>
-              {!hasValue && <BarNoValue height={h} color={color} />}
-              {hasValue && (
-                <BarValue
-                  height={h}
-                  active={hover && hoverEnabled}
-                  color={color}
-                  style={{ width: `${(value / maxValue) * 100}%` }}
-                  stripes={stripes}
-                />
-              )}
-              {hasValue &&
-                refValues &&
-                refValues.map(ref => (
-                  <MarkValue
-                    height={h}
-                    key={ref.key}
-                    lineStyle={ref.style}
-                    style={{ left: `${(ref.value / maxValue) * 100}%` }}
-                    level={level}
-                  />
-                ))}
-              {!hasValue && refValues && !!theRefValue &&(
-                <MarkValue
-                  height={h}
-                  key={theRefValue.key}
-                  lineStyle={theRefValue.style}
-                  style={{ left: `${(theRefValue.value / maxValue) * 100}%` }}
-                  level={level}
-                />
-              )}
-              {showBenchmark &&
-                refValues &&
-                !showAllBenchmarkAnnotations && (
-                !!theRefValue &&
-                <AnnotateBenchmark
-                  rotate={rotate}
-                  benchmarkKey={theRefValue.key}
-                  above={annotateBenchmarkAbove}
-                  margin="1px"
-                />
-              )}
-              {showBenchmark &&
-                refValues &&
-                showAllBenchmarkAnnotations &&
-                annotateBenchmarkAbove &&
-                refValues.filter(ref => !!ref.value).map((ref, index, list) => (
-                  <AnnotateBenchmark
-                    relative
-                    key={ref.key}
-                    left={(ref.value / maxValue) * 100}
-                    align={list.length > 1 && index === 0 ? 'left' : 'right'}
-                    benchmarkKey={ref.key}
-                    above
-                    margin="1px"
-                  />
-                ))
-              }
-              {!hasValue && data && level < 3 && (
-                <NoDataHint
-                  hints={[
-                    getNoDataMessage(data),
-                    showIncompleteAction
-                      ? getIncompleteDataActionMessage(data)
-                      : null,
-                  ]}
-                />
-              )}
-            </BarReference>
-            {(showScore || (hover && scoreOnHover && hoverEnabled)) && hasValue && (
-              <Score
-                rotate={rotate}
-                score={value}
-                left={(value / maxValue) * 100}
-                color={color}
-                unit={unit}
-                level={scoreOnHover ? 1 : level}
-                direction={scoreOnHover || 'bottom'}
-                title={title}
+      <BarWrapper
+        onTouchStart={() => {
+          if (scoreOnHover) setTouched(true);
+          setTimeout(() => setTouched(false), 1000);
+          if (scoreOnHover) setHover(!hover);
+          setTimeout(() => setHover(false), 5000);
+        }}
+        onClick={evt => {
+          if (touched) {
+            if (evt) evt.preventDefault();
+            if (evt) evt.stopPropagation();
+          }
+        }}
+        onMouseEnter={() => scoreOnHover && setHover(true) }
+        onMouseLeave={() => setHover(false)}
+      >
+        <BarReference height={h} noData={!hasValue}>
+          {!hasValue && <BarNoValue height={h} color={color} />}
+          {hasValue && (
+            <BarValue
+              height={h}
+              active={hover && hoverEnabled}
+              color={color}
+              style={{ width: `${(value / maxValue) * 100}%` }}
+              stripes={stripes}
+            />
+          )}
+          {hasValue &&
+            refValues &&
+            refValues.map(ref => (
+              <MarkValue
+                height={h}
+                key={ref.key}
+                lineStyle={ref.style}
+                style={{ left: `${(ref.value / maxValue) * 100}%` }}
+                level={level}
               />
-            )}
-          </BarWrapper>
+            ))}
+          {!hasValue && refValues && !!theRefValue &&(
+            <MarkValue
+              height={h}
+              key={theRefValue.key}
+              lineStyle={theRefValue.style}
+              style={{ left: `${(theRefValue.value / maxValue) * 100}%` }}
+              level={level}
+            />
+          )}
+          {showBenchmark &&
+            refValues &&
+            !showAllBenchmarkAnnotations && (
+            !!theRefValue &&
+            <AnnotateBenchmark
+              rotate={rotate}
+              benchmarkKey={theRefValue.key}
+              above={annotateBenchmarkAbove}
+              margin="1px"
+            />
+          )}
+          {showBenchmark &&
+            refValues &&
+            showAllBenchmarkAnnotations &&
+            annotateBenchmarkAbove &&
+            refValues.filter(ref => !!ref.value).map((ref, index, list) => (
+              <AnnotateBenchmark
+                relative
+                key={ref.key}
+                left={(ref.value / maxValue) * 100}
+                align={list.length > 1 && index === 0 ? 'left' : 'right'}
+                benchmarkKey={ref.key}
+                above
+                margin="1px"
+              />
+            ))
+          }
+          {!hasValue && data && level < 3 && (
+            <NoDataHint
+              hints={[
+                getNoDataMessage(data),
+                showIncompleteAction
+                  ? getIncompleteDataActionMessage(data)
+                  : null,
+              ]}
+            />
+          )}
+        </BarReference>
+        {(showScore || (hover && scoreOnHover && hoverEnabled)) && hasValue && (
+          <Score
+            rotate={rotate}
+            score={value}
+            left={(value / maxValue) * 100}
+            color={color}
+            unit={unit}
+            level={scoreOnHover ? 1 : level}
+            direction={scoreOnHover || 'bottom'}
+            title={title}
+          />
         )}
-      </ResponsiveContext.Consumer>
+      </BarWrapper>
       {showLabels && (
         <MaxLabel rotate={rotate} bottom={data.tooltip}>
           {unit ? `${maxValue}${unit}` : `${maxValue}`}
