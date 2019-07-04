@@ -38,7 +38,7 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-function RightPanel({ right, benchmark, isSubright, standard }) {
+function RightMain({ right, benchmark, isSubright, standard }) {
   const data = {
     ...right,
     color: right.dimension,
@@ -71,11 +71,11 @@ function RightPanel({ right, benchmark, isSubright, standard }) {
     </Box>
   );
 }
-RightPanel.propTypes = {
+RightMain.propTypes = {
   right: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
   isSubright: PropTypes.bool,
 };
 
-export default RightPanel;
+export default RightMain;

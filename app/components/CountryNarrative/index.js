@@ -16,8 +16,8 @@ import { BENCHMARKS, STANDARDS } from 'containers/App/constants';
 import { getRightsScoresForDimension, hasCPR } from 'utils/scores';
 
 import messages from './messages';
-import CPRAccordion from './CPRAccordion';
-import ESRAccordion from './ESRAccordion';
+import CPRAccordion from './Accordions/CPRAccordion';
+import ESRAccordion from './Accordions/ESRAccordion';
 import NarrativeCPR from './NarrativeCPR';
 import NarrativeESR from './NarrativeESR';
 import NarrativeAtRisk from './NarrativeAtRisk';

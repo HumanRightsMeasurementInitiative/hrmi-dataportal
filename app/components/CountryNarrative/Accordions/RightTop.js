@@ -11,7 +11,7 @@ import rootMessages from 'messages';
 import ButtonText from 'styled/ButtonText';
 import Hidden from 'styled/Hidden';
 
-import AccordionPanelHeading from './AccordionPanelHeading';
+import PanelHeading from './PanelHeading';
 import TabLinks from './TabLinks';
 
 const ButtonTextHeading = styled(ButtonText)`
@@ -51,7 +51,7 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-function RightPanelTop({
+function RightTop({
   right,
   benchmark,
   isSubright,
@@ -77,12 +77,12 @@ function RightPanelTop({
       pad={{ vertical: 'none', horizontal: 'small' }}
     >
       <ButtonTextHeading onClick={() => onMetricClick(right.key)}>
-        <AccordionPanelHeading level={isSubright ? 6 : 5}>
+        <PanelHeading level={isSubright ? 6 : 5}>
           <FormattedMessage {...rootMessages['rights-short'][right.key]} />
           <Hidden min="medium">
             <FormNext size="large" />
           </Hidden>
-        </AccordionPanelHeading>
+        </PanelHeading>
       </ButtonTextHeading>
       <TabLinks
         level={isSubright ? 3 : 2}
@@ -110,7 +110,7 @@ function RightPanelTop({
     </Box>
   );
 }
-RightPanelTop.propTypes = {
+RightTop.propTypes = {
   onMetricClick: PropTypes.func,
   right: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
@@ -124,4 +124,4 @@ RightPanelTop.propTypes = {
   refColumns: PropTypes.array,
 };
 
-export default injectIntl(RightPanelTop);
+export default injectIntl(RightTop);

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Box, Tabs, Tab, ResponsiveContext } from 'grommet';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import {
   getTabSearch,
@@ -18,14 +18,10 @@ import HowToRead from 'containers/HowToRead';
 import ColumnTitle from 'styled/ColumnTitle';
 import ColumnHeader from 'styled/ColumnHeader';
 import ColumnContent from 'styled/ColumnContent';
-import {
-  isMinSize,
-  isMaxSize,
-  getAsideWidth,
-  getWindowDimensions,
-  getFloatingAsideWidth,
-} from 'utils/responsive';
-import { SIZES } from 'theme';
+import { isMinSize, isMaxSize } from 'utils/responsive';
+
+import TabAside from './TabAside';
+
 const HowToReadWrapper = styled.div`
   position: relative;
   right: 0px;
@@ -38,50 +34,15 @@ const HowToReadWrapper = styled.div`
   }
 `;
 
-const FixedAside = styled.div`
-  position: fixed;
-  top: ${SIZES.header.height}px;
-  width: ${({ width }) => width}px;
-  bottom: ${({ hasSettings }) => (hasSettings ? SIZES.settings.height : 0)}px;
-  right: 0;
-  overflow-y: auto;
-  background: white;
-  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1);
-`;
-// TODO fix aside when leaving screen
-
 function TabContainer({
   tabs,
   tabIndex,
   onTabClick,
   aside = true,
   modal = false,
-  theme,
   route,
   match,
 }) {
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions(),
-  );
-  const [scrollTop, setScrollTop] = useState(0);
-  const asideRef = useRef();
-
-  useEffect(() => {
-    function handleScroll() {
-      setScrollTop(window.pageYOffset);
-    }
-    window.addEventListener('scroll', handleScroll);
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  // console.log('asideRef',asideRef && asideRef.current && asideRef.current.getBoundingClientRect().top)
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
@@ -102,18 +63,7 @@ function TabContainer({
           tabsWithContent[tabsWithContent.length - 1];
 
         const hasMultipleMainTabs = mainTabs.length > 1;
-        const fixedAside = asideTab &&
-          scrollTop > SIZES.header.height &&
-          asideRef &&
-          asideRef.current &&
-          asideRef.current.getBoundingClientRect &&
-          asideRef.current.getBoundingClientRect().top < SIZES.header.height;
-          // console.log('fixedAside', fixedAside)
-          // console.log('scrollTop', scrollTop)
-          // console.log("asideRef Top", asideRef.current &&
-          // asideRef.current.getBoundingClientRect &&
-          // asideRef.current.getBoundingClientRect().top)
-          // console.log('SIZES.header.height', SIZES.header.height)
+
         return (
           <Box direction="row" margin="0 auto" width="100%">
             <Box direction="column" flex style={{ position: 'relative' }}>
@@ -173,38 +123,11 @@ function TabContainer({
               )}
             </Box>
             {asideTab && (
-              <Box
-                width={getAsideWidth(size)}
-                direction="column"
-                flex={{ shrink: 0 }}
-                ref={asideRef}
-              >
-                {!fixedAside && (
-                  <ColumnHeader>
-                    <ColumnTitle>
-                      {asideTab.title}
-                    </ColumnTitle>
-                  </ColumnHeader>
-                )}
-                {!fixedAside && (
-                  <ColumnContent>
-                    {asideTab.content({ activeTab: tabIndex })}
-                  </ColumnContent>
-                )}
-              </Box>
-            )}
-            {fixedAside && (
-              <FixedAside
-                width={getFloatingAsideWidth(size, theme, windowDimensions)}
+              <TabAside
+                asideTab={asideTab}
+                tabIndex={tabIndex}
                 hasSettings={showSettings({ route, match, tabIndex })}
-              >
-                <ColumnHeader>
-                  <ColumnTitle>&nbsp;</ColumnTitle>
-                </ColumnHeader>
-                <ColumnContent style={{ width: getAsideWidth(size)}}>
-                  {asideTab.content({ activeTab: tabIndex })}
-                </ColumnContent>
-              </FixedAside>
+              />
             )}
           </Box>
         );
@@ -243,4 +166,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withTheme(TabContainer));
+export default compose(withConnect)(TabContainer);

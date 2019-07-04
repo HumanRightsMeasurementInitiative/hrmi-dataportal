@@ -6,6 +6,8 @@ export default styled.div`
   ${({ above, relative }) => {
     if (relative) return css`
       bottom: 2px;
+      width: auto;
+      white-space: nowrap;
     `;
     return above
       ? css`

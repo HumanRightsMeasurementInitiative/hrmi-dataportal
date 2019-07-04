@@ -88,12 +88,13 @@ export function PathCountry({
   cprYear,
   dataReady,
 }) {
+  // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
+
   const countryCode = match.params.country;
 
   const incomeGroup =
@@ -102,6 +103,10 @@ export function PathCountry({
 
   const countryTitle =
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
+
+  const onCloseLayer = () => {
+    onCloseMetricOverlay(countryCode);
+  };
 
   return (
     <ContentWrap>
@@ -118,8 +123,8 @@ export function PathCountry({
                 top: isMinSize(size, 'xlarge') ? 'large' : 'small',
                 bottom: 'ms',
               }}
-              onEsc={() => onCloseMetricOverlay(countryCode)}
-              onClickOutside={() => onCloseMetricOverlay(countryCode)}
+              onEsc={onCloseLayer}
+              onClickOutside={onCloseLayer}
             >
               <CountryMetric
                 metricCode={match.params.metric}
