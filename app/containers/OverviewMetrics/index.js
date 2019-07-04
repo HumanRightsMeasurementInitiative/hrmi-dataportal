@@ -29,7 +29,7 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 import rootMessages from 'messages';
-import { isMaxSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 import MetricPreviewChart from './MetricPreviewChart';
 
 const Option = styled(Button)`
@@ -188,7 +188,9 @@ export function OverviewMetrics({
                                 : COLUMNS.CPR.MEAN
                             }
                             maxScores={maxScores}
-                            activeCountry={activeCountry}
+                            activeCountry={
+                              isMinSize(size, 'large') ? activeCountry : null
+                            }
                             data={
                               dataReady &&
                               scoresByMetric.find(sm => sm.key === d.key)

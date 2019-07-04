@@ -12,7 +12,7 @@ import rootMessages from 'messages';
 import ButtonText from 'styled/ButtonText';
 import Hidden from 'styled/Hidden';
 
-import AccordionPanelHeading from './AccordionPanelHeading';
+import PanelHeading from './PanelHeading';
 import TabLinks from './TabLinks';
 
 const ButtonTextHeading = styled(ButtonText)`
@@ -52,7 +52,7 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-function DimensionPanelTop({
+function DimensionTop({
   dimension,
   benchmark,
   standard,
@@ -79,12 +79,12 @@ function DimensionPanelTop({
       pad={{ vertical: 'none', horizontal: 'small' }}
     >
       <ButtonTextHeading onClick={() => onMetricClick(key)}>
-        <AccordionPanelHeading level={4}>
+        <PanelHeading level={4}>
           <FormattedMessage {...rootMessages.dimensions[key]} />
           <Hidden min="medium">
             <FormNext size="large" />
           </Hidden>
-        </AccordionPanelHeading>
+        </PanelHeading>
       </ButtonTextHeading>
       <TabLinks
         level={1}
@@ -112,7 +112,7 @@ function DimensionPanelTop({
     </Box>
   );
 }
-DimensionPanelTop.propTypes = {
+DimensionTop.propTypes = {
   dimension: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   standard: PropTypes.string,
   benchmark: PropTypes.object,
@@ -121,4 +121,4 @@ DimensionPanelTop.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(DimensionPanelTop);
+export default injectIntl(DimensionTop);

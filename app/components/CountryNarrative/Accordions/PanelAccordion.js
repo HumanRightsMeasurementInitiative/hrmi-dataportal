@@ -31,25 +31,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   }
 `;
 
-// const StyledButtonIcon = styled(ButtonIcon)`
-//   border: 1px solid ${({ theme }) => theme.global.colors.highlight};
-//   &:hover {
-//     background-color: ${({ theme, level }) =>
-//     theme.global.colors[level > 1 ? 'transparent' : 'highlight']};
-//   }
-//   &:focus {
-//     background-color: transparent;
-//   }
-// `;
-//
-// const StyledDown = styled(Down)`
-//   stroke: ${({ theme }) => theme.global.colors.highlight};
-//   ${StyledButtonIcon}:hover & {
-//     stroke: ${({ theme }) => theme.global.colors['dark-1']};
-//   }
-// `;
-
-function Accordion({ head, top, content, buttonText, level }) {
+function PanelAccordion({ main, top, content, buttonText, level }) {
   const [open, setOpen] = useState(false);
   return (
     <ResponsiveContext.Consumer>
@@ -65,7 +47,7 @@ function Accordion({ head, top, content, buttonText, level }) {
           </Box>
           <Box direction="row" align="center" pad={{ bottom: 'small' }}>
             <Box fill="horizontal" direction="column">
-              {head}
+              {main}
             </Box>
             <Box
               width={isMinSize(size, 'medium') ? '200px' : '50px'}
@@ -118,12 +100,12 @@ function Accordion({ head, top, content, buttonText, level }) {
   );
 }
 
-Accordion.propTypes = {
+PanelAccordion.propTypes = {
   top: PropTypes.node,
-  head: PropTypes.node,
+  main: PropTypes.node,
   content: PropTypes.node,
   buttonText: PropTypes.string,
   level: PropTypes.number,
 };
 
-export default Accordion;
+export default PanelAccordion;
