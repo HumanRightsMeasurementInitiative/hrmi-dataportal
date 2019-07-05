@@ -1275,6 +1275,10 @@ export const getHighlightCountry = createSelector(
   getGlobal,
   global => global.highlightCountry,
 );
+export const getShowWelcome = createSelector(
+  getGlobal,
+  global => global.showWelcome,
+);
 
 export const getDependenciesReady = createSelector(
   (state, dependencies) => dependencies,

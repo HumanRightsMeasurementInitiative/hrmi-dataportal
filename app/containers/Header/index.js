@@ -42,7 +42,11 @@ import Icon from 'components/Icon';
 import LocaleToggle from 'containers/LocaleToggle';
 import { appLocales } from 'i18n';
 import { PAGES } from 'containers/App/constants';
-import { navigate, loadDataIfNeeded } from 'containers/App/actions';
+import {
+  navigate,
+  loadDataIfNeeded,
+  showWelcome,
+} from 'containers/App/actions';
 
 // import { isMinSize, isMaxSize } from 'utils/responsive';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -206,7 +210,7 @@ const renderDownload = (intl, isFullWidth) => (
   </Box>
 );
 
-export function Header({ nav, intl, onLoadData, match }) {
+export function Header({ nav, intl, onLoadData, match, resetWelcome }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -223,27 +227,22 @@ export function Header({ nav, intl, onLoadData, match }) {
   const metricTarget = useRef(null);
   const searchRef = useRef(null);
   const downloadRef = useRef(null);
+
+  const onHome = () => {
+    setShowMenu(false);
+    resetWelcome();
+    nav({ pathname: '', search: '' });
+  };
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Styled role="banner">
           <NavBarTop>
-            <BrandButton
-              plain
-              onClick={() => {
-                setShowMenu(false);
-                nav({ pathname: '', search: '' });
-              }}
-            >
+            <BrandButton plain onClick={onHome}>
               <Icon name="BRAND" />
             </BrandButton>
-            <TitleButton
-              plain
-              onClick={() => {
-                setShowMenu(false);
-                nav({ pathname: '', search: '' });
-              }}
-            >
+            <TitleButton plain onClick={onHome}>
               <FormattedMessage {...messages.appTitle} />
             </TitleButton>
             {appLocales.length > 1 && isMaxSize(size, 'medium') && (
@@ -401,6 +400,7 @@ export function Header({ nav, intl, onLoadData, match }) {
 Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
+  resetWelcome: PropTypes.func.isRequired,
   match: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
@@ -414,6 +414,7 @@ const mapDispatchToProps = dispatch => ({
   nav: location => {
     dispatch(navigate(location, { keepTab: true }));
   },
+  resetWelcome: () => dispatch(showWelcome()),
 });
 
 const mapStateToProps = createStructuredSelector({
