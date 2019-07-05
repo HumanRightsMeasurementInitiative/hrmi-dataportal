@@ -125,6 +125,7 @@ export function PathCountry({
               }}
               onEsc={onCloseLayer}
               onClickOutside={onCloseLayer}
+              animate={false}
             >
               <CountryMetric
                 metricCode={match.params.metric}
