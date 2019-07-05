@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Layer, ResponsiveContext } from 'grommet';
 
 import { STANDARDS } from 'containers/App/constants';
 
@@ -21,13 +22,13 @@ import {
   getScaleSearch,
   getDependenciesReady,
   getHighlightCountry,
+  getShowWelcome,
 } from 'containers/App/selectors';
-import { loadDataIfNeeded } from 'containers/App/actions';
+import { loadDataIfNeeded, showWelcome } from 'containers/App/actions';
 
 import OverviewMetrics from 'containers/OverviewMetrics';
 import OverviewCountries from 'containers/OverviewCountries';
 import TabContainer from 'containers/TabContainer';
-
 import rootMessages from 'messages';
 
 // styles
@@ -39,8 +40,10 @@ import PageTitle from 'styled/PageTitle';
 
 import { filterByAssessment } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
+import { isMinSize } from 'utils/responsive';
 import saga from 'containers/App/saga';
 
+import WelcomePanel from './WelcomePanel';
 import messages from './messages';
 
 const DEPENDENCIES = [
@@ -61,6 +64,8 @@ export function PathOverview({
   onLoadData,
   dataReady,
   activeCountry,
+  showWelcomePanel,
+  dismissWelcome,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -78,6 +83,21 @@ export function PathOverview({
     : countries;
   return (
     <ContentWrap>
+      {showWelcomePanel && (
+        <ResponsiveContext.Consumer>
+          {size => (
+            <Layer
+              animate={false}
+              onEsc={dismissWelcome}
+              onClickOutside={dismissWelcome}
+              responsive={false}
+              full={isMinSize(size, 'medium') ? 'false' : 'horizontal'}
+            >
+              <WelcomePanel dismiss={dismissWelcome} />
+            </Layer>
+          )}
+        </ResponsiveContext.Consumer>
+      )}
       <ContentContainer header>
         <ContentMaxWidth>
           <PageTitle level={1}>
@@ -133,6 +153,7 @@ export function PathOverview({
 
 PathOverview.propTypes = {
   onLoadData: PropTypes.func.isRequired,
+  dismissWelcome: PropTypes.func.isRequired,
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,
@@ -141,6 +162,7 @@ PathOverview.propTypes = {
   assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   activeCountry: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  showWelcomePanel: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -151,12 +173,14 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   activeCountry: state => getHighlightCountry(state),
+  showWelcomePanel: state => getShowWelcome(state),
 });
 export function mapDispatchToProps(dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
+    dismissWelcome: () => dispatch(showWelcome(false)),
   };
 }
 

@@ -34,6 +34,7 @@ export const SET_MODALTAB = 'hrmi/App/SET_MODALTAB';
 // state actions
 export const OPEN_HOW_TO = 'hrmi/App/OPEN_HOW_TO';
 export const HIGHLIGHT_COUNTRY = 'hrmi/App/HIGHLIGHT_COUNTRY';
+export const SHOW_WELCOME = 'hrmi/App/SHOW_WELCOME';
 
 export const COLUMNS = {
   CPR: {
