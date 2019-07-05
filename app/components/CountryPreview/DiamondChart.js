@@ -40,7 +40,28 @@ const AnnotateBetter = styled.div`
     content: '';
     position: absolute;
     top: -4.5px;
-    right: -2px;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 7px solid ${({ theme }) => theme.global.colors['dark-4']};
+  }
+`;
+
+const IndicateBetterBelow = styled.div`
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  right: 0;
+  border-bottom: 1px solid;
+  border-color: ${({ theme }) => theme.global.colors['dark-4']};
+  margin: 8px 0;
+  &:after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    right: 0;
     width: 0;
     height: 0;
     border-top: 5px solid transparent;
@@ -66,6 +87,7 @@ export function DiamondChart({
   hideZeroLabels = false,
   hoverEnabled = true,
   small = false,
+  indicateBetterBelow = false,
 }) {
   if (!dimensions && !rightGroups) return null;
   const w = small ? WIDTH[0] : WIDTH[1];
@@ -116,6 +138,7 @@ export function DiamondChart({
               />
             </BarWrapInner>
           ))}
+        {indicateBetterBelow && <IndicateBetterBelow />}
       </BarWrapRotated>
     </Styled>
   );
@@ -128,6 +151,7 @@ DiamondChart.propTypes = {
   hideZeroLabels: PropTypes.bool,
   hoverEnabled: PropTypes.bool,
   small: PropTypes.bool,
+  indicateBetterBelow: PropTypes.bool,
 };
 
 export default DiamondChart;
