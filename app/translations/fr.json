@@ -11,7 +11,7 @@
   "hrmi.containers.Header.download.paragraph": "Vous êtes libre d’utiliser les données et les graphiques produits par l’Initiative pour la Mesure des Droits Humains (HRMI) pour votre travail de défense des droits humains ou pour votre recherche. Nous vous demandons toutefois de vous assurer que vous comprenez les données et ce qu’elles représentent afin de ne pas en donner une image faussée.",
   "hrmi.containers.Header.download.attribution": "Faites référence à l’Initiative pour la Mesure des Droits Humains par un lien vers notre site Internet: ",
   "hrmi.containers.Header.download.attributionURL": "humanrightsmeasurement.org",
-  "hrmi.containers.Header.download.downloadAnchor": "Accepter & télécharger (zip)",
+  "hrmi.containers.Header.download.downloadAnchor": "Je suis d’accord & télécharger (zip)",
   "hrmi.containers.Header.download.downloadURL": "//data-store.humanrightsmeasurement.org/data/hrmi-data-download.zip",
   "hrmi.containers.LocaleToggle.language": "Langue: ",
   "hrmi.containers.NotFoundPage.header": "Page introuvable.",
