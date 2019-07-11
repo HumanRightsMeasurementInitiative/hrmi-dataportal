@@ -636,7 +636,7 @@ export default defineMessages({
       defaultMessage: 'expression-about',
     },
     participation: {
-      id: `${scope}.rights.participation`,
+      id: `${scope}.rights-about.participation`,
       defaultMessage: 'participation-about',
     },
     torture: {

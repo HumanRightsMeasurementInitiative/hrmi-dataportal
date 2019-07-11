@@ -1,5 +1,5 @@
 {
-  "hrmi.containers.Header.appTitle": "Data Portal",
+  "hrmi.containers.Header.appTitle": "Human Rights Performance Overview",
   "hrmi.containers.Header.countries": "Countries",
   "hrmi.containers.Header.metrics": "Rights",
   "hrmi.containers.Header.search.countrySearch": "Search country",
@@ -115,6 +115,11 @@
   "hrmi.components.MetricAbout.titleStandards": "Assessment standard(s)",
   "hrmi.components.Overview.aboveTitle": "Human rights performance overview",
   "hrmi.components.Overview.title": "{number} countries",
+  "hrmi.components.Overview.welcome.heading": "Welcome to the new data portal of the Human Rights Measurement Initiative (HRMI)",
+  "hrmi.components.Overview.welcome.intro": "Explore the human rights performance of countries across 3 categories and 12 rights.",
+  "hrmi.components.Overview.welcome.dimensionScores": "Category scores for",
+  "hrmi.components.Overview.welcome.better": "The higher the score, the better the performance",
+  "hrmi.components.Overview.welcome.buttonExplore": "Explore",
   "hrmi.components.CountryFilters.addFilter": "Add country filter",
   "hrmi.components.CountryFilters.regionsFilterOptionGroup": "By region",
   "hrmi.components.CountryFilters.incomeFilterOptionGroup": "By income group",

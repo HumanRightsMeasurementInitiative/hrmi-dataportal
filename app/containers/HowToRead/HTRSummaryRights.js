@@ -39,7 +39,7 @@ function HTRSummaryRights({ intl }) {
           maxValue: d.type === 'cpr' ? 10 : 100,
           data: rights.map(right => ({
             key: right.key,
-            value: d.type === 'cpr' ? randomValue(5, 10) : randomValue(50, 100),
+            value: d.type === 'cpr' ? randomValue(5, 10) : randomValue(50, 95),
             refValues: d.type === 'esr' && [
               { value: 100, style: 'solid', key: 'best' },
             ],

@@ -25,6 +25,7 @@ import {
   SET_MODALTAB,
   OPEN_HOW_TO,
   HIGHLIGHT_COUNTRY,
+  SHOW_WELCOME,
 } from './constants';
 
 /**
@@ -177,5 +178,11 @@ export function highlightCountry(country) {
   return {
     type: HIGHLIGHT_COUNTRY,
     country,
+  };
+}
+export function showWelcome(show = true) {
+  return {
+    type: SHOW_WELCOME,
+    show,
   };
 }
