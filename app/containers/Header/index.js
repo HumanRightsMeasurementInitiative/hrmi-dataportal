@@ -42,11 +42,7 @@ import Icon from 'components/Icon';
 import LocaleToggle from 'containers/LocaleToggle';
 import { appLocales } from 'i18n';
 import { PAGES } from 'containers/App/constants';
-import {
-  navigate,
-  loadDataIfNeeded,
-  showWelcome,
-} from 'containers/App/actions';
+import { navigate, loadDataIfNeeded } from 'containers/App/actions';
 
 // import { isMinSize, isMaxSize } from 'utils/responsive';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -210,7 +206,7 @@ const renderDownload = (intl, isFullWidth) => (
   </Box>
 );
 
-export function Header({ nav, intl, onLoadData, match, resetWelcome }) {
+export function Header({ nav, intl, onLoadData, match }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -230,7 +226,6 @@ export function Header({ nav, intl, onLoadData, match, resetWelcome }) {
 
   const onHome = () => {
     setShowMenu(false);
-    resetWelcome();
     nav({ pathname: '', search: '' });
   };
 
@@ -400,7 +395,6 @@ export function Header({ nav, intl, onLoadData, match, resetWelcome }) {
 Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
-  resetWelcome: PropTypes.func.isRequired,
   match: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
@@ -414,7 +408,6 @@ const mapDispatchToProps = dispatch => ({
   nav: location => {
     dispatch(navigate(location, { keepTab: true }));
   },
-  resetWelcome: () => dispatch(showWelcome()),
 });
 
 const mapStateToProps = createStructuredSelector({
