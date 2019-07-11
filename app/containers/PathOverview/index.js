@@ -91,7 +91,7 @@ export function PathOverview({
               onEsc={dismissWelcome}
               onClickOutside={dismissWelcome}
               responsive={false}
-              full={isMinSize(size, 'medium') ? 'false' : 'horizontal'}
+              full={isMinSize(size, 'medium') ? false : 'horizontal'}
             >
               <WelcomePanel dismiss={dismissWelcome} />
             </Layer>
