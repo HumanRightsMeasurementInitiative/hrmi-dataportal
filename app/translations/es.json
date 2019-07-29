@@ -97,7 +97,7 @@
   "hrmi.components.Close.label": "De regreso",
   "hrmi.components.CountryReport.title": "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} Human Rights Report",
   "hrmi.components.CountryPeople.title": "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} people at risk overview",
-  "hrmi.components.CountryPeople.intro": "An overview of 'people at risk' by human right",
+  "hrmi.components.CountryPeople.intro": "Un resumen de las 'personas en situación de riesgo' por derecho humano",
   "hrmi.components.CountryAbout.title": "Detalles del país",
   "hrmi.components.CountryAbout.population": "Población ({year})",
   "hrmi.components.CountryAbout.populationValue": "{value}{abbrev, select, millions {m} thousands {k} other {}}",
