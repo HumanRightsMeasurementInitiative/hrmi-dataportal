@@ -118,7 +118,7 @@
   "hrmi.components.Overview.welcome.heading": "Bem-vindo ao novo portal de dados da Iniciativa de Medição dos Direitos Humanos (HRMI)",
   "hrmi.components.Overview.welcome.intro": "Explore o desempenho dos direitos humanos dos países em três categorias e 12 direitos.",
   "hrmi.components.Overview.welcome.dimensionScores": "Pontuações de categoria para",
-  "hrmi.components.Overview.welcome.better": "The higher the score the better the performance",
+  "hrmi.components.Overview.welcome.better": "Quanto maior a pontuação, melhor o desempenho",
   "hrmi.components.Overview.welcome.buttonExplore": "Explorar",
   "hrmi.components.CountryFilters.addFilter": "Adicionar filtro de país",
   "hrmi.components.CountryFilters.regionsFilterOptionGroup": "Regiões",
