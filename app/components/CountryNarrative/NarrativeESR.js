@@ -4,7 +4,12 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
 
 import formatScore from 'utils/format-score';
-import { needsArticle, isPlural, getESRScoreRange } from 'utils/narrative';
+import {
+  needsArticle,
+  isPlural,
+  getESRScoreRange,
+  genderNumber,
+} from 'utils/narrative';
 
 import OL from 'styled/OL';
 
@@ -13,7 +18,7 @@ import { BENCHMARKS } from 'containers/App/constants';
 import rootMessages from 'messages';
 import messages from './messages';
 
-function NarrativeESR({ country, score, intl, someData }) {
+function NarrativeESR({ country, score, intl, someData, countryGrammar }) {
   // console.log(score);
   const scoreAdjusted =
     score && score[BENCHMARKS.find(s => s.key === 'adjusted').column];
@@ -23,8 +28,9 @@ function NarrativeESR({ country, score, intl, someData }) {
   const messageValues = {
     dimension: intl.formatMessage(rootMessages.dimensions.esr),
     country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    isPlural: isPlural(intl.locale, country.country_code),
-    needsArticle: needsArticle(intl.locale, country.country_code),
+    isPlural: isPlural(intl.locale, countryGrammar),
+    needsArticle: needsArticle(intl.locale, countryGrammar),
+    genderNumber: genderNumber(intl.locale, countryGrammar),
     less99adjusted: score && parseFloat(scoreAdjusted) < 99,
     scoreAdjusted: score && `${formatScore(scoreAdjusted)}%`,
     scoreAdjustedBold: score && <strong>{formatScore(scoreAdjusted)}%</strong>,
@@ -115,6 +121,7 @@ NarrativeESR.propTypes = {
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   someData: PropTypes.bool,
   country: PropTypes.object,
+  countryGrammar: PropTypes.object,
   intl: intlShape.isRequired,
 };
 

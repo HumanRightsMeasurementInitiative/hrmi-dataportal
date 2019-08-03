@@ -34,6 +34,7 @@ import {
   getRightsForCountry,
   getIndicatorsForCountry,
   getCountry,
+  getCountryGrammar,
   getScaleSearch,
   getStandardSearch,
   getBenchmarkSearch,
@@ -57,6 +58,7 @@ import saga from 'containers/App/saga';
 
 const DEPENDENCIES = [
   'countries',
+  'countriesGrammar',
   'esrIndicators',
   'cprScores',
   'esrScores',
@@ -74,6 +76,7 @@ export function PathCountry({
   rights,
   indicators,
   country,
+  countryGrammar,
   scale,
   benchmark,
   atRisk,
@@ -195,6 +198,7 @@ export function PathCountry({
                   rights={rights}
                   indicators={indicators}
                   country={country}
+                  countryGrammar={countryGrammar}
                   scale={scale}
                   benchmark={benchmark}
                   atRiskData={atRisk}
@@ -267,6 +271,7 @@ PathCountry.propTypes = {
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -279,6 +284,8 @@ PathCountry.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   country: (state, { match }) => getCountry(state, match.params.country),
+  countryGrammar: (state, { match }) =>
+    getCountryGrammar(state, match.params.country),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   indicators: (state, { match }) =>
     getIndicatorsForCountry(state, match.params.country),
