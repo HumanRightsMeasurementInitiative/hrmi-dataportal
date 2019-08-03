@@ -1,77 +1,89 @@
 import roundScore from './round-score';
 
-const contriesNeedArticle = {
-  en: [
-    'GBR',
-    'BHS', // 'The' should actually be capitalised
-    'CYM',
-    'TCA',
-    'USA',
-    'VCT',
-    'VGB',
-    'VIR',
-    'MHL',
-    'MNP',
-    'PHL',
-    'SLB',
-    'CHI',
-    'CZE',
-    'FRO',
-    'RUS',
-    'NLD',
-    'SVK',
-    'ARE',
-    'SYR',
-    'MDV',
-    'CAF',
-    'COD',
-    'COG',
-    'SYC',
-  ],
-  fr: [],
-  es: [],
-  pt: [],
+const ARTICLES_DEFAULT = {
+  en: 0,
+  fr: 1,
+  es: 0,
+  pt: 1,
 };
 
-const countriesArePlural = {
-  en: [
-    'BHS',
-    'BRB',
-    'CYM',
-    'TCA',
-    'USA',
-    'VCT',
-    'VGB',
-    'VIR',
-    'MHL',
-    'MNP',
-    'PHL',
-    'SLB',
-    'CHI',
-    'FRO',
-    'ARE',
-    'MDV',
-    'SYC',
-  ],
-  fr: [],
-  es: [],
-  pt: [],
+export const needsArticle = (locale, countryGrammar) => {
+  if (ARTICLES_DEFAULT[locale] === 0) {
+    return countryGrammar[`${locale}_article`] === '1';
+  }
+  return countryGrammar[`${locale}_article`] !== '0';
 };
 
-export const needsArticle = (locale, code) =>
-  contriesNeedArticle[locale].indexOf(code) > -1;
-export const isPlural = (locale, code) =>
-  countriesArePlural[locale].indexOf(code) > -1;
+export const isFeminine = (locale, countryGrammar) =>
+  countryGrammar[`${locale}_feminine`] === '1';
+
+export const isPlural = (locale, countryGrammar) =>
+  countryGrammar[`${locale}_plural`] === '1';
+
+export const genderNumber = (locale, countryGrammar) => {
+  if (isFeminine(locale, countryGrammar)) {
+    if (isPlural(locale, countryGrammar)) {
+      return 'fp';
+    }
+    return 'f';
+  }
+  if (isPlural(locale, countryGrammar)) {
+    return 'mp';
+  }
+  return 'm';
+};
 
 const regionsNeedArticle = {
   en: ['americas', 'middle-east-north-africa'],
-  fr: [],
-  es: [],
-  pt: [],
+  fr: ['americas'],
+  es: ['americas'],
+  pt: ['americas'],
+};
+const regionsArePlural = {
+  en: [
+    'americas',
+    'east-asia-pacific',
+    'europe-central-asia',
+    'middle-east-north-africa',
+  ],
+  fr: [
+    'americas',
+    'east-asia-pacific',
+    'europe-central-asia',
+    'middle-east-north-africa',
+  ],
+  es: [
+    'americas',
+    'east-asia-pacific',
+    'europe-central-asia',
+    'middle-east-north-africa',
+  ],
+  pt: [
+    'americas',
+    'east-asia-pacific',
+    'europe-central-asia',
+    'middle-east-north-africa',
+  ],
+};
+const regionsAreFeminine = {
+  en: [],
+  fr: [
+    'americas',
+    'sub-saharan-africa',
+    'south-asia',
+    'europe-central-asia',
+    'east-asia-pacific',
+  ],
+  es: ['americas', 'sub-saharan-africa', 'south-asia', 'europe-central-asia'],
+  pt: ['americas', 'sub-saharan-africa', 'south-asia', 'europe-central-asia'],
 };
 
 export const needsArticleRegion = (locale, code) =>
   regionsNeedArticle[locale].indexOf(code) > -1;
+export const isPluralRegion = (locale, code) =>
+  regionsArePlural[locale].indexOf(code) > -1;
+export const isFeminineRegion = (locale, code) =>
+  regionsAreFeminine[locale].indexOf(code) > -1;
 
 const CPR_SCORE_RANGES = [
   {

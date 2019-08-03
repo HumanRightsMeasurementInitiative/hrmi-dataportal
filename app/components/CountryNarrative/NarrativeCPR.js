@@ -5,18 +5,31 @@ import { Paragraph } from 'grommet';
 
 import formatScore from 'utils/format-score';
 
-import { needsArticle, isPlural, getCPRScoreRange } from 'utils/narrative';
+import {
+  needsArticle,
+  isPlural,
+  getCPRScoreRange,
+  genderNumber,
+} from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
 
-function NarrativeCPR({ dimensionKey, country, score, noData, intl }) {
+function NarrativeCPR({
+  dimensionKey,
+  country,
+  score,
+  noData,
+  intl,
+  countryGrammar,
+}) {
   const messageValues = {
     physint: intl.formatMessage(rootMessages.dimensions.physint),
     empowerment: intl.formatMessage(rootMessages.dimensions.empowerment),
     country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    isPlural: isPlural(intl.locale, country.country_code),
-    needsArticle: needsArticle(intl.locale, country.country_code),
+    isPlural: isPlural(intl.locale, countryGrammar),
+    needsArticle: needsArticle(intl.locale, countryGrammar),
+    genderNumber: genderNumber(intl.locale, countryGrammar),
     scoreBold: score && <strong>{formatScore(score.mean)}</strong>,
     score: score && formatScore(score.mean),
   };
@@ -82,6 +95,7 @@ function NarrativeCPR({ dimensionKey, country, score, noData, intl }) {
 NarrativeCPR.propTypes = {
   noData: PropTypes.bool,
   country: PropTypes.object,
+  countryGrammar: PropTypes.object,
   dimensionKey: PropTypes.string,
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   intl: intlShape.isRequired,

@@ -7,6 +7,7 @@ import {
   isPlural,
   compareRange,
   needsArticleRegion,
+  genderNumber,
 } from 'utils/narrative';
 
 import { COLUMNS } from 'containers/App/constants';
@@ -20,6 +21,7 @@ const isCountryOECD = country => country.OECD_country === '1';
 function NarrativeCPRCompAssessment({
   dimensionKey,
   country,
+  countryGrammar,
   score,
   referenceScore,
   referenceCount,
@@ -30,8 +32,9 @@ function NarrativeCPRCompAssessment({
     country: intl.formatMessage(rootMessages.countries[country.country_code]),
     region: intl.formatMessage(rootMessages.regions[country.region_code]),
     needsArticleRegion: needsArticleRegion(intl.locale, country.region_code),
-    isPlural: isPlural(intl.locale, country.country_code),
-    needsArticle: needsArticle(intl.locale, country.country_code),
+    isPlural: isPlural(intl.locale, countryGrammar),
+    needsArticle: needsArticle(intl.locale, countryGrammar),
+    genderNumber: genderNumber(intl.locale, countryGrammar),
     referenceCount,
     referenceCountLessOne: referenceCount - 1,
   };
@@ -81,6 +84,7 @@ function NarrativeCPRCompAssessment({
 NarrativeCPRCompAssessment.propTypes = {
   conjunct: PropTypes.bool,
   country: PropTypes.object,
+  countryGrammar: PropTypes.object,
   referenceCount: PropTypes.number,
   referenceScore: PropTypes.number,
   dimensionKey: PropTypes.string,

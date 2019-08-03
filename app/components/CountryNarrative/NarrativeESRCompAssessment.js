@@ -7,6 +7,7 @@ import {
   isPlural,
   compareRange,
   needsArticleRegion,
+  genderNumber,
 } from 'utils/narrative';
 
 import rootMessages from 'messages';
@@ -23,17 +24,20 @@ function NarrativeESRCompAssessment({
   referenceScore,
   referenceCount,
   intl,
+  countryGrammar,
 }) {
   const messageValues = {
     esr: intl.formatMessage(rootMessages.dimensions.esr),
     country: intl.formatMessage(rootMessages.countries[country.country_code]),
     region: intl.formatMessage(rootMessages.regions[country.region_code]),
     needsArticleRegion: needsArticleRegion(intl.locale, country.region_code),
-    isPlural: isPlural(intl.locale, country.country_code),
-    needsArticle: needsArticle(intl.locale, country.country_code),
+    isPlural: isPlural(intl.locale, countryGrammar),
+    genderNumber: genderNumber(intl.locale, countryGrammar),
+    needsArticle: needsArticle(intl.locale, countryGrammar),
     referenceCount,
     referenceCountLessOne: referenceCount - 1,
   };
+
   const rangeLo = parseFloat(score[benchmark.column]) - RANGE;
   const rangeHi = parseFloat(score[benchmark.column]) + RANGE;
   return (
@@ -72,6 +76,7 @@ function NarrativeESRCompAssessment({
 
 NarrativeESRCompAssessment.propTypes = {
   country: PropTypes.object,
+  countryGrammar: PropTypes.object,
   referenceCount: PropTypes.number,
   referenceScore: PropTypes.number,
   benchmark: PropTypes.object,
