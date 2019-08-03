@@ -39,6 +39,7 @@ function CountryReport({
   standard,
   indicators,
   country,
+  countryGrammar,
   onMetricClick,
   intl,
   atRiskData,
@@ -78,6 +79,7 @@ function CountryReport({
             rights={rights}
             indicators={indicators}
             country={country}
+            countryGrammar={countryGrammar}
             benchmark={benchmark}
             standard={standard}
             onMetricClick={onMetricClick}
@@ -104,6 +106,7 @@ CountryReport.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),

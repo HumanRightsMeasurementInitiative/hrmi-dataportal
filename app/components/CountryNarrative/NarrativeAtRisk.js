@@ -13,7 +13,7 @@ import {
 } from 'grommet';
 
 // import formatScore from 'utils/format-score';
-import { needsArticle, isPlural } from 'utils/narrative';
+import { needsArticle, isPlural, genderNumber } from 'utils/narrative';
 import quasiEquals from 'utils/quasi-equals';
 //
 // import { BENCHMARKS } from 'containers/App/constants';
@@ -25,7 +25,14 @@ import messages from './messages';
 
 const AT_RISK_THRESHOLD = 0.6;
 
-function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
+function NarrativeAtRisk({
+  data,
+  country,
+  onAtRiskClick,
+  intl,
+  noData,
+  countryGrammar,
+}) {
   // const scoreAdjusted =
   //   score && score[BENCHMARKS.find(s => s.key === 'adjusted').column];
   // const scoreBest =
@@ -33,8 +40,9 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
   //
   const messageValues = {
     country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    isPlural: isPlural(intl.locale, country.country_code),
-    needsArticle: needsArticle(intl.locale, country.country_code),
+    isPlural: isPlural(intl.locale, countryGrammar),
+    needsArticle: needsArticle(intl.locale, countryGrammar),
+    genderNumber: genderNumber(intl.locale, countryGrammar),
   };
   if (noData) {
     return (
@@ -189,6 +197,7 @@ function NarrativeAtRisk({ data, country, onAtRiskClick, intl, noData }) {
 NarrativeAtRisk.propTypes = {
   noData: PropTypes.bool,
   country: PropTypes.object,
+  countryGrammar: PropTypes.object,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   onAtRiskClick: PropTypes.func,
   intl: intlShape.isRequired,
