@@ -1,4 +1,6 @@
+import rootMessages from 'messages';
 import roundScore from './round-score';
+import { startsWithVowel, upperCaseFirst } from './string';
 
 const ARTICLES_DEFAULT = {
   en: 0,
@@ -31,6 +33,69 @@ export const genderNumber = (locale, countryGrammar) => {
     return 'mp';
   }
   return 'm';
+};
+
+export const getCountryWithArticle = (locale, countryGrammar, countryLabel) => {
+  if (!needsArticle(locale, countryGrammar)) {
+    return countryLabel;
+  }
+  if (locale === 'en') {
+    return `the ${countryLabel}`;
+  }
+  if (locale === 'fr') {
+    if (isPlural(locale, countryGrammar)) {
+      return `les ${countryLabel}`;
+    }
+    if (startsWithVowel(countryLabel)) {
+      return `l'${countryLabel}`;
+    }
+    if (isFeminine(locale, countryGrammar)) {
+      return `la ${countryLabel}`;
+    }
+    return `le ${countryLabel}`;
+  }
+  if (locale === 'es') {
+    // TODO
+    return countryLabel;
+  }
+  if (locale === 'pt') {
+    // TODO
+    return countryLabel;
+  }
+  return countryLabel;
+};
+
+export const getCountryOf = (locale, countryGrammar, countryLabel) => {
+  if (locale === 'en') {
+    if (needsArticle(locale, countryGrammar)) {
+      return `for the ${countryLabel}`;
+    }
+    return `for ${countryLabel}`;
+  }
+  if (locale === 'fr') {
+    if (needsArticle(locale, countryGrammar)) {
+      if (isPlural(locale, countryGrammar)) {
+        return `des ${countryLabel}`;
+      }
+      if (startsWithVowel(countryLabel)) {
+        return `de l'${countryLabel}`;
+      }
+      if (isFeminine(locale, countryGrammar)) {
+        return `de la ${countryLabel}`;
+      }
+      return `du ${countryLabel}`;
+    }
+    return `de ${countryLabel}`;
+  }
+  if (locale === 'es') {
+    // TODO
+    return countryLabel;
+  }
+  if (locale === 'pt') {
+    // TODO
+    return countryLabel;
+  }
+  return countryLabel;
 };
 
 const regionsNeedArticle = {
@@ -84,6 +149,67 @@ export const isPluralRegion = (locale, code) =>
   regionsArePlural[locale].indexOf(code) > -1;
 export const isFeminineRegion = (locale, code) =>
   regionsAreFeminine[locale].indexOf(code) > -1;
+
+export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
+  if (!needsArticleRegion(locale, regionCode)) {
+    return regionLabel;
+  }
+  if (locale === 'en') {
+    return `the ${regionLabel}`;
+  }
+  if (locale === 'fr') {
+    if (isPluralRegion(locale, regionCode)) {
+      return `les ${regionLabel}`;
+    }
+    if (startsWithVowel(regionLabel)) {
+      return `l'${regionLabel}`;
+    }
+    if (isFeminine(locale, regionCode)) {
+      return `la ${regionLabel}`;
+    }
+    return `le ${regionLabel}`;
+  }
+  if (locale === 'es') {
+    // TODO
+    return regionLabel;
+  }
+  if (locale === 'pt') {
+    // TODO
+    return regionLabel;
+  }
+  return regionLabel;
+};
+
+// TODO
+export const getRegionIn = (locale, regionCode, regionLabel) => regionLabel;
+
+export const getMessageGrammar = (
+  intl,
+  countryCode,
+  regionCode,
+  countryGrammar,
+) => {
+  const { locale } = intl;
+  const countryLabel = intl.formatMessage(rootMessages.countries[countryCode]);
+  const regionLabel = intl.formatMessage(rootMessages.regions[regionCode]);
+  const countryWithArticle = getCountryWithArticle(
+    locale,
+    countryGrammar,
+    countryLabel,
+  );
+  return {
+    country: countryLabel,
+    countryWithArticle,
+    countryWithArticleCap: upperCaseFirst(countryWithArticle),
+    needsArticle: needsArticle(locale, countryGrammar),
+    isPlural: isPlural(locale, countryGrammar),
+    genderNumber: genderNumber(locale, countryGrammar),
+    countryOf: getCountryOf(locale, countryGrammar, countryLabel),
+    region: regionLabel,
+    regionWithArticle: getRegionWithArticle(locale, regionCode, regionLabel),
+    needsArticleRegion: needsArticleRegion(intl.locale, regionCode),
+  };
+};
 
 const CPR_SCORE_RANGES = [
   {

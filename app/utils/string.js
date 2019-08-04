@@ -2,6 +2,7 @@ import { toLower as loCase } from 'lodash/string';
 import { reduce } from 'lodash/collection';
 
 export const lowerCase = str => loCase(str);
+export const upperCaseFirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const cleanupSearchTarget = str =>
   loCase(str)
@@ -39,3 +40,8 @@ export const truncateText = (text, limit = 6, keepWords = true) => {
 
 export const startsWith = (str, searchString) =>
   str.substr(0, searchString.length) === searchString;
+
+const VOWEL_REGEX =
+  '^[aieouAIEOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛãõÃÕäëïöüÄËÏÖÜ].*';
+
+export const startsWithVowel = str => !!str.match(VOWEL_REGEX);

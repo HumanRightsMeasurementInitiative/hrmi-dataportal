@@ -2,17 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import {
-  needsArticle,
-  isPlural,
-  compareRange,
-  needsArticleRegion,
-  genderNumber,
-} from 'utils/narrative';
+import { compareRange, getMessageGrammar } from 'utils/narrative';
 
 import { COLUMNS } from 'containers/App/constants';
 
-import rootMessages from 'messages';
 import messages from './messages';
 
 const isCountryHighIncome = country => country.high_income_country === '1';
@@ -29,12 +22,12 @@ function NarrativeCPRCompAssessment({
   conjunct = false,
 }) {
   const messageValues = {
-    country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    region: intl.formatMessage(rootMessages.regions[country.region_code]),
-    needsArticleRegion: needsArticleRegion(intl.locale, country.region_code),
-    isPlural: isPlural(intl.locale, countryGrammar),
-    needsArticle: needsArticle(intl.locale, countryGrammar),
-    genderNumber: genderNumber(intl.locale, countryGrammar),
+    ...getMessageGrammar(
+      intl,
+      country.country_code,
+      country.region_code,
+      countryGrammar,
+    ),
     referenceCount,
     referenceCountLessOne: referenceCount - 1,
   };
