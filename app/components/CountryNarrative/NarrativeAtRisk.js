@@ -13,7 +13,7 @@ import {
 } from 'grommet';
 
 // import formatScore from 'utils/format-score';
-import { needsArticle, isPlural, genderNumber } from 'utils/narrative';
+import { getMessageGrammar } from 'utils/narrative';
 import quasiEquals from 'utils/quasi-equals';
 //
 // import { BENCHMARKS } from 'containers/App/constants';
@@ -38,12 +38,12 @@ function NarrativeAtRisk({
   // const scoreBest =
   //   score && score[BENCHMARKS.find(s => s.key === 'best').column];
   //
-  const messageValues = {
-    country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    isPlural: isPlural(intl.locale, countryGrammar),
-    needsArticle: needsArticle(intl.locale, countryGrammar),
-    genderNumber: genderNumber(intl.locale, countryGrammar),
-  };
+  const messageValues = getMessageGrammar(
+    intl,
+    country.country_code,
+    country.region_code,
+    countryGrammar,
+  );
   if (noData) {
     return (
       <Paragraph>

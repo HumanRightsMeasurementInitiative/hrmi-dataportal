@@ -2,13 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import {
-  needsArticle,
-  isPlural,
-  compareRange,
-  needsArticleRegion,
-  genderNumber,
-} from 'utils/narrative';
+import { compareRange, getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -27,13 +21,13 @@ function NarrativeESRCompAssessment({
   countryGrammar,
 }) {
   const messageValues = {
+    ...getMessageGrammar(
+      intl,
+      country.country_code,
+      country.region_code,
+      countryGrammar,
+    ),
     esr: intl.formatMessage(rootMessages.dimensions.esr),
-    country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    region: intl.formatMessage(rootMessages.regions[country.region_code]),
-    needsArticleRegion: needsArticleRegion(intl.locale, country.region_code),
-    isPlural: isPlural(intl.locale, countryGrammar),
-    genderNumber: genderNumber(intl.locale, countryGrammar),
-    needsArticle: needsArticle(intl.locale, countryGrammar),
     referenceCount,
     referenceCountLessOne: referenceCount - 1,
   };

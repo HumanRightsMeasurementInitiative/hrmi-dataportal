@@ -5,12 +5,7 @@ import { Paragraph } from 'grommet';
 
 import formatScore from 'utils/format-score';
 
-import {
-  needsArticle,
-  isPlural,
-  getCPRScoreRange,
-  genderNumber,
-} from 'utils/narrative';
+import { getCPRScoreRange, getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -23,13 +18,16 @@ function NarrativeCPR({
   intl,
   countryGrammar,
 }) {
+  console.log(countryGrammar);
   const messageValues = {
+    ...getMessageGrammar(
+      intl,
+      country.country_code,
+      country.region_code,
+      countryGrammar,
+    ),
     physint: intl.formatMessage(rootMessages.dimensions.physint),
     empowerment: intl.formatMessage(rootMessages.dimensions.empowerment),
-    country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    isPlural: isPlural(intl.locale, countryGrammar),
-    needsArticle: needsArticle(intl.locale, countryGrammar),
-    genderNumber: genderNumber(intl.locale, countryGrammar),
     scoreBold: score && <strong>{formatScore(score.mean)}</strong>,
     score: score && formatScore(score.mean),
   };
