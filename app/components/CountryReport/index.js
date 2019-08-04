@@ -16,7 +16,7 @@ import CountryNarrative from 'components/CountryNarrative';
 import LoadingIndicator from 'components/LoadingIndicator';
 import MainColumn from 'styled/MainColumn';
 
-import { needsArticle, isPlural } from 'utils/narrative';
+import { getMessageGrammar } from 'utils/narrative';
 
 import messages from './messages';
 
@@ -31,7 +31,6 @@ const StyledHeading = styled(Heading)`
 `;
 
 function CountryReport({
-  countryTitle,
   dimensions,
   rights,
   scale,
@@ -58,11 +57,12 @@ function CountryReport({
           <StyledHeading responsive={false} level={2}>
             <FormattedMessage
               {...messages.title}
-              values={{
-                country: countryTitle,
-                isPlural: isPlural(intl.locale, country.country_code),
-                needsArticle: needsArticle(intl.locale, country.country_code),
-              }}
+              values={getMessageGrammar(
+                intl,
+                country.country_code,
+                country.region_code,
+                countryGrammar,
+              )}
             />
           </StyledHeading>
           <CountrySummaryChart

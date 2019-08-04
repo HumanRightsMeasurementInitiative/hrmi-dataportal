@@ -4,12 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
 
 import formatScore from 'utils/format-score';
-import {
-  needsArticle,
-  isPlural,
-  getESRScoreRange,
-  genderNumber,
-} from 'utils/narrative';
+import { getESRScoreRange, getMessageGrammar } from 'utils/narrative';
 
 import OL from 'styled/OL';
 
@@ -26,11 +21,14 @@ function NarrativeESR({ country, score, intl, someData, countryGrammar }) {
     score && score[BENCHMARKS.find(s => s.key === 'best').column];
 
   const messageValues = {
+    ...getMessageGrammar(
+      intl,
+      country.country_code,
+      country.region_code,
+      countryGrammar,
+    ),
     dimension: intl.formatMessage(rootMessages.dimensions.esr),
     country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    isPlural: isPlural(intl.locale, countryGrammar),
-    needsArticle: needsArticle(intl.locale, countryGrammar),
-    genderNumber: genderNumber(intl.locale, countryGrammar),
     less99adjusted: score && parseFloat(scoreAdjusted) < 99,
     scoreAdjusted: score && `${formatScore(scoreAdjusted)}%`,
     scoreAdjustedBold: score && <strong>{formatScore(scoreAdjusted)}%</strong>,

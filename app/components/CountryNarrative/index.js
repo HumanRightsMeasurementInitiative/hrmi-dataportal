@@ -14,6 +14,7 @@ import rootMessages from 'messages';
 
 import { BENCHMARKS, STANDARDS } from 'containers/App/constants';
 import { getRightsScoresForDimension, hasCPR } from 'utils/scores';
+import { getMessageGrammar } from 'utils/narrative';
 
 import messages from './messages';
 import CPRAccordion from './Accordions/CPRAccordion';
@@ -157,7 +158,13 @@ function CountryNarrative({
             />
           </Dimension>
         )}
-        {!hasCPR(dimensions) && <NarrativeCPR noData country={country} />}
+        {!hasCPR(dimensions) && (
+          <NarrativeCPR
+            noData
+            country={country}
+            countryGrammar={countryGrammar}
+          />
+        )}
       </RightsType>
       <RightsType>
         <RightsTypeHeading>
@@ -206,11 +213,12 @@ function CountryNarrative({
           <RightsTypeHeading>
             <FormattedMessage
               {...messages.compAssessmentSectionTitle}
-              values={{
-                country: intl.formatMessage(
-                  rootMessages.countries[country.country_code],
-                ),
-              }}
+              values={getMessageGrammar(
+                intl,
+                country.country_code,
+                country.region_code,
+                countryGrammar,
+              )}
             />
           </RightsTypeHeading>
           {hasCPR(dimensions) && reference.empowerment && reference.physint && (
