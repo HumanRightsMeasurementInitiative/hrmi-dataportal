@@ -178,7 +178,7 @@ const regionsAreFeminine = {
     'east-asia-pacific',
   ],
   es: ['americas', 'sub-saharan-africa', 'south-asia', 'europe-central-asia'],
-  pt: ['americas', 'sub-saharan-africa', 'south-asia', 'europe-central-asia'],
+  pt: ['americas', 'sub-saharan-africa', 'europe-central-asia'],
 };
 
 export const needsArticleRegion = (locale, code) =>
