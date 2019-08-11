@@ -55,12 +55,28 @@ export const getCountryWithArticle = (locale, countryGrammar, countryLabel) => {
     return `le ${countryLabel}`;
   }
   if (locale === 'es') {
-    // TODO
-    return countryLabel;
+    if (isPlural(locale, countryGrammar)) {
+      if (isFeminine(locale, countryGrammar)) {
+        return `las ${countryLabel}`;
+      }
+      return `los ${countryLabel}`;
+    }
+    if (isFeminine(locale, countryGrammar)) {
+      return `la ${countryLabel}`;
+    }
+    return `el ${countryLabel}`;
   }
   if (locale === 'pt') {
-    // TODO
-    return countryLabel;
+    if (isPlural(locale, countryGrammar)) {
+      if (isFeminine(locale, countryGrammar)) {
+        return `as ${countryLabel}`;
+      }
+      return `os ${countryLabel}`;
+    }
+    if (isFeminine(locale, countryGrammar)) {
+      return `a ${countryLabel}`;
+    }
+    return `o ${countryLabel}`;
   }
   return countryLabel;
 };
@@ -88,12 +104,34 @@ export const getCountryOf = (locale, countryGrammar, countryLabel) => {
     return `de ${countryLabel}`;
   }
   if (locale === 'es') {
-    // TODO
-    return countryLabel;
+    if (needsArticle(locale, countryGrammar)) {
+      if (isPlural(locale, countryGrammar)) {
+        if (isFeminine(locale, countryGrammar)) {
+          return `de las ${countryLabel}`;
+        }
+        return `de los ${countryLabel}`;
+      }
+      if (isFeminine(locale, countryGrammar)) {
+        return `de la ${countryLabel}`;
+      }
+      return `del ${countryLabel}`;
+    }
+    return `de ${countryLabel}`;
   }
   if (locale === 'pt') {
-    // TODO
-    return countryLabel;
+    if (needsArticle(locale, countryGrammar)) {
+      if (isPlural(locale, countryGrammar)) {
+        if (isFeminine(locale, countryGrammar)) {
+          return `das ${countryLabel}`;
+        }
+        return `dos ${countryLabel}`;
+      }
+      if (isFeminine(locale, countryGrammar)) {
+        return `da ${countryLabel}`;
+      }
+      return `do ${countryLabel}`;
+    }
+    return `de ${countryLabel}`;
   }
   return countryLabel;
 };
@@ -164,24 +202,89 @@ export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
     if (startsWithVowel(regionLabel)) {
       return `l'${regionLabel}`;
     }
-    if (isFeminine(locale, regionCode)) {
+    if (isFeminineRegion(locale, regionCode)) {
       return `la ${regionLabel}`;
     }
     return `le ${regionLabel}`;
   }
   if (locale === 'es') {
-    // TODO
-    return regionLabel;
+    if (isPluralRegion(locale, regionCode)) {
+      if (isFeminineRegion(locale, regionCode)) {
+        return `las ${regionLabel}`;
+      }
+      return `los ${regionLabel}`;
+    }
+    if (isFeminineRegion(locale, regionCode)) {
+      return `la ${regionLabel}`;
+    }
+    return `el ${regionLabel}`;
   }
   if (locale === 'pt') {
-    // TODO
-    return regionLabel;
+    if (isPluralRegion(locale, regionCode)) {
+      if (isFeminineRegion(locale, regionCode)) {
+        return `as ${regionLabel}`;
+      }
+      return `os ${regionLabel}`;
+    }
+    if (isFeminineRegion(locale, regionCode)) {
+      return `a ${regionLabel}`;
+    }
+    return `o ${regionLabel}`;
   }
   return regionLabel;
 };
 
-// TODO
-export const getRegionIn = (locale, regionCode, regionLabel) => regionLabel;
+export const getRegionOf = (locale, regionCode, regionLabel) => {
+  if (locale === 'en') {
+    return regionLabel;
+  }
+  if (locale === 'fr') {
+    if (needsArticleRegion(locale, regionCode)) {
+      if (isPluralRegion(locale, regionCode)) {
+        return `des ${regionLabel}`;
+      }
+      if (startsWithVowel(regionLabel)) {
+        return `de l'${regionLabel}`;
+      }
+      if (isFeminineRegion(locale, regionCode)) {
+        return `de la ${regionLabel}`;
+      }
+      return `du ${regionLabel}`;
+    }
+    return `de ${regionLabel}`;
+  }
+  if (locale === 'es') {
+    if (needsArticleRegion(locale, regionCode)) {
+      if (isPluralRegion(locale, regionCode)) {
+        if (isFeminineRegion(locale, regionCode)) {
+          return `de las ${regionLabel}`;
+        }
+        return `de los ${regionLabel}`;
+      }
+      if (isFeminineRegion(locale, regionCode)) {
+        return `de la ${regionLabel}`;
+      }
+      return `del ${regionLabel}`;
+    }
+    return `de ${regionLabel}`;
+  }
+  if (locale === 'pt') {
+    if (needsArticleRegion(locale, regionCode)) {
+      if (isPluralRegion(locale, regionCode)) {
+        if (isFeminineRegion(locale, regionCode)) {
+          return `das ${regionLabel}`;
+        }
+        return `dos ${regionLabel}`;
+      }
+      if (isFeminineRegion(locale, regionCode)) {
+        return `da ${regionLabel}`;
+      }
+      return `do ${regionLabel}`;
+    }
+    return `de ${regionLabel}`;
+  }
+  return regionLabel;
+};
 
 export const getMessageGrammar = (
   intl,
@@ -207,6 +310,7 @@ export const getMessageGrammar = (
     countryOf: getCountryOf(locale, countryGrammar, countryLabel),
     region: regionLabel,
     regionWithArticle: getRegionWithArticle(locale, regionCode, regionLabel),
+    regionOf: getRegionOf(locale, regionCode, regionLabel),
     needsArticleRegion: needsArticleRegion(intl.locale, regionCode),
   };
 };
