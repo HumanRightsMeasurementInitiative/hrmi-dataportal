@@ -128,7 +128,6 @@ function Bar({
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
   const hasValue = !!value || value === 0;
   const h = height || HEIGHT[level];
-
   // prettier-ignore
   return (
     <Wrapper
@@ -197,17 +196,23 @@ function Bar({
             refValues &&
             showAllBenchmarkAnnotations &&
             annotateBenchmarkAbove &&
-            refValues.filter(ref => !!ref.value).map((ref, index, list) => (
-              <AnnotateBenchmark
-                relative
-                key={ref.key}
-                left={(ref.value / maxValue) * 100}
-                align={list.length > 1 && index === 0 ? 'left' : 'right'}
-                benchmarkKey={ref.key}
-                above
-                margin="1px"
-              />
-            ))
+            refValues
+              .filter(ref =>
+                ref.value !== null &&
+                ref.value !== false &&
+                typeof ref.value !== 'undefined'
+              ).map((ref, index, list) => (
+                <AnnotateBenchmark
+                  relative
+                  key={ref.key}
+                  left={(ref.value / maxValue) * 100}
+                  align={ref.align || (list.length > 1 && index === 0 ? 'left' : 'right')}
+                  benchmarkKey={ref.key}
+                  above
+                  margin="1px"
+                  label={ref.label || false}
+                />
+              ))
           }
           {!hasValue && data && level < 3 && (
             <NoDataHint

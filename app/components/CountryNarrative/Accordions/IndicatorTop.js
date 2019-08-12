@@ -44,7 +44,14 @@ const getDimensionRefs = (score, benchmark) => {
   }
   return false;
 };
-function IndicatorTop({ indicator, benchmark, standard, onMetricClick, intl }) {
+function IndicatorTop({
+  indicator,
+  benchmark,
+  standard,
+  onMetricClick,
+  intl,
+  raw,
+}) {
   const data = {
     ...indicator,
     color: 'esr',
@@ -62,7 +69,14 @@ function IndicatorTop({ indicator, benchmark, standard, onMetricClick, intl }) {
     >
       <ButtonTextHeading onClick={() => onMetricClick(indicator.key)}>
         <PanelHeading level={6}>
-          <FormattedMessage {...rootMessages.indicators[indicator.key]} />
+          {!raw && (
+            <FormattedMessage {...rootMessages.indicators[indicator.key]} />
+          )}
+          {raw && (
+            <FormattedMessage
+              {...rootMessages['indicators-raw'][indicator.key]}
+            />
+          )}
           <Hidden min="medium">
             <FormNext size="large" />
           </Hidden>
@@ -94,6 +108,7 @@ IndicatorTop.propTypes = {
   standard: PropTypes.string,
   onMetricClick: PropTypes.func,
   intl: intlShape.isRequired,
+  raw: PropTypes.bool,
 };
 
 export default injectIntl(IndicatorTop);

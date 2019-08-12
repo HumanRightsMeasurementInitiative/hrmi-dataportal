@@ -57,7 +57,16 @@ function RightMain({ right, benchmark, isSubright, standard }) {
       responsive={false}
     >
       {right.type === 'esr' && (
-        <Bar level={isSubright ? 3 : 2} data={data} showScore showLabels />
+        <Bar
+          level={isSubright ? 3 : 2}
+          data={data}
+          showScore
+          showLabels
+          showBenchmark
+          annotateBenchmarkAbove
+          showAllBenchmarkAnnotations
+          padAnnotateBenchmarkAbove={false}
+        />
       )}
       {right.type === 'cpr' && (
         <BarBullet

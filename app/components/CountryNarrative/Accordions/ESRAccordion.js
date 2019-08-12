@@ -9,13 +9,11 @@ import HowToRead from 'containers/HowToRead';
 import { lowerCase } from 'utils/string';
 import rootMessages from 'messages';
 import PanelAccordion from './PanelAccordion';
-import PanelSimple from './PanelSimple';
 import DimensionMain from './DimensionMain';
 import DimensionTop from './DimensionTop';
 import RightMain from './RightMain';
 import RightTop from './RightTop';
-import IndicatorMain from './IndicatorMain';
-import IndicatorTop from './IndicatorTop';
+import IndicatorContent from './IndicatorContent';
 
 const Styled = styled(Box)``;
 
@@ -96,30 +94,12 @@ function ESRAccordion({
                           />
                         }
                         content={
-                          <div>
-                            {rightIndicators.map(indicator => (
-                              <PanelSimple
-                                level={3}
-                                key={indicator.key}
-                                top={
-                                  <IndicatorTop
-                                    indicator={indicator}
-                                    benchmark={benchmark}
-                                    onMetricClick={onMetricClick}
-                                    standard={standard}
-                                  />
-                                }
-                                main={
-                                  <IndicatorMain
-                                    indicator={indicator}
-                                    benchmark={benchmark}
-                                    onMetricClick={onMetricClick}
-                                    standard={standard}
-                                  />
-                                }
-                              />
-                            ))}
-                          </div>
+                          <IndicatorContent
+                            indicators={rightIndicators}
+                            benchmark={benchmark}
+                            onMetricClick={onMetricClick}
+                            standard={standard}
+                          />
                         }
                       />
                     </Box>
