@@ -248,6 +248,25 @@ export default defineMessages({
         id: `${scope}.settings.benchmark.best`,
         defaultMessage: 'Global best',
       },
+      min: {
+        id: `${scope}.settings.benchmark.min`,
+        defaultMessage: 'Natural minimum',
+      },
+    },
+    value: {
+      note: {
+        id: `${scope}.settings.value.note`,
+        defaultMessage:
+          'Note: raw indicator values are first converted into scores and then aggregated into the right score',
+      },
+      score: {
+        id: `${scope}.settings.value.score`,
+        defaultMessage: 'Scores',
+      },
+      raw: {
+        id: `${scope}.settings.value.raw`,
+        defaultMessage: 'Raw values',
+      },
     },
   },
   metricTypes: {
