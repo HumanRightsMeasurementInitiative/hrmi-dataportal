@@ -1,6 +1,12 @@
 {
   "projects": {
     "default": "hrmi-dataportal",
-    "dev": "hrmi-dataportal-dev"
+    "dev": "hrmi-dataportal-dev",
+    "summary1": "hrmi-dataportal-summary1",
+    "summary1b": "hrmi-dataportal-summary1b",
+    "summary2": "hrmi-dataportal-summary2",
+    "summary3": "hrmi-dataportal-summary3",
+    "summary3b": "hrmi-dataportal-summary3b",
+    "summary4": "hrmi-dataportal-summary4"
   }
 }
