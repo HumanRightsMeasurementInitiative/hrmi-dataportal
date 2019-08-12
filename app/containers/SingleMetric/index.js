@@ -96,12 +96,15 @@ const getESRDimensionValue = (score, benchmark) => {
 const getCPRDimensionValue = score =>
   score && parseFloat(score[COLUMNS.CPR.MEAN]);
 
-const getDimensionRefs = (score, benchmark) => {
+const getDimensionRefs = (score, benchmark, metricType) => {
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refColumn;
+    const col =
+      metricType === 'indicators'
+        ? benchmark.refIndicatorColumn
+        : benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
@@ -274,7 +277,11 @@ export function SingleMetric({
                             level={2}
                             data={{
                               color: 'esr',
-                              refValues: getDimensionRefs(s, currentBenchmark),
+                              refValues: getDimensionRefs(
+                                s,
+                                currentBenchmark,
+                                metric.metricType,
+                              ),
                               value: getESRDimensionValue(s, currentBenchmark),
                               maxValue: 100,
                               unit: '%',
