@@ -28,8 +28,12 @@ const BarReference = styled.div`
   display: block;
   height: ${props => props.height}px;
   width: 100%;
-  background-color: ${props =>
-    props.noData ? 'transparent' : props.theme.global.colors['light-2']};
+  background-color: ${props => {
+    if (props.noData) {
+      return 'transparent';
+    }
+    return props.theme.global.colors[props.level >= 3 ? 'light-3' : 'light-2'];
+  }};
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: transparent;
@@ -150,7 +154,7 @@ function Bar({
         onMouseEnter={() => scoreOnHover && setHover(true) }
         onMouseLeave={() => setHover(false)}
       >
-        <BarReference height={h} noData={!hasValue}>
+        <BarReference height={h} noData={!hasValue} level={level}>
           {!hasValue && <BarNoValue height={h} color={color} />}
           {hasValue && (
             <BarValue

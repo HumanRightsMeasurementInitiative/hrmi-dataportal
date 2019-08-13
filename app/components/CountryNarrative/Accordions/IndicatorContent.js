@@ -14,7 +14,7 @@ import IndicatorMain from './IndicatorMain';
 import IndicatorTop from './IndicatorTop';
 
 const Settings = styled(Box)`
-  background: ${({ theme }) => theme.global.colors['light-1']};
+  background: ${({ theme }) => theme.global.colors['light-0']};
 `;
 
 function IndicatorContent({ benchmark, onMetricClick, standard, indicators }) {
