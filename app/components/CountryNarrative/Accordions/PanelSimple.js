@@ -8,7 +8,7 @@ function PanelSimple({ main, top, level }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box border="top">
+        <Box border="top" background={level === 3 ? 'light-0' : 'white'}>
           <Box
             direction="row"
             align="center"

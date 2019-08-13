@@ -104,6 +104,7 @@ const theme = {
       white: '#FFFFFF',
       text: { light: '#3A5161' },
       border: { light: '#E8EAE9' },
+      'light-0': '#F8F8F8', // <<< lightest      empowerment: '#262064', // AA large
       'light-1': '#F2F3F4', // <<< lightest      empowerment: '#262064', // AA large
       'light-2': '#EFEFEF',
       'light-3': '#E8EAE9',
