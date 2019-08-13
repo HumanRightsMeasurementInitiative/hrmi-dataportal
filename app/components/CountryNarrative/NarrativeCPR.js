@@ -18,7 +18,6 @@ function NarrativeCPR({
   intl,
   countryGrammar,
 }) {
-  console.log(countryGrammar);
   const messageValues = {
     ...getMessageGrammar(
       intl,
