@@ -58,6 +58,7 @@ const getDimensionRefs = (data, benchmark, raw) => {
   return false;
 };
 function IndicatorMain({ indicator, benchmark, standard, raw }) {
+  // console.log('indicator', indicator)
   const data = {
     ...indicator,
     color: 'esr',
