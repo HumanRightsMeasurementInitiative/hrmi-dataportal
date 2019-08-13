@@ -28,6 +28,7 @@ import {
   INDICATOR_LOOKBACK,
   STANDARDS,
   BENCHMARKS,
+  PEOPLE_GROUPS,
 } from 'containers/App/constants';
 
 import SettingsToggle from 'containers/Settings/SettingsToggle';
@@ -103,10 +104,10 @@ function MetricTrend({
 
   const hasScores = scores && scores.length > 0;
   if (hasScores) {
-    const scoresSorted = scores.sort((a, b) =>
+    const scoresAll = scores.filter(s => s.group === PEOPLE_GROUPS[0].code);
+    const scoresSorted = scoresAll.sort((a, b) =>
       parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
     );
-
     /* eslint-disable no-plusplus */
     for (let y = parseInt(minYear, 10); y <= parseInt(maxYear, 10); y++) {
       const score = scoresSorted.reduce((memo, s) => {

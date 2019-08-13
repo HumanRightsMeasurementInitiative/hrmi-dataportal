@@ -198,12 +198,14 @@ export const PEOPLE_GROUPS = [
     code: 'All',
   },
   {
-    key: 'male',
-    code: 'Male',
-  },
-  {
     key: 'female',
     code: 'Female',
+    breakdown: 'sex',
+  },
+  {
+    key: 'male',
+    code: 'Male',
+    breakdown: 'sex',
   },
 ];
 
