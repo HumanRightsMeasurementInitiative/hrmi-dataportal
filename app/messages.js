@@ -269,6 +269,20 @@ export default defineMessages({
       },
     },
   },
+  groups: {
+    all: {
+      id: `${scope}.groups.all`,
+      defaultMessage: 'All people',
+    },
+    female: {
+      id: `${scope}.groups.female`,
+      defaultMessage: 'Female',
+    },
+    male: {
+      id: `${scope}.groups.male`,
+      defaultMessage: 'Male',
+    },
+  },
   metricTypes: {
     dimensions: {
       id: `${scope}.metricTypes.dimensions`,

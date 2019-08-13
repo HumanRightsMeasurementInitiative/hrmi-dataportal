@@ -70,6 +70,8 @@ function RightTop({
     stripes: right.type === 'esr' && standard === 'hi',
     unit: right.type === 'esr' ? '%' : '',
   };
+
+  const hasGroups = right.groupScores && right.groupScores.length > 0;
   return (
     <Box
       direction="row"
@@ -97,12 +99,22 @@ function RightTop({
           {
             key: right.key,
             value: hasAtRisk ? 1 : 0,
+            label: 'Groups',
+            skip: !hasGroups,
+          },
+          {
+            key: right.key,
+            value: 0 + (hasAtRisk ? 1 : 0) + (hasGroups ? 1 : 0),
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
           },
           {
             key: right.key,
-            value: hasAtRisk ? 2 : 1,
+            value:
+              0 +
+              (hasAtRisk ? 1 : 0) +
+              (hasGroups ? 1 : 0) +
+              (data.value ? 1 : 0),
             label: intl.formatMessage(rootMessages.tabs.about),
           },
         ]}

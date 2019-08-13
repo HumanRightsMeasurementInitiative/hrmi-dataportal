@@ -5,13 +5,13 @@ import Bar from 'components/Bars/Bar';
 import BarBullet from 'components/Bars/BarBullet';
 import { COLUMNS } from 'containers/App/constants';
 
-const getDimensionValue = (data, benchmark) => {
-  if (data.type === 'cpr' && data.score) {
-    return parseFloat(data.score[COLUMNS.CPR.MEAN]);
+const getDimensionValue = (type, score, benchmark) => {
+  if (type === 'cpr' && score) {
+    return parseFloat(score[COLUMNS.CPR.MEAN]);
   }
-  if (data.type === 'esr' && data.score) {
+  if (type === 'esr' && score) {
     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-    return parseFloat(data.score[col]);
+    return parseFloat(score[col]);
   }
   return false;
 };
@@ -39,16 +39,18 @@ const getBand = score => ({
 });
 
 function RightMain({ right, benchmark, isSubright, standard }) {
+  // console.log('right', right)
   const data = {
     ...right,
     color: right.dimension,
-    value: getDimensionValue(right, benchmark),
+    value: getDimensionValue(right.type, right.score, benchmark),
     band: right.type === 'cpr' && getBand(right.score),
     refValues: right.type === 'esr' && getDimensionRefs(right.score, benchmark),
     maxValue: right.type === 'esr' ? '100' : '10',
     stripes: right.type === 'esr' && standard === 'hi',
     unit: right.type === 'esr' ? '%' : '',
   };
+
   return (
     <Box
       pad={{ top: 'ms', left: 'medium', right: 'large', bottom: 'medium' }}

@@ -61,6 +61,8 @@ function IndicatorTop({
     stripes: standard === 'hi',
     unit: '%',
   };
+  const hasGroups = indicator.groupScores && indicator.groupScores.length > 0;
+
   return (
     <Box
       direction="row"
@@ -89,12 +91,18 @@ function IndicatorTop({
           {
             key: indicator.key,
             value: 0,
+            label: 'Groups',
+            skip: !hasGroups,
+          },
+          {
+            key: indicator.key,
+            value: hasGroups ? 1 : 0,
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
           },
           {
             key: indicator.key,
-            value: 1,
+            value: 0 + (hasGroups ? 1 : 0) + (data.value ? 1 : 0),
             label: intl.formatMessage(rootMessages.tabs.about),
           },
         ]}

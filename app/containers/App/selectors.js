@@ -421,21 +421,10 @@ export const getESRRightScores = createSelector(
   getIncomeSearch,
   getOECDSearch,
   getStandardSearch,
-  getGroupSearch,
   getESRYear,
-  (
-    metric,
-    scores,
-    countries,
-    region,
-    income,
-    oecd,
-    standardSearch,
-    groupSearch,
-    year,
-  ) => {
+  (metric, scores, countries, region, income, oecd, standardSearch, year) => {
     const standard = STANDARDS.find(as => as.key === standardSearch);
-    const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
+    const group = PEOPLE_GROUPS[0];
     const right = !!metric && RIGHTS.find(d => d.key === metric);
     return (
       scores &&
@@ -487,12 +476,11 @@ export const getIndicatorScores = createSelector(
   getRegionSearch,
   getIncomeSearch,
   getOECDSearch,
-  getGroupSearch,
   getESRYear,
-  (metric, scores, countries, region, income, oecd, groupSearch, year) => {
+  (metric, scores, countries, region, income, oecd, year) => {
     if (scores && countries) {
       const indicator = metric && INDICATORS.find(d => d.key === metric);
-      const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
+      const group = PEOPLE_GROUPS[0];
       if (indicator) {
         // first filter by group, metric, countries
         const filteredScores = scores.filter(
@@ -563,7 +551,6 @@ export const getESRScoresForCountry = createSelector(
         s =>
           s.country_code === countryCode &&
           s.metric_code === metric.code &&
-          s.group === 'All' &&
           s.standard === standard.code,
       )
     );
@@ -577,10 +564,7 @@ export const getESRIndicatorScoresForCountry = createSelector(
   (countryCode, metric, scores) =>
     scores &&
     scores.filter(
-      s =>
-        s.country_code === countryCode &&
-        s.metric_code === metric.code &&
-        s.group === 'All',
+      s => s.country_code === countryCode && s.metric_code === metric.code,
     ),
 );
 
@@ -621,11 +605,9 @@ export const getRightScoresForCountry = createSelector(
   (state, country) => country,
   getESRScores,
   getCPRScores,
-  getGroupSearch,
   getESRYear,
   getCPRYear,
-  (country, esrScores, cprScores, groupSearch, esrYear, cprYear) => {
-    const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
+  (country, esrScores, cprScores, esrYear, cprYear) => {
     const rightsESR = RIGHTS.filter(d => d.type === 'esr').map(d => d.code);
     const rightsCPR = RIGHTS.filter(d => d.type === 'cpr').map(d => d.code);
     return (
@@ -636,7 +618,6 @@ export const getRightScoresForCountry = createSelector(
           s =>
             s.country_code === country &&
             quasiEquals(s.year, esrYear) &&
-            s.group === group.code &&
             rightsESR.indexOf(s.metric_code) > -1,
         ),
         cpr: cprScores.filter(
@@ -655,17 +636,13 @@ export const getIndicatorScoresForCountry = createSelector(
   (state, country) => country,
   getESRIndicatorScores,
   getESRIndicators, // ForStandard,
-  getGroupSearch,
   getESRYear,
-  (country, scores, indicators, groupSearch, year) => {
+  (country, scores, indicators, year) => {
     if (scores && country && indicators) {
-      // first filter by country and group
-      const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
-      const filteredByGroup = scores.filter(
-        s => s.country_code === country && s.group === group.code,
-      );
+      // first filter by country
+      const filteredByCountry = scores.filter(s => s.country_code === country);
       // filter by standard
-      const filteredByStandard = filteredByGroup.filter(s =>
+      const filteredByStandard = filteredByCountry.filter(s =>
         indicators.find(i => i.metric_code === s.metric_code),
       );
       // then get the most recent year for each metric
@@ -708,7 +685,14 @@ export const getIndicatorsForCountry = createSelector(
         if (details.standard === 'Both' || details.standard === standardCode) {
           return {
             [i.key]: {
-              score: scores.find(s => s.metric_code === i.code),
+              score: scores.find(
+                s =>
+                  s.metric_code === i.code && s.group === PEOPLE_GROUPS[0].code,
+              ),
+              groupScores: scores.filter(
+                s =>
+                  s.metric_code === i.code && s.group !== PEOPLE_GROUPS[0].code,
+              ),
               details,
               ...i,
             },
@@ -812,12 +796,22 @@ export const getRightsForCountry = createSelector(
         }
         // esr
         const score = scores.esr.find(
-          s => s.standard === standardCode && s.metric_code === r.code,
+          s =>
+            s.standard === standardCode &&
+            s.metric_code === r.code &&
+            s.group === PEOPLE_GROUPS[0].code,
+        );
+        const groupScores = scores.esr.filter(
+          s =>
+            s.standard === standardCode &&
+            s.metric_code === r.code &&
+            s.group !== PEOPLE_GROUPS[0].code,
         );
         if (score) {
           return {
             [r.key]: {
               score,
+              groupScores,
               ...r,
             },
             ...memo,

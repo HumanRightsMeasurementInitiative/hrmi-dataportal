@@ -19,6 +19,7 @@ import {
   clearAllBodyScrollLocks,
 } from 'body-scroll-lock';
 
+import CountryMetricGroups from 'components/CountryMetricGroups';
 import CountryMetricPeople from 'components/CountryMetricPeople';
 import CountryAbout from 'components/CountryAbout';
 import MetricTrend from 'components/MetricTrend';
@@ -32,10 +33,13 @@ import {
   STANDARDS,
   BENCHMARKS,
   COLUMNS,
+  PEOPLE_GROUPS,
+  INDICATOR_LOOKBACK,
 } from 'containers/App/constants';
 import ContentContainer from 'styled/ContentContainer';
 
 import getMetricDetails from 'utils/metric-details';
+import quasiEquals from 'utils/quasi-equals';
 
 import {
   getCountry,
@@ -55,6 +59,8 @@ import {
   getMaxYearCPR,
   getMinYearESR,
   getMinYearCPR,
+  getCPRYear,
+  getESRYear,
 } from 'containers/App/selectors';
 
 import {
@@ -183,6 +189,7 @@ export function CountryMetric({
   theme,
   onSetBenchmark,
   onSetStandard,
+  currentYear,
 }) {
   const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -213,6 +220,33 @@ export function CountryMetric({
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
 
+  let currentScores = [];
+  let hasGroups = false;
+  if (isESR && scores) {
+    if (metric.metricType === 'indicators') {
+      const mostRecentYear = scores.reduce((memo, s) => {
+        if (
+          parseInt(s.year, 10) >= currentYear - INDICATOR_LOOKBACK &&
+          (memo === null ||
+            (parseInt(s.year, 10) > memo &&
+              parseInt(s.year, 10) <= currentYear))
+        ) {
+          return parseInt(s.year, 10);
+        }
+        return memo;
+      }, null);
+
+      currentScores = scores.filter(
+        s =>
+          quasiEquals(s.year, currentYear) ||
+          quasiEquals(s.year, mostRecentYear),
+      );
+    } else {
+      currentScores = scores.filter(s => quasiEquals(s.year, currentYear));
+    }
+    hasGroups =
+      currentScores.filter(s => s.group !== PEOPLE_GROUPS[0].code).length > 0;
+  }
   // prettier-ignore
   return (
     <Box overflow="auto" direction="column" ref={layerRef}>
@@ -278,6 +312,34 @@ export function CountryMetric({
                     locale={intl.locale}
                     hasAnalysis={hasAnalysis(metric)}
                     hasSubrightAnalysis={hasSubrightAnalysis(metric)}
+                    {...props}
+                  />
+                )),
+            },
+            {
+              key: 'groups',
+              title: 'Groups',
+              titleMobile: 'Groups',
+              // howToRead: {
+              //   contxt: 'CountryMetric',
+              //   chart: 'WordCloud',
+              //   data: 'atRisk',
+              // },
+              content:
+                hasGroups &&
+                (props => (
+                  <CountryMetricGroups
+                    color="esr"
+                    colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
+                    scores={currentScores}
+                    metric={metric}
+                    metricInfo={metricInfo}
+                    hasBenchmarkOption
+                    onSetBenchmark={onSetBenchmark}
+                    standard={standard}
+                    benchmark={currentBenchmark}
+                    percentage
+                    maxValue={100}
                     {...props}
                   />
                 )),
@@ -385,6 +447,7 @@ CountryMetric.propTypes = {
   maxYearCPR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   minYearESR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   minYearCPR: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  currentYear: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysisSubrights: PropTypes.oneOfType([
@@ -403,6 +466,14 @@ const mapStateToProps = createStructuredSelector({
   maxYearCPR: state => getMaxYearCPR(state),
   minYearESR: state => getMinYearESR(state),
   minYearCPR: state => getMinYearCPR(state),
+  currentYear: (state, { metricCode }) => {
+    const metric = getMetricDetails(metricCode);
+    if (metric.metricType === 'indicators' || metric.type === 'esr') {
+      return getESRYear(state);
+    }
+    return getCPRYear(state);
+  },
+  // currentYearESR: state => getESRYear(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
