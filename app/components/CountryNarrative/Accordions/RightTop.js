@@ -99,7 +99,7 @@ function RightTop({
           {
             key: right.key,
             value: hasAtRisk ? 1 : 0,
-            label: 'Groups',
+            label: intl.formatMessage(rootMessages.tabs.groups),
             skip: !hasGroups,
           },
           {
