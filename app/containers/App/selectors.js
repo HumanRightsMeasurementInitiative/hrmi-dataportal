@@ -85,11 +85,11 @@ export const getRouterMatch = createSelector(
 
 export const getTabSearch = createSelector(
   getRouterSearchParams,
-  search => (search.has('tab') ? parseInt(search.get('tab'), 10) : 0),
+  search => (search.has('tab') ? search.get('tab') : '0'),
 );
 export const getModalTabSearch = createSelector(
   getRouterSearchParams,
-  search => (search.has('mtab') ? parseInt(search.get('mtab'), 10) : 0),
+  search => (search.has('mtab') ? search.get('mtab') : '0'),
 );
 export const getScaleSearch = createSelector(
   getRouterSearchParams,

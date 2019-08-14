@@ -92,19 +92,19 @@ function DimensionTop({
         items={[
           {
             key,
-            value: 0,
+            value: 'atrisk',
             label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
             skip: !hasAtRisk,
           },
           {
             key,
-            value: hasAtRisk ? 1 : 0,
+            value: 'trend',
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
           },
           {
             key,
-            value: hasAtRisk ? 2 : 1,
+            value: 'about',
             label: intl.formatMessage(rootMessages.tabs.about),
           },
         ]}
