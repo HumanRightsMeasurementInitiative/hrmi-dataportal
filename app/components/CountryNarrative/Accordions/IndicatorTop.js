@@ -91,7 +91,7 @@ function IndicatorTop({
           {
             key: indicator.key,
             value: 0,
-            label: 'Groups',
+            label: intl.formatMessage(rootMessages.tabs.groups),
             skip: !hasGroups,
           },
           {

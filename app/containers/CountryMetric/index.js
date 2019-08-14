@@ -318,8 +318,8 @@ export function CountryMetric({
             },
             {
               key: 'groups',
-              title: 'Groups',
-              titleMobile: 'Groups',
+              title: intl.formatMessage(rootMessages.tabs.groups),
+              titleMobile: intl.formatMessage(rootMessages.tabs.groups),
               // howToRead: {
               //   contxt: 'CountryMetric',
               //   chart: 'WordCloud',
