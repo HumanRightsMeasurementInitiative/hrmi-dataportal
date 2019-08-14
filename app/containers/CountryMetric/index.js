@@ -65,7 +65,6 @@ import {
 
 import {
   navigate,
-  setModalTab,
   selectCountry,
   selectMetric,
   loadContentIfNeeded,
@@ -567,7 +566,6 @@ export function mapDispatchToProps(dispatch) {
         dispatch(loadContentIfNeeded(path, 'atrisk'));
       }
     },
-    onTabClick: index => dispatch(setModalTab(index)),
     onSelectCountry: country => dispatch(selectCountry(country)),
     onSelectMetric: metric => dispatch(selectMetric(metric)),
     onSetStandard: value => dispatch(setStandard(value)),
