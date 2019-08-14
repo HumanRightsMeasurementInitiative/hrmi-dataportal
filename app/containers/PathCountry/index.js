@@ -239,7 +239,10 @@ export function PathCountry({
                   currentGDP={currentGDP}
                   onCategoryClick={onCategoryClick}
                   showFAQs={
-                    props && (props.activeTab === 0 || props.activeTab === 2)
+                    props &&
+                    (props.activeTab === '0' ||
+                      props.activeTab === 'report' ||
+                      props.activeTab === 'about')
                   }
                 />
               ),
@@ -317,7 +320,7 @@ export function mapDispatchToProps(dispatch) {
       );
     },
     onClose: () => dispatch(navigate('')),
-    onMetricClick: (country, metric, tab = 0) =>
+    onMetricClick: (country, metric, tab = '0') =>
       dispatch(
         navigate(
           {
