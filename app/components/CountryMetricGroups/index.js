@@ -87,7 +87,7 @@ function CountryMetricGroups({
             const groupScore = scores.find(s => s.group === group.code);
             const data = {
               color,
-              value: groupScore[column],
+              value: parseFloat(groupScore[column]),
               refValues: getRefs(
                 groupScore,
                 benchmark,
@@ -160,8 +160,8 @@ function CountryMetricGroups({
           {hasBenchmarkOption && (
             <Box
               direction={size !== 'small' ? 'row' : 'column'}
-              pad={size === 'small' && { vertical: 'medium' }}
-              justify="left"
+              pad={{ vertical: size === 'small' ? 'medium' : 'none' }}
+              justify="start"
               fill="horizontal"
             >
               {hasBenchmarkOption && (
@@ -187,7 +187,7 @@ CountryMetricGroups.propTypes = {
   color: PropTypes.string,
   colorHint: PropTypes.string,
   percentage: PropTypes.bool,
-  benchmark: PropTypes.string,
+  benchmark: PropTypes.object,
   standard: PropTypes.string,
   hasBenchmarkOption: PropTypes.bool,
   onSetBenchmark: PropTypes.func,

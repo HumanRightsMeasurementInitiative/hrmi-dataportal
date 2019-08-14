@@ -92,29 +92,25 @@ function RightTop({
         items={[
           {
             key: right.key,
-            value: 0,
+            value: 'atrisk',
             label: intl.formatMessage(rootMessages.tabs['people-at-risk']),
             skip: !hasAtRisk,
           },
           {
             key: right.key,
-            value: hasAtRisk ? 1 : 0,
+            value: 'groups',
             label: intl.formatMessage(rootMessages.tabs.groups),
             skip: !hasGroups,
           },
           {
             key: right.key,
-            value: 0 + (hasAtRisk ? 1 : 0) + (hasGroups ? 1 : 0),
+            value: 'trend',
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
           },
           {
             key: right.key,
-            value:
-              0 +
-              (hasAtRisk ? 1 : 0) +
-              (hasGroups ? 1 : 0) +
-              (data.value ? 1 : 0),
+            value: 'about',
             label: intl.formatMessage(rootMessages.tabs.about),
           },
         ]}
