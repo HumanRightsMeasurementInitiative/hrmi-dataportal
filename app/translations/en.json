@@ -204,6 +204,7 @@
   "hrmi.tabs.about": "About",
   "hrmi.tabs.trend": "Over time",
   "hrmi.tabs.mobile.trend": "Trend",
+  "hrmi.tabs.groups": "By sex",
   "hrmi.tooltip.empowerment": "A collection of {count} civil and political rights",
   "hrmi.tooltip.physint": "A collection of {count} physical integrity rights",
   "hrmi.tooltip.esr": "A collection of {count} economic and social rights",

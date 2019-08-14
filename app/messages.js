@@ -163,6 +163,10 @@ export default defineMessages({
       id: `${scope}.tabs.trend`,
       defaultMessage: 'Over time',
     },
+    groups: {
+      id: `${scope}.tabs.groups`,
+      defaultMessage: 'By sex',
+    },
   },
   charts: {
     noData: {
