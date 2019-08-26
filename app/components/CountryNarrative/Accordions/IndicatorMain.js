@@ -60,11 +60,11 @@ const getDimensionRefs = (data, benchmark, raw) => {
 function IndicatorMain({ indicator, benchmark, standard, raw }) {
   const data = {
     ...indicator,
-    color: 'esr',
+    color: raw ? 'esrDark' : 'esr',
     value: getDimensionValue(indicator, benchmark, raw),
     refValues: getDimensionRefs(indicator, benchmark, raw),
     maxValue: '100',
-    stripes: standard === 'hi',
+    stripes: standard === 'hi' && !raw,
     unit: '%',
   };
   return (
