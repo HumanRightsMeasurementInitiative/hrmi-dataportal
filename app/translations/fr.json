@@ -71,7 +71,7 @@
   "hrmi.containers.HowToRead.summary.rights.empowerment": "3 droits politiques et civils qui renforcent l'autonomisation démocratique, scores relevés sur une échelle allant de 0 à 10.",
   "hrmi.containers.HowToRead.summary.rights.physint": "Résultats pour 4 droits politiques et civils favorisant l’intégrité physique des citoyens, relevés sur une échelle allant de 0 à 10. ",
   "hrmi.containers.HowToRead.summary.rights.esr": "Score exprimé en pourcentage pour 5 droits économiques et sociaux, variant de 0 à 100 %.",
-  "hrmi.containers.HowToRead.simpleBar.intro": "Economic and social right scores range from 0 to 100% and are based on underlying indicators. The better the score the longer the bar. ",
+  "hrmi.containers.HowToRead.simpleBar.intro": "Droits économiques et sociaux allant de 0 à 100% et basé sur des indicateurs sous- jacents. Plus le score est élevé, plus la barre est longue.",
   "hrmi.containers.HowToRead.simpleBar.countryComparison": "Lus le score est élevé, plus le pays remplit ses obligations concernant ce droit humain. ",
   "hrmi.containers.HowToRead.simpleBar.drilldownHint": "Pour explorer plus en détail les droits individuels, cliquez sur la flèche jaune vers le bas ",
   "hrmi.containers.HowToRead.trendESR.intro": "Les scores du droit économique et social varient entre 0 et 100 %  et sont basés sur des indicateurs repris ci-dessous. Plus le score est élevé, plus la barre est longue. ",
