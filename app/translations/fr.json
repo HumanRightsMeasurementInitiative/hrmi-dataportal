@@ -163,7 +163,7 @@
   "hrmi.components.CountryNarrative.atRisk.start": "Les experts en droits humains interrogés ont identifié les personnes suivantes comme étant les plus à risque de violation de leurs droits. ",
   "hrmi.components.CountryNarrative.atRisk.tableGroupLabel": "Les personnes",
   "hrmi.components.CountryNarrative.atRisk.tableRightsLabel": "Les droits les plus en danger",
-  "hrmi.components.CountryNarrative.atRisk.end.beforeLink": "En plus de ces personnes, les experts en ont identifié d'autres comme étant particulièrement à risque de voir leurs droits violés. Cliquer ",
+  "hrmi.components.CountryNarrative.atRisk.end.beforeLink": "En plus de ces personnes, les experts en ont identifié d'autres personnes comme étant particulièrement à risque de voir leurs droits violés. Cliquer ",
   "hrmi.components.CountryNarrative.atRisk.end.link": "ici",
   "hrmi.components.CountryNarrative.atRisk.end.afterLink": " pour voir les nuages de mots illustrant de manière plus complète les personnes en {countryWithArticle} ayant été identifiées comme particulièrement vulnérables. ",
   "hrmi.components.CountryNarrative.compAssessmentSectionTitle": "Comment {countryWithArticle} se {genderNumber, select, mp {positionnent-ils} m {positionne-t-il} fp {positionnent-elles} f {positionne-t-el}}?",
