@@ -230,7 +230,7 @@
   "hrmi.settings.standard.hi": "Ingresos altos",
   "hrmi.settings.benchmark.name": "Punto de referencia",
   "hrmi.settings.benchmark.nameShort": "Índice",
-  "hrmi.settings.benchmark.adjusted": "Ajustado según los ingresos",
+  "hrmi.settings.benchmark.adjusted": "Ajustado según indicador de ingresos",
   "hrmi.settings.benchmark.best": "Mejores estándares mundiales",
   "hrmi.metricTypes.dimensions": "Categorías de derechos",
   "hrmi.metricTypes.dimensions-short": "Categorías",
