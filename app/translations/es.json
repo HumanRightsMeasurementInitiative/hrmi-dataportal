@@ -1,4 +1,4 @@
-{
+
   "hrmi.containers.Header.appTitle": "Portal de datos",
   "hrmi.containers.Header.countries": "Países",
   "hrmi.containers.Header.metrics": "Derechos",
@@ -272,7 +272,7 @@
   "hrmi.people-at-risk.26": "Personas de baja condición social o económica",
   "hrmi.people-at-risk.27": "Personas sin hogar",
   "hrmi.people-at-risk.28": "Personas con menos educación",
-  "hrmi.people-at-risk.29": "Académica",
+  "hrmi.people-at-risk.29": "Académicos",
   "hrmi.people-at-risk.30": "Profesionales (por ej., médicos/as, abogados/as, docentes)",
   "hrmi.people-at-risk.31": "Otros (especifique)",
   "hrmi.rights-types.cpr": "Derechos civiles y políticos",
