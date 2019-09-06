@@ -1,4 +1,4 @@
-
+ 
   "hrmi.containers.Header.appTitle": "Portal de datos",
   "hrmi.containers.Header.countries": "Países",
   "hrmi.containers.Header.metrics": "Derechos",
@@ -90,7 +90,7 @@
   "hrmi.containers.HowToRead.trendCPR.largeRange": "A large range indicate more uncertainty about what the true score is because the experts scored the country for a right very differently. ",
   "hrmi.containers.HowToRead.trendCPR.smallRange": "A small range indicate less uncertainty since most experts scored the country similar. ",
   "hrmi.components.WordCloud.noGroupData": "Ninguno seleccionado por los expertos encuestados",
-  "hrmi.components.WordCloud.tooltip": "Porcentaje de expertos en derechos humanos que consideraron a estas personas en situación de riesgo de que se viole este derecho.",
+  "hrmi.components.WordCloud.tooltip": "Porcentaje de expertos en derechos humanos que consideraron a estas personas particularmente vulnerables de la violación de este derecho.",
   "hrmi.components.CountryMetricPeople.noAnalysisInLanguage": "Disculpa, pero esta información aún no ha sido traducida a tu idioma.",
   "hrmi.components.CountryMetricPeople.introRight": "TODO: Hemos pedido a expertos en derechos humanos que nos dijeran qué personas estaban en una situación de riesgo mayor de que se violara este derecho. Las imágenes a continuación muestran dichos grupos.",
   "hrmi.components.CountryMetricPeople.introDimension": "TODO: Hemos pedido a expertos en derechos humanos que nos dijeran qué personas estaban en una mayor situación de riesgo de que se violaran cada uno de los derechos en esta categoría. Las imágenes a continuación muestran dichos grupos.",
