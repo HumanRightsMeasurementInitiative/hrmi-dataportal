@@ -210,7 +210,7 @@
   "hrmi.tooltip.benchmark.intro": "El HRMI mide a los países en relación con los derechos a la calidad de vida basándose en 2 indicadores de rendimiento diferentes.",
   "hrmi.tooltip.benchmark.adjusted": "¿cómo lo está haciendo este país en comparación con el mejor rendimiento de otros países con aproximadamente el mismo nivel de ingresos? ",
   "hrmi.tooltip.benchmark.best": "¿cómo lo está haciendo este país en comparación con el mejor rendimiento de todos los países? ",
-  "hrmi.tooltip.standard.intro": "Para los derechos a la calidad de vida tenemos dos estándares de evaluación. ",
+  "hrmi.tooltip.standard.intro": "Los derechos a la calidad de vida se evalúan de acuerdo a dos estándares de evaluación. ",
   "hrmi.tooltip.standard.core": "Utiliza indicadores estadísticos que están disponibles para la mayoría de los países del mundo, especialmente, los países de ingresos bajos y medios.",
   "hrmi.tooltip.standard.hi": "Utiliza indicadores que están disponibles para menos países y/o reflejan mejor los desafíos relacionados con los derechos humanos de los países de ingresos altos.",
   "hrmi.charts.noData": "Ningún dato",
