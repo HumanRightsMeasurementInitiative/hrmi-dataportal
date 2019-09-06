@@ -175,7 +175,7 @@
   "hrmi.components.CountryNarrative.compAssessment.result.b": "en dessous de la moyenne",
   "hrmi.components.CountryNarrative.compAssessment.result.c": "proche de la moyenne",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": " en matière de droits d'autonomisation. ",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " concernant les droits de intégrité physique. ",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " concernant les droits d'intégrité physique. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.end": ", comparé à d'autres pays en {regionWithArticle}. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", comparé à d'autres pays au revenu élevé. ",
   "hrmi.components.Source.source": "Source : données 2018 de l’Initiative pour la Mesure des Droits Humains (HRMI), data.humanrightsmeasurement.org",
