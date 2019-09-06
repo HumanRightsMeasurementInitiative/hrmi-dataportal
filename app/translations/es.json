@@ -1,4 +1,4 @@
- 
+
   "hrmi.containers.Header.appTitle": "Portal de datos",
   "hrmi.containers.Header.countries": "Países",
   "hrmi.containers.Header.metrics": "Derechos",
@@ -341,8 +341,8 @@
   "hrmi.indicators.pisa-reading": "Lectura",
   "hrmi.indicators.not-stunted": "Niños en crecimiento y desarrollo",
   "hrmi.indicators.food-security": "Seguridad alimentaria",
-  "hrmi.indicators.survival-65": "Personas que sobreviven hasta los 65 años",
-  "hrmi.indicators.under-5-survival": "Niños que sobreviven hasta los 5 años",
+  "hrmi.indicators.survival-65": "Personas sobrevivientes hasta los 65 años",
+  "hrmi.indicators.under-5-survival": "Niños sobrevivientes hasta los 5 años",
   "hrmi.indicators.contraception": "Uso de anticonceptivos",
   "hrmi.indicators.birth-weight": "Peso al nacer",
   "hrmi.indicators.water-in-home": "Agua en las instalaciones",
@@ -358,8 +358,8 @@
   "hrmi.indicators-raw.pisa-reading": "Nivel de lectura 3+ de PISA",
   "hrmi.indicators-raw.not-stunted": "Tasa de niños no atrofiados",
   "hrmi.indicators-raw.food-security": "Personas con seguridad alimentaria",
-  "hrmi.indicators-raw.survival-65": "Personas que sobreviven hasta los 65 años",
-  "hrmi.indicators-raw.under-5-survival": "Niños que sobreviven hasta los 5 años",
+  "hrmi.indicators-raw.survival-65": "Personas sobrevivientes hasta los 65 años",
+  "hrmi.indicators-raw.under-5-survival": "Niños sobrevivientes hasta los 5 años",
   "hrmi.indicators-raw.contraception": "Mujeres que usan métodos anticonceptivos modernos",
   "hrmi.indicators-raw.birth-weight": "Bebés que no tienen bajo peso al nacer",
   "hrmi.indicators-raw.water-in-home": "Personas con agua en las instalaciones",
