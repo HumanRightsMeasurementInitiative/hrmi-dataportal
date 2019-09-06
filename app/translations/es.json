@@ -93,7 +93,7 @@
   "hrmi.components.WordCloud.tooltip": "Porcentaje de expertos en derechos humanos que consideraron a estas personas en situación de riesgo de que se viole este derecho.",
   "hrmi.components.CountryMetricPeople.noAnalysisInLanguage": "Disculpa, pero esta información aún no ha sido traducida a tu idioma.",
   "hrmi.components.CountryMetricPeople.introRight": "TODO: Hemos pedido a expertos en derechos humanos que nos dijeran qué personas estaban en una situación de riesgo mayor de que se violara este derecho. Las imágenes a continuación muestran dichos grupos.",
-  "hrmi.components.CountryMetricPeople.introDimension": "TODO: Hemos pedido a expertos en derechos humanos que nos dijeran qué personas estaban en una situación de riesgo mayor de que se violaran todos los derechos en esta categoría. Las imágenes a continuación muestran dichos grupos.",
+  "hrmi.components.CountryMetricPeople.introDimension": "TODO: Hemos pedido a expertos en derechos humanos que nos dijeran qué personas estaban en una mayor situación de riesgo de que se violaran cada uno de los derechos en esta categoría. Las imágenes a continuación muestran dichos grupos.",
   "hrmi.components.Close.label": "Regresar",
   "hrmi.components.CountryReport.title": "TODO: Informe de derechos humanos {countryOf} ",
   "hrmi.components.CountryPeople.title": "TODO: Un resumen de las 'personas en situación de riesgo' {countryOf}",
