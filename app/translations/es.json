@@ -208,7 +208,7 @@
   "hrmi.tooltip.physint": "Un conjunto de {count} derechos de integridad física",
   "hrmi.tooltip.esr": "Un conjunto de {count} derechos sociales y económicos",
   "hrmi.tooltip.benchmark.intro": "Para los derechos a la calidad de vida, HRMI mide a los países basándose en 2 índices de rendimiento diferentes.",
-  "hrmi.tooltip.benchmark.adjusted": "¿cómo lo está haciendo este país en comparación con el mejor rendimiento de otros paísescon aproximadamente el mismo nivel de ingresos? ",
+  "hrmi.tooltip.benchmark.adjusted": "¿cómo lo está haciendo este país en comparación con el mejor rendimiento de otros países con aproximadamente el mismo nivel de ingresos? ",
   "hrmi.tooltip.benchmark.best": "¿cómo lo está haciendo este país en comparación con el mejor rendimiento de todos los países? ",
   "hrmi.tooltip.standard.intro": "Para los derechos a la calidad de vida tenemos dos estándares de evaluación. ",
   "hrmi.tooltip.standard.core": "Utiliza indicadores estadísticos que están disponibles para la mayoría de los países del mundo, especialmente, los países de ingresos bajos y medios.",
