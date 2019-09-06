@@ -228,7 +228,7 @@
   "hrmi.settings.standard.name": "Estándar de evaluación",
   "hrmi.settings.standard.core": "Ingresos bajos y medios",
   "hrmi.settings.standard.hi": "Ingresos altos",
-  "hrmi.settings.benchmark.name": "Índice de rendimiento",
+  "hrmi.settings.benchmark.name": "Punto de referencia",
   "hrmi.settings.benchmark.nameShort": "Índice",
   "hrmi.settings.benchmark.adjusted": "Ajustado según los ingresos",
   "hrmi.settings.benchmark.best": "Mejores estándares mundiales",
