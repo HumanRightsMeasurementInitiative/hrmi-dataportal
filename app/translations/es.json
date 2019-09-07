@@ -96,7 +96,7 @@
   "hrmi.components.CountryMetricPeople.introDimension": "TODO: Hemos pedido a expertos en derechos humanos que nos dijeran qué personas estaban en una mayor situación de riesgo de que se violaran cada uno de los derechos en esta categoría. Las imágenes a continuación muestran dichos grupos.",
   "hrmi.components.Close.label": "Regresar",
   "hrmi.components.CountryReport.title": "TODO: Informe de derechos humanos {countryOf} ",
-  "hrmi.components.CountryPeople.title": "TODO: Un resumen de las 'personas en situación de riesgo' {countryOf}",
+  "hrmi.components.CountryPeople.title": "TODO: Un resumen de las 'personas en situación de riesgo'",
   "hrmi.components.CountryPeople.intro": "A continuación se presenta en detalle los grupos sociales en situación de riesgo por cada uno de los derechos humanos",
   "hrmi.components.CountryAbout.title": "Detalles del país",
   "hrmi.components.CountryAbout.population": "Población ({year})",
