@@ -138,7 +138,7 @@
   "hrmi.components.CountryNarrative.cpr.then.empowerment.c": "enquanto a maioria das pessoas usufruem das suas liberdades civis e políticas (liberdade de expressão, reunião e associação e direitos democráticos), outras não. ",
   "hrmi.components.CountryNarrative.cpr.then.physint.a": "muitas pessoas não estão livres de prisão arbitrária, tortura, desaparecimento, execução sumária ou extrajudicial. ",
   "hrmi.components.CountryNarrative.cpr.then.physint.b": "um número significativo de pessoas não está protegido de prisão arbitrária, tortura, desaparecimento, execução sumária ou extrajudicial. ",
-  "hrmi.components.CountryNarrative.cpr.then.physint.c": "que a maioria das pessoas está a salvo de prisão arbitrária, tortura, desaparecimento, execução sumária ou extrajudicial, outrora algumas poderão não o estar. ",
+  "hrmi.components.CountryNarrative.cpr.then.physint.c": "que enquanto a maioria das pessoas está a salvo de prisão arbitrária, tortura, desaparecimento, execução sumária ou extrajudicial, outras não o estão. ",
   "hrmi.components.CountryNarrative.esr.changeStandardNote": "Observação: os dados e comentários são exibidos para o padrão de avaliação '{otherStandard}'. Para os países de '{incomeCategory}', é melhor usar o padrão '{defaultStandard}'. ",
   "hrmi.components.CountryNarrative.esr.noData": "Para {countryWithArticle} a pontuação de {dimension} não está disponível devido à falta de dados para pelo menos um componente dos direitos à alimentação, saúde, educação, habitação e trabalho. ",
   "hrmi.components.CountryNarrative.esr.someData": "Por favor, explore os detalhes abaixo (usando a seta para baixo à direita) para ver quais direitos têm dados disponíveis e quais estão faltando. ",
