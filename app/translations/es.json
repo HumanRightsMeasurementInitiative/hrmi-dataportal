@@ -159,7 +159,7 @@
   "hrmi.components.CountryNarrative.esr.scoreBestRange.d": "{isPlural, select, true {están} false {está}} cerca ",
   "hrmi.components.CountryNarrative.esr.scoreBestEnd": "para cumplir con los '{benchmarkBest}' estándares mundiales de la actualidad que aseguran que todas las personas tienen la alimentación, educación, salud, vivienda y trabajo adecuados. ",
   "hrmi.components.CountryNarrative.atRiskSectionTitle": "Personas en situación de riesgo",
-  "hrmi.components.CountryNarrative.atRisk.noData": "Los datos de riesgo aún no se han producido para {countryWithArticle}. TODO: We plan to expand our data collection to the whole world as soon as increased funding becomes available. ",
+  "hrmi.components.CountryNarrative.atRisk.noData": "Los datos de riesgo aún no se han producido para {countryWithArticle}. Planeamos expandir nuestra recopilación de datos a todo el mundo tan pronto como hayan más fondos disponibles.",
   "hrmi.components.CountryNarrative.atRisk.start": "Los expertos en derechos humanos que hemos encuestado, identificaron a las siguientes personas como las que están en una situación de riesgo mayor de sufrir la violación de sus derechos. ",
   "hrmi.components.CountryNarrative.atRisk.tableGroupLabel": "Personas",
   "hrmi.components.CountryNarrative.atRisk.tableRightsLabel": "Derechos en situación de riesgo",
