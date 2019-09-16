@@ -209,7 +209,7 @@
   "hrmi.tooltip.esr": "Conjunto de {count} direitos sociais e económicos",
   "hrmi.tooltip.benchmark.intro": "Para os direitos de qualidade de vida, a HRMI avalia os países comparando 2 valores diferentes de referência .",
   "hrmi.tooltip.benchmark.adjusted": "Desempenho do país comparado com o desempenho dos outros países com aproximadamente o mesmo nível de rendimento.",
-  "hrmi.tooltip.benchmark.best": "Desempenho do país em comparação com o desempenho de todos os países.",
+  "hrmi.tooltip.benchmark.best": "Desempenho do país em comparação com todos os países",
   "hrmi.tooltip.standard.intro": "Para os direitos de qualidade de vida, existem dois padrões de avaliação.",
   "hrmi.tooltip.standard.core": "Estatísticos disponíveis para a maioria dos países do mundo, particularmente países de nível de rendimento baixo e médio..",
   "hrmi.tooltip.standard.hi": "Indicadores disponíveis para um conjunto menor de países e/ou reflete melhor os desafios dos direitos humanos dos países de rendimento elevado.",
