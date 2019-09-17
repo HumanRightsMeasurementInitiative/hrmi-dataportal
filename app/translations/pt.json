@@ -103,7 +103,7 @@
   "hrmi.components.CountryAbout.populationValue": "{value}{abbrev, select, millions {m} thousands {k} other {}}",
   "hrmi.components.CountryAbout.gdp": "PIB/CAPITA ({year})",
   "hrmi.components.CountryAbout.gdpValue": "${value}",
-  "hrmi.components.CountryAbout.gdpHint": "(current PPP dollars)",
+  "hrmi.components.CountryAbout.gdpHint": "(Paridade do poder de compra em dólares)",
   "hrmi.components.CountryAbout.oecd": "Status da OCDE",
   "hrmi.components.CountryAbout.region": "Região",
   "hrmi.components.CountryAbout.income": "Renda",
