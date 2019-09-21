@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Box, ResponsiveContext } from 'grommet';
-import styled, { withTheme } from 'styled-components';
+import styled, { css, withTheme } from 'styled-components';
 
 import ColumnTitle from 'styled/ColumnTitle';
 import ColumnHeader from 'styled/ColumnHeader';
@@ -15,17 +15,22 @@ import {
   getFloatingAsideWidth,
 } from 'utils/responsive';
 
-const FixedAside = styled.div`
-  position: fixed;
-  top: ${SIZES.header.height}px;
-  width: ${({ width }) => width}px;
-  bottom: ${({ hasSettings }) => (hasSettings ? SIZES.settings.height : 0)}px;
-  right: 0;
-  overflow-y: auto;
-  background: white;
-  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1);
+// prettier-ignore
+const FixedAside = styled.span`
+  ${({ fixedAside }) =>
+    fixedAside &&
+    css`
+      display: block;
+      position: fixed;
+      top: ${SIZES.header.height}px;
+      width: ${({ width }) => width}px;
+      bottom: ${({ hasSettings }) => hasSettings ? SIZES.settings.height : 0}px;
+      right: 0;
+      overflow-y: auto;
+      background: white;
+      box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1);
+    `} );
 `;
-// TODO fix aside when leaving screen
 
 function TabAside({ asideTab, tabIndex, hasSettings, theme }) {
   const [scrollTop, setScrollTop] = useState(0);
@@ -68,32 +73,31 @@ function TabAside({ asideTab, tabIndex, hasSettings, theme }) {
             flex={{ shrink: 0 }}
             ref={asideRef}
           >
-            {!fixedAside && (
-              <ColumnHeader>
-                <ColumnTitle>
-                  {asideTab.title}
-                </ColumnTitle>
-              </ColumnHeader>
-            )}
-            {!fixedAside && (
-              <ColumnContent>
-                {asideTab.content({ activeTab: tabIndex })}
-              </ColumnContent>
-            )}
-          </Box>
-          {fixedAside && (
             <FixedAside
-              width={getFloatingAsideWidth(size, theme, windowDimensions)}
+              fixedAside={fixedAside}
+              width={fixedAside
+                ? getFloatingAsideWidth(size, theme, windowDimensions)
+                : 'auto'
+              }
               hasSettings={hasSettings}
             >
               <ColumnHeader>
-                <ColumnTitle>&nbsp;</ColumnTitle>
+                {fixedAside && <ColumnTitle>&nbsp;</ColumnTitle>}
+                {!fixedAside && (
+                  <ColumnTitle>
+                    {asideTab.title}
+                  </ColumnTitle>
+                )}
               </ColumnHeader>
-              <ColumnContent style={{ width: getAsideWidth(size) }}>
+              <ColumnContent
+                style={{ width: fixedAside
+                  ? getAsideWidth(size)
+                  : 'auto'
+                }}>
                 {asideTab.content({ activeTab: tabIndex })}
               </ColumnContent>
             </FixedAside>
-          )}
+          </Box>
         </>
       )}
     </ResponsiveContext.Consumer>
