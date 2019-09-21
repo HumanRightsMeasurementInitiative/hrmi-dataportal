@@ -30,42 +30,57 @@ function NarrativeESRCompAssessment({
     esr: intl.formatMessage(rootMessages.dimensions.esr),
     referenceCount,
     referenceCountLessOne: referenceCount - 1,
+    dimension: intl.formatMessage(rootMessages.dimensions.esr),
   };
 
-  const rangeLo = parseFloat(score[benchmark.column]) - RANGE;
-  const rangeHi = parseFloat(score[benchmark.column]) + RANGE;
-  return (
-    <>
-      <FormattedMessage
-        {...messages.compAssessmentESR.start}
-        values={messageValues}
-      />
-      <strong>
+  if (!score) {
+    return (
+      <>
+        <FormattedMessage {...messages.esr.noData} values={messageValues} />
         <FormattedMessage
-          {...messages.compAssessment.result[
-            compareRange({
-              lo: rangeLo,
-              hi: rangeHi,
-              reference: referenceScore,
-            })
-          ]}
+          {...messages.esr.noDataFunding}
           values={messageValues}
         />
-      </strong>
-      {isCountryHighIncome(country) && (
+      </>
+    );
+  }
+  if (score) {
+    const rangeLo = parseFloat(score[benchmark.column]) - RANGE;
+    const rangeHi = parseFloat(score[benchmark.column]) + RANGE;
+    return (
+      <>
         <FormattedMessage
-          {...messages.compAssessmentESR.endHi}
+          {...messages.compAssessmentESR.start}
           values={messageValues}
         />
-      )}
-      {!isCountryHighIncome(country) && (
-        <FormattedMessage
-          {...messages.compAssessmentESR.end}
-          values={messageValues}
-        />
-      )}
-    </>
-  );
+        <strong>
+          <FormattedMessage
+            {...messages.compAssessment.result[
+              compareRange({
+                lo: rangeLo,
+                hi: rangeHi,
+                reference: referenceScore,
+              })
+            ]}
+            values={messageValues}
+          />
+        </strong>
+        {isCountryHighIncome(country) && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.endHi}
+            values={messageValues}
+          />
+        )}
+        {!isCountryHighIncome(country) && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.end}
+            values={messageValues}
+          />
+        )}
+      </>
+    );
+  }
+  return null;
 }
 
 NarrativeESRCompAssessment.propTypes = {
