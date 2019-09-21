@@ -17,7 +17,6 @@ export default styled.div`
   padding-left: 0px;
   transform: ${({ rotate }) => (rotate ? getRotation(rotate) : '')};
   margin: ${({ margin }) => margin || 0};
-  display: table;
   ${({ align, relative }) =>
     align === 'right' &&
     relative &&
