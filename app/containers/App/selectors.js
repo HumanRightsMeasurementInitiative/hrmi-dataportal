@@ -222,6 +222,10 @@ export const getCountries = createSelector(
   getData,
   data => data.countries,
 );
+export const getCountriesGrammar = createSelector(
+  getData,
+  data => data.countriesGrammar,
+);
 
 // data / content
 const getContent = createSelector(
@@ -324,6 +328,13 @@ export const getCPRYear = createSelector(
 export const getCountry = createSelector(
   (store, code) => code,
   getCountries,
+  (code, countries) =>
+    countries && countries.find(c => c.country_code === code),
+);
+// get data by code
+export const getCountryGrammar = createSelector(
+  (store, code) => code,
+  getCountriesGrammar,
   (code, countries) =>
     countries && countries.find(c => c.country_code === code),
 );
