@@ -323,18 +323,21 @@ export function CountryMetric({
             },
             {
               key: 'about',
-              title: `${intl.formatMessage(
-                rootMessages.tabs.about,
-              )}: ${intl.formatMessage(
-                base === 'country'
-                  ? rootMessages[metric.metricType][metricCode]
-                  : rootMessages.countries[countryCode],
-              )}`,
+              title: `${intl.formatMessage(rootMessages.tabs.about)}`,
               titleMobile: `${intl.formatMessage(
                 rootMessages.tabs.about,
               )}`,
-              content: base === 'country'
-                ? props => (
+              content: props => (
+                <>
+                  {country &&
+                  auxIndicators && (
+                    <CountryAbout
+                      country={country}
+                      auxIndicators={auxIndicators}
+                      onCategoryClick={onCategoryClick}
+                      {...props}
+                    />
+                  )}
                   <MetricAbout
                     metric={metric}
                     metricInfo={metricInfo}
@@ -346,17 +349,8 @@ export function CountryMetric({
                     }
                     {...props}
                   />
-                )
-                : props =>
-                  country &&
-                  auxIndicators && (
-                    <CountryAbout
-                      country={country}
-                      auxIndicators={auxIndicators}
-                      onCategoryClick={onCategoryClick}
-                      {...props}
-                    />
-                  ),
+                </>
+              ),
             },
           ]}
         />
@@ -460,10 +454,9 @@ const mapStateToProps = createStructuredSelector({
     }
     return false;
   },
-  auxIndicators: (state, { countryCode, base }) =>
-    base === 'metric' && getAuxIndicatorsForCountry(state, countryCode),
-  country: (state, { countryCode, base }) =>
-    base === 'metric' && getCountry(state, countryCode),
+  auxIndicators: (state, { countryCode }) =>
+    getAuxIndicatorsForCountry(state, countryCode),
+  country: (state, { countryCode }) => getCountry(state, countryCode),
   metricInfo: (state, { metricCode }) => {
     const metric = getMetricDetails(metricCode);
     if (metric.metricType === 'indicators') {
