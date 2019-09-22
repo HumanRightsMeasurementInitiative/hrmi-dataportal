@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import {
-  needsArticle,
-  isPlural,
-  compareRange,
-  needsArticleRegion,
-} from 'utils/narrative';
+import { compareRange, getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -23,17 +18,19 @@ function NarrativeESRCompAssessment({
   referenceScore,
   referenceCount,
   intl,
+  countryGrammar,
 }) {
   const messageValues = {
-    dimension: intl.formatMessage(rootMessages.dimensions.esr),
+    ...getMessageGrammar(
+      intl,
+      country.country_code,
+      country.region_code,
+      countryGrammar,
+    ),
     esr: intl.formatMessage(rootMessages.dimensions.esr),
-    country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    region: intl.formatMessage(rootMessages.regions[country.region_code]),
-    needsArticleRegion: needsArticleRegion(intl.locale, country.region_code),
-    isPlural: isPlural(intl.locale, country.country_code),
-    needsArticle: needsArticle(intl.locale, country.country_code),
     referenceCount,
     referenceCountLessOne: referenceCount - 1,
+    dimension: intl.formatMessage(rootMessages.dimensions.esr),
   };
 
   if (!score) {
@@ -88,6 +85,7 @@ function NarrativeESRCompAssessment({
 
 NarrativeESRCompAssessment.propTypes = {
   country: PropTypes.object,
+  countryGrammar: PropTypes.object,
   referenceCount: PropTypes.number,
   referenceScore: PropTypes.number,
   benchmark: PropTypes.object,
