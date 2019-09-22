@@ -96,7 +96,7 @@ export function WelcomePanel({ dismiss }) {
             <CloseIcon size="large" color="dark" />
           </StyledButtonIcon>
           {appLocales.length > 1 && (
-            <Box margin={{ left: 'small', right: 'medium' }}>
+            <Box margin={{ left: 'auto', right: 'medium' }}>
               <LocaleToggle light />
             </Box>
           )}
