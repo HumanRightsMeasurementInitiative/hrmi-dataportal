@@ -31,7 +31,7 @@ export default defineMessages({
           "Each chart shows the Human Rights Performance of each country at a glance. Countries' scores are visualised for our 3 categories of Human Rights:",
       },
       empowerment: {
-        id: `${scope}.overview.dimensions.empower`,
+        id: `${scope}.overview.dimensions.empowerment`,
         defaultMessage:
           'Summary score for 3 Civil and Political Rights, mapped on a scale from 0 to 10.',
       },
@@ -81,7 +81,7 @@ export default defineMessages({
           "Countries' scores are visualised for our 3 categories of Human Rights:",
       },
       empowerment: {
-        id: `${scope}.summary.dimensions.empower`,
+        id: `${scope}.summary.dimensions.empowerment`,
         defaultMessage:
           'Summary score for 3 Civil and Political Rights, mapped on a scale from 0 to 10.',
       },
