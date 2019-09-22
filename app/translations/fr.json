@@ -13,7 +13,7 @@
   "hrmi.containers.Header.download.attributionURL": "humanrightsmeasurement.org",
   "hrmi.containers.Header.download.downloadAnchor": "Je suis d’accord & télécharger (zip)",
   "hrmi.containers.Header.download.downloadURL": "//data-store.humanrightsmeasurement.org/data/hrmi-data-download.zip",
-  "hrmi.containers.LocaleToggle.language": "Langue: ",
+  "hrmi.containers.LocaleToggle.language": "Language: ",
   "hrmi.containers.NotFoundPage.header": "Page introuvable.",
   "hrmi.containers.MetricAside.titleParent.rights": "Pour quelle catégorie ce score des droits humains a-t-il été utilisé?",
   "hrmi.containers.MetricAside.titleParent.subrights": "Pour quel score de droits humains cet score a-t-il été utilisé?",
