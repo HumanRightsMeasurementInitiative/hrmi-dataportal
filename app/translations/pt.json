@@ -13,7 +13,7 @@
   "hrmi.containers.Header.download.attributionURL": "humanrightsmeasurement.org",
   "hrmi.containers.Header.download.downloadAnchor": "Concordo & baixe (zip)",
   "hrmi.containers.Header.download.downloadURL": "//data-store.humanrightsmeasurement.org/data/hrmi-data-download.zip",
-  "hrmi.containers.LocaleToggle.language": "Idioma: ",
+  "hrmi.containers.LocaleToggle.language": "Language: ",
   "hrmi.containers.NotFoundPage.header": "Página não encontrada.",
   "hrmi.containers.MetricAside.titleParent.rights": "Para qual categoria pontuada essa pontuação de direitos humanos foi usada?",
   "hrmi.containers.MetricAside.titleParent.subrights": "Para que pontuação de direitos humanos foi utilizado este resultado?",
