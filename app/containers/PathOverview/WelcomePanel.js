@@ -15,6 +15,10 @@ import { DIMENSIONS } from 'containers/App/constants';
 
 import DiamondChart from 'components/CountryPreview/DiamondChart';
 import DimensionTooltip from 'containers/Settings/DimensionTooltip';
+
+import LocaleToggle from 'containers/LocaleToggle';
+import { appLocales } from 'i18n';
+
 import rootMessages from 'messages';
 
 // styles
@@ -53,7 +57,7 @@ const StyledButtonHighlight = styled(ButtonHighlight)`
 `;
 const StyledButtonIcon = styled(ButtonIcon)`
   position: absolute;
-  top: 5px;
+  top: 8px;
   right: 5px;
   background: transparent;
 `;
@@ -91,6 +95,11 @@ export function WelcomePanel({ dismiss }) {
           <StyledButtonIcon onClick={dismiss} subtle>
             <CloseIcon size="large" color="dark" />
           </StyledButtonIcon>
+          {appLocales.length > 1 && (
+            <Box margin={{ left: 'auto', right: 'medium' }}>
+              <LocaleToggle light />
+            </Box>
+          )}
           <WelcomeHeading>
             <FormattedMessage {...messages.welcome.heading} />
           </WelcomeHeading>
