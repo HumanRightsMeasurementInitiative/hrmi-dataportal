@@ -102,6 +102,10 @@ export const DATA_RESOURCES = [
     file: 'countries.csv',
   },
   {
+    key: 'countriesGrammar',
+    file: 'countries_grammar.csv',
+  },
+  {
     key: 'esrIndicators',
     file: 'esr-indicators.csv',
   },
