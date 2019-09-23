@@ -121,6 +121,7 @@
   "hrmi.components.Overview.welcome.better": "The higher the score, the better the performance",
   "hrmi.components.Overview.welcome.buttonExplore": "Explore",
   "hrmi.components.CountryFilters.addFilter": "Add country filter",
+  "hrmi.components.CountryFilters.addFilterMobile": "Add filter",
   "hrmi.components.CountryFilters.regionsFilterOptionGroup": "By region",
   "hrmi.components.CountryFilters.incomeFilterOptionGroup": "By income group",
   "hrmi.components.CountryFilters.assessedFilterOptionGroup": "By assessment progress",

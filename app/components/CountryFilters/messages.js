@@ -12,10 +12,10 @@ export default defineMessages({
   addFilter: {
     id: `${scope}.addFilter`,
     defaultMessage: 'Add country filter',
-    mobile: {
-      id: `${scope}.addFilter.mobile`,
-      defaultMessage: 'Add filter',
-    },
+  },
+  addFilterMobile: {
+    id: `${scope}.addFilterMobile`,
+    defaultMessage: 'Add filter',
   },
   regionsFilterOptionGroup: {
     id: `${scope}.regionsFilterOptionGroup`,
