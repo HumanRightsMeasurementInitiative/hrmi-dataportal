@@ -43,7 +43,11 @@ export function CountrySort({
       {size => {
         // prettier-ignore
         const label = size !== 'small'
-          ? `${intl.formatMessage(messages.sortBy)} ${intl.formatMessage(messages.sortOptions[sort])}`
+          ? (
+            <Text style={{ whiteSpace: 'nowrap' }}>
+              {`${intl.formatMessage(messages.sortBy)} ${intl.formatMessage(messages.sortOptions[sort])}`}
+            </Text>
+          )
           : (
             <Text size="xsmall">
               {`${intl.formatMessage(messages.sortOptions[sort])}`}
@@ -52,7 +56,7 @@ export function CountrySort({
         return (
           <Box
             direction="row"
-            pad={isMaxSize(size, 'medium') ? { top: 'xsmall' } : 'none'}
+            pad={isMaxSize(size, 'medium') ? { top: 'xsmall' } : 'small'}
             align="center"
           >
             <StyledDropButton
