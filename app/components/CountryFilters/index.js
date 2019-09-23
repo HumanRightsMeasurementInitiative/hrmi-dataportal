@@ -205,7 +205,7 @@ export function CountryFilters({
                   </Box>
                 )}
                 {isMaxSize(size, 'medium') && (
-                  <FormattedMessage {...messages.addFilter.mobile} />
+                  <FormattedMessage {...messages.addFilterMobile} />
                 )}
               </FilterDropButton>
               {isMinSize(size, 'large') && filterOpen && (
