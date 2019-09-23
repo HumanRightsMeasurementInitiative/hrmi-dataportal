@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 import { Box, Drop, ResponsiveContext, Layer } from 'grommet';
 import { Close, Add } from 'grommet-icons';
@@ -29,6 +29,12 @@ const StyledButtonIcon = styled(ButtonIcon)`
   width: 40px;
   height: 40px;
   background: ${({ theme }) => theme.global.colors['light-1']};
+`;
+
+const FilterWrap = styled.div`
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding-top: ${({ theme }) => theme.global.edgeSize.small};
+  }
 `;
 
 const getFilterOptions = (
@@ -123,6 +129,7 @@ export function CountryFilters({
   oecdFilterValue,
   intl,
   filterGroups,
+  theme,
 }) {
   const [filterOpen, setFilterOpen] = useState(false);
   const countryTarget = useRef(null);
@@ -136,21 +143,14 @@ export function CountryFilters({
     (memo, filter) => memo && setFilters[filter],
     true,
   );
-  const setAnyFilters = filterGroups.reduce(
-    (memo, filter) => memo || !!setFilters[filter],
-    false,
-  );
+  // const setAnyFilters = filterGroups.reduce(
+  //   (memo, filter) => memo || !!setFilters[filter],
+  //   false,
+  // );
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box
-          direction={isMinSize(size, 'large') ? 'row' : 'column'}
-          width={isMinSize(size, 'large') ? 'auto' : '50%'}
-          responsive={false}
-          pad={{ vertical: 'small' }}
-          align="start"
-          margin={isMinSize(size, 'large') ? 'none' : { top: '-6px' }}
-        >
+        <FilterWrap>
           {setFilters.region && (
             <ActiveFilterButton
               onRemove={() => onRemoveFilter('region')}
@@ -180,14 +180,7 @@ export function CountryFilters({
             />
           )}
           {!setAllFilters && (
-            <Box
-              margin={
-                isMaxSize(size, 'medium') && setAnyFilters
-                  ? { top: 'small' }
-                  : 'none'
-              }
-              align="start"
-            >
+            <>
               <FilterDropButton
                 active={filterOpen}
                 onClick={() => {
@@ -196,6 +189,7 @@ export function CountryFilters({
                 ref={countryTarget}
                 style={{
                   textAlign: isMinSize(size, 'large') ? 'left' : 'center',
+                  marginBottom: theme.global.edgeSize.xxsmall,
                 }}
               >
                 {isMinSize(size, 'large') && (
@@ -248,9 +242,9 @@ export function CountryFilters({
                   )}
                 </Layer>
               )}
-            </Box>
+            </>
           )}
-        </Box>
+        </FilterWrap>
       )}
     </ResponsiveContext.Consumer>
   );
@@ -265,6 +259,7 @@ CountryFilters.propTypes = {
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   filterGroups: PropTypes.array,
+  theme: PropTypes.object,
 };
 
-export default injectIntl(CountryFilters);
+export default injectIntl(withTheme(CountryFilters));

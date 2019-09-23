@@ -16,7 +16,8 @@ const StyledButton = styled(Button)`
   border: 1px solid;
   border-color: transparent;
   font-size: ${({ theme }) => theme.text.xsmall.size};
-  margin-top: ${({ theme }) => theme.global.edgeSize.xxsmall};
+  margin-bottom: ${({ theme }) => theme.global.edgeSize.xxsmall};
+  display: block;
   &:hover {
     background-color: ${({ theme }) => theme.global.colors.white};
     color: ${({ theme }) => theme.global.colors.dark};
@@ -29,8 +30,8 @@ const StyledButton = styled(Button)`
     color: ${({ theme }) => theme.global.colors.dark};
     border-color: ${({ theme }) => theme.global.colors.highlight2};
   }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    margin-top: 0;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    display: inline-block;
     margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
     padding: 4px 8px 4px 16px;
     font-size: ${({ theme }) => theme.text.medium.size};
