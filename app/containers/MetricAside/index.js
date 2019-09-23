@@ -15,8 +15,6 @@ import { compose } from 'redux';
 import { Box, Heading, Text } from 'grommet';
 import { FormNext, FormPrevious } from 'grommet-icons';
 
-import { lowerCase } from 'utils/string';
-
 import FAQs from 'containers/FAQs';
 import MetricAbout from 'components/MetricAbout';
 import { STANDARDS, RIGHTS, INDICATORS } from 'containers/App/constants';
@@ -223,11 +221,11 @@ export function MetricAside({
                 {children.map(as => (
                   <Pad key={as.key}>
                     <Text size="small">
-                      {`'${intl.formatMessage(
+                      {`${intl.formatMessage(
+                        rootMessages.settings.standard.name,
+                      )}: '${intl.formatMessage(
                         rootMessages.settings.standard[as.key],
-                      )}' ${lowerCase(
-                        intl.formatMessage(rootMessages.settings.standard.name),
-                      )}`}
+                      )}'`}
                     </Text>
                     <>
                       {as.indicators.map(child => (
