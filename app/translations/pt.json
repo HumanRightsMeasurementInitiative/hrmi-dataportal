@@ -121,6 +121,7 @@
   "hrmi.components.Overview.welcome.better": "Quanto maior a pontuação, melhor o desempenho",
   "hrmi.components.Overview.welcome.buttonExplore": "Explorar",
   "hrmi.components.CountryFilters.addFilter": "Adicionar filtro de país",
+  "hrmi.components.CountryFilters.addFilterMobile": "Adicionar filtro",
   "hrmi.components.CountryFilters.regionsFilterOptionGroup": "Regiões",
   "hrmi.components.CountryFilters.incomeFilterOptionGroup": "Grupo de renda",
   "hrmi.components.CountryFilters.assessedFilterOptionGroup": "Avaliação",
