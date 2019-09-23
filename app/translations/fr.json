@@ -103,7 +103,7 @@
   "hrmi.components.CountryAbout.populationValue": "{value}{abbrev, select, millions {m} thousands {k} other {}}",
   "hrmi.components.CountryAbout.gdp": "PIB/habitant ({year})",
   "hrmi.components.CountryAbout.gdpValue": "${value}",
-  "hrmi.components.CountryAbout.gdpHint": "(current PPP dollars)",
+  "hrmi.components.CountryAbout.gdpHint": "(PPA en dollars actuels)",
   "hrmi.components.CountryAbout.oecd": "Statut OCDE",
   "hrmi.components.CountryAbout.region": "Région",
   "hrmi.components.CountryAbout.income": "Groupe de revenu",
