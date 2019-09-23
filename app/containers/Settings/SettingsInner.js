@@ -151,15 +151,12 @@ export function SettingsInner({
         >
           <Box pad={{ bottom: 'xsmall' }}>
             <Text style={{ fontWeight: 600 }} size="small">
-              {showHINote({ route, match }) && (
+              {(showHINote({ route, match }) || showHIIndicatorNote({ route, match, metricInfo })) && (
                 <span>
                   {`(${intl.formatMessage(
                     rootMessages.labels.hiCountry,
                   )}): ${intl.formatMessage(messages.hi.title)}`}
                 </span>
-              )}
-              {showHIIndicatorNote({ route, match, metricInfo }) && (
-                <FormattedMessage {...messages.hi.title} />
               )}
               {showHICountryNote({ route, country, standard }) && (
                 <FormattedMessage {...messages.hi.title} />
