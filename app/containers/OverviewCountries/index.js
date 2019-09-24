@@ -132,7 +132,7 @@ export function OverviewCountries({
                   wrap
                   overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
-                  margin={0}
+                  margin="0"
                 >
                   <InfiniteScroll items={sortedCountries} step={30} show={0}>
                     {(c, index) => (
