@@ -22,10 +22,12 @@ import {
   OPEN_HOW_TO,
   HIGHLIGHT_COUNTRY,
   SHOW_WELCOME,
+  COOKIECONSENT_CHECKED,
 } from './constants';
 
 // The initial state of the App
 export const initialState = {
+  cookieConsent: '',
   loading: false,
   error: false,
   howToRead: false,
@@ -117,6 +119,9 @@ const appReducer = (state = initialState, action) =>
         break;
       case SHOW_WELCOME:
         draft.showWelcome = action.show;
+        break;
+      case COOKIECONSENT_CHECKED:
+        draft.cookieConsent = action.status;
         break;
     }
   });

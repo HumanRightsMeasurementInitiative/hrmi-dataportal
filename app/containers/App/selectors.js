@@ -1291,6 +1291,11 @@ export const getShowWelcome = createSelector(
   global => global.showWelcome,
 );
 
+export const getCookieConsent = createSelector(
+  getGlobal,
+  global => global.cookieConsent,
+);
+
 export const getDependenciesReady = createSelector(
   (state, dependencies) => dependencies,
   getDataReady,

@@ -2,6 +2,7 @@ import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
 import { push, replace } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
 import extend from 'lodash/extend';
+import Cookies from 'js-cookie';
 import 'whatwg-fetch';
 
 import quasiEquals from 'utils/quasi-equals';
@@ -30,6 +31,8 @@ import {
   contentLoaded,
   contentLoadingError,
   loadContentIfNeeded,
+  cookieConsentChecked,
+  checkCookieConsent,
 } from './actions';
 import {
   LOAD_DATA_IF_NEEDED,
@@ -48,6 +51,9 @@ import {
   SET_BENCHMARK,
   SET_TAB,
   SET_MODALTAB,
+  CHECK_COOKIECONSENT,
+  COOKIECONSENT_NAME,
+  SET_COOKIECONSENT,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -326,12 +332,23 @@ export function* navigateSaga({ location, args }) {
   yield put(push(`${newPathname}${search}`));
 }
 
+export function* checkCookieConsentSaga() {
+  const consentStatus = Cookies.get(COOKIECONSENT_NAME);
+  yield put(cookieConsentChecked(consentStatus));
+}
+export function* setCookieConsentSaga({ status }) {
+  Cookies.set(COOKIECONSENT_NAME, status, { expires: 365 });
+  yield put(checkCookieConsent());
+}
+
 export default function* defaultSaga() {
   // See example in containers/HomePage/saga.js
   yield takeEvery(
     LOAD_DATA_IF_NEEDED,
     autoRestart(loadDataSaga, loadDataErrorHandler, MAX_LOAD_ATTEMPTS),
   );
+  yield takeEvery(CHECK_COOKIECONSENT, checkCookieConsentSaga);
+  yield takeLatest(SET_COOKIECONSENT, setCookieConsentSaga);
   yield takeEvery(
     LOAD_CONTENT_IF_NEEDED,
     autoRestart(loadContentSaga, loadContentErrorHandler, MAX_LOAD_ATTEMPTS),

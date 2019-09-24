@@ -26,8 +26,28 @@ import {
   OPEN_HOW_TO,
   HIGHLIGHT_COUNTRY,
   SHOW_WELCOME,
+  CHECK_COOKIECONSENT,
+  COOKIECONSENT_CHECKED,
+  SET_COOKIECONSENT,
 } from './constants';
 
+export function checkCookieConsent() {
+  return {
+    type: CHECK_COOKIECONSENT,
+  };
+}
+export function setCookieConsent(status) {
+  return {
+    type: SET_COOKIECONSENT,
+    status,
+  };
+}
+export function cookieConsentChecked(status) {
+  return {
+    type: COOKIECONSENT_CHECKED,
+    status,
+  };
+}
 /**
  * Load the data, this action starts the request saga
  *
