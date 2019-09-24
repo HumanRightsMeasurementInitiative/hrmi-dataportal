@@ -141,6 +141,7 @@ const theme = {
       small: '12px',
       ms: '16px',
       medium: '24px',
+      ml: '36px',
       large: '48px',
       xlarge: '96px',
     },

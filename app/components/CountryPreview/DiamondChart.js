@@ -8,7 +8,7 @@ import BarMultiple from 'components/Bars/BarMultiple';
 import Bar from 'components/Bars/Bar';
 import rootMessages from 'messages';
 
-const WIDTH = [80, 116];
+const WIDTH = [72, 116];
 const MARGINS = 4;
 const heightRotated = w => w * 2 ** (1 / 2); // height * sqrt(2)
 const Styled = styled.div`
