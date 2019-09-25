@@ -136,7 +136,7 @@ export function CookieConsent({ init, cookieConsent, intl, consent }) {
             background="dark-1"
             style={{ maxWidth: '100%', width: '360px' }}
           >
-            <Paragraph margin={{ vertical: 'small' }}>
+            <Paragraph margin={{ vertical: 'small' }} size="small">
               <FormattedMessage {...messages.nonEssentialConsentInfo} />
             </Paragraph>
             <ButtonWrap>
@@ -157,7 +157,7 @@ export function CookieConsent({ init, cookieConsent, intl, consent }) {
                 <FormattedMessage {...messages.buttonReject} />
               </ButtonHighlightSecondary>
             </ButtonWrap>
-            <Paragraph margin={{ vertical: 'small' }}>
+            <Paragraph margin={{ vertical: 'small' }} size="small">
               <FormattedMessage {...messages.additionalInfo} />
               <LinkInText
                 href={intl.formatMessage(messages.urlPrivacyPolicy)}
