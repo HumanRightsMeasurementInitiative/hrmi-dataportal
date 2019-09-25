@@ -181,7 +181,7 @@ export function Settings({
               </Box>
             )}
             {isMaxSize(size, 'medium') && open && (
-              <Layer full animate={false}>
+              <Layer full animate={false} style={{ paddingBottom: '20px' }}>
                 <Box fill>
                   <Box
                     direction="row"
