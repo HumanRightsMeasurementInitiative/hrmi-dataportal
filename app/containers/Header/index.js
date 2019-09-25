@@ -42,7 +42,7 @@ import Icon from 'components/Icon';
 import LocaleToggle from 'containers/LocaleToggle';
 import { appLocales } from 'i18n';
 import { PAGES } from 'containers/App/constants';
-import { navigate, loadDataIfNeeded } from 'containers/App/actions';
+import { navigate, loadDataIfNeeded, trackEvent } from 'containers/App/actions';
 
 // import { isMinSize, isMaxSize } from 'utils/responsive';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -180,7 +180,7 @@ const SecondaryDropButton = styled(Button)`
 `;
 const DEPENDENCIES = ['countries'];
 
-const renderDownload = (intl, isFullWidth) => (
+const renderDownload = (intl, isFullWidth, downloadClicked) => (
   <Box
     pad={{ vertical: 'medium', horizontal: 'medium' }}
     background="dark-1"
@@ -200,13 +200,14 @@ const renderDownload = (intl, isFullWidth) => (
       href={intl.formatMessage(messages.download.downloadURL)}
       as="a"
       style={{ margin: '0 auto' }}
+      onClick={() => downloadClicked}
     >
       <FormattedMessage {...messages.download.downloadAnchor} />
     </ButtonHighlight>
   </Box>
 );
 
-export function Header({ nav, intl, onLoadData, match }) {
+export function Header({ nav, intl, onLoadData, match, downloadClicked }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -287,11 +288,11 @@ export function Header({ nav, intl, onLoadData, match }) {
                   onClickOutside={() => setShowDownload(false)}
                   elevation="small"
                 >
-                  {renderDownload(intl)}
+                  {renderDownload(intl, false, downloadClicked)}
                 </Drop>
               )}
               {showDownload && isMaxSize(size, 'medium') && (
-                <div>{renderDownload(intl, true)}</div>
+                <div>{renderDownload(intl, true, downloadClicked)}</div>
               )}
             </MenuList>
           </NavBarTop>
@@ -397,12 +398,21 @@ Header.propTypes = {
   nav: PropTypes.func.isRequired,
   match: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
+  downloadClicked: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   onLoadData: () => {
     DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
+  },
+  downloadClicked: () => {
+    dispatch(
+      trackEvent({
+        category: 'Data',
+        action: 'Download clicked',
+      }),
+    );
   },
   // navigate to location
   nav: location => {
