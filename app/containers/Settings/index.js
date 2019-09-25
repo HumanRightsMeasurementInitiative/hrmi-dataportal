@@ -36,7 +36,7 @@ import SettingsInner from './SettingsInner';
 
 const Styled = styled.div`
   position: fixed;
-  bottom: 0;
+  bottom: 20px;
   left: 0;
   width: 100%;
   height: ${({ theme }) => theme.sizes.settings.heightCollapsed}px;
