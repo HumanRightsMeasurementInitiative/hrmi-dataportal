@@ -24,13 +24,13 @@ const Styled = styled.div`
   width: 100%;
   height: 20px;
   background: ${props => props.theme.global.colors.black};
-  z-index: 9999;
+  z-index: 9998;
   display: block;
   text-align: right;
   line-height: 0;
 `;
 const Link = styled.a`
-  color: ${props => props.theme.global.colors['light-4']};
+  color: ${props => props.theme.global.colors['light-5']};
   font-size: 14px;
   line-height: 20px;
   text-decoration: none;
@@ -46,10 +46,10 @@ const LinkInText = styled.a`
   }
 `;
 const ButtonDrop = styled(ButtonPlain)`
-  color: ${props => props.theme.global.colors['light-4']};
+  color: ${props => props.theme.global.colors['light-5']};
   font-size: 14px;
   line-height: 20px;
-  margin-right: 20px;
+  margin-right: 10px;
   padding: 0 10px;
   text-decoration: none;
   &:hover {
