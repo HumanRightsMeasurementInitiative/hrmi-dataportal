@@ -27,9 +27,13 @@ export default defineMessages({
     defaultMessage:
       'For any website to function, it is necessary to collect a small amount of user data, so by continuing to use this website, you are consenting to that. To find out more, please read our ',
   },
-  anchorPrivacyPolicy: {
-    id: `${scope}.anchorPrivacyPolicy`,
-    defaultMessage: 'privacy policy',
+  linkPrivacyPolicy: {
+    id: `${scope}.linkPrivacyPolicy`,
+    defaultMessage: 'Privacy Policy',
+  },
+  linkDialogue: {
+    id: `${scope}.linkDialogue`,
+    defaultMessage: 'Privacy Settings',
   },
   urlPrivacyPolicy: {
     id: `${scope}.urlPrivacyPolicy`,

@@ -29,6 +29,8 @@ import {
   CHECK_COOKIECONSENT,
   COOKIECONSENT_CHECKED,
   SET_COOKIECONSENT,
+  GA_INITIALISED,
+  TRACK_EVENT,
 } from './constants';
 
 export function checkCookieConsent() {
@@ -46,6 +48,18 @@ export function cookieConsentChecked(status) {
   return {
     type: COOKIECONSENT_CHECKED,
     status,
+  };
+}
+export function setGAinitialised(status) {
+  return {
+    type: GA_INITIALISED,
+    status,
+  };
+}
+export function trackEvent(gaEvent) {
+  return {
+    type: TRACK_EVENT,
+    gaEvent,
   };
 }
 /**

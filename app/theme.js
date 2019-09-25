@@ -100,7 +100,7 @@ const theme = {
       size: '16px',
     },
     colors: {
-      black: '#09052F',
+      black: '#101D24',
       white: '#FFFFFF',
       text: { light: '#3A5161' },
       border: { light: '#E8EAE9' },
