@@ -408,7 +408,7 @@ export function* initialiseAnalyticsSaga({ status }) {
   const initialisedGA = yield select(getGAStatus);
   if (status === 'true') {
     if (!initialisedGA) {
-      ReactGA.initialize(GA_PROPERTY_ID, { debug: false });
+      ReactGA.initialize(GA_PROPERTY_ID, { debug: false, titleCase: false });
       ReactGA.set({ anonymizeIp: true });
       yield put(setGAinitialised(true));
       const initialPage = yield select(getRouterPath);
