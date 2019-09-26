@@ -56,7 +56,7 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl, trackEvent }) {
             trackEvent({
               category: 'Data',
               action: `CPR dimension ${open ? 'expand' : 'collapse'}`,
-              value: dimension,
+              value: dimension.key,
             })
           }
           content={
@@ -114,7 +114,7 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl, trackEvent }) {
                           trackEvent({
                             category: 'Data',
                             action: `CPR right ${open ? 'expand' : 'collapse'}`,
-                            value: right,
+                            value: right.key,
                           })
                         }
                         content={
