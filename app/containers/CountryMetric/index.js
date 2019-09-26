@@ -480,8 +480,8 @@ export function mapDispatchToProps(dispatch) {
             deleteParams: deleteParams.filter(p => p !== key),
             trackEvent: {
               category: 'Content',
-              action: 'Country-metric: Select country category',
-              value: `Taxonomy: ${key} // Category: ${value}`,
+              action: 'Country-metric: country category',
+              value: `Key/value: ${key}/${value}`,
             },
           },
         ),
@@ -510,8 +510,8 @@ export function mapDispatchToProps(dispatch) {
             deleteParams: ['mtab'],
             trackEvent: {
               category: 'Content',
-              action: 'Close country-metric modal',
-              value: `Base: ${base} // Code: ${code}`,
+              action: 'Close country-metric',
+              value: `Base/code: ${base}/${code}`,
             },
           },
         ),

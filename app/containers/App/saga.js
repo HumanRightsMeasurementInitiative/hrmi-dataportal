@@ -408,12 +408,19 @@ export function* initialiseAnalyticsSaga({ status }) {
   const initialisedGA = yield select(getGAStatus);
   if (status === 'true') {
     if (!initialisedGA) {
-      ReactGA.initialize(GA_PROPERTY_ID, { debug: true });
+      ReactGA.initialize(GA_PROPERTY_ID, { debug: false });
       ReactGA.set({ anonymizeIp: true });
       yield put(setGAinitialised(true));
+      const initialPage = yield select(getRouterPath);
+      ReactGA.pageview(initialPage);
+      yield put(
+        trackEvent({
+          category: 'Content',
+          action: 'GA init',
+          value: initialPage,
+        }),
+      );
     }
-    const initialPage = yield select(getRouterPath);
-    ReactGA.pageview(initialPage);
   } else if (status === 'false') {
     Cookies.remove('_ga', { path: '/', domain: window.location.hostname });
     Cookies.remove('_gat', { path: '/', domain: window.location.hostname });
@@ -424,7 +431,7 @@ export function* initialiseAnalyticsSaga({ status }) {
 export function* trackPageviewSaga({ payload }) {
   const initialisedGA = yield select(getGAStatus);
   const consentStatus = Cookies.get(COOKIECONSENT_NAME);
-  if (consentStatus === 'true' && initialisedGA) {
+  if (consentStatus === 'true' && initialisedGA && !payload.isFirstRendering) {
     ReactGA.pageview(`${payload.location.pathname}${payload.location.search}`);
   }
 }
@@ -433,7 +440,10 @@ export function* trackEventSaga({ gaEvent }) {
   const initialisedGA = yield select(getGAStatus);
   const consentStatus = Cookies.get(COOKIECONSENT_NAME);
   if (consentStatus === 'true' && initialisedGA) {
-    ReactGA.event(gaEvent);
+    ReactGA.event({
+      category: gaEvent.category,
+      action: `${gaEvent.action} | ${gaEvent.value}`,
+    });
   }
 }
 
@@ -443,9 +453,6 @@ export default function* defaultSaga() {
     LOAD_DATA_IF_NEEDED,
     autoRestart(loadDataSaga, loadDataErrorHandler, MAX_LOAD_ATTEMPTS),
   );
-  yield takeEvery(CHECK_COOKIECONSENT, checkCookieConsentSaga);
-  yield takeLatest(SET_COOKIECONSENT, setCookieConsentSaga);
-  yield takeLatest(COOKIECONSENT_CHECKED, initialiseAnalyticsSaga);
   yield takeEvery(
     LOAD_CONTENT_IF_NEEDED,
     autoRestart(loadContentSaga, loadContentErrorHandler, MAX_LOAD_ATTEMPTS),
@@ -458,6 +465,9 @@ export default function* defaultSaga() {
   yield takeLatest(SET_TAB, setTabSaga);
   yield takeLatest(SET_MODALTAB, setModalTabSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
-  yield takeEvery(LOCATION_CHANGE, trackPageviewSaga);
-  yield takeEvery(TRACK_EVENT, trackEventSaga);
+  yield takeLatest(CHECK_COOKIECONSENT, checkCookieConsentSaga);
+  yield takeLatest(SET_COOKIECONSENT, setCookieConsentSaga);
+  yield takeLatest(COOKIECONSENT_CHECKED, initialiseAnalyticsSaga);
+  yield takeLatest(LOCATION_CHANGE, trackPageviewSaga);
+  yield takeLatest(TRACK_EVENT, trackEventSaga);
 }
