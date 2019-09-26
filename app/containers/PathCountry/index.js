@@ -365,7 +365,7 @@ export function mapDispatchToProps(dispatch) {
             trackEvent: {
               category: 'Content',
               action: 'Country-metric close',
-              value: `Country: ${country}`,
+              value: country,
             },
           },
         ),

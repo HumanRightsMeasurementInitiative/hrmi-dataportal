@@ -481,7 +481,7 @@ export function mapDispatchToProps(dispatch) {
             trackEvent: {
               category: 'Content',
               action: 'Country-metric: country category',
-              value: `Key/value: ${key}/${value}`,
+              value: `${key}/${value}`,
             },
           },
         ),
@@ -511,7 +511,7 @@ export function mapDispatchToProps(dispatch) {
             trackEvent: {
               category: 'Content',
               action: 'Close country-metric',
-              value: `Base/code: ${base}/${code}`,
+              value: `${base}/${code}`,
             },
           },
         ),

@@ -218,7 +218,7 @@ export function mapDispatchToProps(dispatch) {
             trackEvent: {
               category: 'Content',
               action: 'Overview: remove country filter',
-              value: `Key: ${key}`,
+              value: key,
             },
           },
         ),
@@ -234,7 +234,7 @@ export function mapDispatchToProps(dispatch) {
             trackEvent: {
               category: 'Content',
               action: 'Overview: country filter',
-              value: `Key/value: ${key}/${value}`,
+              value: `${key}/${value}`,
             },
           },
         ),
