@@ -159,7 +159,7 @@ export function mapDispatchToProps(dispatch) {
           {
             trackEvent: {
               category: 'Content',
-              action: 'Metric: Select metric',
+              action: 'Metric: change metric',
               value: code,
             },
           },
@@ -176,7 +176,7 @@ export function mapDispatchToProps(dispatch) {
             deleteParams: ['mtab'],
             trackEvent: {
               category: 'Content',
-              action: 'Metric: Close country-metric modal',
+              action: 'Metric-country close',
               value: `Metric: ${code}`,
             },
           },

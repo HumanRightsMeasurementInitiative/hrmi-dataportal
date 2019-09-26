@@ -375,7 +375,20 @@ export function mapDispatchToProps(dispatch) {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
     onRemoveFilter: key =>
-      dispatch(navigate({}, { replace: false, deleteParams: [key] })),
+      dispatch(
+        navigate(
+          {},
+          {
+            replace: false,
+            deleteParams: [key],
+            trackEvent: {
+              category: 'Content',
+              action: 'Metric: remove country filter',
+              value: `Key: ${key}`,
+            },
+          },
+        ),
+      ),
     onAddFilter: (key, value) =>
       dispatch(
         navigate(
@@ -384,8 +397,8 @@ export function mapDispatchToProps(dispatch) {
             replace: false,
             trackEvent: {
               category: 'Content',
-              action: 'Metric: Add country filter',
-              value: `Taxonomy: ${key} // Category: ${value}`,
+              action: 'Metric: country filter',
+              value: `Key/value: ${key}/${value}`,
             },
           },
         ),
@@ -398,7 +411,7 @@ export function mapDispatchToProps(dispatch) {
             replace: false,
             trackEvent: {
               category: 'Content',
-              action: 'Metric: Sort countries',
+              action: 'Metric: sort countries',
               value,
             },
           },
@@ -412,7 +425,7 @@ export function mapDispatchToProps(dispatch) {
             replace: false,
             trackEvent: {
               category: 'Content',
-              action: 'Metric: Change country sort order',
+              action: 'Metric: country sort order',
               value,
             },
           },
@@ -429,8 +442,8 @@ export function mapDispatchToProps(dispatch) {
             replace: false,
             trackEvent: {
               category: 'Content',
-              action: 'Metric: Open country-metric modal',
-              value: `Country: ${country} // Metric: ${metric} // Tab: ${tab}`,
+              action: 'Metric-country',
+              value: `Metric/country/tab: ${metric}/${country}/${tab}`,
             },
           },
         ),
