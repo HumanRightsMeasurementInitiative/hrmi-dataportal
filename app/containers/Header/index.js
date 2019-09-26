@@ -416,7 +416,16 @@ const mapDispatchToProps = dispatch => ({
   },
   // navigate to location
   nav: location => {
-    dispatch(navigate(location, { keepTab: true }));
+    dispatch(
+      navigate(location, {
+        keepTab: true,
+        trackEvent: {
+          category: 'Content',
+          action: 'Header: Navigate',
+          value: location,
+        },
+      }),
+    );
   },
 });
 

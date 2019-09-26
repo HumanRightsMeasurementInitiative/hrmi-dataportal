@@ -19,7 +19,7 @@ import RightTop from './RightTop';
 
 const Styled = styled(Box)``;
 
-function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
+function CPRAccordion({ dimension, rights, onMetricClick, intl, trackEvent }) {
   const parentRights = rights.filter(r => typeof r.aggregate === 'undefined');
   const subrights = rights.filter(r => typeof r.aggregate !== 'undefined');
   return (
@@ -51,6 +51,13 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
               onMetricClick={onMetricClick}
               hasAtRisk
             />
+          }
+          onClick={open =>
+            trackEvent({
+              category: 'Data',
+              action: `CPR dimension ${open ? 'expand' : 'collapse'}`,
+              value: dimension,
+            })
           }
           content={
             <div>
@@ -103,6 +110,13 @@ function CPRAccordion({ dimension, rights, onMetricClick, intl }) {
                             onMetricClick={onMetricClick}
                           />
                         }
+                        onClick={open =>
+                          trackEvent({
+                            category: 'Data',
+                            action: `CPR right ${open ? 'expand' : 'collapse'}`,
+                            value: right,
+                          })
+                        }
                         content={
                           <div>
                             {rightSubrights.map(subright => (
@@ -146,6 +160,7 @@ CPRAccordion.propTypes = {
   dimension: PropTypes.object,
   rights: PropTypes.array,
   intl: intlShape.isRequired,
+  trackEvent: PropTypes.func,
 };
 
 export default injectIntl(CPRAccordion);

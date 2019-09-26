@@ -326,6 +326,7 @@ export function* navigateSaga({ location, args }) {
       replace: true,
       deleteParams: false,
       keepTab: false,
+      trackEvent: false,
     },
     args || {},
   );
@@ -387,6 +388,10 @@ export function* navigateSaga({ location, args }) {
   const newSearch = newSearchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
   yield put(push(`${newPathname}${search}`));
+
+  if (xArgs.trackEvent) {
+    yield put(trackEvent(xArgs.trackEvent));
+  }
 }
 
 export function* checkCookieConsentSaga() {
