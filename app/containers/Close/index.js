@@ -112,7 +112,7 @@ function Close({
                   trackEvent: {
                     category: 'Content',
                     action: 'Close view',
-                    value: closeTarget || '',
+                    value: closeTarget || 'Home',
                   },
                 })
             }
@@ -136,7 +136,7 @@ function Close({
               trackEvent: {
                 category: 'Content',
                 action: 'Close view',
-                value: closeTarget || '',
+                value: closeTarget || 'Home',
               },
             })
         }

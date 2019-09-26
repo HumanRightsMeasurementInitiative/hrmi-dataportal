@@ -185,7 +185,7 @@ const mapDispatchToProps = dispatch => ({
       navigate('page/methodology', {
         trackEvent: {
           category: 'Content',
-          action: 'FAQs: Open page',
+          action: 'FAQs: open page',
           value: 'methodology',
         },
       }),

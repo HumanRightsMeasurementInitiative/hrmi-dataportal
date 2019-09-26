@@ -207,7 +207,14 @@ const renderDownload = (intl, isFullWidth, downloadClicked) => (
   </Box>
 );
 
-export function Header({ nav, intl, onLoadData, match, downloadClicked }) {
+export function Header({
+  nav,
+  intl,
+  onLoadData,
+  match,
+  downloadClicked,
+  searched,
+}) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -362,9 +369,12 @@ export function Header({ nav, intl, onLoadData, match, downloadClicked }) {
                   <TextInput
                     plain
                     value={search}
-                    onChange={evt =>
-                      evt && evt.target && setSearch(evt.target.value)
-                    }
+                    onChange={evt => {
+                      if (evt && evt.target) {
+                        setSearch(evt.target.value);
+                        searched(evt.target.value);
+                      }
+                    }}
                     placeholder={intl.formatMessage(messages.search.allSearch)}
                     pad="xsmall"
                   />
@@ -399,6 +409,7 @@ Header.propTypes = {
   match: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   downloadClicked: PropTypes.func.isRequired,
+  searched: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
 
@@ -414,6 +425,15 @@ const mapDispatchToProps = dispatch => ({
       }),
     );
   },
+  searched: value => {
+    dispatch(
+      trackEvent({
+        category: 'Search',
+        action: 'Download clicked',
+        value,
+      }),
+    );
+  },
   // navigate to location
   nav: location => {
     dispatch(
@@ -421,8 +441,8 @@ const mapDispatchToProps = dispatch => ({
         keepTab: true,
         trackEvent: {
           category: 'Content',
-          action: 'Header: Navigate',
-          value: location,
+          action: 'Header: navigate',
+          value: typeof location === 'object' ? location.pathname : location,
         },
       }),
     );
