@@ -371,8 +371,8 @@ export function Header({
                     value={search}
                     onChange={evt => {
                       if (evt && evt.target) {
-                        setSearch(evt.target.value);
                         searched(evt.target.value);
+                        setSearch(evt.target.value);
                       }
                     }}
                     placeholder={intl.formatMessage(messages.search.allSearch)}
@@ -429,7 +429,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       trackEvent({
         category: 'Search',
-        action: 'Download clicked',
+        action: '',
         value,
       }),
     );
