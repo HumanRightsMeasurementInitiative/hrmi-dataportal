@@ -109,6 +109,11 @@ function Close({
                 : onClose(closeTarget || '', {
                   keepTab,
                   needsLocale: !closeTarget,
+                  trackEvent: {
+                    category: 'Content',
+                    action: 'Close view',
+                    value: closeTarget || '',
+                  },
                 })
             }
           >
@@ -128,6 +133,11 @@ function Close({
             : onClose(closeTarget || '', {
               keepTab,
               needsLocale: !closeTarget,
+              trackEvent: {
+                category: 'Content',
+                action: 'Close view',
+                value: closeTarget || '',
+              },
             })
         }
       >

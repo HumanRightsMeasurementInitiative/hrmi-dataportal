@@ -153,7 +153,18 @@ PathMetric.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onMetricClick: code =>
-      dispatch(navigate({ pathname: code === 'all' ? '' : `/metric/${code}` })),
+      dispatch(
+        navigate(
+          { pathname: code === 'all' ? '' : `/metric/${code}` },
+          {
+            trackEvent: {
+              category: 'Content',
+              action: 'Metric: Select metric',
+              value: code,
+            },
+          },
+        ),
+      ),
     onCloseMetricOverlay: code =>
       dispatch(
         navigate(
@@ -163,6 +174,11 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             deleteParams: ['mtab'],
+            trackEvent: {
+              category: 'Content',
+              action: 'Metric: Close country-metric modal',
+              value: `Metric: ${code}`,
+            },
           },
         ),
       ),
