@@ -382,6 +382,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?${key}=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Content',
+              action: 'Metric: Add country filter',
+              value: `Taxonomy: ${key} // Category: ${value}`,
+            },
           },
         ),
       ),
@@ -391,6 +396,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?sort=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Content',
+              action: 'Metric: Sort countries',
+              value,
+            },
           },
         ),
       ),
@@ -400,6 +410,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?dir=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Content',
+              action: 'Metric: Change country sort order',
+              value,
+            },
           },
         ),
       ),
@@ -412,6 +427,11 @@ export function mapDispatchToProps(dispatch) {
           },
           {
             replace: false,
+            trackEvent: {
+              category: 'Content',
+              action: 'Metric: Open country-metric modal',
+              value: `Country: ${country} // Metric: ${metric} // Tab: ${tab}`,
+            },
           },
         ),
       ),

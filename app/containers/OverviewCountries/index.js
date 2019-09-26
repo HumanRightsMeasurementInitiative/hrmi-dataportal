@@ -210,7 +210,18 @@ export function mapDispatchToProps(dispatch) {
   return {
     onRemoveFilter: key =>
       dispatch(
-        navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
+        navigate(
+          { pathname: '' },
+          {
+            replace: false,
+            deleteParams: [key],
+            trackEvent: {
+              category: 'Content',
+              action: 'Overview: Remove country filter',
+              value: `Taxonomy: ${key} (Overview)`,
+            },
+          },
+        ),
       ),
     onSelectCountry: country => dispatch(selectCountry(country)),
     onCountryHover: country => dispatch(highlightCountry(country)),
@@ -220,6 +231,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?${key}=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Content',
+              action: 'Overview: Add country filter',
+              value: `Taxonomy: ${key} // Category: ${value}`,
+            },
           },
         ),
       ),
@@ -229,6 +245,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?sort=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Content',
+              action: 'Overview: Sort countries',
+              value,
+            },
           },
         ),
       ),
@@ -238,6 +259,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?dir=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Content',
+              action: 'Overview: Change country sort order',
+              value,
+            },
           },
         ),
       ),
