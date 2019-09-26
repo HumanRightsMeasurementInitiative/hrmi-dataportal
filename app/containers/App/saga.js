@@ -442,7 +442,9 @@ export function* trackEventSaga({ gaEvent }) {
   if (consentStatus === 'true' && initialisedGA) {
     ReactGA.event({
       category: gaEvent.category,
-      action: `${gaEvent.action} | ${gaEvent.value}`,
+      action: gaEvent.value
+        ? `${gaEvent.action} | ${gaEvent.value}`
+        : gaEvent.action,
     });
   }
 }
