@@ -62,6 +62,7 @@ import {
   COOKIECONSENT_CHECKED,
   GA_PROPERTY_ID,
   TRACK_EVENT,
+  OPEN_HOW_TO,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -217,6 +218,12 @@ export function* selectCountrySaga({ code }) {
   );
 }
 
+const getScaleValue = value => {
+  if (value === 'r') return 'rights';
+  if (value === 'd') return 'dimensions';
+  return value;
+};
+
 export function* setScaleSaga({ value }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
@@ -229,7 +236,7 @@ export function* setScaleSaga({ value }) {
     trackEvent({
       category: 'Setting',
       action: 'Change scale',
-      value,
+      value: getScaleValue(value),
     }),
   );
 }
@@ -245,7 +252,7 @@ export function* setStandardSaga({ value }) {
   yield put(
     trackEvent({
       category: 'Setting',
-      action: 'Change Standard',
+      action: 'Change standard',
       value,
     }),
   );
@@ -262,7 +269,7 @@ export function* setBenchmarkSaga({ value }) {
   yield put(
     trackEvent({
       category: 'Setting',
-      action: 'Change Benchmark',
+      action: 'Change benchmark',
       value,
     }),
   );
@@ -278,7 +285,7 @@ export function* setTabSaga({ value }) {
   yield put(
     trackEvent({
       category: 'Content',
-      action: 'Change Tab',
+      action: 'Change tab',
       value,
     }),
   );
@@ -294,7 +301,7 @@ export function* setModalTabSaga({ value }) {
   yield put(
     trackEvent({
       category: 'Content',
-      action: 'Change Tab in Modal',
+      action: 'Change tab (in modal)',
       value,
     }),
   );
@@ -315,6 +322,25 @@ export function* selectMetricSaga({ code }) {
       value: code,
     }),
   );
+}
+export function* openHowToReadSaga({ layer }) {
+  if (layer) {
+    yield put(
+      trackEvent({
+        category: 'How To Read',
+        action: `Chart: ${layer.chart}, context: ${layer.contxt}, scale: ${
+          layer.data
+        }`,
+      }),
+    );
+  } else {
+    yield put(
+      trackEvent({
+        category: 'Close How To Read',
+        action: '',
+      }),
+    );
+  }
 }
 
 // location can either be string or object { pathname, search}
@@ -415,9 +441,8 @@ export function* initialiseAnalyticsSaga({ status }) {
       ReactGA.pageview(initialPage);
       yield put(
         trackEvent({
-          category: 'Content',
-          action: 'GA init',
-          value: initialPage,
+          category: 'GA initialised',
+          action: `Current page: ${initialPage}`,
         }),
       );
     }
@@ -438,13 +463,16 @@ export function* trackPageviewSaga({ payload }) {
 
 export function* trackEventSaga({ gaEvent }) {
   const initialisedGA = yield select(getGAStatus);
+  const currentLocation = yield select(getRouterLocation);
   const consentStatus = Cookies.get(COOKIECONSENT_NAME);
   if (consentStatus === 'true' && initialisedGA) {
     ReactGA.event({
       category: gaEvent.category,
-      action: gaEvent.value
-        ? `${gaEvent.action} | ${gaEvent.value}`
-        : gaEvent.action,
+      action:
+        typeof gaEvent.value !== 'undefined'
+          ? `${gaEvent.action} | ${gaEvent.value}`
+          : gaEvent.action,
+      label: `${currentLocation.pathname}${currentLocation.search}`,
     });
   }
 }
@@ -472,4 +500,5 @@ export default function* defaultSaga() {
   yield takeLatest(COOKIECONSENT_CHECKED, initialiseAnalyticsSaga);
   yield takeLatest(LOCATION_CHANGE, trackPageviewSaga);
   yield takeLatest(TRACK_EVENT, trackEventSaga);
+  yield takeLatest(OPEN_HOW_TO, openHowToReadSaga);
 }

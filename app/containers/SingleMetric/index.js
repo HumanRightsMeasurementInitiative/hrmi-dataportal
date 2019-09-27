@@ -382,8 +382,8 @@ export function mapDispatchToProps(dispatch) {
             replace: false,
             deleteParams: [key],
             trackEvent: {
-              category: 'Content',
-              action: 'Metric: remove country filter',
+              category: 'Data',
+              action: 'Remove country filter (Metric)',
               value: key,
             },
           },
@@ -396,8 +396,8 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             trackEvent: {
-              category: 'Content',
-              action: 'Metric: country filter',
+              category: 'Data',
+              action: 'Country filter (Metric)',
               value: `${key}/${value}`,
             },
           },
@@ -410,8 +410,8 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             trackEvent: {
-              category: 'Content',
-              action: 'Metric: sort countries',
+              category: 'Data',
+              action: 'Sort countries (Metric)',
               value,
             },
           },
@@ -424,8 +424,8 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             trackEvent: {
-              category: 'Content',
-              action: 'Metric: country sort order',
+              category: 'Data',
+              action: 'Country sort order (Metric)',
               value,
             },
           },
@@ -441,7 +441,7 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             trackEvent: {
-              category: 'Content',
+              category: 'Modal',
               action: 'Metric-country',
               value: `${metric}/${country}/${tab}`,
             },
