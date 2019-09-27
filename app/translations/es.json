@@ -23,7 +23,7 @@
   "hrmi.containers.MetricAside.titleChildren.rights.cpr": "¿Qué subderechos se utilizaron para calcular este derecho humano?",
   "hrmi.containers.Settings.hi.title": "Países con ingresos altos",
   "hrmi.containers.Settings.hi.text": "Para estos países es mejor utilizar la norma de evaluación de 'ingresos altos'.",
-  "hrmi.containers.Settings.hi.textIndicator": "Para estos países, es mejor usar el parámetro de país de ingreso alto de la OCDE",
+  "hrmi.containers.Settings.hi.textIndicator": "Para estos países, es mejor usar el parámetro de país de ingreso alto",
   "hrmi.containers.Settings.mobile.open": "Configuración & leyenda",
   "hrmi.containers.Settings.mobile.close": "Cierre",
   "hrmi.containers.Settings.mobile.title": "Configuración & leyenda",
