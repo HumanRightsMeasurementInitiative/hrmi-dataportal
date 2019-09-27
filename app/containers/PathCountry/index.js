@@ -47,7 +47,12 @@ import {
   getDependenciesReady,
 } from 'containers/App/selectors';
 
-import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
+import {
+  loadDataIfNeeded,
+  navigate,
+  setTab,
+  trackEvent,
+} from 'containers/App/actions';
 
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
@@ -90,6 +95,7 @@ export function PathCountry({
   esrYear,
   cprYear,
   dataReady,
+  onTrackEvent,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -211,6 +217,7 @@ export function PathCountry({
                   esrYear={esrYear}
                   cprYear={cprYear}
                   dataReady={dataReady}
+                  trackEvent={onTrackEvent}
                 />
               ),
             },
@@ -259,6 +266,7 @@ PathCountry.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  onTrackEvent: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   activeTab: PropTypes.number,
   onMetricClick: PropTypes.func,
@@ -319,6 +327,11 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             deleteParams: deleteParams.filter(p => p !== key),
+            trackEvent: {
+              category: 'Data',
+              action: 'Country filter (Country, tags)',
+              value: `${key}/${value}`,
+            },
           },
         ),
       );
@@ -333,6 +346,11 @@ export function mapDispatchToProps(dispatch) {
           },
           {
             replace: false,
+            trackEvent: {
+              category: 'Modal',
+              action: 'Country-metric',
+              value: `${country}/${metric}/${tab}`,
+            },
           },
         ),
       ),
@@ -349,9 +367,14 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             deleteParams: ['mtab'],
+            trackEvent: {
+              category: 'Close modal',
+              action: `Target: country/${country}`,
+            },
           },
         ),
       ),
+    onTrackEvent: e => dispatch(trackEvent(e)),
   };
 }
 

@@ -9,6 +9,11 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
+export const CHECK_COOKIECONSENT = 'hrmi/App/CHECK_COOKIECONSENT';
+export const COOKIECONSENT_CHECKED = 'hrmi/App/COOKIECONSENT_CHECKED';
+export const SET_COOKIECONSENT = 'hrmi/App/SET_COOKIECONSENT';
+export const GA_INITIALISED = 'hrmi/App/GA_INITIALISED';
+export const TRACK_EVENT = 'hrmi/App/TRACK_EVENT';
 // loading actions
 export const LOAD_DATA_IF_NEEDED = 'hrmi/App/LOAD_DATA_IF_NEEDED';
 export const LOAD_DATA_SUCCESS = 'hrmi/App/LOAD_DATA_SUCCESS';
@@ -540,3 +545,6 @@ export const INDICATORS = [
     resource: 'esrIndicatorScores',
   },
 ];
+
+export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';
+export const GA_PROPERTY_ID = 'UA-103815452-2';

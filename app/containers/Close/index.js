@@ -68,6 +68,16 @@ const StyledButtonIcon = styled(ButtonIcon)`
     background: ${({ theme }) => theme.global.colors.highlight2};
   }
 `;
+
+const getTrackValue = location => {
+  if (location) {
+    return typeof location === 'object' && location.pathname
+      ? location.pathname
+      : location;
+  }
+  return 'Home';
+};
+
 // <FormattedMessage {...messages.label} />
 function Close({
   onClose,
@@ -109,6 +119,10 @@ function Close({
                 : onClose(closeTarget || '', {
                   keepTab,
                   needsLocale: !closeTarget,
+                  trackEvent: {
+                    category: 'Close',
+                    action: `Target: ${getTrackValue(closeTarget)}`,
+                  },
                 })
             }
           >
@@ -128,6 +142,10 @@ function Close({
             : onClose(closeTarget || '', {
               keepTab,
               needsLocale: !closeTarget,
+              trackEvent: {
+                category: 'Close',
+                action: `Target: ${getTrackValue(closeTarget)}`,
+              },
             })
         }
       >
