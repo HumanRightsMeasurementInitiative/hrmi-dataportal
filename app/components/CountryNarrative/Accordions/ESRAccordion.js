@@ -28,6 +28,7 @@ function ESRAccordion({
   standard,
   hasAtRisk,
   intl,
+  trackEvent,
 }) {
   return (
     <Styled margin={{ bottom: 'medium' }}>
@@ -60,6 +61,13 @@ function ESRAccordion({
               benchmark={benchmark}
               hasAtRisk={hasAtRisk}
             />
+          }
+          onClick={open =>
+            trackEvent({
+              category: 'Data',
+              action: `${open ? 'Expand' : 'Collapse'} ESR dimension`,
+              value: dimension.key,
+            })
           }
           content={
             <div>
@@ -94,6 +102,13 @@ function ESRAccordion({
                             standard={standard}
                             hasAtRisk={hasAtRisk}
                           />
+                        }
+                        onClick={open =>
+                          trackEvent({
+                            category: 'Data',
+                            action: `${open ? 'Expand' : 'Collapse'} ESR right`,
+                            value: right.key,
+                          })
                         }
                         content={
                           <div>
@@ -142,6 +157,7 @@ ESRAccordion.propTypes = {
   benchmark: PropTypes.object,
   hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
+  trackEvent: PropTypes.func,
 };
 
 export default injectIntl(ESRAccordion);
