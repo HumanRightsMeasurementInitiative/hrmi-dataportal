@@ -208,7 +208,6 @@ export function* selectCountrySaga({ code }) {
   const newSearch = searchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
 
-  yield put(push(`/${requestLocale}/country/${code}${search}`));
   yield put(
     trackEvent({
       category: 'Content',
@@ -216,6 +215,7 @@ export function* selectCountrySaga({ code }) {
       value: code,
     }),
   );
+  yield put(push(`/${requestLocale}/country/${code}${search}`));
 }
 
 const getScaleValue = value => {
@@ -229,9 +229,6 @@ export function* setScaleSaga({ value }) {
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('scale', value);
 
-  // navigate to country and default standard
-  const path = yield select(getRouterPath);
-  yield put(replace(`${path}?${searchParams.toString()}`));
   yield put(
     trackEvent({
       category: 'Setting',
@@ -239,6 +236,9 @@ export function* setScaleSaga({ value }) {
       value: getScaleValue(value),
     }),
   );
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 
 export function* setStandardSaga({ value }) {
@@ -246,9 +246,6 @@ export function* setStandardSaga({ value }) {
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('as', value);
 
-  // navigate to country and default standard
-  const path = yield select(getRouterPath);
-  yield put(replace(`${path}?${searchParams.toString()}`));
   yield put(
     trackEvent({
       category: 'Setting',
@@ -256,6 +253,9 @@ export function* setStandardSaga({ value }) {
       value,
     }),
   );
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 
 export function* setBenchmarkSaga({ value }) {
@@ -263,9 +263,6 @@ export function* setBenchmarkSaga({ value }) {
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('pb', value);
 
-  // navigate to country and default standard
-  const path = yield select(getRouterPath);
-  yield put(replace(`${path}?${searchParams.toString()}`));
   yield put(
     trackEvent({
       category: 'Setting',
@@ -273,6 +270,9 @@ export function* setBenchmarkSaga({ value }) {
       value,
     }),
   );
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(replace(`${path}?${searchParams.toString()}`));
 }
 export function* setTabSaga({ value }) {
   // get URL search params
@@ -281,7 +281,6 @@ export function* setTabSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
-  yield put(push(`${path}?${searchParams.toString()}`));
   yield put(
     trackEvent({
       category: 'Content',
@@ -289,6 +288,7 @@ export function* setTabSaga({ value }) {
       value,
     }),
   );
+  yield put(push(`${path}?${searchParams.toString()}`));
 }
 export function* setModalTabSaga({ value }) {
   // get URL search params
@@ -297,7 +297,6 @@ export function* setModalTabSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
-  yield put(push(`${path}?${searchParams.toString()}`));
   yield put(
     trackEvent({
       category: 'Content',
@@ -305,6 +304,7 @@ export function* setModalTabSaga({ value }) {
       value,
     }),
   );
+  yield put(push(`${path}?${searchParams.toString()}`));
 }
 
 export function* selectMetricSaga({ code }) {
@@ -314,7 +314,6 @@ export function* selectMetricSaga({ code }) {
   currentSearchParams.delete('tab');
   const newSearch = currentSearchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
-  yield put(push(`/${requestLocale}/metric/${code}${search}`));
   yield put(
     trackEvent({
       category: 'Content',
@@ -322,6 +321,7 @@ export function* selectMetricSaga({ code }) {
       value: code,
     }),
   );
+  yield put(push(`/${requestLocale}/metric/${code}${search}`));
 }
 export function* openHowToReadSaga({ layer }) {
   if (layer) {
@@ -410,14 +410,13 @@ export function* navigateSaga({ location, args }) {
   if (xArgs.deleteParams) {
     xArgs.deleteParams.forEach(p => newSearchParams.delete(p));
   }
+  if (xArgs.trackEvent) {
+    yield put(trackEvent(xArgs.trackEvent));
+  }
   // convert to string and append if necessary
   const newSearch = newSearchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
   yield put(push(`${newPathname}${search}`));
-
-  if (xArgs.trackEvent) {
-    yield put(trackEvent(xArgs.trackEvent));
-  }
 }
 
 export function* checkCookieConsentSaga() {
