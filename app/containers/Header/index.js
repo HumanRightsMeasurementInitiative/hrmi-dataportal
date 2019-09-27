@@ -420,8 +420,8 @@ const mapDispatchToProps = dispatch => ({
   downloadClicked: () => {
     dispatch(
       trackEvent({
-        category: 'Data',
-        action: 'Download clicked',
+        category: 'Download',
+        action: 'Agree & download clicked',
       }),
     );
   },
@@ -429,8 +429,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       trackEvent({
         category: 'Search',
-        action: '',
-        value,
+        action: value,
       }),
     );
   },

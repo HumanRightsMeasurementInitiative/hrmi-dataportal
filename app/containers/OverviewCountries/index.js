@@ -216,8 +216,8 @@ export function mapDispatchToProps(dispatch) {
             replace: false,
             deleteParams: [key],
             trackEvent: {
-              category: 'Content',
-              action: 'Overview: remove country filter',
+              category: 'Data',
+              action: 'Remove country filter (Overview)',
               value: key,
             },
           },
@@ -232,8 +232,8 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             trackEvent: {
-              category: 'Content',
-              action: 'Overview: country filter',
+              category: 'Data',
+              action: 'Country filter (Overview)',
               value: `${key}/${value}`,
             },
           },
@@ -246,8 +246,8 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             trackEvent: {
-              category: 'Content',
-              action: 'Overview: sort countries',
+              category: 'Data',
+              action: 'Sort countries (Overview)',
               value,
             },
           },
@@ -260,8 +260,8 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             trackEvent: {
-              category: 'Content',
-              action: 'Overview: country sort order',
+              category: 'Data',
+              action: 'Country sort order (Overview)',
               value,
             },
           },
