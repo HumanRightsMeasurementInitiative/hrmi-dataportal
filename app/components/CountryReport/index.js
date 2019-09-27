@@ -48,6 +48,7 @@ function CountryReport({
   cprYear,
   dataReady,
   hasAside,
+  trackEvent,
 }) {
   return (
     <MainColumn hasAside={hasAside}>
@@ -88,6 +89,7 @@ function CountryReport({
             reference={reference}
             esrYear={esrYear}
             cprYear={cprYear}
+            trackEvent={trackEvent}
           />
         </>
       )}
@@ -99,6 +101,7 @@ CountryReport.propTypes = {
   countryTitle: PropTypes.string,
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
+  trackEvent: PropTypes.func,
   hasAside: PropTypes.bool,
   reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),

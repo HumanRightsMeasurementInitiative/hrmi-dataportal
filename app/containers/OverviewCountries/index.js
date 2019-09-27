@@ -210,7 +210,18 @@ export function mapDispatchToProps(dispatch) {
   return {
     onRemoveFilter: key =>
       dispatch(
-        navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
+        navigate(
+          { pathname: '' },
+          {
+            replace: false,
+            deleteParams: [key],
+            trackEvent: {
+              category: 'Data',
+              action: 'Remove country filter (Overview)',
+              value: key,
+            },
+          },
+        ),
       ),
     onSelectCountry: country => dispatch(selectCountry(country)),
     onCountryHover: country => dispatch(highlightCountry(country)),
@@ -220,6 +231,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?${key}=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Country filter (Overview)',
+              value: `${key}/${value}`,
+            },
           },
         ),
       ),
@@ -229,6 +245,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?sort=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Sort countries (Overview)',
+              value,
+            },
           },
         ),
       ),
@@ -238,6 +259,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?dir=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Country sort order (Overview)',
+              value,
+            },
           },
         ),
       ),

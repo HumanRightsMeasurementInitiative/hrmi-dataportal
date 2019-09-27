@@ -99,6 +99,7 @@ function CountryNarrative({
   reference,
   esrYear,
   cprYear,
+  trackEvent,
 }) {
   if (!dimensions || !rights || !indicators) {
     return null;
@@ -137,6 +138,7 @@ function CountryNarrative({
               dimension={dimensions.empowerment}
               rights={getRightsScoresForDimension(rights, 'empowerment', true)}
               onMetricClick={onMetricClick}
+              trackEvent={trackEvent}
             />
           </Dimension>
         )}
@@ -155,6 +157,7 @@ function CountryNarrative({
               dimension={dimensions.physint}
               rights={getRightsScoresForDimension(rights, 'physint', true)}
               onMetricClick={onMetricClick}
+              trackEvent={trackEvent}
             />
           </Dimension>
         )}
@@ -191,6 +194,7 @@ function CountryNarrative({
             onMetricClick={onMetricClick}
             standard={standard}
             hasAtRisk={hasCPR(dimensions)}
+            trackEvent={trackEvent}
           />
         </Dimension>
       </RightsType>
@@ -268,6 +272,7 @@ function CountryNarrative({
 CountryNarrative.propTypes = {
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
+  trackEvent: PropTypes.func,
   reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
