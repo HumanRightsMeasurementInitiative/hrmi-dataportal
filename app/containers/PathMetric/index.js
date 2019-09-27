@@ -158,8 +158,8 @@ export function mapDispatchToProps(dispatch) {
           { pathname: code === 'all' ? '' : `/metric/${code}` },
           {
             trackEvent: {
-              category: 'Content',
-              action: 'Metric: change metric',
+              category: 'Data',
+              action: 'Change metric (Metric, header links)',
               value: code,
             },
           },
@@ -175,9 +175,8 @@ export function mapDispatchToProps(dispatch) {
             replace: false,
             deleteParams: ['mtab'],
             trackEvent: {
-              category: 'Content',
-              action: 'Metric-country close',
-              value: code,
+              category: 'Close modal',
+              action: `Target: metric/${code}`,
             },
           },
         ),

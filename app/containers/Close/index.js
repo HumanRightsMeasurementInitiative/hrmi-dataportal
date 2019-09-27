@@ -120,9 +120,8 @@ function Close({
                   keepTab,
                   needsLocale: !closeTarget,
                   trackEvent: {
-                    category: 'Content',
-                    action: 'Close view',
-                    value: getTrackValue(closeTarget),
+                    category: 'Close',
+                    action: `Target: ${getTrackValue(closeTarget)}`,
                   },
                 })
             }
@@ -144,9 +143,8 @@ function Close({
               keepTab,
               needsLocale: !closeTarget,
               trackEvent: {
-                category: 'Content',
-                action: 'Close view',
-                value: getTrackValue(closeTarget),
+                category: 'Close',
+                action: `Target: ${getTrackValue(closeTarget)}`,
               },
             })
         }

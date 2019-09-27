@@ -327,6 +327,11 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             deleteParams: deleteParams.filter(p => p !== key),
+            trackEvent: {
+              category: 'Data',
+              action: 'Country filter (Country, tags)',
+              value: `${key}/${value}`,
+            },
           },
         ),
       );
@@ -342,7 +347,7 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             trackEvent: {
-              category: 'Content',
+              category: 'Modal',
               action: 'Country-metric',
               value: `${country}/${metric}/${tab}`,
             },
@@ -363,9 +368,8 @@ export function mapDispatchToProps(dispatch) {
             replace: false,
             deleteParams: ['mtab'],
             trackEvent: {
-              category: 'Content',
-              action: 'Country-metric close',
-              value: country,
+              category: 'Close modal',
+              action: `Target: country/${country}`,
             },
           },
         ),

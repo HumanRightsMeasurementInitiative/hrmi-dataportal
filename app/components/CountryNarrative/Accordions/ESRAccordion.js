@@ -65,7 +65,7 @@ function ESRAccordion({
           onClick={open =>
             trackEvent({
               category: 'Data',
-              action: `ESR dimension ${open ? 'expand' : 'collapse'}`,
+              action: `${open ? 'Expand' : 'Collapse'} ESR dimension`,
               value: dimension.key,
             })
           }
@@ -106,7 +106,7 @@ function ESRAccordion({
                         onClick={open =>
                           trackEvent({
                             category: 'Data',
-                            action: `ESR right ${open ? 'expand' : 'collapse'}`,
+                            action: `${open ? 'Expand' : 'Collapse'} ESR right`,
                             value: right.key,
                           })
                         }
