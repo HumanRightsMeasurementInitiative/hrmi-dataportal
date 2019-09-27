@@ -1,75 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Box, Drop, Paragraph } from 'grommet';
-// import { Checkmark } from 'grommet-icons';
+import { Box, Layer, Paragraph } from 'grommet';
 import { getCookieConsent } from 'containers/App/selectors';
 import { checkCookieConsent, setCookieConsent } from 'containers/App/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
-import ButtonPlain from 'styled/ButtonPlain';
 import ButtonHighlight from 'styled/ButtonHighlight';
 
 import messages from './messages';
 
-const Styled = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 20px;
-  background: ${props => props.theme.global.colors.black};
-  z-index: 9998;
-  display: block;
-  text-align: right;
-  line-height: 0;
-`;
-const Link = styled.a`
-  color: ${props => props.theme.global.colors['light-5']};
-  font-size: 14px;
-  line-height: 20px;
-  text-decoration: none;
-  padding: 0 10px;
-  &:hover {
-    color: ${({ theme }) => theme.global.colors.white};
-  }
-`;
+const Styled = styled.div``;
+
 const LinkInText = styled.a`
   color: ${props => props.theme.global.colors.white};
   &:hover {
     color: ${({ theme }) => theme.global.colors.highlight};
-  }
-`;
-const ButtonDrop = styled(ButtonPlain)`
-  color: ${props => props.theme.global.colors['light-5']};
-  font-size: 14px;
-  line-height: 20px;
-  margin-right: 10px;
-  padding: 0 10px;
-  text-decoration: none;
-  &:hover {
-    color: ${({ theme }) => theme.global.colors.white};
-    background-color: transparent;
-  }
-  &:active {
-    color: ${({ theme }) => theme.global.colors.white};
-    background-color: transparent;
-  }
-  &:visited {
-    color: ${({ theme }) => theme.global.colors['light-4']};
-    background-color: transparent;
-  }
-  &:focus {
-    color: ${({ theme }) => theme.global.colors.white};
-    background-color: transparent;
-    box-shadow: none;
-    border-radius: 0;
-    outline: none;
   }
 `;
 
@@ -105,36 +55,25 @@ export function CookieConsent({ init, cookieConsent, intl, consent }) {
   }, []);
 
   const [showDialogue, setShowDialogue] = useState(false);
-  const dialogueRef = useRef(null);
 
   const consentUnset = cookieConsent !== 'true' && cookieConsent !== 'false';
 
   return (
     <Styled>
-      <Link
-        href={intl.formatMessage(messages.urlPrivacyPolicy)}
-        target="_blank"
-      >
-        <FormattedMessage {...messages.linkPrivacyPolicy} />
-      </Link>
-      <ButtonDrop
-        ref={dialogueRef}
-        onClick={() => {
-          setShowDialogue(!showDialogue);
-        }}
-      >
-        <FormattedMessage {...messages.linkDialogue} />
-      </ButtonDrop>
-      {(consentUnset || showDialogue) && dialogueRef.current && (
-        <Drop
-          align={{ bottom: 'top', right: 'right' }}
-          target={dialogueRef.current}
-          elevation="small"
+      {(consentUnset || showDialogue) && (
+        <Layer
+          position="bottom-right"
+          plain
+          responsive={false}
+          modal={false}
+          animate={false}
+          margin="small"
         >
           <Box
             pad={{ vertical: 'small', horizontal: 'medium' }}
             background="dark-1"
             style={{ maxWidth: '100%', width: '360px' }}
+            elevation="large"
           >
             <Paragraph margin={{ vertical: 'small' }} size="small">
               <FormattedMessage {...messages.nonEssentialConsentInfo} />
@@ -167,7 +106,7 @@ export function CookieConsent({ init, cookieConsent, intl, consent }) {
               </LinkInText>
             </Paragraph>
           </Box>
-        </Drop>
+        </Layer>
       )}
     </Styled>
   );

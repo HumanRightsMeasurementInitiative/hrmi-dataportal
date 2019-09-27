@@ -36,7 +36,7 @@ import SettingsInner from './SettingsInner';
 
 const Styled = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 0;
   left: 0;
   width: 100%;
   height: ${({ theme }) => theme.sizes.settings.heightCollapsed}px;
@@ -181,7 +181,7 @@ export function Settings({
               </Box>
             )}
             {isMaxSize(size, 'medium') && open && (
-              <Layer full animate={false} style={{ paddingBottom: '20px' }}>
+              <Layer full animate={false}>
                 <Box fill>
                   <Box
                     direction="row"
