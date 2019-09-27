@@ -94,7 +94,7 @@
   "hrmi.containers.CookieConsent.buttonReject": "No thanks",
   "hrmi.containers.CookieConsent.additionalInfo": "For any website to function, it is necessary to collect a small amount of user data, so by continuing to use this website, you are consenting to that. To find out more, please read our ",
   "hrmi.containers.CookieConsent.linkPrivacyPolicy": "Privacy Policy",
-  "hrmi.containers.CookieConsent.urlPrivacyPolicy": "//humanrightsmeasurement.org/wp-content/uploads/2019/09/HRMI-Website-Privacy-Policy.pdf",
+  "hrmi.containers.CookieConsent.urlPrivacyPolicy": "//humanrightsmeasurement.org/hrmi-privacy-policy/",
   "hrmi.containers.CookieConsent.linkDialogue": "Privacy Settings",
   "hrmi.components.WordCloud.noGroupData": "Expert respondents didn’t select any group of people for this right. ",
   "hrmi.components.WordCloud.tooltip": "Percentage of human rights experts who identified these people as being particularly at risk of having this right violated.",
