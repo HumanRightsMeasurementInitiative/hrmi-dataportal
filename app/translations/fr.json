@@ -194,7 +194,7 @@
   "hrmi.components.CountryPreview.hiForCore": "Pays à revenus élevés : pour ces pays il est préférable  d'utiliser les normes d’évaluation prévues pour les 'revenus élevés'",
   "hrmi.components.CountryPreview.liForHi": "Pays à revenus faibles et moyens : pour ces pays il est préférable d'utiliser les normes d’évaluation prévues pour les 'revenus faibles et moyens'",
   "hrmi.labels.score": "",
-  "hrmi.labels.hiCountry": "HI",
+  "hrmi.labels.hiCountry": "RE",
   "hrmi.labels.better": "Mieux",
   "hrmi.labels.worse": "Pire",
   "hrmi.labels.loading": "Chargement...",
