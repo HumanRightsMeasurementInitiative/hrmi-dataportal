@@ -194,7 +194,7 @@
   "hrmi.components.CountryPreview.hiForCore": "País de ingresos altos: para estos países es mejor utilizar la norma de evaluación de 'ingresos altos'.",
   "hrmi.components.CountryPreview.liForHi": "País de ingresos bajos y medios: para estos países es mejor utilizar la norma de evaluación de 'ingresos bajos y medios'",
   "hrmi.labels.score": "Puntuación",
-  "hrmi.labels.hiCountry": "HI",
+  "hrmi.labels.hiCountry": "IA",
   "hrmi.labels.better": "Mejor",
   "hrmi.labels.worse": "Peor",
   "hrmi.labels.loading": "Cargando...",
