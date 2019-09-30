@@ -56,49 +56,60 @@ export function CountrySort({
         return (
           <Box
             direction="row"
-            pad={isMaxSize(size, 'medium') ? { top: 'xsmall' } : 'small'}
+            pad={
+              isMaxSize(size, 'medium')
+                ? { top: 'small' }
+                : { vertical: '10px', left: 'small' }
+            }
             align="center"
+            responsive={false}
+            flex={{ shrink: 0 }}
           >
-            <StyledDropButton
-              plain
-              reverse
-              gap="xxsmall"
-              margin={
-                isMinSize(size, 'large')
-                  ? { horizontal: 'small' }
-                  : { horizontal: 'hair' }
-              }
-              icon={optionsOpen ? <FormUp /> : <FormDown />}
-              label={label}
-              onClose={() => setOptionsOpen(false)}
-              onOpen={() => setOptionsOpen(true)}
-              open={optionsOpen}
-              dropProps={{
-                align: { top: 'bottom', right: 'right' },
-                stretch: false,
-              }}
-              dropContent={
-                <SortOptions
-                  options={options}
-                  active={sort}
-                  onSelect={value => {
-                    setOptionsOpen(false);
-                    onSortSelect(value);
-                  }}
-                />
-              }
-            />
-            <StyledButtonIcon
-              subtle
-              onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
-            >
-              {order === 'asc' && (
-                <Ascend size={size === 'small' ? 'small' : 'large'} />
-              )}
-              {order === 'desc' && (
-                <Descend size={size === 'small' ? 'small' : 'large'} />
-              )}
-            </StyledButtonIcon>
+            <Box flex={{ shrink: 0 }}>
+              <StyledDropButton
+                plain
+                reverse
+                gap="xxsmall"
+                alignSelf="end"
+                margin={
+                  isMinSize(size, 'large')
+                    ? { horizontal: 'xsmall' }
+                    : { horizontal: 'hair' }
+                }
+                icon={optionsOpen ? <FormUp /> : <FormDown />}
+                label={label}
+                onClose={() => setOptionsOpen(false)}
+                onOpen={() => setOptionsOpen(true)}
+                open={optionsOpen}
+                dropProps={{
+                  align: { top: 'bottom', right: 'right' },
+                  stretch: false,
+                }}
+                dropContent={
+                  <SortOptions
+                    options={options}
+                    active={sort}
+                    onSelect={value => {
+                      setOptionsOpen(false);
+                      onSortSelect(value);
+                    }}
+                  />
+                }
+              />
+            </Box>
+            <Box flex={{ shrink: 0 }}>
+              <StyledButtonIcon
+                subtle
+                onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
+              >
+                {order === 'asc' && (
+                  <Ascend size={size === 'small' ? 'small' : 'large'} />
+                )}
+                {order === 'desc' && (
+                  <Descend size={size === 'small' ? 'small' : 'large'} />
+                )}
+              </StyledButtonIcon>
+            </Box>
           </Box>
         );
       }}
