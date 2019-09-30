@@ -181,7 +181,15 @@ FAQs.propTypes = {
 const mapDispatchToProps = dispatch => ({
   // navigate to location
   navMethodology: () => {
-    dispatch(navigate('page/methodology'));
+    dispatch(
+      navigate('page/methodology', {
+        trackEvent: {
+          category: 'Content',
+          action: 'FAQs: open page',
+          value: 'methodology',
+        },
+      }),
+    );
   },
 });
 

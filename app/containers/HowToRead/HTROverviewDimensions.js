@@ -59,10 +59,18 @@ function HTROverviewDimensions({ intl }) {
           {d.key === 'esr' && (
             <Box margin={{ top: 'small' }} responsive={false}>
               <HTRParagraph>
-                <FormattedMessage {...messages.general.benchmarkIntro} />
-                <span style={{ fontWeight: 600, margin: '0 3px' }}>
-                  <FormattedMessage {...rootMessages.settings.benchmark.name} />
-                </span>
+                <FormattedMessage
+                  {...messages.general.benchmarkIntro}
+                  values={{
+                    benchmark: (
+                      <span style={{ fontWeight: 600, margin: '0 3px' }}>
+                        {intl.formatMessage(
+                          rootMessages.settings.benchmark.name,
+                        )}
+                      </span>
+                    ),
+                  }}
+                />
               </HTRParagraph>
               <HTRParagraph margin={{ vertical: 'xsmall' }}>
                 <span style={{ fontWeight: 600 }}>

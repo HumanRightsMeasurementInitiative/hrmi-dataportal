@@ -26,18 +26,22 @@ const Styled = styled.span``;
 const StyledDropButton = styled(DropButton)`
   height: 44px;
   padding: 5px 10px;
-  background-color: ${({ theme, active }) => active ? theme.global.colors['dark-3'] : 'transparent' };
+  background-color: ${({ theme, active, light }) => (active && !light) ? theme.global.colors['dark-3'] : 'transparent' };
   &:hover {
-    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+    background-color: ${({ theme, light }) => light || theme.global.colors['dark-3']};
+    color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:active {
-    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+    background-color: ${({ theme, light }) => light || theme.global.colors['dark-3']};
+    color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:visited {
-    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+    background-color: ${({ theme, light }) => light || theme.global.colors['dark-3']};
+    color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:focus {
-    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+    background-color: ${({ theme, light }) => light || theme.global.colors['dark-3']};
+    color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
 `;
 
@@ -64,7 +68,7 @@ const DropContent = ({ active, options, onSelect }) => (
   </Box>
 );
 
-export function LocaleToggle({ intl, locale, onLocaleToggle }) {
+export function LocaleToggle({ intl, locale, onLocaleToggle, light }) {
   const [open, setOpen] = useState(false);
   return (
     <Styled>
@@ -73,6 +77,7 @@ export function LocaleToggle({ intl, locale, onLocaleToggle }) {
           <StyledDropButton
             plain
             reverse
+            light={light}
             gap="xxsmall"
             active={open}
             onClose={() => setOpen(false)}
@@ -110,6 +115,7 @@ export function LocaleToggle({ intl, locale, onLocaleToggle }) {
 LocaleToggle.propTypes = {
   onLocaleToggle: PropTypes.func,
   locale: PropTypes.string,
+  light: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

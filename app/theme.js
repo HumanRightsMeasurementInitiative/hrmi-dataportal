@@ -100,7 +100,7 @@ const theme = {
       size: '16px',
     },
     colors: {
-      black: '#09052F',
+      black: '#101D24',
       white: '#FFFFFF',
       text: { light: '#3A5161' },
       border: { light: '#E8EAE9' },
@@ -141,6 +141,7 @@ const theme = {
       small: '12px',
       ms: '16px',
       medium: '24px',
+      ml: '36px',
       large: '48px',
       xlarge: '96px',
     },

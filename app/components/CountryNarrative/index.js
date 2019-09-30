@@ -14,6 +14,7 @@ import rootMessages from 'messages';
 
 import { BENCHMARKS, STANDARDS } from 'containers/App/constants';
 import { getRightsScoresForDimension, hasCPR } from 'utils/scores';
+import { getMessageGrammar } from 'utils/narrative';
 
 import messages from './messages';
 import CPRAccordion from './Accordions/CPRAccordion';
@@ -90,6 +91,7 @@ function CountryNarrative({
   benchmark,
   onMetricClick,
   country,
+  countryGrammar,
   atRiskData,
   onAtRiskClick,
   standard,
@@ -97,6 +99,7 @@ function CountryNarrative({
   reference,
   esrYear,
   cprYear,
+  trackEvent,
 }) {
   if (!dimensions || !rights || !indicators) {
     return null;
@@ -129,11 +132,13 @@ function CountryNarrative({
               dimensionKey="empowerment"
               score={dimensions.empowerment && dimensions.empowerment.score}
               country={country}
+              countryGrammar={countryGrammar}
             />
             <CPRAccordion
               dimension={dimensions.empowerment}
               rights={getRightsScoresForDimension(rights, 'empowerment', true)}
               onMetricClick={onMetricClick}
+              trackEvent={trackEvent}
             />
           </Dimension>
         )}
@@ -146,15 +151,23 @@ function CountryNarrative({
               dimensionKey="physint"
               score={dimensions.physint && dimensions.physint.score}
               country={country}
+              countryGrammar={countryGrammar}
             />
             <CPRAccordion
               dimension={dimensions.physint}
               rights={getRightsScoresForDimension(rights, 'physint', true)}
               onMetricClick={onMetricClick}
+              trackEvent={trackEvent}
             />
           </Dimension>
         )}
-        {!hasCPR(dimensions) && <NarrativeCPR noData country={country} />}
+        {!hasCPR(dimensions) && (
+          <NarrativeCPR
+            noData
+            country={country}
+            countryGrammar={countryGrammar}
+          />
+        )}
       </RightsType>
       <RightsType>
         <RightsTypeHeading>
@@ -170,6 +183,7 @@ function CountryNarrative({
           <NarrativeESR
             score={dimensions.esr && dimensions.esr.score}
             country={country}
+            countryGrammar={countryGrammar}
             someData={hasSomeIndicatorScores}
           />
           <ESRAccordion
@@ -180,6 +194,7 @@ function CountryNarrative({
             onMetricClick={onMetricClick}
             standard={standard}
             hasAtRisk={hasCPR(dimensions)}
+            trackEvent={trackEvent}
           />
         </Dimension>
       </RightsType>
@@ -190,6 +205,7 @@ function CountryNarrative({
           </RightsTypeHeading>
           <NarrativeAtRisk
             country={country}
+            countryGrammar={countryGrammar}
             noData={!hasCPR(dimensions)}
             data={atRiskData}
             onAtRiskClick={onAtRiskClick}
@@ -201,11 +217,12 @@ function CountryNarrative({
           <RightsTypeHeading>
             <FormattedMessage
               {...messages.compAssessmentSectionTitle}
-              values={{
-                country: intl.formatMessage(
-                  rootMessages.countries[country.country_code],
-                ),
-              }}
+              values={getMessageGrammar(
+                intl,
+                country.country_code,
+                country.region_code,
+                countryGrammar,
+              )}
             />
           </RightsTypeHeading>
           {hasCPR(dimensions) && reference.empowerment && reference.physint && (
@@ -214,6 +231,7 @@ function CountryNarrative({
                 dimensionKey="empowerment"
                 score={dimensions.empowerment && dimensions.empowerment.score}
                 country={country}
+                countryGrammar={countryGrammar}
                 referenceScore={reference.empowerment.average}
                 referenceCount={reference.empowerment.count}
                 start
@@ -223,6 +241,7 @@ function CountryNarrative({
                 dimensionKey="physint"
                 score={dimensions.physint && dimensions.physint.score}
                 country={country}
+                countryGrammar={countryGrammar}
                 referenceScore={reference.physint.average}
                 referenceCount={reference.physint.count}
               />
@@ -236,6 +255,7 @@ function CountryNarrative({
             <Paragraph>
               <NarrativeESRCompAssessment
                 country={country}
+                countryGrammar={countryGrammar}
                 score={dimensions.esr.score}
                 referenceScore={reference.esr[standard].average[benchmark]}
                 referenceCount={reference.esr[standard].count}
@@ -252,12 +272,14 @@ function CountryNarrative({
 CountryNarrative.propTypes = {
   onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
+  trackEvent: PropTypes.func,
   reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,

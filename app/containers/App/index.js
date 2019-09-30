@@ -24,6 +24,8 @@ import PathPage from 'containers/PathPage';
 import PathNotFoundPage from 'containers/PathNotFoundPage';
 import HowToReadLayer from 'containers/HowToRead/HowToReadLayer';
 
+import CookieConsent from 'containers/CookieConsent';
+
 import ScrollToTop from './ScrollToTop';
 
 import { DEFAULT_LOCALE } from '../../i18n';
@@ -55,7 +57,6 @@ const Main = styled.main`
 
 export function App({ match }) {
   const locale = match.params ? match.params.locale : DEFAULT_LOCALE;
-
   return (
     <AppWrapper>
       <Helmet
@@ -68,6 +69,7 @@ export function App({ match }) {
         />
       </Helmet>
       <ScrollToTop>
+        <CookieConsent />
         <Header />
         <HowToReadLayer />
         <Main>
