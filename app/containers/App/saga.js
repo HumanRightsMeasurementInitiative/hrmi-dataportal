@@ -437,11 +437,13 @@ export function* initialiseAnalyticsSaga({ status }) {
       ReactGA.set({ anonymizeIp: true });
       yield put(setGAinitialised(true));
       const initialPage = yield select(getRouterPath);
+      const currentLocation = yield select(getRouterLocation);
       ReactGA.pageview(initialPage);
       yield put(
         trackEvent({
-          category: 'GA initialised',
-          action: `Current page: ${initialPage}`,
+          category: 'Analytics',
+          action: `GA initialised`,
+          label: `${currentLocation.pathname}${currentLocation.search}`,
         }),
       );
     }
