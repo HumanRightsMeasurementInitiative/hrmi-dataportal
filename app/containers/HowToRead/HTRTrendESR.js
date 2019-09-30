@@ -17,10 +17,16 @@ function HTRTrendESR({ contxt, intl }) {
         <FormattedMessage {...messages.trendESR.intro} />
       </HTRParagraph>
       <HTRParagraph>
-        <FormattedMessage {...messages.general.benchmarkIntro} />
-        <Text style={{ fontWeight: 600 }} margin={{ horizontal: 'xsmall' }}>
-          <FormattedMessage {...rootMessages.settings.benchmark.name} />
-        </Text>
+        <FormattedMessage
+          {...messages.general.benchmarkIntro}
+          values={{
+            benchmark: (
+              <span style={{ fontWeight: 600, margin: '0 3px' }}>
+                {intl.formatMessage(rootMessages.settings.benchmark.name)}
+              </span>
+            ),
+          }}
+        />
       </HTRParagraph>
       <HTRParagraph margin={{ vertical: 'xsmall' }}>
         <Text size="small" style={{ fontWeight: 600 }}>
