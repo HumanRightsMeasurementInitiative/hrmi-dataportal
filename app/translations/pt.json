@@ -88,7 +88,7 @@
   "hrmi.containers.HowToRead.trendCPR.intro": "Cada medida de direito civil e político foi produzida a partir de respostas a uma pesquisa de especialistas nacionais em direitos humanos. Pode ser visto nos gráficos cronológicos o modo como as opções dos especialistas mudaram ao longo do tempo.",
   "hrmi.containers.HowToRead.trendCPR.rangeTitle": "Como interpretar as faixas de incerteza",
   "hrmi.containers.HowToRead.trendCPR.largeRange": "A large range indicate more uncertainty about what the true score is because the experts scored the country for a right very differently. ",
-  "hrmi.containers.HowToRead.trendCPR.smallRange": "A small range indicate less uncertaity since most experts scored the country similar. ",
+  "hrmi.containers.HowToRead.trendCPR.smallRange": "A small range indicate less uncertainty since most experts scored the country similar. ",
   "hrmi.containers.CookieConsent.nonEssentialConsentInfo": "We'd like to store cookies and usage data to improve your experience.",
   "hrmi.containers.CookieConsent.buttonAccept": "I'm ok with that",
   "hrmi.containers.CookieConsent.buttonReject": "No thanks",
