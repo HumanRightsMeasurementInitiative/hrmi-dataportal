@@ -1,10 +1,13 @@
 import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
-import { push, replace } from 'connected-react-router';
+import { push, replace, LOCATION_CHANGE } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
 import extend from 'lodash/extend';
+import Cookies from 'js-cookie';
+import ReactGA from 'react-ga';
 import 'whatwg-fetch';
 
 import quasiEquals from 'utils/quasi-equals';
+import { disableAnalytics } from 'utils/analytics';
 
 import { DEFAULT_LOCALE } from 'i18n';
 
@@ -20,6 +23,7 @@ import {
   getDataReadyByKey,
   getDataRequestedByKey,
   getContentRequestedByKey,
+  getGAStatus,
 } from './selectors';
 
 import {
@@ -30,6 +34,10 @@ import {
   contentLoaded,
   contentLoadingError,
   loadContentIfNeeded,
+  cookieConsentChecked,
+  checkCookieConsent,
+  setGAinitialised,
+  trackEvent,
 } from './actions';
 import {
   LOAD_DATA_IF_NEEDED,
@@ -48,6 +56,13 @@ import {
   SET_BENCHMARK,
   SET_TAB,
   SET_MODALTAB,
+  CHECK_COOKIECONSENT,
+  COOKIECONSENT_NAME,
+  SET_COOKIECONSENT,
+  COOKIECONSENT_CHECKED,
+  GA_PROPERTY_ID,
+  TRACK_EVENT,
+  OPEN_HOW_TO,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -193,14 +208,34 @@ export function* selectCountrySaga({ code }) {
   const newSearch = searchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
 
+  yield put(
+    trackEvent({
+      category: 'Content',
+      action: 'Select country',
+      value: code,
+    }),
+  );
   yield put(push(`/${requestLocale}/country/${code}${search}`));
 }
+
+const getScaleValue = value => {
+  if (value === 'r') return 'rights';
+  if (value === 'd') return 'dimensions';
+  return value;
+};
 
 export function* setScaleSaga({ value }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('scale', value);
 
+  yield put(
+    trackEvent({
+      category: 'Setting',
+      action: 'Change scale',
+      value: getScaleValue(value),
+    }),
+  );
   // navigate to country and default standard
   const path = yield select(getRouterPath);
   yield put(replace(`${path}?${searchParams.toString()}`));
@@ -211,6 +246,13 @@ export function* setStandardSaga({ value }) {
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('as', value);
 
+  yield put(
+    trackEvent({
+      category: 'Setting',
+      action: 'Change standard',
+      value,
+    }),
+  );
   // navigate to country and default standard
   const path = yield select(getRouterPath);
   yield put(replace(`${path}?${searchParams.toString()}`));
@@ -221,6 +263,13 @@ export function* setBenchmarkSaga({ value }) {
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('pb', value);
 
+  yield put(
+    trackEvent({
+      category: 'Setting',
+      action: 'Change benchmark',
+      value,
+    }),
+  );
   // navigate to country and default standard
   const path = yield select(getRouterPath);
   yield put(replace(`${path}?${searchParams.toString()}`));
@@ -232,6 +281,13 @@ export function* setTabSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
+  yield put(
+    trackEvent({
+      category: 'Content',
+      action: 'Change tab',
+      value,
+    }),
+  );
   yield put(push(`${path}?${searchParams.toString()}`));
 }
 export function* setModalTabSaga({ value }) {
@@ -241,6 +297,13 @@ export function* setModalTabSaga({ value }) {
 
   // navigate to country and default standard
   const path = yield select(getRouterPath);
+  yield put(
+    trackEvent({
+      category: 'Content',
+      action: 'Change tab (in modal)',
+      value,
+    }),
+  );
   yield put(push(`${path}?${searchParams.toString()}`));
 }
 
@@ -251,7 +314,33 @@ export function* selectMetricSaga({ code }) {
   currentSearchParams.delete('tab');
   const newSearch = currentSearchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
+  yield put(
+    trackEvent({
+      category: 'Content',
+      action: 'Select metric',
+      value: code,
+    }),
+  );
   yield put(push(`/${requestLocale}/metric/${code}${search}`));
+}
+export function* openHowToReadSaga({ layer }) {
+  if (layer) {
+    yield put(
+      trackEvent({
+        category: 'How To Read',
+        action: `Chart: ${layer.chart}, context: ${layer.contxt}, scale: ${
+          layer.data
+        }`,
+      }),
+    );
+  } else {
+    yield put(
+      trackEvent({
+        category: 'Close How To Read',
+        action: '',
+      }),
+    );
+  }
 }
 
 // location can either be string or object { pathname, search}
@@ -263,6 +352,7 @@ export function* navigateSaga({ location, args }) {
       replace: true,
       deleteParams: false,
       keepTab: false,
+      trackEvent: false,
     },
     args || {},
   );
@@ -320,10 +410,72 @@ export function* navigateSaga({ location, args }) {
   if (xArgs.deleteParams) {
     xArgs.deleteParams.forEach(p => newSearchParams.delete(p));
   }
+  if (xArgs.trackEvent) {
+    yield put(trackEvent(xArgs.trackEvent));
+  }
   // convert to string and append if necessary
   const newSearch = newSearchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
   yield put(push(`${newPathname}${search}`));
+}
+
+export function* checkCookieConsentSaga() {
+  const consentStatus = Cookies.get(COOKIECONSENT_NAME);
+  yield disableAnalytics(consentStatus !== 'true');
+  yield put(cookieConsentChecked(consentStatus));
+}
+export function* setCookieConsentSaga({ status }) {
+  Cookies.set(COOKIECONSENT_NAME, status, { expires: 365 });
+  yield put(checkCookieConsent());
+}
+// status = consentStatus
+export function* initialiseAnalyticsSaga({ status }) {
+  const initialisedGA = yield select(getGAStatus);
+  if (status === 'true') {
+    if (!initialisedGA) {
+      ReactGA.initialize(GA_PROPERTY_ID, { debug: false, titleCase: false });
+      ReactGA.set({ anonymizeIp: true });
+      yield put(setGAinitialised(true));
+      const initialPage = yield select(getRouterPath);
+      const currentLocation = yield select(getRouterLocation);
+      ReactGA.pageview(initialPage);
+      yield put(
+        trackEvent({
+          category: 'Analytics',
+          action: `GA initialised`,
+          label: `${currentLocation.pathname}${currentLocation.search}`,
+        }),
+      );
+    }
+  } else if (status === 'false') {
+    Cookies.remove('_ga', { path: '/', domain: window.location.hostname });
+    Cookies.remove('_gat', { path: '/', domain: window.location.hostname });
+    Cookies.remove('_gid', { path: '/', domain: window.location.hostname });
+  }
+}
+
+export function* trackPageviewSaga({ payload }) {
+  const initialisedGA = yield select(getGAStatus);
+  const consentStatus = Cookies.get(COOKIECONSENT_NAME);
+  if (consentStatus === 'true' && initialisedGA && !payload.isFirstRendering) {
+    ReactGA.pageview(`${payload.location.pathname}${payload.location.search}`);
+  }
+}
+
+export function* trackEventSaga({ gaEvent }) {
+  const initialisedGA = yield select(getGAStatus);
+  const currentLocation = yield select(getRouterLocation);
+  const consentStatus = Cookies.get(COOKIECONSENT_NAME);
+  if (consentStatus === 'true' && initialisedGA) {
+    ReactGA.event({
+      category: gaEvent.category,
+      action:
+        typeof gaEvent.value !== 'undefined'
+          ? `${gaEvent.action} | ${gaEvent.value}`
+          : gaEvent.action,
+      label: `${currentLocation.pathname}${currentLocation.search}`,
+    });
+  }
 }
 
 export default function* defaultSaga() {
@@ -344,4 +496,10 @@ export default function* defaultSaga() {
   yield takeLatest(SET_TAB, setTabSaga);
   yield takeLatest(SET_MODALTAB, setModalTabSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
+  yield takeLatest(CHECK_COOKIECONSENT, checkCookieConsentSaga);
+  yield takeLatest(SET_COOKIECONSENT, setCookieConsentSaga);
+  yield takeLatest(COOKIECONSENT_CHECKED, initialiseAnalyticsSaga);
+  yield takeLatest(LOCATION_CHANGE, trackPageviewSaga);
+  yield takeLatest(TRACK_EVENT, trackEventSaga);
+  yield takeLatest(OPEN_HOW_TO, openHowToReadSaga);
 }
