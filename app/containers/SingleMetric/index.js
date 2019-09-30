@@ -375,13 +375,31 @@ export function mapDispatchToProps(dispatch) {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
     onRemoveFilter: key =>
-      dispatch(navigate({}, { replace: false, deleteParams: [key] })),
+      dispatch(
+        navigate(
+          {},
+          {
+            replace: false,
+            deleteParams: [key],
+            trackEvent: {
+              category: 'Data',
+              action: 'Remove country filter (Metric)',
+              value: key,
+            },
+          },
+        ),
+      ),
     onAddFilter: (key, value) =>
       dispatch(
         navigate(
           { search: `?${key}=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Country filter (Metric)',
+              value: `${key}/${value}`,
+            },
           },
         ),
       ),
@@ -391,6 +409,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?sort=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Sort countries (Metric)',
+              value,
+            },
           },
         ),
       ),
@@ -400,6 +423,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?dir=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Country sort order (Metric)',
+              value,
+            },
           },
         ),
       ),
@@ -412,6 +440,11 @@ export function mapDispatchToProps(dispatch) {
           },
           {
             replace: false,
+            trackEvent: {
+              category: 'Modal',
+              action: 'Metric-country',
+              value: `${metric}/${country}/${tab}`,
+            },
           },
         ),
       ),
