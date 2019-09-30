@@ -92,7 +92,7 @@ function SettingsToggle({
           pad={
             inModal
               ? { vertical: 'small' }
-              : { left: size === 'xlarge' ? 'large' : 'medium' }
+              : { left: size === 'xlarge' ? 'medium' : 'small' }
           }
           direction="column"
           flex={{ shrink: 0 }}
