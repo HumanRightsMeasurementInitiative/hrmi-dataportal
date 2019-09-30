@@ -20,7 +20,8 @@ export default defineMessages({
   general: {
     benchmarkIntro: {
       id: `${scope}.general.benchmarkIntro`,
-      defaultMessage: 'The maximum value of 100% refers to the chosen',
+      defaultMessage:
+        'The maximum value of 100% refers to the chosen {benchmark}',
     },
   },
   overview: {

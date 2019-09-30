@@ -52,7 +52,7 @@
   "hrmi.containers.FAQs.answers.measureDimensionCPR": "Each civil and political right metric has been produced from responses to a survey of in-country human rights experts. Respondents’ answers to questions about the frequency of violations of each civil and political right were combined using a statistical model that ensures the comparability of responses across countries. This results in a distribution of estimated levels of respect for each right in each country, represented by the scores and uncertainty bands shown throughout the data visualisations. Other information about who was identified as at risk for human rights abuse was also collected from our respondents, and can be accessed from the 'people at risk' tabs on each country page.",
   "hrmi.containers.HowToRead.label": "How to read this chart",
   "hrmi.containers.HowToRead.labelShort": "How to read",
-  "hrmi.containers.HowToRead.general.benchmarkIntro": "The maximum value of 100% refers to the chosen",
+  "hrmi.containers.HowToRead.general.benchmarkIntro": "The maximum value of 100% refers to the chosen {benchmark}:",
   "hrmi.containers.HowToRead.overview.dimensions.intro": "Each chart shows the Human Rights Performance of each country at a glance. Countries' scores are visualised for our 3 categories of human rights: ",
   "hrmi.containers.HowToRead.overview.dimensions.empowerment": "Summary score for the 3 Empowerment rights, mapped on a scale from 0 to 10. ",
   "hrmi.containers.HowToRead.overview.dimensions.physint": "Summary score for the 4 Safety from the State rights, mapped on a scale from 0 to 10. ",
