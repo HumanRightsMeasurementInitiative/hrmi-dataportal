@@ -336,8 +336,8 @@ export function* openHowToReadSaga({ layer }) {
   } else {
     yield put(
       trackEvent({
-        category: 'Close How To Read',
-        action: '',
+        category: 'Close panel',
+        action: 'How To Read',
       }),
     );
   }
@@ -472,7 +472,7 @@ export function* trackEventSaga({ gaEvent }) {
       action:
         typeof gaEvent.value !== 'undefined'
           ? `${gaEvent.action} | ${gaEvent.value}`
-          : gaEvent.action,
+          : gaEvent.action || 'NO ACTION DEFINED',
       label: `${currentLocation.pathname}${currentLocation.search}`,
     });
   }
