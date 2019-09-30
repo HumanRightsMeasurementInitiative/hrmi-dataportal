@@ -52,7 +52,7 @@
   "hrmi.containers.FAQs.answers.measureDimensionCPR": " ",
   "hrmi.containers.HowToRead.label": "Comment lire ce graphique",
   "hrmi.containers.HowToRead.labelShort": "Comment lire",
-  "hrmi.containers.HowToRead.general.benchmarkIntro": "La valeur maximale de 100% correspond à la valeur choisie",
+  "hrmi.containers.HowToRead.general.benchmarkIntro": "La valeur maximale de 100% correspond à la {benchmark} choisie:",
   "hrmi.containers.HowToRead.overview.dimensions.intro": "Chaque tableau donne une vue d'ensemble des performances en termes de droits humains pour chaque pays. Les scores des pays sont représentés pour nos 3 classes de droits humains: ",
   "hrmi.containers.HowToRead.overview.dimensions.empowerment": "Score global pour 3 droits politiques et civils, relevés sur une échelle allant de 0 à 10. ",
   "hrmi.containers.HowToRead.overview.dimensions.physint": "Score global pour 4 droits politiques et civils favorisant l’intégrité physique des citoyens, sur une échelle allant de 0 à 10. ",
