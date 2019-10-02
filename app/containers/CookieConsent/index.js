@@ -29,6 +29,9 @@ const ButtonHighlightPrimary = styled(ButtonHighlight)`
   &:hover {
     border-color: ${({ theme }) => theme.global.colors.highlight2};
   }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding: 5px 10px;
+  }
 `;
 // color: ${({ theme }) => theme.global.colors.dark};
 // background-color: ${({ theme }) => theme.global.colors.white};
