@@ -71,7 +71,8 @@ function RightTop({
     unit: right.type === 'esr' ? '%' : '',
   };
 
-  const hasGroups = right.groupScores && right.groupScores.length > 0;
+  const hasGroups = false; // right.groupScores && right.groupScores.length > 0;
+
   return (
     <Box
       direction="row"
