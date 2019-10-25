@@ -2,12 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import {
-  needsArticle,
-  isPlural,
-  compareRange,
-  needsArticleRegion,
-} from 'utils/narrative';
+import { compareRange, getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -23,55 +18,74 @@ function NarrativeESRCompAssessment({
   referenceScore,
   referenceCount,
   intl,
+  countryGrammar,
 }) {
   const messageValues = {
+    ...getMessageGrammar(
+      intl,
+      country.country_code,
+      country.region_code,
+      countryGrammar,
+    ),
     esr: intl.formatMessage(rootMessages.dimensions.esr),
-    country: intl.formatMessage(rootMessages.countries[country.country_code]),
-    region: intl.formatMessage(rootMessages.regions[country.region_code]),
-    needsArticleRegion: needsArticleRegion(intl.locale, country.region_code),
-    isPlural: isPlural(intl.locale, country.country_code),
-    needsArticle: needsArticle(intl.locale, country.country_code),
     referenceCount,
     referenceCountLessOne: referenceCount - 1,
+    dimension: intl.formatMessage(rootMessages.dimensions.esr),
   };
-  const rangeLo = parseFloat(score[benchmark.column]) - RANGE;
-  const rangeHi = parseFloat(score[benchmark.column]) + RANGE;
-  return (
-    <>
-      <FormattedMessage
-        {...messages.compAssessmentESR.start}
-        values={messageValues}
-      />
-      <strong>
+
+  if (!score) {
+    return (
+      <>
+        <FormattedMessage {...messages.esr.noData} values={messageValues} />
         <FormattedMessage
-          {...messages.compAssessment.result[
-            compareRange({
-              lo: rangeLo,
-              hi: rangeHi,
-              reference: referenceScore,
-            })
-          ]}
+          {...messages.esr.noDataFunding}
           values={messageValues}
         />
-      </strong>
-      {isCountryHighIncome(country) && (
+      </>
+    );
+  }
+  if (score) {
+    const rangeLo = parseFloat(score[benchmark.column]) - RANGE;
+    const rangeHi = parseFloat(score[benchmark.column]) + RANGE;
+    return (
+      <>
         <FormattedMessage
-          {...messages.compAssessmentESR.endHi}
+          {...messages.compAssessmentESR.start}
           values={messageValues}
         />
-      )}
-      {!isCountryHighIncome(country) && (
-        <FormattedMessage
-          {...messages.compAssessmentESR.end}
-          values={messageValues}
-        />
-      )}
-    </>
-  );
+        <strong>
+          <FormattedMessage
+            {...messages.compAssessment.result[
+              compareRange({
+                lo: rangeLo,
+                hi: rangeHi,
+                reference: referenceScore,
+              })
+            ]}
+            values={messageValues}
+          />
+        </strong>
+        {isCountryHighIncome(country) && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.endHi}
+            values={messageValues}
+          />
+        )}
+        {!isCountryHighIncome(country) && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.end}
+            values={messageValues}
+          />
+        )}
+      </>
+    );
+  }
+  return null;
 }
 
 NarrativeESRCompAssessment.propTypes = {
   country: PropTypes.object,
+  countryGrammar: PropTypes.object,
   referenceCount: PropTypes.number,
   referenceScore: PropTypes.number,
   benchmark: PropTypes.object,

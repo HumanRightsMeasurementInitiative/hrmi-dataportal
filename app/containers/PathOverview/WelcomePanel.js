@@ -15,6 +15,10 @@ import { DIMENSIONS } from 'containers/App/constants';
 
 import DiamondChart from 'components/CountryPreview/DiamondChart';
 import DimensionTooltip from 'containers/Settings/DimensionTooltip';
+
+import LocaleToggle from 'containers/LocaleToggle';
+import { appLocales } from 'i18n';
+
 import rootMessages from 'messages';
 
 // styles
@@ -35,9 +39,11 @@ const WelcomeHeading = styled.h1`
   margin-left: 32px;
   margin-right: 32px;
   font-size: 20px;
+  margin-top: 0;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     margin-left: 22px;
     margin-right: 22px;
+    margin-top: 0.67em;
     font-size: 24px;
   }
 `;
@@ -53,7 +59,7 @@ const StyledButtonHighlight = styled(ButtonHighlight)`
 `;
 const StyledButtonIcon = styled(ButtonIcon)`
   position: absolute;
-  top: 5px;
+  top: 8px;
   right: 5px;
   background: transparent;
 `;
@@ -84,13 +90,19 @@ export function WelcomePanel({ dismiss }) {
           pad={
             isMinSize(size, 'medium')
               ? { top: 'small', bottom: 'large', horizontal: 'medium' }
-              : { top: 'small', bottom: 'large', horizontal: 'small' }
+              : { top: 'small', bottom: 'medium', horizontal: 'small' }
           }
           width={isMinSize(size, 'medium') ? '530px' : '100%'}
+          responsive={false}
         >
           <StyledButtonIcon onClick={dismiss} subtle>
             <CloseIcon size="large" color="dark" />
           </StyledButtonIcon>
+          {appLocales.length > 1 && (
+            <Box margin={{ left: 'auto', right: 'ml' }} responsive={false}>
+              <LocaleToggle light />
+            </Box>
+          )}
           <WelcomeHeading>
             <FormattedMessage {...messages.welcome.heading} />
           </WelcomeHeading>
@@ -103,7 +115,7 @@ export function WelcomePanel({ dismiss }) {
             responsive={false}
           >
             <Box
-              width={isMinSize(size, 'medium') ? '35%' : '27%'}
+              width={isMinSize(size, 'medium') ? '35%' : '30%'}
               flex={{ shrink: 0, grow: 0 }}
               direction="column"
             >
@@ -130,7 +142,7 @@ export function WelcomePanel({ dismiss }) {
               </Box>
             </Box>
             <Box
-              width={isMinSize(size, 'medium') ? '30%' : '46%'}
+              width={isMinSize(size, 'medium') ? '30%' : '40%'}
               flex={{ shrink: 0, grow: 0 }}
             >
               <DiamondChart
@@ -143,7 +155,7 @@ export function WelcomePanel({ dismiss }) {
               />
             </Box>
             <Box
-              width={isMinSize(size, 'medium') ? '35%' : '27%'}
+              width={isMinSize(size, 'medium') ? '35%' : '30%'}
               flex={{ shrink: 0, grow: 0 }}
             >
               <Box height="50%" flex={{ shrink: 0 }} justify="end" />

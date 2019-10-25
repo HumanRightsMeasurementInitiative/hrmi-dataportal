@@ -25,7 +25,7 @@ const randomValue = (min, max) => Math.random() * (max - min) + min;
 
 const getRightGroups = (d, i) => {
   const min = d.type === 'cpr' ? 5 : 50;
-  const max = d.type === 'cpr' ? 10 : 95;
+  const max = d.type === 'cpr' ? 10 : 100;
   // return DIMENSIONS.map((dim, index) => ({
   //   key: dim.key,
   //   color: dim.key,
@@ -45,7 +45,7 @@ const getRightGroups = (d, i) => {
       )
       .map(right => ({
         key: right.key,
-        value: index === i ? randomValue(min, max) : 0,
+        value: index === i ? randomValue(min, max * 0.95) : 0,
       })),
   }));
 };
@@ -100,10 +100,18 @@ function HTROverviewRights({ intl }) {
           {d.key === 'esr' && (
             <Box margin={{ top: 'small' }} responsive={false}>
               <HTRParagraph>
-                <FormattedMessage {...messages.general.benchmarkIntro} />
-                <span style={{ fontWeight: 600, margin: '0 3px' }}>
-                  <FormattedMessage {...rootMessages.settings.benchmark.name} />
-                </span>
+                <FormattedMessage
+                  {...messages.general.benchmarkIntro}
+                  values={{
+                    benchmark: (
+                      <span style={{ fontWeight: 600, margin: '0 3px' }}>
+                        {intl.formatMessage(
+                          rootMessages.settings.benchmark.name,
+                        )}
+                      </span>
+                    ),
+                  }}
+                />
               </HTRParagraph>
               <HTRParagraph margin={{ vertical: 'xsmall' }}>
                 <span style={{ fontWeight: 600 }}>
