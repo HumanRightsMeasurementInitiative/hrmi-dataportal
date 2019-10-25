@@ -26,8 +26,42 @@ import {
   OPEN_HOW_TO,
   HIGHLIGHT_COUNTRY,
   SHOW_WELCOME,
+  CHECK_COOKIECONSENT,
+  COOKIECONSENT_CHECKED,
+  SET_COOKIECONSENT,
+  GA_INITIALISED,
+  TRACK_EVENT,
 } from './constants';
 
+export function checkCookieConsent() {
+  return {
+    type: CHECK_COOKIECONSENT,
+  };
+}
+export function setCookieConsent(status) {
+  return {
+    type: SET_COOKIECONSENT,
+    status,
+  };
+}
+export function cookieConsentChecked(status) {
+  return {
+    type: COOKIECONSENT_CHECKED,
+    status,
+  };
+}
+export function setGAinitialised(status) {
+  return {
+    type: GA_INITIALISED,
+    status,
+  };
+}
+export function trackEvent(gaEvent) {
+  return {
+    type: TRACK_EVENT,
+    gaEvent,
+  };
+}
 /**
  * Load the data, this action starts the request saga
  *

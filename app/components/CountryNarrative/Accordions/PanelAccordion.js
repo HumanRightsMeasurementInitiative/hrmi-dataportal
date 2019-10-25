@@ -31,7 +31,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   }
 `;
 
-function PanelAccordion({ main, top, content, buttonText, level }) {
+function PanelAccordion({ main, top, content, buttonText, level, onClick }) {
   const [open, setOpen] = useState(false);
   return (
     <ResponsiveContext.Consumer>
@@ -72,7 +72,10 @@ function PanelAccordion({ main, top, content, buttonText, level }) {
                 <StyledButtonIcon
                   subtle
                   level={level}
-                  onClick={() => setOpen(!open)}
+                  onClick={() => {
+                    setOpen(!open);
+                    onClick(!open);
+                  }}
                   small={!isMinSize(size, 'medium')}
                 >
                   {!open && (
@@ -106,6 +109,7 @@ PanelAccordion.propTypes = {
   content: PropTypes.node,
   buttonText: PropTypes.string,
   level: PropTypes.number,
+  onClick: PropTypes.func,
 };
 
 export default PanelAccordion;

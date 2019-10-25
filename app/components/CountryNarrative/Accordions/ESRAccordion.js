@@ -20,6 +20,7 @@ function ESRAccordion({
   onMetricClick,
   standard,
   hasAtRisk,
+  trackEvent,
 }) {
   return (
     <Styled margin={{ bottom: 'medium' }}>
@@ -53,6 +54,13 @@ function ESRAccordion({
               hasAtRisk={hasAtRisk}
             />
           }
+          onClick={open =>
+            trackEvent({
+              category: 'Data',
+              action: `${open ? 'Expand' : 'Collapse'} ESR dimension`,
+              value: dimension.key,
+            })
+          }
           content={
             <RightContent
               rights={rights}
@@ -61,6 +69,7 @@ function ESRAccordion({
               onMetricClick={onMetricClick}
               standard={standard}
               hasAtRisk={hasAtRisk}
+              trackEvent={trackEvent}
             />
           }
         />
@@ -77,6 +86,7 @@ ESRAccordion.propTypes = {
   indicators: PropTypes.array,
   benchmark: PropTypes.object,
   hasAtRisk: PropTypes.bool,
+  trackEvent: PropTypes.func,
 };
 
 export default ESRAccordion;

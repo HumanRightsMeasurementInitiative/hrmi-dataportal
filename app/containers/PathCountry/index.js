@@ -34,6 +34,7 @@ import {
   getRightsForCountry,
   getIndicatorsForCountry,
   getCountry,
+  getCountryGrammar,
   getScaleSearch,
   getStandardSearch,
   getBenchmarkSearch,
@@ -46,7 +47,12 @@ import {
   getDependenciesReady,
 } from 'containers/App/selectors';
 
-import { loadDataIfNeeded, navigate, setTab } from 'containers/App/actions';
+import {
+  loadDataIfNeeded,
+  navigate,
+  setTab,
+  trackEvent,
+} from 'containers/App/actions';
 
 import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
@@ -57,6 +63,7 @@ import saga from 'containers/App/saga';
 
 const DEPENDENCIES = [
   'countries',
+  'countriesGrammar',
   'esrIndicators',
   'cprScores',
   'esrScores',
@@ -74,6 +81,7 @@ export function PathCountry({
   rights,
   indicators,
   country,
+  countryGrammar,
   scale,
   benchmark,
   atRisk,
@@ -87,6 +95,7 @@ export function PathCountry({
   esrYear,
   cprYear,
   dataReady,
+  onTrackEvent,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -195,6 +204,7 @@ export function PathCountry({
                   rights={rights}
                   indicators={indicators}
                   country={country}
+                  countryGrammar={countryGrammar}
                   scale={scale}
                   benchmark={benchmark}
                   atRiskData={atRisk}
@@ -207,6 +217,7 @@ export function PathCountry({
                   esrYear={esrYear}
                   cprYear={cprYear}
                   dataReady={dataReady}
+                  trackEvent={onTrackEvent}
                 />
               ),
             },
@@ -258,6 +269,7 @@ PathCountry.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  onTrackEvent: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   activeTab: PropTypes.number,
   onMetricClick: PropTypes.func,
@@ -270,6 +282,7 @@ PathCountry.propTypes = {
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -282,6 +295,8 @@ PathCountry.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   country: (state, { match }) => getCountry(state, match.params.country),
+  countryGrammar: (state, { match }) =>
+    getCountryGrammar(state, match.params.country),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   indicators: (state, { match }) =>
     getIndicatorsForCountry(state, match.params.country),
@@ -315,6 +330,11 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             deleteParams: deleteParams.filter(p => p !== key),
+            trackEvent: {
+              category: 'Data',
+              action: 'Country filter (Country, tags)',
+              value: `${key}/${value}`,
+            },
           },
         ),
       );
@@ -329,6 +349,11 @@ export function mapDispatchToProps(dispatch) {
           },
           {
             replace: false,
+            trackEvent: {
+              category: 'Modal',
+              action: 'Country-metric',
+              value: `${country}/${metric}/${tab}`,
+            },
           },
         ),
       ),
@@ -345,9 +370,14 @@ export function mapDispatchToProps(dispatch) {
           {
             replace: false,
             deleteParams: ['mtab'],
+            trackEvent: {
+              category: 'Close modal',
+              action: `Target: country/${country}`,
+            },
           },
         ),
       ),
+    onTrackEvent: e => dispatch(trackEvent(e)),
   };
 }
 

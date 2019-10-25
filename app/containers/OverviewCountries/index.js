@@ -93,7 +93,7 @@ export function OverviewCountries({
           <Box
             direction="row"
             justify="between"
-            align={isMinSize(size, 'large') ? 'center' : 'start'}
+            align="start"
             margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
           >
             <CountryFilters
@@ -131,8 +131,8 @@ export function OverviewCountries({
                   direction="row"
                   wrap
                   overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
-                  pad={isMaxSize(size, 'medium') ? '40px 0 0' : '40px 0 0'}
-                  margin={isMaxSize(size, 'medium') ? '0' : '-20px 0 0'}
+                  pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
+                  margin="0"
                 >
                   <InfiniteScroll items={sortedCountries} step={30} show={0}>
                     {(c, index) => (
@@ -210,7 +210,18 @@ export function mapDispatchToProps(dispatch) {
   return {
     onRemoveFilter: key =>
       dispatch(
-        navigate({ pathname: '' }, { replace: false, deleteParams: [key] }),
+        navigate(
+          { pathname: '' },
+          {
+            replace: false,
+            deleteParams: [key],
+            trackEvent: {
+              category: 'Data',
+              action: 'Remove country filter (Overview)',
+              value: key,
+            },
+          },
+        ),
       ),
     onSelectCountry: country => dispatch(selectCountry(country)),
     onCountryHover: country => dispatch(highlightCountry(country)),
@@ -220,6 +231,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?${key}=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Country filter (Overview)',
+              value: `${key}/${value}`,
+            },
           },
         ),
       ),
@@ -229,6 +245,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?sort=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Sort countries (Overview)',
+              value,
+            },
           },
         ),
       ),
@@ -238,6 +259,11 @@ export function mapDispatchToProps(dispatch) {
           { search: `?dir=${value}` },
           {
             replace: false,
+            trackEvent: {
+              category: 'Data',
+              action: 'Country sort order (Overview)',
+              value,
+            },
           },
         ),
       ),
