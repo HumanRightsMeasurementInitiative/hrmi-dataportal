@@ -19,6 +19,7 @@ function RightContent({
   standard,
   hasAtRisk,
   intl,
+  trackEvent,
 }) {
   return (
     <div>
@@ -52,6 +53,13 @@ function RightContent({
                     hasAtRisk={hasAtRisk}
                   />
                 }
+                onClick={open =>
+                  trackEvent({
+                    category: 'Data',
+                    action: `${open ? 'Expand' : 'Collapse'} ESR right`,
+                    value: right.key,
+                  })
+                }
                 content={
                   <IndicatorContent
                     indicators={rightIndicators}
@@ -76,6 +84,7 @@ RightContent.propTypes = {
   benchmark: PropTypes.object,
   hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
+  trackEvent: PropTypes.func,
 };
 
 export default injectIntl(RightContent);

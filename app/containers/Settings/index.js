@@ -161,7 +161,7 @@ export function Settings({
                 height="90px"
                 width="full"
                 pad={{
-                  left: isMinSize(size, 'xlarge') ? 'medium' : 'small',
+                  left: isMinSize(size, 'xlarge') ? 'medium' : 'xsmall',
                   top: 'xsmall',
                 }}
                 align="start"
