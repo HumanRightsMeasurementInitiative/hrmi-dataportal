@@ -61,8 +61,7 @@ function IndicatorTop({
     stripes: standard === 'hi',
     unit: '%',
   };
-  const hasGroups = indicator.groupScores && indicator.groupScores.length > 0;
-
+  const { hasGroups } = indicator;
   return (
     <Box
       direction="row"
@@ -79,6 +78,9 @@ function IndicatorTop({
               {...rootMessages['indicators-raw'][indicator.key]}
             />
           )}
+          {raw && indicator.score && indicator.score.year && (
+            <>{` (${indicator.score.year})`}</>
+          )}
           <Hidden min="medium">
             <FormNext size="large" />
           </Hidden>
@@ -90,15 +92,15 @@ function IndicatorTop({
         items={[
           {
             key: indicator.key,
-            value: 'groups',
-            label: intl.formatMessage(rootMessages.tabs.groups),
-            skip: !hasGroups,
-          },
-          {
-            key: indicator.key,
             value: 'trend',
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
+          },
+          {
+            key: indicator.key,
+            value: 'groups',
+            label: intl.formatMessage(rootMessages.tabs.groups),
+            skip: !hasGroups || !data.value,
           },
           {
             key: indicator.key,

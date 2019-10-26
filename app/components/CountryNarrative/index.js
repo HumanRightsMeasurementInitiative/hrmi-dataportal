@@ -100,6 +100,8 @@ function CountryNarrative({
   esrYear,
   cprYear,
   trackEvent,
+  onRawChange,
+  raw,
 }) {
   if (!dimensions || !rights || !indicators) {
     return null;
@@ -195,6 +197,8 @@ function CountryNarrative({
             standard={standard}
             hasAtRisk={hasCPR(dimensions)}
             trackEvent={trackEvent}
+            raw={raw}
+            onRawChange={onRawChange}
           />
         </Dimension>
       </RightsType>
@@ -285,6 +289,8 @@ CountryNarrative.propTypes = {
   intl: intlShape.isRequired,
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
 export default injectIntl(CountryNarrative);

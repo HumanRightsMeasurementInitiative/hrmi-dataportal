@@ -15,11 +15,18 @@ import AnnotateBetter from 'components/AnnotateBetterWorse';
 
 import formatScoreMax from 'utils/format-score-max';
 import { isMinSize } from 'utils/responsive';
+import quasiEquals from 'utils/quasi-equals';
 
 import Source from 'components/Source';
 
 import SettingsToggle from 'containers/Settings/SettingsToggle';
-import { BENCHMARKS, PEOPLE_GROUPS } from 'containers/App/constants';
+import {
+  BENCHMARKS,
+  PEOPLE_GROUPS,
+  COLUMNS,
+  INDICATOR_LOOKBACK,
+} from 'containers/App/constants';
+import ButtonToggleValueSetting from 'styled/ButtonToggleValueSetting';
 
 import rootMessages from 'messages';
 // import SettingsToggle from 'containers/Settings/SettingsToggle';
@@ -46,12 +53,67 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-const getRefs = (score, benchmark, refColumn) => {
+const Settings = styled(Box)`
+  background: ${({ theme }) => theme.global.colors['light-0']};
+`;
+
+// const getRefs = (score, benchmark, refColumn) => {
+//   if (benchmark && benchmark.key === 'adjusted') {
+//     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+//   }
+//   if (benchmark && benchmark.key === 'best') {
+//     const col = benchmark[refColumn];
+//     return [
+//       { value: 100, style: 'solid', key: 'best' },
+//       {
+//         value: score && parseFloat(score[col]),
+//         style: 'dotted',
+//         key: 'adjusted',
+//       },
+//     ];
+//   }
+//   return false;
+// };
+
+const getDimensionValue = (score, benchmark, raw) => {
+  if (score) {
+    const col = raw
+      ? COLUMNS.ESR.RAW
+      : (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return parseFloat(score[col]);
+  }
+  return false;
+};
+const getDimensionRefs = (metricInfo, score, benchmark, raw) => {
+  if (raw) {
+    const valueMin =
+      metricInfo && parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_MIN]);
+    return [
+      {
+        value: valueMin,
+        style: 'solid',
+        key: 'min',
+        align: valueMin < 33 ? 'left' : 'right',
+      },
+      {
+        value: score && parseFloat(score[COLUMNS.ESR.RAW_REF]),
+        style: 'dotted',
+        key: 'adjusted',
+        align: 'right',
+      },
+      {
+        value: metricInfo && parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_BEST]),
+        style: 'solid',
+        key: 'best',
+        align: 'left',
+      },
+    ];
+  }
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark[refColumn];
+    const col = benchmark.refIndicatorColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
@@ -66,8 +128,7 @@ const getRefs = (score, benchmark, refColumn) => {
 
 function CountryMetricGroups({
   scores,
-  metric,
-  // metricInfo,
+  metricInfo,
   percentage,
   color,
   colorHint,
@@ -76,24 +137,74 @@ function CountryMetricGroups({
   hasBenchmarkOption,
   onSetBenchmark,
   maxValue,
+  hasRawOption,
+  raw,
+  onRawChange,
+  metric,
+  currentYear,
 }) {
-  // console.log('scores', scores)
-  const { column } = benchmark;
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Styled pad="medium" direction="column">
+          {hasRawOption && (
+            <Settings direction="row" justify="end" pad="small" border="top">
+              <Box direction="row" justify="end">
+                <ButtonToggleValueSetting
+                  active={!raw}
+                  disabled={!raw}
+                  onClick={() => {
+                    onRawChange(false);
+                  }}
+                >
+                  <FormattedMessage {...rootMessages.settings.value.score} />
+                </ButtonToggleValueSetting>
+                <ButtonToggleValueSetting
+                  active={raw}
+                  disabled={raw}
+                  onClick={() => {
+                    onRawChange(true);
+                  }}
+                >
+                  <FormattedMessage {...rootMessages.settings.value.raw} />
+                </ButtonToggleValueSetting>
+              </Box>
+            </Settings>
+          )}
           {PEOPLE_GROUPS.map(group => {
-            const groupScore = scores.find(s => s.group === group.code);
+            const groupScores = scores.filter(s => s.group === group.code);
+            let groupScore;
+            if (metric.metricType === 'indicators') {
+              const mostRecentYear = groupScores.reduce((memo, s) => {
+                if (
+                  parseInt(s.year, 10) >= currentYear - INDICATOR_LOOKBACK &&
+                  (memo === null ||
+                    (parseInt(s.year, 10) > memo &&
+                      parseInt(s.year, 10) <= currentYear))
+                ) {
+                  return parseInt(s.year, 10);
+                }
+                return memo;
+              }, null);
+              groupScore = groupScores.find(
+                s =>
+                  quasiEquals(s.year, currentYear) ||
+                  quasiEquals(s.year, mostRecentYear),
+              );
+            } else {
+              groupScore = groupScores.find(s =>
+                quasiEquals(s.year, currentYear),
+              );
+            }
+
             const data = {
               color,
-              value: parseFloat(groupScore[column]),
-              refValues: getRefs(
+              value: getDimensionValue(groupScore, benchmark, raw),
+              refValues: getDimensionRefs(
+                metricInfo,
                 groupScore,
                 benchmark,
-                metric.metricType === 'indicators'
-                  ? 'refIndicatorColumn'
-                  : 'refColumn',
+                raw,
               ),
               maxValue,
               stripes: standard === 'hi',
@@ -103,10 +214,13 @@ function CountryMetricGroups({
               <Box key={group.key}>
                 <StyledHeading
                   level={4}
-                  margin={{ vertical: 'none' }}
+                  margin={{ top: 'xsmall', bottom: 'small' }}
                   responsive={false}
                 >
                   <FormattedMessage {...rootMessages.groups[group.key]} />
+                  {raw && groupScore && groupScore.year && (
+                    <>{` (${groupScore.year})`}</>
+                  )}
                 </StyledHeading>
                 <Box
                   pad={{ vertical: '24px' }}
@@ -183,7 +297,9 @@ function CountryMetricGroups({
 
 CountryMetricGroups.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  // metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  metric: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  currentYear: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   color: PropTypes.string,
   colorHint: PropTypes.string,
   percentage: PropTypes.bool,
@@ -192,7 +308,10 @@ CountryMetricGroups.propTypes = {
   hasBenchmarkOption: PropTypes.bool,
   onSetBenchmark: PropTypes.func,
   maxValue: PropTypes.number,
-  metric: PropTypes.object,
+  // metric: PropTypes.object,
+  hasRawOption: PropTypes.bool,
+  raw: PropTypes.bool,
+  onRawChange: PropTypes.func,
 };
 
 export default CountryMetricGroups;
