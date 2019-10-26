@@ -20,6 +20,8 @@ function RightContent({
   hasAtRisk,
   intl,
   trackEvent,
+  onRawChange,
+  raw,
 }) {
   return (
     <div>
@@ -66,6 +68,8 @@ function RightContent({
                     benchmark={benchmark}
                     onMetricClick={onMetricClick}
                     standard={standard}
+                    raw={raw}
+                    onRawChange={onRawChange}
                   />
                 }
               />
@@ -85,6 +89,8 @@ RightContent.propTypes = {
   hasAtRisk: PropTypes.bool,
   intl: intlShape.isRequired,
   trackEvent: PropTypes.func,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
 export default injectIntl(RightContent);

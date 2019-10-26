@@ -31,6 +31,7 @@ import {
   SET_COOKIECONSENT,
   GA_INITIALISED,
   TRACK_EVENT,
+  SET_RAW,
 } from './constants';
 
 export function checkCookieConsent() {
@@ -173,6 +174,12 @@ export function setStandard(value) {
 export function setBenchmark(value) {
   return {
     type: SET_BENCHMARK,
+    value,
+  };
+}
+export function setRaw(value) {
+  return {
+    type: SET_RAW,
     value,
   };
 }

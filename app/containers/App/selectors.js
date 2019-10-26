@@ -83,6 +83,11 @@ export const getRouterMatch = createSelector(
   },
 );
 
+export const getRawSearch = createSelector(
+  getRouterSearchParams,
+  search => !!(search.has('raw') && search.get('raw') === '1'),
+);
+
 export const getTabSearch = createSelector(
   getRouterSearchParams,
   search => (search.has('tab') ? search.get('tab') : '0'),
@@ -699,10 +704,6 @@ export const getIndicatorsForCountry = createSelector(
               score: scores.find(
                 s =>
                   s.metric_code === i.code && s.group === PEOPLE_GROUPS[0].code,
-              ),
-              groupScores: scores.filter(
-                s =>
-                  s.metric_code === i.code && s.group !== PEOPLE_GROUPS[0].code,
               ),
               details,
               ...i,

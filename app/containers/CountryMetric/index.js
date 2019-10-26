@@ -33,13 +33,10 @@ import {
   STANDARDS,
   BENCHMARKS,
   COLUMNS,
-  PEOPLE_GROUPS,
-  INDICATOR_LOOKBACK,
 } from 'containers/App/constants';
 import ContentContainer from 'styled/ContentContainer';
 
 import getMetricDetails from 'utils/metric-details';
-import quasiEquals from 'utils/quasi-equals';
 
 import {
   getCountry,
@@ -61,6 +58,7 @@ import {
   getMinYearCPR,
   getCPRYear,
   getESRYear,
+  getRawSearch,
 } from 'containers/App/selectors';
 
 import {
@@ -71,6 +69,7 @@ import {
   loadDataIfNeeded,
   setStandard,
   setBenchmark,
+  setRaw,
 } from 'containers/App/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
@@ -151,6 +150,13 @@ const getColour = metric => {
   }
   return 'esr';
 };
+
+const getTrendColumn = (isESR, currentBenchmark, raw) => {
+  if (isESR && raw) return COLUMNS.ESR.RAW;
+  if (isESR && !raw) return currentBenchmark.column;
+  return COLUMNS.CPR.MEAN;
+};
+
 const DEPENDENCIES = [
   'countries',
   'esrIndicators',
@@ -189,6 +195,8 @@ export function CountryMetric({
   onSetBenchmark,
   onSetStandard,
   currentYear,
+  raw,
+  onRawChange,
 }) {
   const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -215,37 +223,16 @@ export function CountryMetric({
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const countryTitle =
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
-  const metricTitle =
+  let metricTitle =
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
 
-  let currentScores = [];
-  let hasGroups = false;
-  if (isESR && scores) {
-    if (metric.metricType === 'indicators') {
-      const mostRecentYear = scores.reduce((memo, s) => {
-        if (
-          parseInt(s.year, 10) >= currentYear - INDICATOR_LOOKBACK &&
-          (memo === null ||
-            (parseInt(s.year, 10) > memo &&
-              parseInt(s.year, 10) <= currentYear))
-        ) {
-          return parseInt(s.year, 10);
-        }
-        return memo;
-      }, null);
-
-      currentScores = scores.filter(
-        s =>
-          quasiEquals(s.year, currentYear) ||
-          quasiEquals(s.year, mostRecentYear),
-      );
-    } else {
-      currentScores = scores.filter(s => quasiEquals(s.year, currentYear));
-    }
-    hasGroups =
-      currentScores.filter(s => s.group !== PEOPLE_GROUPS[0].code).length > 0;
+  if (metric && metric.metricType === 'indicators' && raw) {
+    metricTitle = intl.formatMessage(
+      rootMessages[`${metric.metricType}-raw`][metric.key],
+    );
   }
+
   // prettier-ignore
   return (
     <Box overflow="auto" direction="column" ref={layerRef}>
@@ -325,20 +312,26 @@ export function CountryMetric({
               //   data: 'atRisk',
               // },
               content:
-                hasGroups &&
+                metric && metric.hasGroups &&
                 (props => (
                   <CountryMetricGroups
                     color="esr"
                     colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
-                    scores={currentScores}
+                    scores={scores}
                     metric={metric}
                     metricInfo={metricInfo}
-                    hasBenchmarkOption
+                    hasBenchmarkOption={isESR && (metric.metricType !== 'indicators' || !raw)}
                     onSetBenchmark={onSetBenchmark}
                     standard={standard}
                     benchmark={currentBenchmark}
                     percentage
                     maxValue={100}
+                    hasRawOption={
+                      isESR && metric.metricType === 'indicators'
+                    }
+                    raw={raw}
+                    onRawChange={onRawChange}
+                    currentYear={currentYear}
                     {...props}
                   />
                 )),
@@ -363,14 +356,14 @@ export function CountryMetric({
                   maxValue={isESR ? 100 : 11}
                   maxYear={isESR ? maxYearESR : maxYearCPR}
                   minYear={isESR ? minYearESR : minYearCPR}
-                  column={isESR ? currentBenchmark.column : COLUMNS.CPR.MEAN}
+                  column={getTrendColumn(isESR, currentBenchmark, raw)}
                   rangeColumns={
                     !isESR && {
                       upper: COLUMNS.CPR.HI,
                       lower: COLUMNS.CPR.LO,
                     }
                   }
-                  hasBenchmarkOption={isESR}
+                  hasBenchmarkOption={isESR && (metric.metricType !== 'indicators' || !raw)}
                   hasStandardOption={
                     isESR && metric.metricType !== 'indicators'
                   }
@@ -378,6 +371,11 @@ export function CountryMetric({
                   onSetStandard={onSetStandard}
                   standard={standard}
                   benchmark={benchmark}
+                  hasRawOption={
+                    isESR && metric.metricType === 'indicators'
+                  }
+                  raw={raw}
+                  onRawChange={onRawChange}
                   {...props}
                 />
               ),
@@ -452,6 +450,8 @@ CountryMetric.propTypes = {
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   theme: PropTypes.object,
+  raw: PropTypes.bool,
+  onRawChange: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -534,6 +534,7 @@ const mapStateToProps = createStructuredSelector({
     }
     return false;
   },
+  raw: state => getRawSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -568,6 +569,9 @@ export function mapDispatchToProps(dispatch) {
     onSelectMetric: metric => dispatch(selectMetric(metric)),
     onSetStandard: value => dispatch(setStandard(value)),
     onSetBenchmark: value => dispatch(setBenchmark(value)),
+    onRawChange: value => {
+      dispatch(setRaw(value));
+    },
     onClose: (base, code) =>
       dispatch(
         navigate(

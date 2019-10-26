@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { Box, ResponsiveContext } from 'grommet';
 import {
@@ -15,6 +15,7 @@ import {
   YAxis,
   LineSeries,
   LineMarkSeries,
+  MarkSeries,
   AreaSeries,
   HorizontalGridLines,
   Hint,
@@ -33,7 +34,10 @@ import {
 
 import SettingsToggle from 'containers/Settings/SettingsToggle';
 
+import ButtonToggleValueSetting from 'styled/ButtonToggleValueSetting';
 import WrapPlot from 'styled/WrapPlot';
+
+import rootMessages from 'messages';
 
 const PlotHint = styled.div`
   color: ${({ color }) => color};
@@ -45,6 +49,10 @@ const PlotHint = styled.div`
   font-weight: 700;
   width: auto;
   white-space: nowrap;
+`;
+
+const Settings = styled(Box)`
+  background: ${({ theme }) => theme.global.colors['light-0']};
 `;
 
 const isEven = n => n % 2 === 0;
@@ -70,6 +78,39 @@ const getTickValuesX = (size, minYear, maxYear) => {
   return tickValuesX;
 };
 
+const getDataForGroup = (
+  scores,
+  minYear,
+  maxYear,
+  column,
+  groupCode,
+  lookback = false,
+) => {
+  const data = [];
+  const scoresAll = scores.filter(s => s.group === groupCode);
+  const scoresSorted = scoresAll.sort((a, b) =>
+    parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
+  );
+  /* eslint-disable no-plusplus */
+  for (let y = parseInt(minYear, 10); y <= parseInt(maxYear, 10); y++) {
+    const score = scoresSorted.reduce((memo, s) => {
+      const scoreYear = parseInt(s.year, 10);
+      if (scoreYear === y) return s;
+      if (lookback && scoreYear < y && scoreYear >= y - INDICATOR_LOOKBACK)
+        return s;
+      return memo;
+    }, null);
+    if (score) {
+      data.push({
+        syear: y,
+        x: new Date(`${y}`).getTime(),
+        y: parseFloat(score[column]),
+      });
+    }
+  }
+  return data;
+};
+
 function MetricTrend({
   scores,
   column,
@@ -84,8 +125,11 @@ function MetricTrend({
   standard,
   hasBenchmarkOption,
   hasStandardOption,
+  hasRawOption,
   onSetBenchmark,
   onSetStandard,
+  raw,
+  onRawChange,
 }) {
   const [highlight, setHighlight] = useState(false);
   if (!maxYear) return null;
@@ -95,53 +139,186 @@ function MetricTrend({
     { x: new Date(`${parseFloat(minYear) - 0.1}`).getTime(), y: 0 },
     { x: new Date(`${parseFloat(maxYear) + 0.5}`).getTime(), y: maxValue },
   ];
-  const rangeUpper = [];
-  const rangeLower = [];
-  const xyData = [];
+  const hasScores = scores && scores.length > 0;
+
+  const LineMarkAll = hasScores && (
+    <LineMarkSeries
+      data={getDataForGroup(
+        scores,
+        minYear,
+        maxYear,
+        column,
+        PEOPLE_GROUPS[0].code,
+        true,
+      )}
+      size={2.5}
+      style={{
+        stroke: color,
+        strokeWidth: 1,
+      }}
+      fill="white"
+      onNearestX={(point, { index }) => setHighlight({ point, index })}
+    />
+  );
+  const LineMarkFemale = hasScores && (
+    <LineMarkSeries
+      data={getDataForGroup(
+        scores,
+        minYear,
+        maxYear,
+        column,
+        PEOPLE_GROUPS[1].code,
+        true,
+      )}
+      size={2.5}
+      style={{
+        stroke: '#EE5A45',
+        strokeWidth: 1,
+      }}
+      fill="white"
+      onNearestX={(point, { index }) => setHighlight({ point, index })}
+      strokeStyle="dashed"
+    />
+  );
+  const LineMarkMale = hasScores && (
+    <LineMarkSeries
+      data={getDataForGroup(
+        scores,
+        minYear,
+        maxYear,
+        column,
+        PEOPLE_GROUPS[2].code,
+        true,
+      )}
+      size={2.5}
+      style={{
+        stroke: '#0D6D64',
+        strokeWidth: 1,
+      }}
+      fill="white"
+      onNearestX={(point, { index }) => setHighlight({ point, index })}
+      strokeStyle="dashed"
+    />
+  );
+  const MarkAllRawAvailable = hasScores && (
+    <MarkSeries
+      colorType="literal"
+      data={
+        hasScores &&
+        getDataForGroup(
+          scores,
+          minYear,
+          maxYear,
+          column,
+          PEOPLE_GROUPS[0].code,
+          false,
+        )
+      }
+      size={3}
+      style={{
+        stroke: color,
+        strokeWidth: 1,
+      }}
+      fill={color}
+    />
+  );
+  const MarkFemaleRawAvailable = hasScores && (
+    <MarkSeries
+      colorType="literal"
+      data={
+        hasScores &&
+        getDataForGroup(
+          scores,
+          minYear,
+          maxYear,
+          column,
+          PEOPLE_GROUPS[1].code,
+          false,
+        )
+      }
+      size={3}
+      style={{
+        stroke: '#EE5A45',
+        strokeWidth: 1,
+      }}
+      fill="#EE5A45"
+    />
+  );
+  const MarkMaleRawAvailable = hasScores && (
+    <MarkSeries
+      colorType="literal"
+      data={
+        hasScores &&
+        getDataForGroup(
+          scores,
+          minYear,
+          maxYear,
+          column,
+          PEOPLE_GROUPS[2].code,
+          false,
+        )
+      }
+      size={3}
+      style={{
+        stroke: '#0D6D64',
+        strokeWidth: 1,
+      }}
+      fill="#0D6D64"
+    />
+  );
+
+  // console.log(xyData)
+  const rangeUpper =
+    hasScores &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      rangeColumns.upper,
+      PEOPLE_GROUPS[0].code,
+    );
+  const rangeLower =
+    hasScores &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      rangeColumns.lower,
+      PEOPLE_GROUPS[0].code,
+    );
+
   const tickValuesY = percentage
     ? [0, 20, 40, 60, 80, 100]
     : [0, 2, 4, 6, 8, 10];
-
-  const hasScores = scores && scores.length > 0;
-  if (hasScores) {
-    const scoresAll = scores.filter(s => s.group === PEOPLE_GROUPS[0].code);
-    const scoresSorted = scoresAll.sort((a, b) =>
-      parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
-    );
-    /* eslint-disable no-plusplus */
-    for (let y = parseInt(minYear, 10); y <= parseInt(maxYear, 10); y++) {
-      const score = scoresSorted.reduce((memo, s) => {
-        const scoreYear = parseInt(s.year, 10);
-        if (scoreYear === y) return s;
-        if (scoreYear < y && scoreYear >= y - INDICATOR_LOOKBACK) return s;
-        return memo;
-      }, null);
-      if (score) {
-        xyData.push({
-          syear: y,
-          x: new Date(`${y}`).getTime(),
-          y: parseFloat(score[column]),
-        });
-        if (rangeColumns) {
-          rangeUpper.push({
-            syear: y,
-            x: new Date(`${y}`).getTime(),
-            y: parseFloat(score[rangeColumns.upper]),
-          });
-        }
-        rangeLower.push({
-          syear: y,
-          x: new Date(`${y}`).getTime(),
-          y: parseFloat(score[rangeColumns.lower]),
-        });
-      }
-    }
-  }
 
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box direction="column" pad={{ vertical: 'medium' }}>
+          {hasRawOption && (
+            <Settings direction="row" justify="end" pad="small" border="top">
+              <Box direction="row" justify="end">
+                <ButtonToggleValueSetting
+                  active={!raw}
+                  disabled={!raw}
+                  onClick={() => {
+                    onRawChange(false);
+                  }}
+                >
+                  <FormattedMessage {...rootMessages.settings.value.score} />
+                </ButtonToggleValueSetting>
+                <ButtonToggleValueSetting
+                  active={raw}
+                  disabled={raw}
+                  onClick={() => {
+                    onRawChange(true);
+                  }}
+                >
+                  <FormattedMessage {...rootMessages.settings.value.raw} />
+                </ButtonToggleValueSetting>
+              </Box>
+            </Settings>
+          )}
           <WrapPlot>
             <FlexibleWidthXYPlot
               height={size !== 'small' ? 320 : 240}
@@ -199,31 +376,21 @@ function MetricTrend({
               {hasScores && rangeColumns && (
                 <LineSeries
                   data={rangeUpper}
-                  style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+                  style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
               {hasScores && rangeColumns && (
                 <LineSeries
                   data={rangeLower}
-                  style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+                  style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
-              {hasScores && (
-                <LineMarkSeries
-                  size={3}
-                  style={{
-                    stroke: color,
-                    strokeWidth: 2,
-                  }}
-                  markStyle={{
-                    fill: color,
-                  }}
-                  data={xyData}
-                  onNearestX={(point, { index }) =>
-                    setHighlight({ point, index })
-                  }
-                />
-              )}
+              {LineMarkAll}
+              {MarkAllRawAvailable}
+              {LineMarkMale}
+              {MarkMaleRawAvailable}
+              {LineMarkFemale}
+              {MarkFemaleRawAvailable}
               {highlight && highlight.point && (
                 <Hint
                   value={highlight.point}
@@ -291,6 +458,9 @@ MetricTrend.propTypes = {
   standard: PropTypes.string,
   hasBenchmarkOption: PropTypes.bool,
   hasStandardOption: PropTypes.bool,
+  hasRawOption: PropTypes.bool,
+  raw: PropTypes.bool,
+  onRawChange: PropTypes.func,
   onSetBenchmark: PropTypes.func,
   onSetStandard: PropTypes.func,
 };
