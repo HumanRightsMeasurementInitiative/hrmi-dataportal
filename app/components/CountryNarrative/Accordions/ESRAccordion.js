@@ -21,6 +21,8 @@ function ESRAccordion({
   standard,
   hasAtRisk,
   trackEvent,
+  onRawChange,
+  raw,
 }) {
   return (
     <Styled margin={{ bottom: 'medium' }}>
@@ -70,6 +72,8 @@ function ESRAccordion({
               standard={standard}
               hasAtRisk={hasAtRisk}
               trackEvent={trackEvent}
+              raw={raw}
+              onRawChange={onRawChange}
             />
           }
         />
@@ -87,6 +91,8 @@ ESRAccordion.propTypes = {
   benchmark: PropTypes.object,
   hasAtRisk: PropTypes.bool,
   trackEvent: PropTypes.func,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
 export default ESRAccordion;

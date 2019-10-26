@@ -49,6 +49,8 @@ function CountryReport({
   dataReady,
   hasAside,
   trackEvent,
+  onRawChange,
+  raw,
 }) {
   return (
     <MainColumn hasAside={hasAside}>
@@ -90,6 +92,8 @@ function CountryReport({
             esrYear={esrYear}
             cprYear={cprYear}
             trackEvent={trackEvent}
+            raw={raw}
+            onRawChange={onRawChange}
           />
         </>
       )}
@@ -117,6 +121,8 @@ CountryReport.propTypes = {
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
   dataReady: PropTypes.bool,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
 export default injectIntl(CountryReport);

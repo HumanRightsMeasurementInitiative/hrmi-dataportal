@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
@@ -17,8 +17,14 @@ const Settings = styled(Box)`
   background: ${({ theme }) => theme.global.colors['light-0']};
 `;
 
-function IndicatorContent({ benchmark, onMetricClick, standard, indicators }) {
-  const [raw, setRaw] = useState(false);
+function IndicatorContent({
+  benchmark,
+  onMetricClick,
+  onRawChange,
+  raw,
+  standard,
+  indicators,
+}) {
   return (
     <div>
       <Settings direction="row" justify="end" pad="small" border="top">
@@ -36,7 +42,7 @@ function IndicatorContent({ benchmark, onMetricClick, standard, indicators }) {
             active={!raw}
             disabled={!raw}
             onClick={() => {
-              setRaw(false);
+              onRawChange(false);
             }}
           >
             <FormattedMessage {...rootMessages.settings.value.score} />
@@ -45,7 +51,7 @@ function IndicatorContent({ benchmark, onMetricClick, standard, indicators }) {
             active={raw}
             disabled={raw}
             onClick={() => {
-              setRaw(true);
+              onRawChange(true);
             }}
           >
             <FormattedMessage {...rootMessages.settings.value.raw} />
@@ -85,6 +91,8 @@ IndicatorContent.propTypes = {
   standard: PropTypes.string,
   indicators: PropTypes.array,
   benchmark: PropTypes.object,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
 export default IndicatorContent;

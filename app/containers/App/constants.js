@@ -34,6 +34,7 @@ export const SET_SCALE = 'hrmi/App/SET_SCALE';
 export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
 export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 export const SET_TAB = 'hrmi/App/SET_TAB';
+export const SET_RAW = 'hrmi/App/SET_RAW';
 export const SET_MODALTAB = 'hrmi/App/SET_MODALTAB';
 
 // state actions
@@ -449,102 +450,119 @@ export const INDICATORS = [
     code: 'AdjNetPrim',
     right: 'education',
     resource: 'esrIndicatorScores',
+    hasGroups: true,
   },
   {
     key: 'sec-enrol',
     code: 'NetSecEnrol',
     right: 'education',
     resource: 'esrIndicatorScores',
+    hasGroups: true,
   },
   {
     key: 'pisa-science',
     code: 'PISAscience',
     right: 'education',
     resource: 'esrIndicatorScores',
+    hasGroups: true,
   },
   {
     key: 'pisa-math',
     code: 'PISAmath',
     right: 'education',
     resource: 'esrIndicatorScores',
+    hasGroups: true,
   },
   {
     key: 'pisa-reading',
     code: 'PISAreading',
     right: 'education',
     resource: 'esrIndicatorScores',
+    hasGroups: true,
   },
   {
     key: 'not-stunted',
     code: 'NotStunted',
     right: 'food',
     resource: 'esrIndicatorScores',
+    hasGroups: true,
   },
   {
     key: 'food-security',
     code: 'FoodSecure',
     right: 'food',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
   {
     key: 'survival-65',
     code: 'SurvivalTo65',
     right: 'health',
     resource: 'esrIndicatorScores',
+    hasGroups: true,
   },
   {
     key: 'under-5-survival',
     code: 'U5Survival',
     right: 'health',
     resource: 'esrIndicatorScores',
+    hasGroups: true,
   },
   {
     key: 'contraception',
     code: 'Contraception',
     right: 'health',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
   {
     key: 'birth-weight',
     code: 'NotLowBirWt',
     right: 'health',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
   {
     key: 'water-in-home',
     code: 'WaterInHome',
     right: 'housing',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
   {
     key: 'basic-sanitation',
     code: 'BasicSanitation',
     right: 'housing',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
   {
     key: 'safe-sanitation',
     code: 'SafeSanitation',
     right: 'housing',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
   {
     key: 'relative-poverty',
     code: 'NotRelPoor',
     right: 'work',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
   {
     key: 'absolute-poverty',
     code: 'NotAbsPoor',
     right: 'work',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
   {
     key: 'longterm-unemployment',
     code: 'NotLTUnemployed',
     right: 'work',
     resource: 'esrIndicatorScores',
+    hasGroups: false,
   },
 ];
 
