@@ -24,7 +24,6 @@ import {
   getDataRequestedByKey,
   getContentRequestedByKey,
   getGAStatus,
-  getActiveGroupsSearch,
 } from './selectors';
 
 import {
@@ -308,28 +307,19 @@ export function* setGroupsSaga({ value }) {
   );
   yield put(push(`${path}?${searchParams.toString()}`));
 }
-export function* toggleGroupSaga({ group, value }) {
+export function* toggleGroupSaga({ values }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
-  const gactive = yield select(getActiveGroupsSearch);
-
   searchParams.delete('gactive');
-  gactive.forEach(g => {
-    if (g !== group) {
-      searchParams.append('gactive', g);
-    }
-  });
-  if (value) {
-    searchParams.append('gactive', group);
-  }
+  values.forEach(g => searchParams.append('gactive', g));
   const path = yield select(getRouterPath);
-  // yield put(
-  //   trackEvent({
-  //     category: 'Setting',
-  //     action: 'Change groups',
-  //     value,
-  //   }),
-  // );
+  yield put(
+    trackEvent({
+      category: 'Setting',
+      action: 'Toggle groups',
+      value: values.toString(),
+    }),
+  );
   yield put(push(`${path}?${searchParams.toString()}`));
 }
 export function* setTabSaga({ value }) {
