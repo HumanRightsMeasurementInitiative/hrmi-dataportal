@@ -71,8 +71,7 @@ function RightTop({
     unit: right.type === 'esr' ? '%' : '',
   };
 
-  const hasGroups = false; // right.groupScores && right.groupScores.length > 0;
-
+  const { hasGroups } = right; // .groupScores && right.groupScores.length > 0;
   return (
     <Box
       direction="row"
@@ -99,15 +98,15 @@ function RightTop({
           },
           {
             key: right.key,
-            value: 'groups',
-            label: intl.formatMessage(rootMessages.tabs.groups),
-            skip: !hasGroups,
-          },
-          {
-            key: right.key,
             value: 'trend',
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
+          },
+          {
+            key: right.key,
+            value: 'groups',
+            label: intl.formatMessage(rootMessages.tabs.groups),
+            skip: !hasGroups || !data.value,
           },
           {
             key: right.key,

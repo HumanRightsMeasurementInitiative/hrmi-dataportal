@@ -33,6 +33,7 @@ import {
 } from 'containers/App/constants';
 
 import SettingsToggle from 'containers/Settings/SettingsToggle';
+import SettingsMultiToggle from 'containers/Settings/SettingsMultiToggle';
 
 import ButtonToggleValueSetting from 'styled/ButtonToggleValueSetting';
 import WrapPlot from 'styled/WrapPlot';
@@ -53,6 +54,7 @@ const PlotHint = styled.div`
 
 const Settings = styled(Box)`
   background: ${({ theme }) => theme.global.colors['light-0']};
+  min-height: 80px;
 `;
 
 const isEven = n => n % 2 === 0;
@@ -130,6 +132,11 @@ function MetricTrend({
   onSetStandard,
   raw,
   onRawChange,
+  groups,
+  onGroupsChange,
+  metric,
+  onGroupToggle,
+  groupsActive,
 }) {
   const [highlight, setHighlight] = useState(false);
   if (!maxYear) return null;
@@ -141,133 +148,75 @@ function MetricTrend({
   ];
   const hasScores = scores && scores.length > 0;
 
-  const LineMarkAll = hasScores && (
-    <LineMarkSeries
-      data={getDataForGroup(
-        scores,
-        minYear,
-        maxYear,
-        column,
-        PEOPLE_GROUPS[0].code,
-        true,
-      )}
-      size={2.5}
-      style={{
-        stroke: color,
-        strokeWidth: 1,
-      }}
-      fill="white"
-      onNearestX={(point, { index }) => setHighlight({ point, index })}
-    />
-  );
-  const LineMarkFemale = hasScores && (
-    <LineMarkSeries
-      data={getDataForGroup(
-        scores,
-        minYear,
-        maxYear,
-        column,
-        PEOPLE_GROUPS[1].code,
-        true,
-      )}
-      size={2.5}
-      style={{
-        stroke: '#EE5A45',
-        strokeWidth: 1,
-      }}
-      fill="white"
-      onNearestX={(point, { index }) => setHighlight({ point, index })}
-      strokeStyle="dashed"
-    />
-  );
-  const LineMarkMale = hasScores && (
-    <LineMarkSeries
-      data={getDataForGroup(
-        scores,
-        minYear,
-        maxYear,
-        column,
-        PEOPLE_GROUPS[2].code,
-        true,
-      )}
-      size={2.5}
-      style={{
-        stroke: '#0D6D64',
-        strokeWidth: 1,
-      }}
-      fill="white"
-      onNearestX={(point, { index }) => setHighlight({ point, index })}
-      strokeStyle="dashed"
-    />
-  );
-  const MarkAllRawAvailable = hasScores && (
-    <MarkSeries
-      colorType="literal"
-      data={
-        hasScores &&
-        getDataForGroup(
-          scores,
-          minYear,
-          maxYear,
-          column,
-          PEOPLE_GROUPS[0].code,
-          false,
-        )
-      }
-      size={3}
-      style={{
-        stroke: color,
-        strokeWidth: 1,
-      }}
-      fill={color}
-    />
-  );
-  const MarkFemaleRawAvailable = hasScores && (
-    <MarkSeries
-      colorType="literal"
-      data={
-        hasScores &&
-        getDataForGroup(
-          scores,
-          minYear,
-          maxYear,
-          column,
-          PEOPLE_GROUPS[1].code,
-          false,
-        )
-      }
-      size={3}
-      style={{
-        stroke: '#EE5A45',
-        strokeWidth: 1,
-      }}
-      fill="#EE5A45"
-    />
-  );
-  const MarkMaleRawAvailable = hasScores && (
-    <MarkSeries
-      colorType="literal"
-      data={
-        hasScores &&
-        getDataForGroup(
-          scores,
-          minYear,
-          maxYear,
-          column,
-          PEOPLE_GROUPS[2].code,
-          false,
-        )
-      }
-      size={3}
-      style={{
-        stroke: '#0D6D64',
-        strokeWidth: 1,
-      }}
-      fill="#0D6D64"
-    />
-  );
+  const groupsAll = groupsActive.indexOf(PEOPLE_GROUPS[0].key) > -1;
+  const groupsFemale = groupsActive.indexOf(PEOPLE_GROUPS[1].key) > -1;
+  const groupsMale = groupsActive.indexOf(PEOPLE_GROUPS[2].key) > -1;
 
-  // console.log(xyData)
+  const scoresAll =
+    hasScores &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[0].code,
+      metric.metricType === 'indicators',
+    );
+  const scoresFemale =
+    hasScores &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[1].code, // female
+      metric.metricType === 'indicators',
+    );
+  const scoresMale =
+    hasScores &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[2].code, // male
+      metric.metricType === 'indicators',
+    );
+  const scoresAllRawAvailable =
+    hasScores &&
+    metric.metricType === 'indicators' &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[0].code,
+      false,
+    );
+  const scoresFemaleRawAvailable =
+    hasScores &&
+    metric.metricType === 'indicators' &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[1].code,
+      false,
+    );
+  const scoresMaleRawAvailable =
+    hasScores &&
+    metric.metricType === 'indicators' &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[2].code,
+      false,
+    );
+
+  // console.log(scoresFemale)
   const rangeUpper =
     hasScores &&
     getDataForGroup(
@@ -295,30 +244,6 @@ function MetricTrend({
     <ResponsiveContext.Consumer>
       {size => (
         <Box direction="column" pad={{ vertical: 'medium' }}>
-          {hasRawOption && (
-            <Settings direction="row" justify="end" pad="small" border="top">
-              <Box direction="row" justify="end">
-                <ButtonToggleValueSetting
-                  active={!raw}
-                  disabled={!raw}
-                  onClick={() => {
-                    onRawChange(false);
-                  }}
-                >
-                  <FormattedMessage {...rootMessages.settings.value.score} />
-                </ButtonToggleValueSetting>
-                <ButtonToggleValueSetting
-                  active={raw}
-                  disabled={raw}
-                  onClick={() => {
-                    onRawChange(true);
-                  }}
-                >
-                  <FormattedMessage {...rootMessages.settings.value.raw} />
-                </ButtonToggleValueSetting>
-              </Box>
-            </Settings>
-          )}
           <WrapPlot>
             <FlexibleWidthXYPlot
               height={size !== 'small' ? 320 : 240}
@@ -385,12 +310,92 @@ function MetricTrend({
                   style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
-              {LineMarkAll}
-              {MarkAllRawAvailable}
-              {LineMarkMale}
-              {MarkMaleRawAvailable}
-              {LineMarkFemale}
-              {MarkFemaleRawAvailable}
+              {groupsAll && scoresAll && (
+                <LineMarkSeries
+                  data={scoresAll}
+                  size={2.5}
+                  style={{
+                    stroke: color,
+                    strokeWidth: 1,
+                  }}
+                  fill={metric.metricType === 'indicators' ? 'white' : color}
+                  onNearestX={(point, { index }) =>
+                    setHighlight({ point, index })
+                  }
+                />
+              )}
+              {groupsFemale && scoresFemale && (
+                <LineMarkSeries
+                  data={scoresFemale}
+                  size={2.5}
+                  style={{
+                    stroke: '#EE5A45',
+                    strokeWidth: 1,
+                  }}
+                  fill={
+                    metric.metricType === 'indicators'
+                      ? 'white'
+                      : PEOPLE_GROUPS[1].color
+                  }
+                  onNearestX={(point, { index }) =>
+                    setHighlight({ point, index })
+                  }
+                />
+              )}
+              {groupsMale && scoresMale && (
+                <LineMarkSeries
+                  data={scoresMale}
+                  size={2.5}
+                  style={{
+                    stroke: '#0D6D64',
+                    strokeWidth: 1,
+                  }}
+                  fill={
+                    metric.metricType === 'indicators'
+                      ? 'white'
+                      : PEOPLE_GROUPS[2].color
+                  }
+                  onNearestX={(point, { index }) =>
+                    setHighlight({ point, index })
+                  }
+                />
+              )}
+              {groupsAll && scoresAllRawAvailable && (
+                <MarkSeries
+                  colorType="literal"
+                  data={scoresAllRawAvailable}
+                  size={3}
+                  style={{
+                    stroke: color,
+                    strokeWidth: 1,
+                  }}
+                  fill={color}
+                />
+              )}
+              {groupsFemale && scoresFemaleRawAvailable && (
+                <MarkSeries
+                  colorType="literal"
+                  data={scoresFemaleRawAvailable}
+                  size={3}
+                  style={{
+                    stroke: PEOPLE_GROUPS[1].color,
+                    strokeWidth: 1,
+                  }}
+                  fill={PEOPLE_GROUPS[1].color}
+                />
+              )}
+              {groupsMale && scoresMaleRawAvailable && (
+                <MarkSeries
+                  colorType="literal"
+                  data={scoresMaleRawAvailable}
+                  size={3}
+                  style={{
+                    stroke: PEOPLE_GROUPS[2].color,
+                    strokeWidth: 1,
+                  }}
+                  fill={PEOPLE_GROUPS[2].color}
+                />
+              )}
               {highlight && highlight.point && (
                 <Hint
                   value={highlight.point}
@@ -408,36 +413,111 @@ function MetricTrend({
               )}
             </FlexibleWidthXYPlot>
           </WrapPlot>
-          <Source center />
-          {(hasBenchmarkOption || hasStandardOption) && (
-            <Box
-              direction={size !== 'small' ? 'row' : 'column'}
-              pad={
-                size !== 'small'
-                  ? { horizontal: 'medium' }
-                  : { vertical: 'medium' }
-              }
-              justify="center"
-              fill="horizontal"
+          {(hasBenchmarkOption || hasStandardOption || hasRawOption) && (
+            <Settings
+              direction="row"
+              justify="end"
+              pad="xsmall"
+              margin={{ vertical: 'small' }}
             >
-              {hasBenchmarkOption && (
-                <SettingsToggle
-                  setting="benchmark"
-                  active={benchmark}
-                  onActivate={onSetBenchmark}
-                  options={BENCHMARKS}
-                />
+              {(hasBenchmarkOption || hasStandardOption) && (
+                <Box
+                  direction={size !== 'small' ? 'row' : 'column'}
+                  pad={size !== 'small' && { horizontal: 'medium' }}
+                  justify="start"
+                  fill="horizontal"
+                >
+                  {hasBenchmarkOption && (
+                    <SettingsToggle
+                      setting="benchmark"
+                      active={benchmark}
+                      onActivate={onSetBenchmark}
+                      options={BENCHMARKS}
+                    />
+                  )}
+                  {hasStandardOption && (
+                    <SettingsToggle
+                      setting="standard"
+                      active={standard}
+                      onActivate={onSetStandard}
+                      options={STANDARDS}
+                    />
+                  )}
+                </Box>
               )}
-              {hasStandardOption && (
-                <SettingsToggle
-                  setting="standard"
-                  active={standard}
-                  onActivate={onSetStandard}
-                  options={STANDARDS}
-                />
+              {hasRawOption && (
+                <Box direction="row" justify="end" align="center">
+                  <ButtonToggleValueSetting
+                    active={!raw}
+                    disabled={!raw}
+                    onClick={() => {
+                      onRawChange(false);
+                    }}
+                  >
+                    <FormattedMessage {...rootMessages.settings.value.score} />
+                  </ButtonToggleValueSetting>
+                  <ButtonToggleValueSetting
+                    active={raw}
+                    disabled={raw}
+                    onClick={() => {
+                      onRawChange(true);
+                    }}
+                  >
+                    <FormattedMessage {...rootMessages.settings.value.raw} />
+                  </ButtonToggleValueSetting>
+                </Box>
               )}
-            </Box>
+            </Settings>
           )}
+          {((scoresFemale && scoresFemale.length > 1) ||
+            (scoresMale && scoresMale.length > 1)) && (
+            <Settings
+              direction="row"
+              justify="end"
+              pad="xsmall"
+              margin={{ vertical: 'small' }}
+            >
+              {groups && (
+                <Box
+                  direction={size !== 'small' ? 'row' : 'column'}
+                  pad={size !== 'small' && { horizontal: 'medium' }}
+                  justify="start"
+                  fill="horizontal"
+                >
+                  <SettingsMultiToggle
+                    setting="groups"
+                    active={groupsActive}
+                    onChange={(group, active) => {
+                      onGroupToggle(group, active);
+                    }}
+                    defaultColor={color}
+                    options={PEOPLE_GROUPS}
+                  />
+                </Box>
+              )}
+              <Box direction="row" justify="end" align="center">
+                <ButtonToggleValueSetting
+                  active={!groups}
+                  disabled={!groups}
+                  onClick={() => {
+                    onGroupsChange(false);
+                  }}
+                >
+                  Overall
+                </ButtonToggleValueSetting>
+                <ButtonToggleValueSetting
+                  active={groups}
+                  disabled={groups}
+                  onClick={() => {
+                    onGroupsChange(true);
+                  }}
+                >
+                  By sex
+                </ButtonToggleValueSetting>
+              </Box>
+            </Settings>
+          )}
+          <Source center />
         </Box>
       )}
     </ResponsiveContext.Consumer>
@@ -447,6 +527,7 @@ function MetricTrend({
 MetricTrend.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   rangeColumns: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  metric: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   column: PropTypes.string,
   maxYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   minYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
@@ -461,8 +542,12 @@ MetricTrend.propTypes = {
   hasRawOption: PropTypes.bool,
   raw: PropTypes.bool,
   onRawChange: PropTypes.func,
+  groups: PropTypes.bool,
+  onGroupsChange: PropTypes.func,
+  onGroupToggle: PropTypes.func,
   onSetBenchmark: PropTypes.func,
   onSetStandard: PropTypes.func,
+  groupsActive: PropTypes.array,
 };
 
 export default MetricTrend;

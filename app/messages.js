@@ -257,6 +257,16 @@ export default defineMessages({
         defaultMessage: 'Natural minimum',
       },
     },
+    groups: {
+      name: {
+        id: `${scope}.settings.groups.name`,
+        defaultMessage: 'Groups',
+      },
+      nameShort: {
+        id: `${scope}.settings.groups.nameShort`,
+        defaultMessage: 'Groups',
+      },
+    },
     value: {
       note: {
         id: `${scope}.settings.value.note`,

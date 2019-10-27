@@ -24,6 +24,7 @@ import {
   getDataRequestedByKey,
   getContentRequestedByKey,
   getGAStatus,
+  getActiveGroupsSearch,
 } from './selectors';
 
 import {
@@ -55,8 +56,9 @@ import {
   SET_STANDARD,
   SET_BENCHMARK,
   SET_TAB,
-  SET_RAW,
   SET_MODALTAB,
+  SET_RAW,
+  SET_GROUPS,
   CHECK_COOKIECONSENT,
   COOKIECONSENT_NAME,
   SET_COOKIECONSENT,
@@ -64,6 +66,7 @@ import {
   GA_PROPERTY_ID,
   TRACK_EVENT,
   OPEN_HOW_TO,
+  TOGGLE_GROUP,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -280,7 +283,6 @@ export function* setRawSaga({ value }) {
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('raw', value ? '1' : '0');
 
-  // navigate to country and default standard
   const path = yield select(getRouterPath);
   yield put(
     trackEvent({
@@ -289,6 +291,45 @@ export function* setRawSaga({ value }) {
       value,
     }),
   );
+  yield put(push(`${path}?${searchParams.toString()}`));
+}
+export function* setGroupsSaga({ value }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  yield searchParams.set('groups', value ? '1' : '0');
+
+  const path = yield select(getRouterPath);
+  yield put(
+    trackEvent({
+      category: 'Setting',
+      action: 'Change groups',
+      value,
+    }),
+  );
+  yield put(push(`${path}?${searchParams.toString()}`));
+}
+export function* toggleGroupSaga({ group, value }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  const gactive = yield select(getActiveGroupsSearch);
+
+  searchParams.delete('gactive');
+  gactive.forEach(g => {
+    if (g !== group) {
+      searchParams.append('gactive', g);
+    }
+  });
+  if (value) {
+    searchParams.append('gactive', group);
+  }
+  const path = yield select(getRouterPath);
+  // yield put(
+  //   trackEvent({
+  //     category: 'Setting',
+  //     action: 'Change groups',
+  //     value,
+  //   }),
+  // );
   yield put(push(`${path}?${searchParams.toString()}`));
 }
 export function* setTabSaga({ value }) {
@@ -513,6 +554,8 @@ export default function* defaultSaga() {
   yield takeLatest(SET_TAB, setTabSaga);
   yield takeLatest(SET_MODALTAB, setModalTabSaga);
   yield takeLatest(SET_RAW, setRawSaga);
+  yield takeLatest(SET_GROUPS, setGroupsSaga);
+  yield takeLatest(TOGGLE_GROUP, toggleGroupSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
   yield takeLatest(CHECK_COOKIECONSENT, checkCookieConsentSaga);
   yield takeLatest(SET_COOKIECONSENT, setCookieConsentSaga);

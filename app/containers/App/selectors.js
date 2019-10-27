@@ -87,6 +87,17 @@ export const getRawSearch = createSelector(
   getRouterSearchParams,
   search => !!(search.has('raw') && search.get('raw') === '1'),
 );
+export const getGroupsSearch = createSelector(
+  getRouterSearchParams,
+  search => !!(search.has('groups') && search.get('groups') === '1'),
+);
+export const getActiveGroupsSearch = createSelector(
+  getRouterSearchParams,
+  search =>
+    search.has('gactive')
+      ? search.getAll('gactive')
+      : PEOPLE_GROUPS.map(g => g.key),
+);
 
 export const getTabSearch = createSelector(
   getRouterSearchParams,
@@ -162,14 +173,6 @@ export const getOECDSearch = createSelector(
     search.has('oecd') && OECD_FILTERS.indexOf(search.get('oecd')) > -1
       ? search.get('oecd')
       : false,
-);
-export const getGroupSearch = createSelector(
-  getRouterSearchParams,
-  search =>
-    search.has('group') &&
-    PEOPLE_GROUPS.map(s => s.key).indexOf(search.get('group')) > -1
-      ? search.get('group')
-      : PEOPLE_GROUPS[0].key,
 );
 export const getSortSearch = createSelector(
   getRouterSearchParams,
@@ -813,17 +816,10 @@ export const getRightsForCountry = createSelector(
             s.metric_code === r.code &&
             s.group === PEOPLE_GROUPS[0].code,
         );
-        const groupScores = scores.esr.filter(
-          s =>
-            s.standard === standardCode &&
-            s.metric_code === r.code &&
-            s.group !== PEOPLE_GROUPS[0].code,
-        );
         if (score) {
           return {
             [r.key]: {
               score,
-              groupScores,
               ...r,
             },
             ...memo,
