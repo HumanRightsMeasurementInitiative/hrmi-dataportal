@@ -84,7 +84,7 @@ const getDimensionValue = (score, benchmark, raw) => {
   }
   return false;
 };
-const getDimensionRefs = (metricInfo, score, benchmark, raw) => {
+const getDimensionRefs = (metric, metricInfo, score, benchmark, raw) => {
   if (raw) {
     const valueMin =
       metricInfo && parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_MIN]);
@@ -113,7 +113,10 @@ const getDimensionRefs = (metricInfo, score, benchmark, raw) => {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refIndicatorColumn;
+    const col =
+      metric.metricType === 'indicators'
+        ? benchmark.refIndicatorColumn
+        : benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
@@ -172,9 +175,10 @@ function CountryMetricGroups({
             </Settings>
           )}
           {PEOPLE_GROUPS.map(group => {
-            const groupScores = scores.filter(s => s.group === group.code);
+            const groupScores =
+              scores && scores.filter(s => s.group === group.code);
             let groupScore;
-            if (metric.metricType === 'indicators') {
+            if (groupScores && metric.metricType === 'indicators') {
               const mostRecentYear = groupScores.reduce((memo, s) => {
                 if (
                   parseInt(s.year, 10) >= currentYear - INDICATOR_LOOKBACK &&
@@ -201,6 +205,7 @@ function CountryMetricGroups({
               color,
               value: getDimensionValue(groupScore, benchmark, raw),
               refValues: getDimensionRefs(
+                metric,
                 metricInfo,
                 groupScore,
                 benchmark,

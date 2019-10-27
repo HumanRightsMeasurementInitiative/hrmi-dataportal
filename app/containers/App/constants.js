@@ -34,8 +34,10 @@ export const SET_SCALE = 'hrmi/App/SET_SCALE';
 export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
 export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 export const SET_TAB = 'hrmi/App/SET_TAB';
-export const SET_RAW = 'hrmi/App/SET_RAW';
 export const SET_MODALTAB = 'hrmi/App/SET_MODALTAB';
+export const SET_RAW = 'hrmi/App/SET_RAW';
+export const SET_GROUPS = 'hrmi/App/SET_GROUPS';
+export const TOGGLE_GROUP = 'hrmi/App/TOGGLE_GROUP';
 
 // state actions
 export const OPEN_HOW_TO = 'hrmi/App/OPEN_HOW_TO';
@@ -211,11 +213,13 @@ export const PEOPLE_GROUPS = [
     key: 'female',
     code: 'Female',
     breakdown: 'sex',
+    color: '#EE5A45',
   },
   {
     key: 'male',
     code: 'Male',
     breakdown: 'sex',
+    color: '#0D6D64',
   },
 ];
 
@@ -328,6 +332,7 @@ export const RIGHTS = [
     dimension: 'esr',
     type: 'esr',
     resource: 'esrScores',
+    hasGroups: true,
   },
   {
     key: 'food',
@@ -335,6 +340,7 @@ export const RIGHTS = [
     dimension: 'esr',
     type: 'esr',
     resource: 'esrScores',
+    hasGroups: true,
   },
   {
     key: 'health',

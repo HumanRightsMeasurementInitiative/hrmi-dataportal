@@ -59,6 +59,8 @@ import {
   getCPRYear,
   getESRYear,
   getRawSearch,
+  getGroupsSearch,
+  getActiveGroupsSearch,
 } from 'containers/App/selectors';
 
 import {
@@ -70,6 +72,8 @@ import {
   setStandard,
   setBenchmark,
   setRaw,
+  setGroups,
+  toggleGroup,
 } from 'containers/App/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
@@ -197,6 +201,10 @@ export function CountryMetric({
   currentYear,
   raw,
   onRawChange,
+  groups,
+  onGroupsChange,
+  onGroupToggle,
+  activeGroups,
 }) {
   const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -303,6 +311,55 @@ export function CountryMetric({
                 )),
             },
             {
+              key: 'trend',
+              title: intl.formatMessage(rootMessages.tabs.trend),
+              titleMobile: intl.formatMessage(
+                rootMessages.tabs.mobile.trend,
+              ),
+              // howToRead: {
+              //   contxt: 'CountryMetric',
+              //   chart: 'Trend',
+              //   data: metric.type,
+              // },
+              content: props => (
+                <MetricTrend
+                  metric={metric}
+                  color={theme.global.colors[getColour(metric)]}
+                  colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
+                  scores={scores}
+                  percentage={isESR}
+                  maxValue={isESR ? 100 : 11}
+                  maxYear={isESR ? maxYearESR : maxYearCPR}
+                  minYear={isESR ? minYearESR : minYearCPR}
+                  column={getTrendColumn(isESR, currentBenchmark, metric.metricType === 'indicators' && raw)}
+                  rangeColumns={
+                    !isESR && {
+                      upper: COLUMNS.CPR.HI,
+                      lower: COLUMNS.CPR.LO,
+                    }
+                  }
+                  hasBenchmarkOption={isESR && (metric.metricType !== 'indicators' || !raw)}
+                  hasStandardOption={
+                    isESR && metric.metricType !== 'indicators'
+                  }
+                  onSetBenchmark={onSetBenchmark}
+                  onSetStandard={onSetStandard}
+                  standard={standard}
+                  benchmark={benchmark}
+                  hasRawOption={
+                    isESR && metric.metricType === 'indicators'
+                  }
+                  raw={raw}
+                  onRawChange={onRawChange}
+                  groups={groups}
+                  groupsActive={activeGroups}
+                  onGroupsChange={onGroupsChange}
+                  onGroupToggle={onGroupToggle}
+                  {...props}
+                />
+              ),
+            },
+            {
               key: 'groups',
               title: intl.formatMessage(rootMessages.tabs.groups),
               titleMobile: intl.formatMessage(rootMessages.tabs.groups),
@@ -335,50 +392,6 @@ export function CountryMetric({
                     {...props}
                   />
                 )),
-            },
-            {
-              key: 'trend',
-              title: intl.formatMessage(rootMessages.tabs.trend),
-              titleMobile: intl.formatMessage(
-                rootMessages.tabs.mobile.trend,
-              ),
-              // howToRead: {
-              //   contxt: 'CountryMetric',
-              //   chart: 'Trend',
-              //   data: metric.type,
-              // },
-              content: props => (
-                <MetricTrend
-                  color={theme.global.colors[getColour(metric)]}
-                  colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
-                  scores={scores}
-                  percentage={isESR}
-                  maxValue={isESR ? 100 : 11}
-                  maxYear={isESR ? maxYearESR : maxYearCPR}
-                  minYear={isESR ? minYearESR : minYearCPR}
-                  column={getTrendColumn(isESR, currentBenchmark, raw)}
-                  rangeColumns={
-                    !isESR && {
-                      upper: COLUMNS.CPR.HI,
-                      lower: COLUMNS.CPR.LO,
-                    }
-                  }
-                  hasBenchmarkOption={isESR && (metric.metricType !== 'indicators' || !raw)}
-                  hasStandardOption={
-                    isESR && metric.metricType !== 'indicators'
-                  }
-                  onSetBenchmark={onSetBenchmark}
-                  onSetStandard={onSetStandard}
-                  standard={standard}
-                  benchmark={benchmark}
-                  hasRawOption={
-                    isESR && metric.metricType === 'indicators'
-                  }
-                  raw={raw}
-                  onRawChange={onRawChange}
-                  {...props}
-                />
-              ),
             },
             {
               key: 'about',
@@ -452,6 +465,10 @@ CountryMetric.propTypes = {
   theme: PropTypes.object,
   raw: PropTypes.bool,
   onRawChange: PropTypes.func,
+  groups: PropTypes.bool,
+  onGroupsChange: PropTypes.func,
+  onGroupToggle: PropTypes.func,
+  activeGroups: PropTypes.array,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -535,6 +552,8 @@ const mapStateToProps = createStructuredSelector({
     return false;
   },
   raw: state => getRawSearch(state),
+  groups: state => getGroupsSearch(state),
+  activeGroups: state => getActiveGroupsSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -571,6 +590,12 @@ export function mapDispatchToProps(dispatch) {
     onSetBenchmark: value => dispatch(setBenchmark(value)),
     onRawChange: value => {
       dispatch(setRaw(value));
+    },
+    onGroupsChange: value => {
+      dispatch(setGroups(value));
+    },
+    onGroupToggle: (group, value) => {
+      dispatch(toggleGroup(group, value));
     },
     onClose: (base, code) =>
       dispatch(
