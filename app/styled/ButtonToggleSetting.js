@@ -6,8 +6,12 @@ export default styled(Button)`
   border-radius: 3px;
   color: ${({ theme, active }) =>
     active ? theme.global.colors.white : theme.global.colors.text.light};
-  background-color: ${({ theme, active }) =>
-    active ? theme.global.colors['dark-3'] : theme.global.colors['light-3']};
+  background-color: ${({ theme, active, color }) => {
+    if (active) {
+      return color || theme.global.colors['dark-3'];
+    }
+    return theme.global.colors['light-3'];
+  }};
   padding: 3px 6px;
   margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
   &:last-child {

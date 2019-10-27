@@ -32,6 +32,8 @@ import {
   GA_INITIALISED,
   TRACK_EVENT,
   SET_RAW,
+  SET_GROUPS,
+  TOGGLE_GROUP,
 } from './constants';
 
 export function checkCookieConsent() {
@@ -174,6 +176,19 @@ export function setStandard(value) {
 export function setBenchmark(value) {
   return {
     type: SET_BENCHMARK,
+    value,
+  };
+}
+export function setGroups(value) {
+  return {
+    type: SET_GROUPS,
+    value,
+  };
+}
+export function toggleGroup(group, value) {
+  return {
+    type: TOGGLE_GROUP,
+    group,
     value,
   };
 }
