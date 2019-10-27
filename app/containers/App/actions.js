@@ -185,11 +185,10 @@ export function setGroups(value) {
     value,
   };
 }
-export function toggleGroup(group, value) {
+export function toggleGroup(values) {
   return {
     type: TOGGLE_GROUP,
-    group,
-    value,
+    values,
   };
 }
 export function setRaw(value) {

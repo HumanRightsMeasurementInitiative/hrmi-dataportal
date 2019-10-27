@@ -148,9 +148,10 @@ function MetricTrend({
   ];
   const hasScores = scores && scores.length > 0;
 
-  const groupsAll = groupsActive.indexOf(PEOPLE_GROUPS[0].key) > -1;
-  const groupsFemale = groupsActive.indexOf(PEOPLE_GROUPS[1].key) > -1;
-  const groupsMale = groupsActive.indexOf(PEOPLE_GROUPS[2].key) > -1;
+  const groupsAll = !groups || groupsActive.indexOf(PEOPLE_GROUPS[0].key) > -1;
+  const groupsFemale =
+    groups && groupsActive.indexOf(PEOPLE_GROUPS[1].key) > -1;
+  const groupsMale = groups && groupsActive.indexOf(PEOPLE_GROUPS[2].key) > -1;
 
   const scoresAll =
     hasScores &&

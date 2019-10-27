@@ -39,13 +39,48 @@ function SettingsMultiToggle({
             </Box>
           </Box>
           <Box direction="row" align="center">
-            {options.map(option => (
+            {options.map((option, i, arr) => (
               <ButtonToggleSetting
                 key={option.key}
                 active={active.indexOf(option.key) > -1}
                 color={option.color || defaultColor}
                 onClick={() => {
-                  onChange(option.key, active.indexOf(option.key) === -1);
+                  // if all active
+                  if (active.length === arr.length) {
+                    // disable All
+                    // activate current
+                    onChange([option.key]);
+                  }
+                  // else
+                  else {
+                    // if current only active
+                    if (
+                      active.indexOf(option.key) > -1 &&
+                      active.length === 1
+                    ) {
+                      // activate all == deactivate all
+                      onChange(arr.map(o => o.key));
+                    }
+                    // if current active and any other active
+                    if (active.indexOf(option.key) > -1 && active.length > 1) {
+                      // deactivate current
+                      onChange(
+                        active.reduce(
+                          (memo, a) => (option.key === a ? memo : [...memo, a]),
+                          [],
+                        ),
+                      );
+                    }
+                    // if current not active and any other active
+                    if (
+                      active.indexOf(option.key) === -1 &&
+                      active.length > 0
+                    ) {
+                      // activate current
+                      onChange([...active, option.key]);
+                    }
+                    // onChange(option.key, active.indexOf(option.key) === -1);
+                  }
                 }}
               >
                 <Text size="small">
