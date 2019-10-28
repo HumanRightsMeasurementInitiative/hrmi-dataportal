@@ -254,6 +254,8 @@ function MetricTrend({
               margin={{ bottom: 30, right: 10, left: percentage ? 30 : 25 }}
               onMouseLeave={() => {
                 setHighlight(false);
+                setHighlightMale(false);
+                setHighlightFemale(false);
               }}
             >
               <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
