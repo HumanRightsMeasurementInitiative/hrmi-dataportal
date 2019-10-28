@@ -25,6 +25,12 @@ const Top = styled.div`
   height: ${({ theme }) => theme.navTop};
 `;
 
+const StyledTextInput = styled(TextInput)`
+  &::placeholder {
+    color: black;
+  }
+`;
+
 class NavTop extends React.Component {
   constructor(props) {
     super(props);
@@ -58,7 +64,7 @@ class NavTop extends React.Component {
           responsive={false}
         >
           <Box
-            background="dark-1"
+            background="white"
             width="large"
             direction="row"
             align="center"
@@ -66,7 +72,7 @@ class NavTop extends React.Component {
             round="small"
             margin={{ right: 'small' }}
           >
-            <TextInput
+            <StyledTextInput
               plain
               value={search}
               onChange={evt => evt && evt.target && onSearch(evt.target.value)}
