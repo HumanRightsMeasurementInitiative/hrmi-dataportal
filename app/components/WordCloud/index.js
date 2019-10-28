@@ -78,6 +78,7 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
               score={s}
               tooltip={index === false}
               dimension={dimension}
+              right={data.subright || data.right}
               key={s.people_code}
             />
           ))}
