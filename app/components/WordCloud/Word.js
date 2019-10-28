@@ -65,7 +65,7 @@ const scaleOpacity = scaleLinear()
   .domain([0, 1])
   .range([0.66, 1]);
 
-export function Word({ score, tooltip, dimension, intl }) {
+export function Word({ score, tooltip, dimension, right, intl }) {
   const [over, setOver] = useState(false);
   const [open, setOpen] = useState(false);
   const button = useRef(null);
@@ -118,20 +118,28 @@ export function Word({ score, tooltip, dimension, intl }) {
                 <Box
                   pad={{ vertical: 'small', horizontal: 'small' }}
                   background="dark-1"
-                  style={{ maxWidth: '200px' }}
+                  style={{ maxWidth: '320px' }}
                   onClick={evt => {
                     if (evt) evt.preventDefault();
                     if (evt) evt.stopPropagation();
                   }}
                   align="start"
                 >
-                  <Text size="large">
+                  <Text size="xxlarge">
                     {`${Math.round(100 * score.proportion)}%`}
                   </Text>
                   <Text>
-                    {`of our human rights experts identified "${intl.formatMessage(
-                      rootMessages['people-at-risk'][score.people_code],
-                    )}" as being at risk of having this right violated.`}
+                    of our human rights experts identified
+                    <strong>
+                      {` ${intl.formatMessage(
+                        rootMessages['people-at-risk'][score.people_code],
+                      )} `}
+                    </strong>
+                    as being at risk of having their
+                    <strong>
+                      {` ${intl.formatMessage(rootMessages.rights[right])} `}
+                    </strong>
+                    violated.
                   </Text>
                 </Box>
               </StyledDrop>
@@ -152,6 +160,7 @@ export function Word({ score, tooltip, dimension, intl }) {
 Word.propTypes = {
   score: PropTypes.object,
   dimension: PropTypes.string,
+  right: PropTypes.string,
   tooltip: PropTypes.bool,
   border: PropTypes.bool,
   intl: intlShape.isRequired,
