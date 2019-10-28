@@ -89,7 +89,9 @@ const getDataForGroup = (
   lookback = false,
 ) => {
   const data = [];
-  const scoresAll = scores.filter(s => s.group === groupCode);
+  const scoresAll = groupCode
+    ? scores.filter(s => s.group === groupCode)
+    : scores;
   const scoresSorted = scoresAll.sort((a, b) =>
     parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
   );
@@ -162,7 +164,7 @@ function MetricTrend({
       minYear,
       maxYear,
       column,
-      PEOPLE_GROUPS[0].code,
+      rangeColumns ? false : PEOPLE_GROUPS[0].code,
       metric.metricType === 'indicators' && !raw,
     );
   const scoresFemale =
@@ -221,23 +223,9 @@ function MetricTrend({
 
   // console.log(scoresFemale)
   const rangeUpper =
-    hasScores &&
-    getDataForGroup(
-      scores,
-      minYear,
-      maxYear,
-      rangeColumns.upper,
-      PEOPLE_GROUPS[0].code,
-    );
+    hasScores && getDataForGroup(scores, minYear, maxYear, rangeColumns.upper);
   const rangeLower =
-    hasScores &&
-    getDataForGroup(
-      scores,
-      minYear,
-      maxYear,
-      rangeColumns.lower,
-      PEOPLE_GROUPS[0].code,
-    );
+    hasScores && getDataForGroup(scores, minYear, maxYear, rangeColumns.lower);
 
   const tickValuesY = percentage
     ? [0, 20, 40, 60, 80, 100]
