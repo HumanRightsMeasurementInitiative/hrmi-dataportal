@@ -65,6 +65,12 @@ const Styled = styled.header`
   color: ${props => props.theme.global.colors.white};
 `;
 
+const StyledTextInput = styled(TextInput)`
+  &::placeholder {
+    color: black;
+  }
+`;
+
 const NavBarTop = props => (
   <ContentContainer
     direction="row"
@@ -175,6 +181,7 @@ const SecondaryDropButton = styled(Button)`
     theme.global.colors[active ? 'dark-2' : 'dark-3']};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding: 5px 10px 5px 12px;
     width: auto;
   }
 `;
@@ -312,8 +319,19 @@ export function Header({
                 setShowMetrics(false);
                 setShowCountries(!showCountries);
               }}
-              icon={<Icon name="COUNTRY" />}
-              label={intl.formatMessage(messages.countries)}
+              icon={<Icon name="COUNTRY" style={{ minWidth: '24px' }} />}
+              label={
+                <Box
+                  direction="row"
+                  align="center"
+                  justify="between"
+                  fill="horizontal"
+                >
+                  <span>{intl.formatMessage(messages.countries)}</span>
+                  {showCountries && <FormUp size="large" />}
+                  {!showCountries && <FormDown size="large" />}
+                </Box>
+              }
               ref={countryTarget}
             />
             {showCountries && size === 'small' && (
@@ -339,8 +357,20 @@ export function Header({
                 setShowCountries(false);
                 setShowMetrics(!showMetrics);
               }}
-              icon={<Icon name="METRICS" />}
-              label={intl.formatMessage(messages.metrics)}
+              icon={<Icon name="METRICS" style={{ minWidth: '24px' }} />}
+              justify="between"
+              label={
+                <Box
+                  direction="row"
+                  align="center"
+                  justify="between"
+                  fill="horizontal"
+                >
+                  <span>{intl.formatMessage(messages.metrics)}</span>
+                  {showCountries && <FormUp size="large" />}
+                  {!showCountries && <FormDown size="large" />}
+                </Box>
+              }
               ref={metricTarget}
             />
             {showMetrics && size === 'small' && (
@@ -358,7 +388,7 @@ export function Header({
             {isMinSize(size, 'medium') && (
               <Box flex={{ grow: 1 }} margin={{ horizontal: 'medium' }}>
                 <Box
-                  background="dark-1"
+                  background="white"
                   direction="row"
                   align="center"
                   pad={{ horizontal: 'small', vertical: 'xsmall' }}
@@ -366,7 +396,7 @@ export function Header({
                   ref={searchRef}
                   style={{ maxWidth: '500px' }}
                 >
-                  <TextInput
+                  <StyledTextInput
                     plain
                     value={search}
                     onChange={evt => {
