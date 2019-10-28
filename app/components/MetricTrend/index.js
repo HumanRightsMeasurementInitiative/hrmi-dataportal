@@ -139,6 +139,8 @@ function MetricTrend({
   groupsActive,
 }) {
   const [highlight, setHighlight] = useState(false);
+  const [highlightFemale, setHighlightFemale] = useState(false);
+  const [highlightMale, setHighlightMale] = useState(false);
   if (!maxYear) return null;
 
   // dummy data to force the area plot from 0
@@ -161,7 +163,7 @@ function MetricTrend({
       maxYear,
       column,
       PEOPLE_GROUPS[0].code,
-      metric.metricType === 'indicators',
+      metric.metricType === 'indicators' && !raw,
     );
   const scoresFemale =
     hasScores &&
@@ -171,7 +173,7 @@ function MetricTrend({
       maxYear,
       column,
       PEOPLE_GROUPS[1].code, // female
-      metric.metricType === 'indicators',
+      metric.metricType === 'indicators' && !raw,
     );
   const scoresMale =
     hasScores &&
@@ -181,7 +183,7 @@ function MetricTrend({
       maxYear,
       column,
       PEOPLE_GROUPS[2].code, // male
-      metric.metricType === 'indicators',
+      metric.metricType === 'indicators' && !raw,
     );
   const scoresAllRawAvailable =
     hasScores &&
@@ -339,7 +341,7 @@ function MetricTrend({
                       : PEOPLE_GROUPS[1].color
                   }
                   onNearestX={(point, { index }) =>
-                    setHighlight({ point, index })
+                    setHighlightFemale({ point, index })
                   }
                 />
               )}
@@ -357,7 +359,7 @@ function MetricTrend({
                       : PEOPLE_GROUPS[2].color
                   }
                   onNearestX={(point, { index }) =>
-                    setHighlight({ point, index })
+                    setHighlightMale({ point, index })
                   }
                 />
               )}
@@ -412,8 +414,86 @@ function MetricTrend({
                   </PlotHint>
                 </Hint>
               )}
+              {highlightFemale && highlightFemale.point && (
+                <Hint
+                  value={highlightFemale.point}
+                  align={{ vertical: 'top', horizontal: 'left' }}
+                  style={{
+                    transform: 'translateX(50%)',
+                  }}
+                >
+                  <PlotHint color={PEOPLE_GROUPS[1].color}>
+                    {`${formatScore(highlightFemale.point.y)}${
+                      percentage ? '%' : ''
+                    }`}
+                  </PlotHint>
+                </Hint>
+              )}
+              {highlightMale && highlightMale.point && (
+                <Hint
+                  value={highlightMale.point}
+                  align={{ vertical: 'top', horizontal: 'left' }}
+                  style={{
+                    transform: 'translateX(50%)',
+                  }}
+                >
+                  <PlotHint color={PEOPLE_GROUPS[2].color}>
+                    {`${formatScore(highlightMale.point.y)}${
+                      percentage ? '%' : ''
+                    }`}
+                  </PlotHint>
+                </Hint>
+              )}
             </FlexibleWidthXYPlot>
           </WrapPlot>
+          {((scoresFemale && scoresFemale.length > 1) ||
+            (scoresMale && scoresMale.length > 1)) && (
+            <Settings
+              direction="row"
+              justify="end"
+              pad="xsmall"
+              margin={{ vertical: 'small' }}
+            >
+              {groups && (
+                <Box
+                  direction={size !== 'small' ? 'row' : 'column'}
+                  pad={size !== 'small' && { horizontal: 'medium' }}
+                  justify="start"
+                  fill="horizontal"
+                >
+                  <SettingsMultiToggle
+                    setting="groups"
+                    active={groupsActive}
+                    onChange={(group, active) => {
+                      onGroupToggle(group, active);
+                    }}
+                    defaultColor={color}
+                    options={PEOPLE_GROUPS}
+                  />
+                </Box>
+              )}
+              <Box direction="row" justify="end" align="center">
+                <ButtonToggleValueSetting
+                  active={!groups}
+                  disabled={!groups}
+                  onClick={() => {
+                    onGroupsChange(false);
+                  }}
+                >
+                  Overall
+                </ButtonToggleValueSetting>
+                <ButtonToggleValueSetting
+                  active={groups}
+                  disabled={groups}
+                  onClick={() => {
+                    onGroupsChange(true);
+                  }}
+                >
+                  By sex
+                </ButtonToggleValueSetting>
+              </Box>
+            </Settings>
+          )}
           {(hasBenchmarkOption || hasStandardOption || hasRawOption) && (
             <Settings
               direction="row"
@@ -468,54 +548,6 @@ function MetricTrend({
                   </ButtonToggleValueSetting>
                 </Box>
               )}
-            </Settings>
-          )}
-          {((scoresFemale && scoresFemale.length > 1) ||
-            (scoresMale && scoresMale.length > 1)) && (
-            <Settings
-              direction="row"
-              justify="end"
-              pad="xsmall"
-              margin={{ vertical: 'small' }}
-            >
-              {groups && (
-                <Box
-                  direction={size !== 'small' ? 'row' : 'column'}
-                  pad={size !== 'small' && { horizontal: 'medium' }}
-                  justify="start"
-                  fill="horizontal"
-                >
-                  <SettingsMultiToggle
-                    setting="groups"
-                    active={groupsActive}
-                    onChange={(group, active) => {
-                      onGroupToggle(group, active);
-                    }}
-                    defaultColor={color}
-                    options={PEOPLE_GROUPS}
-                  />
-                </Box>
-              )}
-              <Box direction="row" justify="end" align="center">
-                <ButtonToggleValueSetting
-                  active={!groups}
-                  disabled={!groups}
-                  onClick={() => {
-                    onGroupsChange(false);
-                  }}
-                >
-                  Overall
-                </ButtonToggleValueSetting>
-                <ButtonToggleValueSetting
-                  active={groups}
-                  disabled={groups}
-                  onClick={() => {
-                    onGroupsChange(true);
-                  }}
-                >
-                  By sex
-                </ButtonToggleValueSetting>
-              </Box>
             </Settings>
           )}
           <Source center />
