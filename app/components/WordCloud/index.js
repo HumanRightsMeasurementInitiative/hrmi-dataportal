@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
@@ -17,6 +17,7 @@ import messages from './messages';
 
 const Styled = styled(Box)`
   width: 100%;
+  position: relative;
 `;
 const Words = styled(Box)`
   width: 100%;
@@ -24,10 +25,15 @@ const Words = styled(Box)`
   padding-bottom: 1em;
 `;
 
+const ActiveWord = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
 const RightHeading = props => (
   <Heading
     responsive={false}
-    margin={{ top: 'none', bottom: 'medium' }}
+    margin={{ top: 'none', bottom: 'none' }}
     {...props}
   />
 );
@@ -38,6 +44,7 @@ const StyledRightHeadingAbove = styled(Text)`
 `;
 
 export function WordCloud({ data, subright, dimension, intl, border = true }) {
+  const [activeWord, setActiveWord] = useState(null);
   const scores =
     data.scores &&
     data.scores.length > 0 &&
@@ -51,7 +58,6 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
       }
       return a.proportion > b.proportion ? -1 : 1;
     });
-
   return (
     <Styled
       direction="column"
@@ -66,6 +72,32 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
           {...rootMessages.rights[data.subright || data.right]}
         />
       </StyledRightHeading>
+      <ActiveWord>
+        {!activeWord && (
+          <Box>
+            <Text size="medium">
+              Text size based on percentage of human rights experts identifying
+              each group as being at risk of having this right violated.
+            </Text>
+          </Box>
+        )}
+        {activeWord && (
+          <Box>
+            <Text size="medium">
+              <span style={{ fontWeight: 700 }}>
+                {`${Math.round(100 * activeWord.proportion)}% `}
+              </span>
+              of our human rights experts identified
+              <span style={{ color: '#DB7E00', fontWeight: 600 }}>
+                {` ${intl.formatMessage(
+                  rootMessages['people-at-risk'][activeWord.people_code],
+                )} `}
+              </span>
+              as being at risk of having this right violated.
+            </Text>
+          </Box>
+        )}
+      </ActiveWord>
       {!scores && (
         <Hint italic>
           <FormattedMessage {...messages.noGroupData} />
@@ -80,6 +112,8 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
               dimension={dimension}
               right={data.subright || data.right}
               key={s.people_code}
+              setActive={active => setActiveWord(active ? s : null)}
+              active={activeWord && activeWord.people_code === s.people_code}
             />
           ))}
       </Words>
