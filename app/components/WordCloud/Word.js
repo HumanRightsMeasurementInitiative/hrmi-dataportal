@@ -65,9 +65,17 @@ const scaleOpacity = scaleLinear()
   .domain([0, 1])
   .range([0.66, 1]);
 
-export function Word({ score, tooltip, dimension, right, intl }) {
+export function Word({
+  score,
+  tooltip,
+  dimension,
+  right,
+  intl,
+  active,
+  setActive,
+}) {
   const [over, setOver] = useState(false);
-  const [open, setOpen] = useState(false);
+
   const button = useRef(null);
   return (
     <ResponsiveContext.Consumer>
@@ -76,13 +84,13 @@ export function Word({ score, tooltip, dimension, right, intl }) {
           <Tag
             key={score.people_code}
             weight={scaleFontWeight(score.proportion)}
-            opacity={over || open ? 1 : scaleOpacity(score.proportion)}
+            opacity={over || active ? 1 : scaleOpacity(score.proportion)}
             size={
               size === 'small'
                 ? scaleFontMobile(score.proportion) * MAX_SIZE_MOBILE
                 : scaleFont(score.proportion) * MAX_SIZE
             }
-            color={`${dimension}Cloud`}
+            color={active ? 'highlight2' : `${dimension}Cloud`}
             direction="row"
             align="center"
           >
@@ -91,7 +99,7 @@ export function Word({ score, tooltip, dimension, right, intl }) {
               onClick={evt => {
                 if (evt) evt.preventDefault();
                 if (evt) evt.stopPropagation();
-                setOpen(!open);
+                setActive(!active);
               }}
               onMouseEnter={() => setOver(true)}
               onMouseLeave={() => setOver(false)}
@@ -107,22 +115,17 @@ export function Word({ score, tooltip, dimension, right, intl }) {
                 {...rootMessages['people-at-risk'][score.people_code]}
               />
             </Button>
-            {(over || open) && button.current && (
+            {over && !active && button.current && (
               <StyledDrop
                 align={{ bottom: 'top' }}
                 stretch={false}
                 elevation="small"
                 target={button.current}
-                onClickOutside={() => setOpen(false)}
               >
                 <Box
                   pad={{ vertical: 'small', horizontal: 'small' }}
                   background="dark-1"
                   style={{ maxWidth: '320px' }}
-                  onClick={evt => {
-                    if (evt) evt.preventDefault();
-                    if (evt) evt.stopPropagation();
-                  }}
                   align="start"
                 >
                   <Text size="xxlarge">
@@ -164,6 +167,8 @@ Word.propTypes = {
   tooltip: PropTypes.bool,
   border: PropTypes.bool,
   intl: intlShape.isRequired,
+  active: PropTypes.bool,
+  setActive: PropTypes.func,
 };
 
 export default injectIntl(Word);
