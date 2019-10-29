@@ -13,11 +13,6 @@ export const prepCountries = (countries, search, intl) => {
     countries
       .map(country => ({
         code: country.country_code,
-        labelSecondary: intl.formatMessage(
-          rootMessages.income[
-            country.high_income_country === '1' ? 'hi' : 'lmi'
-          ],
-        ),
         label: intl.formatMessage(rootMessages.countries[country.country_code]),
       }))
       .filter(country => filterCountry(country, search, regex))
