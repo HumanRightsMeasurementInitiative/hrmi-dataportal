@@ -4,7 +4,7 @@ import Button from './Button';
 export default styled(Button)`
   display: block;
   width: 100%;
-  text-align: left;
+  text-align: center;
   color: ${({ theme, active }) => theme.global.colors[active ? 'dark-2' : 'white' ]};
   padding: 10px 24px;
   font-size: 1em;
@@ -16,7 +16,6 @@ export default styled(Button)`
     height: 44px;
     padding: 5px 10px;
     border: none;
-    text-align: center;
     width: auto;
   }
   &:hover {
