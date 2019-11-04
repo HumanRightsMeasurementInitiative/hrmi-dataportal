@@ -34,7 +34,6 @@ import { getRouterMatch } from 'containers/App/selectors';
 import ContentContainer from 'styled/ContentContainer';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 import { isMinSize, isMaxSize } from 'utils/responsive';
-import ButtonNavPrimaryDrop from 'styled/ButtonNavPrimaryDrop';
 import ButtonHighlight from 'styled/ButtonHighlight';
 
 import Icon from 'components/Icon';
@@ -140,14 +139,19 @@ const MenuList = styled.div`
     top: auto;
     left: auto;
     right: auto;
+    bottom: auto;
     width: auto;
     height: 44px;
     background: transparent;
-    display: flex;
-    flex-direction: row;
+    display: table;
     margin: 0 0 0 auto;
-    align-items: center;
   }
+`;
+
+const MenuGroup = styled.span`
+  display: table-cell;
+  vertical-align: top;
+  height: 44px;
 `;
 // prettier-ignore
 const ToggleMenu = styled(Button)`
@@ -185,6 +189,25 @@ const SecondaryDropButton = styled(Button)`
     width: auto;
   }
 `;
+// prettier-ignore
+const StyledButtonGrommet = styled(Button)`
+  height: 44px;
+  padding: 5px 10px;
+  background-color: ${({ theme, active }) => active ? theme.global.colors['dark-3'] : 'transparent' };
+  &:hover {
+    background-color: ${({ theme}) => theme.global.colors['dark-3']};
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+  }
+  &:visited {
+    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+  }
+  &:focus {
+    background-color: ${({ theme }) => theme.global.colors['dark-3']};
+  }
+`;
+
 const DEPENDENCIES = ['countries'];
 
 const renderDownload = (intl, isFullWidth, downloadClicked) => (
@@ -266,9 +289,11 @@ export function Header({
             </ToggleMenu>
             <MenuList visible={showMenu}>
               {appLocales.length > 1 && isMinSize(size, 'large') && (
-                <LocaleToggle />
+                <MenuGroup>
+                  <LocaleToggle />
+                </MenuGroup>
               )}
-              <span>
+              <MenuGroup>
                 {PAGES &&
                   PAGES.map(page => (
                     <ButtonNavPrimary
@@ -283,18 +308,21 @@ export function Header({
                       <FormattedMessage {...rootMessages.page[page]} />
                     </ButtonNavPrimary>
                   ))}
-              </span>
-              <ButtonNavPrimaryDrop
-                ref={downloadRef}
-                active={showDownload}
-                onClick={() => {
-                  setShowDownload(!showDownload);
-                }}
-              >
-                <FormattedMessage {...messages.download.button} />
-                {showDownload && <FormUp />}
-                {!showDownload && <FormDown />}
-              </ButtonNavPrimaryDrop>
+              </MenuGroup>
+              <MenuGroup style={{ display: 'table-cell' }}>
+                <StyledButtonGrommet
+                  plain
+                  reverse
+                  gap="xxsmall"
+                  ref={downloadRef}
+                  active={showDownload}
+                  onClick={() => {
+                    setShowDownload(!showDownload);
+                  }}
+                  icon={showDownload ? <FormUp /> : <FormDown />}
+                  label={intl.formatMessage(messages.download.button)}
+                />
+              </MenuGroup>
               {showDownload && isMinSize(size, 'large') && (
                 <Drop
                   align={{ top: 'bottom', right: 'right' }}
@@ -342,6 +370,7 @@ export function Header({
                 align={{ top: 'bottom', left: 'left' }}
                 target={countryTarget.current}
                 onClickOutside={() => setShowCountries(false)}
+                overflow="hidden"
               >
                 <NavCountry
                   onClose={() => setShowCountries(false)}
