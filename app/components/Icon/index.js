@@ -55,7 +55,15 @@ const defaultSize = 24;
  */
 class Icon extends React.PureComponent {
   render() {
-    const { name, title, color, size, iconSize, themeColor } = this.props;
+    const {
+      name,
+      title,
+      color,
+      size,
+      iconSize,
+      themeColor,
+      style,
+    } = this.props;
     const icon = ICONS[name];
     if (icon) {
       const iSizeX = (icon.sizes && icon.sizes[0]) || icon.size || iconSize;
@@ -73,6 +81,7 @@ class Icon extends React.PureComponent {
           themeColor={themeColor}
           aria-hidden={title ? 'false' : 'true'}
           role={title ? 'img' : 'presentation'}
+          style={style}
         >
           {title && <title>{title}</title>}
           <path
@@ -98,6 +107,7 @@ Icon.propTypes = {
   color: PropTypes.string,
   /* the icon fill color (as theme color name) */
   themeColor: PropTypes.string,
+  style: PropTypes.object,
 };
 
 Icon.defaultProps = {
