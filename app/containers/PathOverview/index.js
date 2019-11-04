@@ -51,7 +51,7 @@ const DEPENDENCIES = [
   'esrIndicators',
   'cprScores',
   'esrScores',
-  'esrIndicatorScores',
+  // 'esrIndicatorScores', // consider removing to improve IE11/Edge performance
 ];
 
 export function PathOverview({
