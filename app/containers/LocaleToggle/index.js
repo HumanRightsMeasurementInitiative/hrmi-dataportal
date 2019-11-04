@@ -28,19 +28,19 @@ const StyledDropButton = styled(DropButton)`
   padding: 5px 10px;
   background-color: ${({ theme, active, light }) => (active && !light) ? theme.global.colors['dark-3'] : 'transparent' };
   &:hover {
-    background-color: ${({ theme, light }) => light || theme.global.colors['dark-3']};
+    background-color: ${({ theme, light }) => light ? 'transparent' : theme.global.colors['dark-3']};
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:active {
-    background-color: ${({ theme, light }) => light || theme.global.colors['dark-3']};
+    background-color: ${({ theme, light }) => light ? 'transparent' : theme.global.colors['dark-3']};
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:visited {
-    background-color: ${({ theme, light }) => light || theme.global.colors['dark-3']};
+    background-color: ${({ theme, light }) => light ? 'transparent' : theme.global.colors['dark-3']};
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:focus {
-    background-color: ${({ theme, light }) => light || theme.global.colors['dark-3']};
+    background-color: ${({ theme, light }) => light ? 'transparent' : theme.global.colors['dark-3']};
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
 `;
