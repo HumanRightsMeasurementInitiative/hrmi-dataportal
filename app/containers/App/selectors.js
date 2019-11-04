@@ -294,21 +294,23 @@ export const getContentReadyByKey = createSelector(
 //   );
 // };
 
+// prettier-ignore
 const calcMaxYear = scores =>
   scores &&
   scores.length > 0 &&
   scores.reduce(
     (max, s) => (parseInt(s.year, 10) > max ? parseInt(s.year, 10) : max),
     0,
-  );
+  ).toString();
 
+// prettier-ignore
 const calcMinYear = scores =>
   scores &&
   scores.length > 0 &&
   scores.reduce(
     (min, s) => (parseInt(s.year, 10) < min ? parseInt(s.year, 10) : min),
     9999,
-  );
+  ).toString();
 
 export const getMaxYearESR = createSelector(
   getESRScores,

@@ -90,10 +90,10 @@ function MetricTrend({
   if (!maxYear) return null;
 
   // dummy data to force the area plot from 0
-  const dataForceYRange = [
-    { x: new Date(`${parseFloat(minYear) - 0.1}`).getTime(), y: 0 },
-    { x: new Date(`${parseFloat(maxYear) + 0.5}`).getTime(), y: maxValue },
-  ];
+  const xMin = new Date(`${parseFloat(minYear) - 1}-10-01`).getTime();
+  const xMax = new Date(`${parseFloat(maxYear)}-05-30`).getTime();
+  const dataForceYRange = [{ x: xMin, y: 0 }, { x: xMax, y: maxValue }];
+
   const rangeUpper = [];
   const rangeLower = [];
   const xyData = [];
