@@ -88,7 +88,7 @@ const StyledContent = styled(Box)`
   position: relative;
   min-height: auto;
   padding: 0 ${({ theme }) => theme.global.edgeSize.small};
-  width: 90vw;
+  width: 95vw;
   max-width: none;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     width: ${({ theme }) => theme.breakpointsMin.medium};
