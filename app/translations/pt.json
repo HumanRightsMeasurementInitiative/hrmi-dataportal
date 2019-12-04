@@ -136,7 +136,7 @@
   "hrmi.components.CountrySort.sortBy": "Ordenar por:",
   "hrmi.components.CountrySort.sortOptions.name": "Nome",
   "hrmi.components.CountrySort.sortOptions.score": "Pontuação",
-  "hrmi.components.CountrySort.sortOptions.assessment": "Avaliação",
+  "hrmi.components.CountrySort.sortOptions.assessment": "Disponibilidade",
   "hrmi.components.CountrySort.sortOptions.gdp": "PIB",
   "hrmi.components.CountrySort.sortOptions.population": "População",
   "hrmi.components.CountryNarrative.cpr.noData": "{physint} e {empowerment} dados ainda não foram produzidos para {countryWithArticle}. Pretendemos expandir a nossa coleta de dados sobre estes direitos a todo o mundo, assim que o aumento dos recursos esteja disponível.",
