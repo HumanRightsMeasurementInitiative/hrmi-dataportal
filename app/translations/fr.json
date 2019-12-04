@@ -136,7 +136,7 @@
   "hrmi.components.CountrySort.sortBy": "Trier par: ",
   "hrmi.components.CountrySort.sortOptions.name": "Nom",
   "hrmi.components.CountrySort.sortOptions.score": "Résultat",
-  "hrmi.components.CountrySort.sortOptions.assessment": "données disponibles",
+  "hrmi.components.CountrySort.sortOptions.assessment": "Données disponibles",
   "hrmi.components.CountrySort.sortOptions.gdp": "PIB",
   "hrmi.components.CountrySort.sortOptions.population": "Population",
   "hrmi.components.CountryNarrative.cpr.noData": "Les données pour la protection face à l'État et l'autonomisation n'ont pas encore été recueillies pour {countryWithArticle}. Il est prévu d'étendre au monde entier le recueillement des données pour ces droits, dès que le financement sera disponible. ",
