@@ -85,13 +85,20 @@ const StyledButtonText = styled(ButtonText)``;
 
 const StyledContent = styled(Box)`
   margin: 0 auto;
-  width: 1200px;
-  max-width: 100%;
   position: relative;
   min-height: auto;
   padding: 0 ${({ theme }) => theme.global.edgeSize.small};
+  width: 95vw;
+  max-width: none;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    width: ${({ theme }) => theme.breakpointsMin.medium};
+  }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 0 ${({ theme }) => theme.global.edgeSize.large};
+    width: ${({ theme }) => theme.breakpointsMin.large};
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.xlarge}) {
+    width: ${({ theme }) => theme.breakpointsMin.xlarge};
   }
 `;
 
