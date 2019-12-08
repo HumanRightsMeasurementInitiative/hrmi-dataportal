@@ -65,15 +65,7 @@ const scaleOpacity = scaleLinear()
   .domain([0, 1])
   .range([0.66, 1]);
 
-export function Word({
-  score,
-  tooltip,
-  dimension,
-  right,
-  intl,
-  active,
-  setActive,
-}) {
+export function Word({ score, tooltip, dimension, intl, active, setActive }) {
   const [over, setOver] = useState(false);
 
   const button = useRef(null);
@@ -132,17 +124,13 @@ export function Word({
                     {`${Math.round(100 * score.proportion)}%`}
                   </Text>
                   <Text>
-                    of our human rights experts identified
+                    <FormattedMessage {...messages.highlightStart} />
                     <strong>
                       {` ${intl.formatMessage(
                         rootMessages['people-at-risk'][score.people_code],
                       )} `}
                     </strong>
-                    as being at risk of having their
-                    <strong>
-                      {` ${intl.formatMessage(rootMessages.rights[right])} `}
-                    </strong>
-                    violated.
+                    <FormattedMessage {...messages.highlightEnd} />
                   </Text>
                 </Box>
               </StyledDrop>
@@ -163,7 +151,6 @@ export function Word({
 Word.propTypes = {
   score: PropTypes.object,
   dimension: PropTypes.string,
-  right: PropTypes.string,
   tooltip: PropTypes.bool,
   border: PropTypes.bool,
   intl: intlShape.isRequired,
