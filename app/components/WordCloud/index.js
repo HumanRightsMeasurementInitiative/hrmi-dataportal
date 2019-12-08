@@ -73,12 +73,14 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
         />
       </StyledRightHeading>
       <ActiveWord>
+        <Box>
+          <Text size="medium" style={{ fontStyle: 'italic' }}>
+            <FormattedMessage {...messages.interpretation} />
+          </Text>
+        </Box>
         {!activeWord && (
           <Box>
-            <Text size="medium">
-              Text size based on percentage of human rights experts identifying
-              each group as being at risk of having this right violated.
-            </Text>
+            <Text size="medium">&nbsp;</Text>
           </Box>
         )}
         {activeWord && (
@@ -87,13 +89,13 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
               <span style={{ fontWeight: 700 }}>
                 {`${Math.round(100 * activeWord.proportion)}% `}
               </span>
-              of our human rights experts identified
+              <FormattedMessage {...messages.highlightStart} />
               <span style={{ color: '#DB7E00', fontWeight: 600 }}>
                 {` ${intl.formatMessage(
                   rootMessages['people-at-risk'][activeWord.people_code],
                 )} `}
               </span>
-              as being at risk of having this right violated.
+              <FormattedMessage {...messages.highlightEnd} />
             </Text>
           </Box>
         )}
