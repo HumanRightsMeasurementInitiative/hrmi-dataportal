@@ -64,11 +64,13 @@ export const getIncompleteDataActionMessage = data => {
 export const getScoresForCountry = (countryCode, scores) => ({
   esr: scores.esr && scores.esr[countryCode],
   cpr: scores.cpr && scores.cpr[countryCode],
-  indicators: scores.indicators && scores.indicators[countryCode],
+  // indicators: scores.indicators && scores.indicators[countryCode],
 });
 
 export const dimensionCount = countryScores =>
-  (countryScores.esr && countryScores.esr.esr ? 1 : 0) +
+  (countryScores.esr && countryScores.esr.esr
+    ? countryScores.esr.esr.length
+    : 0) +
   (countryScores.cpr && countryScores.cpr.empowerment ? 1 : 0) +
   (countryScores.cpr && countryScores.cpr.physint ? 1 : 0);
 
