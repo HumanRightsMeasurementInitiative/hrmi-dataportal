@@ -285,17 +285,32 @@ export const getContentReadyByKey = createSelector(
 );
 
 // helper functions
-const sortByNumber = (data, column, asc = true) => {
-  const reverse = asc ? 1 : -1;
-  return data.sort(
-    (a, b) =>
-      reverse * (parseInt(a[column], 10) < parseInt(b[column], 10) ? 1 : -1),
-  );
-};
+// TERRIBLE PERFORMANCE ON EDGE AND IE11
+// const sortByNumber = (data, column, asc = true) => {
+//   const reverse = asc ? 1 : -1;
+//   return data.sort(
+//     (a, b) =>
+//       reverse * (parseInt(a[column], 10) < parseInt(b[column], 10) ? 1 : -1),
+//   );
+// };
+
+// prettier-ignore
 const calcMaxYear = scores =>
-  scores && scores.length > 0 && sortByNumber(scores, 'year')[0].year;
+  scores &&
+  scores.length > 0 &&
+  scores.reduce(
+    (max, s) => (parseInt(s.year, 10) > max ? parseInt(s.year, 10) : max),
+    0,
+  ).toString();
+
+// prettier-ignore
 const calcMinYear = scores =>
-  scores && scores.length > 0 && sortByNumber(scores, 'year', false)[0].year;
+  scores &&
+  scores.length > 0 &&
+  scores.reduce(
+    (min, s) => (parseInt(s.year, 10) < min ? parseInt(s.year, 10) : min),
+    9999,
+  ).toString();
 
 export const getMaxYearESR = createSelector(
   getESRScores,
@@ -1115,10 +1130,8 @@ export const getDimensionAverages = createSelector(
 );
 
 // All countries
-const filterScoresByYear = (year, scores) => {
-  if (!scores) return false;
-  return scores && scores.filter(s => quasiEquals(s.year, year));
-};
+const filterScoresByYear = (year, scores) =>
+  !!scores && scores.filter(s => quasiEquals(s.year, year));
 
 export const getESRScoresForYear = createSelector(
   getESRYear,
@@ -1131,9 +1144,9 @@ export const getCPRScoresForYear = createSelector(
   (year, scores) => filterScoresByYear(year, scores, 'cpr'),
 );
 
-const scoresByCountry = scores => {
-  if (!scores) return false;
-  return scores.reduce((memo, score) => {
+const scoresByCountry = scores =>
+  !!scores &&
+  scores.reduce((memo, score) => {
     const metricR = RIGHTS.find(r => r.code === score.metric_code);
     const metricD = DIMENSIONS.find(d => d.code === score.metric_code);
     const metric = metricR || metricD;
@@ -1165,11 +1178,11 @@ const scoresByCountry = scores => {
       },
     };
   }, {});
-};
 
-const indicatorScoresByCountry = (year, scores) => {
-  if (!scores) return false;
-  return scores.reduce((memo, score) => {
+// TODO refactor for better IE/Edge performance
+const indicatorScoresByCountry = (year, scores) =>
+  !!scores &&
+  scores.reduce((memo, score) => {
     // ignore all outdated scores
     if (parseInt(score.year, 10) < year - INDICATOR_LOOKBACK) return memo;
     const metric = INDICATORS.find(i => i.code === score.metric_code);
@@ -1224,7 +1237,6 @@ const indicatorScoresByCountry = (year, scores) => {
       },
     };
   }, {});
-};
 
 export const getESRScoresByCountry = createSelector(
   getESRScoresForYear,
@@ -1235,6 +1247,8 @@ export const getCPRScoresByCountry = createSelector(
   getCPRScoresForYear,
   scores => scoresByCountry(scores, 'cpr'),
 );
+
+// NOTE not currently used due to bad performance
 export const getIndicatorScoresByCountry = createSelector(
   getESRYear,
   getESRIndicatorScores,
@@ -1244,11 +1258,12 @@ export const getIndicatorScoresByCountry = createSelector(
 export const getScoresByCountry = createSelector(
   getESRScoresByCountry,
   getCPRScoresByCountry,
-  getIndicatorScoresByCountry,
-  (esr, cpr, indicators) => ({
+  // getIndicatorScoresByCountry,
+  // (esr, cpr, indicators) => ({
+  (esr, cpr) => ({
     esr,
     cpr,
-    indicators,
+    // indicators,
   }),
 );
 

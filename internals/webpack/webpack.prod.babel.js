@@ -6,6 +6,7 @@ const OfflinePlugin = require('offline-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const WebpackGitHash = require('webpack-git-hash');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -18,8 +19,8 @@ module.exports = require('./webpack.base.babel')({
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[name].[chunkhash].chunk.js',
+    filename: '[name].[chunkhash].[githash].js',
+    chunkFilename: '[name].[chunkhash].[githash].chunk.js',
   },
 
   optimization: {
@@ -66,6 +67,8 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    new WebpackGitHash(),
+
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'app/index.html',
