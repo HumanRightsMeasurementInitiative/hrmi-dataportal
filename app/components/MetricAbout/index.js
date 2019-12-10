@@ -26,27 +26,25 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
       direction="column"
       pad={{ left: 'medium', top: 'small', bottom: 'medium' }}
     >
-      {(intl.locale === 'en' || metricType !== 'dimensions') && (
-        <WrapAsideTop>
-          <Heading responsive={false} level={5} margin={{ vertical: 'xsmall' }}>
-            <FormattedMessage {...messages.title[metricType]} />
-          </Heading>
-          {rootMessages[`${metricType}-about`] && fullInfo && (
-            <div>
-              <FormattedMessage
-                {...rootMessages[`${metricType}-about`][metric.key]}
-              />
-            </div>
-          )}
-          {rootMessages[`${metricType}-about`] && !fullInfo && (
-            <ReadMore
-              message={intl.formatMessage(
-                rootMessages[`${metricType}-about`][metric.key],
-              )}
+      <WrapAsideTop>
+        <Heading responsive={false} level={5} margin={{ vertical: 'xsmall' }}>
+          <FormattedMessage {...messages.title[metricType]} />
+        </Heading>
+        {rootMessages[`${metricType}-about`] && fullInfo && (
+          <div>
+            <FormattedMessage
+              {...rootMessages[`${metricType}-about`][metric.key]}
             />
-          )}
-        </WrapAsideTop>
-      )}
+          </div>
+        )}
+        {rootMessages[`${metricType}-about`] && !fullInfo && (
+          <ReadMore
+            message={intl.formatMessage(
+              rootMessages[`${metricType}-about`][metric.key],
+            )}
+          />
+        )}
+      </WrapAsideTop>
       {metricType === 'indicators' && metricInfo && (
         <>
           <Box>
