@@ -74,7 +74,7 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
       </StyledRightHeading>
       <ActiveWord>
         <Box>
-          <Text size="medium" style={{ fontStyle: 'italic' }}>
+          <Text size="small" style={{ fontStyle: 'italic' }}>
             <FormattedMessage {...messages.interpretation} />
           </Text>
         </Box>
