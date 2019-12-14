@@ -4,13 +4,13 @@
  *
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Box, Drop, Button, ResponsiveContext, Text } from 'grommet';
+import { Box, Button, ResponsiveContext, Text } from 'grommet';
 import { scaleLinear } from 'd3-scale';
-import Tooltip from 'components/Tooltip';
+import { isMinSize } from 'utils/responsive';
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -21,12 +21,22 @@ const Tag = styled(Box)`
   color: ${props => props.theme.global.colors[props.color]};
   font-weight: ${props => props.weight || 400};
 `;
-
-const StyledDrop = styled(Drop)`
-  margin: 0 0 13px;
+const StyledButton = styled(Button)`
+  position: relative;
+`;
+const StyledDrop = styled(Box)`
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  display: block;
+  width: 300px;
+  max-width: 300px;
+  text-align: left;
+  margin: 0 0 13px -150px;
   overflow: visible;
   font-size: ${({ theme }) => theme.text.xsmall.size};
   line-height: ${({ theme }) => theme.text.xsmall.height};
+  z-index: 8;
   &:after {
     content: '';
     position: absolute;
@@ -65,10 +75,8 @@ const scaleOpacity = scaleLinear()
   .domain([0, 1])
   .range([0.66, 1]);
 
-export function Word({ score, tooltip, dimension, intl, active, setActive }) {
-  const [over, setOver] = useState(false);
-
-  const button = useRef(null);
+export function Word({ score, dimension, intl, active, setActive }) {
+  const [over, setOver] = useState(null);
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -82,22 +90,25 @@ export function Word({ score, tooltip, dimension, intl, active, setActive }) {
                 ? scaleFontMobile(score.proportion) * MAX_SIZE_MOBILE
                 : scaleFont(score.proportion) * MAX_SIZE
             }
-            color={active ? 'highlight2' : `${dimension}Cloud`}
+            color={over || active ? 'highlight2' : `${dimension}Cloud`}
             direction="row"
             align="center"
           >
-            <Button
-              ref={button}
+            <StyledButton
               onClick={evt => {
                 if (evt) evt.preventDefault();
                 if (evt) evt.stopPropagation();
-                setActive(!active);
+                if (isMinSize(size, 'medium')) setActive(!active);
+                if (size === 'small') setOver(!over);
               }}
-              onMouseEnter={() => setOver(true)}
-              onMouseLeave={() => setOver(false)}
-              onFocus={() => setOver(true)}
+              onMouseEnter={() => {
+                if (size !== 'small') setOver(true);
+              }}
+              onMouseOut={() => setOver(false)}
+              onFocus={() => {
+                if (size !== 'small') setOver(true);
+              }}
               onBlur={() => setOver(false)}
-              margin={{ horizontal: 'xsmall' }}
               style={{
                 WebkitAppearance: 'none',
                 MozAppearance: 'none',
@@ -106,42 +117,31 @@ export function Word({ score, tooltip, dimension, intl, active, setActive }) {
               <FormattedMessage
                 {...rootMessages['people-at-risk'][score.people_code]}
               />
-            </Button>
-            {over && !active && button.current && (
-              <StyledDrop
-                align={{ bottom: 'top' }}
-                stretch={false}
-                elevation="small"
-                target={button.current}
-              >
-                <Box
-                  pad={{ vertical: 'small', horizontal: 'small' }}
-                  background="dark-1"
-                  style={{ maxWidth: '320px' }}
-                  align="start"
-                >
-                  <Text size="xxlarge">
-                    {`${Math.round(100 * score.proportion)}%`}
-                  </Text>
-                  <Text>
-                    <FormattedMessage {...messages.highlightStart} />
-                    <strong>
-                      {` ${intl.formatMessage(
-                        rootMessages['people-at-risk'][score.people_code],
-                      )} `}
-                    </strong>
-                    <FormattedMessage {...messages.highlightEnd} />
-                  </Text>
-                </Box>
-              </StyledDrop>
-            )}
+              {over && !active && (
+                <StyledDrop elevation="small" fixed={size === 'small'}>
+                  <Box
+                    pad={{ vertical: 'small', horizontal: 'small' }}
+                    background="dark-1"
+                    align="start"
+                    responsive={false}
+                  >
+                    <Text size="xxlarge">
+                      {`${Math.round(100 * score.proportion)}%`}
+                    </Text>
+                    <Text style={{ maxWidth: '276px' }}>
+                      <FormattedMessage {...messages.highlightStart} />
+                      <strong>
+                        {` ${intl.formatMessage(
+                          rootMessages['people-at-risk'][score.people_code],
+                        )} `}
+                      </strong>
+                      <FormattedMessage {...messages.highlightEnd} />
+                    </Text>
+                  </Box>
+                </StyledDrop>
+              )}
+            </StyledButton>
           </Tag>
-          {tooltip && (
-            <Tooltip
-              iconSize="large"
-              text={intl.formatMessage(messages.tooltip)}
-            />
-          )}
         </Box>
       )}
     </ResponsiveContext.Consumer>
@@ -151,7 +151,6 @@ export function Word({ score, tooltip, dimension, intl, active, setActive }) {
 Word.propTypes = {
   score: PropTypes.object,
   dimension: PropTypes.string,
-  tooltip: PropTypes.bool,
   border: PropTypes.bool,
   intl: intlShape.isRequired,
   active: PropTypes.bool,
