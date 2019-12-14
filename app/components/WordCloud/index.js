@@ -45,6 +45,7 @@ const StyledRightHeadingAbove = styled(Text)`
 
 export function WordCloud({ data, subright, dimension, intl, border = true }) {
   const [activeWord, setActiveWord] = useState(null);
+
   const scores =
     data.scores &&
     data.scores.length > 0 &&
@@ -107,10 +108,9 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
       )}
       <Words direction="column" align="center">
         {scores &&
-          scores.map((s, index) => (
+          scores.map(s => (
             <Word
               score={s}
-              tooltip={index === false}
               dimension={dimension}
               right={data.subright || data.right}
               key={s.people_code}

@@ -97,7 +97,6 @@
   "hrmi.containers.CookieConsent.urlPrivacyPolicy": "//humanrightsmeasurement.org/hrmi-privacy-policy/",
   "hrmi.containers.CookieConsent.linkDialogue": "Privacy Settings",
   "hrmi.components.WordCloud.noGroupData": "Ninguno seleccionado por los expertos encuestados",
-  "hrmi.components.WordCloud.tooltip": "Porcentaje de expertos en derechos humanos que consideraron a estas personas particularmente vulnerables de la violación de este derecho.",
   "hrmi.components.WordCloud.interpretation": "Interpretación: Texto más grande = más expertos en derechos humanos identificaron a este grupo como en riesgo.",
   "hrmi.components.WordCloud.highlightStart": "de nuestros expertos en derechos humanos identificaron a ",
   "hrmi.components.WordCloud.highlightEnd": "como en riesgo de violar este derecho.",
