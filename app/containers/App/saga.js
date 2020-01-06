@@ -425,7 +425,7 @@ export function* checkCookieConsentSaga() {
   yield put(cookieConsentChecked(consentStatus));
 }
 export function* setCookieConsentSaga({ status }) {
-  Cookies.set(COOKIECONSENT_NAME, status, { expires: 365 });
+  Cookies.set(COOKIECONSENT_NAME, status, { expires: 365, sameSite: 'strict' });
   yield put(checkCookieConsent());
 }
 // status = consentStatus
