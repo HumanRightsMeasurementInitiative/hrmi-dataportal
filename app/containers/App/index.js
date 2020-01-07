@@ -9,6 +9,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl, intlShape } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
@@ -25,6 +26,8 @@ import PathNotFoundPage from 'containers/PathNotFoundPage';
 import HowToReadLayer from 'containers/HowToRead/HowToReadLayer';
 
 import CookieConsent from 'containers/CookieConsent';
+
+import headerMessages from 'containers/Header/messages';
 
 import ScrollToTop from './ScrollToTop';
 
@@ -55,18 +58,16 @@ const Main = styled.main`
  *
  */
 
-export function App({ match }) {
+export function App({ match, intl }) {
   const locale = match.params ? match.params.locale : DEFAULT_LOCALE;
+  const title = `HRMI ${intl.formatMessage(headerMessages.appTitle)}`;
+  const description = `Human Rights Measurement Initiative ${intl.formatMessage(
+    headerMessages.appTitle,
+  )}`;
   return (
     <AppWrapper>
-      <Helmet
-        titleTemplate="%s - HRMI Data Portal v2"
-        defaultTitle="HRMI Data Portal v2"
-      >
-        <meta
-          name="description"
-          content="Human Rights Measurement Initiative"
-        />
+      <Helmet titleTemplate={`%s - {title}`} defaultTitle={title}>
+        <meta name="description" content={description} />
       </Helmet>
       <ScrollToTop>
         <CookieConsent />
@@ -95,7 +96,8 @@ export function App({ match }) {
 }
 
 App.propTypes = {
+  intl: intlShape.isRequired,
   match: PropTypes.object,
 };
 
-export default App;
+export default injectIntl(App);
