@@ -66,7 +66,7 @@ export function App({ match, intl }) {
   )}`;
   return (
     <AppWrapper>
-      <Helmet titleTemplate={`%s - {title}`} defaultTitle={title}>
+      <Helmet titleTemplate={`%s - ${title}`} defaultTitle={title}>
         <meta name="description" content={description} />
       </Helmet>
       <ScrollToTop>
