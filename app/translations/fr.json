@@ -188,7 +188,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " concernant les droits d'intégrité physique. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.end": ", comparé à d'autres pays en {regionWithArticle}. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", comparé à d'autres pays au revenu élevé. ",
-  "hrmi.components.Source.source": "Source : données 2018 de l’Initiative pour la Mesure des Droits Humains (HRMI), data.humanrightsmeasurement.org",
+  "hrmi.components.Source.source": "Source : données 2018 de l’Initiative pour la Mesure des Droits Humains (HRMI), www.rightstracker.org",
   "hrmi.components.ReadMore.more": "Lire la suite",
   "hrmi.components.ReadMore.less": "Montrer moins",
   "hrmi.components.HowToRead.label": "Comment lire ce graphique",
