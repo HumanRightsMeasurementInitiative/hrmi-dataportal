@@ -188,7 +188,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " on the right to be safe from the state",
   "hrmi.components.CountryNarrative.compAssessmentESR.end": ", compared with the other countries in {needsArticleRegion, select, true {the } false {}}{region}. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", compared with all other high income countries. ",
-  "hrmi.components.Source.source": "Source: 2019 Human Rights Measurement Initiative (HRMI) dataset, data.humanrightsmeasurement.org",
+  "hrmi.components.Source.source": "Source: 2019 Human Rights Measurement Initiative (HRMI) dataset, www.rightstracker.org",
   "hrmi.components.ReadMore.more": "Read more",
   "hrmi.components.ReadMore.less": "Show less",
   "hrmi.components.HowToRead.label": "How to read this chart",
