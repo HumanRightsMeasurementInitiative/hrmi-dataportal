@@ -31,7 +31,7 @@ const FilterWrap = styled.div`
 `;
 
 const getFilterOptions = (
-  { region, subregion, income, assessed },
+  { region, subregion, income, assessed, cgroup, treaty },
   intl,
   filterValues,
 ) => {
@@ -78,6 +78,34 @@ const getFilterOptions = (
       },
     ];
   }
+  if (!cgroup && filterValues.cgroup) {
+    groups = [
+      ...groups,
+      {
+        group: 'cgroup',
+        label: intl.formatMessage(messages.countryGroupFilterOptionGroup),
+        options: filterValues.cgroup.map(value => ({
+          key: 'cgroup',
+          value,
+          label: intl.formatMessage(rootMessages.countryGroups[value]),
+        })),
+      },
+    ];
+  }
+  if (!treaty && filterValues.treaty) {
+    groups = [
+      ...groups,
+      {
+        group: 'treaty',
+        label: intl.formatMessage(messages.treatyFilterOptionGroup),
+        options: filterValues.treaty.map(value => ({
+          key: 'treaty',
+          value,
+          label: intl.formatMessage(rootMessages.treaties[value]),
+        })),
+      },
+    ];
+  }
   if (!assessed && filterValues.assessed) {
     groups = [
       ...groups,
@@ -120,6 +148,8 @@ export function CountryFilters({
   onAddFilter,
   incomeFilterValue,
   assessedFilterValue,
+  countryGroupFilterValue,
+  treatyFilterValue,
   intl,
   filterValues,
   theme,
@@ -131,6 +161,8 @@ export function CountryFilters({
     subregion: filterValues.subregion && subregionFilterValue,
     income: filterValues.income && incomeFilterValue,
     assessed: filterValues.assessed && assessedFilterValue,
+    cgroup: filterValues.cgroup && countryGroupFilterValue,
+    treaty: filterValues.treaty && treatyFilterValue,
   };
   const setAllFilters = Object.keys(filterValues).reduce(
     (memo, key) => memo && setFilters[key],
@@ -146,6 +178,8 @@ export function CountryFilters({
       subregion: subregionFilterValue,
       income: incomeFilterValue,
       assessed: assessedFilterValue,
+      cgroup: countryGroupFilterValue,
+      treaty: treatyFilterValue,
     },
     intl,
     filterValues,
@@ -178,6 +212,22 @@ export function CountryFilters({
             <ActiveFilterButton
               onRemove={() => onRemoveFilter('income')}
               label={intl.formatMessage(rootMessages.income[incomeFilterValue])}
+            />
+          )}
+          {setFilters.cgroup && (
+            <ActiveFilterButton
+              onRemove={() => onRemoveFilter('cgroup')}
+              label={intl.formatMessage(
+                rootMessages.countryGroups[countryGroupFilterValue],
+              )}
+            />
+          )}
+          {setFilters.treaty && (
+            <ActiveFilterButton
+              onRemove={() => onRemoveFilter('treaty')}
+              label={intl.formatMessage(
+                rootMessages.treaties[treatyFilterValue],
+              )}
             />
           )}
           {setFilters.assessed && (
@@ -239,6 +289,11 @@ CountryFilters.propTypes = {
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  countryGroupFilterValue: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]),
+  treatyFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   filterValues: PropTypes.object,

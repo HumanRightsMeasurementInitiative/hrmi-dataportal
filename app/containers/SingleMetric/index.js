@@ -35,6 +35,8 @@ import {
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
+  getCountryGroupSearch,
+  getTreatySearch,
   getSortSearch,
   getSortOrderSearch,
   getCountries,
@@ -122,7 +124,7 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-const FILTER_GROUPS = ['income', 'region', 'subregion'];
+const FILTER_GROUPS = ['income', 'region', 'subregion', 'cgroup', 'treaty'];
 
 export function SingleMetric({
   onLoadData,
@@ -133,6 +135,8 @@ export function SingleMetric({
   regionFilterValue,
   subregionFilterValue,
   incomeFilterValue,
+  countryGroupFilterValue,
+  treatyFilterValue,
   onRemoveFilter,
   onAddFilter,
   sort,
@@ -178,6 +182,8 @@ export function SingleMetric({
               onRemoveFilter={onRemoveFilter}
               onAddFilter={onAddFilter}
               incomeFilterValue={incomeFilterValue}
+              countryGroupFilterValue={countryGroupFilterValue}
+              treatyFilterValue={treatyFilterValue}
               filterValues={filterValues}
             />
             <CountrySort
@@ -337,6 +343,11 @@ SingleMetric.propTypes = {
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  countryGroupFilterValue: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]),
+  treatyFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   sort: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -370,6 +381,8 @@ const mapStateToProps = createStructuredSelector({
   regionFilterValue: state => getRegionSearch(state),
   subregionFilterValue: state => getSubregionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
+  countryGroupFilterValue: state => getCountryGroupSearch(state),
+  treatyFilterValue: state => getTreatySearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
 });

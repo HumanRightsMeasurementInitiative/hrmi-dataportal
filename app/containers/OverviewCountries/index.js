@@ -16,6 +16,8 @@ import {
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
+  getCountryGroupSearch,
+  getTreatySearch,
   getBenchmarkSearch,
   getStandardSearch,
   getScaleSearch,
@@ -57,7 +59,14 @@ export const isDefaultStandard = (country, standardDetails) =>
   (country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' &&
     standardDetails.key === 'hi');
 
-const FILTER_GROUPS = ['income', 'region', 'subregion', 'assessed'];
+const FILTER_GROUPS = [
+  'income',
+  'region',
+  'subregion',
+  'cgroup',
+  'treaty',
+  'assessed',
+];
 
 export function OverviewCountries({
   countries,
@@ -66,6 +75,8 @@ export function OverviewCountries({
   subregionFilterValue,
   incomeFilterValue,
   assessedFilterValue,
+  countryGroupFilterValue,
+  treatyFilterValue,
   onRemoveFilter,
   onAddFilter,
   onSelectCountry,
@@ -115,6 +126,8 @@ export function OverviewCountries({
               onAddFilter={onAddFilter}
               incomeFilterValue={incomeFilterValue}
               assessedFilterValue={assessedFilterValue}
+              countryGroupFilterValue={countryGroupFilterValue}
+              treatyFilterValue={treatyFilterValue}
               filterValues={filterValues}
             />
             <CountrySort
@@ -192,6 +205,11 @@ OverviewCountries.propTypes = {
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  countryGroupFilterValue: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]),
+  treatyFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -210,6 +228,8 @@ const mapStateToProps = createStructuredSelector({
   subregionFilterValue: state => getSubregionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
   assessedFilterValue: state => getAssessedSearch(state),
+  countryGroupFilterValue: state => getCountryGroupSearch(state),
+  treatyFilterValue: state => getTreatySearch(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),

@@ -25,8 +25,8 @@ export default defineMessages({
     id: `${scope}.subregionsFilterOptionGroup`,
     defaultMessage: 'Subregions',
   },
-  groupFilterOptionGroup: {
-    id: `${scope}.groupFilterOptionGroup`,
+  countryGroupFilterOptionGroup: {
+    id: `${scope}.countryGroupFilterOptionGroup`,
     defaultMessage: 'Category',
   },
   treatyFilterOptionGroup: {
