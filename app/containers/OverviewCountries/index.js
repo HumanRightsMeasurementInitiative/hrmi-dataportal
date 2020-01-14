@@ -44,8 +44,10 @@ import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
+
 import { isMinSize, isMaxSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
+import { getFilterOptionValues } from 'utils/countries';
 
 import rootMessages from 'messages';
 
@@ -54,6 +56,8 @@ export const isDefaultStandard = (country, standardDetails) =>
     standardDetails.key === 'core') ||
   (country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' &&
     standardDetails.key === 'hi');
+
+const FILTER_GROUPS = ['income', 'region', 'subregion', 'assessed'];
 
 export function OverviewCountries({
   countries,
@@ -93,6 +97,7 @@ export function OverviewCountries({
     order: currentSortOrder,
     scores: scoresAllCountries,
   });
+  const filterValues = getFilterOptionValues(countries, FILTER_GROUPS);
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -110,7 +115,7 @@ export function OverviewCountries({
               onAddFilter={onAddFilter}
               incomeFilterValue={incomeFilterValue}
               assessedFilterValue={assessedFilterValue}
-              filterGroups={['income', 'region', 'subregion', 'assessed']}
+              filterValues={filterValues}
             />
             <CountrySort
               sort={currentSort}
