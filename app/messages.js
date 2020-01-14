@@ -978,21 +978,21 @@ export default defineMessages({
       defaultMessage: 'lmi',
     },
   },
-  groups: {
+  countryGroups: {
     oecd: {
-      id: `${scope}.groups.oecd`,
+      id: `${scope}.countryGroups.oecd`,
       defaultMessage: 'OECD',
     },
     'not-oecd': {
-      id: `${scope}.groups.not-oecd`,
+      id: `${scope}.countryGroups.not-oecd`,
       defaultMessage: 'not OECD',
     },
     asean: {
-      id: `${scope}.groups.asean`,
+      id: `${scope}.countryGroups.asean`,
       defaultMessage: 'ASEAN',
     },
     oic: {
-      id: `${scope}.groups.oic`,
+      id: `${scope}.countryGroups.oic`,
       defaultMessage: 'OIC',
     },
   },

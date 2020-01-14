@@ -169,7 +169,8 @@ export const SUBREGIONS = [
   'north-africa',
   'middle-east',
 ];
-export const GROUPS = ['oecd', 'not-oecd', 'asean', 'oic'];
+export const COUNTRY_GROUPS = ['oecd', 'not-oecd', 'asean', 'oic'];
+
 export const TREATIES = ['icescr', 'iccpr'];
 
 export const ASSESSED_FILTERS = ['all', 'cpr-all', 'esr-all', 'some'];

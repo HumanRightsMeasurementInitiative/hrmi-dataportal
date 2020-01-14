@@ -10,7 +10,12 @@ import quasiEquals from 'utils/quasi-equals';
 
 import getMetricDetails from 'utils/metric-details';
 
-import { isCountryHighIncome, isCountryOECD } from 'utils/countries';
+import {
+  hasCountryGroup,
+  hasCountryTreaty,
+  isCountryHighIncome,
+  isCountryOECD,
+} from 'utils/countries';
 
 import { initialState } from './reducer';
 import {
@@ -21,6 +26,8 @@ import {
   SUBREGIONS,
   COUNTRY_SORTS,
   INCOME_GROUPS,
+  COUNTRY_GROUPS,
+  TREATIES,
   DIMENSIONS,
   RIGHTS,
   INDICATORS,
@@ -160,11 +167,28 @@ export const getIncomeSearch = createSelector(
       ? search.get('income')
       : false,
 );
+export const getCountryGroupSearch = createSelector(
+  getRouterSearchParams,
+  search =>
+    search.has('cgroup') && COUNTRY_GROUPS.indexOf(search.get('cgroup')) > -1
+      ? search.get('cgroup')
+      : false,
+);
+export const getTreatySearch = createSelector(
+  getRouterSearchParams,
+  search =>
+    search.has('treaty') && TREATIES.indexOf(search.get('treaty')) > -1
+      ? search.get('treaty')
+      : false,
+);
 const getHasCountryFilters = createSelector(
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
-  (region, subregion, income) => region || subregion || income,
+  getCountryGroupSearch,
+  getTreatySearch,
+  (region, subregion, income, cgroup, treaty) =>
+    region || subregion || income || cgroup || treaty,
 );
 export const getGroupSearch = createSelector(
   getRouterSearchParams,
@@ -367,11 +391,15 @@ export const getCountriesFiltered = createSelector(
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
-  (countries, region, subregion, income) =>
+  getCountryGroupSearch,
+  getTreatySearch,
+  (countries, region, subregion, income, cgroup, treaty) =>
     countries &&
     countries
       .filter(c => !region || c[COLUMNS.COUNTRIES.REGION] === region)
       .filter(c => !subregion || c[COLUMNS.COUNTRIES.SUBREGION] === subregion)
+      .filter(c => !cgroup || hasCountryGroup(c, cgroup))
+      .filter(c => !treaty || hasCountryTreaty(c, treaty))
       .filter(
         c =>
           !income ||
