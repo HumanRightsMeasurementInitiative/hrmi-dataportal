@@ -13,7 +13,9 @@ export const prepCountries = (countries, search, intl) => {
     countries
       .map(country => ({
         code: country.country_code,
-        label: intl.formatMessage(rootMessages.countries[country.country_code]),
+        label: rootMessages.countries[country.country_code]
+          ? intl.formatMessage(rootMessages.countries[country.country_code])
+          : country.country_code,
       }))
       .filter(country => filterCountry(country, search, regex))
       .sort((a, b) => (a.label < b.label ? -1 : 1))

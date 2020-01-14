@@ -21,6 +21,18 @@ export default defineMessages({
     id: `${scope}.regionsFilterOptionGroup`,
     defaultMessage: 'Regions',
   },
+  subregionsFilterOptionGroup: {
+    id: `${scope}.subregionsFilterOptionGroup`,
+    defaultMessage: 'Subregions',
+  },
+  groupFilterOptionGroup: {
+    id: `${scope}.groupFilterOptionGroup`,
+    defaultMessage: 'Category',
+  },
+  treatyFilterOptionGroup: {
+    id: `${scope}.treatyFilterOptionGroup`,
+    defaultMessage: 'Treaty',
+  },
   incomeFilterOptionGroup: {
     id: `${scope}.incomeFilterOptionGroup`,
     defaultMessage: 'Income group',
@@ -28,9 +40,5 @@ export default defineMessages({
   assessedFilterOptionGroup: {
     id: `${scope}.assessedFilterOptionGroup`,
     defaultMessage: 'Assessment',
-  },
-  oecdFilterOptionGroup: {
-    id: `${scope}.oecdFilterOptionGroup`,
-    defaultMessage: 'OECD status',
   },
 });

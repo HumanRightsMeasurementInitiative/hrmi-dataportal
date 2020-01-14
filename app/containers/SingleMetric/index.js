@@ -36,7 +36,6 @@ import {
   getSortSearch,
   getSortOrderSearch,
   getCountries,
-  getOECDSearch,
   getDependenciesReady,
 } from 'containers/App/selectors';
 
@@ -129,7 +128,6 @@ export function SingleMetric({
   standard,
   regionFilterValue,
   incomeFilterValue,
-  oecdFilterValue,
   onRemoveFilter,
   onAddFilter,
   sort,
@@ -173,8 +171,7 @@ export function SingleMetric({
               onRemoveFilter={onRemoveFilter}
               onAddFilter={onAddFilter}
               incomeFilterValue={incomeFilterValue}
-              oecdFilterValue={oecdFilterValue}
-              filterGroups={['income', 'region', 'oecd']}
+              filterGroups={['income', 'region', 'subregion']}
             />
             <CountrySort
               sort={currentSort}
@@ -332,7 +329,6 @@ SingleMetric.propTypes = {
   onRemoveFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   sort: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -365,7 +361,6 @@ const mapStateToProps = createStructuredSelector({
   standard: state => getStandardSearch(state),
   regionFilterValue: state => getRegionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
-  oecdFilterValue: state => getOECDSearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
 });

@@ -215,7 +215,9 @@ export function CountryMetric({
   const metric = getMetricDetails(metricCode);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const countryTitle =
-    countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
+    countryCode && rootMessages.countries[countryCode]
+      ? intl.formatMessage(rootMessages.countries[countryCode])
+      : countryCode;
   const metricTitle =
     metric && intl.formatMessage(rootMessages[metric.metricType][metric.key]);
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';

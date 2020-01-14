@@ -14,13 +14,13 @@ import { Box, InfiniteScroll, ResponsiveContext } from 'grommet';
 
 import {
   getRegionSearch,
+  getSubregionSearch,
   getIncomeSearch,
   getBenchmarkSearch,
   getStandardSearch,
   getScaleSearch,
   getESRIndicators,
   getAssessedSearch,
-  getOECDSearch,
   getSortSearch,
   getSortOrderSearch,
 } from 'containers/App/selectors';
@@ -30,7 +30,12 @@ import {
   highlightCountry,
 } from 'containers/App/actions';
 
-import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
+import {
+  STANDARDS,
+  BENCHMARKS,
+  COUNTRY_SORTS,
+  COLUMNS,
+} from 'containers/App/constants';
 
 import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
@@ -45,16 +50,18 @@ import { sortCountries, getScoresForCountry } from 'utils/scores';
 import rootMessages from 'messages';
 
 export const isDefaultStandard = (country, standardDetails) =>
-  (country.high_income_country === '0' && standardDetails.key === 'core') ||
-  (country.high_income_country === '1' && standardDetails.key === 'hi');
+  (country[COLUMNS.COUNTRIES.HIGH_INCOME] === '0' &&
+    standardDetails.key === 'core') ||
+  (country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' &&
+    standardDetails.key === 'hi');
 
 export function OverviewCountries({
   countries,
   scoresAllCountries,
   regionFilterValue,
+  subregionFilterValue,
   incomeFilterValue,
   assessedFilterValue,
-  oecdFilterValue,
   onRemoveFilter,
   onAddFilter,
   onSelectCountry,
@@ -98,12 +105,12 @@ export function OverviewCountries({
           >
             <CountryFilters
               regionFilterValue={regionFilterValue}
+              subregionFilterValue={subregionFilterValue}
               onRemoveFilter={onRemoveFilter}
               onAddFilter={onAddFilter}
               incomeFilterValue={incomeFilterValue}
               assessedFilterValue={assessedFilterValue}
-              oecdFilterValue={oecdFilterValue}
-              filterGroups={['income', 'region', 'assessed', 'oecd']}
+              filterGroups={['income', 'region', 'subregion', 'assessed']}
             />
             <CountrySort
               sort={currentSort}
@@ -177,9 +184,9 @@ OverviewCountries.propTypes = {
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -195,9 +202,9 @@ OverviewCountries.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   regionFilterValue: state => getRegionSearch(state),
+  subregionFilterValue: state => getSubregionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
   assessedFilterValue: state => getAssessedSearch(state),
-  oecdFilterValue: state => getOECDSearch(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),

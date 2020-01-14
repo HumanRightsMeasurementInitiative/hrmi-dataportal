@@ -83,11 +83,13 @@ export const indicatorsCount = countryScores =>
 
 export const sortByName = (a, b, order, intl) => {
   const factor = order === 'asc' ? 1 : -1;
-  // prettier-ignore
-  return intl.formatMessage(messages.countries[a.country_code]) >
-    intl.formatMessage(messages.countries[b.country_code])
-    ? factor * 1
-    : factor * -1;
+  const nameA = messages.countries[a.country_code]
+    ? intl.formatMessage(messages.countries[a.country_code])
+    : a.country_code;
+  const nameB = messages.countries[b.country_code]
+    ? intl.formatMessage(messages.countries[b.country_code])
+    : a.country_code;
+  return nameA > nameB ? factor * 1 : factor * -1;
 };
 
 export const sortByAssessment = (a, b, scoresAllCountries, order) => {

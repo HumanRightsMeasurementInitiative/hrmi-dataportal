@@ -10,9 +10,9 @@ import ButtonIcon from 'styled/ButtonIcon';
 
 import {
   REGIONS,
+  SUBREGIONS,
   INCOME_GROUPS,
   ASSESSED_FILTERS,
-  OECD_FILTERS,
 } from 'containers/App/constants';
 
 import rootMessages from 'messages';
@@ -38,7 +38,7 @@ const FilterWrap = styled.div`
 `;
 
 const getFilterOptions = (
-  { region, income, assessed, oecd },
+  { region, subregion, income, assessed },
   intl,
   filterGroups,
 ) => {
@@ -57,6 +57,20 @@ const getFilterOptions = (
       },
     ];
   }
+  if (!subregion && filterGroups.indexOf('subregion') > -1) {
+    groups = [
+      ...groups,
+      {
+        group: 'subregions',
+        label: intl.formatMessage(messages.subregionsFilterOptionGroup),
+        options: SUBREGIONS.map(r => ({
+          key: 'subregion',
+          value: r,
+          label: intl.formatMessage(rootMessages.subregions[r]),
+        })),
+      },
+    ];
+  }
   if (!income && filterGroups.indexOf('income') > -1) {
     groups = [
       ...groups,
@@ -67,20 +81,6 @@ const getFilterOptions = (
           key: 'income',
           value: i.key,
           label: intl.formatMessage(rootMessages.income[i.key]),
-        })),
-      },
-    ];
-  }
-  if (!oecd && filterGroups.indexOf('oecd') > -1) {
-    groups = [
-      ...groups,
-      {
-        group: 'oecd',
-        label: intl.formatMessage(messages.oecdFilterOptionGroup),
-        options: OECD_FILTERS.map(a => ({
-          key: 'oecd',
-          value: a,
-          label: intl.formatMessage(rootMessages.oecd[a]),
         })),
       },
     ];
@@ -122,11 +122,11 @@ const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
 
 export function CountryFilters({
   regionFilterValue,
+  subregionFilterValue,
   onRemoveFilter,
   onAddFilter,
   incomeFilterValue,
   assessedFilterValue,
-  oecdFilterValue,
   intl,
   filterGroups,
   theme,
@@ -135,9 +135,9 @@ export function CountryFilters({
   const countryTarget = useRef(null);
   const setFilters = {
     region: filterGroups.indexOf('region') > -1 && regionFilterValue,
+    subregion: filterGroups.indexOf('subregion') > -1 && subregionFilterValue,
     income: filterGroups.indexOf('income') > -1 && incomeFilterValue,
     assessed: filterGroups.indexOf('assessed') > -1 && assessedFilterValue,
-    oecd: filterGroups.indexOf('oecd') > -1 && oecdFilterValue,
   };
   const setAllFilters = filterGroups.reduce(
     (memo, filter) => memo && setFilters[filter],
@@ -159,6 +159,14 @@ export function CountryFilters({
               )}
             />
           )}
+          {setFilters.subregion && (
+            <ActiveFilterButton
+              onRemove={() => onRemoveFilter('subregion')}
+              label={intl.formatMessage(
+                rootMessages.subregions[subregionFilterValue],
+              )}
+            />
+          )}
           {setFilters.income && (
             <ActiveFilterButton
               onRemove={() => onRemoveFilter('income')}
@@ -171,12 +179,6 @@ export function CountryFilters({
               label={intl.formatMessage(
                 rootMessages.assessedFilters[assessedFilterValue],
               )}
-            />
-          )}
-          {setFilters.oecd && (
-            <ActiveFilterButton
-              onRemove={() => onRemoveFilter('oecd')}
-              label={intl.formatMessage(rootMessages.oecd[oecdFilterValue])}
             />
           )}
           {!setAllFilters && (
@@ -212,9 +214,9 @@ export function CountryFilters({
                     getFilterOptions(
                       {
                         region: regionFilterValue,
+                        subregion: subregionFilterValue,
                         income: incomeFilterValue,
                         assessed: assessedFilterValue,
-                        oecd: oecdFilterValue,
                       },
                       intl,
                       filterGroups,
@@ -230,9 +232,9 @@ export function CountryFilters({
                     getFilterOptions(
                       {
                         region: regionFilterValue,
+                        subregion: subregionFilterValue,
                         income: incomeFilterValue,
                         assessed: assessedFilterValue,
-                        oecd: oecdFilterValue,
                       },
                       intl,
                       filterGroups,
@@ -253,9 +255,9 @@ export function CountryFilters({
 CountryFilters.propTypes = {
   intl: intlShape.isRequired,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   filterGroups: PropTypes.array,
