@@ -28,7 +28,9 @@ function NarrativeESR({ country, score, intl, someData, countryGrammar }) {
       countryGrammar,
     ),
     dimension: intl.formatMessage(rootMessages.dimensions.esr),
-    country: intl.formatMessage(rootMessages.countries[country.country_code]),
+    country: rootMessages.countries[country.country_code]
+      ? intl.formatMessage(rootMessages.countries[country.country_code])
+      : country.country_code,
     less99adjusted: score && parseFloat(scoreAdjusted) < 99,
     scoreAdjusted: score && `${formatScore(scoreAdjusted)}%`,
     scoreAdjustedBold: score && <strong>{formatScore(scoreAdjusted)}%</strong>,

@@ -10,6 +10,9 @@ const ARTICLES_DEFAULT = {
 };
 
 export const needsArticle = (locale, countryGrammar) => {
+  if (!countryGrammar) {
+    return false;
+  }
   if (ARTICLES_DEFAULT[locale] === 0) {
     return countryGrammar[`${locale}_article`] === '1';
   }
@@ -17,12 +20,13 @@ export const needsArticle = (locale, countryGrammar) => {
 };
 
 export const isFeminine = (locale, countryGrammar) =>
-  countryGrammar[`${locale}_feminine`] === '1';
+  countryGrammar ? countryGrammar[`${locale}_feminine`] === '1' : false;
 
 export const isPlural = (locale, countryGrammar) =>
-  countryGrammar[`${locale}_plural`] === '1';
+  countryGrammar ? countryGrammar[`${locale}_plural`] === '1' : false;
 
 export const genderNumber = (locale, countryGrammar) => {
+  if (!countryGrammar) return 'f';
   if (isFeminine(locale, countryGrammar)) {
     if (isPlural(locale, countryGrammar)) {
       return 'fp';
@@ -36,6 +40,9 @@ export const genderNumber = (locale, countryGrammar) => {
 };
 
 export const getCountryWithArticle = (locale, countryGrammar, countryLabel) => {
+  if (!countryGrammar) {
+    return countryLabel;
+  }
   if (!needsArticle(locale, countryGrammar)) {
     return countryLabel;
   }
@@ -293,7 +300,9 @@ export const getMessageGrammar = (
   countryGrammar,
 ) => {
   const { locale } = intl;
-  const countryLabel = intl.formatMessage(rootMessages.countries[countryCode]);
+  const countryLabel = rootMessages.countries[countryCode]
+    ? intl.formatMessage(rootMessages.countries[countryCode])
+    : countryCode;
   const regionLabel = intl.formatMessage(rootMessages.regions[regionCode]);
   const countryWithArticle = getCountryWithArticle(
     locale,

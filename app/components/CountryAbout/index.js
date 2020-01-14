@@ -60,6 +60,12 @@ function CountryAbout({
     auxIndicators &&
     auxIndicators[COLUMNS.AUX.POPULATION] &&
     auxIndicators[COLUMNS.AUX.POPULATION] !== '';
+  const countryGroups =
+    country[COLUMNS.COUNTRIES.GROUPS] &&
+    country[COLUMNS.COUNTRIES.GROUPS].split(',');
+  const treaties =
+    country[COLUMNS.COUNTRIES.TREATIES] &&
+    country[COLUMNS.COUNTRIES.TREATIES].split(',');
   return (
     <Box
       direction="column"
@@ -139,26 +145,77 @@ function CountryAbout({
           </Button>
         </Box>
       </Box>
-      <Box direction="row" margin={{ bottom: 'xsmall' }}>
-        <Box width="50%">
-          <Label>
-            <FormattedMessage {...messages.oecd} />
-          </Label>
+      {country[COLUMNS.COUNTRIES.SUBREGION] && (
+        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+          <Box width="50%">
+            <Label>
+              <FormattedMessage {...messages.subregion} />
+            </Label>
+          </Box>
+          <Box width="50%">
+            <Button
+              onClick={() =>
+                onCategoryClick(
+                  'subregion',
+                  country[COLUMNS.COUNTRIES.SUBREGION],
+                )
+              }
+            >
+              <Text>
+                <FormattedMessage
+                  {...rootMessages.subregions[
+                    country[COLUMNS.COUNTRIES.SUBREGION]
+                  ]}
+                />
+              </Text>
+            </Button>
+          </Box>
         </Box>
-        <Box width="50%">
-          <Button
-            onClick={() =>
-              onCategoryClick('oecd', country[COLUMNS.COUNTRIES.OECD])
-            }
-          >
-            <Text>
+      )}
+      {countryGroups && (
+        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+          <Box width="50%">
+            <Label>
               <FormattedMessage
-                {...rootMessages.oecd[country[COLUMNS.COUNTRIES.OECD]]}
+                {...messages.groups[
+                  countryGroups.length === 1 ? 'single' : 'plural'
+                ]}
               />
-            </Text>
-          </Button>
+            </Label>
+          </Box>
+          <Box width="50%">
+            {countryGroups.map(g => (
+              <Button onClick={() => onCategoryClick('group', g)}>
+                <Text>
+                  <FormattedMessage {...rootMessages.groups[g]} />
+                </Text>
+              </Button>
+            ))}
+          </Box>
         </Box>
-      </Box>
+      )}
+      {treaties && (
+        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+          <Box width="50%">
+            <Label>
+              <FormattedMessage
+                {...messages.treaties[
+                  treaties.length === 1 ? 'single' : 'plural'
+                ]}
+              />
+            </Label>
+          </Box>
+          <Box width="50%">
+            {treaties.map(g => (
+              <Button onClick={() => onCategoryClick('treaty', g)}>
+                <Text>
+                  <FormattedMessage {...rootMessages.treaties[g]} />
+                </Text>
+              </Button>
+            ))}
+          </Box>
+        </Box>
+      )}
       <Box direction="row" margin={{ bottom: 'xsmall' }}>
         <Box width="50%">
           <Label>
