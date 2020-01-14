@@ -188,7 +188,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " en el derecho a estar a salvo del Estado",
   "hrmi.components.CountryNarrative.compAssessmentESR.end": ", en comparación con otros países {regionOf}. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", en comparación con otros países de ingresos altos. ",
-  "hrmi.components.Source.source": "Fuente: Conjunto de datos de la iniciativa de medición de derechos humanos (HRMI) de 2019, data.humanrightsmeasurement.org",
+  "hrmi.components.Source.source": "Fuente: Conjunto de datos de la iniciativa de medición de derechos humanos (HRMI) de 2019, www.rightstracker.org",
   "hrmi.components.ReadMore.more": "Leer más",
   "hrmi.components.ReadMore.less": "Mostrar menos",
   "hrmi.components.HowToRead.label": "Cómo leer este gráfico",
