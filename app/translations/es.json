@@ -176,7 +176,7 @@
   "hrmi.components.CountryNarrative.atRisk.end.beforeLink": "Además de estas personas, los expertos identificaron a otras en especial riesgo de sufrir violaciones de sus derechos. Haga clic ",
   "hrmi.components.CountryNarrative.atRisk.end.link": "aquí",
   "hrmi.components.CountryNarrative.atRisk.end.afterLink": " para ver palabras claves que dan una idea más completa de qué personas en {countryWithArticle} fueron identificadas como especialmente vulnerables. ",
-  "hrmi.components.CountryNarrative.compAssessmentSectionTitle": "Evaluación comparativa",www.rightstracker.org
+  "hrmi.components.CountryNarrative.compAssessmentSectionTitle": "Evaluación comparativa",
   "hrmi.components.CountryNarrative.compAssessmentCPR.hiOECD": "Comparado con los otros {referenceCountLessOne} países de la OCDE con ingresos altos sobre los que tenemos datos de derechos civiles y políticos, {countryWithArticle} se {isPlural, select, true {están} false {está}} desempeñando ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.notHiOECD": "Para derechos civiles y políticos, no tenemos datos de suficientes países en {regionWithArticle} que permitan hacer una comparación regional. Sin embargo, si comparamos con otros {referenceCount} países de nuestra muestra, {countryWithArticle} se {isPlural, select, true {están} false {está}} desempeñando ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.conjunct": " y ",
