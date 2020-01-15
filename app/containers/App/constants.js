@@ -189,6 +189,15 @@ export const INCOME_GROUPS = [
   },
 ];
 
+export const COUNTRY_FILTERS = [
+  'income',
+  'region',
+  'assessed',
+  'subregion',
+  'treaty',
+  'cgroup',
+];
+
 export const STANDARDS = [
   {
     key: 'core',
