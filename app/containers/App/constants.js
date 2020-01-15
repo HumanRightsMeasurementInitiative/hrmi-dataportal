@@ -155,23 +155,23 @@ export const COUNTRY_SORTS = {
 
 export const REGIONS = [
   'americas',
-  'east-asia-pacific',
-  'europe-central-asia',
   'middle-east-north-africa',
-  'south-asia',
   'sub-saharan-africa',
+  'europe-central-asia',
+  'south-asia',
+  'east-asia-pacific',
 ];
 export const SUBREGIONS = [
-  'pacific',
-  'east-asia',
-  'central-asia',
-  'europe',
-  'north-africa',
   'middle-east',
+  'north-africa',
+  'europe',
+  'central-asia',
+  'east-asia',
+  'pacific',
 ];
 export const COUNTRY_GROUPS = ['oecd', 'not-oecd', 'asean', 'oic'];
 
-export const TREATIES = ['icescr', 'iccpr'];
+export const TREATIES = ['iccpr', 'icescr'];
 
 export const ASSESSED_FILTERS = ['all', 'cpr-all', 'esr-all', 'some'];
 

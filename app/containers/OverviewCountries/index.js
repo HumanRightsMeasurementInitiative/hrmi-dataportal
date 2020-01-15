@@ -49,7 +49,7 @@ import Hint from 'styled/Hint';
 
 import { isMinSize, isMaxSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
-import { getFilterOptionValues } from 'utils/countries';
+import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 
 import rootMessages from 'messages';
 
@@ -108,7 +108,22 @@ export function OverviewCountries({
     order: currentSortOrder,
     scores: scoresAllCountries,
   });
-  const filterValues = getFilterOptionValues(countries, FILTER_GROUPS);
+  const filterValues = getFilterOptionValues(
+    countries,
+    FILTER_GROUPS,
+    // check if any filters are already set -
+    // if not we can just return all specified options
+    areAnyFiltersSet(FILTER_GROUPS, {
+      regionFilterValue,
+      subregionFilterValue,
+      incomeFilterValue,
+      assessedFilterValue,
+      countryGroupFilterValue,
+      treatyFilterValue,
+    }),
+    standardDetails,
+    scoresAllCountries,
+  );
   return (
     <ResponsiveContext.Consumer>
       {size => (

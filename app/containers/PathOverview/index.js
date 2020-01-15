@@ -38,7 +38,7 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 
 import PageTitle from 'styled/PageTitle';
 
-import { filterByAssessment } from 'utils/scores';
+import { filterByAssessment } from 'utils/filters';
 import { useInjectSaga } from 'utils/injectSaga';
 import { isMinSize } from 'utils/responsive';
 import saga from 'containers/App/saga';

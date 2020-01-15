@@ -126,6 +126,7 @@ const getFilterOptions = (
 const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
   <Box
     pad={{ horizontal: 'none', top: 'small', bottom: 'none' }}
+    width={{ min: '280px' }}
     overflow="auto"
   >
     <StyledButtonIcon subtle onClick={() => setFilterOpen(false)}>
@@ -168,10 +169,6 @@ export function CountryFilters({
     (memo, key) => memo && setFilters[key],
     true,
   );
-  // const setAnyFilters = filterGroups.reduce(
-  //   (memo, filter) => memo || !!setFilters[filter],
-  //   false,
-  // );
   const optionGroups = getFilterOptions(
     {
       region: regionFilterValue,
