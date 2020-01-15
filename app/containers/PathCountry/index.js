@@ -54,7 +54,7 @@ import {
   trackEvent,
 } from 'containers/App/actions';
 
-import { INCOME_GROUPS } from 'containers/App/constants';
+import { INCOME_GROUPS, COUNTRY_FILTERS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -316,14 +316,7 @@ export function mapDispatchToProps(dispatch) {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
     onCategoryClick: (key, value) => {
-      const deleteParams = [
-        'income',
-        'region',
-        'assessed',
-        'subregion',
-        'treaties',
-        'cgroups',
-      ];
+      const deleteParams = COUNTRY_FILTERS;
       dispatch(
         navigate(
           { pathname: '', search: key === 'all' ? '' : `?${key}=${value}` },

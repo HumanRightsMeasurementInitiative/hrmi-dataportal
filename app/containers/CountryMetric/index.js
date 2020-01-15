@@ -32,6 +32,7 @@ import {
   STANDARDS,
   BENCHMARKS,
   COLUMNS,
+  COUNTRY_FILTERS,
 } from 'containers/App/constants';
 import ContentContainer from 'styled/ContentContainer';
 
@@ -480,14 +481,7 @@ export function mapDispatchToProps(dispatch) {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
     onCategoryClick: (key, value) => {
-      const deleteParams = [
-        'income',
-        'region',
-        'assessed',
-        'subregion',
-        'treaties',
-        'cgroups',
-      ];
+      const deleteParams = COUNTRY_FILTERS;
       dispatch(
         navigate(
           { pathname: '', search: `?${key}=${value}` },
