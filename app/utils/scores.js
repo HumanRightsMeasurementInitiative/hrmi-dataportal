@@ -1,5 +1,7 @@
 import messages from 'messages';
-import { RIGHTS } from 'containers/App/constants';
+import { RIGHTS, COUNTRY_SORTS } from 'containers/App/constants';
+import quasiEquals from 'utils/quasi-equals';
+import isNumber from 'utils/is-number';
 
 export const getRightsScoresForDimension = (
   rights,
@@ -81,7 +83,7 @@ export const rightsCount = countryScores =>
 export const indicatorsCount = countryScores =>
   countryScores.indicators ? Object.keys(countryScores.indicators).length : 0;
 
-export const sortByName = (a, b, order, intl) => {
+const sortByName = (a, b, order, intl) => {
   const factor = order === 'asc' ? 1 : -1;
   // prettier-ignore
   return intl.formatMessage(messages.countries[a.country_code]) >
@@ -89,8 +91,24 @@ export const sortByName = (a, b, order, intl) => {
     ? factor * 1
     : factor * -1;
 };
+const sortByNumber = (a, b, order) => {
+  const factor = order === 'asc' ? 1 : -1;
+  if (!isNumber(a) && !isNumber(b)) {
+    return 0;
+  }
+  if (isNumber(a) && !isNumber(b)) {
+    return -1;
+  }
+  if (!isNumber(a) && isNumber(b)) {
+    return 1;
+  }
+  // prettier-ignore
+  return parseFloat(a, 10) > parseFloat(b, 10)
+    ? factor * 1
+    : factor * -1;
+};
 
-export const sortByAssessment = (a, b, scoresAllCountries, order) => {
+const sortByAssessment = (a, b, scoresAllCountries, order) => {
   const factor = order === 'asc' ? -1 : 1;
   const countryScoresA = getScoresForCountry(
     a.country_code,
@@ -118,7 +136,31 @@ export const sortByAssessment = (a, b, scoresAllCountries, order) => {
   return 1;
 };
 
-export const sortCountries = ({ countries, sort, order, intl, scores }) => {
+const mapAttribute = (s, auxIndicators, column) => {
+  const aux = auxIndicators.find(i =>
+    quasiEquals(s.country_code, i.country_code),
+  );
+  if (aux && aux[column]) {
+    return {
+      [column]: aux[column],
+      ...s,
+    };
+  }
+  return {
+    [column]: null,
+    ...s,
+  };
+};
+
+export const sortCountries = ({
+  countries,
+  sort,
+  order,
+  intl,
+  scores,
+  auxIndicators,
+}) => {
+  const sortOption = COUNTRY_SORTS[sort];
   if (sort === 'name') {
     return countries.sort((a, b) => sortByName(a, b, order, intl));
   }
@@ -127,24 +169,44 @@ export const sortCountries = ({ countries, sort, order, intl, scores }) => {
       .sort((a, b) => sortByName(a, b, 'asc', intl))
       .sort((a, b) => sortByAssessment(a, b, scores, order));
   }
+  if (sortOption.data === 'aux' && auxIndicators) {
+    return countries
+      .map(c => mapAttribute(c, auxIndicators, sortOption.column))
+      .sort((a, b) => sortByName(a, b, 'asc', intl))
+      .sort((a, b) =>
+        sortByNumber(a[sortOption.column], b[sortOption.column], order),
+      );
+  }
   return countries;
 };
 
-export const sortScores = ({ sort, order, intl, scores, column }) => {
-  const factor = order === 'asc' ? -1 : 1;
+export const sortScores = ({
+  sort,
+  order,
+  intl,
+  scores,
+  column,
+  auxIndicators,
+}) => {
+  const sortOption = COUNTRY_SORTS[sort];
+  // const factor = order === 'asc' ? -1 : 1;
   if (sort === 'name') {
     return scores && scores.sort((a, b) => sortByName(a, b, order, intl));
+  }
+  if (sortOption.data === 'aux' && auxIndicators) {
+    return scores
+      .map(s => mapAttribute(s, auxIndicators, sortOption.column))
+      .sort((a, b) => sortByName(a, b, order, intl))
+      .sort((a, b) =>
+        sortByNumber(a[sortOption.column], b[sortOption.column], order),
+      );
   }
   // sort by score
   return (
     scores &&
     scores
       .sort((a, b) => sortByName(a, b, order, intl))
-      .sort((a, b) =>
-        parseFloat(a[column], 10) < parseFloat(b[column], 10)
-          ? factor * 1
-          : factor * -1,
-      )
+      .sort((a, b) => sortByNumber(a[column], b[column], order))
   );
 };
 
