@@ -22,7 +22,7 @@ import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
 
 import { sortScores } from 'utils/scores';
-import { getFilterOptionValues } from 'utils/countries';
+import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 
 import {
   getESRDimensionScores,
@@ -158,14 +158,37 @@ export function SingleMetric({
 
   const currentSort = sort || 'score';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
-  const sortedScores = sortScores({
-    intl,
-    sort: currentSort,
-    order: currentSortOrder,
-    scores,
-    column: metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
-  });
-  const filterValues = getFilterOptionValues(countries, FILTER_GROUPS);
+  const sortedScores =
+    dataReady &&
+    sortScores({
+      intl,
+      sort: currentSort,
+      order: currentSortOrder,
+      scores,
+      column:
+        metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
+    });
+
+  // prettier-ignore
+  const countriesForScores = sortedScores
+    ? sortedScores.map(s =>
+      countries.find(c => c.country_code === s.country_code),
+    )
+    : [];
+
+  const filterValues = getFilterOptionValues(
+    countriesForScores,
+    FILTER_GROUPS,
+    // check if any filters are already set -
+    // if not we can just return all specified options
+    areAnyFiltersSet(FILTER_GROUPS, {
+      regionFilterValue,
+      subregionFilterValue,
+      incomeFilterValue,
+      countryGroupFilterValue,
+      treatyFilterValue,
+    }),
+  );
   return (
     <ResponsiveContext.Consumer>
       {size => (
