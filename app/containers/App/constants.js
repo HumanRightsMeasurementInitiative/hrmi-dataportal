@@ -108,11 +108,11 @@ export const PAGES = ['about', 'methodology'];
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countries2.csv',
+    file: 'countries_v2.csv',
   },
   {
     key: 'countriesGrammar',
-    file: 'countries_grammar2.csv',
+    file: 'countries_grammar_v2.csv',
   },
   {
     key: 'esrIndicators',
