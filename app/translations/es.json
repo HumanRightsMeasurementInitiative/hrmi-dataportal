@@ -140,7 +140,7 @@
   "hrmi.components.CountrySort.sortOptions.name": "Nombre",
   "hrmi.components.CountrySort.sortOptions.score": "Puntuación",
   "hrmi.components.CountrySort.sortOptions.assessment": "Disponibilidad",
-  "hrmi.components.CountrySort.sortOptions.gdp": "PIB",
+  "hrmi.components.CountrySort.sortOptions.gdp": "PIB/per cápita (2011 PPP$)",
   "hrmi.components.CountrySort.sortOptions.population": "Población",
   "hrmi.components.CountryNarrative.cpr.noData": "Aún no se han producido los datos de '{physint}' y '{empowerment}' para {countryWithArticle}. Tenemos la intención de ampliar nuestra recopilación de datos para estos derechos en todo el mundo, tan pronto como se disponga de una mayor financiación. ",
   "hrmi.components.CountryNarrative.cpr.start": "La puntuación de {scoreBold} {countryOf} en la categoría de '{dimension}' sugiere que ",
