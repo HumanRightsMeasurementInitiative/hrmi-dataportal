@@ -147,6 +147,17 @@ export const COUNTRY_SORTS = {
   },
   assessment: {
     order: 'desc',
+    data: 'scores',
+  },
+  gdp: {
+    order: 'desc',
+    data: 'aux',
+    column: COLUMNS.AUX.GDP,
+  },
+  population: {
+    order: 'desc',
+    data: 'aux',
+    column: COLUMNS.AUX.POPULATION,
   },
 };
 

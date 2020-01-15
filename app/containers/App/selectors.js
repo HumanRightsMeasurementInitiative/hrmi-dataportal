@@ -1268,6 +1268,12 @@ export const getScoresByCountry = createSelector(
 );
 
 // aux indicators
+// all countries
+export const getAuxIndicatorsLatest = createSelector(
+  getMaxYearESR,
+  getAuxIndicators,
+  (year, scores) => filterScoresByYear(year, scores),
+);
 // single country, single year
 export const getAuxIndicatorsForCountry = createSelector(
   (state, country) => country,

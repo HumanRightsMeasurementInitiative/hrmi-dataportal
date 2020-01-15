@@ -140,7 +140,7 @@
   "hrmi.components.CountrySort.sortOptions.name": "Name",
   "hrmi.components.CountrySort.sortOptions.score": "Score",
   "hrmi.components.CountrySort.sortOptions.assessment": "Data availability",
-  "hrmi.components.CountrySort.sortOptions.gdp": "GDP",
+  "hrmi.components.CountrySort.sortOptions.gdp": "GDP/capita (2011 PPP$)",
   "hrmi.components.CountrySort.sortOptions.population": "Population",
   "hrmi.components.CountryNarrative.cpr.noData": "{physint} and {empowerment} data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We plan to expand our data collection for these rights to the whole world as soon as we have enough funding.",
   "hrmi.components.CountryNarrative.cpr.start": "{needsArticle, select, true {The } false {}}{country}'{isPlural, select, true {} false {s}} {dimension} score of {scoreBold} suggests that ",
