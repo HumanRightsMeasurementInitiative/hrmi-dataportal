@@ -12,6 +12,7 @@ import { Heading, Box, Text } from 'grommet';
 
 import roundValue from 'utils/round-score';
 
+import Tooltip from 'components/Tooltip';
 import { COLUMNS } from 'containers/App/constants';
 
 import FAQs from 'containers/FAQs';
@@ -54,8 +55,8 @@ function CountryAbout({
     country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
   const hasCurrentGDP =
     currentGDP &&
-    currentGDP[COLUMNS.AUX.GDP_CURRENT] &&
-    currentGDP[COLUMNS.AUX.GDP_CURRENT] !== '';
+    currentGDP[COLUMNS.AUX.GDP_CURRENT_US] &&
+    currentGDP[COLUMNS.AUX.GDP_CURRENT_US] !== '';
   const hasPopulation =
     auxIndicators &&
     auxIndicators[COLUMNS.AUX.POPULATION] &&
@@ -100,6 +101,10 @@ function CountryAbout({
                 {...messages.gdp}
                 values={{ year: currentGDP.year }}
               />
+              <Tooltip
+                iconSize="medium"
+                text={intl.formatMessage(messages.gdpTooltip)}
+              />
             </Label>
           </Box>
           <Box direction="column" width="50%">
@@ -108,7 +113,7 @@ function CountryAbout({
                 {...messages.gdpValue}
                 values={{
                   value: intl.formatNumber(
-                    roundValue(currentGDP[COLUMNS.AUX.GDP_CURRENT], 0),
+                    roundValue(currentGDP[COLUMNS.AUX.GDP_CURRENT_US], 0),
                   ),
                 }}
               />
