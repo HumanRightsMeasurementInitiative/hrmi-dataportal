@@ -1283,10 +1283,10 @@ export const getCountryCurrentGDP = createSelector(
   (country, data) => {
     if (!data) return false;
     const sortedCurrentGDP = data
-      .filter(d => d.country_code === country && d[COLUMNS.AUX.GDP_CURRENT])
+      .filter(d => d.country_code === country && d[COLUMNS.AUX.GDP_CURRENT_US])
       .sort((a, b) =>
-        parseInt(a[COLUMNS.AUX.GDP_CURRENT], 10) >
-        parseInt(b[COLUMNS.AUX.GDP_CURRENT], 10)
+        parseInt(a[COLUMNS.AUX.GDP_CURRENT_US], 10) >
+        parseInt(b[COLUMNS.AUX.GDP_CURRENT_US], 10)
           ? 1
           : -1,
       );
