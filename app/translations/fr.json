@@ -95,7 +95,7 @@
   "hrmi.containers.CookieConsent.additionalInfo": "Pour toutes les fonctions du site, il est nécessaire de collecter un nombre réduit de données utilisateur, ce que vous acceptez en poursuivant votre navigation de ce site. Pour en savoir plus, veuillez lire notre ",
   "hrmi.containers.CookieConsent.linkPrivacyPolicy": "Politique de Confidentialité (en anglais)",
   "hrmi.containers.CookieConsent.urlPrivacyPolicy": "//humanrightsmeasurement.org/hrmi-privacy-policy/",
-  "hrmi.containers.CookieConsent.linkDialogue": "Privacy Settings",
+  "hrmi.containers.CookieConsent.linkDialogue": "Paramètres de confidentialité",
   "hrmi.components.WordCloud.noGroupData": "Aucun sélectionné par les experts",
   "hrmi.components.WordCloud.interpretation": "Interprétation: Texte plus grand = davantage d'experts en droits humains ont identifié ce groupe comme étant à risque.",
   "hrmi.components.WordCloud.highlightStart": "de nos experts en droits humains ont identifié ",
