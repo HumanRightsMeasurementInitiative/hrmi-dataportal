@@ -41,6 +41,7 @@ import {
   getSortOrderSearch,
   getCountries,
   getDependenciesReady,
+  getAuxIndicatorsLatest,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
@@ -87,6 +88,7 @@ const DEPENDENCIES = [
   'esrScores',
   'esrIndicators',
   'esrIndicatorScores',
+  'auxIndicators',
 ];
 
 const getESRDimensionValue = (score, benchmark) => {
@@ -125,6 +127,7 @@ const getBand = score => ({
 });
 
 const FILTER_GROUPS = ['income', 'region', 'subregion', 'cgroup', 'treaty'];
+const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
 
 export function SingleMetric({
   onLoadData,
@@ -148,6 +151,7 @@ export function SingleMetric({
   countries,
   dataReady,
   hasAside,
+  auxIndicators,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -165,6 +169,7 @@ export function SingleMetric({
       sort: currentSort,
       order: currentSortOrder,
       scores,
+      auxIndicators,
       column:
         metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
     });
@@ -211,7 +216,7 @@ export function SingleMetric({
             />
             <CountrySort
               sort={currentSort}
-              options={['score', 'name']}
+              options={SORT_OPTIONS}
               order={currentSortOrder}
               onSortSelect={onSortSelect}
               onOrderToggle={onOrderChange}
@@ -361,6 +366,7 @@ SingleMetric.propTypes = {
   benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   onAddFilter: PropTypes.func,
   onRemoveFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -399,6 +405,7 @@ const mapStateToProps = createStructuredSelector({
     return false;
   },
   countries: state => getCountries(state),
+  auxIndicators: state => getAuxIndicatorsLatest(state),
   benchmark: state => getBenchmarkSearch(state),
   standard: state => getStandardSearch(state),
   regionFilterValue: state => getRegionSearch(state),

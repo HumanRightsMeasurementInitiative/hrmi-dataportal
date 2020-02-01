@@ -64,6 +64,7 @@ export const COLUMNS = {
     POPULATION: 'population',
     GDP: 'gdp_per_capita_2011ppp',
     GDP_CURRENT: 'gdp_per_capita_current_ppp',
+    GDP_CURRENT_US: 'gdp_per_capita_current_usd',
   },
   COUNTRIES: {
     HIGH_INCOME: 'high_income_country',
@@ -150,6 +151,17 @@ export const COUNTRY_SORTS = {
   },
   assessment: {
     order: 'desc',
+    data: 'scores',
+  },
+  gdp: {
+    order: 'desc',
+    data: 'aux',
+    column: COLUMNS.AUX.GDP,
+  },
+  population: {
+    order: 'desc',
+    data: 'aux',
+    column: COLUMNS.AUX.POPULATION,
   },
 };
 

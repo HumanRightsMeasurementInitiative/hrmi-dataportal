@@ -68,6 +68,8 @@ const FILTER_GROUPS = [
   'assessed',
 ];
 
+const SORT_OPTIONS = ['assessment', 'name', 'population', 'gdp'];
+
 export function OverviewCountries({
   countries,
   scoresAllCountries,
@@ -92,6 +94,7 @@ export function OverviewCountries({
   onCountryHover,
   dataReady,
   hasAside,
+  auxIndicators,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -107,6 +110,7 @@ export function OverviewCountries({
     sort: currentSort,
     order: currentSortOrder,
     scores: scoresAllCountries,
+    auxIndicators,
   });
   const filterValues = getFilterOptionValues(
     countries,
@@ -147,7 +151,7 @@ export function OverviewCountries({
             />
             <CountrySort
               sort={currentSort}
-              options={['name', 'assessment']}
+              options={SORT_OPTIONS}
               order={currentSortOrder}
               onSortSelect={onSortSelect}
               onOrderToggle={onOrderChange}
@@ -210,6 +214,7 @@ export function OverviewCountries({
 
 OverviewCountries.propTypes = {
   // dispatch: PropTypes.func.isRequired,
+  auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   indicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),

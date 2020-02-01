@@ -23,6 +23,7 @@ import {
   getDependenciesReady,
   getHighlightCountry,
   getShowWelcome,
+  getAuxIndicatorsLatest,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, showWelcome } from 'containers/App/actions';
 
@@ -51,6 +52,7 @@ const DEPENDENCIES = [
   'esrIndicators',
   'cprScores',
   'esrScores',
+  'auxIndicators',
   // 'esrIndicatorScores', // consider removing to improve IE11/Edge performance
 ];
 
@@ -66,6 +68,7 @@ export function PathOverview({
   activeCountry,
   showWelcomePanel,
   dismissWelcome,
+  auxIndicators,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -81,6 +84,7 @@ export function PathOverview({
       filterByAssessment(c, scoresAllCountries, assessed, standardDetails),
     )
     : countries;
+
   return (
     <ContentWrap>
       {showWelcomePanel && (
@@ -120,6 +124,7 @@ export function PathOverview({
                 <OverviewCountries
                   countries={filteredCountries}
                   scoresAllCountries={scoresAllCountries}
+                  auxIndicators={auxIndicators}
                   dataReady={dataReady}
                   {...props}
                 />
@@ -156,6 +161,7 @@ PathOverview.propTypes = {
   dismissWelcome: PropTypes.func.isRequired,
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   intl: intlShape.isRequired,
   dataReady: PropTypes.bool,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -167,6 +173,7 @@ PathOverview.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   countries: state => getCountriesFiltered(state),
+  auxIndicators: state => getAuxIndicatorsLatest(state),
   scoresAllCountries: state => getScoresByCountry(state),
   standard: state => getStandardSearch(state),
   assessed: state => getAssessedSearch(state),
