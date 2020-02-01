@@ -108,7 +108,9 @@ export function PathCountry({
 
   const incomeGroup =
     country &&
-    INCOME_GROUPS.find(g => quasiEquals(g.value, country.high_income_country));
+    INCOME_GROUPS.values.find(g =>
+      quasiEquals(g.value, country.high_income_country),
+    );
   if (!rootMessages.countries[countryCode]) {
     console.log('Country code not in language files:', countryCode);
   }
