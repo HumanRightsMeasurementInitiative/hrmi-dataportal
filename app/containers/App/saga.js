@@ -188,7 +188,9 @@ export function* selectCountrySaga({ code }) {
   const country = yield select(getCountry, code);
   const group =
     country &&
-    INCOME_GROUPS.find(g => quasiEquals(country.high_income_country, g.value));
+    INCOME_GROUPS.values.find(g =>
+      quasiEquals(country.high_income_country, g.value),
+    );
   const countryDefaultStandard =
     group && STANDARDS.find(s => s.key === group.standard);
 
@@ -345,6 +347,7 @@ export function* openHowToReadSaga({ layer }) {
 
 // location can either be string or object { pathname, search}
 export function* navigateSaga({ location, args }) {
+  console.log(args);
   // default args
   const xArgs = extend(
     {
@@ -353,12 +356,14 @@ export function* navigateSaga({ location, args }) {
       deleteParams: false,
       keepTab: false,
       trackEvent: false,
+      multiple: false,
     },
     args || {},
   );
   const requestLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
   const currentSearchParams = new URLSearchParams(currentLocation.search);
+  console.log(currentLocation.search, currentSearchParams.toString());
 
   // the new pathname
   let newPathname;
@@ -393,8 +398,11 @@ export function* navigateSaga({ location, args }) {
       newSearchParams = new URLSearchParams(location.search);
       // optionally keep old params
       if (!xArgs.replace) {
+        console.log(xArgs, '!replace');
         newSearchParams.forEach((value, key) =>
-          currentSearchParams.set(key, value),
+          xArgs.multiple
+            ? currentSearchParams.append(key, value)
+            : currentSearchParams.set(key, value),
         );
         newSearchParams = currentSearchParams;
       }

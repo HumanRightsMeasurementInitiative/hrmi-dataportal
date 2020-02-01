@@ -112,10 +112,17 @@ const getCountryFilterValues = (
     return countries
       .reduce(
         (memo, country) =>
-          addCountryAttribute(memo, country, COLUMNS.COUNTRIES.REGION, REGIONS),
+          addCountryAttribute(
+            memo,
+            country,
+            COLUMNS.COUNTRIES.REGION,
+            REGIONS.values,
+          ),
         [],
       )
-      .sort((a, b) => (REGIONS.indexOf(a) > REGIONS.indexOf(b) ? 1 : -1));
+      .sort((a, b) =>
+        REGIONS.values.indexOf(a) > REGIONS.values.indexOf(b) ? 1 : -1,
+      );
   }
   if (filter === 'subregion') {
     return countries
@@ -125,11 +132,13 @@ const getCountryFilterValues = (
             memo,
             country,
             COLUMNS.COUNTRIES.SUBREGION,
-            SUBREGIONS,
+            SUBREGIONS.values,
           ),
         [],
       )
-      .sort((a, b) => (SUBREGIONS.indexOf(a) > SUBREGIONS.indexOf(b) ? 1 : -1));
+      .sort((a, b) =>
+        SUBREGIONS.values.indexOf(a) > SUBREGIONS.values.indexOf(b) ? 1 : -1,
+      );
   }
   if (filter === 'income') {
     return countries
@@ -139,12 +148,12 @@ const getCountryFilterValues = (
             memo,
             country,
             COLUMNS.COUNTRIES.HIGH_INCOME,
-            INCOME_GROUPS,
+            INCOME_GROUPS.values,
           ),
         [],
       )
       .sort((a, b) => {
-        const keys = INCOME_GROUPS.map(g => g.key);
+        const keys = INCOME_GROUPS.values.map(g => g.key);
         return keys.indexOf(a) > keys.indexOf(b) ? 1 : -1;
       });
   }
@@ -156,12 +165,14 @@ const getCountryFilterValues = (
             memo,
             country,
             COLUMNS.COUNTRIES.GROUPS,
-            COUNTRY_GROUPS,
+            COUNTRY_GROUPS.values,
           ),
         [],
       )
       .sort((a, b) =>
-        COUNTRY_GROUPS.indexOf(a) > COUNTRY_GROUPS.indexOf(b) ? 1 : -1,
+        COUNTRY_GROUPS.values.indexOf(a) > COUNTRY_GROUPS.values.indexOf(b)
+          ? 1
+          : -1,
       );
   }
   if (filter === 'treaty') {
@@ -172,11 +183,13 @@ const getCountryFilterValues = (
             memo,
             country,
             COLUMNS.COUNTRIES.TREATIES,
-            TREATIES,
+            TREATIES.values,
           ),
         [],
       )
-      .sort((a, b) => (TREATIES.indexOf(a) > TREATIES.indexOf(b) ? 1 : -1));
+      .sort((a, b) =>
+        TREATIES.values.indexOf(a) > TREATIES.values.indexOf(b) ? 1 : -1,
+      );
   }
   if (filter === 'assessed' && standard && scoresAllCountries) {
     return countries
@@ -186,29 +199,31 @@ const getCountryFilterValues = (
         [],
       )
       .sort((a, b) =>
-        ASSESSED_FILTERS.indexOf(a) > ASSESSED_FILTERS.indexOf(b) ? 1 : -1,
+        ASSESSED_FILTERS.values.indexOf(a) > ASSESSED_FILTERS.values.indexOf(b)
+          ? 1
+          : -1,
       );
   }
   return [];
 };
 const getAllCountryFilterValues = filter => {
   if (filter === 'region') {
-    return REGIONS;
+    return REGIONS.values;
   }
   if (filter === 'subregion') {
-    return SUBREGIONS;
+    return SUBREGIONS.values;
   }
   if (filter === 'income') {
-    return INCOME_GROUPS.map(g => g.key);
+    return INCOME_GROUPS.values.map(g => g.key);
   }
   if (filter === 'cgroup') {
-    return COUNTRY_GROUPS;
+    return COUNTRY_GROUPS.values;
   }
   if (filter === 'treaty') {
-    return TREATIES;
+    return TREATIES.values;
   }
   if (filter === 'assessed') {
-    return ASSESSED_FILTERS;
+    return ASSESSED_FILTERS.values;
   }
   return [];
 };
