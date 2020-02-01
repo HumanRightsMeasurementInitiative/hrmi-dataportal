@@ -165,41 +165,55 @@ export const COUNTRY_SORTS = {
   },
 };
 
-export const REGIONS = [
-  'americas',
-  'middle-east-north-africa',
-  'sub-saharan-africa',
-  'europe-central-asia',
-  'south-asia',
-  'east-asia-pacific',
-];
-export const SUBREGIONS = [
-  'middle-east',
-  'north-africa',
-  'europe',
-  'central-asia',
-  'east-asia',
-  'pacific',
-];
-export const COUNTRY_GROUPS = ['oecd', 'not-oecd', 'asean', 'oic'];
+export const REGIONS = {
+  values: [
+    'americas',
+    'middle-east-north-africa',
+    'sub-saharan-africa',
+    'europe-central-asia',
+    'south-asia',
+    'east-asia-pacific',
+  ],
+};
+export const SUBREGIONS = {
+  values: [
+    'middle-east',
+    'north-africa',
+    'europe',
+    'central-asia',
+    'east-asia',
+    'pacific',
+  ],
+};
+export const COUNTRY_GROUPS = {
+  values: ['oecd', 'not-oecd', 'asean', 'oic'],
+  multiple: true,
+};
 
-export const TREATIES = ['iccpr', 'icescr'];
+export const TREATIES = {
+  values: ['iccpr', 'icescr'],
+  multiple: true,
+};
 
-export const ASSESSED_FILTERS = ['all', 'cpr-all', 'esr-all', 'some'];
+export const ASSESSED_FILTERS = {
+  values: ['all', 'cpr-all', 'esr-all', 'some'],
+};
 
 // column: 'high_income_country',
-export const INCOME_GROUPS = [
-  {
-    key: 'hi',
-    value: '1',
-    standard: 'hi',
-  },
-  {
-    key: 'lmi',
-    value: '0',
-    standard: 'core',
-  },
-];
+export const INCOME_GROUPS = {
+  values: [
+    {
+      key: 'hi',
+      value: '1',
+      standard: 'hi',
+    },
+    {
+      key: 'lmi',
+      value: '0',
+      standard: 'core',
+    },
+  ],
+};
 
 export const COUNTRY_FILTERS = [
   'income',

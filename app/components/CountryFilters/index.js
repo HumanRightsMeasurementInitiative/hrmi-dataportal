@@ -6,6 +6,15 @@ import styled, { withTheme } from 'styled-components';
 import { Box, Drop, ResponsiveContext, Layer } from 'grommet';
 import { Close, Add } from 'grommet-icons';
 
+import {
+  INCOME_GROUPS,
+  REGIONS,
+  SUBREGIONS,
+  COUNTRY_GROUPS,
+  TREATIES,
+  ASSESSED_FILTERS,
+} from 'containers/App/constants';
+
 import ButtonIcon from 'styled/ButtonIcon';
 
 import rootMessages from 'messages';
@@ -36,87 +45,99 @@ const getFilterOptions = (
   filterValues,
 ) => {
   let groups = [];
-  if (!region && filterValues.region) {
+  if ((!region || REGIONS.multiple) && filterValues.region) {
     groups = [
       ...groups,
       {
         group: 'regions',
         label: intl.formatMessage(messages.regionsFilterOptionGroup),
-        options: filterValues.region.map(value => ({
-          key: 'region',
-          value,
-          label: intl.formatMessage(rootMessages.regions[value]),
-        })),
+        options: filterValues.region
+          .filter(value => !region || region.indexOf(value) === -1)
+          .map(value => ({
+            key: 'region',
+            value,
+            label: intl.formatMessage(rootMessages.regions[value]),
+          })),
       },
     ];
   }
-  if (!subregion && filterValues.subregion) {
+  if ((!subregion || SUBREGIONS.multiple) && filterValues.subregion) {
     groups = [
       ...groups,
       {
         group: 'subregions',
         label: intl.formatMessage(messages.subregionsFilterOptionGroup),
-        options: filterValues.subregion.map(value => ({
-          key: 'subregion',
-          value,
-          label: intl.formatMessage(rootMessages.subregions[value]),
-        })),
+        options: filterValues.subregion
+          .filter(value => !subregion || subregion.indexOf(value) === -1)
+          .map(value => ({
+            key: 'subregion',
+            value,
+            label: intl.formatMessage(rootMessages.subregions[value]),
+          })),
       },
     ];
   }
-  if (!income && filterValues.income) {
+  if ((!income || INCOME_GROUPS.multiple) && filterValues.income) {
     groups = [
       ...groups,
       {
         group: 'income',
         label: intl.formatMessage(messages.incomeFilterOptionGroup),
-        options: filterValues.income.map(value => ({
-          key: 'income',
-          value,
-          label: intl.formatMessage(rootMessages.income[value]),
-        })),
+        options: filterValues.income
+          .filter(value => !income || income.indexOf(value) === -1)
+          .map(value => ({
+            key: 'income',
+            value,
+            label: intl.formatMessage(rootMessages.income[value]),
+          })),
       },
     ];
   }
-  if (!cgroup && filterValues.cgroup) {
+  if ((!cgroup || COUNTRY_GROUPS.multiple) && filterValues.cgroup) {
     groups = [
       ...groups,
       {
         group: 'cgroup',
         label: intl.formatMessage(messages.countryGroupFilterOptionGroup),
-        options: filterValues.cgroup.map(value => ({
-          key: 'cgroup',
-          value,
-          label: intl.formatMessage(rootMessages.countryGroups[value]),
-        })),
+        options: filterValues.cgroup
+          .filter(value => !cgroup || cgroup.indexOf(value) === -1)
+          .map(value => ({
+            key: 'cgroup',
+            value,
+            label: intl.formatMessage(rootMessages.countryGroups[value]),
+          })),
       },
     ];
   }
-  if (!treaty && filterValues.treaty) {
+  if ((!treaty || TREATIES.multiple) && filterValues.treaty) {
     groups = [
       ...groups,
       {
         group: 'treaty',
         label: intl.formatMessage(messages.treatyFilterOptionGroup),
-        options: filterValues.treaty.map(value => ({
-          key: 'treaty',
-          value,
-          label: intl.formatMessage(rootMessages.treaties[value]),
-        })),
+        options: filterValues.treaty
+          .filter(value => !treaty || treaty.indexOf(value) === -1)
+          .map(value => ({
+            key: 'treaty',
+            value,
+            label: intl.formatMessage(rootMessages.treaties[value]),
+          })),
       },
     ];
   }
-  if (!assessed && filterValues.assessed) {
+  if ((!assessed || ASSESSED_FILTERS.multiple) && filterValues.assessed) {
     groups = [
       ...groups,
       {
         group: 'assessed',
         label: intl.formatMessage(messages.assessedFilterOptionGroup),
-        options: filterValues.assessed.map(value => ({
-          key: 'assessed',
-          value,
-          label: intl.formatMessage(rootMessages.assessedFilters[value]),
-        })),
+        options: filterValues.assessed
+          .filter(value => !assessed || assessed.indexOf(value) === -1)
+          .map(value => ({
+            key: 'assessed',
+            value,
+            label: intl.formatMessage(rootMessages.assessedFilters[value]),
+          })),
       },
     ];
   }
@@ -189,52 +210,54 @@ export function CountryFilters({
     <ResponsiveContext.Consumer>
       {size => (
         <FilterWrap>
-          {setFilters.region && (
-            <ActiveFilterButton
-              onRemove={() => onRemoveFilter('region')}
-              label={intl.formatMessage(
-                rootMessages.regions[regionFilterValue],
-              )}
-            />
-          )}
-          {setFilters.subregion && (
-            <ActiveFilterButton
-              onRemove={() => onRemoveFilter('subregion')}
-              label={intl.formatMessage(
-                rootMessages.subregions[subregionFilterValue],
-              )}
-            />
-          )}
-          {setFilters.income && (
-            <ActiveFilterButton
-              onRemove={() => onRemoveFilter('income')}
-              label={intl.formatMessage(rootMessages.income[incomeFilterValue])}
-            />
-          )}
-          {setFilters.cgroup && (
-            <ActiveFilterButton
-              onRemove={() => onRemoveFilter('cgroup')}
-              label={intl.formatMessage(
-                rootMessages.countryGroups[countryGroupFilterValue],
-              )}
-            />
-          )}
-          {setFilters.treaty && (
-            <ActiveFilterButton
-              onRemove={() => onRemoveFilter('treaty')}
-              label={intl.formatMessage(
-                rootMessages.treaties[treatyFilterValue],
-              )}
-            />
-          )}
-          {setFilters.assessed && (
-            <ActiveFilterButton
-              onRemove={() => onRemoveFilter('assessed')}
-              label={intl.formatMessage(
-                rootMessages.assessedFilters[assessedFilterValue],
-              )}
-            />
-          )}
+          {setFilters.region &&
+            setFilters.region.map(value => (
+              <ActiveFilterButton
+                key={value}
+                onRemove={() => onRemoveFilter('region')}
+                label={intl.formatMessage(rootMessages.regions[value])}
+              />
+            ))}
+          {setFilters.subregion &&
+            setFilters.subregion.map(value => (
+              <ActiveFilterButton
+                key={value}
+                onRemove={() => onRemoveFilter('subregion')}
+                label={intl.formatMessage(rootMessages.subregions[value])}
+              />
+            ))}
+          {setFilters.income &&
+            setFilters.income.map(value => (
+              <ActiveFilterButton
+                key={value}
+                onRemove={() => onRemoveFilter('income')}
+                label={intl.formatMessage(rootMessages.income[value])}
+              />
+            ))}
+          {setFilters.cgroup &&
+            setFilters.cgroup.map(value => (
+              <ActiveFilterButton
+                key={value}
+                onRemove={() => onRemoveFilter('cgroup')}
+                label={intl.formatMessage(rootMessages.countryGroups[value])}
+              />
+            ))}
+          {setFilters.treaty &&
+            setFilters.treaty.map(value => (
+              <ActiveFilterButton
+                key={value}
+                onRemove={() => onRemoveFilter('treaty')}
+                label={intl.formatMessage(rootMessages.treaties[value])}
+              />
+            ))}
+          {setFilters.assessed &&
+            setFilters.assessed.map(value => (
+              <ActiveFilterButton
+                key={value}
+                onRemove={() => onRemoveFilter('assessed')}
+                label={intl.formatMessage(rootMessages.assessedFilters[value])}
+              />
+            ))}
           {!setAllFilters && hasOptions && (
             <>
               <FilterDropButton
@@ -282,15 +305,15 @@ export function CountryFilters({
 
 CountryFilters.propTypes = {
   intl: intlShape.isRequired,
-  regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countryGroupFilterValue: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.string,
+    PropTypes.array,
   ]),
-  treatyFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  treatyFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   filterValues: PropTypes.object,

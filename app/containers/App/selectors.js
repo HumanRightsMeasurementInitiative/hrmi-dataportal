@@ -13,6 +13,7 @@ import getMetricDetails from 'utils/metric-details';
 import {
   hasCountryGroup,
   hasCountryTreaty,
+  hasCountryIncome,
   isCountryHighIncome,
   isCountryOECD,
 } from 'utils/countries';
@@ -137,49 +138,47 @@ export const getYearCPRSearch = createSelector(
       ? search.get('ycpr')
       : false,
 );
+
+const searchValues = (validValues, search) => {
+  const validSearchValues = search.filter(s => validValues.indexOf(s) > -1);
+  return validSearchValues.length > 0 && validSearchValues;
+};
+
 export const getRegionSearch = createSelector(
   getRouterSearchParams,
   search =>
-    search.has('region') && REGIONS.indexOf(search.get('region')) > -1
-      ? search.get('region')
-      : false,
+    search.has('region') &&
+    searchValues(REGIONS.values, search.getAll('region')),
 );
 export const getSubregionSearch = createSelector(
   getRouterSearchParams,
   search =>
-    search.has('subregion') && SUBREGIONS.indexOf(search.get('subregion')) > -1
-      ? search.get('subregion')
-      : false,
+    search.has('subregion') &&
+    searchValues(SUBREGIONS.values, search.getAll('subregion')),
 );
 export const getAssessedSearch = createSelector(
   getRouterSearchParams,
   search =>
     search.has('assessed') &&
-    ASSESSED_FILTERS.indexOf(search.get('assessed')) > -1
-      ? search.get('assessed')
-      : false,
+    searchValues(ASSESSED_FILTERS.values, search.getAll('assessed')),
 );
 export const getIncomeSearch = createSelector(
   getRouterSearchParams,
   search =>
     search.has('income') &&
-    INCOME_GROUPS.map(s => s.key).indexOf(search.get('income')) > -1
-      ? search.get('income')
-      : false,
+    searchValues(INCOME_GROUPS.values.map(s => s.key), search.getAll('income')),
 );
 export const getCountryGroupSearch = createSelector(
   getRouterSearchParams,
   search =>
-    search.has('cgroup') && COUNTRY_GROUPS.indexOf(search.get('cgroup')) > -1
-      ? search.get('cgroup')
-      : false,
+    search.has('cgroup') &&
+    searchValues(COUNTRY_GROUPS.values, search.getAll('cgroup')),
 );
 export const getTreatySearch = createSelector(
   getRouterSearchParams,
   search =>
-    search.has('treaty') && TREATIES.indexOf(search.get('treaty')) > -1
-      ? search.get('treaty')
-      : false,
+    search.has('treaty') &&
+    searchValues(TREATIES.values, search.getAll('treaty')),
 );
 const getHasCountryFilters = createSelector(
   getRegionSearch,
@@ -396,19 +395,14 @@ export const getCountriesFiltered = createSelector(
   (countries, region, subregion, income, cgroup, treaty) =>
     countries &&
     countries
-      .filter(c => !region || c[COLUMNS.COUNTRIES.REGION] === region)
-      .filter(c => !subregion || c[COLUMNS.COUNTRIES.SUBREGION] === subregion)
-      .filter(c => !cgroup || hasCountryGroup(c, cgroup))
-      .filter(c => !treaty || hasCountryTreaty(c, treaty))
+      .filter(c => !region || region.indexOf(c[COLUMNS.COUNTRIES.REGION]) > -1)
       .filter(
         c =>
-          !income ||
-          (INCOME_GROUPS.find(i => i.key === income) &&
-            quasiEquals(
-              c[COLUMNS.COUNTRIES.HIGH_INCOME],
-              INCOME_GROUPS.find(i => i.key === income).value,
-            )),
-      ),
+          !subregion || subregion.indexOf(c[COLUMNS.COUNTRIES.SUBREGION]) > -1,
+      )
+      .filter(c => !cgroup || hasCountryGroup(c, cgroup))
+      .filter(c => !treaty || hasCountryTreaty(c, treaty))
+      .filter(c => !income || hasCountryIncome(c, income)),
 );
 
 // single metric
