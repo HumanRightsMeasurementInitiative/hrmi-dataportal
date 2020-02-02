@@ -10,14 +10,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Box, Text, ResponsiveContext } from 'grommet';
+import { Box, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 
 import Source from 'components/Source';
-import Bar from 'components/Bars/Bar';
-import BarBullet from 'components/Bars/BarBullet';
-import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
-import AnnotateBetter from 'components/AnnotateBetterWorse';
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
 
@@ -51,32 +47,11 @@ import { isMinSize } from 'utils/responsive';
 import rootMessages from 'messages';
 // import messages from './messages';
 
-import CountryButton from './CountryButton';
+import Score from './Score';
+import ListHeader from './ListHeader';
 
 const Styled = styled(Box)`
   margin: 0 auto;
-`;
-
-const WrapAnnotateBetter = styled.div`
-  position: absolute;
-  left: ${({ theme }) => theme.global.edgeSize.small};
-  right: ${({ theme }) => theme.global.edgeSize.medium};
-  top: -2px;
-`;
-
-// prettier-ignore
-const StyledScoreText = styled(Text)`
-  padding: 0 5px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 0 8px;
-  }
-`;
-
-const BarWrap = styled(Box)``;
-// prettier-ignore
-const CountryWrap = styled(Box)`
-  border-right: 1px solid;
-  border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
 `;
 
 const DEPENDENCIES = [
@@ -87,41 +62,6 @@ const DEPENDENCIES = [
   'esrIndicatorScores',
   'auxIndicators',
 ];
-
-const getESRDimensionValue = (score, benchmark) => {
-  if (score) {
-    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-    return score && parseFloat(score[col]);
-  }
-  return false;
-};
-const getCPRDimensionValue = score =>
-  score && parseFloat(score[COLUMNS.CPR.MEAN]);
-
-const getDimensionRefs = (score, benchmark, metricType) => {
-  if (benchmark && benchmark.key === 'adjusted') {
-    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
-  }
-  if (benchmark && benchmark.key === 'best') {
-    const col =
-      metricType === 'indicators'
-        ? benchmark.refIndicatorColumn
-        : benchmark.refColumn;
-    return [
-      { value: 100, style: 'solid', key: 'best' },
-      {
-        value: score && parseFloat(score[col]),
-        style: 'dotted',
-        key: 'adjusted',
-      },
-    ];
-  }
-  return false;
-};
-const getBand = score => ({
-  lo: score && parseFloat(score[COLUMNS.CPR.LO]),
-  hi: score && parseFloat(score[COLUMNS.CPR.HI]),
-});
 
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
 
@@ -156,7 +96,7 @@ export function SingleMetric({
 
   const currentSort = sort || 'score';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
-  const sortedScores = sortScores({
+  const { sorted, other } = sortScores({
     intl,
     sort: currentSort,
     order: currentSortOrder,
@@ -164,6 +104,8 @@ export function SingleMetric({
     auxIndicators,
     column: metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
   });
+  const hasResults =
+    dataReady && ((sorted && sorted.length > 0) || (other && other.length > 0));
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -191,12 +133,12 @@ export function SingleMetric({
             />
           </Box>
           {!dataReady && <LoadingIndicator />}
-          {dataReady && sortedScores && sortedScores.length === 0 && (
+          {!hasResults && (
             <Hint italic>
               <FormattedMessage {...rootMessages.hints.noResults} />
             </Hint>
           )}
-          {dataReady && sortedScores && sortedScores.length > 0 && (
+          {hasResults && sorted && sorted.length > 0 && (
             <Styled
               pad={{
                 vertical: 'large',
@@ -205,120 +147,51 @@ export function SingleMetric({
               direction="column"
               fill="horizontal"
             >
-              <Box direction="row" align="end" pad={{ bottom: 'xsmall' }}>
-                <CountryWrap
-                  width={isMinSize(size, 'medium') ? '160px' : '80px'}
-                  noBorder
-                  align="end"
-                  pad={{ right: 'small' }}
-                  flex={{ shrink: 0 }}
-                >
-                  <StyledScoreText size="small" style={{ fontWeight: 600 }}>
-                    <FormattedMessage {...rootMessages.labels.score} />
-                  </StyledScoreText>
-                </CountryWrap>
-                <BarWrap
-                  flex
-                  direction="row"
-                  style={{ position: 'relative' }}
-                  align="center"
-                >
-                  <Text size="small" style={{ transform: 'translateX(-50%)' }}>
-                    0
-                  </Text>
-                  <Text
-                    size="small"
-                    margin={{ left: 'auto' }}
-                    style={{ transform: 'translateX(50%)' }}
-                  >
-                    {metric.type === 'esr' || metric.metricType === 'indicators'
-                      ? '100%'
-                      : '10'}
-                  </Text>
-                  <WrapAnnotateBetter>
-                    <AnnotateBetter />
-                  </WrapAnnotateBetter>
-                  {metric.type === 'esr' && (
-                    <AnnotateBenchmark
-                      benchmarkKey={benchmark}
-                      above
-                      margin="0 2px"
-                    />
-                  )}
-                </BarWrap>
-              </Box>
-              {sortedScores &&
-                sortedScores.map(s => {
-                  const country = countries.find(
+              <ListHeader metric={metric} benchmark={benchmark} />
+              {sorted.map(s => (
+                <Score
+                  score={s}
+                  country={countries.find(
                     c => c.country_code === s.country_code,
-                  );
-                  return (
-                    <Box
-                      key={s.country_code}
-                      direction="row"
-                      align="center"
-                      border="right"
-                    >
-                      <CountryWrap
-                        width={isMinSize(size, 'medium') ? '160px' : '80px'}
-                        align="end"
-                        flex={{ shrink: 0 }}
-                        pad={{ right: 'small' }}
-                      >
-                        {country && (
-                          <CountryButton
-                            onCountryClick={() =>
-                              onCountryClick(s.country_code, metric.key)
-                            }
-                            country={country}
-                            metric={metric}
-                          />
-                        )}
-                      </CountryWrap>
-                      <BarWrap flex>
-                        {(metric.type === 'esr' ||
-                          metric.metricType === 'indicators') && (
-                          <Bar
-                            showLabels={false}
-                            level={2}
-                            data={{
-                              color: 'esr',
-                              refValues: getDimensionRefs(
-                                s,
-                                currentBenchmark,
-                                metric.metricType,
-                              ),
-                              value: getESRDimensionValue(s, currentBenchmark),
-                              maxValue: 100,
-                              unit: '%',
-                              stripes: standard === 'hi',
-                            }}
-                            scoreOnHover="top"
-                          />
-                        )}
-                        {metric.type === 'cpr' && (
-                          <BarBullet
-                            // color = metric.metricType === 'rights' ? metric.dimension : metric.key;
-                            level={2}
-                            showLabels={false}
-                            data={{
-                              color: metric.dimension || metric.key,
-                              value: getCPRDimensionValue(s),
-                              maxValue: 10,
-                              unit: '',
-                              band: getBand(s),
-                            }}
-                            scoreOnHover="top"
-                            bandOnHover="top"
-                          />
-                        )}
-                      </BarWrap>
-                    </Box>
-                  );
-                })}
-              <Source />
+                  )}
+                  metric={metric}
+                  standard={standard}
+                  currentBenchmark={currentBenchmark}
+                  onCountryClick={onCountryClick}
+                />
+              ))}
             </Styled>
           )}
+          {hasResults && other && other.length > 0 && (
+            <Styled
+              margin={{ top: 'medium' }}
+              pad={{
+                right: isMinSize(size, 'medium') ? 'xlarge' : 'medium',
+              }}
+              direction="column"
+              fill="horizontal"
+              border="top"
+            >
+              <Box direction="row" margin={{ top: 'small', bottom: 'medium' }}>
+                <Hint italic>
+                  <FormattedMessage {...rootMessages.hints.noSortData} />
+                </Hint>
+              </Box>
+              {other.map(s => (
+                <Score
+                  score={s}
+                  country={countries.find(
+                    c => c.country_code === s.country_code,
+                  )}
+                  metric={metric}
+                  standard={standard}
+                  currentBenchmark={currentBenchmark}
+                  onCountryClick={onCountryClick}
+                />
+              ))}
+            </Styled>
+          )}
+          {hasResults && <Source />}
         </MainColumn>
       )}
     </ResponsiveContext.Consumer>
