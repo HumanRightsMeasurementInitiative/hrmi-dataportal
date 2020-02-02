@@ -62,8 +62,8 @@ export const COLUMNS = {
   },
   AUX: {
     POPULATION: 'population',
-    GDP: 'gdp_per_capita_2011ppp',
-    GDP_CURRENT: 'gdp_per_capita_current_ppp',
+    GDP_2011_PPP: 'gdp_per_capita_2011ppp',
+    GDP_CURRENT_PPP: 'gdp_per_capita_current_ppp',
     GDP_CURRENT_US: 'gdp_per_capita_current_usd',
   },
   COUNTRIES: {
@@ -152,7 +152,7 @@ export const COUNTRY_SORTS = {
   gdp: {
     order: 'desc',
     data: 'aux',
-    column: COLUMNS.AUX.GDP,
+    column: COLUMNS.AUX.GPD_2011_PPP,
   },
   population: {
     order: 'desc',
