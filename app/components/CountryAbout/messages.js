@@ -40,6 +40,14 @@ export default defineMessages({
     defaultMessage:
       'This is the latest value in USD. However, when comparing countries elsewhere on this website we use GDP/capita measured in 2011 PPP$, which adjusts for inflation and purchasing power',
   },
+  gdpHintPPP: {
+    id: `${scope}.gdpHintPPP`,
+    defaultMessage: '(2011 PPP dollars)',
+  },
+  gdpTooltipPPP: {
+    id: `${scope}.gdpTooltipPPP`,
+    defaultMessage: 'About PPP dollars',
+  },
   oecd: {
     id: `${scope}.oecd`,
     defaultMessage: 'OECD status',
