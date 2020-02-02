@@ -421,13 +421,18 @@ export function mapDispatchToProps(dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
-    onRemoveFilter: key =>
+    onRemoveFilter: (key, value) =>
       dispatch(
         navigate(
           {},
           {
             replace: false,
-            deleteParams: [key],
+            deleteParams: [
+              {
+                key,
+                value,
+              },
+            ],
             trackEvent: {
               category: 'Data',
               action: 'Remove country filter (Metric)',
@@ -442,6 +447,7 @@ export function mapDispatchToProps(dispatch) {
           { search: `?${key}=${value}` },
           {
             replace: false,
+            multiple: true,
             trackEvent: {
               category: 'Data',
               action: 'Country filter (Metric)',
