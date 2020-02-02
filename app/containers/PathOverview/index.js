@@ -79,9 +79,9 @@ export function PathOverview({
 
   const standardDetails = STANDARDS.find(s => s.key === standard);
   // prettier-ignore
-  const filteredCountries = assessed
+  const filteredCountries = assessed && assessed.length > 0
     ? countries && countries.filter(c =>
-      filterByAssessment(c, scoresAllCountries, assessed, standardDetails),
+      filterByAssessment(c, scoresAllCountries, assessed[0], standardDetails),
     )
     : countries;
 
@@ -165,7 +165,7 @@ PathOverview.propTypes = {
   intl: intlShape.isRequired,
   dataReady: PropTypes.bool,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   activeCountry: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   showWelcomePanel: PropTypes.bool,

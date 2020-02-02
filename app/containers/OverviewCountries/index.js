@@ -260,17 +260,22 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onRemoveFilter: key =>
+    onRemoveFilter: (key, value) =>
       dispatch(
         navigate(
           { pathname: '' },
           {
             replace: false,
-            deleteParams: [key],
+            deleteParams: [
+              {
+                key,
+                value,
+              },
+            ],
             trackEvent: {
               category: 'Data',
               action: 'Remove country filter (Overview)',
-              value: key,
+              value: `${key}/${value}`,
             },
           },
         ),
