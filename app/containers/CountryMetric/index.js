@@ -50,6 +50,8 @@ import {
   getESRIndicatorScoresForCountry,
   getHasCountryCPR,
   getAuxIndicatorsForCountry,
+  getLatestCountryCurrentGDP,
+  getLatestCountry2011PPPGDP,
   getIndicatorInfo,
   getMaxYearESR,
   getMaxYearCPR,
@@ -178,6 +180,8 @@ export function CountryMetric({
   hasAtRisk,
   onCategoryClick,
   auxIndicators,
+  currentGDP,
+  pppGDP,
   country,
   onLoadData,
   metricInfo,
@@ -342,6 +346,8 @@ export function CountryMetric({
                       country={country}
                       auxIndicators={auxIndicators}
                       onCategoryClick={onCategoryClick}
+                      currentGDP={currentGDP}
+                      pppGDP={pppGDP}
                       {...props}
                     />
                   )}
@@ -397,6 +403,8 @@ CountryMetric.propTypes = {
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   theme: PropTypes.object,
+  currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -471,6 +479,10 @@ const mapStateToProps = createStructuredSelector({
     }
     return false;
   },
+  currentGDP: (state, { countryCode }) =>
+    getLatestCountryCurrentGDP(state, countryCode),
+  pppGDP: (state, { countryCode }) =>
+    getLatestCountry2011PPPGDP(state, countryCode),
 });
 
 export function mapDispatchToProps(dispatch) {
