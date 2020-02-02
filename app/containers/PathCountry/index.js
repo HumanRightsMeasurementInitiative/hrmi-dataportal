@@ -41,7 +41,8 @@ import {
   getPeopleAtRiskForCountry,
   getDimensionAverages,
   getAuxIndicatorsForCountry,
-  getCountryCurrentGDP,
+  getLatestCountryCurrentGDP,
+  getLatestCountry2011PPPGDP,
   getESRYear,
   getCPRYear,
   getDependenciesReady,
@@ -92,6 +93,7 @@ export function PathCountry({
   dimensionAverages,
   auxIndicators,
   currentGDP,
+  pppGDP,
   esrYear,
   cprYear,
   dataReady,
@@ -248,6 +250,7 @@ export function PathCountry({
                   country={country}
                   auxIndicators={auxIndicators}
                   currentGDP={currentGDP}
+                  pppGDP={pppGDP}
                   onCategoryClick={onCategoryClick}
                   showFAQs={
                     props && (props.activeTab === 0 || props.activeTab === 2)
@@ -285,6 +288,7 @@ PathCountry.propTypes = {
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
   dataReady: PropTypes.bool,
@@ -309,7 +313,9 @@ const mapStateToProps = createStructuredSelector({
   cprYear: state => getCPRYear(state),
   dimensionAverages: state => getDimensionAverages(state),
   currentGDP: (state, { match }) =>
-    getCountryCurrentGDP(state, match.params.country),
+    getLatestCountryCurrentGDP(state, match.params.country),
+  pppGDP: (state, { match }) =>
+    getLatestCountry2011PPPGDP(state, match.params.country),
   auxIndicators: (state, { match }) =>
     getAuxIndicatorsForCountry(state, match.params.country),
 });
