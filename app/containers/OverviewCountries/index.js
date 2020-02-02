@@ -48,6 +48,8 @@ export const isDefaultStandard = (country, standardDetails) =>
   (country.high_income_country === '0' && standardDetails.key === 'core') ||
   (country.high_income_country === '1' && standardDetails.key === 'hi');
 
+const SORT_OPTIONS = ['assessment', 'name', 'population', 'gdp'];
+
 export function OverviewCountries({
   countries,
   scoresAllCountries,
@@ -70,6 +72,7 @@ export function OverviewCountries({
   onCountryHover,
   dataReady,
   hasAside,
+  auxIndicators,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -85,6 +88,7 @@ export function OverviewCountries({
     sort: currentSort,
     order: currentSortOrder,
     scores: scoresAllCountries,
+    auxIndicators,
   });
   return (
     <ResponsiveContext.Consumer>
@@ -107,7 +111,7 @@ export function OverviewCountries({
             />
             <CountrySort
               sort={currentSort}
-              options={['name', 'assessment']}
+              options={SORT_OPTIONS}
               order={currentSortOrder}
               onSortSelect={onSortSelect}
               onOrderToggle={onOrderChange}
@@ -170,6 +174,7 @@ export function OverviewCountries({
 
 OverviewCountries.propTypes = {
   // dispatch: PropTypes.func.isRequired,
+  auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   indicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
