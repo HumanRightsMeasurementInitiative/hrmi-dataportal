@@ -15,6 +15,10 @@ export default defineMessages({
       defaultMessage:
         'We could not find any countries for your filter settings',
     },
+    noSortData: {
+      id: `${scope}.hints.noSortData`,
+      defaultMessage: 'Sorting information missing',
+    },
   },
   labels: {
     score: {

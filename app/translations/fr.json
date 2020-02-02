@@ -207,6 +207,7 @@
   "hrmi.labels.allCountries": "Tous les pays",
   "hrmi.labels.allMetrics": "Toutes catégories",
   "hrmi.hints.noResults": "Nous n'avons trouvé aucun pays pour vos paramètres de filtre actuels",
+  "hrmi.hints.noSortData": "Sorting information missing",
   "hrmi.tabs.countries": "Analyser par pays",
   "hrmi.tabs.mobile.countries": "Explorer les pays",
   "hrmi.tabs.metrics": "Explorer par droits humains",
