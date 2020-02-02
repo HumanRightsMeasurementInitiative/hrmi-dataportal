@@ -47,6 +47,7 @@ function CountryAbout({
   country,
   auxIndicators,
   currentGDP,
+  pppGDP,
   onCategoryClick,
   showFAQs,
 }) {
@@ -54,9 +55,8 @@ function CountryAbout({
   const incomeCode =
     country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
   const hasCurrentGDP =
-    currentGDP &&
-    currentGDP[COLUMNS.AUX.GDP_CURRENT_US] &&
-    currentGDP[COLUMNS.AUX.GDP_CURRENT_US] !== '';
+    currentGDP && currentGDP.value && currentGDP.value !== '';
+  const hasPPPGDP = pppGDP && pppGDP.value && pppGDP.value !== '';
   const hasPopulation =
     auxIndicators &&
     auxIndicators[COLUMNS.AUX.POPULATION] &&
@@ -95,7 +95,7 @@ function CountryAbout({
       )}
       {hasCurrentGDP && (
         <Box direction="row" margin={{ bottom: 'xsmall' }}>
-          <Box width="50%">
+          <Box direction="column" width="50%">
             <Label>
               <FormattedMessage
                 {...messages.gdp}
@@ -106,20 +106,47 @@ function CountryAbout({
                 text={intl.formatMessage(messages.gdpTooltip)}
               />
             </Label>
+            <Text size="xsmall">
+              <FormattedMessage {...messages.gdpHint} />
+            </Text>
           </Box>
           <Box direction="column" width="50%">
             <Text>
               <FormattedMessage
                 {...messages.gdpValue}
                 values={{
-                  value: intl.formatNumber(
-                    roundValue(currentGDP[COLUMNS.AUX.GDP_CURRENT_US], 0),
-                  ),
+                  value: intl.formatNumber(roundValue(currentGDP.value, 0)),
                 }}
               />
             </Text>
-            <Text size="small">
-              <FormattedMessage {...messages.gdpHint} />
+          </Box>
+        </Box>
+      )}
+      {hasPPPGDP && (
+        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+          <Box direction="column" width="50%">
+            <Label>
+              <FormattedMessage
+                {...messages.gdp}
+                values={{ year: pppGDP.year }}
+              />
+              <Tooltip
+                iconSize="medium"
+                text={intl.formatMessage(messages.gdpTooltipPPP)}
+              />
+            </Label>
+            <Text size="xsmall">
+              <FormattedMessage {...messages.gdpHintPPP} />
+            </Text>
+          </Box>
+          <Box direction="column" width="50%">
+            <Text>
+              <FormattedMessage
+                {...messages.gdpValue}
+                values={{
+                  value: intl.formatNumber(roundValue(pppGDP.value, 0)),
+                }}
+              />
             </Text>
           </Box>
         </Box>
@@ -193,6 +220,7 @@ CountryAbout.propTypes = {
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,
 };
 
