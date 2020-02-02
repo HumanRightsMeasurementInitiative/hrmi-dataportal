@@ -347,7 +347,6 @@ export function* openHowToReadSaga({ layer }) {
 
 // location can either be string or object { pathname, search}
 export function* navigateSaga({ location, args }) {
-  console.log(args);
   // default args
   const xArgs = extend(
     {
@@ -363,12 +362,37 @@ export function* navigateSaga({ location, args }) {
   const requestLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
   const currentSearchParams = new URLSearchParams(currentLocation.search);
-  console.log(currentLocation.search, currentSearchParams.toString());
 
   // the new pathname
   let newPathname;
   // the new search (URLSearchParams object)
-  let newSearchParams;
+  let newSearchParams = currentSearchParams;
+
+  // clean up search params
+  if (xArgs.deleteParams) {
+    newSearchParams = xArgs.deleteParams.reduce((memoParams, p) => {
+      // delete only specific value when key & value are present
+      if (p.key) {
+        if (p.value) {
+          const params = new URLSearchParams();
+          memoParams.forEach((value, key) => {
+            // only keep those that are not deleted
+            if (p.key !== key || p.value !== value) {
+              params.append(key, value);
+            }
+          });
+          return params;
+        }
+        memoParams.delete(p.key);
+      } else {
+        memoParams.delete(p);
+      }
+      return memoParams;
+    }, currentSearchParams);
+  }
+  if (!xArgs.keepTab) {
+    newSearchParams.delete('tab');
+  }
 
   // if location is string
   // use as pathname and keep old search
@@ -378,7 +402,6 @@ export function* navigateSaga({ location, args }) {
     if (location !== '') {
       newPathname += `/${location}`;
     }
-    newSearchParams = currentSearchParams;
   }
 
   // if location is object, use pathname and replace or extend search
@@ -395,29 +418,20 @@ export function* navigateSaga({ location, args }) {
 
     // figure out new search or keep old search
     if (typeof location.search !== 'undefined') {
-      newSearchParams = new URLSearchParams(location.search);
       // optionally keep old params
       if (!xArgs.replace) {
-        console.log(xArgs, '!replace');
-        newSearchParams.forEach((value, key) =>
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.forEach((value, key) =>
           xArgs.multiple
-            ? currentSearchParams.append(key, value)
-            : currentSearchParams.set(key, value),
+            ? newSearchParams.append(key, value)
+            : newSearchParams.set(key, value),
         );
-        newSearchParams = currentSearchParams;
+      } else {
+        newSearchParams = new URLSearchParams(location.search);
       }
-    } else {
-      newSearchParams = currentSearchParams;
     }
   }
 
-  // clean up search params
-  if (!xArgs.keepTab) {
-    newSearchParams.delete('tab');
-  }
-  if (xArgs.deleteParams) {
-    xArgs.deleteParams.forEach(p => newSearchParams.delete(p));
-  }
   if (xArgs.trackEvent) {
     yield put(trackEvent(xArgs.trackEvent));
   }

@@ -11,8 +11,7 @@ import quasiEquals from 'utils/quasi-equals';
 import getMetricDetails from 'utils/metric-details';
 
 import {
-  hasCountryGroup,
-  hasCountryTreaty,
+  hasCountryAttribute,
   hasCountryIncome,
   isCountryHighIncome,
   isCountryOECD,
@@ -400,8 +399,14 @@ export const getCountriesFiltered = createSelector(
         c =>
           !subregion || subregion.indexOf(c[COLUMNS.COUNTRIES.SUBREGION]) > -1,
       )
-      .filter(c => !cgroup || hasCountryGroup(c, cgroup))
-      .filter(c => !treaty || hasCountryTreaty(c, treaty))
+      .filter(
+        c =>
+          !cgroup || hasCountryAttribute(c, cgroup, COLUMNS.COUNTRIES.GROUPS),
+      )
+      .filter(
+        c =>
+          !treaty || hasCountryAttribute(c, treaty, COLUMNS.COUNTRIES.TREATIES),
+      )
       .filter(c => !income || hasCountryIncome(c, income)),
 );
 

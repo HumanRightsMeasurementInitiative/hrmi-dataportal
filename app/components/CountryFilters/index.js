@@ -214,7 +214,7 @@ export function CountryFilters({
             setFilters.region.map(value => (
               <ActiveFilterButton
                 key={value}
-                onRemove={() => onRemoveFilter('region')}
+                onRemove={() => onRemoveFilter('region', value)}
                 label={intl.formatMessage(rootMessages.regions[value])}
               />
             ))}
@@ -222,7 +222,7 @@ export function CountryFilters({
             setFilters.subregion.map(value => (
               <ActiveFilterButton
                 key={value}
-                onRemove={() => onRemoveFilter('subregion')}
+                onRemove={() => onRemoveFilter('subregion', value)}
                 label={intl.formatMessage(rootMessages.subregions[value])}
               />
             ))}
@@ -230,7 +230,7 @@ export function CountryFilters({
             setFilters.income.map(value => (
               <ActiveFilterButton
                 key={value}
-                onRemove={() => onRemoveFilter('income')}
+                onRemove={() => onRemoveFilter('income', value)}
                 label={intl.formatMessage(rootMessages.income[value])}
               />
             ))}
@@ -238,7 +238,7 @@ export function CountryFilters({
             setFilters.cgroup.map(value => (
               <ActiveFilterButton
                 key={value}
-                onRemove={() => onRemoveFilter('cgroup')}
+                onRemove={() => onRemoveFilter('cgroup', value)}
                 label={intl.formatMessage(rootMessages.countryGroups[value])}
               />
             ))}
@@ -246,7 +246,7 @@ export function CountryFilters({
             setFilters.treaty.map(value => (
               <ActiveFilterButton
                 key={value}
-                onRemove={() => onRemoveFilter('treaty')}
+                onRemove={() => onRemoveFilter('treaty', value)}
                 label={intl.formatMessage(rootMessages.treaties[value])}
               />
             ))}
@@ -254,7 +254,7 @@ export function CountryFilters({
             setFilters.assessed.map(value => (
               <ActiveFilterButton
                 key={value}
-                onRemove={() => onRemoveFilter('assessed')}
+                onRemove={() => onRemoveFilter('assessed', value)}
                 label={intl.formatMessage(rootMessages.assessedFilters[value])}
               />
             ))}
