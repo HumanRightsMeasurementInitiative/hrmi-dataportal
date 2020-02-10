@@ -402,7 +402,7 @@
   "hrmi.sources.oecd": "OECD",
   "hrmi.sources.wb_edstats": "World Bank Education Statistics",
   "hrmi.sources.wb_hnp": "World Bank Health, Nutrition and Population Statistics",
-  "hrmi.sources.wb_wdi": "World Bank World Development Index",
+  "hrmi.sources.wb_wdi": "World Bank World Development Indicators",
   "hrmi.sources.who_unicef": "WHO UNICEF Joint Monitoring Project (JMP) ",
   "hrmi.sources.lis": "Luxembourg Income Study",
   "hrmi.regions.americas": "Americas",
