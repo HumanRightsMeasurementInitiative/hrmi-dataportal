@@ -62,6 +62,25 @@ export const getIncompleteDataActionMessage = data => {
   }
   return '';
 };
+// true if we have a cpr dimension score
+export const hasAllCPRScores = countryScores =>
+  countryScores.cpr &&
+  countryScores.cpr.empowerment &&
+  countryScores.cpr.physint;
+
+// true if we have an esr dimension score for current standard
+export const hasAllESRScores = (countryScores, standard) =>
+  countryScores.esr &&
+  countryScores.esr.esr &&
+  countryScores.esr.esr.find(s => s.standard === standard.code);
+
+export const hasAllScores = (countryScores, standard) =>
+  hasAllCPRScores(countryScores) && hasAllESRScores(countryScores, standard);
+
+// true if we have any rights score for any standard
+export const hasSomeScores = countryScores =>
+  (countryScores.cpr && Object.keys(countryScores.cpr).length > 0) ||
+  (countryScores.esr && Object.keys(countryScores.esr).length > 0);
 
 export const getScoresForCountry = (countryCode, scores) => ({
   esr: scores.esr && scores.esr[countryCode],
@@ -85,11 +104,13 @@ export const indicatorsCount = countryScores =>
 
 const sortByName = (a, b, order, intl) => {
   const factor = order === 'asc' ? 1 : -1;
-  // prettier-ignore
-  return intl.formatMessage(messages.countries[a.country_code]) >
-    intl.formatMessage(messages.countries[b.country_code])
-    ? factor * 1
-    : factor * -1;
+  const nameA = messages.countries[a.country_code]
+    ? intl.formatMessage(messages.countries[a.country_code])
+    : a.country_code;
+  const nameB = messages.countries[b.country_code]
+    ? intl.formatMessage(messages.countries[b.country_code])
+    : a.country_code;
+  return nameA > nameB ? factor * 1 : factor * -1;
 };
 const sortByNumber = (a, b, order) => {
   const factor = order === 'asc' ? 1 : -1;
@@ -208,51 +229,4 @@ export const sortScores = ({
       .sort((a, b) => sortByName(a, b, order, intl))
       .sort((a, b) => sortByNumber(a[column], b[column], order))
   );
-};
-
-export const filterByAssessment = (
-  country,
-  scoresAllCountries,
-  filter,
-  standard,
-) => {
-  const countryScores = getScoresForCountry(
-    country.country_code,
-    scoresAllCountries,
-  );
-  if (filter === 'all') {
-    // true if we have all dimension scores for current standard
-    return (
-      countryScores.cpr &&
-      countryScores.cpr.empowerment &&
-      countryScores.cpr.physint &&
-      countryScores.esr &&
-      countryScores.esr.esr &&
-      countryScores.esr.esr.find(s => s.standard === standard.code)
-    );
-  }
-  if (filter === 'cpr-all') {
-    // true if we have a cpr dimension score
-    return (
-      countryScores.cpr &&
-      countryScores.cpr.empowerment &&
-      countryScores.cpr.physint
-    );
-  }
-  if (filter === 'esr-all') {
-    // true if we have an esr dimension score for current standard
-    return (
-      countryScores.esr &&
-      countryScores.esr.esr &&
-      countryScores.esr.esr.find(s => s.standard === standard.code)
-    );
-  }
-  if (filter === 'some') {
-    // true if we have any rights score for any standard
-    return (
-      (countryScores.cpr && Object.keys(countryScores.cpr).length > 0) ||
-      (countryScores.esr && Object.keys(countryScores.esr).length > 0)
-    );
-  }
-  return true;
 };

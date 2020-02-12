@@ -11,12 +11,10 @@ import styled from 'styled-components';
 import { Heading, Paragraph, Box } from 'grommet';
 
 import rootMessages from 'messages';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import WordCloud from 'components/WordCloud';
 import MainColumn from 'styled/MainColumn';
-
-import { needsArticle, isPlural } from 'utils/narrative';
 
 import messages from './messages';
 
@@ -46,18 +44,11 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-function CountryPeople({ data, countryTitle, countryCode, intl, hasAside }) {
+function CountryPeople({ data, hasAside }) {
   return (
     <MainColumn hasAside={hasAside}>
       <StyledHeading responsive={false} level={2}>
-        <FormattedMessage
-          {...messages.title}
-          values={{
-            country: countryTitle,
-            isPlural: isPlural(intl.locale, countryCode),
-            needsArticle: needsArticle(intl.locale, countryCode),
-          }}
-        />
+        <FormattedMessage {...messages.title} />
       </StyledHeading>
       <Paragraph>
         <FormattedMessage {...messages.intro} />
@@ -101,11 +92,8 @@ function CountryPeople({ data, countryTitle, countryCode, intl, hasAside }) {
 }
 
 CountryPeople.propTypes = {
-  countryCode: PropTypes.string,
-  countryTitle: PropTypes.string,
   hasAside: PropTypes.bool,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  intl: intlShape.isRequired,
 };
 
-export default injectIntl(CountryPeople);
+export default CountryPeople;

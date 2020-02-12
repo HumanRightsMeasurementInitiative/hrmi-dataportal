@@ -25,7 +25,12 @@ function CountryButton({ country, metric, onCountryClick }) {
   return (
     <>
       <Styled onClick={() => onCountryClick(country.country_code, metric.key)}>
-        <FormattedMessage {...rootMessages.countries[country.country_code]} />
+        {rootMessages.countries[country.country_code] && (
+          <FormattedMessage {...rootMessages.countries[country.country_code]} />
+        )}
+        {!rootMessages.countries[country.country_code] && (
+          <span>{country.country_code}</span>
+        )}
         {metric &&
           (metric.type === 'esr' || metric.metricType === 'indicators') &&
           country &&
