@@ -34,7 +34,6 @@ export const SET_SCALE = 'hrmi/App/SET_SCALE';
 export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
 export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 export const SET_TAB = 'hrmi/App/SET_TAB';
-export const SET_MODALTAB = 'hrmi/App/SET_MODALTAB';
 
 // state actions
 export const OPEN_HOW_TO = 'hrmi/App/OPEN_HOW_TO';
@@ -105,15 +104,15 @@ export const PAGES = ['about', 'methodology'];
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countries.csv',
+    file: 'countries_v3.csv',
   },
   {
     key: 'countriesGrammar',
-    file: 'countries_grammar.csv',
+    file: 'countries_grammar_v3.csv',
   },
   {
     key: 'esrIndicators',
-    file: 'esr-indicators.csv',
+    file: 'esr-indicators_v3.csv',
   },
   {
     key: 'atRisk',
@@ -121,7 +120,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'auxIndicators',
-    file: 'auxiliary-indicators.csv',
+    file: 'auxiliary-indicators_v3.csv',
   },
   {
     key: 'cprScores',
@@ -235,12 +234,12 @@ export const RIGHTS_TYPES = ['cpr', 'esr'];
 // d: dimensions, r: rights
 export const SCALES = [
   {
-    key: 'd',
-    type: 'dimensions',
-  },
-  {
     key: 'r',
     type: 'rights',
+  },
+  {
+    key: 'd',
+    type: 'dimensions',
   },
 ];
 
@@ -293,14 +292,6 @@ export const RIGHTS = [
     dimension: 'physint',
     type: 'cpr',
     resource: 'cprScores',
-    aggregate: 'execution',
-  },
-  {
-    key: 'execution',
-    code: 'execution',
-    dimension: 'physint',
-    type: 'cpr',
-    resource: 'cprScores',
   },
   {
     key: 'extrajud-killing',
@@ -308,7 +299,6 @@ export const RIGHTS = [
     dimension: 'physint',
     type: 'cpr',
     resource: 'cprScores',
-    aggregate: 'execution',
   },
   {
     key: 'expression',
@@ -385,14 +375,12 @@ export const AT_RISK_INDICATORS = [
     resource: 'atRisk',
   },
   {
-    right: 'execution',
-    subright: 'death-penalty',
+    right: 'death-penalty',
     code: 'dpex_atrisk',
     resource: 'atRisk',
   },
   {
-    right: 'execution',
-    subright: 'extrajud-killing',
+    right: 'extrajud-killing',
     code: 'exkill_atrisk',
     resource: 'atRisk',
   },

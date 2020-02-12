@@ -87,10 +87,6 @@ export const getTabSearch = createSelector(
   getRouterSearchParams,
   search => (search.has('tab') ? parseInt(search.get('tab'), 10) : 0),
 );
-export const getModalTabSearch = createSelector(
-  getRouterSearchParams,
-  search => (search.has('mtab') ? parseInt(search.get('mtab'), 10) : 0),
-);
 export const getScaleSearch = createSelector(
   getRouterSearchParams,
   search =>
@@ -1320,14 +1316,6 @@ export const getLatestCountry2011PPPGDP = createSelector(
 export const getHowToRead = createSelector(
   getGlobal,
   global => global.howToRead,
-);
-export const getHighlightCountry = createSelector(
-  getGlobal,
-  global => global.highlightCountry,
-);
-export const getShowWelcome = createSelector(
-  getGlobal,
-  global => global.showWelcome,
 );
 
 export const getCookieConsent = createSelector(

@@ -1,6 +1,6 @@
 /**
  *
- * CountryReport
+ * CountrySnapshot
  *
  */
 
@@ -12,7 +12,6 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Heading } from 'grommet';
 
 import CountrySummaryChart from 'components/CountrySummaryChart';
-import CountryNarrative from 'components/CountryNarrative';
 import LoadingIndicator from 'components/LoadingIndicator';
 import MainColumn from 'styled/MainColumn';
 
@@ -30,25 +29,19 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-function CountryReport({
+function CountrySnapshot({
   dimensions,
   rights,
   scale,
   benchmark,
   standard,
-  indicators,
   country,
   countryGrammar,
-  onMetricClick,
   intl,
-  atRiskData,
-  onAtRiskClick,
-  reference,
   esrYear,
   cprYear,
   dataReady,
   hasAside,
-  trackEvent,
 }) {
   return (
     <MainColumn hasAside={hasAside}>
@@ -75,37 +68,14 @@ function CountryReport({
             esrYear={esrYear}
             cprYear={cprYear}
           />
-          <CountryNarrative
-            dimensions={dimensions}
-            rights={rights}
-            indicators={indicators}
-            country={country}
-            countryGrammar={countryGrammar}
-            benchmark={benchmark}
-            standard={standard}
-            onMetricClick={onMetricClick}
-            atRiskData={atRiskData}
-            onAtRiskClick={onAtRiskClick}
-            reference={reference}
-            esrYear={esrYear}
-            cprYear={cprYear}
-            trackEvent={trackEvent}
-          />
         </>
       )}
     </MainColumn>
   );
 }
-
-CountryReport.propTypes = {
+CountrySnapshot.propTypes = {
   countryTitle: PropTypes.string,
-  onMetricClick: PropTypes.func,
-  onAtRiskClick: PropTypes.func,
-  trackEvent: PropTypes.func,
   hasAside: PropTypes.bool,
-  reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -119,4 +89,4 @@ CountryReport.propTypes = {
   dataReady: PropTypes.bool,
 };
 
-export default injectIntl(CountryReport);
+export default injectIntl(CountrySnapshot);

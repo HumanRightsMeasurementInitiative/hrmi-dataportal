@@ -141,7 +141,6 @@ export function SingleMetric({
   intl,
   onSortSelect,
   onOrderChange,
-  onCountryClick,
   countries,
   dataReady,
   hasAside,
@@ -268,7 +267,11 @@ export function SingleMetric({
                         {country && (
                           <CountryButton
                             onCountryClick={() =>
-                              onCountryClick(s.country_code, metric.key)
+                              console.log(
+                                'country click',
+                                s.country_code,
+                                metric.key,
+                              )
                             }
                             country={country}
                             metric={metric}
@@ -345,7 +348,6 @@ SingleMetric.propTypes = {
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
-  onCountryClick: PropTypes.func,
   dataReady: PropTypes.bool,
 };
 
@@ -435,23 +437,6 @@ export function mapDispatchToProps(dispatch) {
               category: 'Data',
               action: 'Country sort order (Metric)',
               value,
-            },
-          },
-        ),
-      ),
-    onCountryClick: (country, metric, tab = 0) =>
-      dispatch(
-        navigate(
-          {
-            pathname: `/metric/${metric}/${country}`,
-            search: `?mtab=${tab}`,
-          },
-          {
-            replace: false,
-            trackEvent: {
-              category: 'Modal',
-              action: 'Metric-country',
-              value: `${metric}/${country}/${tab}`,
             },
           },
         ),

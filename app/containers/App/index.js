@@ -20,7 +20,9 @@ import Header from 'containers/Header';
 import Settings from 'containers/Settings';
 import PathOverview from 'containers/PathOverview';
 import PathMetric from 'containers/PathMetric';
+import PathMetricOverview from 'containers/PathMetricOverview';
 import PathCountry from 'containers/PathCountry';
+import PathCountryOverview from 'containers/PathCountryOverview';
 import PathPage from 'containers/PathPage';
 import PathNotFoundPage from 'containers/PathNotFoundPage';
 import HowToReadLayer from 'containers/HowToRead/HowToReadLayer';
@@ -76,9 +78,14 @@ export function App({ match, intl }) {
         <Main>
           <Switch>
             <Route exact path={`/${locale}`} component={PathOverview} />
+            <Route path={`/${locale}/metrics`} component={PathMetricOverview} />
             <Route
               path={`/${locale}/metric/:metric/:country?`}
               component={PathMetric}
+            />
+            <Route
+              path={`/${locale}/countries`}
+              component={PathCountryOverview}
             />
             <Route
               path={`/${locale}/country/:country/:metric?`}
