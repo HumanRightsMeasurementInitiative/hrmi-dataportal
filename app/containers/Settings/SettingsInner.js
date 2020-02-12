@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { Box, Text } from 'grommet';
 
 import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
@@ -18,19 +18,15 @@ import rootMessages from 'messages';
 import messages from './messages';
 import Key from './Key';
 import SettingsToggle from './SettingsToggle';
-import ScaleToggle from './ScaleToggle';
+// import ScaleToggle from './ScaleToggle';
+//
+// const SetScaleWrap = styled.div`
+//   text-align: center;
+//   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+//     text-align: left;
+//   }
+// `;
 
-const SetScaleWrap = styled.div`
-  text-align: center;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    text-align: left;
-  }
-`;
-
-const showScaleInModal = ({ route }) => {
-  if (route === 'metric') return false;
-  return true;
-};
 const showDimensionKey = ({ route, inModal }) => {
   if (route === 'metric') return false;
   if (route === 'country') return inModal;
@@ -40,7 +36,7 @@ const showHINote = ({ route, match }) => {
   const metricDetails = getMetricDetails(match);
   if (metricDetails && metricDetails.metricType === 'indicators') return false;
   if (route === 'country') return false;
-  return true;
+  return route === 'countries';
 };
 const showHIIndicatorNote = ({ match, metricInfo }) => {
   const metricDetails = getMetricDetails(match);
@@ -91,11 +87,6 @@ export function SettingsInner({
 }) {
   return (
     <>
-      {showScaleInModal({ route, match }) && inModal && (
-        <SetScaleWrap>
-          <ScaleToggle inModal />
-        </SetScaleWrap>
-      )}
       {showDimensionKey({ route, match, inModal }) && <Key inModal={inModal} />}
       {showBenchmark() && (
         <SettingsToggle

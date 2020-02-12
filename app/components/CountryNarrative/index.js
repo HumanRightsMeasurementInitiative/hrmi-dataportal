@@ -100,173 +100,204 @@ function CountryNarrative({
   esrYear,
   cprYear,
   trackEvent,
+  type,
 }) {
-  if (!dimensions || !rights || !indicators) {
+  if (!dimensions || !rights) {
     return null;
   }
+  if (type === 'esr') {
+    if (!indicators) {
+      return null;
+    }
+    const currentStandard = STANDARDS.find(s => s.key === standard);
+    const hasSomeIndicatorScores = Object.values(indicators)
+      .filter(s => {
+        if (!s.details) return false;
+        return (
+          s.details.standard === 'Both' ||
+          s.details.standard === currentStandard.code
+        );
+      })
+      .reduce((m, s) => m || !!s.score, false);
 
-  const currentStandard = STANDARDS.find(s => s.key === standard);
-  const hasSomeIndicatorScores = Object.values(indicators)
-    .filter(s => {
-      if (!s.details) return false;
-      return (
-        s.details.standard === 'Both' ||
-        s.details.standard === currentStandard.code
-      );
-    })
-    .reduce((m, s) => m || !!s.score, false);
-
-  return (
-    <Styled>
-      <RightsType>
-        <RightsTypeHeading>
-          <FormattedMessage {...rootMessages['rights-types'].cpr} />
-          {` (${cprYear})`}
-        </RightsTypeHeading>
-        {dimensions.empowerment && dimensions.empowerment.score && (
-          <Dimension>
-            <StyledDimensionHeading>
-              <FormattedMessage {...rootMessages.dimensions.empowerment} />
-            </StyledDimensionHeading>
-            <NarrativeCPR
-              dimensionKey="empowerment"
-              score={dimensions.empowerment && dimensions.empowerment.score}
-              country={country}
-              countryGrammar={countryGrammar}
-            />
-            <CPRAccordion
-              dimension={dimensions.empowerment}
-              rights={getRightsScoresForDimension(rights, 'empowerment', true)}
-              onMetricClick={onMetricClick}
-              trackEvent={trackEvent}
-            />
-          </Dimension>
-        )}
-        {dimensions.physint && dimensions.physint.score && (
-          <Dimension>
-            <StyledDimensionHeading>
-              <FormattedMessage {...rootMessages.dimensions.physint} />
-            </StyledDimensionHeading>
-            <NarrativeCPR
-              dimensionKey="physint"
-              score={dimensions.physint && dimensions.physint.score}
-              country={country}
-              countryGrammar={countryGrammar}
-            />
-            <CPRAccordion
-              dimension={dimensions.physint}
-              rights={getRightsScoresForDimension(rights, 'physint', true)}
-              onMetricClick={onMetricClick}
-              trackEvent={trackEvent}
-            />
-          </Dimension>
-        )}
-        {!hasCPR(dimensions) && (
-          <NarrativeCPR
-            noData
-            country={country}
-            countryGrammar={countryGrammar}
-          />
-        )}
-      </RightsType>
-      <RightsType>
-        <RightsTypeHeading>
-          <FormattedMessage {...rootMessages['rights-types'].esr} />
-          {` (${esrYear})`}
-        </RightsTypeHeading>
-        <Dimension>
-          <StyledDimensionHeading>
-            <FormattedMessage {...rootMessages.dimensions.esr} />
-          </StyledDimensionHeading>
-          {getDefaultStandard(country) !== standard &&
-            renderStandardHint(intl, standard, country)}
-          <NarrativeESR
-            score={dimensions.esr && dimensions.esr.score}
-            country={country}
-            countryGrammar={countryGrammar}
-            someData={hasSomeIndicatorScores}
-          />
-          <ESRAccordion
-            dimension={dimensions.esr}
-            rights={getRightsScoresForDimension(rights, 'esr')}
-            benchmark={BENCHMARKS.find(s => s.key === benchmark)}
-            indicators={Object.values(indicators)}
-            onMetricClick={onMetricClick}
-            standard={standard}
-            hasAtRisk={hasCPR(dimensions)}
-            trackEvent={trackEvent}
-          />
-        </Dimension>
-      </RightsType>
-      {hasCPR(dimensions) && (
+    return (
+      <Styled>
         <RightsType>
           <RightsTypeHeading>
-            <FormattedMessage {...messages.atRiskSectionTitle} />
+            <FormattedMessage {...rootMessages['rights-types'].esr} />
+            {` (${esrYear})`}
           </RightsTypeHeading>
-          <NarrativeAtRisk
-            country={country}
-            countryGrammar={countryGrammar}
-            noData={!hasCPR(dimensions)}
-            data={atRiskData}
-            onAtRiskClick={onAtRiskClick}
-          />
+          <Dimension>
+            <StyledDimensionHeading>
+              <FormattedMessage {...rootMessages.dimensions.esr} />
+            </StyledDimensionHeading>
+            {getDefaultStandard(country) !== standard &&
+              renderStandardHint(intl, standard, country)}
+            <NarrativeESR
+              score={dimensions.esr && dimensions.esr.score}
+              country={country}
+              countryGrammar={countryGrammar}
+              someData={hasSomeIndicatorScores}
+            />
+            <ESRAccordion
+              dimension={dimensions.esr}
+              rights={getRightsScoresForDimension(rights, 'esr')}
+              benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+              indicators={Object.values(indicators)}
+              onMetricClick={onMetricClick}
+              standard={standard}
+              hasAtRisk={hasCPR(dimensions)}
+              trackEvent={trackEvent}
+            />
+          </Dimension>
         </RightsType>
-      )}
-      {(hasCPR(dimensions) || (dimensions.esr && dimensions.esr.score)) && (
+        {dimensions.esr && dimensions.esr.score && (
+          <RightsType>
+            <RightsTypeHeading>
+              <FormattedMessage
+                {...messages.compAssessmentSectionTitle}
+                values={getMessageGrammar(
+                  intl,
+                  country.country_code,
+                  country.region_code,
+                  countryGrammar,
+                )}
+              />
+            </RightsTypeHeading>
+            {dimensions.esr &&
+              dimensions.esr.score &&
+              getDefaultStandard(country) !== standard &&
+              renderStandardHint(intl, standard, country)}
+            {dimensions.esr && reference && reference.esr && (
+              <Paragraph>
+                <NarrativeESRCompAssessment
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  score={dimensions.esr.score}
+                  referenceScore={reference.esr[standard].average[benchmark]}
+                  referenceCount={reference.esr[standard].count}
+                  benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+                />
+              </Paragraph>
+            )}
+          </RightsType>
+        )}
+      </Styled>
+    );
+  }
+  if (type === 'cpr') {
+    return (
+      <Styled>
         <RightsType>
           <RightsTypeHeading>
-            <FormattedMessage
-              {...messages.compAssessmentSectionTitle}
-              values={getMessageGrammar(
-                intl,
-                country.country_code,
-                country.region_code,
-                countryGrammar,
-              )}
-            />
+            <FormattedMessage {...rootMessages['rights-types'].cpr} />
+            {` (${cprYear})`}
           </RightsTypeHeading>
-          {hasCPR(dimensions) && reference.empowerment && reference.physint && (
-            <Paragraph>
-              <NarrativeCPRCompAssessment
+          {dimensions.empowerment && dimensions.empowerment.score && (
+            <Dimension>
+              <StyledDimensionHeading>
+                <FormattedMessage {...rootMessages.dimensions.empowerment} />
+              </StyledDimensionHeading>
+              <NarrativeCPR
                 dimensionKey="empowerment"
                 score={dimensions.empowerment && dimensions.empowerment.score}
                 country={country}
                 countryGrammar={countryGrammar}
-                referenceScore={reference.empowerment.average}
-                referenceCount={reference.empowerment.count}
-                start
               />
-              <NarrativeCPRCompAssessment
-                conjunct
+              <CPRAccordion
+                dimension={dimensions.empowerment}
+                rights={getRightsScoresForDimension(
+                  rights,
+                  'empowerment',
+                  true,
+                )}
+                onMetricClick={onMetricClick}
+                trackEvent={trackEvent}
+              />
+            </Dimension>
+          )}
+          {dimensions.physint && dimensions.physint.score && (
+            <Dimension>
+              <StyledDimensionHeading>
+                <FormattedMessage {...rootMessages.dimensions.physint} />
+              </StyledDimensionHeading>
+              <NarrativeCPR
                 dimensionKey="physint"
                 score={dimensions.physint && dimensions.physint.score}
                 country={country}
                 countryGrammar={countryGrammar}
-                referenceScore={reference.physint.average}
-                referenceCount={reference.physint.count}
               />
-            </Paragraph>
+              <CPRAccordion
+                dimension={dimensions.physint}
+                rights={getRightsScoresForDimension(rights, 'physint', true)}
+                onMetricClick={onMetricClick}
+                trackEvent={trackEvent}
+              />
+            </Dimension>
           )}
-          {dimensions.esr &&
-            dimensions.esr.score &&
-            getDefaultStandard(country) !== standard &&
-            renderStandardHint(intl, standard, country)}
-          {dimensions.esr && reference && reference.esr && (
-            <Paragraph>
-              <NarrativeESRCompAssessment
-                country={country}
-                countryGrammar={countryGrammar}
-                score={dimensions.esr.score}
-                referenceScore={reference.esr[standard].average[benchmark]}
-                referenceCount={reference.esr[standard].count}
-                benchmark={BENCHMARKS.find(s => s.key === benchmark)}
-              />
-            </Paragraph>
+          {!hasCPR(dimensions) && (
+            <NarrativeCPR
+              noData
+              country={country}
+              countryGrammar={countryGrammar}
+            />
           )}
         </RightsType>
-      )}
-    </Styled>
-  );
+        {hasCPR(dimensions) && (
+          <RightsType>
+            <RightsTypeHeading>
+              <FormattedMessage {...messages.atRiskSectionTitle} />
+            </RightsTypeHeading>
+            <NarrativeAtRisk
+              country={country}
+              countryGrammar={countryGrammar}
+              noData={!hasCPR(dimensions)}
+              data={atRiskData}
+              onAtRiskClick={onAtRiskClick}
+            />
+          </RightsType>
+        )}
+        {hasCPR(dimensions) && (
+          <RightsType>
+            <RightsTypeHeading>
+              <FormattedMessage
+                {...messages.compAssessmentSectionTitle}
+                values={getMessageGrammar(
+                  intl,
+                  country.country_code,
+                  country.region_code,
+                  countryGrammar,
+                )}
+              />
+            </RightsTypeHeading>
+            {hasCPR(dimensions) && reference.empowerment && reference.physint && (
+              <Paragraph>
+                <NarrativeCPRCompAssessment
+                  dimensionKey="empowerment"
+                  score={dimensions.empowerment && dimensions.empowerment.score}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  referenceScore={reference.empowerment.average}
+                  referenceCount={reference.empowerment.count}
+                  start
+                />
+                <NarrativeCPRCompAssessment
+                  conjunct
+                  dimensionKey="physint"
+                  score={dimensions.physint && dimensions.physint.score}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  referenceScore={reference.physint.average}
+                  referenceCount={reference.physint.count}
+                />
+              </Paragraph>
+            )}
+          </RightsType>
+        )}
+      </Styled>
+    );
+  }
+  return null;
 }
 
 CountryNarrative.propTypes = {
@@ -285,6 +316,7 @@ CountryNarrative.propTypes = {
   intl: intlShape.isRequired,
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
+  type: PropTypes.string,
 };
 
 export default injectIntl(CountryNarrative);

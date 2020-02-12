@@ -12,13 +12,14 @@ import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 
-import { Box, Layer, ResponsiveContext } from 'grommet';
+import { Box } from 'grommet';
 
 import rootMessages from 'messages';
 
-import CountryMetric from 'containers/CountryMetric';
 import Close from 'containers/Close';
-import CountryReport from 'components/CountryReport';
+import CountryReportESR from 'components/CountryReportESR';
+import CountryReportCPR from 'components/CountryReportCPR';
+import CountrySnapshot from 'components/CountrySnapshot';
 import CountryPeople from 'components/CountryPeople';
 import CountryAbout from 'components/CountryAbout';
 import HeaderLinks from 'components/HeaderLinks';
@@ -59,7 +60,6 @@ import { INCOME_GROUPS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
-import { isMinSize } from 'utils/responsive';
 import saga from 'containers/App/saga';
 
 const DEPENDENCIES = [
@@ -86,8 +86,6 @@ export function PathCountry({
   scale,
   benchmark,
   atRisk,
-  onMetricClick,
-  onCloseMetricOverlay,
   onAtRiskClick,
   standard,
   dimensionAverages,
@@ -115,38 +113,12 @@ export function PathCountry({
   const countryTitle =
     countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
 
-  const onCloseLayer = () => {
-    onCloseMetricOverlay(countryCode);
-  };
-
   return (
     <ContentWrap>
       <Helmet>
         <title>{countryTitle}</title>
         <meta name="description" content="Description of Country page" />
       </Helmet>
-      {match.params.metric && (
-        <ResponsiveContext.Consumer>
-          {size => (
-            <Layer
-              full="vertical"
-              margin={{
-                top: isMinSize(size, 'xlarge') ? 'large' : 'small',
-                bottom: 'ms',
-              }}
-              onEsc={onCloseLayer}
-              onClickOutside={onCloseLayer}
-              animate={false}
-            >
-              <CountryMetric
-                metricCode={match.params.metric}
-                countryCode={countryCode}
-                base="country"
-              />
-            </Layer>
-          )}
-        </ResponsiveContext.Consumer>
-      )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
           <Close float />
@@ -191,15 +163,42 @@ export function PathCountry({
         <TabContainer
           tabs={[
             {
-              key: 'report',
-              title: intl.formatMessage(rootMessages.tabs.report),
+              key: 'snapshot',
+              title: intl.formatMessage(rootMessages.tabs.snapshot),
               howToRead: {
                 contxt: 'PathCountry',
                 chart: 'Summary',
                 data: scale,
               },
               content: props => (
-                <CountryReport
+                <CountrySnapshot
+                  {...props}
+                  countryTitle={countryTitle}
+                  dimensions={dimensions}
+                  rights={rights}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  scale={scale}
+                  benchmark={benchmark}
+                  atRiskData={atRisk}
+                  standard={standard}
+                  reference={dimensionAverages}
+                  esrYear={esrYear}
+                  cprYear={cprYear}
+                  dataReady={dataReady}
+                />
+              ),
+            },
+            {
+              key: 'report-esr',
+              title: intl.formatMessage(rootMessages.tabs.reportESR),
+              howToRead: {
+                contxt: 'PathCountry',
+                chart: 'Summary',
+                data: scale,
+              },
+              content: props => (
+                <CountryReportESR
                   {...props}
                   countryTitle={countryTitle}
                   dimensions={dimensions}
@@ -214,9 +213,40 @@ export function PathCountry({
                   reference={dimensionAverages}
                   onAtRiskClick={() => onAtRiskClick()}
                   onMetricClick={(metric, tab) =>
-                    onMetricClick(countryCode, metric, tab)
+                    console.log('metric click', countryCode, metric, tab)
                   }
                   esrYear={esrYear}
+                  cprYear={cprYear}
+                  dataReady={dataReady}
+                  trackEvent={onTrackEvent}
+                />
+              ),
+            },
+            {
+              key: 'report-cpr',
+              title: intl.formatMessage(rootMessages.tabs.reportCPR),
+              howToRead: {
+                contxt: 'PathCountry',
+                chart: 'Summary',
+                data: scale,
+              },
+              content: props => (
+                <CountryReportCPR
+                  {...props}
+                  countryTitle={countryTitle}
+                  dimensions={dimensions}
+                  rights={rights}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  scale={scale}
+                  benchmark={benchmark}
+                  atRiskData={atRisk}
+                  standard={standard}
+                  reference={dimensionAverages}
+                  onAtRiskClick={() => onAtRiskClick()}
+                  onMetricClick={(metric, tab) =>
+                    console.log('metric click', countryCode, metric, tab)
+                  }
                   cprYear={cprYear}
                   dataReady={dataReady}
                   trackEvent={onTrackEvent}
@@ -272,9 +302,7 @@ PathCountry.propTypes = {
   onTrackEvent: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   activeTab: PropTypes.number,
-  onMetricClick: PropTypes.func,
   onAtRiskClick: PropTypes.func,
-  onCloseMetricOverlay: PropTypes.func,
   match: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -343,43 +371,10 @@ export function mapDispatchToProps(dispatch) {
       );
     },
     onClose: () => dispatch(navigate('')),
-    onMetricClick: (country, metric, tab = 0) =>
-      dispatch(
-        navigate(
-          {
-            pathname: `/country/${country}/${metric}`,
-            search: `?mtab=${tab}`,
-          },
-          {
-            replace: false,
-            trackEvent: {
-              category: 'Modal',
-              action: 'Country-metric',
-              value: `${country}/${metric}/${tab}`,
-            },
-          },
-        ),
-      ),
     onAtRiskClick: () => {
       window.scrollTo(0, 0);
       return dispatch(setTab(1));
     },
-    onCloseMetricOverlay: country =>
-      dispatch(
-        navigate(
-          {
-            pathname: `/country/${country}`,
-          },
-          {
-            replace: false,
-            deleteParams: ['mtab'],
-            trackEvent: {
-              category: 'Close modal',
-              action: `Target: country/${country}`,
-            },
-          },
-        ),
-      ),
     onTrackEvent: e => dispatch(trackEvent(e)),
   };
 }

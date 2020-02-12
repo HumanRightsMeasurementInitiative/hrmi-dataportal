@@ -10,9 +10,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Helmet } from 'react-helmet';
-import { Layer, Box, ResponsiveContext } from 'grommet';
+import { Box } from 'grommet';
 
-import CountryMetric from 'containers/CountryMetric';
 import Close from 'containers/Close';
 
 import SingleMetric from 'containers/SingleMetric';
@@ -28,16 +27,10 @@ import HeaderLinks from 'components/HeaderLinks';
 import rootMessages from 'messages';
 
 import getMetricDetails from 'utils/metric-details';
-import { isMinSize } from 'utils/responsive';
 
 import { navigate } from 'containers/App/actions';
 
-export function PathMetric({
-  match,
-  intl,
-  onCloseMetricOverlay,
-  onMetricClick,
-}) {
+export function PathMetric({ match, intl, onMetricClick }) {
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
   const metricTitle = intl.formatMessage(
@@ -74,28 +67,6 @@ export function PathMetric({
         <title>{metricTitle}</title>
         <meta name="description" content="Description of metric" />
       </Helmet>
-      {match.params.country && (
-        <ResponsiveContext.Consumer>
-          {size => (
-            <Layer
-              animate={false}
-              full="vertical"
-              margin={{
-                top: isMinSize(size, 'xlarge') ? 'large' : 'small',
-                bottom: 'ms',
-              }}
-              onEsc={() => onCloseMetricOverlay(metricCode)}
-              onClickOutside={() => onCloseMetricOverlay(metricCode)}
-            >
-              <CountryMetric
-                metricCode={metricCode}
-                countryCode={match.params.country}
-                base="metric"
-              />
-            </Layer>
-          )}
-        </ResponsiveContext.Consumer>
-      )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
           <Close float />
@@ -145,7 +116,6 @@ export function PathMetric({
 
 PathMetric.propTypes = {
   intl: intlShape.isRequired,
-  onCloseMetricOverlay: PropTypes.func,
   onMetricClick: PropTypes.func,
   match: PropTypes.object,
 };
@@ -161,22 +131,6 @@ export function mapDispatchToProps(dispatch) {
               category: 'Data',
               action: 'Change metric (Metric, header links)',
               value: code,
-            },
-          },
-        ),
-      ),
-    onCloseMetricOverlay: code =>
-      dispatch(
-        navigate(
-          {
-            pathname: `/metric/${code}`,
-          },
-          {
-            replace: false,
-            deleteParams: ['mtab'],
-            trackEvent: {
-              category: 'Close modal',
-              action: `Target: metric/${code}`,
             },
           },
         ),

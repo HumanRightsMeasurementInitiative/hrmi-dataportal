@@ -22,10 +22,7 @@ import {
   SET_STANDARD,
   SET_BENCHMARK,
   SET_TAB,
-  SET_MODALTAB,
   OPEN_HOW_TO,
-  HIGHLIGHT_COUNTRY,
-  SHOW_WELCOME,
   CHECK_COOKIECONSENT,
   COOKIECONSENT_CHECKED,
   SET_COOKIECONSENT,
@@ -182,12 +179,6 @@ export function setTab(value) {
     value,
   };
 }
-export function setModalTab(value) {
-  return {
-    type: SET_MODALTAB,
-    value,
-  };
-}
 
 /**
  * navigate to new location
@@ -206,17 +197,5 @@ export function openHowToRead(args) {
   return {
     type: OPEN_HOW_TO,
     layer: args,
-  };
-}
-export function highlightCountry(country) {
-  return {
-    type: HIGHLIGHT_COUNTRY,
-    country,
-  };
-}
-export function showWelcome(show = true) {
-  return {
-    type: SHOW_WELCOME,
-    show,
   };
 }

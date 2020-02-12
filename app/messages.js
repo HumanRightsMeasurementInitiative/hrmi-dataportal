@@ -143,9 +143,17 @@ export default defineMessages({
         defaultMessage: 'Trend',
       },
     },
-    report: {
-      id: `${scope}.tabs.report`,
-      defaultMessage: 'Report',
+    snapshot: {
+      id: `${scope}.tabs.snapshot`,
+      defaultMessage: 'Snapshot',
+    },
+    reportESR: {
+      id: `${scope}.tabs.reportESR`,
+      defaultMessage: 'ESR',
+    },
+    reportCPR: {
+      id: `${scope}.tabs.reportCPR`,
+      defaultMessage: 'CPR',
     },
     singleMetric: {
       id: `${scope}.tabs.singleMetric`,
@@ -483,10 +491,6 @@ export default defineMessages({
       id: `${scope}.rights.death-penalty`,
       defaultMessage: 'death-penalty',
     },
-    execution: {
-      id: `${scope}.rights.execution`,
-      defaultMessage: 'execution',
-    },
     'extrajud-killing': {
       id: `${scope}.rights.extrajud-killing`,
       defaultMessage: 'extrajud-killing',
@@ -622,10 +626,6 @@ export default defineMessages({
     'death-penalty': {
       id: `${scope}.rights-about.death-penalty`,
       defaultMessage: 'death-penalty-about',
-    },
-    execution: {
-      id: `${scope}.rights-about.execution`,
-      defaultMessage: 'execution-about',
     },
     'extrajud-killing': {
       id: `${scope}.rights-about.extrajud-killing`,
