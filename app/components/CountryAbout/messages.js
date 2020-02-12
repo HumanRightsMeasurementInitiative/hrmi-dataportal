@@ -16,20 +16,20 @@ export default defineMessages({
   },
   population: {
     id: `${scope}.population`,
-    defaultMessage: 'Population ({year})',
+    defaultMessage: 'Population',
   },
   populationValue: {
     id: `${scope}.populationValue`,
     defaultMessage:
-      '{value}{abbrev, select, millions {m} thousands {k} other {}}',
+      '{value}{abbrev, select, millions {m} thousands {k} other {}} ({year})',
   },
   gdp: {
     id: `${scope}.gdp`,
-    defaultMessage: 'GDP/capita ({year})',
+    defaultMessage: 'GDP/capita',
   },
   gdpValue: {
     id: `${scope}.gdpValue`,
-    defaultMessage: '${value}',
+    defaultMessage: '${value} ({year})',
   },
   gdpHint: {
     id: `${scope}.gdpHint`,
