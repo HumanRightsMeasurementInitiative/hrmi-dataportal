@@ -34,7 +34,7 @@ import {
   getCountries,
   getOECDSearch,
   getDependenciesReady,
-  getAuxIndicatorsLatest,
+  getAuxIndicators,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
@@ -241,7 +241,7 @@ const mapStateToProps = createStructuredSelector({
     return false;
   },
   countries: state => getCountries(state),
-  auxIndicators: state => getAuxIndicatorsLatest(state),
+  auxIndicators: state => getAuxIndicators(state),
   benchmark: state => getBenchmarkSearch(state),
   standard: state => getStandardSearch(state),
   regionFilterValue: state => getRegionSearch(state),
