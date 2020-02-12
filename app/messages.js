@@ -942,6 +942,32 @@ export default defineMessages({
       defaultMessage: 'sub-saharan-africa',
     },
   },
+  subregions: {
+    'east-asia': {
+      id: `${scope}.subregions.east-asia`,
+      defaultMessage: 'east-asia',
+    },
+    pacific: {
+      id: `${scope}.subregions.pacific`,
+      defaultMessage: 'pacific',
+    },
+    europe: {
+      id: `${scope}.subregions.europe`,
+      defaultMessage: 'europe',
+    },
+    'central-asia': {
+      id: `${scope}.subregions.central-asia`,
+      defaultMessage: 'central-asia',
+    },
+    'middle-east': {
+      id: `${scope}.subregions.middle-east`,
+      defaultMessage: 'middle-east',
+    },
+    'north-africa': {
+      id: `${scope}.subregions.north-africa`,
+      defaultMessage: 'north-africa',
+    },
+  },
   income: {
     hi: {
       id: `${scope}.income.hi`,
@@ -952,14 +978,32 @@ export default defineMessages({
       defaultMessage: 'lmi',
     },
   },
-  oecd: {
-    0: {
-      id: `${scope}.oecd.0`,
-      defaultMessage: 'not oecd',
+  countryGroups: {
+    oecd: {
+      id: `${scope}.countryGroups.oecd`,
+      defaultMessage: 'OECD',
     },
-    1: {
-      id: `${scope}.oecd.1`,
-      defaultMessage: 'oecd',
+    'not-oecd': {
+      id: `${scope}.countryGroups.not-oecd`,
+      defaultMessage: 'not OECD',
+    },
+    asean: {
+      id: `${scope}.countryGroups.asean`,
+      defaultMessage: 'ASEAN',
+    },
+    oic: {
+      id: `${scope}.countryGroups.oic`,
+      defaultMessage: 'OIC',
+    },
+  },
+  treaties: {
+    icescr: {
+      id: `${scope}.treaties.icescr`,
+      defaultMessage: 'icescr',
+    },
+    iccpr: {
+      id: `${scope}.treaties.iccpr`,
+      defaultMessage: 'iccpr',
     },
   },
   assessed: {
@@ -1844,6 +1888,22 @@ export default defineMessages({
     ZWE: {
       id: `${scope}.countries.ZWE`,
       defaultMessage: 'ZWE',
+    },
+    COK: {
+      id: `${scope}.countries.COK`,
+      defaultMessage: 'COK',
+    },
+    NIU: {
+      id: `${scope}.countries.NIU`,
+      defaultMessage: 'NIU',
+    },
+    TKL: {
+      id: `${scope}.countries.TKL`,
+      defaultMessage: 'TKL',
+    },
+    WLF: {
+      id: `${scope}.countries.WLF`,
+      defaultMessage: 'WLF',
     },
   },
 });

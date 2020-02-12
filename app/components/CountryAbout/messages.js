@@ -48,13 +48,33 @@ export default defineMessages({
     id: `${scope}.gdpTooltipPPP`,
     defaultMessage: 'About PPP dollars',
   },
-  oecd: {
-    id: `${scope}.oecd`,
-    defaultMessage: 'OECD status',
+  groups: {
+    single: {
+      id: `${scope}.groups.single`,
+      defaultMessage: 'group',
+    },
+    plural: {
+      id: `${scope}.groups.plural`,
+      defaultMessage: 'groups',
+    },
+  },
+  treaties: {
+    single: {
+      id: `${scope}.treaties.single`,
+      defaultMessage: 'treaty',
+    },
+    plural: {
+      id: `${scope}.treaties.plural`,
+      defaultMessage: 'treaties',
+    },
   },
   region: {
     id: `${scope}.region`,
     defaultMessage: 'Region',
+  },
+  subregion: {
+    id: `${scope}.subregion`,
+    defaultMessage: 'Subregion',
   },
   income: {
     id: `${scope}.income`,

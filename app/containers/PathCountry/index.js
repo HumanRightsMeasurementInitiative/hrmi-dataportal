@@ -56,7 +56,7 @@ import {
   trackEvent,
 } from 'containers/App/actions';
 
-import { INCOME_GROUPS } from 'containers/App/constants';
+import { INCOME_GROUPS, COUNTRY_FILTERS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -108,10 +108,16 @@ export function PathCountry({
 
   const incomeGroup =
     country &&
-    INCOME_GROUPS.find(g => quasiEquals(g.value, country.high_income_country));
-
+    INCOME_GROUPS.values.find(g =>
+      quasiEquals(g.value, country.high_income_country),
+    );
+  if (!rootMessages.countries[countryCode]) {
+    console.log('Country code not in language files:', countryCode);
+  }
   const countryTitle =
-    countryCode && intl.formatMessage(rootMessages.countries[countryCode]);
+    countryCode && rootMessages.countries[countryCode]
+      ? intl.formatMessage(rootMessages.countries[countryCode])
+      : countryCode;
 
   return (
     <ContentWrap>
@@ -136,13 +142,6 @@ export function PathCountry({
                     value: country.region_code,
                     label: intl.formatMessage(
                       rootMessages.regions[country.region_code],
-                    ),
-                  },
-                  {
-                    key: 'oecd',
-                    value: country.OECD_country,
-                    label: intl.formatMessage(
-                      rootMessages.oecd[country.OECD_country],
                     ),
                   },
                   {
@@ -354,7 +353,7 @@ export function mapDispatchToProps(dispatch) {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
     onCategoryClick: (key, value) => {
-      const deleteParams = ['income', 'region', 'assessed'];
+      const deleteParams = COUNTRY_FILTERS;
       dispatch(
         navigate(
           { pathname: '', search: key === 'all' ? '' : `?${key}=${value}` },

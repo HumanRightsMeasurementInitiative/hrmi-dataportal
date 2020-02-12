@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { compareRange, getMessageGrammar } from 'utils/narrative';
+import { isCountryHighIncome, isCountryOECD } from 'utils/countries';
 
 import { COLUMNS } from 'containers/App/constants';
 
 import messages from './messages';
-
-const isCountryHighIncome = country => country.high_income_country === '1';
-const isCountryOECD = country => country.OECD_country === '1';
 
 function NarrativeCPRCompAssessment({
   dimensionKey,

@@ -220,6 +220,9 @@ export function CountryPreview({
   onCountryHover,
 }) {
   if (!country) return null;
+  if (!rootMessages.countries[country.country_code]) {
+    console.log('Country code not in language files:', country.country_code);
+  }
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -275,9 +278,14 @@ export function CountryPreview({
                 <Box pad={{ top: 'small' }}>
                   <Text textAlign="center" alignSelf="center">
                     <CountryLabel>
-                      <FormattedMessage
-                        {...rootMessages.countries[country.country_code]}
-                      />
+                      {rootMessages.countries[country.country_code] && (
+                        <FormattedMessage
+                          {...rootMessages.countries[country.country_code]}
+                        />
+                      )}
+                      {!rootMessages.countries[country.country_code] && (
+                        <span>{country.country_code}</span>
+                      )}
                       {country && country.high_income_country === '1' && (
                         <span>
                           {` (${intl.formatMessage(

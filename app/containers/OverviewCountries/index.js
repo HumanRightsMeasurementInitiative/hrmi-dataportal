@@ -14,19 +14,26 @@ import { Box, InfiniteScroll, ResponsiveContext } from 'grommet';
 
 import {
   getRegionSearch,
+  getSubregionSearch,
   getIncomeSearch,
+  getCountryGroupSearch,
+  getTreatySearch,
   getBenchmarkSearch,
   getStandardSearch,
   getScaleSearch,
   getESRIndicators,
   getAssessedSearch,
-  getOECDSearch,
   getSortSearch,
   getSortOrderSearch,
 } from 'containers/App/selectors';
 import { navigate, selectCountry } from 'containers/App/actions';
 
-import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
+import {
+  STANDARDS,
+  BENCHMARKS,
+  COUNTRY_SORTS,
+  COLUMNS,
+} from 'containers/App/constants';
 
 import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
@@ -35,14 +42,27 @@ import CountrySort from 'components/CountrySort';
 import CountryFilters from 'components/CountryFilters';
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
+
 import { isMinSize, isMaxSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
+import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 
 import rootMessages from 'messages';
 
 export const isDefaultStandard = (country, standardDetails) =>
-  (country.high_income_country === '0' && standardDetails.key === 'core') ||
-  (country.high_income_country === '1' && standardDetails.key === 'hi');
+  (country[COLUMNS.COUNTRIES.HIGH_INCOME] === '0' &&
+    standardDetails.key === 'core') ||
+  (country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' &&
+    standardDetails.key === 'hi');
+
+const FILTER_GROUPS = [
+  'income',
+  'region',
+  'subregion',
+  'cgroup',
+  'treaty',
+  'assessed',
+];
 
 const SORT_OPTIONS = ['assessment', 'name', 'population', 'gdp'];
 
@@ -50,9 +70,11 @@ export function OverviewCountries({
   countries,
   scoresAllCountries,
   regionFilterValue,
+  subregionFilterValue,
   incomeFilterValue,
   assessedFilterValue,
-  oecdFilterValue,
+  countryGroupFilterValue,
+  treatyFilterValue,
   onRemoveFilter,
   onAddFilter,
   onSelectCountry,
@@ -86,6 +108,22 @@ export function OverviewCountries({
     scores: scoresAllCountries,
     auxIndicators,
   });
+  const filterValues = getFilterOptionValues(
+    countries,
+    FILTER_GROUPS,
+    // check if any filters are already set -
+    // if not we can just return all specified options
+    areAnyFiltersSet(FILTER_GROUPS, {
+      regionFilterValue,
+      subregionFilterValue,
+      incomeFilterValue,
+      assessedFilterValue,
+      countryGroupFilterValue,
+      treatyFilterValue,
+    }),
+    standardDetails,
+    scoresAllCountries,
+  );
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -98,12 +136,14 @@ export function OverviewCountries({
           >
             <CountryFilters
               regionFilterValue={regionFilterValue}
+              subregionFilterValue={subregionFilterValue}
               onRemoveFilter={onRemoveFilter}
               onAddFilter={onAddFilter}
               incomeFilterValue={incomeFilterValue}
               assessedFilterValue={assessedFilterValue}
-              oecdFilterValue={oecdFilterValue}
-              filterGroups={['income', 'region', 'assessed', 'oecd']}
+              countryGroupFilterValue={countryGroupFilterValue}
+              treatyFilterValue={treatyFilterValue}
+              filterValues={filterValues}
             />
             <CountrySort
               sort={currentSort}
@@ -177,10 +217,15 @@ OverviewCountries.propTypes = {
   onSelectCountry: PropTypes.func,
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
-  regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  countryGroupFilterValue: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array,
+  ]),
+  treatyFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   intl: intlShape.isRequired,
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -196,9 +241,11 @@ OverviewCountries.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   regionFilterValue: state => getRegionSearch(state),
+  subregionFilterValue: state => getSubregionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
   assessedFilterValue: state => getAssessedSearch(state),
-  oecdFilterValue: state => getOECDSearch(state),
+  countryGroupFilterValue: state => getCountryGroupSearch(state),
+  treatyFilterValue: state => getTreatySearch(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
@@ -209,17 +256,22 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onRemoveFilter: key =>
+    onRemoveFilter: (key, value) =>
       dispatch(
         navigate(
           { pathname: '' },
           {
             replace: false,
-            deleteParams: [key],
+            deleteParams: [
+              {
+                key,
+                value,
+              },
+            ],
             trackEvent: {
               category: 'Data',
               action: 'Remove country filter (Overview)',
-              value: key,
+              value: `${key}/${value}`,
             },
           },
         ),
@@ -231,6 +283,7 @@ export function mapDispatchToProps(dispatch) {
           { search: `?${key}=${value}` },
           {
             replace: false,
+            multiple: true,
             trackEvent: {
               category: 'Data',
               action: 'Country filter (Overview)',
