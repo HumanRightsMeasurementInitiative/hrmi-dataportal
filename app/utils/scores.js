@@ -136,18 +136,20 @@ const sortByAssessment = (a, b, scoresAllCountries, order) => {
   return 1;
 };
 
+const findLatestValue = (countryAuxIndicators, column) => {
+  const sorted = countryAuxIndicators
+    .filter(i => i[column] !== '' && i[column] !== null)
+    .sort((a, b) => (parseInt(a.year, 10) > parseInt(b.year, 10) ? -1 : 1));
+  return sorted.length > 0 && sorted[0][column];
+};
+
 const mapAttribute = (s, auxIndicators, column) => {
-  const aux = auxIndicators.find(i =>
+  const countryAuxIndicators = auxIndicators.filter(i =>
     quasiEquals(s.country_code, i.country_code),
   );
-  if (aux && aux[column]) {
-    return {
-      [column]: aux[column],
-      ...s,
-    };
-  }
+  const aux = findLatestValue(countryAuxIndicators, column);
   return {
-    [column]: null,
+    [column]: aux || null,
     ...s,
   };
 };

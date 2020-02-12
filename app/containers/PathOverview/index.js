@@ -23,7 +23,7 @@ import {
   getDependenciesReady,
   getHighlightCountry,
   getShowWelcome,
-  getAuxIndicatorsLatest,
+  getAuxIndicators,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, showWelcome } from 'containers/App/actions';
 
@@ -173,7 +173,7 @@ PathOverview.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   countries: state => getCountriesFiltered(state),
-  auxIndicators: state => getAuxIndicatorsLatest(state),
+  auxIndicators: state => getAuxIndicators(state),
   scoresAllCountries: state => getScoresByCountry(state),
   standard: state => getStandardSearch(state),
   assessed: state => getAssessedSearch(state),
