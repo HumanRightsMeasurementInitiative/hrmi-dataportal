@@ -55,7 +55,6 @@ import {
   SET_STANDARD,
   SET_BENCHMARK,
   SET_TAB,
-  SET_MODALTAB,
   CHECK_COOKIECONSENT,
   COOKIECONSENT_NAME,
   SET_COOKIECONSENT,
@@ -290,22 +289,6 @@ export function* setTabSaga({ value }) {
   );
   yield put(push(`${path}?${searchParams.toString()}`));
 }
-export function* setModalTabSaga({ value }) {
-  // get URL search params
-  const searchParams = yield select(getRouterSearchParams);
-  yield searchParams.set('mtab', value);
-
-  // navigate to country and default standard
-  const path = yield select(getRouterPath);
-  yield put(
-    trackEvent({
-      category: 'Content',
-      action: 'Change tab (in modal)',
-      value,
-    }),
-  );
-  yield put(push(`${path}?${searchParams.toString()}`));
-}
 
 export function* selectMetricSaga({ code }) {
   const requestLocale = yield select(getLocale);
@@ -494,7 +477,6 @@ export default function* defaultSaga() {
   yield takeLatest(SET_STANDARD, setStandardSaga);
   yield takeLatest(SET_BENCHMARK, setBenchmarkSaga);
   yield takeLatest(SET_TAB, setTabSaga);
-  yield takeLatest(SET_MODALTAB, setModalTabSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
   yield takeLatest(CHECK_COOKIECONSENT, checkCookieConsentSaga);
   yield takeLatest(SET_COOKIECONSENT, setCookieConsentSaga);

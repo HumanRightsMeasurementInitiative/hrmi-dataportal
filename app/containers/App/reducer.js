@@ -20,8 +20,6 @@ import {
   LOAD_CONTENT_SUCCESS,
   CONTENT_REQUESTED,
   OPEN_HOW_TO,
-  HIGHLIGHT_COUNTRY,
-  SHOW_WELCOME,
   COOKIECONSENT_CHECKED,
   GA_INITIALISED,
 } from './constants';
@@ -33,8 +31,6 @@ export const initialState = {
   loading: false,
   error: false,
   howToRead: false,
-  highlightCountry: false,
-  showWelcome: true,
   /* eslint-disable no-param-reassign */
   // the data
   data: DATA_RESOURCES.reduce((memo, resource) => {
@@ -115,12 +111,6 @@ const appReducer = (state = initialState, action) =>
         break;
       case OPEN_HOW_TO:
         draft.howToRead = action.layer;
-        break;
-      case HIGHLIGHT_COUNTRY:
-        draft.highlightCountry = action.country;
-        break;
-      case SHOW_WELCOME:
-        draft.showWelcome = action.show;
         break;
       case COOKIECONSENT_CHECKED:
         draft.cookieConsent = action.status;

@@ -105,7 +105,7 @@ export const showSettings = ({ route, match, tabIndex }) => {
   if (route === 'country') {
     return tabIndex === 0;
   }
-  return true;
+  return route === 'countries' || route === 'metrics';
 };
 
 const showScale = ({ route }) => {

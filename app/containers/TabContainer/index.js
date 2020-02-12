@@ -8,11 +8,10 @@ import styled from 'styled-components';
 
 import {
   getTabSearch,
-  getModalTabSearch,
   getRouterRoute,
   getRouterMatch,
 } from 'containers/App/selectors';
-import { setTab, setModalTab } from 'containers/App/actions';
+import { setTab } from 'containers/App/actions';
 import { showSettings } from 'containers/Settings';
 import HowToRead from 'containers/HowToRead';
 import ColumnTitle from 'styled/ColumnTitle';
@@ -39,7 +38,6 @@ function TabContainer({
   tabIndex,
   onTabClick,
   aside = true,
-  modal = false,
   route,
   match,
 }) {
@@ -50,7 +48,6 @@ function TabContainer({
         // tabs in main column if small or more than 2 tabs
         const tabsWithContent = tabs.filter(t => t.content && t.content());
         const hasAside =
-          !modal &&
           isMinSize(size, 'large') &&
           aside &&
           tabsWithContent.length > 1;
@@ -73,7 +70,7 @@ function TabContainer({
                     justify="start"
                     activeIndex={tabIndex}
                     onActive={index =>
-                      index !== tabIndex && onTabClick(index, modal)
+                      index !== tabIndex && onTabClick(index)
                     }
                   >
                     {mainTabs.slice().map(tab => (
@@ -140,7 +137,6 @@ TabContainer.propTypes = {
   tabs: PropTypes.array,
   onTabClick: PropTypes.func,
   aside: PropTypes.bool,
-  modal: PropTypes.bool,
   theme: PropTypes.object,
   tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   route: PropTypes.string.isRequired,
@@ -148,16 +144,14 @@ TabContainer.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  tabIndex: (state, { modal }) =>
-    modal ? getModalTabSearch(state) : getTabSearch(state),
+  tabIndex: state => getTabSearch(state),
   route: state => getRouterRoute(state),
   match: state => getRouterMatch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onTabClick: (index, modal) =>
-      dispatch(modal ? setModalTab(index) : setTab(index)),
+    onTabClick: index => dispatch(setTab(index)),
   };
 }
 

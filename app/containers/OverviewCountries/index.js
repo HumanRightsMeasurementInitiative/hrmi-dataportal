@@ -24,11 +24,7 @@ import {
   getSortSearch,
   getSortOrderSearch,
 } from 'containers/App/selectors';
-import {
-  navigate,
-  selectCountry,
-  highlightCountry,
-} from 'containers/App/actions';
+import { navigate, selectCountry } from 'containers/App/actions';
 
 import { STANDARDS, BENCHMARKS, COUNTRY_SORTS } from 'containers/App/constants';
 
@@ -229,7 +225,6 @@ export function mapDispatchToProps(dispatch) {
         ),
       ),
     onSelectCountry: country => dispatch(selectCountry(country)),
-    onCountryHover: country => dispatch(highlightCountry(country)),
     onAddFilter: (key, value) =>
       dispatch(
         navigate(
