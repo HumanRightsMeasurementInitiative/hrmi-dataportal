@@ -187,7 +187,9 @@ export function* selectCountrySaga({ code }) {
   const country = yield select(getCountry, code);
   const group =
     country &&
-    INCOME_GROUPS.find(g => quasiEquals(country.high_income_country, g.value));
+    INCOME_GROUPS.values.find(g =>
+      quasiEquals(country.high_income_country, g.value),
+    );
   const countryDefaultStandard =
     group && STANDARDS.find(s => s.key === group.standard);
 
@@ -336,6 +338,7 @@ export function* navigateSaga({ location, args }) {
       deleteParams: false,
       keepTab: false,
       trackEvent: false,
+      multiple: false,
     },
     args || {},
   );
@@ -346,7 +349,33 @@ export function* navigateSaga({ location, args }) {
   // the new pathname
   let newPathname;
   // the new search (URLSearchParams object)
-  let newSearchParams;
+  let newSearchParams = currentSearchParams;
+
+  // clean up search params
+  if (xArgs.deleteParams) {
+    newSearchParams = xArgs.deleteParams.reduce((memoParams, p) => {
+      // delete only specific value when key & value are present
+      if (p.key) {
+        if (p.value) {
+          const params = new URLSearchParams();
+          memoParams.forEach((value, key) => {
+            // only keep those that are not deleted
+            if (p.key !== key || p.value !== value) {
+              params.append(key, value);
+            }
+          });
+          return params;
+        }
+        memoParams.delete(p.key);
+      } else {
+        memoParams.delete(p);
+      }
+      return memoParams;
+    }, currentSearchParams);
+  }
+  if (!xArgs.keepTab) {
+    newSearchParams.delete('tab');
+  }
 
   // if location is string
   // use as pathname and keep old search
@@ -356,7 +385,6 @@ export function* navigateSaga({ location, args }) {
     if (location !== '') {
       newPathname += `/${location}`;
     }
-    newSearchParams = currentSearchParams;
   }
 
   // if location is object, use pathname and replace or extend search
@@ -373,26 +401,20 @@ export function* navigateSaga({ location, args }) {
 
     // figure out new search or keep old search
     if (typeof location.search !== 'undefined') {
-      newSearchParams = new URLSearchParams(location.search);
       // optionally keep old params
       if (!xArgs.replace) {
-        newSearchParams.forEach((value, key) =>
-          currentSearchParams.set(key, value),
+        const searchParams = new URLSearchParams(location.search);
+        searchParams.forEach((value, key) =>
+          xArgs.multiple
+            ? newSearchParams.append(key, value)
+            : newSearchParams.set(key, value),
         );
-        newSearchParams = currentSearchParams;
+      } else {
+        newSearchParams = new URLSearchParams(location.search);
       }
-    } else {
-      newSearchParams = currentSearchParams;
     }
   }
 
-  // clean up search params
-  if (!xArgs.keepTab) {
-    newSearchParams.delete('tab');
-  }
-  if (xArgs.deleteParams) {
-    xArgs.deleteParams.forEach(p => newSearchParams.delete(p));
-  }
   if (xArgs.trackEvent) {
     yield put(trackEvent(xArgs.trackEvent));
   }

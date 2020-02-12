@@ -11,8 +11,7 @@ export const scope = 'hrmi.components.CountryPeople';
 export default defineMessages({
   title: {
     id: `${scope}.title`,
-    defaultMessage:
-      "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} people at risk overview",
+    defaultMessage: 'Which people are most at risk?',
   },
   intro: {
     id: `${scope}.intro`,

@@ -22,6 +22,7 @@ import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
 
 import { sortScores } from 'utils/scores';
+import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 
 import {
   getESRDimensionScores,
@@ -32,11 +33,13 @@ import {
   getIndicatorScores,
   getStandardSearch,
   getRegionSearch,
+  getSubregionSearch,
   getIncomeSearch,
+  getCountryGroupSearch,
+  getTreatySearch,
   getSortSearch,
   getSortOrderSearch,
   getCountries,
-  getOECDSearch,
   getDependenciesReady,
   getAuxIndicatorsLatest,
 } from 'containers/App/selectors';
@@ -123,6 +126,7 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
+const FILTER_GROUPS = ['income', 'region', 'subregion', 'cgroup', 'treaty'];
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
 
 export function SingleMetric({
@@ -132,8 +136,10 @@ export function SingleMetric({
   benchmark,
   standard,
   regionFilterValue,
+  subregionFilterValue,
   incomeFilterValue,
-  oecdFilterValue,
+  countryGroupFilterValue,
+  treatyFilterValue,
   onRemoveFilter,
   onAddFilter,
   sort,
@@ -155,14 +161,38 @@ export function SingleMetric({
 
   const currentSort = sort || 'score';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
-  const sortedScores = sortScores({
-    intl,
-    sort: currentSort,
-    order: currentSortOrder,
-    scores,
-    auxIndicators,
-    column: metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
-  });
+  const sortedScores =
+    dataReady &&
+    sortScores({
+      intl,
+      sort: currentSort,
+      order: currentSortOrder,
+      scores,
+      auxIndicators,
+      column:
+        metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
+    });
+
+  // prettier-ignore
+  const countriesForScores = sortedScores
+    ? sortedScores.map(s =>
+      countries.find(c => c.country_code === s.country_code),
+    )
+    : [];
+
+  const filterValues = getFilterOptionValues(
+    countriesForScores,
+    FILTER_GROUPS,
+    // check if any filters are already set -
+    // if not we can just return all specified options
+    areAnyFiltersSet(FILTER_GROUPS, {
+      regionFilterValue,
+      subregionFilterValue,
+      incomeFilterValue,
+      countryGroupFilterValue,
+      treatyFilterValue,
+    }),
+  );
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -175,11 +205,13 @@ export function SingleMetric({
           >
             <CountryFilters
               regionFilterValue={regionFilterValue}
+              subregionFilterValue={subregionFilterValue}
               onRemoveFilter={onRemoveFilter}
               onAddFilter={onAddFilter}
               incomeFilterValue={incomeFilterValue}
-              oecdFilterValue={oecdFilterValue}
-              filterGroups={['income', 'region', 'oecd']}
+              countryGroupFilterValue={countryGroupFilterValue}
+              treatyFilterValue={treatyFilterValue}
+              filterValues={filterValues}
             />
             <CountrySort
               sort={currentSort}
@@ -341,8 +373,13 @@ SingleMetric.propTypes = {
   onAddFilter: PropTypes.func,
   onRemoveFilter: PropTypes.func,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  oecdFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  countryGroupFilterValue: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+  ]),
+  treatyFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
   sort: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -374,8 +411,10 @@ const mapStateToProps = createStructuredSelector({
   benchmark: state => getBenchmarkSearch(state),
   standard: state => getStandardSearch(state),
   regionFilterValue: state => getRegionSearch(state),
+  subregionFilterValue: state => getSubregionSearch(state),
   incomeFilterValue: state => getIncomeSearch(state),
-  oecdFilterValue: state => getOECDSearch(state),
+  countryGroupFilterValue: state => getCountryGroupSearch(state),
+  treatyFilterValue: state => getTreatySearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
 });
@@ -384,13 +423,18 @@ export function mapDispatchToProps(dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
-    onRemoveFilter: key =>
+    onRemoveFilter: (key, value) =>
       dispatch(
         navigate(
           {},
           {
             replace: false,
-            deleteParams: [key],
+            deleteParams: [
+              {
+                key,
+                value,
+              },
+            ],
             trackEvent: {
               category: 'Data',
               action: 'Remove country filter (Metric)',
@@ -405,6 +449,7 @@ export function mapDispatchToProps(dispatch) {
           { search: `?${key}=${value}` },
           {
             replace: false,
+            multiple: true,
             trackEvent: {
               category: 'Data',
               action: 'Country filter (Metric)',
