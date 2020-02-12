@@ -305,6 +305,14 @@ export default defineMessages({
       id: `${scope}.page.methodology`,
       defaultMessage: 'Methodology',
     },
+    download: {
+      id: `${scope}.page.download`,
+      defaultMessage: 'Download data',
+    },
+    'at-risk': {
+      id: `${scope}.page.at-risk`,
+      defaultMessage: 'Groups at risk',
+    },
   },
   'people-at-risk': {
     0: {
