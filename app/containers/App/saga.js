@@ -126,7 +126,7 @@ export function* loadDataSaga({ key }) {
 }
 // key expected to include full path, for at risk data metric/country
 export function* loadContentSaga({ key, contentType = 'page', locale }) {
-  const pageIndex = PAGES.indexOf(key);
+  const pageIndex = PAGES.map(page => page.key).indexOf(key);
   if (pageIndex > -1 || contentType === 'atrisk') {
     const requestedAt = yield select(getContentRequestedByKey, key);
     const ready = yield select(getContentReadyByKey, key);

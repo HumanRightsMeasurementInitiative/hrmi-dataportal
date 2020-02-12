@@ -95,7 +95,24 @@ export const LANGUAGES = {
 export const DATA_URL = '//data-store.humanrightsmeasurement.org/data';
 export const PAGES_URL = '//content-store.humanrightsmeasurement.org/';
 
-export const PAGES = ['about', 'methodology'];
+export const PAGES = [
+  {
+    key: 'about',
+    primary: true,
+  },
+  {
+    key: 'methodology',
+    primary: true,
+  },
+  {
+    key: 'download',
+    primary: true,
+  },
+  {
+    key: 'at-risk',
+    primary: false,
+  },
+];
 
 // countries: country lookup table
 // esrIndicators: ESR indicator lookup table
