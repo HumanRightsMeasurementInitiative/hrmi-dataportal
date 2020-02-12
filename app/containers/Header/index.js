@@ -11,15 +11,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import {
-  Box,
-  Button,
-  Drop,
-  ResponsiveContext,
-  TextInput,
-  Heading,
-  Paragraph,
-} from 'grommet';
+import { Box, Button, Drop, ResponsiveContext, TextInput } from 'grommet';
 import {
   Menu,
   Close,
@@ -34,7 +26,6 @@ import { getRouterMatch } from 'containers/App/selectors';
 import ContentContainer from 'styled/ContentContainer';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 import { isMinSize, isMaxSize } from 'utils/responsive';
-import ButtonHighlight from 'styled/ButtonHighlight';
 
 import Icon from 'components/Icon';
 
@@ -172,7 +163,7 @@ const ToggleMenu = styled(Button)`
 `;
 
 // prettier-ignore
-const SecondaryDropButton = styled(Button)`
+const ButtonNavSecondary = styled(Button)`
   height: 56px;
   padding: 5px 10px;
   min-width: 160px;
@@ -192,74 +183,40 @@ const SecondaryDropButton = styled(Button)`
   }
 `;
 // prettier-ignore
-const PrimaryDropButton = styled(Button)`
-  padding: 10px 24px;
-  background-color: ${({ theme, active }) => active ? theme.global.colors['dark-3'] : 'transparent' };
-  border-top: 1px solid;
-  border-bottom: 1px solid;
-  border-color: ${({ theme }) => theme.global.colors['light-4']};
-  background-color: ${({ theme, active }) => active ? theme.global.colors['light-3'] : 'transparent' };
-  display: block;
-  width: 100%;
-  text-align: center;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    display: inline-block;
-    height: 44px;
-    padding: 5px 10px;
-    border: none;
-    width: auto;
-  }
-  &:hover {
-    background-color: ${({ theme}) => theme.global.colors['dark-3']};
-  }
-  &:active {
-    background-color: ${({ theme }) => theme.global.colors['dark-3']};
-  }
-  &:visited {
-    background-color: ${({ theme }) => theme.global.colors['dark-3']};
-  }
-  &:focus {
-    background-color: ${({ theme }) => theme.global.colors['dark-3']};
-  }
-`;
+// const PrimaryDropButton = styled(Button)`
+//   padding: 10px 24px;
+//   background-color: ${({ theme, active }) => active ? theme.global.colors['dark-3'] : 'transparent' };
+//   border-top: 1px solid;
+//   border-bottom: 1px solid;
+//   border-color: ${({ theme }) => theme.global.colors['light-4']};
+//   background-color: ${({ theme, active }) => active ? theme.global.colors['light-3'] : 'transparent' };
+//   display: block;
+//   width: 100%;
+//   text-align: center;
+//   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+//     display: inline-block;
+//     height: 44px;
+//     padding: 5px 10px;
+//     border: none;
+//     width: auto;
+//   }
+//   &:hover {
+//     background-color: ${({ theme}) => theme.global.colors['dark-3']};
+//   }
+//   &:active {
+//     background-color: ${({ theme }) => theme.global.colors['dark-3']};
+//   }
+//   &:visited {
+//     background-color: ${({ theme }) => theme.global.colors['dark-3']};
+//   }
+//   &:focus {
+//     background-color: ${({ theme }) => theme.global.colors['dark-3']};
+//   }
+// `;
 
 const DEPENDENCIES = ['countries'];
 
-const renderDownload = (intl, isFullWidth, downloadClicked) => (
-  <Box
-    pad={{ vertical: 'medium', horizontal: 'medium' }}
-    background="dark-1"
-    style={{ maxWidth: '100%', width: isFullWidth ? '100%' : '500px' }}
-  >
-    <Heading level={4} margin={{ top: 'small', bottom: 'xsmall' }}>
-      <FormattedMessage {...messages.download.title} />
-    </Heading>
-    <Paragraph margin={{ vertical: 'small' }}>
-      <FormattedMessage {...messages.download.paragraph} />
-    </Paragraph>
-    <Paragraph margin={{ top: 'small', bottom: 'medium' }}>
-      <FormattedMessage {...messages.download.attribution} />
-      <FormattedMessage {...messages.download.attributionURL} />
-    </Paragraph>
-    <ButtonHighlight
-      href={intl.formatMessage(messages.download.downloadURL)}
-      as="a"
-      style={{ margin: '0 auto' }}
-      onClick={() => downloadClicked}
-    >
-      <FormattedMessage {...messages.download.downloadAnchor} />
-    </ButtonHighlight>
-  </Box>
-);
-
-export function Header({
-  nav,
-  intl,
-  onLoadData,
-  match,
-  downloadClicked,
-  searched,
-}) {
+export function Header({ nav, intl, onLoadData, match, searched }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -270,12 +227,10 @@ export function Header({
   const [showMenu, setShowMenu] = useState(false);
   const [showCountries, setShowCountries] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
-  const [showDownload, setShowDownload] = useState(false);
   const [search, setSearch] = useState('');
   const countryTarget = useRef(null);
   const metricTarget = useRef(null);
   const searchRef = useRef(null);
-  const downloadRef = useRef(null);
 
   const onHome = () => {
     setShowMenu(false);
@@ -310,51 +265,24 @@ export function Header({
               )}
               <MenuGroup>
                 {PAGES &&
-                  PAGES.map(page => (
+                  PAGES.filter(page => page.primary).map(page => (
                     <ButtonNavPrimary
-                      key={page}
-                      active={page === match}
-                      disabled={page === match}
+                      key={page.key}
+                      active={page.key === match}
+                      disabled={page.key === match}
                       onClick={() => {
                         setShowMenu(false);
-                        nav(`page/${page}`);
+                        nav(`page/${page.key}`);
                       }}
                     >
-                      <FormattedMessage {...rootMessages.page[page]} />
+                      <FormattedMessage {...rootMessages.page[page.key]} />
                     </ButtonNavPrimary>
                   ))}
               </MenuGroup>
-              <MenuGroup>
-                <PrimaryDropButton
-                  plain
-                  reverse
-                  gap="xxsmall"
-                  ref={downloadRef}
-                  active={showDownload}
-                  onClick={() => {
-                    setShowDownload(!showDownload);
-                  }}
-                  icon={showDownload ? <FormUp /> : <FormDown />}
-                  label={intl.formatMessage(messages.download.button)}
-                />
-              </MenuGroup>
-              {showDownload && isMinSize(size, 'large') && (
-                <Drop
-                  align={{ top: 'bottom', right: 'right' }}
-                  target={downloadRef.current}
-                  onClickOutside={() => setShowDownload(false)}
-                  elevation="small"
-                >
-                  {renderDownload(intl, false, downloadClicked)}
-                </Drop>
-              )}
-              {showDownload && isMaxSize(size, 'medium') && (
-                <div>{renderDownload(intl, true, downloadClicked)}</div>
-              )}
             </MenuList>
           </NavBarTop>
           <NavBarBottom>
-            <SecondaryDropButton
+            <ButtonNavSecondary
               plain
               first
               active={showCountries}
@@ -393,8 +321,7 @@ export function Header({
                 />
               </Drop>
             )}
-            <SecondaryDropButton
-              last
+            <ButtonNavSecondary
               plain
               active={showMetrics}
               onClick={() => {
@@ -429,6 +356,18 @@ export function Header({
                 <NavMetric onClose={() => setShowMetrics(false)} size={size} />
               </Drop>
             )}
+            <ButtonNavSecondary
+              key="at-risk"
+              plain
+              last
+              active={match === 'at-risk'}
+              onClick={() => {
+                setShowMenu(false);
+                nav('page/at-risk/');
+              }}
+            >
+              <FormattedMessage {...rootMessages.page['at-risk']} />
+            </ButtonNavSecondary>
             {isMinSize(size, 'medium') && (
               <Box flex={{ grow: 1 }} margin={{ horizontal: 'medium' }}>
                 <Box

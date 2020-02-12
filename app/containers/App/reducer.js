@@ -47,17 +47,17 @@ export const initialState = {
     memo[resource.key] = false;
     return memo;
   }, {}),
-  contentRequested: PAGES.reduce((memo, key) => {
-    memo[key] = false;
+  contentRequested: PAGES.reduce((memo, page) => {
+    memo[page.key] = false;
     return memo;
   }, {}),
-  content: PAGES.reduce((memo, key) => {
-    memo[key] = false;
+  content: PAGES.reduce((memo, page) => {
+    memo[page.key] = false;
     return memo;
   }, {}),
   // record return time
-  contentReady: PAGES.reduce((memo, key) => {
-    memo[key] = false;
+  contentReady: PAGES.reduce((memo, page) => {
+    memo[page.key] = false;
     return memo;
   }, {}),
   // the last location to go back to when closing routes
