@@ -49,6 +49,14 @@ export default defineMessages({
       id: `${scope}.labels.allMetrics`,
       defaultMessage: 'All metrics',
     },
+    countries: {
+      id: `${scope}.labels.countries`,
+      defaultMessage: 'Countries',
+    },
+    metrics: {
+      id: `${scope}.labels.metrics`,
+      defaultMessage: 'Metrics',
+    },
   },
   tooltip: {
     empowerment: {
@@ -141,6 +149,14 @@ export default defineMessages({
       trend: {
         id: `${scope}.tabs.trend`,
         defaultMessage: 'Trend',
+      },
+      reportESR: {
+        id: `${scope}.tabs.mobile.reportESR`,
+        defaultMessage: 'ESR',
+      },
+      reportCPR: {
+        id: `${scope}.tabs.mobile.reportCPR`,
+        defaultMessage: 'CPR',
       },
     },
     snapshot: {

@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
 import { Box, Button, Drop, ResponsiveContext } from 'grommet';
 import { Menu, Close, FormDown, FormUp } from 'grommet-icons';
@@ -181,7 +181,7 @@ const ButtonNavSecondary = styled(Button)`
 
 const DEPENDENCIES = ['countries'];
 
-export function Header({ nav, intl, onLoadData, match, route, theme }) {
+export function Header({ nav, onLoadData, match, route, theme }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -262,7 +262,7 @@ export function Header({ nav, intl, onLoadData, match, route, theme }) {
                     justify="between"
                     fill="horizontal"
                   >
-                    <span>{intl.formatMessage(messages.countries)}</span>
+                    <FormattedMessage {...rootMessages.labels.countries} />
                     {showCountries && <FormUp size="large" />}
                     {!showCountries && <FormDown size="large" />}
                   </Box>
@@ -304,7 +304,7 @@ export function Header({ nav, intl, onLoadData, match, route, theme }) {
                     justify="between"
                     fill="horizontal"
                   >
-                    <span>{intl.formatMessage(messages.metrics)}</span>
+                    <FormattedMessage {...rootMessages.labels.metrics} />
                     {showCountries && <FormUp size="large" />}
                     {!showCountries && <FormDown size="large" />}
                   </Box>
@@ -352,7 +352,6 @@ Header.propTypes = {
   match: PropTypes.string,
   route: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
   theme: PropTypes.object,
 };
 
@@ -385,4 +384,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(withTheme(Header)));
+export default compose(withConnect)(withTheme(Header));
