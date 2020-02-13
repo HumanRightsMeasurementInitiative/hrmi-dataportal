@@ -66,6 +66,7 @@ export const COLUMNS = {
     GDP_CURRENT_US: 'gdp_per_capita_current_usd',
   },
   COUNTRIES: {
+    CODE: 'country_code',
     HIGH_INCOME: 'high_income_country',
     REGION: 'region_code',
     SUBREGION: 'subregion_code',
@@ -73,6 +74,10 @@ export const COLUMNS = {
     TREATIES: 'treaty_codes',
     STATUS: 'country_status',
     RELATED: 'related_country_code',
+  },
+  FEATURED: {
+    CAT: 'featured_category',
+    COUNTRIES: 'country_codes',
   },
 };
 
@@ -154,6 +159,10 @@ export const DATA_RESOURCES = [
   {
     key: 'esrIndicatorScores',
     file: 'esr-indicator-scores.csv',
+  },
+  {
+    key: 'featured',
+    file: 'featured_v3.csv',
   },
 ];
 
@@ -283,7 +292,7 @@ export const PEOPLE_GROUPS = [
 
 export const METRIC_TYPES = ['dimensions', 'rights', 'indicators'];
 
-export const RIGHTS_TYPES = ['cpr', 'esr'];
+export const RIGHTS_TYPES = ['esr', 'cpr'];
 
 // d: dimensions, r: rights
 export const SCALES = [
@@ -320,62 +329,6 @@ export const DIMENSIONS = [
 
 export const RIGHTS = [
   {
-    key: 'arrest',
-    code: 'arrest',
-    dimension: 'physint',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
-    key: 'assembly',
-    code: 'assem',
-    dimension: 'empowerment',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
-    key: 'disappearance',
-    code: 'disap',
-    dimension: 'physint',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
-    key: 'death-penalty',
-    code: 'dpex',
-    dimension: 'physint',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
-    key: 'extrajud-killing',
-    code: 'exkill',
-    dimension: 'physint',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
-    key: 'expression',
-    code: 'express',
-    dimension: 'empowerment',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
-    key: 'participation',
-    code: 'polpart',
-    dimension: 'empowerment',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
-    key: 'torture',
-    code: 'tort',
-    dimension: 'physint',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
     key: 'education',
     code: 'Education',
     dimension: 'esr',
@@ -409,6 +362,62 @@ export const RIGHTS = [
     dimension: 'esr',
     type: 'esr',
     resource: 'esrScores',
+  },
+  {
+    key: 'arrest',
+    code: 'arrest',
+    dimension: 'physint',
+    type: 'cpr',
+    resource: 'cprScores',
+  },
+  {
+    key: 'disappearance',
+    code: 'disap',
+    dimension: 'physint',
+    type: 'cpr',
+    resource: 'cprScores',
+  },
+  {
+    key: 'death-penalty',
+    code: 'dpex',
+    dimension: 'physint',
+    type: 'cpr',
+    resource: 'cprScores',
+  },
+  {
+    key: 'extrajud-killing',
+    code: 'exkill',
+    dimension: 'physint',
+    type: 'cpr',
+    resource: 'cprScores',
+  },
+  {
+    key: 'assembly',
+    code: 'assem',
+    dimension: 'empowerment',
+    type: 'cpr',
+    resource: 'cprScores',
+  },
+  {
+    key: 'expression',
+    code: 'express',
+    dimension: 'empowerment',
+    type: 'cpr',
+    resource: 'cprScores',
+  },
+  {
+    key: 'participation',
+    code: 'polpart',
+    dimension: 'empowerment',
+    type: 'cpr',
+    resource: 'cprScores',
+  },
+  {
+    key: 'torture',
+    code: 'tort',
+    dimension: 'physint',
+    type: 'cpr',
+    resource: 'cprScores',
   },
 ];
 

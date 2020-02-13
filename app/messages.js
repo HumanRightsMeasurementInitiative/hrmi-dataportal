@@ -1914,4 +1914,30 @@ export default defineMessages({
       defaultMessage: 'WLF',
     },
   },
+  featured: {
+    A: {
+      id: `${scope}.featured.A`,
+      defaultMessage: 'In the news',
+    },
+    B: {
+      id: `${scope}.featured.B`,
+      defaultMessage: 'UPR upcoming',
+    },
+    C: {
+      id: `${scope}.featured.C`,
+      defaultMessage: 'Featured C',
+    },
+    D: {
+      id: `${scope}.featured.D`,
+      defaultMessage: 'Featured D',
+    },
+    E: {
+      id: `${scope}.featured.E`,
+      defaultMessage: 'Featured E',
+    },
+    F: {
+      id: `${scope}.featured.F`,
+      defaultMessage: 'Featured F',
+    },
+  },
 });

@@ -8,13 +8,22 @@ import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Box, Button, Drop } from 'grommet';
 import { FormDown, FormUp } from 'grommet-icons';
 
 import styled, { withTheme } from 'styled-components';
 
-import { loadDataIfNeeded, navigate } from 'containers/App/actions';
+import { getCountriesFeaturedOnly } from 'containers/App/selectors';
+import {
+  loadDataIfNeeded,
+  navigate,
+  selectCountry,
+  selectMetric,
+} from 'containers/App/actions';
+import { COLUMNS, RIGHTS } from 'containers/App/constants';
+
 import Search from 'containers/Search';
 import NavCountry from 'containers/Search/NavCountry';
 import NavMetric from 'containers/Search/NavMetric';
@@ -28,9 +37,11 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 
 import PageTitle from 'styled/PageTitle';
 import ButtonText from 'styled/ButtonText';
+import ButtonPlain from 'styled/ButtonPlain';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
+import rootMessages from 'messages';
 
 import messages from './messages';
 
@@ -68,14 +79,17 @@ const DropdownButton = styled(Button)`
   }
 `;
 
-const DEPENDENCIES = [
-  'countries',
-  'cprScores',
-  'esrScores',
-  // 'esrIndicatorScores', // consider removing to improve IE11/Edge performance
-];
+const DEPENDENCIES = ['countries', 'featured'];
 
-export function PathOverview({ onLoadData, nav, intl, theme }) {
+export function PathOverview({
+  onLoadData,
+  nav,
+  intl,
+  theme,
+  countries,
+  onSelectMetric,
+  onSelectCountry,
+}) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -175,14 +189,75 @@ export function PathOverview({ onLoadData, nav, intl, theme }) {
         <ContentMaxWidth maxWidth="1024px" column>
           Section Featured Countries Carousel
           <ButtonText onClick={() => nav('countries')}>
-            All countries
+            Countries overview
           </ButtonText>
+          <div>
+            {countries &&
+              countries.map(country => {
+                if (!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]) {
+                  console.log(
+                    'Country code not in language files:',
+                    country[COLUMNS.COUNTRIES.CODE],
+                  );
+                  return null;
+                }
+                const cats = country.featured.split(',');
+                const catLabels = cats.reduce(
+                  (memo, cat) =>
+                    `${memo}${memo === '' ? '' : ', '}${intl.formatMessage(
+                      rootMessages.featured[cat],
+                    )}`,
+                  '',
+                );
+                return (
+                  <div>
+                    <ButtonPlain
+                      onClick={() =>
+                        onSelectCountry(country[COLUMNS.COUNTRIES.CODE])
+                      }
+                    >
+                      {rootMessages.countries[
+                        country[COLUMNS.COUNTRIES.CODE]
+                      ] && (
+                        <FormattedMessage
+                          {...rootMessages.countries[
+                            country[COLUMNS.COUNTRIES.CODE]
+                          ]}
+                        />
+                      )}
+                      {!rootMessages.countries[
+                        country[COLUMNS.COUNTRIES.CODE]
+                      ] && <span>{country[COLUMNS.COUNTRIES.CODE]}</span>}
+                      {` (${catLabels})`}
+                    </ButtonPlain>
+                  </div>
+                );
+              })}
+          </div>
         </ContentMaxWidth>
       </SectionContainer>
       <SectionContainer border>
         <ContentMaxWidth maxWidth="1024px" column>
           Section Rights Carousel
-          <ButtonText onClick={() => nav('metrics')}>All rights</ButtonText>
+          <ButtonText onClick={() => nav('metrics')}>
+            Rights overview
+          </ButtonText>
+          <div>
+            {RIGHTS &&
+              RIGHTS.map(r => (
+                <div>
+                  <ButtonPlain
+                    onClick={() => {
+                      onSelectMetric(r.key);
+                    }}
+                  >
+                    {`${intl.formatMessage(rootMessages.rights[r.key])} (${
+                      r.dimension
+                    })`}
+                  </ButtonPlain>
+                </div>
+              ))}
+          </div>
         </ContentMaxWidth>
       </SectionContainer>
       <SectionContainer border>
@@ -215,13 +290,22 @@ PathOverview.propTypes = {
   intl: intlShape.isRequired,
   dataReady: PropTypes.bool,
   theme: PropTypes.object,
+  countries: PropTypes.array,
+  onSelectMetric: PropTypes.func,
+  onSelectCountry: PropTypes.func,
 };
+
+const mapStateToProps = createStructuredSelector({
+  countries: state => getCountriesFeaturedOnly(state),
+});
 
 export function mapDispatchToProps(dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
+    onSelectCountry: country => dispatch(selectCountry(country)),
+    onSelectMetric: metric => dispatch(selectMetric(metric)),
     // navigate to location
     nav: location => {
       dispatch(
@@ -239,7 +323,7 @@ export function mapDispatchToProps(dispatch) {
 }
 
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 
