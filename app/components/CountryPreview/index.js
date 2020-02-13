@@ -220,8 +220,11 @@ export function CountryPreview({
   onCountryHover,
 }) {
   if (!country) return null;
-  if (!rootMessages.countries[country.country_code]) {
-    console.log('Country code not in language files:', country.country_code);
+  if (!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]) {
+    console.log(
+      'Country code not in language files:',
+      country[COLUMNS.COUNTRIES.CODE],
+    );
   }
   return (
     <ResponsiveContext.Consumer>
@@ -234,9 +237,11 @@ export function CountryPreview({
         >
           {country && (
             <Button
-              onClick={() => onSelectCountry(country.country_code)}
-              onMouseOver={() => onCountryHover(country.country_code)}
-              onFocus={() => onCountryHover(country.country_code)}
+              onClick={() => onSelectCountry(country[COLUMNS.COUNTRIES.CODE])}
+              onMouseOver={() =>
+                onCountryHover(country[COLUMNS.COUNTRIES.CODE])
+              }
+              onFocus={() => onCountryHover(country[COLUMNS.COUNTRIES.CODE])}
               onMouseOut={() => onCountryHover(false)}
               onBlur={() => onCountryHover(false)}
             >
@@ -278,14 +283,18 @@ export function CountryPreview({
                 <Box pad={{ top: 'small' }}>
                   <Text textAlign="center" alignSelf="center">
                     <CountryLabel>
-                      {rootMessages.countries[country.country_code] && (
+                      {rootMessages.countries[
+                        country[COLUMNS.COUNTRIES.CODE]
+                      ] && (
                         <FormattedMessage
-                          {...rootMessages.countries[country.country_code]}
+                          {...rootMessages.countries[
+                            country[COLUMNS.COUNTRIES.CODE]
+                          ]}
                         />
                       )}
-                      {!rootMessages.countries[country.country_code] && (
-                        <span>{country.country_code}</span>
-                      )}
+                      {!rootMessages.countries[
+                        country[COLUMNS.COUNTRIES.CODE]
+                      ] && <span>{country[COLUMNS.COUNTRIES.CODE]}</span>}
                       {country && country.high_income_country === '1' && (
                         <span>
                           {` (${intl.formatMessage(
