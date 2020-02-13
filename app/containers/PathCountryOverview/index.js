@@ -7,9 +7,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import styled from 'styled-components';
+import { Box } from 'grommet';
 
 import { STANDARDS } from 'containers/App/constants';
 
@@ -25,14 +27,16 @@ import {
 import { loadDataIfNeeded } from 'containers/App/actions';
 
 import OverviewCountries from 'containers/OverviewCountries';
-import TabContainer from 'containers/TabContainer';
+
 import rootMessages from 'messages';
+
+import HowToRead from 'containers/HowToRead';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-
+import ColumnContent from 'styled/ColumnContent';
 import PageTitle from 'styled/PageTitle';
 
 import { filterByAssessment } from 'utils/filters';
@@ -40,6 +44,18 @@ import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
 
 import messages from './messages';
+
+const HowToReadWrapper = styled.div`
+  position: relative;
+  right: 0px;
+  top: 4px;
+  text-align: right;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    position: absolute;
+    right: ${({ theme }) => theme.global.edgeSize.medium};
+    top: 0;
+  }
+`;
 
 const DEPENDENCIES = [
   'countries',
@@ -53,7 +69,6 @@ const DEPENDENCIES = [
 export function PathCountryOverview({
   countries,
   scoresAllCountries,
-  intl,
   standard,
   assessed,
   scale,
@@ -80,39 +95,42 @@ export function PathCountryOverview({
     <ContentWrap>
       <ContentContainer header>
         <ContentMaxWidth>
-          <PageTitle level={1}>
-            <FormattedMessage {...messages.aboveTitle} />
+          <PageTitle level={2}>
+            <FormattedMessage {...messages.title} />
           </PageTitle>
         </ContentMaxWidth>
       </ContentContainer>
       <ContentMaxWidth>
-        <TabContainer
-          tabs={[
-            {
-              key: 'countries',
-              title: intl.formatMessage(rootMessages.tabs.countries, {
-                count: filteredCountries ? `${filteredCountries.length} ` : '',
-              }),
-              titleMobile: intl.formatMessage(
-                rootMessages.tabs.mobile.countries,
-              ),
-              content: props => (
-                <OverviewCountries
-                  countries={filteredCountries}
-                  scoresAllCountries={scoresAllCountries}
-                  auxIndicators={auxIndicators}
-                  dataReady={dataReady}
-                  {...props}
-                />
-              ),
-              howToRead: {
-                contxt: 'PathCountryOverview',
-                chart: 'Diamonds',
-                data: scale,
-              },
-            },
-          ]}
-        />
+        <Box direction="row" margin="0 auto" width="100%">
+          <Box direction="column" flex style={{ position: 'relative' }}>
+            <div>
+              <FormattedMessage
+                {...rootMessages.tabs.countries}
+                values={{
+                  count: filteredCountries
+                    ? `${filteredCountries.length} `
+                    : '',
+                }}
+              />
+            </div>
+            <HowToReadWrapper>
+              <HowToRead
+                htr="tab-countries"
+                contxt="PathCountryOverview"
+                chart="Diamonds"
+                data={scale}
+              />
+            </HowToReadWrapper>
+            <ColumnContent>
+              <OverviewCountries
+                countries={filteredCountries}
+                scoresAllCountries={scoresAllCountries}
+                auxIndicators={auxIndicators}
+                dataReady={dataReady}
+              />
+            </ColumnContent>
+          </Box>
+        </Box>
       </ContentMaxWidth>
     </ContentWrap>
   );
@@ -123,7 +141,6 @@ PathCountryOverview.propTypes = {
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  intl: intlShape.isRequired,
   dataReady: PropTypes.bool,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -152,4 +169,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(PathCountryOverview));
+export default compose(withConnect)(PathCountryOverview);
