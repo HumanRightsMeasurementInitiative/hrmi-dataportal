@@ -308,14 +308,14 @@ export const SCALES = [
 
 export const DIMENSIONS = [
   {
-    key: 'empowerment',
-    code: 'empower',
+    key: 'physint',
+    code: 'physint',
     type: 'cpr',
     resource: 'cprScores',
   },
   {
-    key: 'physint',
-    code: 'physint',
+    key: 'empowerment',
+    code: 'empower',
     type: 'cpr',
     resource: 'cprScores',
   },
@@ -392,6 +392,13 @@ export const RIGHTS = [
     resource: 'cprScores',
   },
   {
+    key: 'torture',
+    code: 'tort',
+    dimension: 'physint',
+    type: 'cpr',
+    resource: 'cprScores',
+  },
+  {
     key: 'assembly',
     code: 'assem',
     dimension: 'empowerment',
@@ -409,13 +416,6 @@ export const RIGHTS = [
     key: 'participation',
     code: 'polpart',
     dimension: 'empowerment',
-    type: 'cpr',
-    resource: 'cprScores',
-  },
-  {
-    key: 'torture',
-    code: 'tort',
-    dimension: 'physint',
     type: 'cpr',
     resource: 'cprScores',
   },
