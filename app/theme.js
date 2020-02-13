@@ -3,6 +3,8 @@ import { css } from 'styled-components';
 export const SIZES = {
   header: {
     height: 100,
+    heightTop: 44,
+    heightBottom: 56,
   },
   aside: {
     width: [0, 0, 280, 360, 440],

@@ -87,7 +87,6 @@ export function OverviewCountries({
   sortOrder,
   onSortSelect,
   onOrderChange,
-  onCountryHover,
   dataReady,
   hasAside,
   auxIndicators,
@@ -191,7 +190,7 @@ export function OverviewCountries({
                         benchmark={benchmarkDetails}
                         onSelectCountry={() => onSelectCountry(c.country_code)}
                         indicators={indicators}
-                        onCountryHover={code => onCountryHover(code)}
+                        onCountryHover={code => console.log(code)}
                       />
                     )}
                   </InfiniteScroll>
@@ -234,7 +233,6 @@ OverviewCountries.propTypes = {
   sortOrder: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
-  onCountryHover: PropTypes.func,
   dataReady: PropTypes.bool,
   hasAside: PropTypes.bool,
 };

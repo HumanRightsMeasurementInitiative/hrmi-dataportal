@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box } from 'grommet';
 
@@ -14,4 +15,18 @@ const Styled = styled(Box)`
   }
 `;
 
-export default props => <Styled direction="row" align="center" {...props} />;
+export function ContentMaxWidth(props) {
+  return (
+    <Styled
+      direction={props.column ? 'column' : 'row'}
+      align={props.column ? 'start' : 'center'}
+      {...props}
+    />
+  );
+}
+
+ContentMaxWidth.propTypes = {
+  column: PropTypes.bool,
+};
+
+export default ContentMaxWidth;
