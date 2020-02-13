@@ -21,4 +21,12 @@ export default defineMessages({
         'Explore the human rights performance of countries across 3 categories and 12 rights',
     },
   },
+  countries: {
+    id: `${scope}.countries`,
+    defaultMessage: 'Countries',
+  },
+  metrics: {
+    id: `${scope}.metrics`,
+    defaultMessage: 'Metrics',
+  },
 });

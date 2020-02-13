@@ -33,12 +33,12 @@ export function NavMetric({ onSelectMetric, intl, onClose, size }) {
         onClose={() => onClose()}
         search={search}
         onSearch={s => setSearch(s)}
-        placeholder={intl.formatMessage(messages.search.metricSearch)}
+        placeholder={intl.formatMessage(messages.metricSearch)}
         size={size}
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
-          {!hasMetrics && <FormattedMessage {...messages.search.noResults} />}
+          {!hasMetrics && <FormattedMessage {...messages.noResults} />}
           {dimensions.length > 0 && (
             <NavOptionGroup
               label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
