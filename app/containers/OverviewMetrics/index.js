@@ -106,10 +106,6 @@ export function OverviewMetrics({
       }));
     }
   }
-  const maxScores = scoresByMetric.reduce(
-    (memo, sm) => Math.max(memo, sm.scores.length),
-    0,
-  );
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -187,7 +183,6 @@ export function OverviewMetrics({
                                 ? benchmarkDetails.column
                                 : COLUMNS.CPR.MEAN
                             }
-                            maxScores={maxScores}
                             activeCountry={
                               isMinSize(size, 'large') ? activeCountry : null
                             }
@@ -220,7 +215,6 @@ export function OverviewMetrics({
                                 level={2}
                                 maxValue={r.type === 'esr' ? 100 : 10}
                                 color={r.dimension}
-                                maxScores={maxScores}
                                 column={
                                   r.type === 'esr'
                                     ? benchmarkDetails.column
