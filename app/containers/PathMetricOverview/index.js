@@ -15,7 +15,7 @@ import { Box } from 'grommet';
 import { STANDARDS } from 'containers/App/constants';
 
 import {
-  getCountriesFiltered,
+  getCountries,
   getScoresByCountry,
   getStandardSearch,
   getAssessedSearch,
@@ -114,7 +114,7 @@ PathMetricOverview.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  countries: state => getCountriesFiltered(state),
+  countries: state => getCountries(state),
   scoresAllCountries: state => getScoresByCountry(state),
   standard: state => getStandardSearch(state),
   assessed: state => getAssessedSearch(state),

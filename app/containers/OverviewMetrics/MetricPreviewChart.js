@@ -12,7 +12,7 @@ const sortData = (a, b, column) => {
   return parseFloat(a[column]) > parseFloat(b[column]) ? 1 : -1;
 };
 
-const HEIGHT = [50, 50, 25];
+const HEIGHT = [50, 160, 80];
 const Styled = styled.div`
   width: 100%;
   position: relative;
@@ -37,16 +37,12 @@ export function MetricPreviewChart({
   maxValue,
   color,
   level = 1,
-  maxScores,
   theme,
   activeCountry,
   loading,
 }) {
-  let sorted =
+  const sorted =
     data && data.scores && data.scores.sort((a, b) => sortData(a, b, column));
-  if (sorted && sorted.length > 0 && sorted.length < maxScores) {
-    sorted = [{ [column]: 0 }, ...sorted];
-  }
   return (
     <Styled height={HEIGHT[level]}>
       {loading && <NoDataHint hint="loading" />}
@@ -59,7 +55,7 @@ export function MetricPreviewChart({
           margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
         >
           <AreaSeries
-            data={[{ x: 1, y: 0 }, { x: maxScores, y: maxValue }]}
+            data={[{ x: 1, y: 0 }, { x: sorted.length, y: maxValue }]}
             style={{ opacity: 0 }}
           />
           <VerticalBarSeries
@@ -69,15 +65,16 @@ export function MetricPreviewChart({
             ]}
             colorDomain={[0, 1]}
             colorScale="category"
-            barWidth={getMaxWidth(maxScores)}
-            data={sorted.map((d, index, list) => {
+            barWidth={getMaxWidth(sorted.length)}
+            stroke="#fff"
+            data={sorted.map((d, index) => {
               const c =
                 !activeCountry ||
                 (activeCountry && d.country_code === activeCountry)
                   ? 0
                   : 1;
               return {
-                x: index + (maxScores - list.length) + 1,
+                x: index + 1,
                 y: parseFloat(d[column]),
                 color: c,
               };
@@ -96,7 +93,6 @@ MetricPreviewChart.propTypes = {
   color: PropTypes.string,
   maxValue: PropTypes.number,
   level: PropTypes.number,
-  maxScores: PropTypes.number,
   theme: PropTypes.object,
   loading: PropTypes.bool,
 };
