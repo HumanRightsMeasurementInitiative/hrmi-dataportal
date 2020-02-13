@@ -252,6 +252,40 @@ export const getCountriesGrammar = createSelector(
   getData,
   data => data.countriesGrammar,
 );
+export const getFeatured = createSelector(
+  getData,
+  data => data.featured,
+);
+export const getCountriesFeatured = createSelector(
+  getFeatured,
+  getCountries,
+  (featured, countries) => {
+    if (!featured || !countries) {
+      return null;
+    }
+    return countries.map(country => ({
+      ...country,
+      featured: featured.reduce((memo2, cat) => {
+        if (
+          cat[COLUMNS.FEATURED.COUNTRIES].indexOf(
+            country[COLUMNS.COUNTRIES.CODE],
+          ) > -1
+        ) {
+          return `${memo2}${memo2 === '' ? '' : ','}${
+            cat[COLUMNS.FEATURED.CAT]
+          }`;
+        }
+        return memo2;
+      }, ''),
+    }));
+  },
+);
+export const getCountriesFeaturedOnly = createSelector(
+  getCountriesFeatured,
+  countries =>
+    countries &&
+    countries.filter(country => country.featured && country.featured !== ''),
+);
 
 // data / content
 const getContent = createSelector(
