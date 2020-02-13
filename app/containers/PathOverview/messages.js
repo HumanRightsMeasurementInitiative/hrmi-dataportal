@@ -9,24 +9,14 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.components.Overview';
 
 export default defineMessages({
-  welcome: {
-    heading: {
-      id: `${scope}.welcome.heading`,
-      defaultMessage:
-        "Welcome to the Human Rights Measurement Initiative (HRMI)'s data portal",
-    },
-    intro: {
-      id: `${scope}.welcome.intro`,
-      defaultMessage:
-        'Explore the human rights performance of countries across 3 categories and 12 rights',
-    },
+  heading: {
+    id: `${scope}.title`,
+    defaultMessage:
+      "Welcome to the Human Rights Measurement Initiative (HRMI)'s data portal",
   },
-  countries: {
-    id: `${scope}.countries`,
-    defaultMessage: 'Countries',
-  },
-  metrics: {
-    id: `${scope}.metrics`,
-    defaultMessage: 'Metrics',
+  intro: {
+    id: `${scope}.intro`,
+    defaultMessage:
+      'Explore the human rights performance of countries across 3 categories and 12 rights',
   },
 });

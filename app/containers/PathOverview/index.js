@@ -107,9 +107,9 @@ export function PathOverview({
       <SectionContainer border>
         <ContentMaxWidth maxWidth="1024px" column>
           <PageTitle level={3}>
-            <FormattedMessage {...messages.welcome.heading} />
+            <FormattedMessage {...messages.title} />
           </PageTitle>
-          <FormattedMessage {...messages.welcome.intro} />
+          <FormattedMessage {...messages.intro} />
         </ContentMaxWidth>
       </SectionContainer>
       <SectionContainer border background="dark">
@@ -133,7 +133,7 @@ export function PathOverview({
                   justify="between"
                   fill="horizontal"
                 >
-                  <span>{intl.formatMessage(messages.countries)}</span>
+                  <FormattedMessage {...rootMessages.labels.countries} />
                   {showCountries && <FormUp size="large" />}
                   {!showCountries && <FormDown size="large" />}
                 </Box>
@@ -166,7 +166,7 @@ export function PathOverview({
                   justify="between"
                   fill="horizontal"
                 >
-                  <span>{intl.formatMessage(messages.metrics)}</span>
+                  <FormattedMessage {...rootMessages.labels.metrics} />
                   {showCountries && <FormUp size="large" />}
                   {!showCountries && <FormDown size="large" />}
                 </Box>
