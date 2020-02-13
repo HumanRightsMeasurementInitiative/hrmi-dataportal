@@ -7,9 +7,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Box } from 'grommet';
 
 import { STANDARDS } from 'containers/App/constants';
 
@@ -23,14 +24,13 @@ import {
 import { loadDataIfNeeded } from 'containers/App/actions';
 
 import OverviewMetrics from 'containers/OverviewMetrics';
-import TabContainer from 'containers/TabContainer';
 import rootMessages from 'messages';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-
+import ColumnContent from 'styled/ColumnContent';
 import PageTitle from 'styled/PageTitle';
 
 import { filterByAssessment } from 'utils/filters';
@@ -51,7 +51,6 @@ const DEPENDENCIES = [
 export function PathMetricOverview({
   countries,
   scoresAllCountries,
-  intl,
   standard,
   assessed,
   onLoadData,
@@ -77,30 +76,27 @@ export function PathMetricOverview({
     <ContentWrap>
       <ContentContainer header>
         <ContentMaxWidth>
-          <PageTitle level={1}>
-            <FormattedMessage {...messages.aboveTitle} />
+          <PageTitle level={2}>
+            <FormattedMessage {...messages.title} />
           </PageTitle>
         </ContentMaxWidth>
       </ContentContainer>
-      <ContentMaxWidth>
-        <TabContainer
-          tabs={[
-            {
-              key: 'metrics',
-              title: intl.formatMessage(rootMessages.tabs.metrics),
-              titleMobile: intl.formatMessage(rootMessages.tabs.mobile.metrics),
-              content: props => (
-                <OverviewMetrics
-                  countries={filteredCountries}
-                  scoresAllCountries={scoresAllCountries}
-                  dataReady={dataReady}
-                  activeCountry={activeCountry}
-                  {...props}
-                />
-              ),
-            },
-          ]}
-        />
+      <ContentMaxWidth maxWidth="786px">
+        <Box direction="row" margin="0 auto" width="100%">
+          <Box direction="column" flex style={{ position: 'relative' }}>
+            <div>
+              <FormattedMessage {...rootMessages.tabs.metrics} />
+            </div>
+            <ColumnContent>
+              <OverviewMetrics
+                countries={filteredCountries}
+                scoresAllCountries={scoresAllCountries}
+                dataReady={dataReady}
+                activeCountry={activeCountry}
+              />
+            </ColumnContent>
+          </Box>
+        </Box>
       </ContentMaxWidth>
     </ContentWrap>
   );
@@ -110,7 +106,6 @@ PathMetricOverview.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   countries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scoresAllCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  intl: intlShape.isRequired,
   dataReady: PropTypes.bool,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -138,4 +133,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(PathMetricOverview));
+export default compose(withConnect)(PathMetricOverview);
