@@ -13,16 +13,4 @@ export default defineMessages({
     id: `${scope}.appTitle`,
     defaultMessage: 'Data Portal',
   },
-  language: {
-    id: `${scope}.language`,
-    defaultMessage: 'Language: ',
-  },
-  countries: {
-    id: `${scope}.countries`,
-    defaultMessage: 'Countries',
-  },
-  metrics: {
-    id: `${scope}.metrics`,
-    defaultMessage: 'Metrics',
-  },
 });
