@@ -34,13 +34,13 @@ export function NavCountry({
         onClose={() => onClose()}
         search={search}
         onSearch={s => setSearch(s)}
-        placeholder={intl.formatMessage(messages.search.countrySearch)}
+        placeholder={intl.formatMessage(messages.countrySearch)}
         size={size}
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
           {(!sorted || sorted.length === 0) && (
-            <FormattedMessage {...messages.search.noResults} />
+            <FormattedMessage {...messages.noResults} />
           )}
           {sorted && sorted.length > 0 && (
             <NavOptionGroup

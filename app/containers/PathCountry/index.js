@@ -191,11 +191,6 @@ export function PathCountry({
             {
               key: 'report-esr',
               title: intl.formatMessage(rootMessages.tabs.reportESR),
-              howToRead: {
-                contxt: 'PathCountry',
-                chart: 'Summary',
-                data: scale,
-              },
               content: props => (
                 <CountryReportESR
                   {...props}
@@ -224,11 +219,6 @@ export function PathCountry({
             {
               key: 'report-cpr',
               title: intl.formatMessage(rootMessages.tabs.reportCPR),
-              howToRead: {
-                contxt: 'PathCountry',
-                chart: 'Summary',
-                data: scale,
-              },
               content: props => (
                 <CountryReportCPR
                   {...props}

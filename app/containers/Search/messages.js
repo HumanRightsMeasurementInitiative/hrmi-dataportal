@@ -1,0 +1,36 @@
+/*
+ * Header Messages
+ *
+ * This contains all the text for the Header container.
+ */
+
+import { defineMessages } from 'react-intl';
+
+export const scope = 'hrmi.containers.Search';
+
+export default defineMessages({
+  countries: {
+    id: `${scope}.countries`,
+    defaultMessage: 'Countries',
+  },
+  metrics: {
+    id: `${scope}.metrics`,
+    defaultMessage: 'Metrics',
+  },
+  allSearch: {
+    id: `${scope}.allSearch`,
+    defaultMessage: 'Search country or metric',
+  },
+  noResults: {
+    id: `${scope}.noResults`,
+    defaultMessage: 'We are sorry! Your search did not return any results.',
+  },
+  countrySearch: {
+    id: `${scope}.countrySearch`,
+    defaultMessage: 'Search country',
+  },
+  metricSearch: {
+    id: `${scope}.metricSearch`,
+    defaultMessage: 'Search metric',
+  },
+});

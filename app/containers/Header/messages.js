@@ -25,22 +25,4 @@ export default defineMessages({
     id: `${scope}.metrics`,
     defaultMessage: 'Metrics',
   },
-  search: {
-    countrySearch: {
-      id: `${scope}.search.countrySearch`,
-      defaultMessage: 'Search country',
-    },
-    metricSearch: {
-      id: `${scope}.search.metricSearch`,
-      defaultMessage: 'Search metric',
-    },
-    allSearch: {
-      id: `${scope}.search.allSearch`,
-      defaultMessage: 'Search country or metric',
-    },
-    noResults: {
-      id: `${scope}.search.noResults`,
-      defaultMessage: 'We are sorry! Your search did not return any results.',
-    },
-  },
 });

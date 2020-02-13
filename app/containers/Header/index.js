@@ -10,18 +10,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
-import { Box, Button, Drop, ResponsiveContext, TextInput } from 'grommet';
-import {
-  Menu,
-  Close,
-  FormClose,
-  Search,
-  FormDown,
-  FormUp,
-} from 'grommet-icons';
+import styled, { withTheme } from 'styled-components';
+import { Box, Button, Drop, ResponsiveContext } from 'grommet';
+import { Menu, Close, FormDown, FormUp } from 'grommet-icons';
 
-import { getRouterMatch } from 'containers/App/selectors';
+import { getRouterMatch, getRouterRoute } from 'containers/App/selectors';
 
 import ContentContainer from 'styled/ContentContainer';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
@@ -32,18 +25,17 @@ import Icon from 'components/Icon';
 import LocaleToggle from 'containers/LocaleToggle';
 import { appLocales } from 'i18n';
 import { PAGES } from 'containers/App/constants';
-import { navigate, loadDataIfNeeded, trackEvent } from 'containers/App/actions';
+import { navigate, loadDataIfNeeded } from 'containers/App/actions';
 
 // import { isMinSize, isMaxSize } from 'utils/responsive';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
+import Search from 'containers/Search';
+import NavCountry from 'containers/Search/NavCountry';
+import NavMetric from 'containers/Search/NavMetric';
 
 import rootMessages from 'messages';
 import messages from './messages';
-
-import NavCountry from './NavCountry';
-import NavMetric from './NavMetric';
-import SearchResults from './SearchResults';
 
 const Styled = styled.header`
   position: fixed;
@@ -51,14 +43,11 @@ const Styled = styled.header`
   left: 0;
   z-index: 9;
   width: 100%;
-  height: ${({ theme }) => theme.sizes.header.height}px;
-  color: ${props => props.theme.global.colors.white};
-`;
-
-const StyledTextInput = styled(TextInput)`
-  &::placeholder {
-    color: black;
-  }
+  height: ${({ theme, showSecondary }) =>
+    showSecondary
+      ? theme.sizes.header.heightTop
+      : theme.sizes.header.heightTop + theme.sizes.header.heightBottom}px;
+  color: ${({ theme }) => theme.global.colors.white};
 `;
 
 const NavBarTop = props => (
@@ -66,25 +55,32 @@ const NavBarTop = props => (
     direction="row"
     align="center"
     background="dark-1"
-    height="44px"
+    height={`${props.theme.sizes.header.heightTop}px`}
     width="full"
     fill="horizontal"
     pad={{ horizontal: 'small', vertical: 'none' }}
     {...props}
   />
 );
+NavBarTop.propTypes = {
+  theme: PropTypes.object,
+};
+
 const NavBarBottom = props => (
   <Box
     elevation="large"
     direction="row"
     align="center"
     background="dark"
-    height="56px"
+    height={`${props.theme.sizes.header.heightBottom}px`}
     width="full"
     fill="horizontal"
     {...props}
   />
 );
+NavBarBottom.propTypes = {
+  theme: PropTypes.object,
+};
 
 const BrandButton = styled(Button)`
   height: 44px;
@@ -182,41 +178,10 @@ const ButtonNavSecondary = styled(Button)`
     width: auto;
   }
 `;
-// prettier-ignore
-// const PrimaryDropButton = styled(Button)`
-//   padding: 10px 24px;
-//   background-color: ${({ theme, active }) => active ? theme.global.colors['dark-3'] : 'transparent' };
-//   border-top: 1px solid;
-//   border-bottom: 1px solid;
-//   border-color: ${({ theme }) => theme.global.colors['light-4']};
-//   background-color: ${({ theme, active }) => active ? theme.global.colors['light-3'] : 'transparent' };
-//   display: block;
-//   width: 100%;
-//   text-align: center;
-//   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-//     display: inline-block;
-//     height: 44px;
-//     padding: 5px 10px;
-//     border: none;
-//     width: auto;
-//   }
-//   &:hover {
-//     background-color: ${({ theme}) => theme.global.colors['dark-3']};
-//   }
-//   &:active {
-//     background-color: ${({ theme }) => theme.global.colors['dark-3']};
-//   }
-//   &:visited {
-//     background-color: ${({ theme }) => theme.global.colors['dark-3']};
-//   }
-//   &:focus {
-//     background-color: ${({ theme }) => theme.global.colors['dark-3']};
-//   }
-// `;
 
 const DEPENDENCIES = ['countries'];
 
-export function Header({ nav, intl, onLoadData, match, searched }) {
+export function Header({ nav, intl, onLoadData, match, route, theme }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -227,21 +192,19 @@ export function Header({ nav, intl, onLoadData, match, searched }) {
   const [showMenu, setShowMenu] = useState(false);
   const [showCountries, setShowCountries] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
-  const [search, setSearch] = useState('');
   const countryTarget = useRef(null);
   const metricTarget = useRef(null);
-  const searchRef = useRef(null);
 
   const onHome = () => {
     setShowMenu(false);
     nav({ pathname: '', search: '' });
   };
-
+  const showSecondary = route !== '';
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Styled role="banner">
-          <NavBarTop>
+        <Styled role="banner" showSecondary={showSecondary}>
+          <NavBarTop theme={theme}>
             <BrandButton plain onClick={onHome}>
               <Icon name="BRAND" />
             </BrandButton>
@@ -281,135 +244,102 @@ export function Header({ nav, intl, onLoadData, match, searched }) {
               </MenuGroup>
             </MenuList>
           </NavBarTop>
-          <NavBarBottom>
-            <ButtonNavSecondary
-              plain
-              first
-              active={showCountries}
-              onClick={() => {
-                setShowMetrics(false);
-                setShowCountries(!showCountries);
-              }}
-              icon={<Icon name="COUNTRY" style={{ minWidth: '24px' }} />}
-              label={
-                <Box
-                  direction="row"
-                  align="center"
-                  justify="between"
-                  fill="horizontal"
-                >
-                  <span>{intl.formatMessage(messages.countries)}</span>
-                  {showCountries && <FormUp size="large" />}
-                  {!showCountries && <FormDown size="large" />}
-                </Box>
-              }
-              ref={countryTarget}
-            />
-            {showCountries && size === 'small' && (
-              <NavCountry onClose={() => setShowCountries(false)} size={size} />
-            )}
-            {showCountries && isMinSize(size, 'medium') && (
-              <Drop
-                align={{ top: 'bottom', left: 'left' }}
-                target={countryTarget.current}
-                onClickOutside={() => setShowCountries(false)}
-                overflow="hidden"
-              >
+          {showSecondary && (
+            <NavBarBottom theme={theme}>
+              <ButtonNavSecondary
+                plain
+                first
+                active={showCountries}
+                onClick={() => {
+                  setShowMetrics(false);
+                  setShowCountries(!showCountries);
+                }}
+                icon={<Icon name="COUNTRY" style={{ minWidth: '24px' }} />}
+                label={
+                  <Box
+                    direction="row"
+                    align="center"
+                    justify="between"
+                    fill="horizontal"
+                  >
+                    <span>{intl.formatMessage(messages.countries)}</span>
+                    {showCountries && <FormUp size="large" />}
+                    {!showCountries && <FormDown size="large" />}
+                  </Box>
+                }
+                ref={countryTarget}
+              />
+              {showCountries && size === 'small' && (
                 <NavCountry
                   onClose={() => setShowCountries(false)}
                   size={size}
                 />
-              </Drop>
-            )}
-            <ButtonNavSecondary
-              plain
-              active={showMetrics}
-              onClick={() => {
-                setShowCountries(false);
-                setShowMetrics(!showMetrics);
-              }}
-              icon={<Icon name="METRICS" style={{ minWidth: '24px' }} />}
-              justify="between"
-              label={
-                <Box
-                  direction="row"
-                  align="center"
-                  justify="between"
-                  fill="horizontal"
+              )}
+              {showCountries && isMinSize(size, 'medium') && (
+                <Drop
+                  align={{ top: 'bottom', left: 'left' }}
+                  target={countryTarget.current}
+                  onClickOutside={() => setShowCountries(false)}
+                  overflow="hidden"
                 >
-                  <span>{intl.formatMessage(messages.metrics)}</span>
-                  {showCountries && <FormUp size="large" />}
-                  {!showCountries && <FormDown size="large" />}
-                </Box>
-              }
-              ref={metricTarget}
-            />
-            {showMetrics && size === 'small' && (
-              <NavMetric onClose={() => setShowMetrics(false)} size={size} />
-            )}
-            {showMetrics && isMinSize(size, 'medium') && (
-              <Drop
-                align={{ top: 'bottom', left: 'left' }}
-                target={metricTarget.current}
-                onClickOutside={() => setShowMetrics(false)}
-              >
-                <NavMetric onClose={() => setShowMetrics(false)} size={size} />
-              </Drop>
-            )}
-            <ButtonNavSecondary
-              key="at-risk"
-              plain
-              last
-              active={match === 'at-risk'}
-              onClick={() => {
-                setShowMenu(false);
-                nav('page/at-risk/');
-              }}
-            >
-              <FormattedMessage {...rootMessages.page['at-risk']} />
-            </ButtonNavSecondary>
-            {isMinSize(size, 'medium') && (
-              <Box flex={{ grow: 1 }} margin={{ horizontal: 'medium' }}>
-                <Box
-                  background="white"
-                  direction="row"
-                  align="center"
-                  pad={{ horizontal: 'small', vertical: 'xsmall' }}
-                  round="small"
-                  ref={searchRef}
-                  style={{ maxWidth: '500px' }}
-                >
-                  <StyledTextInput
-                    plain
-                    value={search}
-                    onChange={evt => {
-                      if (evt && evt.target) {
-                        searched(evt.target.value);
-                        setSearch(evt.target.value);
-                      }
-                    }}
-                    placeholder={intl.formatMessage(messages.search.allSearch)}
-                    pad="xsmall"
+                  <NavCountry
+                    onClose={() => setShowCountries(false)}
+                    size={size}
                   />
-                  {search && search.length > 0 && (
-                    <Button onClick={() => setSearch('')} pad="xsmall">
-                      <FormClose />
-                    </Button>
-                  )}
-                  {(!search || search.length === 0) && <Search />}
-                </Box>
-              </Box>
-            )}
-            {search.length > 1 && isMinSize(size, 'medium') && (
-              <Drop
-                align={{ top: 'bottom', left: 'left' }}
-                target={searchRef.current}
-                onClickOutside={() => setSearch('')}
+                </Drop>
+              )}
+              <ButtonNavSecondary
+                plain
+                active={showMetrics}
+                onClick={() => {
+                  setShowCountries(false);
+                  setShowMetrics(!showMetrics);
+                }}
+                icon={<Icon name="METRICS" style={{ minWidth: '24px' }} />}
+                justify="between"
+                label={
+                  <Box
+                    direction="row"
+                    align="center"
+                    justify="between"
+                    fill="horizontal"
+                  >
+                    <span>{intl.formatMessage(messages.metrics)}</span>
+                    {showCountries && <FormUp size="large" />}
+                    {!showCountries && <FormDown size="large" />}
+                  </Box>
+                }
+                ref={metricTarget}
+              />
+              {showMetrics && size === 'small' && (
+                <NavMetric onClose={() => setShowMetrics(false)} size={size} />
+              )}
+              {showMetrics && isMinSize(size, 'medium') && (
+                <Drop
+                  align={{ top: 'bottom', left: 'left' }}
+                  target={metricTarget.current}
+                  onClickOutside={() => setShowMetrics(false)}
+                >
+                  <NavMetric
+                    onClose={() => setShowMetrics(false)}
+                    size={size}
+                  />
+                </Drop>
+              )}
+              <ButtonNavSecondary
+                key="at-risk"
+                plain
+                last
+                active={match === 'at-risk'}
+                onClick={() => {
+                  nav('page/at-risk/');
+                }}
               >
-                <SearchResults onClose={() => setSearch('')} search={search} />
-              </Drop>
-            )}
-          </NavBarBottom>
+                <FormattedMessage {...rootMessages.page['at-risk']} />
+              </ButtonNavSecondary>
+              {isMinSize(size, 'medium') && <Search margin />}
+            </NavBarBottom>
+          )}
         </Styled>
       )}
     </ResponsiveContext.Consumer>
@@ -420,31 +350,15 @@ Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
   match: PropTypes.string,
+  route: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
-  downloadClicked: PropTypes.func.isRequired,
-  searched: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
+  theme: PropTypes.object,
 };
 
 const mapDispatchToProps = dispatch => ({
   onLoadData: () => {
     DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
-  },
-  downloadClicked: () => {
-    dispatch(
-      trackEvent({
-        category: 'Download',
-        action: 'Agree & download clicked',
-      }),
-    );
-  },
-  searched: value => {
-    dispatch(
-      trackEvent({
-        category: 'Search',
-        action: value,
-      }),
-    );
   },
   // navigate to location
   nav: location => {
@@ -463,6 +377,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = createStructuredSelector({
   match: state => getRouterMatch(state),
+  route: state => getRouterRoute(state),
 });
 
 const withConnect = connect(
@@ -470,4 +385,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(Header));
+export default compose(withConnect)(injectIntl(withTheme(Header)));

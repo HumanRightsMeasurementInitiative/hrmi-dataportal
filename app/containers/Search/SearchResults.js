@@ -36,7 +36,7 @@ export function SearchResults({
     <Box direction="column" pad="medium">
       {!hasCountries && !hasMetrics && (
         <Hint italic>
-          <FormattedMessage {...messages.search.noResults} />
+          <FormattedMessage {...messages.noResults} />
         </Hint>
       )}
       {hasCountries && (
