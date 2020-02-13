@@ -611,3 +611,12 @@ export const INDICATORS = [
 
 export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';
 export const GA_PROPERTY_ID = 'UA-103815452-2';
+
+export const PATHS = {
+  HOME: '',
+  METRICS: 'metrics',
+  METRIC: 'metric',
+  COUNTRIES: 'countries',
+  COUNTRY: 'country',
+  PAGE: 'page',
+};
