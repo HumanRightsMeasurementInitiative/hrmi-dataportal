@@ -31,6 +31,7 @@ import CookieConsent from 'containers/CookieConsent';
 
 import headerMessages from 'containers/Header/messages';
 
+import { PATHS } from './constants';
 import ScrollToTop from './ScrollToTop';
 
 import { DEFAULT_LOCALE } from '../../i18n';
@@ -78,20 +79,26 @@ export function App({ match, intl }) {
         <Main>
           <Switch>
             <Route exact path={`/${locale}`} component={PathOverview} />
-            <Route path={`/${locale}/metrics`} component={PathMetricOverview} />
             <Route
-              path={`/${locale}/metric/:metric/:country?`}
+              path={`/${locale}/${PATHS.METRICS}`}
+              component={PathMetricOverview}
+            />
+            <Route
+              path={`/${locale}/${PATHS.METRIC}/:metric/:country?`}
               component={PathMetric}
             />
             <Route
-              path={`/${locale}/countries`}
+              path={`/${locale}/${PATHS.COUNTRIES}`}
               component={PathCountryOverview}
             />
             <Route
-              path={`/${locale}/country/:country/:metric?`}
+              path={`/${locale}/${PATHS.COUNTRY}/:country/:metric?`}
               component={PathCountry}
             />
-            <Route path={`/${locale}/page/:page`} component={PathPage} />
+            <Route
+              path={`/${locale}/${PATHS.PAGE}/:page`}
+              component={PathPage}
+            />
             <Route path={`/${locale}`} component={PathNotFoundPage} />
           </Switch>
         </Main>

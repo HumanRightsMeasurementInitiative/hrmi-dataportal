@@ -257,7 +257,7 @@ export function mapDispatchToProps(dispatch) {
     onRemoveFilter: (key, value) =>
       dispatch(
         navigate(
-          { pathname: '' },
+          {},
           {
             replace: false,
             deleteParams: [
