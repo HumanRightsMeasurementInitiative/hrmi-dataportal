@@ -27,6 +27,7 @@ import {
 import { loadDataIfNeeded } from 'containers/App/actions';
 
 import OverviewCountries from 'containers/OverviewCountries';
+import Close from 'containers/Close';
 
 import rootMessages from 'messages';
 
@@ -95,6 +96,7 @@ export function PathCountryOverview({
     <ContentWrap>
       <ContentContainer header>
         <ContentMaxWidth>
+          <Close />
           <PageTitle level={2}>
             <FormattedMessage {...messages.title} />
           </PageTitle>

@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import styled, { css } from 'styled-components';
 import { Box, Text } from 'grommet';
-import { Close as CloseIcon } from 'grommet-icons';
+import { Close as CloseIcon, FormPrevious } from 'grommet-icons';
 import { FormattedMessage } from 'react-intl';
 
 import { navigate } from 'containers/App/actions';
@@ -61,11 +61,13 @@ const Styled = styled(Box)`
     `}
 `;
 
+// prettier-ignore
 const StyledButtonIcon = styled(ButtonIcon)`
   background: ${({ theme, subtle }) =>
     subtle ? 'transparent' : theme.global.colors.highlight};
   &:hover {
-    background: ${({ theme }) => theme.global.colors.highlight2};
+    background: ${({ theme, subtle }) =>
+    theme.global.colors[subtle ? 'highlight' : 'highlight2']};
   }
 `;
 
@@ -85,9 +87,9 @@ function Close({
   keepTab = false,
   onClick,
   topRight,
-  float = true,
-  text = true,
-  plain = false,
+  float = false,
+  text = false,
+  plain = true,
 }) {
   const [scrollTop, setScrollTop] = useState(0);
 
@@ -103,7 +105,7 @@ function Close({
   return (
     <Styled
       direction="row"
-      pad={topRight || float ? { top: 'medium' } : 'none'}
+      pad={topRight || float ? { top: 'medium' } : { right: 'xsmall' }}
       align="center"
       topRight={topRight}
       float={float}
@@ -133,7 +135,7 @@ function Close({
         </Visible>
       )}
       <StyledButtonIcon
-        subtle={plain}
+        subtle={plain && !topRight}
         float={float}
         onClick={() =>
           // prettier-ignore
@@ -149,7 +151,8 @@ function Close({
             })
         }
       >
-        <CloseIcon size="xlarge" color="dark" />
+        {topRight && <CloseIcon size="xlarge" color="dark" />}
+        {!topRight && <FormPrevious size="xxlarge" color="dark" />}
       </StyledButtonIcon>
     </Styled>
   );

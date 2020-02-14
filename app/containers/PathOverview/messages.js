@@ -9,7 +9,7 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.components.Overview';
 
 export default defineMessages({
-  heading: {
+  title: {
     id: `${scope}.title`,
     defaultMessage:
       "Welcome to the Human Rights Measurement Initiative (HRMI)'s data portal",

@@ -22,6 +22,7 @@ import {
   OPEN_HOW_TO,
   COOKIECONSENT_CHECKED,
   GA_INITIALISED,
+  PATHS,
 } from './constants';
 
 // The initial state of the App
@@ -61,7 +62,17 @@ export const initialState = {
     return memo;
   }, {}),
   // the last location to go back to when closing routes
-  closeTarget: {
+  closeTargetPage: {
+    pathname: '',
+    search: '',
+    hash: '',
+  },
+  closeTargetCountry: {
+    pathname: '',
+    search: '',
+    hash: '',
+  },
+  closeTargetMetric: {
     pathname: '',
     search: '',
     hash: '',
@@ -74,8 +85,27 @@ const appReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
       case LOCATION_CHANGE:
-        if (action.payload.location.pathname.indexOf('page') === -1) {
-          draft.closeTarget = action.payload.location;
+        if (action.payload.location.pathname) {
+          const splitPath = action.payload.location.pathname.split('/');
+          const route = splitPath.length > 2 ? splitPath[2] : '';
+          console.log(splitPath);
+          // last non-page for pages
+          if (route !== PATHS.PAGE) {
+            draft.closeTargetPage = action.payload.location;
+          }
+          // go back to country overview if visited prior
+          if (route === PATHS.COUNTRIES) {
+            draft.closeTargetCountry = action.payload.location;
+          }
+          // go back to metric overview if visited prior
+          if (route === PATHS.METRICS) {
+            draft.closeTargetMetric = action.payload.location;
+          }
+          // ... that is unless we hit the home page in the meantime
+          if (route === PATHS.HOME) {
+            draft.closeTargetCountry = action.payload.location;
+            draft.closeTargetMetric = action.payload.location;
+          }
         }
         draft.howToRead = false;
         break;

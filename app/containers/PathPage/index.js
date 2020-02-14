@@ -14,7 +14,7 @@ import styled from 'styled-components';
 import { intlShape, injectIntl } from 'react-intl';
 
 import { loadContentIfNeeded } from 'containers/App/actions';
-import { getContentByKey, getCloseTarget } from 'containers/App/selectors';
+import { getContentByKey, getCloseTargetPage } from 'containers/App/selectors';
 
 import Close from 'containers/Close';
 import HTMLWrapper from 'components/HTMLWrapper';
@@ -30,6 +30,7 @@ import saga from 'containers/App/saga';
 import rootMessages from 'messages';
 
 const StyledContent = styled.div`
+  width: 100%;
   margin-top: 30px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     margin-top: 20px;
@@ -56,7 +57,7 @@ export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
         <meta name="description" content="Description of Page" />
       </Helmet>
       <ContentContainer direction="column" header>
-        <Close closeTarget={closeTarget} keepTab topRight />
+        <Close closeTarget={closeTarget} keepTab topRight float />
         <ContentMaxWidth maxWidth="700px">
           <StyledContent>
             <PageTitle level={1}>{pageTitle}</PageTitle>
@@ -79,7 +80,7 @@ PathPage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   content: (state, props) => getContentByKey(state, props.match.params.page),
-  closeTarget: state => getCloseTarget(state),
+  closeTarget: state => getCloseTargetPage(state),
 });
 
 function mapDispatchToProps(dispatch) {

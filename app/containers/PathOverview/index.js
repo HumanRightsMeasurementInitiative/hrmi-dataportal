@@ -210,7 +210,7 @@ export function PathOverview({
                   '',
                 );
                 return (
-                  <div>
+                  <div key={country[COLUMNS.COUNTRIES.CODE]}>
                     <ButtonPlain
                       onClick={() =>
                         onSelectCountry(country[COLUMNS.COUNTRIES.CODE])
@@ -245,7 +245,7 @@ export function PathOverview({
           <div>
             {RIGHTS &&
               RIGHTS.map(r => (
-                <div>
+                <div key={r.key}>
                   <ButtonPlain
                     onClick={() => {
                       onSelectMetric(r.key);

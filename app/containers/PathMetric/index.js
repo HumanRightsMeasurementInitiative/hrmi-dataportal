@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { Box } from 'grommet';
 
@@ -23,14 +24,15 @@ import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 import HeaderLinks from 'components/HeaderLinks';
-
+import { PATHS } from 'containers/App/constants';
 import rootMessages from 'messages';
 
 import getMetricDetails from 'utils/metric-details';
 
 import { navigate } from 'containers/App/actions';
+import { getCloseTargetMetric } from 'containers/App/selectors';
 
-export function PathMetric({ match, intl, onMetricClick }) {
+export function PathMetric({ match, intl, onMetricClick, closeTarget }) {
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
   const metricTitle = intl.formatMessage(
@@ -69,7 +71,7 @@ export function PathMetric({ match, intl, onMetricClick }) {
       </Helmet>
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
-          <Close float />
+          <Close closeTarget={closeTarget} />
           <Box direction="column">
             <HeaderLinks
               onItemClick={key => onMetricClick(key)}
@@ -117,15 +119,23 @@ export function PathMetric({ match, intl, onMetricClick }) {
 PathMetric.propTypes = {
   intl: intlShape.isRequired,
   onMetricClick: PropTypes.func,
+  closeTarget: PropTypes.object,
   match: PropTypes.object,
 };
+
+const mapStateToProps = createStructuredSelector({
+  closeTarget: state => getCloseTargetMetric(state),
+});
 
 export function mapDispatchToProps(dispatch) {
   return {
     onMetricClick: code =>
       dispatch(
         navigate(
-          { pathname: code === 'all' ? '' : `/metric/${code}` },
+          {
+            pathname:
+              code === 'all' ? `/${PATHS.METRICS}` : `/${PATHS.METRIC}/${code}`,
+          },
           {
             trackEvent: {
               category: 'Data',
@@ -139,7 +149,7 @@ export function mapDispatchToProps(dispatch) {
 }
 
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 
