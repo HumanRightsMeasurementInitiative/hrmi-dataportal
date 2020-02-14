@@ -262,18 +262,14 @@ function CountryAbout({
           </Button>
         </Box>
       </Box>
-      {showFAQs && (
-        <FAQs
-          questions={['scale', 'year', 'standards', 'benchmarks', 'indicators']}
-        />
-      )}
+      <FAQs questions={showFAQs} />
     </Box>
   );
 }
 
 CountryAbout.propTypes = {
   onCategoryClick: PropTypes.func,
-  showFAQs: PropTypes.bool,
+  showFAQs: PropTypes.array,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),

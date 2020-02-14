@@ -620,3 +620,13 @@ export const PATHS = {
   COUNTRY: 'country',
   PAGE: 'page',
 };
+export const FAQS = {
+  COUNTRY_SNAPSHOT: ['scale', 'year', 'benchmarks', 'standards'],
+  COUNTRY_ESR: ['benchmarks', 'standards'],
+  COUNTRY_CPR: [],
+  ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],
+  ESR_RIGHT: ['measureRightESR', 'benchmarks', 'standards'],
+  ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],
+  CPR_DIMENSION: ['measureDimensionCPR'],
+  CPR_RIGHT: ['measureRightCPR'],
+};
