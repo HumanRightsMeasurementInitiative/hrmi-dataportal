@@ -17,8 +17,7 @@ import { Box } from 'grommet';
 import rootMessages from 'messages';
 
 import Close from 'containers/Close';
-import CountryReportESR from 'components/CountryReportESR';
-import CountryReportCPR from 'components/CountryReportCPR';
+import CountryReport from 'components/CountryReport';
 import CountrySnapshot from 'components/CountrySnapshot';
 import CountryPeople from 'components/CountryPeople';
 import CountryAbout from 'components/CountryAbout';
@@ -61,6 +60,7 @@ import {
   INCOME_GROUPS,
   COUNTRY_FILTERS,
   PATHS,
+  FAQS,
 } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
@@ -198,8 +198,9 @@ export function PathCountry({
               key: 'report-esr',
               title: intl.formatMessage(rootMessages.tabs.reportESR),
               content: props => (
-                <CountryReportESR
+                <CountryReport
                   {...props}
+                  type="esr"
                   countryTitle={countryTitle}
                   dimensions={dimensions}
                   rights={rights}
@@ -226,8 +227,9 @@ export function PathCountry({
               key: 'report-cpr',
               title: intl.formatMessage(rootMessages.tabs.reportCPR),
               content: props => (
-                <CountryReportCPR
+                <CountryReport
                   {...props}
+                  type="cpr"
                   countryTitle={countryTitle}
                   dimensions={dimensions}
                   rights={rights}
@@ -269,19 +271,38 @@ export function PathCountry({
             {
               key: 'about',
               title: intl.formatMessage(rootMessages.tabs.about),
-              content: props => (
-                <CountryAbout
-                  {...props}
-                  country={country}
-                  auxIndicators={auxIndicators}
-                  currentGDP={currentGDP}
-                  pppGDP={pppGDP}
-                  onCategoryClick={onCategoryClick}
-                  showFAQs={
-                    props && (props.activeTab === 0 || props.activeTab === 2)
-                  }
-                />
-              ),
+              content: props => {
+                let faqs = [];
+                if (
+                  props &&
+                  (props.activeTab === 0 || props.activeTab === 'snapshot')
+                ) {
+                  faqs = FAQS.COUNTRY_SNAPSHOT;
+                }
+                if (
+                  props &&
+                  (props.activeTab === 1 || props.activeTab === 'esr-report')
+                ) {
+                  faqs = FAQS.COUNTRY_ESR;
+                }
+                if (
+                  props &&
+                  (props.activeTab === 2 || props.activeTab === 'cpr-report')
+                ) {
+                  faqs = FAQS.COUNTRY_CPR;
+                }
+                return (
+                  <CountryAbout
+                    {...props}
+                    country={country}
+                    auxIndicators={auxIndicators}
+                    currentGDP={currentGDP}
+                    pppGDP={pppGDP}
+                    onCategoryClick={onCategoryClick}
+                    showFAQs={faqs}
+                  />
+                );
+              },
             },
           ]}
         />

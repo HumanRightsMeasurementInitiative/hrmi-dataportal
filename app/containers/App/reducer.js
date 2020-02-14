@@ -88,7 +88,6 @@ const appReducer = (state = initialState, action) =>
         if (action.payload.location.pathname) {
           const splitPath = action.payload.location.pathname.split('/');
           const route = splitPath.length > 2 ? splitPath[2] : '';
-          console.log(splitPath);
           // last non-page for pages
           if (route !== PATHS.PAGE) {
             draft.closeTargetPage = action.payload.location;

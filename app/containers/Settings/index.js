@@ -25,6 +25,7 @@ import {
 } from 'containers/App/selectors';
 
 import { setStandard, setBenchmark } from 'containers/App/actions';
+import { PATHS } from 'containers/App/constants';
 
 import getMetricDetails from 'utils/metric-details';
 import { isMinSize, isMaxSize } from 'utils/responsive';
@@ -97,15 +98,16 @@ const StyledButton = styled(Button)`
 `;
 
 export const showSettings = ({ route, match, tabIndex }) => {
-  if (route === 'page') return false;
-  if (route === 'metric') {
+  if (route === PATHS.PAGE) return false;
+  if (route === PATHS.METRIC) {
     const metricDetails = getMetricDetails(match);
     if (metricDetails && metricDetails.type === 'cpr') return false;
+    return true;
   }
-  if (route === 'country') {
+  if (route === PATHS.COUNTRY) {
     return tabIndex === 0;
   }
-  return route === 'countries' || route === 'metrics';
+  return route === PATHS.COUNTRIES || route === PATHS.METRICS;
 };
 
 const showScale = ({ route }) => {

@@ -57,7 +57,7 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
             </Heading>
             <Box>
               <StyledUL>
-                {metricInfo.source.split(',').map(source => (
+                {metricInfo.source_codes.split(',').map(source => (
                   <li key={source}>
                     <FormattedMessage {...rootMessages.sources[source]} />
                   </li>

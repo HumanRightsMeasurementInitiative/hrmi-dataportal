@@ -17,12 +17,8 @@ import { FormNext, FormPrevious } from 'grommet-icons';
 
 import FAQs from 'containers/FAQs';
 import MetricAbout from 'components/MetricAbout';
-import { STANDARDS, RIGHTS, INDICATORS } from 'containers/App/constants';
-import {
-  getIndicatorInfo,
-  getESRIndicators,
-  getBenchmarkSearch,
-} from 'containers/App/selectors';
+import { STANDARDS, RIGHTS, INDICATORS, FAQS } from 'containers/App/constants';
+import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 import Button from 'styled/Button';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -76,7 +72,6 @@ export function MetricAside({
   allIndicators,
   onLoadData,
   onSelectMetric,
-  benchmark,
   intl,
 }) {
   useInjectSaga({ key: 'app', saga });
@@ -99,20 +94,11 @@ export function MetricAside({
     children = RIGHTS.filter(
       r => r.dimension === metric.key && typeof r.aggregate === 'undefined',
     );
-    if (metric.type === 'cpr') {
-      questions = [...questions, 'measureDimensionCPR'];
-    } else {
-      questions = [
-        ...questions,
-        'measureDimensionESR',
-        'standards',
-        'benchmarks',
-      ];
-    }
+    questions = metric.type === 'cpr' ? FAQS.CPR_DIMENSION : FAQS.ESR_DIMENSION;
   }
   if (metricType === 'rights' && metric.type === 'cpr') {
     children = RIGHTS.filter(r => r.aggregate === metric.key);
-    questions = [...questions, 'measureRightCPR'];
+    questions = FAQS.CPR_RIGHT;
   }
   if (allIndicators && metricType === 'rights' && metric.type === 'esr') {
     children = STANDARDS.map(as => ({
@@ -125,16 +111,10 @@ export function MetricAside({
         );
       }),
     }));
-    if (benchmark === 'adjusted') {
-      questions = [...questions, 'measureRightESR'];
-    }
-    questions = [...questions, 'standards', 'benchmarks'];
+    questions = FAQS.ESR_RIGHT;
   }
   if (metricType === 'indicators') {
-    // if (benchmark === 'adjusted') {
-    //   questions = [...questions, 'measureIndicators'];
-    // }
-    questions = [...questions, 'indicators'];
+    questions = FAQS.ESR_INDICATOR;
   }
 
   return (
@@ -270,11 +250,9 @@ MetricAside.propTypes = {
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   intl: intlShape.isRequired,
   ancestors: PropTypes.array,
-  benchmark: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  benchmark: state => getBenchmarkSearch(state),
   metricInfo: (state, { metric }) => {
     if (metric.metricType === 'indicators') {
       return getIndicatorInfo(state, metric.code);
