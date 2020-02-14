@@ -22,19 +22,6 @@ import MethodologyLink from './MethodologyLink';
 
 import messages from './messages';
 
-const QUESTIONS = [
-  'measureDimensionCPR',
-  'measureRightCPR',
-  'measureDimensionESR',
-  'measureRightESR',
-  'measureIndicators',
-  'scale',
-  'year',
-  'standards',
-  'benchmarks',
-  'indicators',
-];
-
 const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'measureRightESR') {
     return (
@@ -120,7 +107,6 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
 
 function FAQs({ questions, intl, metric, navMethodology }) {
   const [actives, setActive] = useState([]);
-  const validQuestions = questions.filter(q => QUESTIONS.includes(q));
   return (
     <Box pad={{ vertical: 'large' }}>
       <Accordion
@@ -128,7 +114,7 @@ function FAQs({ questions, intl, metric, navMethodology }) {
         activeIndex={actives}
         onActive={newActive => setActive(newActive)}
       >
-        {validQuestions.map((q, index) => (
+        {questions.map((q, index) => (
           <AccordionPanel
             key={q}
             header={
