@@ -210,9 +210,17 @@ export const getSortOrderSearch = createSelector(
 // global sub-state
 const getGlobal = state => state.global || initialState;
 
-export const getCloseTarget = createSelector(
+export const getCloseTargetPage = createSelector(
   getGlobal,
-  global => global.closeTarget,
+  global => global.closeTargetPage,
+);
+export const getCloseTargetMetric = createSelector(
+  getGlobal,
+  global => global.closeTargetMetric,
+);
+export const getCloseTargetCountry = createSelector(
+  getGlobal,
+  global => global.closeTargetCountry,
 );
 
 // get data / content
