@@ -47,6 +47,7 @@ import {
   getESRYear,
   getCPRYear,
   getDependenciesReady,
+  getCloseTargetCountry,
 } from 'containers/App/selectors';
 
 import {
@@ -56,7 +57,11 @@ import {
   trackEvent,
 } from 'containers/App/actions';
 
-import { INCOME_GROUPS, COUNTRY_FILTERS } from 'containers/App/constants';
+import {
+  INCOME_GROUPS,
+  COUNTRY_FILTERS,
+  PATHS,
+} from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -96,6 +101,7 @@ export function PathCountry({
   cprYear,
   dataReady,
   onTrackEvent,
+  closeTarget,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -127,7 +133,7 @@ export function PathCountry({
       </Helmet>
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
-          <Close float />
+          <Close closeTarget={closeTarget} />
           <Box direction="column">
             {country && incomeGroup && (
               <HeaderLinks
@@ -293,6 +299,7 @@ PathCountry.propTypes = {
   activeTab: PropTypes.number,
   onAtRiskClick: PropTypes.func,
   match: PropTypes.object,
+  closeTarget: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -335,6 +342,7 @@ const mapStateToProps = createStructuredSelector({
     getLatestCountry2011PPPGDP(state, match.params.country),
   auxIndicators: (state, { match }) =>
     getAuxIndicatorsForCountry(state, match.params.country),
+  closeTarget: state => getCloseTargetCountry(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -346,7 +354,10 @@ export function mapDispatchToProps(dispatch) {
       const deleteParams = COUNTRY_FILTERS;
       dispatch(
         navigate(
-          { pathname: '', search: key === 'all' ? '' : `?${key}=${value}` },
+          {
+            pathname: `/${PATHS.COUNTRIES}`,
+            search: key === 'all' ? '' : `?${key}=${value}`,
+          },
           {
             replace: false,
             deleteParams: deleteParams.filter(p => p !== key),
@@ -359,7 +370,6 @@ export function mapDispatchToProps(dispatch) {
         ),
       );
     },
-    onClose: () => dispatch(navigate('')),
     onAtRiskClick: () => {
       window.scrollTo(0, 0);
       return dispatch(setTab(1));

@@ -209,7 +209,7 @@
   "hrmi.labels.loading": "Loading...",
   "hrmi.labels.atRiskFor": "People at risk for",
   "hrmi.labels.allCountries": "All countries",
-  "hrmi.labels.allMetrics": "All categories",
+  "hrmi.labels.allMetrics": "All rights",
   "hrmi.labels.countries": "Countries",
   "hrmi.labels.metrics": "Rights",
   "hrmi.hints.noResults": "We could not find any countries for your current filter settings",
