@@ -29,16 +29,18 @@ const Label = styled(Text)`
   font-weight: 600;
 `;
 
-const prepPopulationValue = (value, intl) => {
+const prepPopulationValue = (value, intl, year) => {
   if (parseInt(value, 10) > 1000000) {
     return {
       value: intl.formatNumber(roundValue(value / 1000000, 1)),
       abbrev: 'millions',
+      year,
     };
   }
   return {
     value: intl.formatNumber(roundValue(value / 1000, 1)),
     abbrev: 'thousands',
+    year,
   };
 };
 
@@ -80,10 +82,7 @@ function CountryAbout({
         <Box direction="row" margin={{ bottom: 'xsmall' }}>
           <Box width="50%">
             <Label>
-              <FormattedMessage
-                {...messages.population}
-                values={{ year: auxIndicators.year }}
-              />
+              <FormattedMessage {...messages.population} />
             </Label>
           </Box>
           <Box width="50%">
@@ -93,67 +92,65 @@ function CountryAbout({
                 values={prepPopulationValue(
                   auxIndicators[COLUMNS.AUX.POPULATION],
                   intl,
+                  auxIndicators.year,
                 )}
               />
             </Text>
           </Box>
         </Box>
       )}
-      {hasCurrentGDP && (
+      {(hasCurrentGDP || hasPPPGDP) && (
         <Box direction="row" margin={{ bottom: 'xsmall' }}>
           <Box direction="column" width="50%">
             <Label>
-              <FormattedMessage
-                {...messages.gdp}
-                values={{ year: currentGDP.year }}
-              />
-              <Tooltip
-                iconSize="medium"
-                text={intl.formatMessage(messages.gdpTooltip)}
-              />
+              <FormattedMessage {...messages.gdp} />
             </Label>
-            <Text size="xsmall">
-              <FormattedMessage {...messages.gdpHint} />
-            </Text>
           </Box>
           <Box direction="column" width="50%">
-            <Text>
-              <FormattedMessage
-                {...messages.gdpValue}
-                values={{
-                  value: intl.formatNumber(roundValue(currentGDP.value, 0)),
-                }}
-              />
-            </Text>
-          </Box>
-        </Box>
-      )}
-      {hasPPPGDP && (
-        <Box direction="row" margin={{ bottom: 'xsmall' }}>
-          <Box direction="column" width="50%">
-            <Label>
-              <FormattedMessage
-                {...messages.gdp}
-                values={{ year: pppGDP.year }}
-              />
-              <Tooltip
-                iconSize="medium"
-                text={intl.formatMessage(messages.gdpTooltipPPP)}
-              />
-            </Label>
-            <Text size="xsmall">
-              <FormattedMessage {...messages.gdpHintPPP} />
-            </Text>
-          </Box>
-          <Box direction="column" width="50%">
-            <Text>
-              <FormattedMessage
-                {...messages.gdpValue}
-                values={{
-                  value: intl.formatNumber(roundValue(pppGDP.value, 0)),
-                }}
-              />
-            </Text>
+            {hasCurrentGDP && (
+              <Box direction="column" margin={{ bottom: 'xsmall' }}>
+                <Text>
+                  <FormattedMessage
+                    {...messages.gdpValue}
+                    values={{
+                      value: intl.formatNumber(roundValue(currentGDP.value, 0)),
+                      year: currentGDP.year,
+                    }}
+                  />
+                </Text>
+                <Box direction="row">
+                  <Text size="xsmall">
+                    <FormattedMessage {...messages.gdpHint} />
+                  </Text>
+                  <Tooltip
+                    iconSize="medium"
+                    text={intl.formatMessage(messages.gdpTooltip)}
+                  />
+                </Box>
+              </Box>
+            )}
+            {hasPPPGDP && (
+              <Box direction="column">
+                <Text>
+                  <FormattedMessage
+                    {...messages.gdpValue}
+                    values={{
+                      value: intl.formatNumber(roundValue(pppGDP.value, 0)),
+                      year: pppGDP.year,
+                    }}
+                  />
+                </Text>
+                <Box direction="row">
+                  <Text size="xsmall">
+                    <FormattedMessage {...messages.gdpHintPPP} />
+                  </Text>
+                  <Tooltip
+                    iconSize="medium"
+                    text={intl.formatMessage(messages.gdpTooltipPPP)}
+                  />
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
       )}
