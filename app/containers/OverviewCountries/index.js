@@ -166,7 +166,12 @@ export function OverviewCountries({
                 </Box>
               )}
               {dataReady && other && other.length > 0 && (
-                <Box direction="column" margin={{ top: 'medium' }} border="top">
+                <Box
+                  direction="column"
+                  margin={{ top: 'medium' }}
+                  border="top"
+                  width="100%"
+                >
                   <Box direction="row" margin={{ vertical: 'small' }}>
                     <Hint italic>
                       <FormattedMessage {...rootMessages.hints.noSortData} />
