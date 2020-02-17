@@ -123,8 +123,8 @@ export function OverviewCountries({
           {sorted && scoresAllCountries && (
             <Box
               width="100%"
-              pad={{ bottom: 'medium', top: size === 'small' ? 'xsmall' : '0' }}
-              align="center"
+              pad={{ top: size === 'small' ? 'xsmall' : '0' }}
+              align="start"
               responsive={false}
             >
               {!dataReady && <LoadingIndicator />}
@@ -140,6 +140,7 @@ export function OverviewCountries({
                   overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
                   margin="0"
+                  align="start"
                 >
                   <InfiniteScroll items={sorted} step={36} show={0}>
                     {(c, index) => (
@@ -207,7 +208,16 @@ export function OverviewCountries({
                   </Box>
                 </Box>
               )}
-              {hasResults && <Source />}
+            </Box>
+          )}
+          {sorted && scoresAllCountries && hasResults && (
+            <Box
+              width="100%"
+              pad={{ bottom: 'medium', top: '0' }}
+              align="center"
+              responsive={false}
+            >
+              {<Source />}
             </Box>
           )}
         </MainColumn>
