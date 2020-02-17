@@ -102,7 +102,7 @@ function CountryAbout({
           </Box>
           <Box direction="column" width="50%">
             {hasCurrentGDP && (
-              <Box direction="column" margin={{ bottom: 'xsmall' }}>
+              <Box direction="column" margin={{ bottom: 'small' }}>
                 <Text>
                   <FormattedMessage
                     {...messages.gdpValue}
@@ -112,7 +112,7 @@ function CountryAbout({
                     }}
                   />
                 </Text>
-                <Box direction="row">
+                <div>
                   <Text size="xsmall">
                     <FormattedMessage {...messages.gdpHint} />
                   </Text>
@@ -120,11 +120,11 @@ function CountryAbout({
                     iconSize="medium"
                     text={intl.formatMessage(messages.gdpTooltip)}
                   />
-                </Box>
+                </div>
               </Box>
             )}
             {hasPPPGDP && (
-              <Box direction="column">
+              <Box direction="column" margin={{ bottom: 'xsmall' }}>
                 <Text>
                   <FormattedMessage
                     {...messages.gdpValue}
@@ -134,7 +134,7 @@ function CountryAbout({
                     }}
                   />
                 </Text>
-                <Box direction="row">
+                <div>
                   <Text size="xsmall">
                     <FormattedMessage {...messages.gdpHintPPP} />
                   </Text>
@@ -142,7 +142,7 @@ function CountryAbout({
                     iconSize="medium"
                     text={intl.formatMessage(messages.gdpTooltipPPP)}
                   />
-                </Box>
+                </div>
               </Box>
             )}
           </Box>
