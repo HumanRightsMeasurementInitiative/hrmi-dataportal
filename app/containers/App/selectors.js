@@ -1349,13 +1349,13 @@ export const getLatestCountryCurrentGDP = createSelector(
   getAuxIndicators,
   (country, data) => {
     if (!data) return false;
-    const sortedCurrentGDP = data
+    const sorted = data
       .filter(d => d.country_code === country && d[COLUMNS.AUX.GDP_CURRENT_US])
       .sort((a, b) => (parseInt(a.year, 10) > parseInt(b.year, 10) ? -1 : 1));
-    if (sortedCurrentGDP.length > 0) {
+    if (sorted.length > 0) {
       return {
-        value: sortedCurrentGDP[0][COLUMNS.AUX.GDP_CURRENT_US],
-        year: sortedCurrentGDP[0].year,
+        value: sorted[0][COLUMNS.AUX.GDP_CURRENT_US],
+        year: sorted[0].year,
       };
     }
     return false;
@@ -1366,13 +1366,13 @@ export const getLatestCountry2011PPPGDP = createSelector(
   getAuxIndicators,
   (country, data) => {
     if (!data) return false;
-    const sorted2011PPPGDP = data
+    const sorted = data
       .filter(d => d.country_code === country && d[COLUMNS.AUX.GDP_2011_PPP])
       .sort((a, b) => (parseInt(a.year, 10) > parseInt(b.year, 10) ? -1 : 1));
-    if (sorted2011PPPGDP.length > 0) {
+    if (sorted.length > 0) {
       return {
-        value: sorted2011PPPGDP[0][COLUMNS.AUX.GDP_2011_PPP],
-        year: sorted2011PPPGDP[0].year,
+        value: sorted[0][COLUMNS.AUX.GDP_2011_PPP],
+        year: sorted[0].year,
       };
     }
     return false;
