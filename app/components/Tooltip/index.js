@@ -37,19 +37,19 @@ const renderContent = (maxWidth, component, text, onClose, inModal) => (
     }}
     align={inModal ? 'center' : 'start'}
   >
+    {onClose && (
+      <Button
+        onClick={evt => {
+          if (evt) evt.preventDefault();
+          if (evt) evt.stopPropagation();
+          onClose();
+        }}
+        margin={{ left: 'auto' }}
+      >
+        <Close color="white" size="large" />
+      </Button>
+    )}
     <ContentWrap>
-      {onClose && (
-        <Button
-          onClick={evt => {
-            if (evt) evt.preventDefault();
-            if (evt) evt.stopPropagation();
-            onClose();
-          }}
-          margin={{ left: 'auto' }}
-        >
-          <Close color="white" size="large" />
-        </Button>
-      )}
       {component}
       {!component && <span>{text}</span>}
     </ContentWrap>
