@@ -66,7 +66,7 @@ function CountryAbout({
   return (
     <Box
       direction="column"
-      pad={{ horizontal: 'medium', bottom: 'medium', top: 'small' }}
+      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
       style={{ maxWidth: '500px' }}
     >
       <Heading responsive={false} level={3}>
