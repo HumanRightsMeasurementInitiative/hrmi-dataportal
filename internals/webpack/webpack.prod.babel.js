@@ -109,6 +109,11 @@ module.exports = require('./webpack.base.babel')({
 
       // Removes warning for about `additional` section usage
       safeToUseOptionalCaches: true,
+      // changing config according to https://github.com/react-boilerplate/react-boilerplate/issues/2750#issuecomment-536215256
+      ServiceWorker: {
+        events: true,
+      },
+      responseStrategy: 'network-first',
     }),
 
     new CompressionPlugin({
