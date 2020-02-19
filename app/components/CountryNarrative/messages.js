@@ -98,18 +98,30 @@ export default defineMessages({
   compAssessmentESR: {
     start: {
       id: `${scope}.compAssessmentESR.start`,
+      defaultMessage: 'On {esr}, ',
+    },
+    performing: {
+      id: `${scope}.compAssessmentESR.all`,
       defaultMessage:
-        'On {esr}, {needsArticle, select, true {the } false { }}{country} is performing ',
+        '{needsArticle, select, true {the } false { }}{country} is performing ',
+    },
+    some: {
+      id: `${scope}.compAssessmentESR.some`,
+      defaultMessage: 'when we look across the rights for which we have data, ',
+    },
+    one: {
+      id: `${scope}.compAssessmentESR.one`,
+      defaultMessage: 'on the {right} ',
     },
     end: {
       id: `${scope}.compAssessmentESR.end`,
       defaultMessage:
-        ', compared with {referenceCount} other countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
+        ', compared with the other countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
     },
     endHi: {
       id: `${scope}.compAssessmentESR.endHi`,
       defaultMessage:
-        ', compared with {referenceCount} other HI countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
+        ', compared with the other HI countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
     },
   },
   esr: {

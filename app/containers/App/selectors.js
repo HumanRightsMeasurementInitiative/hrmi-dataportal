@@ -1189,6 +1189,156 @@ export const getDimensionAverages = createSelector(
     };
   },
 );
+export const getReferenceScores = createSelector(
+  getCountryFromRouter,
+  getCountries,
+  getESRDimensionScoresForYear,
+  getCPRDimensionScoresForYear,
+  (country, countries, esrDimScores, cprDimScores) => {
+    if (!country || !countries || !esrDimScores || !cprDimScores) return false;
+    // figure out esr averages
+    // these are the countries that we are comparing our country to
+    // if country high income country then compare with all other HI countriesGrammar
+    // if not, compare with region
+    const compareESRCountries = countries.filter(
+      c =>
+        (c.region_code === country.region_code ||
+          c.high_income_country === '1') &&
+        (country.high_income_country === '0' || c.high_income_country === '1'),
+    );
+    const hiStandard = STANDARDS.find(s => s.key === 'hi');
+    const coreStandard = STANDARDS.find(s => s.key === 'core');
+
+    const countryStandard =
+      country.high_income_country === '0' ? coreStandard : hiStandard;
+    const countryDimScore = esrDimScores.find(
+      s =>
+        s.country_code === country.country_code &&
+        s.standard === countryStandard.code,
+    );
+    const hasCountryDimScore = !!countryDimScore;
+
+    // console.log(countryStandard)
+    // console.log(countryDimScore)
+    console.log(hasCountryDimScore);
+    // the function that adds all dimension scores and also counts
+    const esrScoreAdder = (m, c, standard) => {
+      // look up country score
+      const score = esrDimScores.find(
+        s => s.country_code === c.country_code && s.standard === standard,
+      );
+      // sums by benchmark & count
+      // prettier-ignore
+      return score
+        ? {
+          sumAdjusted:
+            m.sumAdjusted + parseFloat(score[COLUMNS.ESR.SCORE_ADJUSTED]),
+          sumBest: m.sumBest + parseFloat(score[COLUMNS.ESR.SCORE_BEST]),
+          count: m.count + 1,
+        }
+        : m;
+    };
+    // the function that adds all rights scores and also counts
+    // limited to those rights where country has data for
+    // const esrRightScoreAdder = (m, c, standard) => {
+    //   // look up country score
+    //   const score = esrDimScores.find(
+    //     s => s.country_code === c.country_code && s.standard === standard,
+    //   );
+    //   // sums by benchmark & count
+    //   // prettier-ignore
+    //   return score
+    //     ? {
+    //       sumAdjusted:
+    //         m.sumAdjusted + parseFloat(score[COLUMNS.ESR.SCORE_ADJUSTED]),
+    //       sumBest: m.sumBest + parseFloat(score[COLUMNS.ESR.SCORE_BEST]),
+    //       count: m.count + 1,
+    //     }
+    //     : m;
+    // };
+    // figure out sums for each standard
+    const esrSumsHi = compareESRCountries.reduce(
+      (m, c) => esrScoreAdder(m, c, hiStandard.code),
+      {
+        sumAdjusted: 0,
+        sumBest: 0,
+        count: 0,
+      },
+    );
+    const esrSumsCore = compareESRCountries.reduce(
+      (m, c) => esrScoreAdder(m, c, coreStandard.code),
+      {
+        sumAdjusted: 0,
+        sumBest: 0,
+        count: 0,
+      },
+    );
+    // finally figure out averages for each benchmark and standard
+    const esrAverages = {
+      hi: {
+        ...esrSumsHi,
+        average: {
+          adjusted: esrSumsHi.sumAdjusted / esrSumsHi.count,
+          best: esrSumsHi.sumBest / esrSumsHi.count,
+        },
+      },
+      core: {
+        ...esrSumsCore,
+        average: {
+          adjusted: esrSumsCore.sumAdjusted / esrSumsCore.count,
+          best: esrSumsCore.sumBest / esrSumsCore.count,
+        },
+      },
+    };
+    const compareCPRCountries = countries.filter(
+      c =>
+        !isCountryHighIncome(country) ||
+        !isCountryOECD(country) ||
+        (isCountryHighIncome(c) && isCountryOECD(c)),
+    );
+    const cprScoreAdder = (m, c, key) => {
+      const score = cprDimScores[key].find(
+        s => s.country_code === c.country_code,
+      );
+      // prettier-ignore
+      return score
+        ? {
+          sum: m.sum + parseFloat(score[COLUMNS.CPR.MEAN]),
+          count: m.count + 1,
+        }
+        : m;
+    };
+    const cprDimensions = DIMENSIONS.filter(d => d.type === 'cpr');
+    const cprSums = cprDimensions.reduce(
+      (m, d) => ({
+        ...m,
+        [d.key]: compareCPRCountries.reduce(
+          (mc, c) => cprScoreAdder(mc, c, d.key),
+          {
+            sum: 0,
+            count: 0,
+          },
+        ),
+      }),
+      {},
+    );
+    const cprAverages = cprDimensions.reduce(
+      (m, d) => ({
+        ...m,
+        [d.key]: {
+          ...cprSums[d.key],
+          average: cprSums[d.key].sum / cprSums[d.key].count,
+        },
+      }),
+      {},
+    );
+
+    return {
+      esr: esrAverages,
+      ...cprAverages,
+    };
+  },
+);
 
 // All countries
 const filterScoresByYear = (year, scores) =>

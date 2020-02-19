@@ -21,7 +21,7 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import MainColumn from 'styled/MainColumn';
 import SectionContainer from 'styled/SectionContainer';
 
-import { hasCPR } from 'utils/scores';
+import { hasCPR, getRightsScoresForDimension } from 'utils/scores';
 // import { getMessageGrammar } from 'utils/narrative';
 //
 // import messages from './messages';
@@ -41,7 +41,7 @@ function CountryReport({
   hasAside,
   type,
   dimensions,
-  // rights,
+  rights,
   benchmark,
   standard,
   indicators,
@@ -56,6 +56,7 @@ function CountryReport({
   // trackEvent,
 }) {
   const currentStandard = STANDARDS.find(s => s.key === standard);
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const hasSomeIndicatorScores =
     type === 'esr' &&
     indicators &&
@@ -68,6 +69,24 @@ function CountryReport({
         );
       })
       .reduce((m, s) => m || !!s.score, false);
+
+  const rightsESR =
+    type === 'esr' && getRightsScoresForDimension(rights, 'esr');
+
+  const rightsESRScoreCount =
+    rightsESR &&
+    Object.values(rightsESR).reduce((m, s) => (s.score ? m + 1 : m), 0);
+
+  let scoreESR;
+  if (rightsESRScoreCount > 0 && rightsESRScoreCount < rightsESR.length) {
+    scoreESR =
+      rightsESR.reduce(
+        (m, s) =>
+          s.score ? m + parseFloat(s.score[currentBenchmark.column]) : m,
+        0,
+      ) / rightsESRScoreCount;
+  }
+
   return (
     <MainColumn hasAside={hasAside}>
       {!dataReady && <LoadingIndicator />}
@@ -77,7 +96,7 @@ function CountryReport({
           <SectionContainer>
             ESR Narrative & Comparative Assessment
             <NarrativeESR
-              score={dimensions.esr && dimensions.esr.score}
+              dimensionScore={dimensions.esr && dimensions.esr.score}
               country={country}
               countryGrammar={countryGrammar}
               someData={hasSomeIndicatorScores}
@@ -87,10 +106,13 @@ function CountryReport({
                 <NarrativeESRCompAssessment
                   country={country}
                   countryGrammar={countryGrammar}
-                  score={dimensions.esr.score}
+                  dimensionScore={dimensions.esr && dimensions.esr.score}
+                  rightsAverageScore={scoreESR}
                   referenceScore={reference.esr[standard].average[benchmark]}
                   referenceCount={reference.esr[standard].count}
-                  benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+                  benchmark={currentBenchmark}
+                  some={rightsESRScoreCount < rightsESR.length}
+                  one={rightsESRScoreCount === 1}
                 />
               </Paragraph>
             )}
@@ -172,11 +194,11 @@ CountryReport.propTypes = {
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   dataReady: PropTypes.bool,
   type: PropTypes.string,
+  rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   // onMetricClick: PropTypes.func,
   // onAtRiskClick: PropTypes.func,
   // trackEvent: PropTypes.func,
   // atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  // rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   // esrYear: PropTypes.number,
   // cprYear: PropTypes.number,
 };

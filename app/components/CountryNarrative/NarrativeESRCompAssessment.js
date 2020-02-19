@@ -14,7 +14,7 @@ const isCountryHighIncome = country => country.high_income_country === '1';
 function NarrativeESRCompAssessment({
   benchmark,
   country,
-  score,
+  dimensionScore,
   referenceScore,
   referenceCount,
   intl,
@@ -33,7 +33,7 @@ function NarrativeESRCompAssessment({
     dimension: intl.formatMessage(rootMessages.dimensions.esr),
   };
 
-  if (!score) {
+  if (!dimensionScore) {
     return (
       <>
         <FormattedMessage {...messages.esr.noData} values={messageValues} />
@@ -44,9 +44,9 @@ function NarrativeESRCompAssessment({
       </>
     );
   }
-  if (score) {
-    const rangeLo = parseFloat(score[benchmark.column]) - RANGE;
-    const rangeHi = parseFloat(score[benchmark.column]) + RANGE;
+  if (dimensionScore) {
+    const rangeLo = parseFloat(dimensionScore[benchmark.column]) - RANGE;
+    const rangeHi = parseFloat(dimensionScore[benchmark.column]) + RANGE;
     return (
       <>
         <FormattedMessage
@@ -89,7 +89,8 @@ NarrativeESRCompAssessment.propTypes = {
   referenceCount: PropTypes.number,
   referenceScore: PropTypes.number,
   benchmark: PropTypes.object,
-  score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  dimensionScore: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  rightsAverageScore: PropTypes.number,
   intl: intlShape.isRequired,
 };
 
