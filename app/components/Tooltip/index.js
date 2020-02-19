@@ -4,6 +4,8 @@ import { Box, Drop, Button, ResponsiveContext, Layer } from 'grommet';
 import { CircleInformation, Close } from 'grommet-icons';
 import styled from 'styled-components';
 
+import ContentWrap from './ContentWrap';
+
 const StyledDrop = styled(Drop)`
   margin: 0 0 13px;
   overflow: visible;
@@ -47,8 +49,10 @@ const renderContent = (maxWidth, component, text, onClose, inModal) => (
         <Close color="white" size="large" />
       </Button>
     )}
-    {component}
-    {!component && <span>{text}</span>}
+    <ContentWrap>
+      {component}
+      {!component && <span>{text}</span>}
+    </ContentWrap>
   </Box>
 );
 

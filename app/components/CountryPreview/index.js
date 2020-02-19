@@ -233,7 +233,6 @@ export function CountryPreview({
           pad="none"
           basis={isMinSize(size, 'large') ? '250px' : '280px'}
           alignContent="center"
-          flex={{ grow: 1 }}
         >
           {country && (
             <Button

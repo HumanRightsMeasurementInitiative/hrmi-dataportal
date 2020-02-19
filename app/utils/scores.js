@@ -157,18 +157,20 @@ const sortByAssessment = (a, b, scoresAllCountries, order) => {
   return 1;
 };
 
+const findLatestValue = (countryAuxIndicators, column) => {
+  const sorted = countryAuxIndicators
+    .filter(i => i[column] !== '' && i[column] !== null)
+    .sort((a, b) => (parseInt(a.year, 10) > parseInt(b.year, 10) ? -1 : 1));
+  return sorted.length > 0 && sorted[0][column];
+};
+
 const mapAttribute = (s, auxIndicators, column) => {
-  const aux = auxIndicators.find(i =>
+  const countryAuxIndicators = auxIndicators.filter(i =>
     quasiEquals(s.country_code, i.country_code),
   );
-  if (aux && aux[column]) {
-    return {
-      [column]: aux[column],
-      ...s,
-    };
-  }
+  const aux = findLatestValue(countryAuxIndicators, column);
   return {
-    [column]: null,
+    [column]: aux || null,
     ...s,
   };
 };
@@ -183,22 +185,37 @@ export const sortCountries = ({
 }) => {
   const sortOption = COUNTRY_SORTS[sort];
   if (sort === 'name') {
-    return countries.sort((a, b) => sortByName(a, b, order, intl));
+    return {
+      sorted: countries.sort((a, b) => sortByName(a, b, order, intl)),
+    };
   }
   if (scores && sort === 'assessment') {
-    return countries
-      .sort((a, b) => sortByName(a, b, 'asc', intl))
-      .sort((a, b) => sortByAssessment(a, b, scores, order));
+    return {
+      sorted: countries
+        .sort((a, b) => sortByName(a, b, 'asc', intl))
+        .sort((a, b) => sortByAssessment(a, b, scores, order)),
+    };
   }
   if (sortOption.data === 'aux' && auxIndicators) {
-    return countries
-      .map(c => mapAttribute(c, auxIndicators, sortOption.column))
-      .sort((a, b) => sortByName(a, b, 'asc', intl))
-      .sort((a, b) =>
-        sortByNumber(a[sortOption.column], b[sortOption.column], order),
-      );
+    const mappedCountries = countries.map(c =>
+      mapAttribute(c, auxIndicators, sortOption.column),
+    );
+    return {
+      sorted: mappedCountries
+        .filter(c => c[sortOption.column] && c[sortOption.column] !== '')
+        .sort((a, b) => sortByName(a, b, 'asc', intl))
+        .sort((a, b) =>
+          sortByNumber(a[sortOption.column], b[sortOption.column], order),
+        ),
+      other: mappedCountries
+        .filter(c => !c[sortOption.column] || c[sortOption.column] === '')
+        .sort((a, b) => sortByName(a, b, 'asc', intl)),
+    };
   }
-  return countries;
+  return {
+    sorted: countries,
+    other: countries,
+  };
 };
 
 export const sortScores = ({
@@ -211,22 +228,36 @@ export const sortScores = ({
 }) => {
   const sortOption = COUNTRY_SORTS[sort];
   // const factor = order === 'asc' ? -1 : 1;
+  if (!scores) {
+    return {
+      sorted: false,
+    };
+  }
   if (sort === 'name') {
-    return scores && scores.sort((a, b) => sortByName(a, b, order, intl));
+    return {
+      sorted: scores.sort((a, b) => sortByName(a, b, order, intl)),
+    };
   }
   if (sortOption.data === 'aux' && auxIndicators) {
-    return scores
-      .map(s => mapAttribute(s, auxIndicators, sortOption.column))
-      .sort((a, b) => sortByName(a, b, order, intl))
-      .sort((a, b) =>
-        sortByNumber(a[sortOption.column], b[sortOption.column], order),
-      );
+    const mappedScores = scores.map(c =>
+      mapAttribute(c, auxIndicators, sortOption.column),
+    );
+    return {
+      sorted: mappedScores
+        .filter(s => s[sortOption.column] && s[sortOption.column] !== '')
+        .sort((a, b) => sortByName(a, b, order, intl))
+        .sort((a, b) =>
+          sortByNumber(a[sortOption.column], b[sortOption.column], order),
+        ),
+      other: mappedScores
+        .filter(s => !s[sortOption.column] || s[sortOption.column] === '')
+        .sort((a, b) => sortByName(a, b, 'asc', intl)),
+    };
   }
   // sort by score
-  return (
-    scores &&
-    scores
+  return {
+    sorted: scores
       .sort((a, b) => sortByName(a, b, order, intl))
-      .sort((a, b) => sortByNumber(a[column], b[column], order))
-  );
+      .sort((a, b) => sortByNumber(a[column], b[column], order)),
+  };
 };
