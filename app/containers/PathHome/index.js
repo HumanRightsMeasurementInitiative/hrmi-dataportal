@@ -81,7 +81,7 @@ const DropdownButton = styled(Button)`
 
 const DEPENDENCIES = ['countries', 'featured'];
 
-export function PathOverview({
+export function PathHome({
   onLoadData,
   nav,
   intl,
@@ -284,7 +284,7 @@ export function PathOverview({
   );
 }
 
-PathOverview.propTypes = {
+PathHome.propTypes = {
   nav: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
@@ -327,4 +327,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(withTheme(PathOverview)));
+export default compose(withConnect)(injectIntl(withTheme(PathHome)));
