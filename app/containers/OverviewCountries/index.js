@@ -99,14 +99,6 @@ export function OverviewCountries({
   const currentSort = sort || 'assessment';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
 
-  const sortedCountries = sortCountries({
-    intl,
-    countries,
-    sort: currentSort,
-    order: currentSortOrder,
-    scores: scoresAllCountries,
-    auxIndicators,
-  });
   const filterValues = getFilterOptionValues(
     countries,
     FILTER_GROUPS,
@@ -123,6 +115,17 @@ export function OverviewCountries({
     standardDetails,
     scoresAllCountries,
   );
+  // sortable and non-sortable countries
+  const { sorted, other } = sortCountries({
+    intl,
+    countries,
+    sort: currentSort,
+    order: currentSortOrder,
+    scores: scoresAllCountries,
+    auxIndicators,
+  });
+  const hasResults =
+    dataReady && ((sorted && sorted.length > 0) || (other && other.length > 0));
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -152,28 +155,29 @@ export function OverviewCountries({
               onOrderToggle={onOrderChange}
             />
           </Box>
-          {sortedCountries && scoresAllCountries && (
+          {sorted && scoresAllCountries && (
             <Box
               width="100%"
-              pad={{ bottom: 'medium', top: size === 'small' ? 'xsmall' : '0' }}
-              align="center"
+              pad={{ top: size === 'small' ? 'xsmall' : '0' }}
+              align="start"
               responsive={false}
             >
               {!dataReady && <LoadingIndicator />}
-              {dataReady && sortedCountries && sortedCountries.length === 0 && (
+              {!hasResults && dataReady && (
                 <Hint italic>
                   <FormattedMessage {...rootMessages.hints.noResults} />
                 </Hint>
               )}
-              {dataReady && sortedCountries && sortedCountries.length > 0 && (
+              {dataReady && sorted && sorted.length > 0 && (
                 <Box
                   direction="row"
                   wrap
                   overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
                   margin="0"
+                  align="start"
                 >
-                  <InfiniteScroll items={sortedCountries} step={36} show={0}>
+                  <InfiniteScroll items={sorted} step={36} show={0}>
                     {(c, index) => (
                       <CountryPreview
                         showAnnotation={index === 0}
@@ -196,9 +200,64 @@ export function OverviewCountries({
                   </InfiniteScroll>
                 </Box>
               )}
-              {dataReady && sortedCountries && sortedCountries.length > 0 && (
-                <Source />
+              {dataReady && other && other.length > 0 && (
+                <Box
+                  direction="column"
+                  margin={{ top: 'medium' }}
+                  border="top"
+                  width="100%"
+                >
+                  <Box direction="row" margin={{ vertical: 'small' }}>
+                    <Hint italic>
+                      <FormattedMessage {...rootMessages.hints.noSortData} />
+                    </Hint>
+                  </Box>
+                  <Box
+                    direction="row"
+                    wrap
+                    overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
+                    pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
+                    margin="0"
+                  >
+                    <InfiniteScroll items={other} step={36} show={0}>
+                      {(c, index) => (
+                        <CountryPreview
+                          showAnnotation={index === 0}
+                          key={c.country_code}
+                          country={c}
+                          scale={scale}
+                          scores={getScoresForCountry(
+                            c.country_code,
+                            scoresAllCountries,
+                          )}
+                          standard={standardDetails}
+                          otherStandard={otherStandardDetails}
+                          defaultStandard={isDefaultStandard(
+                            c,
+                            standardDetails,
+                          )}
+                          benchmark={benchmarkDetails}
+                          onSelectCountry={() =>
+                            onSelectCountry(c.country_code)
+                          }
+                          indicators={indicators}
+                          onCountryHover={code => console.log(code)}
+                        />
+                      )}
+                    </InfiniteScroll>
+                  </Box>
+                </Box>
               )}
+            </Box>
+          )}
+          {sorted && scoresAllCountries && hasResults && (
+            <Box
+              width="100%"
+              pad={{ bottom: 'medium', top: '0' }}
+              align="center"
+              responsive={false}
+            >
+              {<Source />}
             </Box>
           )}
         </MainColumn>
