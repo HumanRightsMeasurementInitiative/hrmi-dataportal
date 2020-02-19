@@ -10,12 +10,18 @@ import PropTypes from 'prop-types';
 // import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 // import { injectIntl, intlShape } from 'react-intl';
 
-// import { Heading } from 'grommet';
+import { Paragraph } from 'grommet';
+import { BENCHMARKS, STANDARDS } from 'containers/App/constants';
 
+import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
+import NarrativeESR from 'components/CountryNarrative/NarrativeESR';
+import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
+import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import LoadingIndicator from 'components/LoadingIndicator';
 import MainColumn from 'styled/MainColumn';
 import SectionContainer from 'styled/SectionContainer';
 
+import { hasCPR } from 'utils/scores';
 // import { getMessageGrammar } from 'utils/narrative';
 //
 // import messages from './messages';
@@ -30,22 +36,38 @@ import SectionContainer from 'styled/SectionContainer';
 //   }
 // `;
 
-// dimensions,
-// rights,
-// benchmark,
-// standard,
-// indicators,
-// country,
-// countryGrammar,
-// onMetricClick,
-// intl,
-// atRiskData,
-// onAtRiskClick,
-// reference,
-// esrYear,
-// trackEvent,
-
-function CountryReport({ dataReady, hasAside, type }) {
+function CountryReport({
+  dataReady,
+  hasAside,
+  type,
+  dimensions,
+  // rights,
+  benchmark,
+  standard,
+  indicators,
+  country,
+  countryGrammar,
+  // onMetricClick,
+  // atRiskData,
+  // onAtRiskClick,
+  reference,
+  // esrYear,
+  // cprYear,
+  // trackEvent,
+}) {
+  const currentStandard = STANDARDS.find(s => s.key === standard);
+  const hasSomeIndicatorScores =
+    type === 'esr' &&
+    indicators &&
+    Object.values(indicators)
+      .filter(s => {
+        if (!s.details) return false;
+        return (
+          s.details.standard === 'Both' ||
+          s.details.standard === currentStandard.code
+        );
+      })
+      .reduce((m, s) => m || !!s.score, false);
   return (
     <MainColumn hasAside={hasAside}>
       {!dataReady && <LoadingIndicator />}
@@ -54,6 +76,24 @@ function CountryReport({ dataReady, hasAside, type }) {
           <SectionContainer>ESR Summary Chart</SectionContainer>
           <SectionContainer>
             ESR Narrative & Comparative Assessment
+            <NarrativeESR
+              score={dimensions.esr && dimensions.esr.score}
+              country={country}
+              countryGrammar={countryGrammar}
+              someData={hasSomeIndicatorScores}
+            />
+            {dimensions.esr && reference && reference.esr && (
+              <Paragraph>
+                <NarrativeESRCompAssessment
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  score={dimensions.esr.score}
+                  referenceScore={reference.esr[standard].average[benchmark]}
+                  referenceCount={reference.esr[standard].count}
+                  benchmark={BENCHMARKS.find(s => s.key === benchmark)}
+                />
+              </Paragraph>
+            )}
           </SectionContainer>
           <SectionContainer>Indicators by right</SectionContainer>
           <SectionContainer>Rights and indicators by sex</SectionContainer>
@@ -70,10 +110,47 @@ function CountryReport({ dataReady, hasAside, type }) {
           <SectionContainer>Safety Summary Chart</SectionContainer>
           <SectionContainer>
             Safety Narrative & Comparative Assessment
+            <NarrativeCPR
+              dimensionKey="physint"
+              score={dimensions.physint && dimensions.physint.score}
+              country={country}
+              countryGrammar={countryGrammar}
+            />
+            {hasCPR(dimensions) && reference.physint && (
+              <Paragraph>
+                <NarrativeCPRCompAssessment
+                  dimensionKey="physint"
+                  score={dimensions.physint && dimensions.physint.score}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  referenceScore={reference.physint.average}
+                  referenceCount={reference.physint.count}
+                />
+              </Paragraph>
+            )}
           </SectionContainer>
           <SectionContainer>Empowerment Summary Chart</SectionContainer>
           <SectionContainer>
             Empowerment Narrative & Comparative Assessment
+            <NarrativeCPR
+              dimensionKey="empowerment"
+              score={dimensions.empowerment && dimensions.empowerment.score}
+              country={country}
+              countryGrammar={countryGrammar}
+            />
+            {hasCPR(dimensions) && reference.empowerment && (
+              <Paragraph>
+                <NarrativeCPRCompAssessment
+                  dimensionKey="empowerment"
+                  score={dimensions.empowerment && dimensions.empowerment.score}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  referenceScore={reference.empowerment.average}
+                  referenceCount={reference.empowerment.count}
+                  start
+                />
+              </Paragraph>
+            )}
           </SectionContainer>
           <SectionContainer>
             People at risk word cloud and narrative
@@ -86,24 +163,22 @@ function CountryReport({ dataReady, hasAside, type }) {
 
 CountryReport.propTypes = {
   hasAside: PropTypes.bool,
-  // countryTitle: PropTypes.string,
+  reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  dataReady: PropTypes.bool,
+  type: PropTypes.string,
   // onMetricClick: PropTypes.func,
   // onAtRiskClick: PropTypes.func,
   // trackEvent: PropTypes.func,
-  // reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   // atRiskData: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  // indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   // rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  // standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  // benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  // intl: intlShape.isRequired,
   // esrYear: PropTypes.number,
-  dataReady: PropTypes.bool,
-  type: PropTypes.string,
+  // cprYear: PropTypes.number,
 };
 
 // export default injectIntl(CountryReport);
