@@ -87,6 +87,28 @@ export const getCountryWithArticle = (locale, countryGrammar, countryLabel) => {
   }
   return countryLabel;
 };
+export const getCountryPossessive = (locale, countryGrammar, countryLabel) => {
+  if (!countryGrammar || !countryLabel) {
+    return countryLabel;
+  }
+  if (locale === 'en') {
+    // check for any info in brackets
+    const split = countryLabel.split(' (');
+    // get the core name
+    let result = split[0];
+    // check if core name ending in 's'
+    if (result.slice(-1) === 's') {
+      result = `${result}'`;
+    } else {
+      result = `${result}'s`;
+    }
+    if (split.length > 1) {
+      return `${result} (${split[1]}`;
+    }
+    return result;
+  }
+  return countryLabel;
+};
 
 export const getCountryOf = (locale, countryGrammar, countryLabel) => {
   if (locale === 'en') {
@@ -311,6 +333,11 @@ export const getMessageGrammar = (
   );
   return {
     country: countryLabel,
+    countryPossessive: getCountryPossessive(
+      locale,
+      countryGrammar,
+      countryLabel,
+    ),
     countryWithArticle,
     countryWithArticleCap: upperCaseFirst(countryWithArticle),
     needsArticle: needsArticle(locale, countryGrammar),
