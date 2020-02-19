@@ -39,7 +39,7 @@ import {
   getStandardSearch,
   getBenchmarkSearch,
   getPeopleAtRiskForCountry,
-  getDimensionAverages,
+  getReferenceScores,
   getAuxIndicatorsForCountry,
   getLatestCountryCurrentGDP,
   getLatestCountry2011PPPGDP,
@@ -93,7 +93,7 @@ export function PathCountry({
   atRisk,
   onAtRiskClick,
   standard,
-  dimensionAverages,
+  referenceScores,
   auxIndicators,
   currentGDP,
   pppGDP,
@@ -187,7 +187,7 @@ export function PathCountry({
                   benchmark={benchmark}
                   atRiskData={atRisk}
                   standard={standard}
-                  reference={dimensionAverages}
+                  reference={referenceScores}
                   esrYear={esrYear}
                   cprYear={cprYear}
                   dataReady={dataReady}
@@ -211,7 +211,7 @@ export function PathCountry({
                   benchmark={benchmark}
                   atRiskData={atRisk}
                   standard={standard}
-                  reference={dimensionAverages}
+                  reference={referenceScores}
                   onAtRiskClick={() => onAtRiskClick()}
                   onMetricClick={(metric, tab) =>
                     console.log('metric click', countryCode, metric, tab)
@@ -239,7 +239,7 @@ export function PathCountry({
                   benchmark={benchmark}
                   atRiskData={atRisk}
                   standard={standard}
-                  reference={dimensionAverages}
+                  reference={referenceScores}
                   onAtRiskClick={() => onAtRiskClick()}
                   onMetricClick={(metric, tab) =>
                     console.log('metric click', countryCode, metric, tab)
@@ -325,7 +325,7 @@ PathCountry.propTypes = {
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  referenceScores: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -356,7 +356,7 @@ const mapStateToProps = createStructuredSelector({
   benchmark: state => getBenchmarkSearch(state),
   esrYear: state => getESRYear(state),
   cprYear: state => getCPRYear(state),
-  dimensionAverages: state => getDimensionAverages(state),
+  referenceScores: state => getReferenceScores(state),
   currentGDP: (state, { match }) =>
     getLatestCountryCurrentGDP(state, match.params.country),
   pppGDP: (state, { match }) =>

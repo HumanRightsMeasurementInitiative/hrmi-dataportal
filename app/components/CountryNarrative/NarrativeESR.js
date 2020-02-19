@@ -13,12 +13,20 @@ import { BENCHMARKS } from 'containers/App/constants';
 import rootMessages from 'messages';
 import messages from './messages';
 
-function NarrativeESR({ country, score, intl, someData, countryGrammar }) {
+function NarrativeESR({
+  country,
+  dimensionScore,
+  intl,
+  someData,
+  countryGrammar,
+}) {
   // console.log(score);
   const scoreAdjusted =
-    score && score[BENCHMARKS.find(s => s.key === 'adjusted').column];
+    dimensionScore &&
+    dimensionScore[BENCHMARKS.find(s => s.key === 'adjusted').column];
   const scoreBest =
-    score && score[BENCHMARKS.find(s => s.key === 'best').column];
+    dimensionScore &&
+    dimensionScore[BENCHMARKS.find(s => s.key === 'best').column];
 
   const messageValues = {
     ...getMessageGrammar(
@@ -31,17 +39,19 @@ function NarrativeESR({ country, score, intl, someData, countryGrammar }) {
     country: rootMessages.countries[country.country_code]
       ? intl.formatMessage(rootMessages.countries[country.country_code])
       : country.country_code,
-    less99adjusted: score && parseFloat(scoreAdjusted) < 99,
-    scoreAdjusted: score && `${formatScore(scoreAdjusted)}%`,
-    scoreAdjustedBold: score && <strong>{formatScore(scoreAdjusted)}%</strong>,
-    scoreBest: score && `${formatScore(scoreBest)}%`,
-    scoreBestBold: score && <strong>{formatScore(scoreBest)}%</strong>,
+    less99adjusted: dimensionScore && parseFloat(scoreAdjusted) < 99,
+    scoreAdjusted: dimensionScore && `${formatScore(scoreAdjusted)}%`,
+    scoreAdjustedBold: dimensionScore && (
+      <strong>{formatScore(scoreAdjusted)}%</strong>
+    ),
+    scoreBest: dimensionScore && `${formatScore(scoreBest)}%`,
+    scoreBestBold: dimensionScore && <strong>{formatScore(scoreBest)}%</strong>,
     benchmarkAdjusted: intl.formatMessage(
       rootMessages.settings.benchmark.adjusted,
     ),
     benchmarkBest: intl.formatMessage(rootMessages.settings.benchmark.best),
   };
-  if (!score) {
+  if (!dimensionScore) {
     return (
       <Paragraph>
         <FormattedMessage {...messages.esr.noData} values={messageValues} />
@@ -55,7 +65,7 @@ function NarrativeESR({ country, score, intl, someData, countryGrammar }) {
       </Paragraph>
     );
   }
-  if (score) {
+  if (dimensionScore) {
     const rangeAdjusted = getESRScoreRange(scoreAdjusted);
     const rangeBest = getESRScoreRange(scoreBest);
     return (
@@ -118,7 +128,7 @@ function NarrativeESR({ country, score, intl, someData, countryGrammar }) {
 }
 
 NarrativeESR.propTypes = {
-  score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  dimensionScore: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   someData: PropTypes.bool,
   country: PropTypes.object,
   countryGrammar: PropTypes.object,
