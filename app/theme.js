@@ -14,6 +14,12 @@ export const SIZES = {
     heightCollapsed: 40,
   },
 };
+
+export const CARD_WIDTH = {
+  min: 200,
+  max: 250,
+};
+
 // theme defining breakpoints, colors, sizes, grid gutters
 // breakpoints:
 // < 720px (45em): small (mobile)

@@ -1,0 +1,56 @@
+/**
+ *
+ * Overview
+ *
+ */
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import { injectIntl, intlShape } from 'react-intl';
+
+// styles
+import SectionContainer from 'styled/SectionContainer';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
+
+import ButtonText from 'styled/ButtonText';
+import ButtonPlain from 'styled/ButtonPlain';
+
+import rootMessages from 'messages';
+
+import Slider from './Slider';
+import Card from './Card';
+
+export function SectionRights({ rights, onSelectRight, navAllRights, intl }) {
+  return (
+    <SectionContainer border>
+      <ContentMaxWidth maxWidth="1024px" column>
+        Section Rights Carousel
+        <ButtonText onClick={() => navAllRights()}>Rights overview</ButtonText>
+        <Slider>
+          {rights.map(r => (
+            <Card key={r.key}>
+              <ButtonPlain
+                onClick={() => {
+                  onSelectRight(r.key);
+                }}
+              >
+                {`${intl.formatMessage(rootMessages.rights[r.key])} (${
+                  r.dimension
+                })`}
+              </ButtonPlain>
+            </Card>
+          ))}
+        </Slider>
+      </ContentMaxWidth>
+    </SectionContainer>
+  );
+}
+
+SectionRights.propTypes = {
+  rights: PropTypes.array,
+  onSelectRight: PropTypes.func,
+  navAllRights: PropTypes.func,
+  intl: intlShape.isRequired,
+};
+
+export default injectIntl(SectionRights);
