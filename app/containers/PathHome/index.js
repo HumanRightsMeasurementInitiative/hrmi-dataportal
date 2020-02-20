@@ -4,16 +4,14 @@
  *
  */
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Box, Button, Drop } from 'grommet';
-import { FormDown, FormUp } from 'grommet-icons';
-
-import styled, { withTheme } from 'styled-components';
+import { Box } from 'grommet';
+// import Carousel from 'react-multi-carousel';
+// import Slider from 'react-styled-carousel';
 
 import { getCountriesFeaturedOnly } from 'containers/App/selectors';
 import {
@@ -22,28 +20,22 @@ import {
   selectCountry,
   selectMetric,
 } from 'containers/App/actions';
-import { COLUMNS, RIGHTS } from 'containers/App/constants';
-
-import Search from 'containers/Search';
-import NavCountry from 'containers/Search/NavCountry';
-import NavMetric from 'containers/Search/NavMetric';
-
-import Icon from 'components/Icon';
+import { RIGHTS, PATHS } from 'containers/App/constants';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
-import PageTitle from 'styled/PageTitle';
 import ButtonText from 'styled/ButtonText';
-import ButtonPlain from 'styled/ButtonPlain';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
-import rootMessages from 'messages';
 
-import messages from './messages';
+import SectionIntro from './SectionIntro';
+import SectionCountries from './SectionCountries';
+import SectionRights from './SectionRights';
+// import messages from './messages';
 
 const Bar = props => (
   <Box
@@ -58,34 +50,26 @@ Bar.propTypes = {
   theme: PropTypes.object,
 };
 
-// prettier-ignore
-const DropdownButton = styled(Button)`
-  height: 56px;
-  padding: 5px 10px;
-  min-width: 160px;
-  width: 50%;
-  background-color: ${({ active, theme }) =>
-    active ? theme.global.colors['dark-2'] : 'transparent'};
-  border-right: ${({ last }) => last ? 2 : 1}px solid;
-  border-left: ${({ first }) => first ? 0 : 1}px solid;
-  border-color: ${({ theme }) => theme.global.colors['dark-2']};
-  &:hover {
-    background-color: ${({ active, theme }) =>
-    theme.global.colors[active ? 'dark-2' : 'dark-3']};
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 5px 10px 5px 12px;
-    width: auto;
-  }
-`;
+const Card = props => (
+  <Box
+    height="250px"
+    elevation="small"
+    width="300px"
+    responsive={false}
+    margin="small"
+    padding="small"
+    {...props}
+  />
+);
+Card.propTypes = {
+  theme: PropTypes.object,
+};
 
 const DEPENDENCIES = ['countries', 'featured'];
 
 export function PathHome({
   onLoadData,
   nav,
-  intl,
-  theme,
   countries,
   onSelectMetric,
   onSelectCountry,
@@ -97,169 +81,19 @@ export function PathHome({
     onLoadData();
   }, []);
 
-  const [showCountries, setShowCountries] = useState(false);
-  const [showMetrics, setShowMetrics] = useState(false);
-  const countryTarget = useRef(null);
-  const metricTarget = useRef(null);
-
   return (
     <ContentWrap>
-      <SectionContainer border>
-        <ContentMaxWidth maxWidth="1024px" column>
-          <PageTitle level={3}>
-            <FormattedMessage {...messages.title} />
-          </PageTitle>
-          <FormattedMessage {...messages.intro} />
-        </ContentMaxWidth>
-      </SectionContainer>
-      <SectionContainer border background="dark">
-        <ContentMaxWidth maxWidth="1024px" column>
-          Section Search
-          <Search />
-          <Bar theme={theme}>
-            <DropdownButton
-              plain
-              first
-              active={showCountries}
-              onClick={() => {
-                setShowMetrics(false);
-                setShowCountries(!showCountries);
-              }}
-              icon={<Icon name="COUNTRY" style={{ minWidth: '24px' }} />}
-              label={
-                <Box
-                  direction="row"
-                  align="center"
-                  justify="between"
-                  fill="horizontal"
-                >
-                  <FormattedMessage {...rootMessages.labels.countries} />
-                  {showCountries && <FormUp size="large" />}
-                  {!showCountries && <FormDown size="large" />}
-                </Box>
-              }
-              ref={countryTarget}
-            />
-            {showCountries && (
-              <Drop
-                align={{ top: 'bottom', left: 'left' }}
-                target={countryTarget.current}
-                onClickOutside={() => setShowCountries(false)}
-                overflow="hidden"
-              >
-                <NavCountry onClose={() => setShowCountries(false)} />
-              </Drop>
-            )}
-            <DropdownButton
-              plain
-              active={showMetrics}
-              onClick={() => {
-                setShowCountries(false);
-                setShowMetrics(!showMetrics);
-              }}
-              icon={<Icon name="METRICS" style={{ minWidth: '24px' }} />}
-              justify="between"
-              label={
-                <Box
-                  direction="row"
-                  align="center"
-                  justify="between"
-                  fill="horizontal"
-                >
-                  <FormattedMessage {...rootMessages.labels.metrics} />
-                  {showCountries && <FormUp size="large" />}
-                  {!showCountries && <FormDown size="large" />}
-                </Box>
-              }
-              ref={metricTarget}
-            />
-            {showMetrics && (
-              <Drop
-                align={{ top: 'bottom', left: 'left' }}
-                target={metricTarget.current}
-                onClickOutside={() => setShowMetrics(false)}
-              >
-                <NavMetric onClose={() => setShowMetrics(false)} />
-              </Drop>
-            )}
-          </Bar>
-        </ContentMaxWidth>
-      </SectionContainer>
-      <SectionContainer border>
-        <ContentMaxWidth maxWidth="1024px" column>
-          Section Featured Countries Carousel
-          <ButtonText onClick={() => nav('countries')}>
-            Countries overview
-          </ButtonText>
-          <div>
-            {countries &&
-              countries.map(country => {
-                if (!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]) {
-                  console.log(
-                    'Country code not in language files:',
-                    country[COLUMNS.COUNTRIES.CODE],
-                  );
-                  return null;
-                }
-                const cats = country.featured.split(',');
-                const catLabels = cats.reduce(
-                  (memo, cat) =>
-                    `${memo}${memo === '' ? '' : ', '}${intl.formatMessage(
-                      rootMessages.featured[cat],
-                    )}`,
-                  '',
-                );
-                return (
-                  <div key={country[COLUMNS.COUNTRIES.CODE]}>
-                    <ButtonPlain
-                      onClick={() =>
-                        onSelectCountry(country[COLUMNS.COUNTRIES.CODE])
-                      }
-                    >
-                      {rootMessages.countries[
-                        country[COLUMNS.COUNTRIES.CODE]
-                      ] && (
-                        <FormattedMessage
-                          {...rootMessages.countries[
-                            country[COLUMNS.COUNTRIES.CODE]
-                          ]}
-                        />
-                      )}
-                      {!rootMessages.countries[
-                        country[COLUMNS.COUNTRIES.CODE]
-                      ] && <span>{country[COLUMNS.COUNTRIES.CODE]}</span>}
-                      {` (${catLabels})`}
-                    </ButtonPlain>
-                  </div>
-                );
-              })}
-          </div>
-        </ContentMaxWidth>
-      </SectionContainer>
-      <SectionContainer border>
-        <ContentMaxWidth maxWidth="1024px" column>
-          Section Rights Carousel
-          <ButtonText onClick={() => nav('metrics')}>
-            Rights overview
-          </ButtonText>
-          <div>
-            {RIGHTS &&
-              RIGHTS.map(r => (
-                <div key={r.key}>
-                  <ButtonPlain
-                    onClick={() => {
-                      onSelectMetric(r.key);
-                    }}
-                  >
-                    {`${intl.formatMessage(rootMessages.rights[r.key])} (${
-                      r.dimension
-                    })`}
-                  </ButtonPlain>
-                </div>
-              ))}
-          </div>
-        </ContentMaxWidth>
-      </SectionContainer>
+      <SectionIntro />
+      <SectionCountries
+        countries={countries}
+        onSelectCountry={onSelectCountry}
+        navAllCountries={() => nav(PATHS.COUNTRIES)}
+      />
+      <SectionRights
+        rights={RIGHTS}
+        onSelectRight={onSelectMetric}
+        navAllRights={() => nav(PATHS.METRICS)}
+      />
       <SectionContainer border>
         <ContentMaxWidth maxWidth="1024px" column>
           Section Groups
@@ -287,9 +121,7 @@ export function PathHome({
 PathHome.propTypes = {
   nav: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
-  dataReady: PropTypes.bool,
-  theme: PropTypes.object,
+  // dataReady: PropTypes.bool,
   countries: PropTypes.array,
   onSelectMetric: PropTypes.func,
   onSelectCountry: PropTypes.func,
@@ -327,4 +159,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(withTheme(PathHome)));
+export default compose(withConnect)(PathHome);
