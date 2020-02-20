@@ -3,7 +3,7 @@
  */
 
 import { createSelector } from 'reselect';
-
+import { uniq } from 'lodash';
 import { DEFAULT_LOCALE, appLocales } from 'i18n';
 import isInteger from 'utils/is-integer';
 import quasiEquals from 'utils/quasi-equals';
@@ -976,6 +976,18 @@ const atRiskScores = (
     {},
   );
 };
+
+export const getPeopleAtRiskGroups = createSelector(
+  getAtRiskData,
+  data => {
+    if (!data) return null;
+    const year = calcMaxYear(data);
+    const groups = data
+      .filter(d => quasiEquals(d.year, year))
+      .map(d => d[COLUMNS.AT_RISK.CODE]);
+    return uniq(groups);
+  },
+);
 
 // single country, multiple rights, single year
 export const getPeopleAtRiskForCountry = createSelector(

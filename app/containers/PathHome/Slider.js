@@ -26,7 +26,7 @@ const getCardNumber = width => {
   return minCards > maxCards ? minCards : maxCards;
 };
 
-export function Slider(props) {
+export function Slider({ stretch, children, ...rest }) {
   const ref = useRef(null);
   const [carouselWidth, setCarouselWidth] = useState(0);
 
@@ -40,14 +40,15 @@ export function Slider(props) {
       window.removeEventListener('resize', handleResize);
     };
   });
-  const { children } = props;
   const cardNumber = carouselWidth ? getCardNumber(carouselWidth) : 1;
   // prettier-ignore
   const responsive = reduce(BREAKPOINTS, (m, bp, key) => ({
     ...m,
     [key]: {
       breakpoint: bp,
-      items: cardNumber,
+      items: stretch && cardNumber > children.length
+        ? children.length
+        : cardNumber,
     },
   }), {});
 
@@ -62,7 +63,7 @@ export function Slider(props) {
           arrows={false}
           customButtonGroup={<SliderControls />}
           renderButtonGroupOutside
-          {...props}
+          {...rest}
         >
           {children}
         </Carousel>
@@ -76,6 +77,7 @@ Slider.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  stretch: PropTypes.bool,
 };
 
 export default Slider;

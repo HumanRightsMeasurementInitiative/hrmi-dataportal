@@ -48,16 +48,16 @@ export const initialState = {
     memo[resource.key] = false;
     return memo;
   }, {}),
-  contentRequested: PAGES.reduce((memo, page) => {
+  contentRequested: Object.values(PAGES).reduce((memo, page) => {
     memo[page.key] = false;
     return memo;
   }, {}),
-  content: PAGES.reduce((memo, page) => {
+  content: Object.values(PAGES).reduce((memo, page) => {
     memo[page.key] = false;
     return memo;
   }, {}),
   // record return time
-  contentReady: PAGES.reduce((memo, page) => {
+  contentReady: Object.values(PAGES).reduce((memo, page) => {
     memo[page.key] = false;
     return memo;
   }, {}),
