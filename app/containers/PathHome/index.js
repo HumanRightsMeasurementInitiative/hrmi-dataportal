@@ -13,14 +13,18 @@ import { Box } from 'grommet';
 // import Carousel from 'react-multi-carousel';
 // import Slider from 'react-styled-carousel';
 
-import { getCountriesFeaturedOnly } from 'containers/App/selectors';
+import {
+  getCountries,
+  getCountriesFeaturedOnly,
+  getPeopleAtRiskGroups,
+} from 'containers/App/selectors';
 import {
   loadDataIfNeeded,
   navigate,
   selectCountry,
   selectMetric,
 } from 'containers/App/actions';
-import { RIGHTS, PATHS } from 'containers/App/constants';
+import { RIGHTS, PATHS, PAGES } from 'containers/App/constants';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
@@ -33,6 +37,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
 
 import SectionIntro from './SectionIntro';
+import SectionData from './SectionData';
 import SectionCountries from './SectionCountries';
 import SectionRights from './SectionRights';
 // import messages from './messages';
@@ -65,12 +70,14 @@ Card.propTypes = {
   theme: PropTypes.object,
 };
 
-const DEPENDENCIES = ['countries', 'featured'];
+const DEPENDENCIES = ['countries', 'featured', 'atRisk'];
 
 export function PathHome({
   onLoadData,
   nav,
   countries,
+  countriesFeatured,
+  groups,
   onSelectMetric,
   onSelectCountry,
 }) {
@@ -81,11 +88,21 @@ export function PathHome({
     onLoadData();
   }, []);
 
+  console.log(countries && countries.length);
+
   return (
     <ContentWrap>
       <SectionIntro />
+      <SectionData
+        noCountries={countries ? countries.length : 0}
+        noRights={RIGHTS.length}
+        noGroups={groups ? groups.length : 0}
+        navCountries={() => nav(PATHS.COUNTRIES)}
+        navRights={() => nav(PATHS.METRICS)}
+        navGroups={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}
+      />
       <SectionCountries
-        countries={countries}
+        countries={countriesFeatured}
         onSelectCountry={onSelectCountry}
         navAllCountries={() => nav(PATHS.COUNTRIES)}
       />
@@ -97,7 +114,7 @@ export function PathHome({
       <SectionContainer border>
         <ContentMaxWidth maxWidth="1024px" column>
           Section Groups
-          <ButtonText onClick={() => nav('page/at-risk')}>
+          <ButtonText onClick={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}>
             About Groups At Risk
           </ButtonText>
         </ContentMaxWidth>
@@ -105,13 +122,19 @@ export function PathHome({
       <SectionContainer border>
         <ContentMaxWidth maxWidth="1024px" column>
           Section Other
-          <ButtonText onClick={() => nav('page/download')}>
+          <ButtonText
+            onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}
+          >
             Download Data
           </ButtonText>
-          <ButtonText onClick={() => nav('page/methodology')}>
+          <ButtonText
+            onClick={() => nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)}
+          >
             About our methodology
           </ButtonText>
-          <ButtonText onClick={() => nav('page/about')}>About HRMI</ButtonText>
+          <ButtonText onClick={() => nav(`${PATHS.PAGE}/${PAGES.about.key}`)}>
+            About HRMI
+          </ButtonText>
         </ContentMaxWidth>
       </SectionContainer>
     </ContentWrap>
@@ -123,12 +146,16 @@ PathHome.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   // dataReady: PropTypes.bool,
   countries: PropTypes.array,
+  countriesFeatured: PropTypes.array,
+  groups: PropTypes.array,
   onSelectMetric: PropTypes.func,
   onSelectCountry: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
-  countries: state => getCountriesFeaturedOnly(state),
+  countriesFeatured: state => getCountriesFeaturedOnly(state),
+  countries: state => getCountries(state),
+  groups: state => getPeopleAtRiskGroups(state),
 });
 
 export function mapDispatchToProps(dispatch) {

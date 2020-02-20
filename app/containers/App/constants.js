@@ -79,6 +79,10 @@ export const COLUMNS = {
     CAT: 'featured_category',
     COUNTRIES: 'country_codes',
   },
+  AT_RISK: {
+    CODE: 'people_code',
+    METRIC_CODE: 'metric_code',
+  },
 };
 
 export const LANGUAGES = {
@@ -100,24 +104,43 @@ export const LANGUAGES = {
 export const DATA_URL = '//data-store.humanrightsmeasurement.org/data';
 export const PAGES_URL = '//content-store.humanrightsmeasurement.org/';
 
-export const PAGES = [
-  {
+export const PAGES = {
+  about: {
     key: 'about',
     primary: true,
   },
-  {
+  methodology: {
     key: 'methodology',
     primary: true,
   },
-  {
+  download: {
     key: 'download',
     primary: true,
   },
-  {
+  atRisk: {
     key: 'at-risk',
     primary: false,
   },
-];
+};
+
+export const PATHS = {
+  HOME: '',
+  METRICS: 'metrics',
+  METRIC: 'metric',
+  COUNTRIES: 'countries',
+  COUNTRY: 'country',
+  PAGE: 'page',
+};
+export const FAQS = {
+  COUNTRY_SNAPSHOT: ['scale', 'year', 'benchmarks', 'standards'],
+  COUNTRY_ESR: ['benchmarks', 'standards'],
+  COUNTRY_CPR: [],
+  ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],
+  ESR_RIGHT: ['measureRightESR', 'benchmarks', 'standards'],
+  ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],
+  CPR_DIMENSION: ['measureDimensionCPR'],
+  CPR_RIGHT: ['measureRightCPR'],
+};
 
 // countries: country lookup table
 // esrIndicators: ESR indicator lookup table
@@ -611,22 +634,3 @@ export const INDICATORS = [
 
 export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';
 export const GA_PROPERTY_ID = 'UA-103815452-2';
-
-export const PATHS = {
-  HOME: '',
-  METRICS: 'metrics',
-  METRIC: 'metric',
-  COUNTRIES: 'countries',
-  COUNTRY: 'country',
-  PAGE: 'page',
-};
-export const FAQS = {
-  COUNTRY_SNAPSHOT: ['scale', 'year', 'benchmarks', 'standards'],
-  COUNTRY_ESR: ['benchmarks', 'standards'],
-  COUNTRY_CPR: [],
-  ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],
-  ESR_RIGHT: ['measureRightESR', 'benchmarks', 'standards'],
-  ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],
-  CPR_DIMENSION: ['measureDimensionCPR'],
-  CPR_RIGHT: ['measureRightCPR'],
-};

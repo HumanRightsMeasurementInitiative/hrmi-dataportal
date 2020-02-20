@@ -24,26 +24,36 @@ import SearchResults from './SearchResults';
 
 const StyledTextInput = styled(TextInput)`
   &::placeholder {
-    color: black;
+    color: ${({ dark }) => (dark ? 'white' : 'black')};
   }
 `;
 
-export function Search({ intl, searched, margin }) {
+export function Search({
+  intl,
+  searched,
+  margin,
+  dark = false,
+  stretch = false,
+}) {
   useInjectSaga({ key: 'app', saga });
 
   const [search, setSearch] = useState('');
   const searchRef = useRef(null);
 
   return (
-    <Box flex={{ grow: 1 }} margin={margin ? { horizontal: 'medium' } : null}>
+    <Box
+      flex={{ grow: 1 }}
+      margin={margin ? { horizontal: 'medium' } : null}
+      width={stretch ? '100%' : null}
+    >
       <Box
-        background="white"
+        background={dark ? 'dark' : 'white'}
         direction="row"
         align="center"
         pad={{ horizontal: 'small', vertical: 'xsmall' }}
         round="small"
         ref={searchRef}
-        style={{ maxWidth: '500px' }}
+        style={stretch ? null : { maxWidth: '500px' }}
       >
         <StyledTextInput
           plain
@@ -56,6 +66,7 @@ export function Search({ intl, searched, margin }) {
           }}
           placeholder={intl.formatMessage(messages.allSearch)}
           pad="xsmall"
+          dark={dark}
         />
         {search && search.length > 0 && (
           <Button onClick={() => setSearch('')} pad="xsmall">
@@ -81,6 +92,8 @@ Search.propTypes = {
   searched: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   margin: PropTypes.bool,
+  dark: PropTypes.bool,
+  stretch: PropTypes.bool,
 };
 
 const mapDispatchToProps = dispatch => ({
