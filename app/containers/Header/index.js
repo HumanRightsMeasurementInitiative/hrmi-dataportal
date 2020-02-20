@@ -181,7 +181,7 @@ const ButtonNavSecondary = styled(Button)`
 
 const DEPENDENCIES = ['countries'];
 
-export function Header({ nav, onLoadData, match, route, theme }) {
+export function Header({ nav, onLoadData, match, theme }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -199,7 +199,7 @@ export function Header({ nav, onLoadData, match, route, theme }) {
     setShowMenu(false);
     nav({ pathname: '', search: '' });
   };
-  const showSecondary = route !== '';
+  const showSecondary = true;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -350,7 +350,7 @@ Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
   match: PropTypes.string,
-  route: PropTypes.string,
+  // route: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   theme: PropTypes.object,
 };
