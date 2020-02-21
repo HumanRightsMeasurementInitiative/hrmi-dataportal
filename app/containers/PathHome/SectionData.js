@@ -35,19 +35,19 @@ export function SectionData({
               cardMargin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
             >
               <CardData
-                onClick={navCountries}
+                onCardClick={navCountries}
                 no={noCountries}
                 title="Country Profiles"
                 margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
               />
               <CardData
-                onClick={navRights}
+                onCardClick={navRights}
                 no={noRights}
                 title="Rights"
                 margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
               />
               <CardData
-                onClick={navGroups}
+                onCardClick={navGroups}
                 no={noGroups}
                 title="Risk Groups"
                 margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}

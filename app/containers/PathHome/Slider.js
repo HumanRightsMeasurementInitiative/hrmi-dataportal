@@ -11,7 +11,7 @@ import { reduce } from 'lodash/collection';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-import { isMaxSize } from 'utils/responsive';
+import { isMaxSize, isMinSize } from 'utils/responsive';
 
 import { BREAKPOINTS, CARD_WIDTH } from 'theme';
 
@@ -21,7 +21,6 @@ import SliderControls from './SliderControls';
 const SliderWrapper = styled.div`
   width: 100%;
   position: relative;
-  min-height: 150px;
   margin: 0 -${({ theme, edge }) => (edge && theme.global.edgeSize[edge]) || 0};
   width: calc(
     100% +
@@ -77,7 +76,10 @@ export function Slider({ stretch, children, cardMargin, ...rest }) {
               keyBoardControl={false}
               slidesToSlide={cardNumber}
               arrows={false}
-              customButtonGroup={<SliderControls />}
+              customButtonGroup={
+                isMinSize(size, 'medium') && <SliderControls />
+              }
+              removeArrowOnDeviceType={['small']}
               renderButtonGroupOutside
               partialVisible={isMaxSize(size, 'small')}
               {...rest}

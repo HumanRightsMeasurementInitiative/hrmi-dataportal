@@ -40,6 +40,7 @@ const ArrowWrapper = styled.div`
 
 // prettier-ignore
 const StyledButtonIcon = styled(ButtonIcon)`
+  pointer-events: all;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -64,6 +65,7 @@ const SliderControlsWrapper = styled.div`
   top: 0;
   bottom: 0;
   width: 100%;
+  pointer-events: none;
 `;
 
 const SliderControls = ({ next, previous, carouselState }) => {
