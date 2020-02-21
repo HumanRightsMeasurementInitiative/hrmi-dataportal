@@ -23,12 +23,12 @@ import Card from './Card';
 export function SectionRights({ rights, onSelectRight, navAllRights, intl }) {
   return (
     <SectionContainer border>
-      <ContentMaxWidth maxWidth="1024px" column>
+      <ContentMaxWidth maxWidth="medium" column>
         Section Rights Carousel
         <ButtonText onClick={() => navAllRights()}>Rights overview</ButtonText>
-        <Slider>
+        <Slider cardMargin="xsmall">
           {rights.map(r => (
-            <Card key={r.key}>
+            <Card key={r.key} margin="xsmall">
               <ButtonPlain
                 onClick={() => {
                   onSelectRight(r.key);

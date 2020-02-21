@@ -30,13 +30,13 @@ export function SectionCountries({
 }) {
   return (
     <SectionContainer border>
-      <ContentMaxWidth maxWidth="1024px" column>
+      <ContentMaxWidth maxWidth="medium" column>
         Section Featured Countries
         <ButtonText onClick={() => navAllCountries()}>
           Countries overview
         </ButtonText>
         {countries && (
-          <Slider>
+          <Slider cardMargin="xsmall">
             {countries.map(country => {
               if (!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]) {
                 console.log(
@@ -54,7 +54,7 @@ export function SectionCountries({
                 '',
               );
               return (
-                <Card key={country[COLUMNS.COUNTRIES.CODE]}>
+                <Card key={country[COLUMNS.COUNTRIES.CODE]} margin="xsmall">
                   <ButtonPlain
                     onClick={() =>
                       onSelectCountry(country[COLUMNS.COUNTRIES.CODE])

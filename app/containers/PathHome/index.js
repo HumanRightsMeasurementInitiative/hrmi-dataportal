@@ -88,8 +88,6 @@ export function PathHome({
     onLoadData();
   }, []);
 
-  console.log(countries && countries.length);
-
   return (
     <ContentWrap>
       <SectionIntro />
@@ -112,7 +110,7 @@ export function PathHome({
         navAllRights={() => nav(PATHS.METRICS)}
       />
       <SectionContainer border>
-        <ContentMaxWidth maxWidth="1024px" column>
+        <ContentMaxWidth maxWidth="medium" column>
           Section Groups
           <ButtonText onClick={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}>
             About Groups At Risk
@@ -120,7 +118,7 @@ export function PathHome({
         </ContentMaxWidth>
       </SectionContainer>
       <SectionContainer border>
-        <ContentMaxWidth maxWidth="1024px" column>
+        <ContentMaxWidth maxWidth="medium" column>
           Section Other
           <ButtonText
             onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}
@@ -145,7 +143,7 @@ PathHome.propTypes = {
   nav: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   // dataReady: PropTypes.bool,
-  countries: PropTypes.array,
+  countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   countriesFeatured: PropTypes.array,
   groups: PropTypes.array,
   onSelectMetric: PropTypes.func,
