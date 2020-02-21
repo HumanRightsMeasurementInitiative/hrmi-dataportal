@@ -1959,5 +1959,9 @@ export default defineMessages({
       id: `${scope}.featured.F`,
       defaultMessage: 'Featured F',
     },
+    any: {
+      id: `${scope}.featured.any`,
+      defaultMessage: 'Featured',
+    },
   },
 });

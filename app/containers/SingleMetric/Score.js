@@ -129,8 +129,8 @@ export function Score({ score, country, metric, currentBenchmark, standard }) {
 }
 
 Score.propTypes = {
-  score: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  country: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   metric: PropTypes.object.isRequired,
   standard: PropTypes.string,
   currentBenchmark: PropTypes.object,

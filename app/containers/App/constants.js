@@ -270,6 +270,7 @@ export const COUNTRY_FILTERS = [
   'subregion',
   'treaty',
   'cgroup',
+  'featured',
 ];
 
 export const STANDARDS = [

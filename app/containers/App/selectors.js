@@ -15,6 +15,7 @@ import {
   hasCountryIncome,
   isCountryHighIncome,
   isCountryOECD,
+  isCountryFeatured,
 } from 'utils/countries';
 
 import { initialState } from './reducer';
@@ -37,6 +38,64 @@ import {
   COLUMNS,
   ASSESSED_FILTERS,
 } from './constants';
+
+// global sub-state
+const getGlobal = state => state.global || initialState;
+
+export const getCloseTargetPage = createSelector(
+  getGlobal,
+  global => global.closeTargetPage,
+);
+export const getCloseTargetMetric = createSelector(
+  getGlobal,
+  global => global.closeTargetMetric,
+);
+export const getCloseTargetCountry = createSelector(
+  getGlobal,
+  global => global.closeTargetCountry,
+);
+
+// get data / content
+const getData = createSelector(
+  getGlobal,
+  global => global.data,
+);
+export const getESRScores = createSelector(
+  getData,
+  data => data.esrScores,
+);
+export const getCPRScores = createSelector(
+  getData,
+  data => data.cprScores,
+);
+export const getAuxIndicators = createSelector(
+  getData,
+  data => data.auxIndicators,
+);
+export const getESRIndicators = createSelector(
+  getData,
+  data => data.esrIndicators,
+);
+export const getESRIndicatorScores = createSelector(
+  getData,
+  data => data.esrIndicatorScores,
+);
+export const getAtRiskData = createSelector(
+  getData,
+  data => data.atRisk,
+);
+export const getCountries = createSelector(
+  getData,
+  data => data.countries,
+);
+export const getCountriesGrammar = createSelector(
+  getData,
+  data => data.countriesGrammar,
+);
+export const getFeatured = createSelector(
+  getData,
+  data => data.featured,
+);
 
 // router sub-state
 const getRouter = state => state.router;
@@ -175,14 +234,29 @@ export const getTreatySearch = createSelector(
     search.has('treaty') &&
     searchValues(TREATIES.values, search.getAll('treaty')),
 );
+export const getFeaturedValues = createSelector(
+  getFeatured,
+  featured =>
+    featured && ['any'].concat(featured.map(f => f[COLUMNS.FEATURED.CAT])),
+);
+
+export const getFeaturedSearch = createSelector(
+  getFeaturedValues,
+  getRouterSearchParams,
+  (featuredValues, search) =>
+    search.has('featured') &&
+    featuredValues &&
+    searchValues(featuredValues, search.getAll('featured')),
+);
 const getHasCountryFilters = createSelector(
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
   getCountryGroupSearch,
   getTreatySearch,
-  (region, subregion, income, cgroup, treaty) =>
-    region || subregion || income || cgroup || treaty,
+  getFeaturedSearch,
+  (region, subregion, income, cgroup, treaty, featured) =>
+    region || subregion || income || cgroup || treaty || featured,
 );
 export const getGroupSearch = createSelector(
   getRouterSearchParams,
@@ -207,63 +281,6 @@ export const getSortOrderSearch = createSelector(
     search.get('dir'),
 );
 
-// global sub-state
-const getGlobal = state => state.global || initialState;
-
-export const getCloseTargetPage = createSelector(
-  getGlobal,
-  global => global.closeTargetPage,
-);
-export const getCloseTargetMetric = createSelector(
-  getGlobal,
-  global => global.closeTargetMetric,
-);
-export const getCloseTargetCountry = createSelector(
-  getGlobal,
-  global => global.closeTargetCountry,
-);
-
-// get data / content
-const getData = createSelector(
-  getGlobal,
-  global => global.data,
-);
-export const getESRScores = createSelector(
-  getData,
-  data => data.esrScores,
-);
-export const getCPRScores = createSelector(
-  getData,
-  data => data.cprScores,
-);
-export const getAuxIndicators = createSelector(
-  getData,
-  data => data.auxIndicators,
-);
-export const getESRIndicators = createSelector(
-  getData,
-  data => data.esrIndicators,
-);
-export const getESRIndicatorScores = createSelector(
-  getData,
-  data => data.esrIndicatorScores,
-);
-export const getAtRiskData = createSelector(
-  getData,
-  data => data.atRisk,
-);
-export const getCountries = createSelector(
-  getData,
-  data => data.countries,
-);
-export const getCountriesGrammar = createSelector(
-  getData,
-  data => data.countriesGrammar,
-);
-export const getFeatured = createSelector(
-  getData,
-  data => data.featured,
-);
 export const getCountriesFeatured = createSelector(
   getFeatured,
   getCountries,
@@ -424,13 +441,25 @@ export const getCountryGrammar = createSelector(
 
 export const getCountriesFiltered = createSelector(
   getCountries,
+  getFeatured,
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
   getCountryGroupSearch,
   getTreatySearch,
-  (countries, region, subregion, income, cgroup, treaty) =>
+  getFeaturedSearch,
+  (
+    countries,
+    featuredCountries,
+    region,
+    subregion,
+    income,
+    cgroup,
+    treaty,
+    featured,
+  ) =>
     countries &&
+    featuredCountries &&
     countries
       .filter(c => !region || region.indexOf(c[COLUMNS.COUNTRIES.REGION]) > -1)
       .filter(
@@ -445,7 +474,10 @@ export const getCountriesFiltered = createSelector(
         c =>
           !treaty || hasCountryAttribute(c, treaty, COLUMNS.COUNTRIES.TREATIES),
       )
-      .filter(c => !income || hasCountryIncome(c, income)),
+      .filter(c => !income || hasCountryIncome(c, income))
+      .filter(
+        c => !featured || isCountryFeatured(c, featured, featuredCountries),
+      ),
 );
 
 // single metric
