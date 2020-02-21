@@ -41,4 +41,8 @@ export default defineMessages({
     id: `${scope}.assessedFilterOptionGroup`,
     defaultMessage: 'Assessment',
   },
+  featuredFilterOptionGroup: {
+    id: `${scope}.featureedFilterOptionGroup`,
+    defaultMessage: 'Featured',
+  },
 });
