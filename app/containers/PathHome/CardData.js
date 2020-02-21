@@ -7,33 +7,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Box } from 'grommet';
-import styled from 'styled-components';
-import ButtonPlain from 'styled/ButtonPlain';
+import { Box, Button } from 'grommet';
 
-const Button = styled(ButtonPlain)`
-  margin: 0 auto;
-  @media (min-width: 520px) {
-    margin: 0;
-  }
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-export function CardData({ onClick, no, title, margin }) {
+export function CardData({ onCardClick, no, title, margin }) {
   return (
     <Box
-      height={{ min: '200px' }}
       elevation="small"
       responsive={false}
       margin={margin || 'medium'}
-      pad="small"
+      pad="none"
       background="white"
     >
-      <Button onClick={onClick}>
-        <div>{no}</div>
-        <div>{title}</div>
+      <Button onClick={onCardClick} fill plain>
+        <Box height={{ min: '200px' }} pad="small">
+          <div>{no}</div>
+          <div>{title}</div>
+        </Box>
       </Button>
     </Box>
   );
@@ -42,7 +31,7 @@ export function CardData({ onClick, no, title, margin }) {
 CardData.propTypes = {
   no: PropTypes.number,
   title: PropTypes.string,
-  onClick: PropTypes.func,
+  onCardClick: PropTypes.func,
   margin: PropTypes.string,
 };
 

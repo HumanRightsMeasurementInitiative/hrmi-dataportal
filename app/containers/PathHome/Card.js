@@ -6,23 +6,34 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box } from 'grommet';
+import { Box, Button } from 'grommet';
 
-export function Card(props) {
+export function Card({ children, margin, onCardClick, ...rest }) {
   return (
     <Box
-      height={{ min: '150px' }}
       elevation="small"
       responsive={false}
-      margin={props.margin || 'xsmall'}
-      pad="small"
-      {...props}
-    />
+      margin={margin || 'xsmall'}
+      pad="none"
+      align="start"
+      {...rest}
+    >
+      <Button onClick={onCardClick} fill plain>
+        <Box height={{ min: '150px' }} pad="small">
+          {children}
+        </Box>
+      </Button>
+    </Box>
   );
 }
 
 Card.propTypes = {
+  onCardClick: PropTypes.func,
   margin: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default Card;

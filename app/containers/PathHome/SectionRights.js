@@ -13,7 +13,6 @@ import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
 import ButtonText from 'styled/ButtonText';
-import ButtonPlain from 'styled/ButtonPlain';
 
 import rootMessages from 'messages';
 
@@ -28,16 +27,16 @@ export function SectionRights({ rights, onSelectRight, navAllRights, intl }) {
         <ButtonText onClick={() => navAllRights()}>Rights overview</ButtonText>
         <Slider cardMargin="xsmall">
           {rights.map(r => (
-            <Card key={r.key} margin="xsmall">
-              <ButtonPlain
-                onClick={() => {
-                  onSelectRight(r.key);
-                }}
-              >
-                {`${intl.formatMessage(rootMessages.rights[r.key])} (${
-                  r.dimension
-                })`}
-              </ButtonPlain>
+            <Card
+              key={r.key}
+              margin="xsmall"
+              onCardClick={() => {
+                onSelectRight(r.key);
+              }}
+            >
+              {`${intl.formatMessage(rootMessages.rights[r.key])} (${
+                r.dimension
+              })`}
             </Card>
           ))}
         </Slider>
