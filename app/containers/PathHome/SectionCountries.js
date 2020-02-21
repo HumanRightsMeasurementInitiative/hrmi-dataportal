@@ -15,12 +15,22 @@ import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
 import ButtonText from 'styled/ButtonText';
-import ButtonPlain from 'styled/ButtonPlain';
+// import ButtonPlain from 'styled/ButtonPlain';
 
 import rootMessages from 'messages';
 
 import Slider from './Slider';
 import Card from './Card';
+
+// const Button = styled(ButtonPlain)`
+//   margin: 0 auto;
+//   @media (min-width: 520px) {
+//     margin: 0;
+//   }
+//   &:hover {
+//     text-decoration: underline;
+//   }
+// `;
 
 export function SectionCountries({
   countries,
@@ -54,26 +64,24 @@ export function SectionCountries({
                 '',
               );
               return (
-                <Card key={country[COLUMNS.COUNTRIES.CODE]} margin="xsmall">
-                  <ButtonPlain
-                    onClick={() =>
-                      onSelectCountry(country[COLUMNS.COUNTRIES.CODE])
-                    }
-                  >
-                    {rootMessages.countries[
-                      country[COLUMNS.COUNTRIES.CODE]
-                    ] && (
-                      <FormattedMessage
-                        {...rootMessages.countries[
-                          country[COLUMNS.COUNTRIES.CODE]
-                        ]}
-                      />
-                    )}
-                    {!rootMessages.countries[
-                      country[COLUMNS.COUNTRIES.CODE]
-                    ] && <span>{country[COLUMNS.COUNTRIES.CODE]}</span>}
-                    {` (${catLabels})`}
-                  </ButtonPlain>
+                <Card
+                  key={country[COLUMNS.COUNTRIES.CODE]}
+                  margin="xsmall"
+                  onCardClick={() =>
+                    onSelectCountry(country[COLUMNS.COUNTRIES.CODE])
+                  }
+                >
+                  {rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]] && (
+                    <FormattedMessage
+                      {...rootMessages.countries[
+                        country[COLUMNS.COUNTRIES.CODE]
+                      ]}
+                    />
+                  )}
+                  {!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]] && (
+                    <span>{country[COLUMNS.COUNTRIES.CODE]}</span>
+                  )}
+                  {` (${catLabels})`}
                 </Card>
               );
             })}
