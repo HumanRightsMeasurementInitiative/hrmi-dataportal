@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Box } from 'grommet';
 
 export function Card(props) {
@@ -13,11 +14,15 @@ export function Card(props) {
       height={{ min: '150px' }}
       elevation="small"
       responsive={false}
-      margin="xsmall"
+      margin={props.margin || 'xsmall'}
       pad="small"
       {...props}
     />
   );
 }
+
+Card.propTypes = {
+  margin: PropTypes.string,
+};
 
 export default Card;

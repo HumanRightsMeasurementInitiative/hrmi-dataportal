@@ -6,6 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ResponsiveContext } from 'grommet';
+import { isMaxSize } from 'utils/responsive';
 
 // styles
 import SectionContainer from 'styled/SectionContainer';
@@ -23,20 +25,38 @@ export function SectionData({
   navGroups,
 }) {
   return (
-    <SectionContainer border background="light-4">
-      <ContentMaxWidth maxWidth="1024px" column>
-        Our data
-        <Slider stretch>
-          <CardData
-            onClick={navCountries}
-            no={noCountries}
-            title="Country Profiles"
-          />
-          <CardData onClick={navRights} no={noRights} title="Rights" />
-          <CardData onClick={navGroups} no={noGroups} title="Risk Groups" />
-        </Slider>
-      </ContentMaxWidth>
-    </SectionContainer>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <SectionContainer border background="light-4">
+          <ContentMaxWidth maxWidth="medium" column>
+            Our data
+            <Slider
+              stretch
+              cardMargin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
+            >
+              <CardData
+                onClick={navCountries}
+                no={noCountries}
+                title="Country Profiles"
+                margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
+              />
+              <CardData
+                onClick={navRights}
+                no={noRights}
+                title="Rights"
+                margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
+              />
+              <CardData
+                onClick={navGroups}
+                no={noGroups}
+                title="Risk Groups"
+                margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
+              />
+            </Slider>
+          </ContentMaxWidth>
+        </SectionContainer>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

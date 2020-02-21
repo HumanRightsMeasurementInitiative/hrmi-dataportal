@@ -21,13 +21,13 @@ const Button = styled(ButtonPlain)`
   }
 `;
 
-export function CardData({ onClick, no, title }) {
+export function CardData({ onClick, no, title, margin }) {
   return (
     <Box
       height={{ min: '200px' }}
       elevation="small"
       responsive={false}
-      margin="medium"
+      margin={margin || 'medium'}
       pad="small"
       background="white"
     >
@@ -43,6 +43,7 @@ CardData.propTypes = {
   no: PropTypes.number,
   title: PropTypes.string,
   onClick: PropTypes.func,
+  margin: PropTypes.string,
 };
 
 export default CardData;

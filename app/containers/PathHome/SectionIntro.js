@@ -28,7 +28,7 @@ const SearchWrapper = styled.div`
 export function SectionIntro() {
   return (
     <SectionContainer border>
-      <ContentMaxWidth maxWidth="1024px" column>
+      <ContentMaxWidth maxWidth="medium" column>
         <PageTitle level={3}>
           <FormattedMessage {...messages.title} />
         </PageTitle>
