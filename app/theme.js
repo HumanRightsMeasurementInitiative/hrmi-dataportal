@@ -151,7 +151,7 @@ const theme = {
       medium: '24px',
       ml: '36px',
       large: '48px',
-      xlarge: '96px',
+      xlarge: '72px',
     },
     breakpoints: {
       small: {
@@ -292,6 +292,8 @@ const theme = {
     },
   },
   maxWidth: '1600px',
+  maxWidthMedium: '1068px',
+  maxWidthNarrow: '800px',
 };
 
 /**
