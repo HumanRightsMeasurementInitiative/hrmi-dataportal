@@ -142,6 +142,7 @@
   "hrmi.components.CountryFilters.assessedFilterOptionGroup": "By assessment progress",
   "hrmi.components.CountryFilters.countryGroupFilterOptionGroup": "By country grouping",
   "hrmi.components.CountryFilters.treatyFilterOptionGroup": "By treaty ratification",
+  "hrmi.components.CountryFilters.featuredFilterOptionGroup": "By featured category",
   "hrmi.components.CountrySort.sortBy": "Sort by:",
   "hrmi.components.CountrySort.sortOptions.name": "Name",
   "hrmi.components.CountrySort.sortOptions.score": "Score",
@@ -669,5 +670,6 @@
   "hrmi.featured.C": "Featured C",
   "hrmi.featured.D": "Featured D",
   "hrmi.featured.E": "Featured E",
-  "hrmi.featured.F": "Featured F"
+  "hrmi.featured.F": "Featured F",
+  "hrmi.featured.any": "Featured"
 }

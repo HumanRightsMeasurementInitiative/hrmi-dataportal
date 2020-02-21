@@ -23,6 +23,8 @@ import {
   getScaleSearch,
   getDependenciesReady,
   getAuxIndicatorsLatest,
+  getFeaturedValues,
+  getFeatured,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
 
@@ -64,6 +66,7 @@ const DEPENDENCIES = [
   'cprScores',
   'esrScores',
   'auxIndicators',
+  'featured',
   // 'esrIndicatorScores', // consider removing to improve IE11/Edge performance
 ];
 
@@ -76,6 +79,8 @@ export function PathCountryOverview({
   onLoadData,
   dataReady,
   auxIndicators,
+  featuredValues,
+  featuredCountries,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -83,12 +88,15 @@ export function PathCountryOverview({
     // kick off loading of data
     onLoadData();
   }, []);
-
-  const standardDetails = STANDARDS.find(s => s.key === standard);
   // prettier-ignore
   const filteredCountries = assessed
     ? countries && countries.filter(c =>
-      filterByAssessment(c, scoresAllCountries, assessed, standardDetails),
+      filterByAssessment(
+        c,
+        scoresAllCountries,
+        assessed,
+        STANDARDS.find(s => s.key === standard),
+      ),
     )
     : countries;
 
@@ -129,6 +137,8 @@ export function PathCountryOverview({
                 scoresAllCountries={scoresAllCountries}
                 auxIndicators={auxIndicators}
                 dataReady={dataReady}
+                featuredValues={featuredValues}
+                featuredCountries={featuredCountries}
               />
             </ColumnContent>
           </Box>
@@ -145,8 +155,10 @@ PathCountryOverview.propTypes = {
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   dataReady: PropTypes.bool,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -157,6 +169,8 @@ const mapStateToProps = createStructuredSelector({
   assessed: state => getAssessedSearch(state),
   scale: state => getScaleSearch(state),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
+  featuredValues: state => getFeaturedValues(state),
+  featuredCountries: state => getFeatured(state),
 });
 export function mapDispatchToProps(dispatch) {
   return {
