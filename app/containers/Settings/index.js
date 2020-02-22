@@ -105,7 +105,7 @@ export const showSettings = ({ route, match, tabIndex }) => {
     return true;
   }
   if (route === PATHS.COUNTRY) {
-    return tabIndex === 0;
+    return tabIndex < 2;
   }
   return route === PATHS.COUNTRIES || route === PATHS.METRICS;
 };

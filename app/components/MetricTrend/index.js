@@ -24,13 +24,11 @@ import formatScore from 'utils/format-score';
 
 import Source from 'components/Source';
 
-import {
-  INDICATOR_LOOKBACK,
-  STANDARDS,
-  BENCHMARKS,
-} from 'containers/App/constants';
+import { INDICATOR_LOOKBACK } from 'containers/App/constants';
 
-import SettingsToggle from 'containers/Settings/SettingsToggle';
+// STANDARDS,
+// BENCHMARKS,
+// import SettingsToggle from 'containers/Settings/SettingsToggle';
 
 import WrapPlot from 'styled/WrapPlot';
 
@@ -79,12 +77,12 @@ function MetricTrend({
   rangeColumns,
   color,
   colorHint,
-  benchmark,
-  standard,
-  hasBenchmarkOption,
-  hasStandardOption,
-  onSetBenchmark,
-  onSetStandard,
+  // benchmark,
+  // standard,
+  // hasBenchmarkOption,
+  // hasStandardOption,
+  // onSetBenchmark,
+  // onSetStandard,
 }) {
   const [highlight, setHighlight] = useState(false);
   if (!maxYear) return null;
@@ -241,40 +239,40 @@ function MetricTrend({
             </FlexibleWidthXYPlot>
           </WrapPlot>
           <Source center />
-          {(hasBenchmarkOption || hasStandardOption) && (
-            <Box
-              direction={size !== 'small' ? 'row' : 'column'}
-              pad={
-                size !== 'small'
-                  ? { horizontal: 'medium' }
-                  : { vertical: 'medium' }
-              }
-              justify="center"
-              fill="horizontal"
-            >
-              {hasBenchmarkOption && (
-                <SettingsToggle
-                  setting="benchmark"
-                  active={benchmark}
-                  onActivate={onSetBenchmark}
-                  options={BENCHMARKS}
-                />
-              )}
-              {hasStandardOption && (
-                <SettingsToggle
-                  setting="standard"
-                  active={standard}
-                  onActivate={onSetStandard}
-                  options={STANDARDS}
-                />
-              )}
-            </Box>
-          )}
         </Box>
       )}
     </ResponsiveContext.Consumer>
   );
 }
+// {(hasBenchmarkOption || hasStandardOption) && (
+//   <Box
+//   direction={size !== 'small' ? 'row' : 'column'}
+//   pad={
+//     size !== 'small'
+//     ? { horizontal: 'medium' }
+//     : { vertical: 'medium' }
+//   }
+//   justify="center"
+//   fill="horizontal"
+//   >
+//   {hasBenchmarkOption && (
+//     <SettingsToggle
+//     setting="benchmark"
+//     active={benchmark}
+//     onActivate={onSetBenchmark}
+//     options={BENCHMARKS}
+//     />
+//   )}
+//   {hasStandardOption && (
+//     <SettingsToggle
+//     setting="standard"
+//     active={standard}
+//     onActivate={onSetStandard}
+//     options={STANDARDS}
+//     />
+//   )}
+//   </Box>
+// )}
 
 MetricTrend.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
@@ -286,12 +284,12 @@ MetricTrend.propTypes = {
   colorHint: PropTypes.string,
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
-  benchmark: PropTypes.string,
-  standard: PropTypes.string,
-  hasBenchmarkOption: PropTypes.bool,
-  hasStandardOption: PropTypes.bool,
-  onSetBenchmark: PropTypes.func,
-  onSetStandard: PropTypes.func,
+  // benchmark: PropTypes.string,
+  // standard: PropTypes.string,
+  // hasBenchmarkOption: PropTypes.bool,
+  // hasStandardOption: PropTypes.bool,
+  // onSetBenchmark: PropTypes.func,
+  // onSetStandard: PropTypes.func,
 };
 
 export default MetricTrend;
