@@ -47,6 +47,7 @@ import {
   getCPRYear,
   getDependenciesReady,
   getCloseTargetCountry,
+  getESRIndicators,
 } from 'containers/App/selectors';
 
 import {
@@ -102,6 +103,7 @@ export function PathCountry({
   dataReady,
   onTrackEvent,
   closeTarget,
+  allIndicators,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -220,6 +222,7 @@ export function PathCountry({
                   cprYear={cprYear}
                   dataReady={dataReady}
                   trackEvent={onTrackEvent}
+                  allIndicators={allIndicators}
                 />
               ),
             },
@@ -334,6 +337,7 @@ PathCountry.propTypes = {
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
   dataReady: PropTypes.bool,
@@ -364,6 +368,7 @@ const mapStateToProps = createStructuredSelector({
   auxIndicators: (state, { match }) =>
     getAuxIndicatorsForCountry(state, match.params.country),
   closeTarget: state => getCloseTargetCountry(state),
+  allIndicators: state => getESRIndicators(state),
 });
 
 export function mapDispatchToProps(dispatch) {
