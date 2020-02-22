@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Box } from 'grommet';
 
+import { SIZES } from 'theme';
 import { selectCountry } from 'containers/App/actions';
 import { getCountries } from 'containers/App/selectors';
 
@@ -27,9 +28,10 @@ export function NavCountry({
   const [search, setSearch] = useState('');
 
   const sorted = countries && prepCountries(countries, search, intl);
-
+  // figure out available height for IE11
+  const h = window.innerHeight - SIZES.header.height;
   return (
-    <NavWrapper>
+    <NavWrapper h={h}>
       <NavTop
         onClose={() => onClose()}
         search={search}
