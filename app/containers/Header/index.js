@@ -411,8 +411,8 @@ export function Header({
                   fill="horizontal"
                 >
                   <span>{intl.formatMessage(messages.metrics)}</span>
-                  {showCountries && <FormUp size="large" />}
-                  {!showCountries && <FormDown size="large" />}
+                  {showMetrics && <FormUp size="large" />}
+                  {!showMetrics && <FormDown size="large" />}
                 </Box>
               }
               ref={metricTarget}
