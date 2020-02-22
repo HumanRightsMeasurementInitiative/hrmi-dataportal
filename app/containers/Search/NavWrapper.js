@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+const concat = (a, b) => `${a}${b}`;
 // prettier-ignore
 export default styled.div`
   width: 100%;
@@ -14,6 +14,7 @@ export default styled.div`
   color: ${({ theme }) => theme.global.colors.text.light};
   z-index: 1000;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    height: ${({ h }) => h ? concat(h, 'px') : '400px'};
     position: relative;
     width: 400px;
   }
