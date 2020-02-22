@@ -57,6 +57,7 @@ function CountryReport({
   dataReady,
   hasAside,
   type,
+  dimension,
   country,
   allIndicators,
   standard,
@@ -78,7 +79,7 @@ function CountryReport({
             <ChartMetricSelector
               activeDefault="esr"
               metrics={DIMENSIONS.reduce((dims, d) => {
-                if (d.key !== 'esr') {
+                if (d.key !== dimension) {
                   return dims;
                 }
                 return [
@@ -125,12 +126,48 @@ function CountryReport({
           </SectionContainer>
         </>
       )}
-      {dataReady && type === 'cpr' && (
+      {dataReady && type === 'cpr' && dimension === 'physint' && (
         <>
           <SectionContainer>Safety Summary Chart</SectionContainer>
           <SectionContainer>
             Safety Narrative & Comparative Assessment
           </SectionContainer>
+          <SectionContainer>
+            Category, rights & indicators over time
+            <ChartMetricSelector
+              activeDefault={dimension}
+              metrics={DIMENSIONS.reduce((dims, d) => {
+                if (d.key !== dimension) {
+                  return dims;
+                }
+                return [
+                  ...dims,
+                  {
+                    ...d,
+                    children: RIGHTS.reduce((rights, r) => {
+                      if (r.dimension !== d.key) {
+                        return rights;
+                      }
+                      return [...rights, r];
+                    }, []),
+                  },
+                ];
+              }, [])}
+              chart={props => (
+                <ChartContainerTrend
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  {...props}
+                />
+              )}
+            />
+          </SectionContainer>
+          <SectionContainer>
+            People at risk word cloud and narrative
+          </SectionContainer>
+        </>
+      )}
+      {dataReady && type === 'cpr' && dimension === 'empowerment' && (
+        <>
           <SectionContainer>Empowerment Summary Chart</SectionContainer>
           <SectionContainer>
             Empowerment Narrative & Comparative Assessment
@@ -138,9 +175,9 @@ function CountryReport({
           <SectionContainer>
             Category, rights & indicators over time
             <ChartMetricSelector
-              activeDefault="physint"
+              activeDefault={dimension}
               metrics={DIMENSIONS.reduce((dims, d) => {
-                if (d.type !== 'cpr') {
+                if (d.key !== dimension) {
                   return dims;
                 }
                 return [
@@ -179,6 +216,7 @@ CountryReport.propTypes = {
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   dataReady: PropTypes.bool,
   type: PropTypes.string,
+  dimension: PropTypes.string,
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   // countryTitle: PropTypes.string,
   // onMetricClick: PropTypes.func,

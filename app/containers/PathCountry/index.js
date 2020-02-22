@@ -198,11 +198,12 @@ export function PathCountry({
             },
             {
               key: 'report-esr',
-              title: intl.formatMessage(rootMessages.tabs.reportESR),
+              title: intl.formatMessage(rootMessages.dimensions.esr),
               content: props => (
                 <CountryReport
                   {...props}
                   type="esr"
+                  dimension="esr"
                   countryTitle={countryTitle}
                   dimensions={dimensions}
                   rights={rights}
@@ -227,21 +228,46 @@ export function PathCountry({
               ),
             },
             {
-              key: 'report-cpr',
-              title: intl.formatMessage(rootMessages.tabs.reportCPR),
+              key: 'report-physint',
+              title: intl.formatMessage(rootMessages.dimensions.physint),
               content: props => (
                 <CountryReport
                   {...props}
                   type="cpr"
+                  dimension="physint"
                   countryTitle={countryTitle}
                   dimensions={dimensions}
                   rights={rights}
                   country={country}
                   countryGrammar={countryGrammar}
                   scale={scale}
-                  benchmark={benchmark}
                   atRiskData={atRisk}
-                  standard={standard}
+                  reference={dimensionAverages}
+                  onAtRiskClick={() => onAtRiskClick()}
+                  onMetricClick={(metric, tab) =>
+                    console.log('metric click', countryCode, metric, tab)
+                  }
+                  cprYear={cprYear}
+                  dataReady={dataReady}
+                  trackEvent={onTrackEvent}
+                />
+              ),
+            },
+            {
+              key: 'report-empowerment',
+              title: intl.formatMessage(rootMessages.dimensions.empowerment),
+              content: props => (
+                <CountryReport
+                  {...props}
+                  type="cpr"
+                  dimension="empowerment"
+                  countryTitle={countryTitle}
+                  dimensions={dimensions}
+                  rights={rights}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  scale={scale}
+                  atRiskData={atRisk}
                   reference={dimensionAverages}
                   onAtRiskClick={() => onAtRiskClick()}
                   onMetricClick={(metric, tab) =>
