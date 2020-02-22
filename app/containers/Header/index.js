@@ -307,8 +307,8 @@ export function Header({ nav, onLoadData, match, theme }) {
                     fill="horizontal"
                   >
                     <FormattedMessage {...rootMessages.labels.metrics} />
-                    {showCountries && <FormUp size="large" />}
-                    {!showCountries && <FormDown size="large" />}
+                    {showMetrics && <FormUp size="large" />}
+                    {!showMetrics && <FormDown size="large" />}
                   </Box>
                 }
                 ref={metricTarget}
