@@ -248,7 +248,7 @@ export const getFeaturedSearch = createSelector(
     featuredValues &&
     searchValues(featuredValues, search.getAll('featured')),
 );
-const getHasCountryFilters = createSelector(
+const getHasChartSettingFilters = createSelector(
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
@@ -492,10 +492,10 @@ export const getIndicatorInfo = createSelector(
 export const getESRDimensionScores = createSelector(
   getESRScores,
   getCountriesFiltered,
-  getHasCountryFilters,
+  getHasChartSettingFilters,
   getStandardSearch,
   getESRYear,
-  (scores, countries, hasCountryFilters, standardSearch, year) => {
+  (scores, countries, hasChartSettingFilters, standardSearch, year) => {
     const standard = STANDARDS.find(as => as.key === standardSearch);
     const dimension = DIMENSIONS.find(d => d.key === 'esr');
     return (
@@ -508,7 +508,7 @@ export const getESRDimensionScores = createSelector(
           s.standard === standard.code &&
           s.metric_code === dimension.code &&
           quasiEquals(s.year, year) &&
-          (!hasCountryFilters ||
+          (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
     );
@@ -519,9 +519,9 @@ export const getCPRDimensionScores = createSelector(
   (state, metric) => metric,
   getCPRScores,
   getCountriesFiltered,
-  getHasCountryFilters,
+  getHasChartSettingFilters,
   getCPRYear,
-  (metric, scores, countries, hasCountryFilters, year) => {
+  (metric, scores, countries, hasChartSettingFilters, year) => {
     // make sure a metric is set
     const dimension = !!metric && DIMENSIONS.find(d => d.key === metric);
     return (
@@ -532,7 +532,7 @@ export const getCPRDimensionScores = createSelector(
         s =>
           s.metric_code === dimension.code &&
           quasiEquals(s.year, year) &&
-          (!hasCountryFilters ||
+          (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
     );
@@ -544,7 +544,7 @@ export const getESRRightScores = createSelector(
   (state, metric) => metric,
   getESRScores,
   getCountriesFiltered,
-  getHasCountryFilters,
+  getHasChartSettingFilters,
   getStandardSearch,
   getGroupSearch,
   getESRYear,
@@ -552,7 +552,7 @@ export const getESRRightScores = createSelector(
     metric,
     scores,
     countries,
-    hasCountryFilters,
+    hasChartSettingFilters,
     standardSearch,
     groupSearch,
     year,
@@ -570,7 +570,7 @@ export const getESRRightScores = createSelector(
           s.standard === standard.code &&
           s.metric_code === right.code &&
           quasiEquals(s.year, year) &&
-          (!hasCountryFilters ||
+          (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
     );
@@ -582,9 +582,9 @@ export const getCPRRightScores = createSelector(
   (state, metric) => metric,
   getCPRScores,
   getCountriesFiltered,
-  getHasCountryFilters,
+  getHasChartSettingFilters,
   getCPRYear,
-  (metric, scores, countries, hasCountryFilters, year) => {
+  (metric, scores, countries, hasChartSettingFilters, year) => {
     const right = !!metric && RIGHTS.find(d => d.key === metric);
     return (
       scores &&
@@ -594,7 +594,7 @@ export const getCPRRightScores = createSelector(
         s =>
           s.metric_code === right.code &&
           quasiEquals(s.year, year) &&
-          (!hasCountryFilters ||
+          (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
     );
@@ -605,10 +605,10 @@ export const getIndicatorScores = createSelector(
   (state, metric) => metric,
   getESRIndicatorScores,
   getCountriesFiltered,
-  getHasCountryFilters,
+  getHasChartSettingFilters,
   getGroupSearch,
   getESRYear,
-  (metric, scores, countries, hasCountryFilters, groupSearch, year) => {
+  (metric, scores, countries, hasChartSettingFilters, groupSearch, year) => {
     if (scores && countries) {
       const indicator = metric && INDICATORS.find(d => d.key === metric);
       const group = PEOPLE_GROUPS.find(g => g.key === groupSearch);
@@ -618,7 +618,7 @@ export const getIndicatorScores = createSelector(
           s =>
             s.group === group.code &&
             s.metric_code === indicator.code &&
-            (!hasCountryFilters ||
+            (!hasChartSettingFilters ||
               countries.map(c => c.country_code).indexOf(s.country_code) > -1),
         );
         // then get the most recent year for each country

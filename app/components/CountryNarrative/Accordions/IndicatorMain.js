@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box } from 'grommet';
 
-import Bar from 'components/Bars/Bar';
+import Bar from 'components/ChartBars/Bar';
 import { COLUMNS } from 'containers/App/constants';
 
 const getDimensionValue = (data, benchmark) => {

@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
 
-import MetricTrend from 'components/MetricTrend';
+import ChartCountryMetricTrend from 'components/ChartCountryMetricTrend';
 
 import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
 
@@ -80,7 +80,7 @@ export function ChartContainerTrend({
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
   // prettier-ignore
   return (
-    <MetricTrend
+    <ChartCountryMetricTrend
       color={theme.global.colors[getColour(metric)]}
       colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
       scores={scores}

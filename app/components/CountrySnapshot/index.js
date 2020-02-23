@@ -11,7 +11,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { Heading } from 'grommet';
 
-import CountrySummaryChart from 'components/CountrySummaryChart';
+import ChartCountrySummary from 'components/ChartCountrySummary';
 import LoadingIndicator from 'components/LoadingIndicator';
 import MainColumn from 'styled/MainColumn';
 
@@ -59,7 +59,7 @@ function CountrySnapshot({
               )}
             />
           </StyledHeading>
-          <CountrySummaryChart
+          <ChartCountrySummary
             scale={scale}
             dimensions={dimensions}
             rights={rights}

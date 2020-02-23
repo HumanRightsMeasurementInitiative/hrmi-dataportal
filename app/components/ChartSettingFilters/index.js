@@ -179,7 +179,7 @@ const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
   </Box>
 );
 
-export function CountryFilters({
+export function ChartSettingFilters({
   regionFilterValue,
   subregionFilterValue,
   onRemoveFilter,
@@ -330,7 +330,7 @@ export function CountryFilters({
   );
 }
 
-CountryFilters.propTypes = {
+ChartSettingFilters.propTypes = {
   intl: intlShape.isRequired,
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
@@ -348,4 +348,4 @@ CountryFilters.propTypes = {
   theme: PropTypes.object,
 };
 
-export default injectIntl(withTheme(CountryFilters));
+export default injectIntl(withTheme(ChartSettingFilters));

@@ -13,7 +13,7 @@ import { Heading, Paragraph, Box } from 'grommet';
 import rootMessages from 'messages';
 import { FormattedMessage } from 'react-intl';
 
-import WordCloud from 'components/WordCloud';
+import ChartWordCloud from 'components/ChartWordCloud';
 import MainColumn from 'styled/MainColumn';
 
 import messages from './messages';
@@ -71,7 +71,7 @@ function CountryPeople({ data, hasAside }) {
                   )}
                   {Object.values(right.atRiskData).map(
                     (d, indexInner, array) => (
-                      <WordCloud
+                      <ChartWordCloud
                         key={d.code}
                         data={d}
                         dimension={right.dimension}

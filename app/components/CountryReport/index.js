@@ -20,7 +20,7 @@ import {
 } from 'containers/App/constants';
 import ChartContainerTrend from 'containers/ChartContainerTrend';
 import LoadingIndicator from 'components/LoadingIndicator';
-import ChartMetricSelector from 'components/ChartMetricSelector';
+import ChartSettingMetrics from 'components/ChartSettingMetrics';
 import MainColumn from 'styled/MainColumn';
 import SectionContainer from 'styled/SectionContainer';
 
@@ -76,7 +76,7 @@ function CountryReport({
           <SectionContainer>Rights and indicators by sex</SectionContainer>
           <SectionContainer>
             Category, rights & indicators over time
-            <ChartMetricSelector
+            <ChartSettingMetrics
               activeDefault="esr"
               metrics={DIMENSIONS.reduce((dims, d) => {
                 if (d.key !== dimension) {
@@ -134,7 +134,7 @@ function CountryReport({
           </SectionContainer>
           <SectionContainer>
             Category, rights & indicators over time
-            <ChartMetricSelector
+            <ChartSettingMetrics
               activeDefault={dimension}
               metrics={DIMENSIONS.reduce((dims, d) => {
                 if (d.key !== dimension) {
@@ -174,7 +174,7 @@ function CountryReport({
           </SectionContainer>
           <SectionContainer>
             Category, rights & indicators over time
-            <ChartMetricSelector
+            <ChartSettingMetrics
               activeDefault={dimension}
               metrics={DIMENSIONS.reduce((dims, d) => {
                 if (d.key !== dimension) {

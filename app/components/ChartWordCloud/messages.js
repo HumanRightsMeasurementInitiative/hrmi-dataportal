@@ -1,12 +1,12 @@
 /*
- * WordCloud Messages
+ * ChartWordCloud Messages
  *
- * This contains all the text for the WordCloud component.
+ * This contains all the text for the ChartWordCloud component.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.WordCloud';
+export const scope = 'hrmi.components.ChartWordCloud';
 
 export default defineMessages({
   noGroupData: {

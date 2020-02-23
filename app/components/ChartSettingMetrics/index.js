@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Box } from 'grommet';
 import ButtonToggleSetting from 'styled/ButtonToggleSetting';
 
-function ChartMetricSelector({ activeDefault, metrics, chart }) {
+function ChartSettingMetrics({ activeDefault, metrics, chart }) {
   const [activeMetric, setActiveMetric] = useState(activeDefault);
 
   // TODO fall back to activeDefault if activeMetric not included in metrics
@@ -48,10 +48,10 @@ function ChartMetricSelector({ activeDefault, metrics, chart }) {
   );
 }
 
-ChartMetricSelector.propTypes = {
+ChartSettingMetrics.propTypes = {
   activeDefault: PropTypes.string, // the key
   metrics: PropTypes.array, // the available metrics
   chart: PropTypes.func,
 };
 
-export default ChartMetricSelector;
+export default ChartSettingMetrics;

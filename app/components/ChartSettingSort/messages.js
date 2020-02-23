@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.CountrySort';
+export const scope = 'hrmi.components.ChartSettingSort';
 
 export default defineMessages({
   sortBy: {

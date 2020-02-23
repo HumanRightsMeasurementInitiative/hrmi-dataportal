@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box } from 'grommet';
-import Bar from 'components/Bars/Bar';
-import BarBullet from 'components/Bars/BarBullet';
+import Bar from 'components/ChartBars/Bar';
+import BarBullet from 'components/ChartBars/BarBullet';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 
 import { COLUMNS } from 'containers/App/constants';

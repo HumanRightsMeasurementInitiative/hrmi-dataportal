@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Box, ResponsiveContext } from 'grommet';
 import { COLUMNS } from 'containers/App/constants';
 
-import BarMultiple from 'components/Bars/BarMultiple';
+import BarMultiple from 'components/ChartBars/BarMultiple';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 import { isMinSize } from 'utils/responsive';
 import DimensionTitle from './DimensionTitle';
