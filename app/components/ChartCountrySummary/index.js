@@ -1,6 +1,6 @@
 /**
  *
- * CountrySummaryChart
+ * ChartCountrySummary
  *
  */
 
@@ -47,7 +47,7 @@ const RightsTypeHeading = props => (
   />
 );
 
-function CountrySummaryChart({
+function ChartCountrySummary({
   dimensions,
   benchmark,
   scale,
@@ -153,7 +153,7 @@ function CountrySummaryChart({
   );
 }
 
-CountrySummaryChart.propTypes = {
+ChartCountrySummary.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -164,4 +164,4 @@ CountrySummaryChart.propTypes = {
   cprYear: PropTypes.number,
 };
 
-export default CountrySummaryChart;
+export default ChartCountrySummary;

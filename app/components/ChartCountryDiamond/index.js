@@ -1,6 +1,6 @@
 /**
  *
- * CountryPreview
+ * ChartCountryDiamond
  *
  */
 
@@ -206,7 +206,7 @@ const getRightGroups = (
       }))
   }));
 
-export function CountryPreview({
+export function ChartCountryDiamond({
   onSelectCountry,
   country,
   scale,
@@ -314,7 +314,7 @@ export function CountryPreview({
   );
 }
 
-CountryPreview.propTypes = {
+ChartCountryDiamond.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onSelectCountry: PropTypes.func,
   onCountryHover: PropTypes.func,
@@ -331,4 +331,4 @@ CountryPreview.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(CountryPreview);
+export default injectIntl(ChartCountryDiamond);

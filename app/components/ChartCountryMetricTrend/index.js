@@ -1,6 +1,6 @@
 /**
  *
- * MetricTrend
+ * ChartCountryMetricTrend
  *
  */
 
@@ -67,7 +67,7 @@ const getTickValuesX = (size, minYear, maxYear) => {
   return tickValuesX;
 };
 
-function MetricTrend({
+function ChartCountryMetricTrend({
   scores,
   column,
   maxYear,
@@ -77,13 +77,15 @@ function MetricTrend({
   rangeColumns,
   color,
   colorHint,
-  // benchmark,
+  benchmark,
   // standard,
   // hasBenchmarkOption,
   // hasStandardOption,
   // onSetBenchmark,
   // onSetStandard,
 }) {
+  console.log(benchmark);
+  console.log(scores);
   const [highlight, setHighlight] = useState(false);
   if (!maxYear) return null;
 
@@ -274,7 +276,7 @@ function MetricTrend({
 //   </Box>
 // )}
 
-MetricTrend.propTypes = {
+ChartCountryMetricTrend.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   rangeColumns: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   column: PropTypes.string,
@@ -284,7 +286,7 @@ MetricTrend.propTypes = {
   colorHint: PropTypes.string,
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
-  // benchmark: PropTypes.string,
+  benchmark: PropTypes.string,
   // standard: PropTypes.string,
   // hasBenchmarkOption: PropTypes.bool,
   // hasStandardOption: PropTypes.bool,
@@ -292,4 +294,4 @@ MetricTrend.propTypes = {
   // onSetStandard: PropTypes.func,
 };
 
-export default MetricTrend;
+export default ChartCountryMetricTrend;

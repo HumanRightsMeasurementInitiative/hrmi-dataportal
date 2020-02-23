@@ -284,7 +284,7 @@ export function PathCountry({
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
               // howToRead: {
               //   contxt: 'PathCountry',
-              //   chart: 'WordCloud',
+              //   chart: 'ChartWordCloud',
               //   data: 'atRisk',
               // },
               content: props =>

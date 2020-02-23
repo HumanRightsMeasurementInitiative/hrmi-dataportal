@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { Box, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 
-import Bar from 'components/Bars/Bar';
-import BarBullet from 'components/Bars/BarBullet';
+import Bar from 'components/ChartBars/Bar';
+import BarBullet from 'components/ChartBars/BarBullet';
 
 import { COLUMNS } from 'containers/App/constants';
 import { isMinSize } from 'utils/responsive';

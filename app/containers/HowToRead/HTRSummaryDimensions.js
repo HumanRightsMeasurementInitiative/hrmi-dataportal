@@ -4,8 +4,8 @@ import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { Heading, Box, ResponsiveContext } from 'grommet';
 import { DIMENSIONS } from 'containers/App/constants';
-import Bar from 'components/Bars/Bar';
-import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
+import Bar from 'components/ChartBars/Bar';
+import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
 
 // import { isMaxSize, isMinSize } from 'utils/responsive';

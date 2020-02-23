@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { Text } from 'grommet';
 
-import BarMultiple from 'components/Bars/BarMultiple';
-import Bar from 'components/Bars/Bar';
+import BarMultiple from 'components/ChartBars/BarMultiple';
+import Bar from 'components/ChartBars/Bar';
 import rootMessages from 'messages';
 
 const WIDTH = [72, 116];

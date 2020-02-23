@@ -14,7 +14,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import HTMLWrapper from 'components/HTMLWrapper';
 import Loading from 'components/LoadingIndicator';
-import WordCloud from 'components/WordCloud';
+import ChartWordCloud from 'components/ChartWordCloud';
 import Hint from 'styled/Hint';
 
 import messages from './messages';
@@ -72,7 +72,7 @@ function CountryMetricPeople({
                 atRiskAnalysisSubrights.find(sra => sra.key === d.subright);
               return (
                 <span key={d.code}>
-                  <WordCloud
+                  <ChartWordCloud
                     data={d}
                     dimension={metric.dimension}
                     showTitle={array.length > 1}
@@ -98,7 +98,7 @@ function CountryMetricPeople({
                   </StyledRightHeading>
                 )}
                 {Object.values(i.atRiskData).map((d, index, array) => (
-                  <WordCloud
+                  <ChartWordCloud
                     key={d.code}
                     data={d}
                     dimension={i.dimension}

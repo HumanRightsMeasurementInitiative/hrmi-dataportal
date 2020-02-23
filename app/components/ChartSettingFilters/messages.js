@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.CountryFilters';
+export const scope = 'hrmi.components.ChartSettingFilters';
 
 export default defineMessages({
   addFilter: {

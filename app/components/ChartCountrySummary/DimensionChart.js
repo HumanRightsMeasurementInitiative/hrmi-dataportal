@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
 
-import Bar from 'components/Bars/Bar';
+import Bar from 'components/ChartBars/Bar';
 import { COLUMNS } from 'containers/App/constants';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 import formatScoreMax from 'utils/format-score-max';
