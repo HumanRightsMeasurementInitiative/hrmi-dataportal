@@ -1,6 +1,6 @@
 /**
  *
- * CountryMetricPeople
+ * ChartCountryMetricPeople
  *
  */
 
@@ -49,7 +49,7 @@ const renderAnalysis = (atRiskAnalysis, intl) => (
   </Box>
 );
 
-function CountryMetricPeople({
+function ChartCountryMetricPeople({
   data,
   metric,
   atRiskAnalysis,
@@ -117,7 +117,7 @@ function CountryMetricPeople({
   );
 }
 
-CountryMetricPeople.propTypes = {
+ChartCountryMetricPeople.propTypes = {
   hasAnalysis: PropTypes.bool,
   hasSubrightAnalysis: PropTypes.bool,
   metric: PropTypes.object,
@@ -130,4 +130,4 @@ CountryMetricPeople.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(CountryMetricPeople);
+export default injectIntl(ChartCountryMetricPeople);

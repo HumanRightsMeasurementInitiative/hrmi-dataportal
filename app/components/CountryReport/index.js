@@ -20,6 +20,7 @@ import {
 } from 'containers/App/constants';
 
 import ChartContainerTrend from 'containers/ChartContainerTrend';
+import ChartContainerPeople from 'containers/ChartContainerPeople';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ChartSettingMetrics from 'components/ChartSettingMetrics';
 import MainColumn from 'styled/MainColumn';
@@ -127,6 +128,23 @@ function CountryReport({
           </SectionContainer>
           <SectionContainer>
             People at risk word cloud and narrative
+            <ChartSettingMetrics
+              activeDefault={
+                RIGHTS.filter(r => r.dimension === dimension)[0].key
+              }
+              metrics={RIGHTS.reduce((rights, r) => {
+                if (r.dimension !== dimension) {
+                  return rights;
+                }
+                return [...rights, r];
+              }, [])}
+              chart={props => (
+                <ChartContainerPeople
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  {...props}
+                />
+              )}
+            />
           </SectionContainer>
         </>
       )}
@@ -167,6 +185,23 @@ function CountryReport({
           </SectionContainer>
           <SectionContainer>
             People at risk word cloud and narrative
+            <ChartSettingMetrics
+              activeDefault={
+                RIGHTS.filter(r => r.dimension === dimension)[0].key
+              }
+              metrics={RIGHTS.reduce((rights, r) => {
+                if (r.dimension !== dimension) {
+                  return rights;
+                }
+                return [...rights, r];
+              }, [])}
+              chart={props => (
+                <ChartContainerPeople
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  {...props}
+                />
+              )}
+            />
           </SectionContainer>
         </>
       )}
@@ -207,6 +242,23 @@ function CountryReport({
           </SectionContainer>
           <SectionContainer>
             People at risk word cloud and narrative
+            <ChartSettingMetrics
+              activeDefault={
+                RIGHTS.filter(r => r.dimension === dimension)[0].key
+              }
+              metrics={RIGHTS.reduce((rights, r) => {
+                if (r.dimension !== dimension) {
+                  return rights;
+                }
+                return [...rights, r];
+              }, [])}
+              chart={props => (
+                <ChartContainerPeople
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  {...props}
+                />
+              )}
+            />
           </SectionContainer>
         </>
       )}
