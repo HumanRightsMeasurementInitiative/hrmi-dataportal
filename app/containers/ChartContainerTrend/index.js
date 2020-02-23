@@ -34,7 +34,6 @@ import {
 
 import {
   navigate,
-  loadContentIfNeeded,
   loadDataIfNeeded,
   setStandard,
   setBenchmark,
@@ -270,13 +269,6 @@ export function mapDispatchToProps(dispatch) {
           },
         ),
       );
-    },
-    onLoadContent: path => {
-      if (Array.isArray(path)) {
-        path.forEach(p => dispatch(loadContentIfNeeded(p, 'atrisk')));
-      } else {
-        dispatch(loadContentIfNeeded(path, 'atrisk'));
-      }
     },
     onSetStandard: value => dispatch(setStandard(value)),
     onSetBenchmark: value => dispatch(setBenchmark(value)),
