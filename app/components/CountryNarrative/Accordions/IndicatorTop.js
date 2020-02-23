@@ -44,7 +44,14 @@ const getDimensionRefs = (score, benchmark) => {
   }
   return false;
 };
-function IndicatorTop({ indicator, benchmark, standard, onMetricClick, intl }) {
+function IndicatorTop({
+  indicator,
+  benchmark,
+  standard,
+  onMetricClick,
+  intl,
+  raw,
+}) {
   const data = {
     ...indicator,
     color: 'esr',
@@ -54,6 +61,7 @@ function IndicatorTop({ indicator, benchmark, standard, onMetricClick, intl }) {
     stripes: standard === 'hi',
     unit: '%',
   };
+  const { hasGroups } = indicator;
   return (
     <Box
       direction="row"
@@ -62,7 +70,17 @@ function IndicatorTop({ indicator, benchmark, standard, onMetricClick, intl }) {
     >
       <ButtonTextHeading onClick={() => onMetricClick(indicator.key)}>
         <PanelHeading level={6}>
-          <FormattedMessage {...rootMessages.indicators[indicator.key]} />
+          {!raw && (
+            <FormattedMessage {...rootMessages.indicators[indicator.key]} />
+          )}
+          {raw && (
+            <FormattedMessage
+              {...rootMessages['indicators-raw'][indicator.key]}
+            />
+          )}
+          {raw && indicator.score && indicator.score.year && (
+            <>{` (${indicator.score.year})`}</>
+          )}
           <Hidden min="medium">
             <FormNext size="large" />
           </Hidden>
@@ -74,13 +92,19 @@ function IndicatorTop({ indicator, benchmark, standard, onMetricClick, intl }) {
         items={[
           {
             key: indicator.key,
-            value: 0,
+            value: 'trend',
             label: intl.formatMessage(rootMessages.tabs.trend),
             skip: !data.value,
           },
           {
             key: indicator.key,
-            value: 1,
+            value: 'groups',
+            label: intl.formatMessage(rootMessages.tabs.groups),
+            skip: !hasGroups || !data.value,
+          },
+          {
+            key: indicator.key,
+            value: 'about',
             label: intl.formatMessage(rootMessages.tabs.about),
           },
         ]}
@@ -94,6 +118,7 @@ IndicatorTop.propTypes = {
   standard: PropTypes.string,
   onMetricClick: PropTypes.func,
   intl: intlShape.isRequired,
+  raw: PropTypes.bool,
 };
 
 export default injectIntl(IndicatorTop);

@@ -28,8 +28,12 @@ const BarReference = styled.div`
   display: block;
   height: ${props => props.height}px;
   width: 100%;
-  background-color: ${props =>
-    props.noData ? 'transparent' : props.theme.global.colors['light-2']};
+  background-color: ${props => {
+    if (props.noData) {
+      return 'transparent';
+    }
+    return props.theme.global.colors[props.level >= 3 ? 'light-3' : 'light-2'];
+  }};
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: transparent;
@@ -128,7 +132,6 @@ function Bar({
   const theRefValue = refValues && refValues.find(ref => ref.value === 100);
   const hasValue = !!value || value === 0;
   const h = height || HEIGHT[level];
-
   // prettier-ignore
   return (
     <Wrapper
@@ -151,7 +154,7 @@ function Bar({
         onMouseEnter={() => scoreOnHover && setHover(true) }
         onMouseLeave={() => setHover(false)}
       >
-        <BarReference height={h} noData={!hasValue}>
+        <BarReference height={h} noData={!hasValue} level={level}>
           {!hasValue && <BarNoValue height={h} color={color} />}
           {hasValue && (
             <BarValue
@@ -197,17 +200,23 @@ function Bar({
             refValues &&
             showAllBenchmarkAnnotations &&
             annotateBenchmarkAbove &&
-            refValues.filter(ref => !!ref.value).map((ref, index, list) => (
-              <AnnotateBenchmark
-                relative
-                key={ref.key}
-                left={(ref.value / maxValue) * 100}
-                align={list.length > 1 && index === 0 ? 'left' : 'right'}
-                benchmarkKey={ref.key}
-                above
-                margin="1px"
-              />
-            ))
+            refValues
+              .filter(ref =>
+                ref.value !== null &&
+                ref.value !== false &&
+                typeof ref.value !== 'undefined'
+              ).map((ref, index, list) => (
+                <AnnotateBenchmark
+                  relative
+                  key={ref.key}
+                  left={(ref.value / maxValue) * 100}
+                  align={ref.align || (list.length > 1 && index === 0 ? 'left' : 'right')}
+                  benchmarkKey={ref.key}
+                  above
+                  margin="1px"
+                  label={ref.label || false}
+                />
+              ))
           }
           {!hasValue && data && level < 3 && (
             <NoDataHint
