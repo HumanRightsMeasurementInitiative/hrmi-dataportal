@@ -28,7 +28,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   }
 `;
 
-export function CountrySort({
+export function ChartSettingSort({
   sort,
   options,
   order,
@@ -117,7 +117,7 @@ export function CountrySort({
   );
 }
 
-CountrySort.propTypes = {
+ChartSettingSort.propTypes = {
   intl: intlShape.isRequired,
   sort: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   options: PropTypes.array,
@@ -126,4 +126,4 @@ CountrySort.propTypes = {
   onOrderToggle: PropTypes.func,
 };
 
-export default injectIntl(CountrySort);
+export default injectIntl(ChartSettingSort);

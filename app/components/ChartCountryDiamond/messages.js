@@ -1,12 +1,12 @@
 /*
- * CountryPreview Messages
+ * ChartCountryDiamond Messages
  *
- * This contains all the text for the CountryPreview container.
+ * This contains all the text for the ChartCountryDiamond container.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.CountryPreview';
+export const scope = 'hrmi.components.ChartCountryDiamond';
 
 export default defineMessages({
   hiForCore: {

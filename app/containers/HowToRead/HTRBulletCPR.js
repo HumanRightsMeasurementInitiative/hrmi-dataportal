@@ -8,7 +8,7 @@ import {
 } from 'react-intl';
 import styled from 'styled-components';
 import { Heading, Box } from 'grommet';
-import BarBullet from 'components/Bars/BarBullet';
+import BarBullet from 'components/ChartBars/BarBullet';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
 import Hint from 'styled/Hint';
 

@@ -1,6 +1,6 @@
 /**
  *
- * WordCloud
+ * ChartWordCloud
  *
  */
 
@@ -43,7 +43,13 @@ const StyledRightHeadingAbove = styled(Text)`
   margin-top: 10px;
 `;
 
-export function WordCloud({ data, subright, dimension, intl, border = true }) {
+export function ChartWordCloud({
+  data,
+  subright,
+  dimension,
+  intl,
+  border = true,
+}) {
   const [activeWord, setActiveWord] = useState(null);
 
   const scores =
@@ -124,7 +130,7 @@ export function WordCloud({ data, subright, dimension, intl, border = true }) {
   );
 }
 
-WordCloud.propTypes = {
+ChartWordCloud.propTypes = {
   data: PropTypes.object,
   dimension: PropTypes.string,
   subright: PropTypes.bool,
@@ -132,4 +138,4 @@ WordCloud.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(WordCloud);
+export default injectIntl(ChartWordCloud);

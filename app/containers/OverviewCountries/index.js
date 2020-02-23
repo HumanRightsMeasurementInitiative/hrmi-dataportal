@@ -39,9 +39,9 @@ import {
 
 import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
-import CountryPreview from 'components/CountryPreview';
-import CountrySort from 'components/CountrySort';
-import CountryFilters from 'components/CountryFilters';
+import ChartCountryDiamond from 'components/ChartCountryDiamond';
+import ChartSettingSort from 'components/ChartSettingSort';
+import ChartSettingFilters from 'components/ChartSettingFilters';
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
 
@@ -135,7 +135,7 @@ export function OverviewCountries({
             align="start"
             margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
           >
-            <CountryFilters
+            <ChartSettingFilters
               regionFilterValue={regionFilterValue}
               subregionFilterValue={subregionFilterValue}
               onRemoveFilter={onRemoveFilter}
@@ -147,7 +147,7 @@ export function OverviewCountries({
               featuredFilterValue={featuredFilterValue}
               filterValues={filterValues}
             />
-            <CountrySort
+            <ChartSettingSort
               sort={currentSort}
               options={SORT_OPTIONS}
               order={currentSortOrder}
@@ -179,7 +179,7 @@ export function OverviewCountries({
                 >
                   <InfiniteScroll items={sorted} step={36} show={0}>
                     {(c, index) => (
-                      <CountryPreview
+                      <ChartCountryDiamond
                         showAnnotation={index === 0}
                         key={c.country_code}
                         country={c}
@@ -221,7 +221,7 @@ export function OverviewCountries({
                   >
                     <InfiniteScroll items={other} step={36} show={0}>
                       {(c, index) => (
-                        <CountryPreview
+                        <ChartCountryDiamond
                           showAnnotation={index === 0}
                           key={c.country_code}
                           country={c}

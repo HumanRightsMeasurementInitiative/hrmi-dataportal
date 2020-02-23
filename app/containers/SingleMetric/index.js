@@ -50,8 +50,8 @@ import {
   COUNTRY_SORTS,
   COUNTRY_FILTERS,
 } from 'containers/App/constants';
-import CountryFilters from 'components/CountryFilters';
-import CountrySort from 'components/CountrySort';
+import ChartSettingFilters from 'components/ChartSettingFilters';
+import ChartSettingSort from 'components/ChartSettingSort';
 import LoadingIndicator from 'components/LoadingIndicator';
 import { isMinSize } from 'utils/responsive';
 
@@ -159,7 +159,7 @@ export function SingleMetric({
             align={isMinSize(size, 'medium') ? 'center' : 'start'}
             margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
           >
-            <CountryFilters
+            <ChartSettingFilters
               regionFilterValue={regionFilterValue}
               subregionFilterValue={subregionFilterValue}
               onRemoveFilter={onRemoveFilter}
@@ -170,7 +170,7 @@ export function SingleMetric({
               featuredFilterValue={featuredFilterValue}
               filterValues={filterValues}
             />
-            <CountrySort
+            <ChartSettingSort
               sort={currentSort}
               options={SORT_OPTIONS}
               order={currentSortOrder}
