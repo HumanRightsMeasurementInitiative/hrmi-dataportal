@@ -48,6 +48,7 @@ import {
   getDependenciesReady,
   getCloseTargetCountry,
   getESRIndicators,
+  getRawSearch,
 } from 'containers/App/selectors';
 
 import {
@@ -55,6 +56,7 @@ import {
   navigate,
   setTab,
   trackEvent,
+  setRaw,
 } from 'containers/App/actions';
 
 import {
@@ -104,6 +106,8 @@ export function PathCountry({
   onTrackEvent,
   closeTarget,
   allIndicators,
+  onRawChange,
+  raw,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -224,6 +228,8 @@ export function PathCountry({
                   dataReady={dataReady}
                   trackEvent={onTrackEvent}
                   allIndicators={allIndicators}
+                  onRawChange={onRawChange}
+                  raw={raw}
                 />
               ),
             },
@@ -320,6 +326,7 @@ export function PathCountry({
                 ) {
                   faqs = FAQS.COUNTRY_CPR;
                 }
+                // TODO check about tab
                 return (
                   <CountryAbout
                     {...props}
@@ -367,6 +374,8 @@ PathCountry.propTypes = {
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
   dataReady: PropTypes.bool,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -386,6 +395,7 @@ const mapStateToProps = createStructuredSelector({
   benchmark: state => getBenchmarkSearch(state),
   esrYear: state => getESRYear(state),
   cprYear: state => getCPRYear(state),
+  raw: state => getRawSearch(state),
   dimensionAverages: state => getDimensionAverages(state),
   currentGDP: (state, { match }) =>
     getLatestCountryCurrentGDP(state, match.params.country),
@@ -401,6 +411,9 @@ export function mapDispatchToProps(dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
+    },
+    onRawChange: value => {
+      dispatch(setRaw(value));
     },
     onCategoryClick: (key, value) => {
       const deleteParams = COUNTRY_FILTERS;

@@ -55,6 +55,7 @@ import {
   SET_STANDARD,
   SET_BENCHMARK,
   SET_TAB,
+  SET_RAW,
   CHECK_COOKIECONSENT,
   COOKIECONSENT_NAME,
   SET_COOKIECONSENT,
@@ -62,6 +63,7 @@ import {
   GA_PROPERTY_ID,
   TRACK_EVENT,
   OPEN_HOW_TO,
+  TOGGLE_GROUP,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -276,6 +278,37 @@ export function* setBenchmarkSaga({ value }) {
   // navigate to country and default standard
   const path = yield select(getRouterPath);
   yield put(replace(`${path}?${searchParams.toString()}`));
+}
+export function* setRawSaga({ value }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  yield searchParams.set('raw', value ? '1' : '0');
+
+  const path = yield select(getRouterPath);
+  yield put(
+    trackEvent({
+      category: 'Setting',
+      action: 'Change raw',
+      value,
+    }),
+  );
+  yield put(push(`${path}?${searchParams.toString()}`));
+}
+
+export function* toggleGroupSaga({ values }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  searchParams.delete('gactive');
+  values.forEach(g => searchParams.append('gactive', g));
+  const path = yield select(getRouterPath);
+  yield put(
+    trackEvent({
+      category: 'Setting',
+      action: 'Toggle groups',
+      value: values.toString(),
+    }),
+  );
+  yield put(push(`${path}?${searchParams.toString()}`));
 }
 export function* setTabSaga({ value }) {
   // get URL search params
@@ -501,6 +534,8 @@ export default function* defaultSaga() {
   yield takeLatest(SET_STANDARD, setStandardSaga);
   yield takeLatest(SET_BENCHMARK, setBenchmarkSaga);
   yield takeLatest(SET_TAB, setTabSaga);
+  yield takeLatest(SET_RAW, setRawSaga);
+  yield takeLatest(TOGGLE_GROUP, toggleGroupSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
   yield takeLatest(CHECK_COOKIECONSENT, checkCookieConsentSaga);
   yield takeLatest(SET_COOKIECONSENT, setCookieConsentSaga);

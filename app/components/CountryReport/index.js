@@ -18,6 +18,7 @@ import {
   INDICATORS,
   STANDARDS,
 } from 'containers/App/constants';
+
 import ChartContainerTrend from 'containers/ChartContainerTrend';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ChartSettingMetrics from 'components/ChartSettingMetrics';
@@ -61,6 +62,9 @@ function CountryReport({
   country,
   allIndicators,
   standard,
+  // trackEvent,
+  // onRawChange,
+  // raw,
 }) {
   const standardInfo = STANDARDS.find(s => s.key === standard);
   return (
@@ -218,6 +222,8 @@ CountryReport.propTypes = {
   type: PropTypes.string,
   dimension: PropTypes.string,
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  // onRawChange: PropTypes.func,
+  // raw: PropTypes.bool,
   // countryTitle: PropTypes.string,
   // onMetricClick: PropTypes.func,
   // onAtRiskClick: PropTypes.func,

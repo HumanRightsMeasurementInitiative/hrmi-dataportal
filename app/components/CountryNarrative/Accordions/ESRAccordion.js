@@ -1,21 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Box } from 'grommet';
 
 import HowToRead from 'containers/HowToRead';
 
-import { lowerCase } from 'utils/string';
-import rootMessages from 'messages';
 import PanelAccordion from './PanelAccordion';
-import PanelSimple from './PanelSimple';
 import DimensionMain from './DimensionMain';
 import DimensionTop from './DimensionTop';
-import RightMain from './RightMain';
-import RightTop from './RightTop';
-import IndicatorMain from './IndicatorMain';
-import IndicatorTop from './IndicatorTop';
+import RightContent from './RightContent';
 
 const Styled = styled(Box)``;
 
@@ -27,8 +20,9 @@ function ESRAccordion({
   onMetricClick,
   standard,
   hasAtRisk,
-  intl,
   trackEvent,
+  onRawChange,
+  raw,
 }) {
   return (
     <Styled margin={{ bottom: 'medium' }}>
@@ -70,77 +64,17 @@ function ESRAccordion({
             })
           }
           content={
-            <div>
-              {rights &&
-                rights.map(right => {
-                  const rightIndicators = indicators.filter(
-                    indicator => indicator.right === right.key,
-                  );
-                  return (
-                    <Box border="top" key={right.key}>
-                      <PanelAccordion
-                        buttonText={`${rightIndicators.length} ${lowerCase(
-                          intl.formatMessage(
-                            rootMessages.metricTypes.indicators,
-                          ),
-                        )}`}
-                        level={2}
-                        top={
-                          <RightTop
-                            right={right}
-                            benchmark={benchmark}
-                            onMetricClick={onMetricClick}
-                            standard={standard}
-                            hasAtRisk={hasAtRisk}
-                          />
-                        }
-                        main={
-                          <RightMain
-                            right={right}
-                            benchmark={benchmark}
-                            onMetricClick={onMetricClick}
-                            standard={standard}
-                            hasAtRisk={hasAtRisk}
-                          />
-                        }
-                        onClick={open =>
-                          trackEvent({
-                            category: 'Data',
-                            action: `${open ? 'Expand' : 'Collapse'} ESR right`,
-                            value: right.key,
-                          })
-                        }
-                        content={
-                          <div>
-                            {rightIndicators.map(indicator => (
-                              <PanelSimple
-                                level={3}
-                                key={indicator.key}
-                                top={
-                                  <IndicatorTop
-                                    indicator={indicator}
-                                    benchmark={benchmark}
-                                    onMetricClick={onMetricClick}
-                                    standard={standard}
-                                  />
-                                }
-                                main={
-                                  <IndicatorMain
-                                    indicator={indicator}
-                                    benchmark={benchmark}
-                                    onMetricClick={onMetricClick}
-                                    standard={standard}
-                                  />
-                                }
-                              />
-                            ))}
-                          </div>
-                        }
-                      />
-                    </Box>
-                  );
-                })}
-            </div>
+            <RightContent
+              rights={rights}
+              indicators={indicators}
+              benchmark={benchmark}
+              onMetricClick={onMetricClick}
+              standard={standard}
+              hasAtRisk={hasAtRisk}
+              trackEvent={trackEvent}
+              raw={raw}
+              onRawChange={onRawChange}
+            />
           }
         />
       </Box>
@@ -156,8 +90,9 @@ ESRAccordion.propTypes = {
   indicators: PropTypes.array,
   benchmark: PropTypes.object,
   hasAtRisk: PropTypes.bool,
-  intl: intlShape.isRequired,
   trackEvent: PropTypes.func,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
-export default injectIntl(ESRAccordion);
+export default ESRAccordion;

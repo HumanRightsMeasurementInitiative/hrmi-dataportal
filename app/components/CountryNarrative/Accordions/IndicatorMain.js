@@ -5,15 +5,42 @@ import { Box } from 'grommet';
 import Bar from 'components/ChartBars/Bar';
 import { COLUMNS } from 'containers/App/constants';
 
-const getDimensionValue = (data, benchmark) => {
+const getDimensionValue = (data, benchmark, raw) => {
   if (data.score) {
-    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    const col = raw
+      ? COLUMNS.ESR.RAW
+      : (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
     return parseFloat(data.score[col]);
   }
   return false;
 };
 
-const getDimensionRefs = (score, benchmark) => {
+const getDimensionRefs = (data, benchmark, raw) => {
+  if (raw) {
+    const valueMin =
+      data.details && parseFloat(data.details[COLUMNS.ESR.RAW_REF_MIN]);
+    return [
+      {
+        value: valueMin,
+        style: 'solid',
+        key: 'min',
+        align: valueMin < 33 ? 'left' : 'right',
+      },
+      {
+        value: data.score && parseFloat(data.score[COLUMNS.ESR.RAW_REF]),
+        style: 'dotted',
+        key: 'adjusted',
+        align: 'right',
+      },
+      {
+        value:
+          data.details && parseFloat(data.details[COLUMNS.ESR.RAW_REF_BEST]),
+        style: 'solid',
+        key: 'best',
+        align: 'left',
+      },
+    ];
+  }
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
@@ -22,7 +49,7 @@ const getDimensionRefs = (score, benchmark) => {
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
-        value: score && parseFloat(score[col]),
+        value: data.score && parseFloat(data.score[col]),
         style: 'dotted',
         key: 'adjusted',
       },
@@ -30,12 +57,13 @@ const getDimensionRefs = (score, benchmark) => {
   }
   return false;
 };
-function IndicatorMain({ indicator, benchmark, standard }) {
+function IndicatorMain({ indicator, benchmark, standard, raw }) {
+  // console.log('indicator', indicator)
   const data = {
     ...indicator,
     color: 'esr',
-    value: getDimensionValue(indicator, benchmark),
-    refValues: getDimensionRefs(indicator.score, benchmark),
+    value: getDimensionValue(indicator, benchmark, raw),
+    refValues: getDimensionRefs(indicator, benchmark, raw),
     maxValue: '100',
     stripes: standard === 'hi',
     unit: '%',
@@ -47,7 +75,16 @@ function IndicatorMain({ indicator, benchmark, standard }) {
       style={{ position: 'relative' }}
       responsive={false}
     >
-      <Bar level={3} data={data} showScore showLabels />
+      <Bar
+        level={3}
+        data={data}
+        showScore
+        showLabels
+        showBenchmark
+        annotateBenchmarkAbove
+        showAllBenchmarkAnnotations
+        padAnnotateBenchmarkAbove={false}
+      />
     </Box>
   );
 }
@@ -55,6 +92,7 @@ IndicatorMain.propTypes = {
   indicator: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   benchmark: PropTypes.object,
   standard: PropTypes.string,
+  raw: PropTypes.bool,
 };
 
 export default IndicatorMain;

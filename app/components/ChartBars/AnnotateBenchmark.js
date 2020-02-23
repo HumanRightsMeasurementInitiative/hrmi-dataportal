@@ -94,7 +94,7 @@ AnnotateBenchmark.propTypes = {
   relative: PropTypes.bool,
   tooltip: PropTypes.bool,
   left: PropTypes.number,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   intl: intlShape.isRequired,
 };
