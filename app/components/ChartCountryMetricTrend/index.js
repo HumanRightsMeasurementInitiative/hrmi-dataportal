@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { Box, ResponsiveContext } from 'grommet';
 import {
@@ -15,6 +15,7 @@ import {
   YAxis,
   LineSeries,
   LineMarkSeries,
+  MarkSeries,
   AreaSeries,
   HorizontalGridLines,
   Hint,
@@ -24,13 +25,14 @@ import formatScore from 'utils/format-score';
 
 import Source from 'components/Source';
 
-import { INDICATOR_LOOKBACK } from 'containers/App/constants';
+import { INDICATOR_LOOKBACK, PEOPLE_GROUPS } from 'containers/App/constants';
 
-// STANDARDS,
-// BENCHMARKS,
-// import SettingsToggle from 'containers/Settings/SettingsToggle';
+import SettingsMultiToggle from 'containers/Settings/SettingsMultiToggle';
 
+import ButtonToggleValueSetting from 'styled/ButtonToggleValueSetting';
 import WrapPlot from 'styled/WrapPlot';
+
+import rootMessages from 'messages';
 
 const PlotHint = styled.div`
   color: ${({ color }) => color};
@@ -42,6 +44,11 @@ const PlotHint = styled.div`
   font-weight: 700;
   width: auto;
   white-space: nowrap;
+`;
+
+const Settings = styled(Box)`
+  background: ${({ theme }) => theme.global.colors['light-0']};
+  min-height: 80px;
 `;
 
 const isEven = n => n % 2 === 0;
@@ -66,7 +73,52 @@ const getTickValuesX = (size, minYear, maxYear) => {
   /* eslint-enable no-plusplus */
   return tickValuesX;
 };
-
+const getDataForGroup = (
+  scores,
+  minYear,
+  maxYear,
+  column,
+  groupCode,
+  lookback = false,
+) => {
+  const data = [];
+  const scoresAll = groupCode
+    ? scores.filter(s => s.group === groupCode)
+    : scores;
+  const scoresSorted = scoresAll.sort((a, b) =>
+    parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
+  );
+  /* eslint-disable no-plusplus */
+  for (let y = parseInt(minYear, 10); y <= parseInt(maxYear, 10); y++) {
+    const score = scoresSorted.reduce((memo, s) => {
+      const scoreYear = parseInt(s.year, 10);
+      if (scoreYear === y) return s;
+      if (lookback && scoreYear < y && scoreYear >= y - INDICATOR_LOOKBACK)
+        return s;
+      return memo;
+    }, null);
+    if (score) {
+      data.push({
+        syear: y,
+        x: new Date(`${y}`).getTime(),
+        y: parseFloat(score[column]),
+      });
+    }
+  }
+  return data;
+};
+const getDataForValue = (value, minYear, maxYear) => {
+  const data = [];
+  /* eslint-disable no-plusplus */
+  for (let y = parseInt(minYear, 10); y <= parseInt(maxYear, 10); y++) {
+    data.push({
+      syear: y,
+      x: new Date(`${y}`).getTime(),
+      y: parseFloat(value),
+    });
+  }
+  return data;
+};
 function ChartCountryMetricTrend({
   scores,
   column,
@@ -78,96 +130,143 @@ function ChartCountryMetricTrend({
   color,
   colorHint,
   benchmarkRefs,
-  // standard,
-  // hasBenchmarkOption,
-  // hasStandardOption,
-  // onSetBenchmark,
-  // onSetStandard,
+  hasRawOption,
+  raw,
+  onRawChange,
+  metric,
+  onGroupToggle,
+  groupsActive,
 }) {
   const [highlight, setHighlight] = useState(false);
+  const [highlightFemale, setHighlightFemale] = useState(false);
+  const [highlightMale, setHighlightMale] = useState(false);
   if (!maxYear) return null;
 
   // dummy data to force the area plot from 0
-  const xMin = new Date(`${parseFloat(minYear) - 1}-10-01`).getTime();
-  const xMax = new Date(`${parseFloat(maxYear)}-05-30`).getTime();
-  const dataForceYRange = [{ x: xMin, y: 0 }, { x: xMax, y: maxValue }];
+  const dataForceYRange = [
+    { x: new Date(`${parseFloat(minYear) - 0.1}`).getTime(), y: 0 },
+    { x: new Date(`${parseFloat(maxYear) + 0.5}`).getTime(), y: maxValue },
+  ];
+  const hasScores = scores && scores.length > 0;
 
-  const rangeUpper = [];
-  const rangeLower = [];
-  const xyData = [];
+  const groupsAll = groupsActive.indexOf(PEOPLE_GROUPS[0].key) > -1;
+  const groupsFemale = groupsActive.indexOf(PEOPLE_GROUPS[1].key) > -1;
+  const groupsMale = groupsActive.indexOf(PEOPLE_GROUPS[2].key) > -1;
+
+  const scoresAll =
+    hasScores &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      rangeColumns ? false : PEOPLE_GROUPS[0].code,
+      metric.metricType === 'indicators' && !raw,
+    );
+  const scoresFemale =
+    hasScores &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[1].code, // female
+      metric.metricType === 'indicators' && !raw,
+    );
+  const scoresMale =
+    hasScores &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[2].code, // male
+      metric.metricType === 'indicators' && !raw,
+    );
+  const scoresAllRawAvailable =
+    hasScores &&
+    metric.metricType === 'indicators' &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[0].code,
+      false,
+    );
+  const scoresFemaleRawAvailable =
+    hasScores &&
+    metric.metricType === 'indicators' &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[1].code,
+      false,
+    );
+  const scoresMaleRawAvailable =
+    hasScores &&
+    metric.metricType === 'indicators' &&
+    getDataForGroup(
+      scores,
+      minYear,
+      maxYear,
+      column,
+      PEOPLE_GROUPS[2].code,
+      false,
+    );
+  // benchmark references
   const xyDataRefs =
-    benchmarkRefs && benchmarkRefs.map(ref => ({ xy: [], ...ref }));
+    benchmarkRefs &&
+    benchmarkRefs.map(ref => {
+      if (typeof ref.value !== 'undefined') {
+        return {
+          xy: getDataForValue(ref.value, minYear, maxYear),
+          ...ref,
+        };
+      }
+      if (ref.refColumn) {
+        return {
+          xy: getDataForGroup(
+            scores,
+            minYear,
+            maxYear,
+            ref.refColumn,
+            PEOPLE_GROUPS[0].code,
+            metric.metricType === 'indicators' && !raw,
+          ),
+          ...ref,
+        };
+      }
+      return ref;
+    });
+  // cpr ranges
+  const rangeUpper =
+    hasScores && getDataForGroup(scores, minYear, maxYear, rangeColumns.upper);
+  const rangeLower =
+    hasScores && getDataForGroup(scores, minYear, maxYear, rangeColumns.lower);
+
   const tickValuesY = percentage
     ? [0, 20, 40, 60, 80, 100]
     : [0, 2, 4, 6, 8, 10];
 
-  const hasScores = scores && scores.length > 0;
-
-  if (hasScores) {
-    const scoresSorted = scores.sort((a, b) =>
-      parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
-    );
-
-    /* eslint-disable no-plusplus */
-    for (let y = parseInt(minYear, 10); y <= parseInt(maxYear, 10); y++) {
-      const score = scoresSorted.reduce((memo, s) => {
-        const scoreYear = parseInt(s.year, 10);
-        if (scoreYear === y) return s;
-        if (scoreYear < y && scoreYear >= y - INDICATOR_LOOKBACK) return s;
-        return memo;
-      }, null);
-      if (score) {
-        const x = new Date(`${y}`).getTime();
-        xyData.push({
-          syear: y,
-          x,
-          y: parseFloat(score[column]),
-        });
-        if (rangeColumns) {
-          rangeUpper.push({
-            syear: y,
-            x,
-            y: parseFloat(score[rangeColumns.upper]),
-          });
-          rangeLower.push({
-            syear: y,
-            x,
-            y: parseFloat(score[rangeColumns.lower]),
-          });
-        }
-        if (benchmarkRefs) {
-          xyDataRefs.forEach(ref => {
-            if (ref.value) {
-              ref.xy.push({
-                syear: y,
-                x,
-                y: parseFloat(ref.value),
-              });
-            }
-            if (ref.refColumn) {
-              ref.xy.push({
-                syear: y,
-                x,
-                y: parseFloat(score[ref.refColumn]),
-              });
-            }
-          });
-        }
-      }
-    }
-  }
-
+  const hasGroupOption =
+    (scoresFemale && scoresFemale.length > 1) ||
+    (scoresMale && scoresMale.length > 1);
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box direction="column" pad={{ vertical: 'medium' }}>
           <WrapPlot>
             <FlexibleWidthXYPlot
-              height={size !== 'small' ? 280 : 220}
+              height={size !== 'small' ? 240 : 200}
               xType="time"
               margin={{ bottom: 30, right: 10, left: percentage ? 30 : 25 }}
               onMouseLeave={() => {
                 setHighlight(false);
+                setHighlightMale(false);
+                setHighlightFemale(false);
               }}
             >
               <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
@@ -218,19 +317,20 @@ function ChartCountryMetricTrend({
               {hasScores && rangeColumns && (
                 <LineSeries
                   data={rangeUpper}
-                  style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+                  style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
               {hasScores && rangeColumns && (
                 <LineSeries
                   data={rangeLower}
-                  style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+                  style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
-              {hasScores &&
-                xyDataRefs &&
+              {xyDataRefs &&
                 xyDataRefs.map(ref => (
                   <LineMarkSeries
+                    key={ref.key}
+                    data={ref.xy}
                     size={1.5}
                     style={{
                       stroke: 'black',
@@ -246,39 +346,92 @@ function ChartCountryMetricTrend({
                       fill: 'black',
                     }}
                     strokeDasharray={ref.style === 'dotted' && [1, 2]}
-                    data={ref.xy}
                   />
                 ))}
-              {hasScores && (
+              {groupsAll && scoresAll && (
                 <LineMarkSeries
-                  size={3}
+                  data={scoresAll}
+                  size={2.5}
                   style={{
                     stroke: color,
-                    strokeWidth: 2,
+                    strokeWidth: 1,
                   }}
-                  markStyle={{
-                    fill: color,
-                  }}
-                  data={xyData}
+                  fill={metric.metricType === 'indicators' ? 'white' : color}
                   onNearestX={(point, { index }) =>
                     setHighlight({ point, index })
                   }
                 />
               )}
-              {hasScores && (
+              {groupsFemale && scoresFemale && (
                 <LineMarkSeries
+                  data={scoresFemale}
+                  size={2.5}
+                  style={{
+                    stroke: '#EE5A45',
+                    strokeWidth: 1,
+                  }}
+                  fill={
+                    metric.metricType === 'indicators'
+                      ? 'white'
+                      : PEOPLE_GROUPS[1].color
+                  }
+                  onNearestX={(point, { index }) =>
+                    setHighlightFemale({ point, index })
+                  }
+                />
+              )}
+              {groupsMale && scoresMale && (
+                <LineMarkSeries
+                  data={scoresMale}
+                  size={2.5}
+                  style={{
+                    stroke: '#0D6D64',
+                    strokeWidth: 1,
+                  }}
+                  fill={
+                    metric.metricType === 'indicators'
+                      ? 'white'
+                      : PEOPLE_GROUPS[2].color
+                  }
+                  onNearestX={(point, { index }) =>
+                    setHighlightMale({ point, index })
+                  }
+                />
+              )}
+              {groupsAll && scoresAllRawAvailable && (
+                <MarkSeries
+                  colorType="literal"
+                  data={scoresAllRawAvailable}
                   size={3}
                   style={{
                     stroke: color,
-                    strokeWidth: 2,
+                    strokeWidth: 1,
                   }}
-                  markStyle={{
-                    fill: color,
+                  fill={color}
+                />
+              )}
+              {groupsFemale && scoresFemaleRawAvailable && (
+                <MarkSeries
+                  colorType="literal"
+                  data={scoresFemaleRawAvailable}
+                  size={3}
+                  style={{
+                    stroke: PEOPLE_GROUPS[1].color,
+                    strokeWidth: 1,
                   }}
-                  data={xyData}
-                  onNearestX={(point, { index }) =>
-                    setHighlight({ point, index })
-                  }
+                  fill={PEOPLE_GROUPS[1].color}
+                />
+              )}
+              {groupsMale && scoresMaleRawAvailable && (
+                <MarkSeries
+                  colorType="literal"
+                  data={scoresMaleRawAvailable}
+                  size={3}
+                  style={{
+                    stroke: PEOPLE_GROUPS[2].color,
+                    strokeWidth: 1,
+                  }}
+                  fill={PEOPLE_GROUPS[2].color}
                 />
               )}
               {highlight && highlight.point && (
@@ -296,47 +449,98 @@ function ChartCountryMetricTrend({
                   </PlotHint>
                 </Hint>
               )}
+              {highlightFemale && highlightFemale.point && (
+                <Hint
+                  value={highlightFemale.point}
+                  align={{ vertical: 'top', horizontal: 'left' }}
+                  style={{
+                    transform: 'translateX(50%)',
+                  }}
+                >
+                  <PlotHint color={PEOPLE_GROUPS[1].color}>
+                    {`${formatScore(highlightFemale.point.y)}${
+                      percentage ? '%' : ''
+                    }`}
+                  </PlotHint>
+                </Hint>
+              )}
+              {highlightMale && highlightMale.point && (
+                <Hint
+                  value={highlightMale.point}
+                  align={{ vertical: 'top', horizontal: 'left' }}
+                  style={{
+                    transform: 'translateX(50%)',
+                  }}
+                >
+                  <PlotHint color={PEOPLE_GROUPS[2].color}>
+                    {`${formatScore(highlightMale.point.y)}${
+                      percentage ? '%' : ''
+                    }`}
+                  </PlotHint>
+                </Hint>
+              )}
             </FlexibleWidthXYPlot>
           </WrapPlot>
+          {(hasRawOption || hasGroupOption) && (
+            <Settings
+              direction="row"
+              justify="end"
+              pad="xsmall"
+              margin={{ vertical: 'small' }}
+            >
+              {hasGroupOption && (
+                <Box
+                  direction={size !== 'small' ? 'row' : 'column'}
+                  pad={size !== 'small' && { horizontal: 'medium' }}
+                  justify="start"
+                  fill="horizontal"
+                >
+                  <SettingsMultiToggle
+                    setting="groups"
+                    active={groupsActive}
+                    onChange={groups => {
+                      onGroupToggle(groups);
+                    }}
+                    defaultColor={color}
+                    options={PEOPLE_GROUPS}
+                  />
+                </Box>
+              )}
+              {hasRawOption && (
+                <Box direction="row" justify="end" align="center">
+                  <ButtonToggleValueSetting
+                    active={!raw}
+                    disabled={!raw}
+                    onClick={() => {
+                      onRawChange(false);
+                    }}
+                  >
+                    <FormattedMessage {...rootMessages.settings.value.score} />
+                  </ButtonToggleValueSetting>
+                  <ButtonToggleValueSetting
+                    active={raw}
+                    disabled={raw}
+                    onClick={() => {
+                      onRawChange(true);
+                    }}
+                  >
+                    <FormattedMessage {...rootMessages.settings.value.raw} />
+                  </ButtonToggleValueSetting>
+                </Box>
+              )}
+            </Settings>
+          )}
           <Source center />
         </Box>
       )}
     </ResponsiveContext.Consumer>
   );
 }
-// {(hasBenchmarkOption || hasStandardOption) && (
-//   <Box
-//   direction={size !== 'small' ? 'row' : 'column'}
-//   pad={
-//     size !== 'small'
-//     ? { horizontal: 'medium' }
-//     : { vertical: 'medium' }
-//   }
-//   justify="center"
-//   fill="horizontal"
-//   >
-//   {hasBenchmarkOption && (
-//     <SettingsToggle
-//     setting="benchmark"
-//     active={benchmark}
-//     onActivate={onSetBenchmark}
-//     options={BENCHMARKS}
-//     />
-//   )}
-//   {hasStandardOption && (
-//     <SettingsToggle
-//     setting="standard"
-//     active={standard}
-//     onActivate={onSetStandard}
-//     options={STANDARDS}
-//     />
-//   )}
-//   </Box>
-// )}
 
 ChartCountryMetricTrend.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   rangeColumns: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  metric: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   column: PropTypes.string,
   maxYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   minYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
@@ -345,11 +549,11 @@ ChartCountryMetricTrend.propTypes = {
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
   benchmarkRefs: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-  // standard: PropTypes.string,
-  // hasBenchmarkOption: PropTypes.bool,
-  // hasStandardOption: PropTypes.bool,
-  // onSetBenchmark: PropTypes.func,
-  // onSetStandard: PropTypes.func,
+  hasRawOption: PropTypes.bool,
+  raw: PropTypes.bool,
+  onRawChange: PropTypes.func,
+  onGroupToggle: PropTypes.func,
+  groupsActive: PropTypes.array,
 };
 
 export default ChartCountryMetricTrend;

@@ -28,6 +28,8 @@ import {
   getMaxYearCPR,
   getMinYearESR,
   getMinYearCPR,
+  getRawSearch,
+  getActiveGroupsSearch,
 } from 'containers/App/selectors';
 
 import {
@@ -36,6 +38,8 @@ import {
   loadDataIfNeeded,
   setStandard,
   setBenchmark,
+  setRaw,
+  toggleGroup,
 } from 'containers/App/actions';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
@@ -49,7 +53,26 @@ const getColour = metric => {
   }
   return 'esr';
 };
-const getRefs = (benchmark, isIndicator) => {
+const getRefs = (benchmark, isIndicator, raw = false, indicatorInfo) => {
+  if (isIndicator && raw && indicatorInfo) {
+    return [
+      {
+        value: parseFloat(indicatorInfo[COLUMNS.ESR.RAW_REF_MIN]),
+        style: 'solid',
+        key: 'min',
+      },
+      {
+        refColumn: COLUMNS.ESR.RAW_REF,
+        style: 'dotted',
+        key: 'adjusted',
+      },
+      {
+        value: parseFloat(indicatorInfo[COLUMNS.ESR.RAW_REF_BEST]),
+        style: 'solid',
+        key: 'best',
+      },
+    ];
+  }
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
@@ -66,6 +89,12 @@ const getRefs = (benchmark, isIndicator) => {
     ];
   }
   return false;
+};
+
+const getTrendColumn = (isESR, currentBenchmark, raw) => {
+  if (isESR && raw) return COLUMNS.ESR.RAW;
+  if (isESR && !raw) return currentBenchmark.column;
+  return COLUMNS.CPR.MEAN;
 };
 
 const DEPENDENCIES = [
@@ -89,6 +118,11 @@ export function ChartContainerTrend({
   theme,
   onSetBenchmark,
   onSetStandard,
+  raw,
+  onRawChange,
+  onGroupToggle,
+  activeGroups,
+  metricInfo,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -108,7 +142,11 @@ export function ChartContainerTrend({
       maxValue={isESR ? 100 : 11}
       maxYear={isESR ? maxYearESR : maxYearCPR}
       minYear={isESR ? minYearESR : minYearCPR}
-      column={isESR ? currentBenchmark.column : COLUMNS.CPR.MEAN}
+      column={getTrendColumn(
+        isESR,
+        currentBenchmark,
+        metric.metricType === 'indicators' && raw
+      )}
       rangeColumns={
         !isESR && {
           upper: COLUMNS.CPR.HI,
@@ -116,7 +154,12 @@ export function ChartContainerTrend({
         }
       }
       benchmarkRefs={
-        isESR && getRefs(currentBenchmark, metric.metricType === 'indicators')
+        isESR && getRefs(
+          currentBenchmark,
+          metric.metricType === 'indicators',
+          raw,
+          metricInfo,
+        )
       }
       hasBenchmarkOption={isESR}
       hasStandardOption={
@@ -126,6 +169,14 @@ export function ChartContainerTrend({
       onSetStandard={onSetStandard}
       standard={standard}
       benchmark={benchmark}
+      metric={metric}
+      hasRawOption={
+        isESR && metric.metricType === 'indicators'
+      }
+      raw={raw}
+      onRawChange={onRawChange}
+      groupsActive={activeGroups}
+      onGroupToggle={onGroupToggle}
     />
   );
 }
@@ -142,7 +193,12 @@ ChartContainerTrend.propTypes = {
   onLoadData: PropTypes.func,
   metricCode: PropTypes.string.isRequired,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  metricInfo: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   theme: PropTypes.object,
+  raw: PropTypes.bool,
+  onRawChange: PropTypes.func,
+  onGroupToggle: PropTypes.func,
+  activeGroups: PropTypes.array,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -181,6 +237,8 @@ const mapStateToProps = createStructuredSelector({
     }
     return false;
   },
+  raw: state => getRawSearch(state),
+  activeGroups: state => getActiveGroupsSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -213,6 +271,12 @@ export function mapDispatchToProps(dispatch) {
     },
     onSetStandard: value => dispatch(setStandard(value)),
     onSetBenchmark: value => dispatch(setBenchmark(value)),
+    onRawChange: value => {
+      dispatch(setRaw(value));
+    },
+    onGroupToggle: groups => {
+      dispatch(toggleGroup(groups));
+    },
   };
 }
 const withConnect = connect(
