@@ -163,7 +163,7 @@ function ChartCountryMetricTrend({
         <Box direction="column" pad={{ vertical: 'medium' }}>
           <WrapPlot>
             <FlexibleWidthXYPlot
-              height={size !== 'small' ? 320 : 240}
+              height={size !== 'small' ? 280 : 220}
               xType="time"
               margin={{ bottom: 30, right: 10, left: percentage ? 30 : 25 }}
               onMouseLeave={() => {
