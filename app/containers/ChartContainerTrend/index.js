@@ -49,6 +49,25 @@ const getColour = metric => {
   }
   return 'esr';
 };
+const getRefs = (benchmark, isIndicator) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        refColumn: isIndicator
+          ? benchmark.refIndicatorColumn
+          : benchmark.refColumn,
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
+
 const DEPENDENCIES = [
   'countries',
   'esrIndicators',
@@ -56,6 +75,7 @@ const DEPENDENCIES = [
   'esrScores',
   'esrIndicatorScores',
 ];
+
 export function ChartContainerTrend({
   metricCode,
   scores,
@@ -94,6 +114,9 @@ export function ChartContainerTrend({
           upper: COLUMNS.CPR.HI,
           lower: COLUMNS.CPR.LO,
         }
+      }
+      benchmarkRefs={
+        isESR && getRefs(currentBenchmark, metric.metricType === 'indicators')
       }
       hasBenchmarkOption={isESR}
       hasStandardOption={

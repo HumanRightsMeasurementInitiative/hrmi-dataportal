@@ -77,15 +77,13 @@ function ChartCountryMetricTrend({
   rangeColumns,
   color,
   colorHint,
-  benchmark,
+  benchmarkRefs,
   // standard,
   // hasBenchmarkOption,
   // hasStandardOption,
   // onSetBenchmark,
   // onSetStandard,
 }) {
-  console.log(benchmark);
-  console.log(scores);
   const [highlight, setHighlight] = useState(false);
   if (!maxYear) return null;
 
@@ -97,11 +95,14 @@ function ChartCountryMetricTrend({
   const rangeUpper = [];
   const rangeLower = [];
   const xyData = [];
+  const xyDataRefs =
+    benchmarkRefs && benchmarkRefs.map(ref => ({ xy: [], ...ref }));
   const tickValuesY = percentage
     ? [0, 20, 40, 60, 80, 100]
     : [0, 2, 4, 6, 8, 10];
 
   const hasScores = scores && scores.length > 0;
+
   if (hasScores) {
     const scoresSorted = scores.sort((a, b) =>
       parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
@@ -116,23 +117,42 @@ function ChartCountryMetricTrend({
         return memo;
       }, null);
       if (score) {
+        const x = new Date(`${y}`).getTime();
         xyData.push({
           syear: y,
-          x: new Date(`${y}`).getTime(),
+          x,
           y: parseFloat(score[column]),
         });
         if (rangeColumns) {
           rangeUpper.push({
             syear: y,
-            x: new Date(`${y}`).getTime(),
+            x,
             y: parseFloat(score[rangeColumns.upper]),
           });
+          rangeLower.push({
+            syear: y,
+            x,
+            y: parseFloat(score[rangeColumns.lower]),
+          });
         }
-        rangeLower.push({
-          syear: y,
-          x: new Date(`${y}`).getTime(),
-          y: parseFloat(score[rangeColumns.lower]),
-        });
+        if (benchmarkRefs) {
+          xyDataRefs.forEach(ref => {
+            if (ref.value) {
+              ref.xy.push({
+                syear: y,
+                x,
+                y: parseFloat(ref.value),
+              });
+            }
+            if (ref.refColumn) {
+              ref.xy.push({
+                syear: y,
+                x,
+                y: parseFloat(score[ref.refColumn]),
+              });
+            }
+          });
+        }
       }
     }
   }
@@ -205,6 +225,44 @@ function ChartCountryMetricTrend({
                 <LineSeries
                   data={rangeLower}
                   style={{ stroke: color, opacity: 0.5, strokeWidth: 1 }}
+                />
+              )}
+              {hasScores &&
+                xyDataRefs &&
+                xyDataRefs.map(ref => (
+                  <LineMarkSeries
+                    size={1.5}
+                    style={{
+                      stroke: 'black',
+                      line: {
+                        strokeWidth: ref.style === 'dotted' ? 2 : 1,
+                      },
+                      mark: {
+                        strokeWidth: 1,
+                      },
+                      opacity: ref.style === 'dotted' ? 0.4 : 0.2,
+                    }}
+                    markStyle={{
+                      fill: 'black',
+                    }}
+                    strokeDasharray={ref.style === 'dotted' && [1, 2]}
+                    data={ref.xy}
+                  />
+                ))}
+              {hasScores && (
+                <LineMarkSeries
+                  size={3}
+                  style={{
+                    stroke: color,
+                    strokeWidth: 2,
+                  }}
+                  markStyle={{
+                    fill: color,
+                  }}
+                  data={xyData}
+                  onNearestX={(point, { index }) =>
+                    setHighlight({ point, index })
+                  }
                 />
               )}
               {hasScores && (
@@ -286,7 +344,7 @@ ChartCountryMetricTrend.propTypes = {
   colorHint: PropTypes.string,
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
-  benchmark: PropTypes.string,
+  benchmarkRefs: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   // standard: PropTypes.string,
   // hasBenchmarkOption: PropTypes.bool,
   // hasStandardOption: PropTypes.bool,
