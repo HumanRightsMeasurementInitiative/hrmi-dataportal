@@ -56,20 +56,20 @@ const getColour = metric => {
 const getRefs = (benchmark, isIndicator, raw = false, indicatorInfo) => {
   if (isIndicator && raw && indicatorInfo) {
     return [
-      {
-        value: parseFloat(indicatorInfo[COLUMNS.ESR.RAW_REF_MIN]),
-        style: 'solid',
-        key: 'min',
-      },
+      // {
+      //   value: parseFloat(indicatorInfo[COLUMNS.ESR.RAW_REF_MIN]),
+      //   style: 'solid',
+      //   key: 'min',
+      // },
+      // {
+      //   value: parseFloat(indicatorInfo[COLUMNS.ESR.RAW_REF_BEST]),
+      //   style: 'solid',
+      //   key: 'best',
+      // },
       {
         refColumn: COLUMNS.ESR.RAW_REF,
         style: 'dotted',
         key: 'adjusted',
-      },
-      {
-        value: parseFloat(indicatorInfo[COLUMNS.ESR.RAW_REF_BEST]),
-        style: 'solid',
-        key: 'best',
       },
     ];
   }
@@ -151,6 +151,15 @@ export function ChartContainerTrend({
         !isESR && {
           upper: COLUMNS.CPR.HI,
           lower: COLUMNS.CPR.LO,
+        }
+      }
+      rangeValues={
+        isESR &&
+        metric.metricType === 'indicators' &&
+        raw &&
+        {
+          lower: parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_MIN]),
+          upper: parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_BEST]),
         }
       }
       benchmarkRefs={

@@ -127,6 +127,7 @@ function ChartCountryMetricTrend({
   maxValue,
   percentage,
   rangeColumns,
+  rangeValues,
   color,
   colorHint,
   benchmarkRefs,
@@ -239,13 +240,19 @@ function ChartCountryMetricTrend({
           ...ref,
         };
       }
-      return ref;
+      return null;
     });
   // cpr ranges
-  const rangeUpper =
-    hasScores && getDataForGroup(scores, minYear, maxYear, rangeColumns.upper);
-  const rangeLower =
-    hasScores && getDataForGroup(scores, minYear, maxYear, rangeColumns.lower);
+  let rangeUpper;
+  let rangeLower;
+  if (rangeColumns && hasScores) {
+    rangeUpper = getDataForGroup(scores, minYear, maxYear, rangeColumns.upper);
+    rangeLower = getDataForGroup(scores, minYear, maxYear, rangeColumns.lower);
+  }
+  if (rangeValues) {
+    rangeUpper = getDataForValue(rangeValues.upper, minYear, maxYear);
+    rangeLower = getDataForValue(rangeValues.lower, minYear, maxYear);
+  }
 
   const tickValuesY = percentage
     ? [0, 20, 40, 60, 80, 100]
@@ -270,13 +277,13 @@ function ChartCountryMetricTrend({
               }}
             >
               <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
-              {hasScores && rangeColumns && (
+              {hasScores && rangeUpper && (
                 <AreaSeries
                   data={rangeUpper}
                   style={{ fill: color, stroke: 'transparent', opacity: 0.2 }}
                 />
               )}
-              {hasScores && rangeColumns && (
+              {hasScores && rangeLower && (
                 <AreaSeries
                   data={rangeLower}
                   style={{
@@ -314,40 +321,43 @@ function ChartCountryMetricTrend({
                 tickValues={tickValuesY}
                 tickPadding={2}
               />
-              {hasScores && rangeColumns && (
+              {hasScores && rangeUpper && (
                 <LineSeries
                   data={rangeUpper}
                   style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
-              {hasScores && rangeColumns && (
+              {hasScores && rangeLower && (
                 <LineSeries
                   data={rangeLower}
                   style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
               {xyDataRefs &&
-                xyDataRefs.map(ref => (
-                  <LineMarkSeries
-                    key={ref.key}
-                    data={ref.xy}
-                    size={1.5}
-                    style={{
-                      stroke: 'black',
-                      line: {
-                        strokeWidth: ref.style === 'dotted' ? 2 : 1,
-                      },
-                      mark: {
-                        strokeWidth: 1,
-                      },
-                      opacity: ref.style === 'dotted' ? 0.4 : 0.2,
-                    }}
-                    markStyle={{
-                      fill: 'black',
-                    }}
-                    strokeDasharray={ref.style === 'dotted' && [1, 2]}
-                  />
-                ))}
+                xyDataRefs.map(
+                  ref =>
+                    ref && (
+                      <LineMarkSeries
+                        key={ref.key}
+                        data={ref.xy}
+                        size={1.5}
+                        style={{
+                          stroke: 'black',
+                          line: {
+                            strokeWidth: ref.style === 'dotted' ? 2 : 1,
+                          },
+                          mark: {
+                            strokeWidth: 1,
+                          },
+                          opacity: ref.style === 'dotted' ? 0.4 : 0.2,
+                        }}
+                        markStyle={{
+                          fill: 'black',
+                        }}
+                        strokeDasharray={ref.style === 'dotted' && [1, 2]}
+                      />
+                    ),
+                )}
               {groupsAll && scoresAll && (
                 <LineMarkSeries
                   data={scoresAll}
@@ -540,6 +550,7 @@ function ChartCountryMetricTrend({
 ChartCountryMetricTrend.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   rangeColumns: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  rangeValues: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   metric: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   column: PropTypes.string,
   maxYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
