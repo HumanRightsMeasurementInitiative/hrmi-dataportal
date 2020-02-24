@@ -21,6 +21,7 @@ import {
 
 import ChartContainerTrend from 'containers/ChartContainerTrend';
 import ChartContainerPeople from 'containers/ChartContainerPeople';
+import ChartContainerByGroup from 'containers/ChartContainerByGroup';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ChartSettingMetrics from 'components/ChartSettingMetrics';
 import MainColumn from 'styled/MainColumn';
@@ -79,6 +80,42 @@ function CountryReport({
           </SectionContainer>
           <SectionContainer>Indicators by right</SectionContainer>
           <SectionContainer>Rights and indicators by sex</SectionContainer>
+          <ChartSettingMetrics
+            activeDefault={
+              RIGHTS.filter(r => r.dimension === dimension && r.hasGroups)[0]
+                .key
+            }
+            metrics={RIGHTS.reduce((rights, r) => {
+              if (r.dimension !== dimension || !r.hasGroups) {
+                return rights;
+              }
+              return [
+                ...rights,
+                {
+                  ...r,
+                  children: INDICATORS.reduce((inds, i) => {
+                    const info = allIndicators.find(ii =>
+                      quasiEquals(ii.metric_code, i.code),
+                    );
+                    if (
+                      i.right === r.key &&
+                      (info.standard === 'Both' ||
+                        info.standard === standardInfo.code)
+                    ) {
+                      return [...inds, i];
+                    }
+                    return inds;
+                  }, []),
+                },
+              ];
+            }, [])}
+            chart={props => (
+              <ChartContainerByGroup
+                countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                {...props}
+              />
+            )}
+          />
           <SectionContainer>
             Category, rights & indicators over time
             <ChartSettingMetrics
