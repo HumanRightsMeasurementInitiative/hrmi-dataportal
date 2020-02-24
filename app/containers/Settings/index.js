@@ -105,7 +105,12 @@ export const showSettings = ({ route, match, tabKey }) => {
     return true;
   }
   if (route === PATHS.COUNTRY) {
-    return tabKey === 'snapshot' || tabKey === 'report-esr';
+    return (
+      tabKey === 'snapshot' ||
+      tabKey === '0' ||
+      tabKey === 'report-esr' ||
+      tabKey === '1'
+    );
   }
   return route === PATHS.COUNTRIES || route === PATHS.METRICS;
 };
