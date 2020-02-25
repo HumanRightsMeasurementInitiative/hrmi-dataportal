@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import { Box, Text, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 
-import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
+import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 
 import { isMinSize } from 'utils/responsive';

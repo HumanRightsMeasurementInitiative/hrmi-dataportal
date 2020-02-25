@@ -191,6 +191,10 @@ export default defineMessages({
       id: `${scope}.tabs.trend`,
       defaultMessage: 'Over time',
     },
+    groups: {
+      id: `${scope}.tabs.groups`,
+      defaultMessage: 'By sex',
+    },
   },
   charts: {
     noData: {
@@ -276,6 +280,49 @@ export default defineMessages({
         id: `${scope}.settings.benchmark.best`,
         defaultMessage: 'Global best',
       },
+      min: {
+        id: `${scope}.settings.benchmark.min`,
+        defaultMessage: 'Natural minimum',
+      },
+    },
+    groups: {
+      name: {
+        id: `${scope}.settings.groups.name`,
+        defaultMessage: 'Groups',
+      },
+      nameShort: {
+        id: `${scope}.settings.groups.nameShort`,
+        defaultMessage: 'Groups',
+      },
+    },
+    value: {
+      note: {
+        id: `${scope}.settings.value.note`,
+        defaultMessage:
+          'Note: raw indicator values are first converted into scores and then aggregated into the right score',
+      },
+      score: {
+        id: `${scope}.settings.value.score`,
+        defaultMessage: 'Scores',
+      },
+      raw: {
+        id: `${scope}.settings.value.raw`,
+        defaultMessage: 'Raw values',
+      },
+    },
+  },
+  groups: {
+    all: {
+      id: `${scope}.groups.all`,
+      defaultMessage: 'All people',
+    },
+    female: {
+      id: `${scope}.groups.female`,
+      defaultMessage: 'Female',
+    },
+    male: {
+      id: `${scope}.groups.male`,
+      defaultMessage: 'Male',
     },
   },
   metricTypes: {
@@ -1958,6 +2005,10 @@ export default defineMessages({
     F: {
       id: `${scope}.featured.F`,
       defaultMessage: 'Featured F',
+    },
+    any: {
+      id: `${scope}.featured.any`,
+      defaultMessage: 'Featured',
     },
   },
 });

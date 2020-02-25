@@ -13,12 +13,10 @@ import { Heading, Box, Paragraph } from 'grommet';
 import rootMessages from 'messages';
 
 import { BENCHMARKS, STANDARDS } from 'containers/App/constants';
-import { getRightsScoresForDimension, hasCPR } from 'utils/scores';
+import { hasCPR } from 'utils/scores';
 import { getMessageGrammar } from 'utils/narrative';
 
 import messages from './messages';
-import CPRAccordion from './Accordions/CPRAccordion';
-import ESRAccordion from './Accordions/ESRAccordion';
 import NarrativeCPR from './NarrativeCPR';
 import NarrativeESR from './NarrativeESR';
 import NarrativeAtRisk from './NarrativeAtRisk';
@@ -89,7 +87,6 @@ function CountryNarrative({
   rights,
   indicators,
   benchmark,
-  onMetricClick,
   country,
   countryGrammar,
   atRiskData,
@@ -99,7 +96,6 @@ function CountryNarrative({
   reference,
   esrYear,
   cprYear,
-  trackEvent,
   type,
 }) {
   if (!dimensions || !rights) {
@@ -119,7 +115,6 @@ function CountryNarrative({
         );
       })
       .reduce((m, s) => m || !!s.score, false);
-
     return (
       <Styled>
         <RightsType>
@@ -138,16 +133,6 @@ function CountryNarrative({
               country={country}
               countryGrammar={countryGrammar}
               someData={hasSomeIndicatorScores}
-            />
-            <ESRAccordion
-              dimension={dimensions.esr}
-              rights={getRightsScoresForDimension(rights, 'esr')}
-              benchmark={BENCHMARKS.find(s => s.key === benchmark)}
-              indicators={Object.values(indicators)}
-              onMetricClick={onMetricClick}
-              standard={standard}
-              hasAtRisk={hasCPR(dimensions)}
-              trackEvent={trackEvent}
             />
           </Dimension>
         </RightsType>
@@ -204,16 +189,6 @@ function CountryNarrative({
                 country={country}
                 countryGrammar={countryGrammar}
               />
-              <CPRAccordion
-                dimension={dimensions.empowerment}
-                rights={getRightsScoresForDimension(
-                  rights,
-                  'empowerment',
-                  true,
-                )}
-                onMetricClick={onMetricClick}
-                trackEvent={trackEvent}
-              />
             </Dimension>
           )}
           {dimensions.physint && dimensions.physint.score && (
@@ -226,12 +201,6 @@ function CountryNarrative({
                 score={dimensions.physint && dimensions.physint.score}
                 country={country}
                 countryGrammar={countryGrammar}
-              />
-              <CPRAccordion
-                dimension={dimensions.physint}
-                rights={getRightsScoresForDimension(rights, 'physint', true)}
-                onMetricClick={onMetricClick}
-                trackEvent={trackEvent}
               />
             </Dimension>
           )}
@@ -317,6 +286,8 @@ CountryNarrative.propTypes = {
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
   type: PropTypes.string,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
 export default injectIntl(CountryNarrative);

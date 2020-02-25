@@ -14,6 +14,12 @@ export const SIZES = {
     heightCollapsed: 40,
   },
 };
+
+export const CARD_WIDTH = {
+  min: 200,
+  max: 250,
+};
+
 // theme defining breakpoints, colors, sizes, grid gutters
 // breakpoints:
 // < 720px (45em): small (mobile)
@@ -106,6 +112,7 @@ const theme = {
       white: '#FFFFFF',
       text: { light: '#3A5161' },
       border: { light: '#E8EAE9' },
+      'light-0': '#F8F8F8', // <<< lightest      empowerment: '#262064', // AA large
       'light-1': '#F2F3F4', // <<< lightest      empowerment: '#262064', // AA large
       'light-2': '#EFEFEF',
       'light-3': '#E8EAE9',
@@ -145,7 +152,7 @@ const theme = {
       medium: '24px',
       ml: '36px',
       large: '48px',
-      xlarge: '96px',
+      xlarge: '72px',
     },
     breakpoints: {
       small: {
@@ -286,6 +293,8 @@ const theme = {
     },
   },
   maxWidth: '1600px',
+  maxWidthMedium: '1068px',
+  maxWidthNarrow: '800px',
 };
 
 /**

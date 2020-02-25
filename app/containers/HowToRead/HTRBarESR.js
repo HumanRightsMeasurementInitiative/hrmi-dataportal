@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { Box, ResponsiveContext } from 'grommet';
-import Bar from 'components/Bars/Bar';
-import AnnotateBenchmark from 'components/Bars/AnnotateBenchmark';
+import Bar from 'components/ChartBars/Bar';
+import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
 import Hint from 'styled/Hint';
 
