@@ -39,7 +39,7 @@ import {
   getStandardSearch,
   getBenchmarkSearch,
   getPeopleAtRiskForCountry,
-  getReferenceScores,
+  getDimensionAverages,
   getAuxIndicatorsForCountry,
   getLatestCountryCurrentGDP,
   getLatestCountry2011PPPGDP,
@@ -47,6 +47,8 @@ import {
   getCPRYear,
   getDependenciesReady,
   getCloseTargetCountry,
+  getESRIndicators,
+  getRawSearch,
 } from 'containers/App/selectors';
 
 import {
@@ -54,6 +56,7 @@ import {
   navigate,
   setTab,
   trackEvent,
+  setRaw,
 } from 'containers/App/actions';
 
 import {
@@ -93,7 +96,7 @@ export function PathCountry({
   atRisk,
   onAtRiskClick,
   standard,
-  referenceScores,
+  dimensionAverages,
   auxIndicators,
   currentGDP,
   pppGDP,
@@ -102,6 +105,9 @@ export function PathCountry({
   dataReady,
   onTrackEvent,
   closeTarget,
+  allIndicators,
+  onRawChange,
+  raw,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -187,7 +193,7 @@ export function PathCountry({
                   benchmark={benchmark}
                   atRiskData={atRisk}
                   standard={standard}
-                  reference={referenceScores}
+                  reference={dimensionAverages}
                   esrYear={esrYear}
                   cprYear={cprYear}
                   dataReady={dataReady}
@@ -196,11 +202,12 @@ export function PathCountry({
             },
             {
               key: 'report-esr',
-              title: intl.formatMessage(rootMessages.tabs.reportESR),
+              title: intl.formatMessage(rootMessages.dimensions.esr),
               content: props => (
                 <CountryReport
                   {...props}
                   type="esr"
+                  dimension="esr"
                   countryTitle={countryTitle}
                   dimensions={dimensions}
                   rights={rights}
@@ -211,7 +218,7 @@ export function PathCountry({
                   benchmark={benchmark}
                   atRiskData={atRisk}
                   standard={standard}
-                  reference={referenceScores}
+                  reference={dimensionAverages}
                   onAtRiskClick={() => onAtRiskClick()}
                   onMetricClick={(metric, tab) =>
                     console.log('metric click', countryCode, metric, tab)
@@ -220,26 +227,54 @@ export function PathCountry({
                   cprYear={cprYear}
                   dataReady={dataReady}
                   trackEvent={onTrackEvent}
+                  allIndicators={allIndicators}
+                  onRawChange={onRawChange}
+                  raw={raw}
                 />
               ),
             },
             {
-              key: 'report-cpr',
-              title: intl.formatMessage(rootMessages.tabs.reportCPR),
+              key: 'report-physint',
+              title: intl.formatMessage(rootMessages.dimensions.physint),
               content: props => (
                 <CountryReport
                   {...props}
                   type="cpr"
+                  dimension="physint"
                   countryTitle={countryTitle}
                   dimensions={dimensions}
                   rights={rights}
                   country={country}
                   countryGrammar={countryGrammar}
                   scale={scale}
-                  benchmark={benchmark}
                   atRiskData={atRisk}
-                  standard={standard}
-                  reference={referenceScores}
+                  reference={dimensionAverages}
+                  onAtRiskClick={() => onAtRiskClick()}
+                  onMetricClick={(metric, tab) =>
+                    console.log('metric click', countryCode, metric, tab)
+                  }
+                  cprYear={cprYear}
+                  dataReady={dataReady}
+                  trackEvent={onTrackEvent}
+                />
+              ),
+            },
+            {
+              key: 'report-empowerment',
+              title: intl.formatMessage(rootMessages.dimensions.empowerment),
+              content: props => (
+                <CountryReport
+                  {...props}
+                  type="cpr"
+                  dimension="empowerment"
+                  countryTitle={countryTitle}
+                  dimensions={dimensions}
+                  rights={rights}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  scale={scale}
+                  atRiskData={atRisk}
+                  reference={dimensionAverages}
                   onAtRiskClick={() => onAtRiskClick()}
                   onMetricClick={(metric, tab) =>
                     console.log('metric click', countryCode, metric, tab)
@@ -255,7 +290,7 @@ export function PathCountry({
               title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
               // howToRead: {
               //   contxt: 'PathCountry',
-              //   chart: 'WordCloud',
+              //   chart: 'ChartWordCloud',
               //   data: 'atRisk',
               // },
               content: props =>
@@ -291,6 +326,7 @@ export function PathCountry({
                 ) {
                   faqs = FAQS.COUNTRY_CPR;
                 }
+                // TODO check about tab
                 return (
                   <CountryAbout
                     {...props}
@@ -325,7 +361,7 @@ PathCountry.propTypes = {
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  referenceScores: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -334,9 +370,12 @@ PathCountry.propTypes = {
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
   dataReady: PropTypes.bool,
+  onRawChange: PropTypes.func,
+  raw: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -356,7 +395,8 @@ const mapStateToProps = createStructuredSelector({
   benchmark: state => getBenchmarkSearch(state),
   esrYear: state => getESRYear(state),
   cprYear: state => getCPRYear(state),
-  referenceScores: state => getReferenceScores(state),
+  raw: state => getRawSearch(state),
+  dimensionAverages: state => getDimensionAverages(state),
   currentGDP: (state, { match }) =>
     getLatestCountryCurrentGDP(state, match.params.country),
   pppGDP: (state, { match }) =>
@@ -364,12 +404,16 @@ const mapStateToProps = createStructuredSelector({
   auxIndicators: (state, { match }) =>
     getAuxIndicatorsForCountry(state, match.params.country),
   closeTarget: state => getCloseTargetCountry(state),
+  allIndicators: state => getESRIndicators(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
+    },
+    onRawChange: value => {
+      dispatch(setRaw(value));
     },
     onCategoryClick: (key, value) => {
       const deleteParams = COUNTRY_FILTERS;

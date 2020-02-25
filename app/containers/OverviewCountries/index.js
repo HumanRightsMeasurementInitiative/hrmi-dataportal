@@ -18,6 +18,7 @@ import {
   getIncomeSearch,
   getCountryGroupSearch,
   getTreatySearch,
+  getFeaturedSearch,
   getBenchmarkSearch,
   getStandardSearch,
   getScaleSearch,
@@ -32,14 +33,15 @@ import {
   STANDARDS,
   BENCHMARKS,
   COUNTRY_SORTS,
+  COUNTRY_FILTERS,
   COLUMNS,
 } from 'containers/App/constants';
 
 import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
-import CountryPreview from 'components/CountryPreview';
-import CountrySort from 'components/CountrySort';
-import CountryFilters from 'components/CountryFilters';
+import ChartCountryDiamond from 'components/ChartCountryDiamond';
+import ChartSettingSort from 'components/ChartSettingSort';
+import ChartSettingFilters from 'components/ChartSettingFilters';
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
 
@@ -55,15 +57,6 @@ export const isDefaultStandard = (country, standardDetails) =>
   (country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' &&
     standardDetails.key === 'hi');
 
-const FILTER_GROUPS = [
-  'income',
-  'region',
-  'subregion',
-  'cgroup',
-  'treaty',
-  'assessed',
-];
-
 const SORT_OPTIONS = ['assessment', 'name', 'population', 'gdp'];
 
 export function OverviewCountries({
@@ -75,6 +68,7 @@ export function OverviewCountries({
   assessedFilterValue,
   countryGroupFilterValue,
   treatyFilterValue,
+  featuredFilterValue,
   onRemoveFilter,
   onAddFilter,
   onSelectCountry,
@@ -90,6 +84,8 @@ export function OverviewCountries({
   dataReady,
   hasAside,
   auxIndicators,
+  featuredValues,
+  featuredCountries,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -101,19 +97,22 @@ export function OverviewCountries({
 
   const filterValues = getFilterOptionValues(
     countries,
-    FILTER_GROUPS,
+    COUNTRY_FILTERS,
     // check if any filters are already set -
     // if not we can just return all specified options
-    areAnyFiltersSet(FILTER_GROUPS, {
+    areAnyFiltersSet(COUNTRY_FILTERS, {
       regionFilterValue,
       subregionFilterValue,
       incomeFilterValue,
       assessedFilterValue,
       countryGroupFilterValue,
       treatyFilterValue,
+      featuredFilterValue,
     }),
     standardDetails,
     scoresAllCountries,
+    featuredValues,
+    featuredCountries,
   );
   // sortable and non-sortable countries
   const { sorted, other } = sortCountries({
@@ -136,7 +135,7 @@ export function OverviewCountries({
             align="start"
             margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
           >
-            <CountryFilters
+            <ChartSettingFilters
               regionFilterValue={regionFilterValue}
               subregionFilterValue={subregionFilterValue}
               onRemoveFilter={onRemoveFilter}
@@ -145,9 +144,10 @@ export function OverviewCountries({
               assessedFilterValue={assessedFilterValue}
               countryGroupFilterValue={countryGroupFilterValue}
               treatyFilterValue={treatyFilterValue}
+              featuredFilterValue={featuredFilterValue}
               filterValues={filterValues}
             />
-            <CountrySort
+            <ChartSettingSort
               sort={currentSort}
               options={SORT_OPTIONS}
               order={currentSortOrder}
@@ -179,7 +179,7 @@ export function OverviewCountries({
                 >
                   <InfiniteScroll items={sorted} step={36} show={0}>
                     {(c, index) => (
-                      <CountryPreview
+                      <ChartCountryDiamond
                         showAnnotation={index === 0}
                         key={c.country_code}
                         country={c}
@@ -221,7 +221,7 @@ export function OverviewCountries({
                   >
                     <InfiniteScroll items={other} step={36} show={0}>
                       {(c, index) => (
-                        <CountryPreview
+                        <ChartCountryDiamond
                           showAnnotation={index === 0}
                           key={c.country_code}
                           country={c}
@@ -276,6 +276,7 @@ OverviewCountries.propTypes = {
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  featuredFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countryGroupFilterValue: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,
@@ -294,6 +295,8 @@ OverviewCountries.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   hasAside: PropTypes.bool,
+  featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -303,6 +306,7 @@ const mapStateToProps = createStructuredSelector({
   assessedFilterValue: state => getAssessedSearch(state),
   countryGroupFilterValue: state => getCountryGroupSearch(state),
   treatyFilterValue: state => getTreatySearch(state),
+  featuredFilterValue: state => getFeaturedSearch(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),

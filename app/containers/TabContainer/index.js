@@ -18,6 +18,7 @@ import ColumnTitle from 'styled/ColumnTitle';
 import ColumnHeader from 'styled/ColumnHeader';
 import ColumnContent from 'styled/ColumnContent';
 import { isMinSize, isMaxSize } from 'utils/responsive';
+import isNumber from 'utils/is-number';
 
 import TabAside from './TabAside';
 
@@ -35,7 +36,7 @@ const HowToReadWrapper = styled.div`
 
 function TabContainer({
   tabs,
-  tabIndex,
+  tabKey,
   onTabClick,
   aside = true,
   route,
@@ -61,6 +62,13 @@ function TabContainer({
 
         const hasMultipleMainTabs = mainTabs.length > 1;
 
+        let activeIndex = 0;
+        if (isNumber(tabKey) && parseInt(tabKey, 10) < mainTabs.length) {
+          activeIndex = parseInt(tabKey, 10);
+        }
+        if (mainTabs.map(t => t.key).indexOf(tabKey) >= 0) {
+          activeIndex = mainTabs.map(t => t.key).indexOf(tabKey);
+        };
         return (
           <Box direction="row" margin="0 auto" width="100%">
             <Box direction="column" flex style={{ position: 'relative' }}>
@@ -68,9 +76,9 @@ function TabContainer({
                 <>
                   <Tabs
                     justify="start"
-                    activeIndex={tabIndex}
+                    activeIndex={activeIndex}
                     onActive={index =>
-                      index !== tabIndex && onTabClick(index)
+                      index !== activeIndex && onTabClick(mainTabs[index])
                     }
                   >
                     {mainTabs.slice().map(tab => (
@@ -89,7 +97,7 @@ function TabContainer({
                           </HowToReadWrapper>
                         )}
                         <ColumnContent>
-                          {tab.content({ hasAside, activeTab: tabIndex })}
+                          {tab.content({ hasAside, activeTab: activeIndex })}
                         </ColumnContent>
                       </Tab>
                     ))}
@@ -114,7 +122,7 @@ function TabContainer({
                     )}
                   </ColumnHeader>
                   <ColumnContent>
-                    {mainTabs[0].content({ hasAside, activeTab: tabIndex })}
+                    {mainTabs[0].content({ hasAside, activeTab: activeIndex })}
                   </ColumnContent>
                 </Box>
               )}
@@ -122,8 +130,8 @@ function TabContainer({
             {asideTab && (
               <TabAside
                 asideTab={asideTab}
-                tabIndex={tabIndex}
-                hasSettings={showSettings({ route, match, tabIndex })}
+                tabIndex={activeIndex}
+                hasSettings={showSettings({ route, match, tabKey })}
               />
             )}
           </Box>
@@ -138,20 +146,23 @@ TabContainer.propTypes = {
   onTabClick: PropTypes.func,
   aside: PropTypes.bool,
   theme: PropTypes.object,
-  tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  tabKey: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   route: PropTypes.string.isRequired,
   match: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  tabIndex: state => getTabSearch(state),
+  tabKey: state => getTabSearch(state),
   route: state => getRouterRoute(state),
   match: state => getRouterMatch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onTabClick: index => dispatch(setTab(index)),
+    onTabClick: tab => {
+      const key = (tab && tab.key) || '0';
+      return dispatch(setTab(key));
+    },
   };
 }
 

@@ -24,7 +24,7 @@ import Icon from 'components/Icon';
 
 import LocaleToggle from 'containers/LocaleToggle';
 import { appLocales } from 'i18n';
-import { PAGES } from 'containers/App/constants';
+import { PAGES, PATHS } from 'containers/App/constants';
 import { navigate, loadDataIfNeeded } from 'containers/App/actions';
 
 // import { isMinSize, isMaxSize } from 'utils/responsive';
@@ -181,7 +181,7 @@ const ButtonNavSecondary = styled(Button)`
 
 const DEPENDENCIES = ['countries'];
 
-export function Header({ nav, onLoadData, match, route, theme }) {
+export function Header({ nav, onLoadData, match, theme }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -199,7 +199,7 @@ export function Header({ nav, onLoadData, match, route, theme }) {
     setShowMenu(false);
     nav({ pathname: '', search: '' });
   };
-  const showSecondary = route !== '';
+  const showSecondary = true;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -228,19 +228,21 @@ export function Header({ nav, onLoadData, match, route, theme }) {
               )}
               <MenuGroup>
                 {PAGES &&
-                  PAGES.filter(page => page.primary).map(page => (
-                    <ButtonNavPrimary
-                      key={page.key}
-                      active={page.key === match}
-                      disabled={page.key === match}
-                      onClick={() => {
-                        setShowMenu(false);
-                        nav(`page/${page.key}`);
-                      }}
-                    >
-                      <FormattedMessage {...rootMessages.page[page.key]} />
-                    </ButtonNavPrimary>
-                  ))}
+                  Object.values(PAGES)
+                    .filter(page => page.primary)
+                    .map(page => (
+                      <ButtonNavPrimary
+                        key={page.key}
+                        active={page.key === match}
+                        disabled={page.key === match}
+                        onClick={() => {
+                          setShowMenu(false);
+                          nav(`${PATHS.PAGE}/${page.key}`);
+                        }}
+                      >
+                        <FormattedMessage {...rootMessages.page[page.key]} />
+                      </ButtonNavPrimary>
+                    ))}
               </MenuGroup>
             </MenuList>
           </NavBarTop>
@@ -305,8 +307,8 @@ export function Header({ nav, onLoadData, match, route, theme }) {
                     fill="horizontal"
                   >
                     <FormattedMessage {...rootMessages.labels.metrics} />
-                    {showCountries && <FormUp size="large" />}
-                    {!showCountries && <FormDown size="large" />}
+                    {showMetrics && <FormUp size="large" />}
+                    {!showMetrics && <FormDown size="large" />}
                   </Box>
                 }
                 ref={metricTarget}
@@ -350,7 +352,7 @@ Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
   match: PropTypes.string,
-  route: PropTypes.string,
+  // route: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   theme: PropTypes.object,
 };

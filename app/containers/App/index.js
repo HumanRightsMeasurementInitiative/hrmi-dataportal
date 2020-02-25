@@ -18,7 +18,7 @@ import GlobalStyle from 'global-styles';
 
 import Header from 'containers/Header';
 import Settings from 'containers/Settings';
-import PathOverview from 'containers/PathOverview';
+import PathHome from 'containers/PathHome';
 import PathMetric from 'containers/PathMetric';
 import PathMetricOverview from 'containers/PathMetricOverview';
 import PathCountry from 'containers/PathCountry';
@@ -78,7 +78,7 @@ export function App({ match, intl }) {
         <HowToReadLayer />
         <Main>
           <Switch>
-            <Route exact path={`/${locale}`} component={PathOverview} />
+            <Route exact path={`/${locale}`} component={PathHome} />
             <Route
               path={`/${locale}/${PATHS.METRICS}`}
               component={PathMetricOverview}

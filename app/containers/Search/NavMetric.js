@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Box } from 'grommet';
 
+import { SIZES } from 'theme';
 import { DIMENSIONS, RIGHTS, INDICATORS } from 'containers/App/constants';
 import { selectMetric } from 'containers/App/actions';
 
@@ -27,8 +28,10 @@ export function NavMetric({ onSelectMetric, intl, onClose, size }) {
   const indicators = prepMetrics(INDICATORS, 'indicators', search, intl);
   const hasMetrics =
     dimensions.length > 0 || rights.length > 0 || indicators.length > 0;
+  // figure out available height for IE11
+  const h = window.innerHeight - SIZES.header.height;
   return (
-    <NavWrapper>
+    <NavWrapper h={h}>
       <NavTop
         onClose={() => onClose()}
         search={search}

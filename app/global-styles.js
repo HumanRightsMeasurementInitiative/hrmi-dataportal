@@ -57,6 +57,13 @@ const GlobalStyle = createGlobalStyle`
       background: #FDB933;
     }
   }
+
+  .react-multi-carousel-list__custom {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: visible !important;
+  }
 `;
 
 export default GlobalStyle;

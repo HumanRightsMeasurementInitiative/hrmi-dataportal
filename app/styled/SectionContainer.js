@@ -11,6 +11,7 @@ const Styled = styled(Box)`
   border-color: ${props =>
     props.border ? props.theme.global.colors['light-3'] : 'transparent'};
   padding-top: 10px;
+  overflow-x: hidden;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding-top: 25px;
   }

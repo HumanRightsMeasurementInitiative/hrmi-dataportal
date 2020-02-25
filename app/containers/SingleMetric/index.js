@@ -33,17 +33,25 @@ import {
   getIncomeSearch,
   getCountryGroupSearch,
   getTreatySearch,
+  getFeaturedSearch,
   getSortSearch,
   getSortOrderSearch,
   getCountries,
   getDependenciesReady,
   getAuxIndicatorsLatest,
+  getFeaturedValues,
+  getFeatured,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
-import { BENCHMARKS, COLUMNS, COUNTRY_SORTS } from 'containers/App/constants';
-import CountryFilters from 'components/CountryFilters';
-import CountrySort from 'components/CountrySort';
+import {
+  BENCHMARKS,
+  COLUMNS,
+  COUNTRY_SORTS,
+  COUNTRY_FILTERS,
+} from 'containers/App/constants';
+import ChartSettingFilters from 'components/ChartSettingFilters';
+import ChartSettingSort from 'components/ChartSettingSort';
 import LoadingIndicator from 'components/LoadingIndicator';
 import { isMinSize } from 'utils/responsive';
 
@@ -64,9 +72,9 @@ const DEPENDENCIES = [
   'esrIndicators',
   'esrIndicatorScores',
   'auxIndicators',
+  'featured',
 ];
 
-const FILTER_GROUPS = ['income', 'region', 'subregion', 'cgroup', 'treaty'];
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
 
 export function SingleMetric({
@@ -80,6 +88,7 @@ export function SingleMetric({
   incomeFilterValue,
   countryGroupFilterValue,
   treatyFilterValue,
+  featuredFilterValue,
   onRemoveFilter,
   onAddFilter,
   sort,
@@ -91,6 +100,8 @@ export function SingleMetric({
   dataReady,
   hasAside,
   auxIndicators,
+  featuredValues,
+  featuredCountries,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -111,16 +122,21 @@ export function SingleMetric({
 
   const filterValues = getFilterOptionValues(
     countriesForScores,
-    FILTER_GROUPS,
+    COUNTRY_FILTERS,
     // check if any filters are already set -
     // if not we can just return all specified options
-    areAnyFiltersSet(FILTER_GROUPS, {
+    areAnyFiltersSet(COUNTRY_FILTERS, {
       regionFilterValue,
       subregionFilterValue,
       incomeFilterValue,
       countryGroupFilterValue,
       treatyFilterValue,
+      featuredFilterValue,
     }),
+    null,
+    null,
+    featuredValues,
+    featuredCountries,
   );
 
   const { sorted, other } = sortScores({
@@ -143,7 +159,7 @@ export function SingleMetric({
             align={isMinSize(size, 'medium') ? 'center' : 'start'}
             margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
           >
-            <CountryFilters
+            <ChartSettingFilters
               regionFilterValue={regionFilterValue}
               subregionFilterValue={subregionFilterValue}
               onRemoveFilter={onRemoveFilter}
@@ -151,9 +167,10 @@ export function SingleMetric({
               incomeFilterValue={incomeFilterValue}
               countryGroupFilterValue={countryGroupFilterValue}
               treatyFilterValue={treatyFilterValue}
+              featuredFilterValue={featuredFilterValue}
               filterValues={filterValues}
             />
-            <CountrySort
+            <ChartSettingSort
               sort={currentSort}
               options={SORT_OPTIONS}
               order={currentSortOrder}
@@ -242,6 +259,7 @@ SingleMetric.propTypes = {
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  featuredFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countryGroupFilterValue: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,
@@ -253,6 +271,8 @@ SingleMetric.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   dataReady: PropTypes.bool,
+  featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -282,8 +302,11 @@ const mapStateToProps = createStructuredSelector({
   incomeFilterValue: state => getIncomeSearch(state),
   countryGroupFilterValue: state => getCountryGroupSearch(state),
   treatyFilterValue: state => getTreatySearch(state),
+  featuredFilterValue: state => getFeaturedSearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
+  featuredValues: state => getFeaturedValues(state),
+  featuredCountries: state => getFeatured(state),
 });
 
 export function mapDispatchToProps(dispatch) {
