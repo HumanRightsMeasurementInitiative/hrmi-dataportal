@@ -97,7 +97,7 @@ const StyledButton = styled(Button)`
   text-align: center;
 `;
 
-export const showSettings = ({ route, match, tabIndex }) => {
+export const showSettings = ({ route, match, tabKey }) => {
   if (route === PATHS.PAGE) return false;
   if (route === PATHS.METRIC) {
     const metricDetails = getMetricDetails(match);
@@ -105,7 +105,12 @@ export const showSettings = ({ route, match, tabIndex }) => {
     return true;
   }
   if (route === PATHS.COUNTRY) {
-    return tabIndex === 0;
+    return (
+      tabKey === 'snapshot' ||
+      tabKey === '0' ||
+      tabKey === 'report-esr' ||
+      tabKey === '1'
+    );
   }
   return route === PATHS.COUNTRIES || route === PATHS.METRICS;
 };
@@ -121,14 +126,14 @@ export function Settings({
   match,
   standard,
   benchmark,
-  tabIndex,
+  tabKey,
   onSetStandard,
   onSetBenchmark,
   metricInfo,
   country,
 }) {
   const [open, setOpen] = useState(false);
-  if (!showSettings({ route, match, tabIndex })) return null;
+  if (!showSettings({ route, match, tabKey })) return null;
   return (
     <Styled>
       {showScale({ route }) && (
@@ -252,7 +257,7 @@ Settings.propTypes = {
   match: PropTypes.string.isRequired,
   standard: PropTypes.string,
   benchmark: PropTypes.string,
-  tabIndex: PropTypes.number,
+  tabKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onSetStandard: PropTypes.func,
   onSetBenchmark: PropTypes.func,
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
@@ -264,7 +269,7 @@ const mapStateToProps = createStructuredSelector({
   match: state => getRouterMatch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
-  tabIndex: state => getTabSearch(state),
+  tabKey: state => getTabSearch(state),
   metricInfo: state => {
     const route = getRouterRoute(state);
     if (route === 'metric') {

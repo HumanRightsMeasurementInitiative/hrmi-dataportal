@@ -3,7 +3,7 @@ import React from 'react';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { Heading, Box } from 'grommet';
-import DiamondChart from 'components/CountryPreview/DiamondChart';
+import DiamondChart from 'components/ChartCountryDiamond/DiamondChart';
 
 import { DIMENSIONS } from 'containers/App/constants';
 import rootMessages from 'messages';

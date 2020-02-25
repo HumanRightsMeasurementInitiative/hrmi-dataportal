@@ -23,3 +23,15 @@ export const hasCountryIncome = (country, incomeKeys) => {
 
 export const isCountryOECD = country =>
   hasCountryAttribute(country, ['oecd'], COLUMNS.COUNTRIES.GROUPS);
+
+export const isCountryFeatured = (country, filter, featuredCountries) => {
+  const featured = featuredCountries.reduce(
+    (memo, c) =>
+      c[COLUMNS.FEATURED.COUNTRIES].indexOf(country[COLUMNS.COUNTRIES.CODE]) >
+      -1
+        ? [c[COLUMNS.FEATURED.CAT], ...memo]
+        : memo,
+    [],
+  );
+  return featured.length > 0 && ['any', ...featured].indexOf(filter[0]) > -1;
+};

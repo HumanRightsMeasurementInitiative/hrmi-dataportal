@@ -82,7 +82,7 @@ export function PathMetricOverview({
           </PageTitle>
         </ContentMaxWidth>
       </ContentContainer>
-      <ContentMaxWidth maxWidth="786px">
+      <ContentMaxWidth maxWidth="narrow">
         <Box direction="row" margin="0 auto" width="100%">
           <Box direction="column" flex style={{ position: 'relative' }}>
             <div>
