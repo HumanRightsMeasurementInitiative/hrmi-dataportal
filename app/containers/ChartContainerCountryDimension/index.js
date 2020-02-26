@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
 
 // import getMetricDetails from 'utils/metric-details';
@@ -43,9 +42,6 @@ import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPR
 
 import { useInjectSaga } from 'utils/injectSaga';
 
-import rootMessages from 'messages';
-import messages from './messages';
-
 const DEPENDENCIES = [
   'countries',
   'countriesGrammar',
@@ -54,33 +50,6 @@ const DEPENDENCIES = [
   'esrScores',
   'esrIndicatorScores',
 ];
-
-const getDefaultStandard = country =>
-  country.high_income_country === '1' ? 'hi' : 'core';
-
-const getIncomeCategory = country =>
-  country.high_income_country === '1' ? 'hi' : 'lmi';
-
-const renderStandardHint = (intl, standard, country) => (
-  <Paragraph>
-    <strong>
-      <FormattedMessage
-        {...messages.esr.changeStandardNote}
-        values={{
-          otherStandard: intl.formatMessage(
-            rootMessages.settings.standard[standard],
-          ),
-          defaultStandard: intl.formatMessage(
-            rootMessages.settings.standard[getDefaultStandard(country)],
-          ),
-          incomeCategory: intl.formatMessage(
-            rootMessages.income[getIncomeCategory(country)],
-          ),
-        }}
-      />
-    </strong>
-  </Paragraph>
-);
 
 export function ChartContainerCountryDimension({
   countryCode,
@@ -95,7 +64,6 @@ export function ChartContainerCountryDimension({
   standard,
   benchmark,
   dataReady,
-  intl,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -104,6 +72,7 @@ export function ChartContainerCountryDimension({
 
   if (!dataReady) return null;
 
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const currentStandard = STANDARDS.find(s => s.key === standard);
   const hasSomeIndicatorScores = Object.values(indicators)
     .filter(s => {
@@ -115,8 +84,6 @@ export function ChartContainerCountryDimension({
     })
     .reduce((m, s) => m || !!s.score, false);
 
-  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-
   const dimension = dimensions[dimensionCode];
   const reference = dimensionAverages[dimensionCode];
 
@@ -126,13 +93,12 @@ export function ChartContainerCountryDimension({
       <div>
         {type === 'esr' && dimension && (
           <>
-            {getDefaultStandard(country) !== standard &&
-              renderStandardHint(intl, standard, country)}
             <NarrativeESR
               dimensionScore={dimension.score}
               country={country}
               countryGrammar={countryGrammar}
               someData={hasSomeIndicatorScores}
+              standard={standard}
             />
             <Paragraph>
               <NarrativeESRCompAssessment
@@ -210,7 +176,6 @@ ChartContainerCountryDimension.propTypes = {
   // pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   // esrYear: PropTypes.number,
   // cprYear: PropTypes.number,
-  intl: intlShape.isRequired,
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
@@ -238,6 +203,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(
-  withTheme(injectIntl(ChartContainerCountryDimension)),
-);
+export default compose(withConnect)(withTheme(ChartContainerCountryDimension));

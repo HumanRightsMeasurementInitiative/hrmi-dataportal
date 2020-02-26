@@ -184,18 +184,8 @@ export function PathCountry({
               content: props => (
                 <CountrySnapshot
                   {...props}
-                  countryTitle={countryTitle}
-                  dimensions={dimensions}
-                  rights={rights}
-                  country={country}
+                  countryCode={countryCode}
                   countryGrammar={countryGrammar}
-                  scale={scale}
-                  benchmark={benchmark}
-                  atRiskData={atRisk}
-                  standard={standard}
-                  reference={dimensionAverages}
-                  esrYear={esrYear}
-                  cprYear={cprYear}
                   dataReady={dataReady}
                 />
               ),
