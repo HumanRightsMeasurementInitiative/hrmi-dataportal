@@ -11,7 +11,6 @@ import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { Box, ResponsiveContext } from 'grommet';
-import styled from 'styled-components';
 
 import Source from 'components/Source';
 import MainColumn from 'styled/MainColumn';
@@ -53,17 +52,11 @@ import {
 import ChartSettingFilters from 'components/ChartSettingFilters';
 import ChartSettingSort from 'components/ChartSettingSort';
 import LoadingIndicator from 'components/LoadingIndicator';
+import ChartBars from 'components/ChartBars';
 import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 // import messages from './messages';
-
-import Score from './Score';
-import ListHeader from './ListHeader';
-
-const Styled = styled(Box)`
-  margin: 0 auto;
-`;
 
 const DEPENDENCIES = [
   'countries',
@@ -76,6 +69,85 @@ const DEPENDENCIES = [
 ];
 
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
+
+const getESRDimensionValue = (score, benchmark) => {
+  if (score) {
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return score && parseFloat(score[col]);
+  }
+  return false;
+};
+const getCPRDimensionValue = score =>
+  score && parseFloat(score[COLUMNS.CPR.MEAN]);
+
+const getDimensionRefs = (score, benchmark, metricType) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    const col =
+      metricType === 'indicators'
+        ? benchmark.refIndicatorColumn
+        : benchmark.refColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        value: score && parseFloat(score[col]),
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
+const getBand = score => ({
+  lo: score && parseFloat(score[COLUMNS.CPR.LO]),
+  hi: score && parseFloat(score[COLUMNS.CPR.HI]),
+});
+
+const getCountryLabel = (score, countries, metric, intl) => {
+  const country = countries.find(c => c.country_code === score.country_code);
+  let label = '';
+  if (rootMessages.countries[country.country_code]) {
+    label = intl.formatMessage(rootMessages.countries[country.country_code]);
+  } else {
+    label = country.country_code;
+  }
+  if (
+    metric &&
+    (metric.type === 'esr' || metric.metricType === 'indicators') &&
+    country &&
+    country.high_income_country === '1'
+  ) {
+    label = `${label} (${intl.formatMessage(rootMessages.labels.hiCountry)})`;
+  }
+  return label;
+};
+
+// prettier-ignore
+const prepareData = ({ scores, metric, currentBenchmark, standard, countries, intl }) =>
+  scores.map(s =>
+    metric.type === 'esr' || metric.metricType === 'indicators'
+      ? {
+        color: 'esr',
+        refValues: getDimensionRefs(s, currentBenchmark, metric.metricType),
+        value: getESRDimensionValue(s, currentBenchmark),
+        maxValue: 100,
+        unit: '%',
+        stripes: standard === 'hi',
+        key: s.country_code,
+        label: getCountryLabel(s, countries, metric, intl),
+      }
+      : {
+        color: metric.dimension || metric.key,
+        value: getCPRDimensionValue(s),
+        maxValue: 10,
+        unit: '',
+        band: getBand(s),
+        key: s.country_code,
+        label: getCountryLabel(s, countries, metric, intl),
+      }
+  );
 
 export function SingleMetric({
   onLoadData,
@@ -147,6 +219,7 @@ export function SingleMetric({
     auxIndicators,
     column: metric.type === 'cpr' ? COLUMNS.CPR.MEAN : currentBenchmark.column,
   });
+
   const hasResults =
     dataReady && ((sorted && sorted.length > 0) || (other && other.length > 0));
   return (
@@ -185,57 +258,42 @@ export function SingleMetric({
             </Hint>
           )}
           {hasResults && sorted && sorted.length > 0 && (
-            <Styled
-              pad={{
-                vertical: 'large',
-                right: isMinSize(size, 'medium') ? 'xlarge' : 'medium',
-              }}
-              direction="column"
-              fill="horizontal"
-            >
-              <ListHeader metric={metric} benchmark={benchmark} />
-              {sorted.map(s => (
-                <Score
-                  key={s.country_code}
-                  score={s}
-                  country={countries.find(
-                    c => c.country_code === s.country_code,
-                  )}
-                  metric={metric}
-                  standard={standard}
-                  currentBenchmark={currentBenchmark}
-                />
-              ))}
-            </Styled>
+            <ChartBars
+              data={prepareData({
+                scores: sorted,
+                metric,
+                currentBenchmark,
+                standard,
+                intl,
+                countries,
+              })}
+              currentBenchmark={currentBenchmark}
+              metric={metric}
+              listHeader
+              bullet={metric.type === 'cpr'}
+              allowWordBreak
+            />
           )}
           {hasResults && other && other.length > 0 && (
-            <Styled
-              margin={{ top: 'medium' }}
-              pad={{
-                right: isMinSize(size, 'medium') ? 'xlarge' : 'medium',
-              }}
-              direction="column"
-              fill="horizontal"
-              border="top"
-            >
-              <Box direction="row" margin={{ top: 'small', bottom: 'medium' }}>
-                <Hint italic>
-                  <FormattedMessage {...rootMessages.hints.noSortData} />
-                </Hint>
-              </Box>
-              {other.map(s => (
-                <Score
-                  key={s.country_code}
-                  score={s}
-                  country={countries.find(
-                    c => c.country_code === s.country_code,
-                  )}
-                  metric={metric}
-                  standard={standard}
-                  currentBenchmark={currentBenchmark}
-                />
-              ))}
-            </Styled>
+            <Box border="top">
+              <Hint italic>
+                <FormattedMessage {...rootMessages.hints.noSortData} />
+              </Hint>
+              <ChartBars
+                data={prepareData({
+                  scores: other,
+                  metric,
+                  currentBenchmark,
+                  standard,
+                  intl,
+                  countries,
+                })}
+                currentBenchmark={currentBenchmark}
+                metric={metric}
+                bullet={metric.type === 'cpr'}
+                allowWordBreak
+              />
+            </Box>
           )}
           {hasResults && <Source />}
         </MainColumn>
@@ -243,6 +301,9 @@ export function SingleMetric({
     </ResponsiveContext.Consumer>
   );
 }
+// metric={metric}
+// currentBenchmark={currentBenchmark}
+// standard={standard}
 
 SingleMetric.propTypes = {
   // dispatch: PropTypes.func.isRequired,
