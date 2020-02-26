@@ -51,6 +51,7 @@ function CountryReport({
             ESR Summary Chart & Narrative
             <ChartContainerCountryDimension
               type={type}
+              dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
             />
           </SectionContainer>
@@ -169,6 +170,7 @@ function CountryReport({
             Safety Summary Chart && Narrative
             <ChartContainerCountryDimension
               type={type}
+              dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
             />
           </SectionContainer>
@@ -229,6 +231,7 @@ function CountryReport({
             Empowerment Summary Chart && Narrative
             <ChartContainerCountryDimension
               type={type}
+              dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
             />
           </SectionContainer>
