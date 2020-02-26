@@ -176,11 +176,6 @@ export function PathCountry({
             {
               key: 'snapshot',
               title: intl.formatMessage(rootMessages.tabs.snapshot),
-              howToRead: {
-                contxt: 'PathCountry',
-                chart: 'Summary',
-                data: scale,
-              },
               content: props => (
                 <CountrySnapshot
                   {...props}
