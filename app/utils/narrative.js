@@ -325,7 +325,8 @@ export const getMessageGrammar = (
   const countryLabel = rootMessages.countries[countryCode]
     ? intl.formatMessage(rootMessages.countries[countryCode])
     : countryCode;
-  const regionLabel = intl.formatMessage(rootMessages.regions[regionCode]);
+  const regionLabel =
+    regionCode && intl.formatMessage(rootMessages.regions[regionCode]);
   const countryWithArticle = getCountryWithArticle(
     locale,
     countryGrammar,
@@ -345,9 +346,11 @@ export const getMessageGrammar = (
     genderNumber: genderNumber(locale, countryGrammar),
     countryOf: getCountryOf(locale, countryGrammar, countryLabel),
     region: regionLabel,
-    regionWithArticle: getRegionWithArticle(locale, regionCode, regionLabel),
-    regionOf: getRegionOf(locale, regionCode, regionLabel),
-    needsArticleRegion: needsArticleRegion(intl.locale, regionCode),
+    regionWithArticle:
+      regionCode && getRegionWithArticle(locale, regionCode, regionLabel),
+    regionOf: regionCode && getRegionOf(locale, regionCode, regionLabel),
+    needsArticleRegion:
+      regionCode && needsArticleRegion(intl.locale, regionCode),
   };
 };
 

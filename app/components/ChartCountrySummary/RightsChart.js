@@ -7,7 +7,6 @@ import { COLUMNS } from 'containers/App/constants';
 import BarMultiple from 'components/ChartBars/BarMultiple';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 import { isMinSize } from 'utils/responsive';
-import DimensionTitle from './DimensionTitle';
 import RightsScoreItem from './RightsScoreItem';
 
 const RightsScoresWrapperTable = styled.div`
@@ -65,7 +64,6 @@ function RightsChart({ data, standard, benchmark, scoreWidth }) {
     <ResponsiveContext.Consumer>
       {size => (
         <Box>
-          <DimensionTitle dimensionKey={data.dimension} />
           <Box
             direction="row"
             align="center"
