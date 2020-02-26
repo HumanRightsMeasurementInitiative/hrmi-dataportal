@@ -8,14 +8,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Box, ResponsiveContext, Text } from 'grommet';
-import { isMinSize } from 'utils/responsive';
+import { Heading, Box, Text } from 'grommet';
 import formatScoreMax from 'utils/format-score-max';
 
 import rootMessages from 'messages';
 // import messages from './messages';
 
-import RightsChart from './RightsChart';
+import ChartBars from 'components/ChartBars';
+import { COLUMNS } from 'containers/App/constants';
 
 const Dimension = styled(Box)`
   margin-bottom: 6px;
@@ -42,6 +42,77 @@ const DimensionHeading = props => (
   />
 );
 
+const getESRDimensionValue = (score, benchmark) => {
+  if (score) {
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return score && parseFloat(score[col]);
+  }
+  return false;
+};
+const getCPRDimensionValue = score =>
+  score && parseFloat(score[COLUMNS.CPR.MEAN]);
+
+const getDimensionRefs = (score, benchmark) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    const col = benchmark.refColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        value: score && parseFloat(score[col]),
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
+
+const getMetricLabel = score => score.key;
+// const country = countries.find(c => c.country_code === score.country_code);
+// let label = '';
+// if (rootMessages.countries[country.country_code]) {
+//   label = intl.formatMessage(rootMessages.countries[country.country_code]);
+// } else {
+//   label = country.country_code;
+// }
+// if (
+//   metric &&
+//   (metric.type === 'esr' || metric.metricType === 'indicators') &&
+//   country &&
+//   country.high_income_country === '1'
+// ) {
+//   label = `${label} (${intl.formatMessage(rootMessages.labels.hiCountry)})`;
+// }
+// return label;
+// };
+
+// prettier-ignore
+const prepareData = ({ scores, dimensionCode, currentBenchmark, standard }) =>
+  scores.map(s =>
+    dimensionCode === 'esr'
+      ? {
+        color: dimensionCode,
+        refValues: getDimensionRefs(s.score, currentBenchmark),
+        value: getESRDimensionValue(s.score, currentBenchmark),
+        maxValue: 100,
+        unit: '%',
+        stripes: standard === 'hi',
+        key: s.key,
+        label: getMetricLabel(s),
+      }
+      : {
+        color: dimensionCode,
+        value: getCPRDimensionValue(s.score),
+        maxValue: 10,
+        unit: '',
+        key: s.key,
+        label: getMetricLabel(s),
+      }
+  );
+
 function ChartCountrySummary({
   type,
   dimensionCode,
@@ -53,51 +124,48 @@ function ChartCountrySummary({
   maxValue,
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
-  // const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
+  // <ResponsiveContext.Consumer>
+  // {size => (
   return (
-    <ResponsiveContext.Consumer>
-      {size => (
-        <Box
-          direction="column"
-          pad={{ bottom: 'small' }}
-          margin={{ bottom: 'small' }}
-        >
-          <Box direction="row">
-            <ChartArea>
-              <Dimension>
-                <DimensionHeading>
-                  <FormattedMessage
-                    {...rootMessages.dimensions[dimensionCode]}
-                  />
-                  {` (${formatScoreMax(dimensionScore, maxValue)})`}
-                </DimensionHeading>
-                <Text>
-                  <FormattedMessage {...rootMessages['rights-types'][type]} />
-                  {` (${year})`}
-                </Text>
-                <RightsChart
-                  data={{
-                    rights,
-                    type,
-                    dimension: dimensionCode,
-                  }}
-                  benchmark={type === 'esr' && currentBenchmark}
-                  standard={type === 'esr' && standard}
-                  scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
-                />
-              </Dimension>
-            </ChartArea>
-          </Box>
-        </Box>
-      )}
-    </ResponsiveContext.Consumer>
+    <Box
+      direction="column"
+      pad={{ bottom: 'small' }}
+      margin={{ bottom: 'small' }}
+    >
+      <Box direction="row">
+        <ChartArea>
+          <Dimension>
+            <DimensionHeading>
+              <FormattedMessage {...rootMessages.dimensions[dimensionCode]} />
+              {` (${formatScoreMax(dimensionScore, maxValue)})`}
+            </DimensionHeading>
+            <Text>
+              <FormattedMessage {...rootMessages['rights-types'][type]} />
+              {` (${year})`}
+            </Text>
+            <ChartBars
+              data={prepareData({
+                scores: rights,
+                dimensionCode,
+                currentBenchmark,
+                standard,
+              })}
+              currentBenchmark={type === 'esr' && currentBenchmark}
+              standard={type === 'esr' && standard}
+            />
+          </Dimension>
+        </ChartArea>
+      </Box>
+    </Box>
   );
 }
+// )}
+// </ResponsiveContext.Consumer>
 
 ChartCountrySummary.propTypes = {
-  rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  dimensionScore: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  rights: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  dimensionScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   currentBenchmark: PropTypes.object,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   year: PropTypes.number,
