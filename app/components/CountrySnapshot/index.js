@@ -11,7 +11,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { Heading } from 'grommet';
 
-import ChartCountrySummary from 'components/ChartCountrySummary';
+import ChartContainerCountrySummary from 'containers/ChartContainerCountrySummary';
 import LoadingIndicator from 'components/LoadingIndicator';
 import MainColumn from 'styled/MainColumn';
 
@@ -30,16 +30,9 @@ const StyledHeading = styled(Heading)`
 `;
 
 function CountrySnapshot({
-  dimensions,
-  rights,
-  scale,
-  benchmark,
-  standard,
-  country,
+  countryCode,
   countryGrammar,
   intl,
-  esrYear,
-  cprYear,
   dataReady,
   hasAside,
 }) {
@@ -53,39 +46,23 @@ function CountrySnapshot({
               {...messages.title}
               values={getMessageGrammar(
                 intl,
-                country.country_code,
-                country.region_code,
+                countryCode,
+                null,
                 countryGrammar,
               )}
             />
           </StyledHeading>
-          <ChartCountrySummary
-            scale={scale}
-            dimensions={dimensions}
-            rights={rights}
-            benchmark={benchmark}
-            standard={standard}
-            esrYear={esrYear}
-            cprYear={cprYear}
-          />
+          <ChartContainerCountrySummary countryCode={countryCode} />
         </>
       )}
     </MainColumn>
   );
 }
 CountrySnapshot.propTypes = {
-  countryTitle: PropTypes.string,
   hasAside: PropTypes.bool,
-  rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryCode: PropTypes.string.isRequired,
   countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   intl: intlShape.isRequired,
-  esrYear: PropTypes.number,
-  cprYear: PropTypes.number,
   dataReady: PropTypes.bool,
 };
 

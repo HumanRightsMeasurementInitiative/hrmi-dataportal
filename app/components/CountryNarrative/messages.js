@@ -9,50 +9,6 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.components.CountryNarrative';
 
 export default defineMessages({
-  atRiskSectionTitle: {
-    id: `${scope}.atRiskSectionTitle`,
-    defaultMessage: 'People at risk',
-  },
-  atRisk: {
-    noData: {
-      id: `${scope}.atRisk.noData`,
-      defaultMessage:
-        'At risk data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We plan to expand our data collection to the whole world as soon as increased funding becomes available. ',
-    },
-    start: {
-      id: `${scope}.atRisk.start`,
-      defaultMessage:
-        'The human rights experts we surveyed identified the following people as being at most risk of rights violations. ',
-    },
-    tableGroupLabel: {
-      id: `${scope}.atRisk.tableGroupLabel`,
-      defaultMessage: 'People',
-    },
-    tableRightsLabel: {
-      id: `${scope}.atRisk.tableRightsLabel`,
-      defaultMessage: 'Rights they are more at risk for',
-    },
-    end: {
-      beforeLink: {
-        id: `${scope}.atRisk.end.beforeLink`,
-        defaultMessage:
-          'As well as these people, the experts identified others as also being at particular risk of rights violations. Click ',
-      },
-      link: {
-        id: `${scope}.atRisk.end.link`,
-        defaultMessage: 'here',
-      },
-      afterLink: {
-        id: `${scope}.atRisk.end.afterLink`,
-        defaultMessage:
-          ' to see word clouds giving a more complete picture of which people in {needsArticle, select, true {the } false {}}{country} were identified as being especially vulnerable. ',
-      },
-    },
-  },
-  compAssessmentSectionTitle: {
-    id: `${scope}.compAssessmentSectionTitle`,
-    defaultMessage: 'Comparative assessment',
-  },
   compAssessment: {
     result: {
       a: {
@@ -154,6 +110,11 @@ export default defineMessages({
       id: `${scope}.esr.scoreAdjusted`,
       defaultMessage:
         "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} scores {scoreAdjustedBold} on {dimension} when scored against the '{benchmarkAdjusted}' benchmark. ",
+    },
+    scoreBestSimple: {
+      id: `${scope}.esr.scoreBestSimple`,
+      defaultMessage:
+        "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} scores {scoreBestBold} on {dimension} when scored against the '{benchmarkBest}' benchmark. ",
     },
     scoreAdjustedExplanation: {
       id: `${scope}.esr.scoreAdjustedExplanation`,

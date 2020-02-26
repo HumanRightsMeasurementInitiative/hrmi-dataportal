@@ -8,21 +8,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Box, ResponsiveContext } from 'grommet';
+import { Heading, Box, ResponsiveContext, Text } from 'grommet';
 import { isMinSize } from 'utils/responsive';
+import formatScoreMax from 'utils/format-score-max';
 
 import rootMessages from 'messages';
 // import messages from './messages';
-import { BENCHMARKS } from 'containers/App/constants';
-import ScaleToggle from 'containers/Settings/ScaleToggle';
-import { getRightsScoresForDimension } from 'utils/scores';
 
-import Source from 'components/Source';
-
-import DimensionChart from './DimensionChart';
 import RightsChart from './RightsChart';
 
-const RightsType = styled(Box)`
+const Dimension = styled(Box)`
   margin-bottom: 6px;
 `;
 const ChartArea = props => (
@@ -30,7 +25,7 @@ const ChartArea = props => (
 );
 
 // prettier-ignore
-const StyledRightsTypeHeading = styled(Heading)`
+const StyledDimensionHeading = styled(Heading)`
   font-size: ${({ theme, level = 1 }) => theme.heading.level[level].small.size};
   line-height: ${({ theme, level = 1 }) => theme.heading.level[level].small.height};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
@@ -38,8 +33,8 @@ const StyledRightsTypeHeading = styled(Heading)`
     line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
   }
 `;
-const RightsTypeHeading = props => (
-  <StyledRightsTypeHeading
+const DimensionHeading = props => (
+  <StyledDimensionHeading
     responsive={false}
     level={4}
     margin={{ vertical: 'none' }}
@@ -48,105 +43,52 @@ const RightsTypeHeading = props => (
 );
 
 function ChartCountrySummary({
-  dimensions,
-  benchmark,
-  scale,
+  type,
+  dimensionCode,
+  dimensionScore,
+  currentBenchmark,
   rights,
   standard,
-  esrYear,
-  cprYear,
+  year,
+  maxValue,
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
-  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-
-  // figure out rights scores
-  const empowerRights =
-    scale === 'r' && getRightsScoresForDimension(rights, 'empowerment');
-  const physintRights =
-    scale === 'r' && getRightsScoresForDimension(rights, 'physint');
-  const esrRights = scale === 'r' && getRightsScoresForDimension(rights, 'esr');
+  // const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box
           direction="column"
-          pad={{ bottom: 'large' }}
-          margin={{ bottom: 'large' }}
-          border="bottom"
+          pad={{ bottom: 'small' }}
+          margin={{ bottom: 'small' }}
         >
           <Box direction="row">
             <ChartArea>
-              <RightsType>
-                <RightsTypeHeading>
-                  <FormattedMessage {...rootMessages['rights-types'].cpr} />
-                  {` (${cprYear})`}
-                </RightsTypeHeading>
-                {scale === 'd' && (
-                  <DimensionChart
-                    data={dimensions && dimensions.empowerment}
-                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
+              <Dimension>
+                <DimensionHeading>
+                  <FormattedMessage
+                    {...rootMessages.dimensions[dimensionCode]}
                   />
-                )}
-                {scale === 'd' && (
-                  <DimensionChart
-                    data={dimensions && dimensions.physint}
-                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
-                  />
-                )}
-                {scale === 'r' && (
-                  <RightsChart
-                    data={{
-                      rights: empowerRights,
-                      type: 'cpr',
-                      dimension: 'empowerment',
-                    }}
-                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
-                  />
-                )}
-                {scale === 'r' && (
-                  <RightsChart
-                    data={{
-                      rights: physintRights,
-                      type: 'cpr',
-                      dimension: 'physint',
-                    }}
-                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
-                  />
-                )}
-              </RightsType>
-              <RightsType>
-                <RightsTypeHeading>
-                  <FormattedMessage {...rootMessages['rights-types'].esr} />
-                  {` (${esrYear})`}
-                </RightsTypeHeading>
-                {scale === 'd' && (
-                  <DimensionChart
-                    data={dimensions && dimensions.esr}
-                    benchmark={currentBenchmark}
-                    standard={standard}
-                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
-                  />
-                )}
-                {scale === 'r' && (
-                  <RightsChart
-                    data={{
-                      rights: esrRights,
-                      type: 'esr',
-                      dimension: 'esr',
-                    }}
-                    benchmark={currentBenchmark}
-                    standard={standard}
-                    scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
-                  />
-                )}
-              </RightsType>
-              <Box pad={{ top: 'xsmall' }}>
-                <ScaleToggle />
-              </Box>
+                  {` (${formatScoreMax(dimensionScore, maxValue)})`}
+                </DimensionHeading>
+                <Text>
+                  <FormattedMessage {...rootMessages['rights-types'][type]} />
+                  {` (${year})`}
+                </Text>
+                <RightsChart
+                  data={{
+                    rights,
+                    type,
+                    dimension: dimensionCode,
+                  }}
+                  benchmark={type === 'esr' && currentBenchmark}
+                  standard={type === 'esr' && standard}
+                  scoreWidth={isMinSize(size, 'medium') ? '200px' : '50px'}
+                />
+              </Dimension>
             </ChartArea>
           </Box>
-          <Source />
         </Box>
       )}
     </ResponsiveContext.Consumer>
@@ -155,13 +97,13 @@ function ChartCountrySummary({
 
 ChartCountrySummary.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  dimensionScore: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  currentBenchmark: PropTypes.object,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  esrYear: PropTypes.number,
-  cprYear: PropTypes.number,
+  year: PropTypes.number,
+  maxValue: PropTypes.number,
+  type: PropTypes.string,
+  dimensionCode: PropTypes.string,
 };
 
 export default ChartCountrySummary;
