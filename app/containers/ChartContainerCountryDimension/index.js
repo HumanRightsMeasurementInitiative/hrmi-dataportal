@@ -10,125 +10,221 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Paragraph } from 'grommet';
 
-import getMetricDetails from 'utils/metric-details';
+// import getMetricDetails from 'utils/metric-details';
 
 import {
+  getDimensionsForCountry,
+  getIndicatorsForCountry,
+  getCountry,
+  getCountryGrammar,
   getStandardSearch,
   getBenchmarkSearch,
-  getESRScoresForCountry,
-  getCPRScoresForCountry,
-  getESRIndicatorScoresForCountry,
-  getIndicatorInfo,
-  getMaxYearESR,
-  getMaxYearCPR,
-  getMinYearESR,
-  getMinYearCPR,
-  getRawSearch,
-  getActiveGroupsSearch,
+  getDimensionAverages,
+  getDependenciesReady,
+  // getRightsForCountry,
+  // getAuxIndicatorsForCountry,
+  // getLatestCountryCurrentGDP,
+  // getLatestCountry2011PPPGDP,
+  // getESRYear,
+  // getCPRYear,
 } from 'containers/App/selectors';
 
+import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 import { loadDataIfNeeded } from 'containers/App/actions';
-import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
+import NarrativeESR from 'components/CountryNarrative/NarrativeESR';
+import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
+import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
+import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
+// import NarrativeAtRisk from 'components/CountryNarrative/NarrativeAtRisk';
+
+import { useInjectSaga } from 'utils/injectSaga';
+
+import rootMessages from 'messages';
+import messages from './messages';
 
 const DEPENDENCIES = [
   'countries',
+  'countriesGrammar',
   'esrIndicators',
   'cprScores',
   'esrScores',
   'esrIndicatorScores',
 ];
 
+const getDefaultStandard = country =>
+  country.high_income_country === '1' ? 'hi' : 'core';
+
+const getIncomeCategory = country =>
+  country.high_income_country === '1' ? 'hi' : 'lmi';
+
+const renderStandardHint = (intl, standard, country) => (
+  <Paragraph>
+    <strong>
+      <FormattedMessage
+        {...messages.esr.changeStandardNote}
+        values={{
+          otherStandard: intl.formatMessage(
+            rootMessages.settings.standard[standard],
+          ),
+          defaultStandard: intl.formatMessage(
+            rootMessages.settings.standard[getDefaultStandard(country)],
+          ),
+          incomeCategory: intl.formatMessage(
+            rootMessages.income[getIncomeCategory(country)],
+          ),
+        }}
+      />
+    </strong>
+  </Paragraph>
+);
+
 export function ChartContainerCountryDimension({
   countryCode,
   type,
   onLoadData,
+  country,
+  dimensions,
+  dimensionCode,
+  dimensionAverages,
+  countryGrammar,
+  indicators,
+  standard,
+  benchmark,
+  dataReady,
+  intl,
 }) {
-  console.log(type);
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     onLoadData();
   }, []);
+
+  if (!dataReady) return null;
+
+  const currentStandard = STANDARDS.find(s => s.key === standard);
+  const hasSomeIndicatorScores = Object.values(indicators)
+    .filter(s => {
+      if (!s.details) return false;
+      return (
+        s.details.standard === 'Both' ||
+        s.details.standard === currentStandard.code
+      );
+    })
+    .reduce((m, s) => m || !!s.score, false);
+
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
+
+  const dimension = dimensions[dimensionCode];
+  const reference = dimensionAverages[dimensionCode];
+
   return (
     <div>
       <div>TODO: Dimension Summary Chart for {countryCode} </div>
-      <div>TODO: Dimension Narrative</div>
+      <div>
+        {type === 'esr' && dimension && (
+          <>
+            {getDefaultStandard(country) !== standard &&
+              renderStandardHint(intl, standard, country)}
+            <NarrativeESR
+              dimensionScore={dimension.score}
+              country={country}
+              countryGrammar={countryGrammar}
+              someData={hasSomeIndicatorScores}
+            />
+            <Paragraph>
+              <NarrativeESRCompAssessment
+                country={country}
+                countryGrammar={countryGrammar}
+                dimensionScore={dimension && dimension.score}
+                referenceScore={reference[standard].average[benchmark]}
+                referenceCount={reference[standard].count}
+                benchmark={currentBenchmark}
+              />
+            </Paragraph>
+          </>
+        )}
+        {type === 'cpr' && dimension && (
+          <>
+            <NarrativeCPR
+              dimensionKey={dimensionCode}
+              score={dimension.score}
+              country={country}
+              countryGrammar={countryGrammar}
+            />
+            <Paragraph>
+              <NarrativeCPRCompAssessment
+                dimensionKey={dimensionCode}
+                score={dimension.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={reference.average}
+                referenceCount={reference.count}
+                start
+              />
+            </Paragraph>
+          </>
+        )}
+      </div>
     </div>
   );
-  // const metric = getMetricDetails(metricCode);
-  // const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-  // const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
+  // rightsAverageScore={scoreESR}
+  // some={rightsESRScoreCount < rightsESR.length}
+  // one={rightsESRScoreCount === 1}
   // // prettier-ignore
-  // return (
-  //   <NarrativeESR
-  //     dimensionScore={dimensions.esr && dimensions.esr.score}
-  //     country={country}
-  //     countryGrammar={countryGrammar}
-  //     someData={hasSomeIndicatorScores}
-  //   />
-  //   {dimensions.esr && reference && reference.esr && (
-  //     <Paragraph>
-  //       <NarrativeESRCompAssessment
-  //         country={country}
-  //         countryGrammar={countryGrammar}
-  //         dimensionScore={dimensions.esr && dimensions.esr.score}
-  //         rightsAverageScore={scoreESR}
-  //         referenceScore={reference.esr[standard].average[benchmark]}
-  //         referenceCount={reference.esr[standard].count}
-  //         benchmark={currentBenchmark}
-  //         some={rightsESRScoreCount < rightsESR.length}
-  //         one={rightsESRScoreCount === 1}
-  //       />
-  //     </Paragraph>
-  //   )}
-  // );
+  // if (type === 'esr') {
+  //   return (
+  //     {dimensions.esr && reference && reference.esr && (
+  //     )}
+  //   );
+  // }
+  // return null;
 }
 
 ChartContainerCountryDimension.propTypes = {
+  dimensionCode: PropTypes.string.isRequired,
   countryCode: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onLoadData: PropTypes.func.isRequired,
+  indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  dataReady: PropTypes.bool,
+  dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  // onTrackEvent: PropTypes.func.isRequired,
+  // onCategoryClick: PropTypes.func,
+  // activeTab: PropTypes.number,
+  // onMetricClick: PropTypes.func,
+  // onAtRiskClick: PropTypes.func,
+  // onCloseMetricOverlay: PropTypes.func,
+  // match: PropTypes.object,
+  // atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  // rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  // auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  // currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  // pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  // esrYear: PropTypes.number,
+  // cprYear: PropTypes.number,
+  intl: intlShape.isRequired,
 };
-
 const mapStateToProps = createStructuredSelector({
-  maxYearESR: state => getMaxYearESR(state),
-  maxYearCPR: state => getMaxYearCPR(state),
-  minYearESR: state => getMinYearESR(state),
-  minYearCPR: state => getMinYearCPR(state),
+  country: (state, { countryCode }) => getCountry(state, countryCode),
+  countryGrammar: (state, { countryCode }) =>
+    getCountryGrammar(state, countryCode),
+  dataReady: state => getDependenciesReady(state, DEPENDENCIES),
+  indicators: (state, { countryCode }) =>
+    getIndicatorsForCountry(state, countryCode),
+  // rights: (state, { countryCode }) => getRightsForCountry(state, countryCode),
+  dimensions: (state, { countryCode }) =>
+    getDimensionsForCountry(state, countryCode),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
-  scores: (state, { countryCode, metricCode }) => {
-    const metric = getMetricDetails(metricCode);
-    if (metric.metricType === 'dimensions' || metric.metricType === 'rights') {
-      if (metric.type === 'esr') {
-        return getESRScoresForCountry(state, {
-          countryCode,
-          metric,
-        });
-      }
-      return getCPRScoresForCountry(state, {
-        countryCode,
-        metric,
-      });
-    }
-    if (metric.metricType === 'indicators') {
-      return getESRIndicatorScoresForCountry(state, {
-        countryCode,
-        metric,
-      });
-    }
-    return false;
-  },
-  metricInfo: (state, { metricCode }) => {
-    const metric = getMetricDetails(metricCode);
-    if (metric.metricType === 'indicators') {
-      return getIndicatorInfo(state, metric.code);
-    }
-    return false;
-  },
-  raw: state => getRawSearch(state),
-  activeGroups: state => getActiveGroupsSearch(state),
+  dimensionAverages: state => getDimensionAverages(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -142,4 +238,6 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withTheme(ChartContainerCountryDimension));
+export default compose(withConnect)(
+  withTheme(injectIntl(ChartContainerCountryDimension)),
+);

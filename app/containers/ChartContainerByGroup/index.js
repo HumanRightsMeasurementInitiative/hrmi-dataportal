@@ -85,7 +85,7 @@ export function ChartContainerByGroup({
 }
 
 ChartContainerByGroup.propTypes = {
-  currentYear: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  currentYear: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   standard: PropTypes.string,
   onLoadData: PropTypes.func,
   metricCode: PropTypes.string.isRequired,
