@@ -1,7 +1,7 @@
 /*
- * CountryReport Messages
+ * TabCountryReport Messages
  *
- * This contains all the text for the CountryReport component.
+ * This contains all the text for the TabCountryReport component.
  */
 
 import { defineMessages } from 'react-intl';

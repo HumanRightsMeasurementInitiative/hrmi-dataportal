@@ -30,7 +30,17 @@ import { loadDataIfNeeded } from 'containers/App/actions';
 
 import OverviewCountries from 'containers/OverviewCountries';
 
-import rootMessages from 'messages';
+// import rootMessages from 'messages';
+// <div>
+//   <FormattedMessage
+//     {...rootMessages.tabs.countries}
+//     values={{
+//       count: filteredCountries
+//         ? `${filteredCountries.length} `
+//         : '',
+//     }}
+//   />
+// </div>
 
 import ChartTools from 'containers/ChartTools';
 
@@ -52,11 +62,11 @@ const ChartToolWrapper = styled.div`
   right: 0px;
   top: 4px;
   text-align: right;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+  /* @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     position: absolute;
     right: ${({ theme }) => theme.global.edgeSize.medium};
     top: 0;
-  }
+  } */
 `;
 
 const DEPENDENCIES = [
@@ -111,16 +121,6 @@ export function PathCountryOverview({
       <ContentMaxWidth>
         <Box direction="row" margin="0 auto" width="100%">
           <Box direction="column" flex style={{ position: 'relative' }}>
-            <div>
-              <FormattedMessage
-                {...rootMessages.tabs.countries}
-                values={{
-                  count: filteredCountries
-                    ? `${filteredCountries.length} `
-                    : '',
-                }}
-              />
-            </div>
             <ChartToolWrapper>
               <ChartTools
                 howToReadConfig={{
