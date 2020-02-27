@@ -1,6 +1,6 @@
 /**
  *
- * CountryPeople
+ * TabCountryPeople
  *
  */
 
@@ -43,7 +43,7 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-function CountryPeople({ data }) {
+function TabCountryPeople({ data }) {
   return (
     <>
       <StyledHeading responsive={false} level={2}>
@@ -90,9 +90,9 @@ function CountryPeople({ data }) {
   );
 }
 
-CountryPeople.propTypes = {
+TabCountryPeople.propTypes = {
   hasAside: PropTypes.bool,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
 };
 
-export default CountryPeople;
+export default TabCountryPeople;

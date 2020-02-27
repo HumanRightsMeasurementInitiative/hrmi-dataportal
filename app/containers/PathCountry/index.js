@@ -16,9 +16,9 @@ import { Box } from 'grommet';
 
 import rootMessages from 'messages';
 
-import CountryReport from 'components/CountryReport';
-import CountrySnapshot from 'components/CountrySnapshot';
-import CountryPeople from 'components/CountryPeople';
+import TabCountryReport from 'components/TabCountryReport';
+import TabCountrySnapshot from 'components/TabCountrySnapshot';
+import TabCountryPeople from 'components/TabCountryPeople';
 import CountryAbout from 'components/CountryAbout';
 import HeaderLinks from 'components/HeaderLinks';
 import TabContainer from 'containers/TabContainer';
@@ -33,7 +33,6 @@ import {
   getRightsForCountry,
   getIndicatorsForCountry,
   getCountry,
-  getCountryGrammar,
   getStandardSearch,
   getPeopleAtRiskForCountry,
   getAuxIndicatorsForCountry,
@@ -75,7 +74,6 @@ export function PathCountry({
   dimensions,
   indicators,
   country,
-  countryGrammar,
   atRisk,
   standard,
   auxIndicators,
@@ -149,19 +147,14 @@ export function PathCountry({
             key: 'snapshot',
             title: intl.formatMessage(rootMessages.tabs.snapshot),
             content: props => (
-              <CountrySnapshot
-                {...props}
-                countryCode={countryCode}
-                countryGrammar={countryGrammar}
-                dataReady={dataReady}
-              />
+              <TabCountrySnapshot {...props} countryCode={countryCode} />
             ),
           },
           {
             key: 'report-esr',
             title: intl.formatMessage(rootMessages.dimensions.esr),
             content: props => (
-              <CountryReport
+              <TabCountryReport
                 {...props}
                 type="esr"
                 dimension="esr"
@@ -179,7 +172,7 @@ export function PathCountry({
             key: 'report-physint',
             title: intl.formatMessage(rootMessages.dimensions.physint),
             content: props => (
-              <CountryReport
+              <TabCountryReport
                 {...props}
                 type="cpr"
                 dimension="physint"
@@ -194,7 +187,7 @@ export function PathCountry({
             key: 'report-empowerment',
             title: intl.formatMessage(rootMessages.dimensions.empowerment),
             content: props => (
-              <CountryReport
+              <TabCountryReport
                 {...props}
                 type="cpr"
                 dimension="empowerment"
@@ -215,7 +208,7 @@ export function PathCountry({
             // },
             content: props =>
               hasCPR(dimensions) && (
-                <CountryPeople
+                <TabCountryPeople
                   {...props}
                   data={atRisk}
                   countryTitle={countryTitle}
@@ -297,8 +290,6 @@ PathCountry.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   country: (state, { match }) => getCountry(state, match.params.country),
-  countryGrammar: (state, { match }) =>
-    getCountryGrammar(state, match.params.country),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   indicators: (state, { match }) =>
     getIndicatorsForCountry(state, match.params.country),

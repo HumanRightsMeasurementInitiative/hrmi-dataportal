@@ -1,6 +1,6 @@
 /**
  *
- * CountryReport
+ * TabCountryReport
  *
  */
 
@@ -28,7 +28,7 @@ import quasiEquals from 'utils/quasi-equals';
 
 const SectionContainer = styled.div``;
 
-function CountryReport({
+function TabCountryReport({
   type,
   dimension,
   country,
@@ -297,7 +297,7 @@ function CountryReport({
   );
 }
 
-CountryReport.propTypes = {
+TabCountryReport.propTypes = {
   hasAside: PropTypes.bool,
   reference: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -313,5 +313,5 @@ CountryReport.propTypes = {
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
-// export default injectIntl(CountryReport);
-export default CountryReport;
+// export default injectIntl(TabCountryReport);
+export default TabCountryReport;

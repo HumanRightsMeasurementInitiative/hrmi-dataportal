@@ -92,18 +92,6 @@ export function PathMetric({ match, intl, onMetricClick }) {
             key: 'singleMetric',
             title: intl.formatMessage(rootMessages.tabs.singleMetric),
             content: props => <SingleMetric {...props} metric={metric} />,
-            chartTools: {
-              howToRead: {
-                contxt: 'PathMetric',
-                chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
-                data: metric.color,
-              },
-              settings: metric.type !== 'esr' && {
-                key: 'metric',
-                showStandard: true,
-                showBenchmark: metric.metricType !== 'indicators',
-              },
-            },
           },
           {
             aside: true,
