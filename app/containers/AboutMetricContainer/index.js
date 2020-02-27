@@ -19,6 +19,7 @@ import { STANDARDS, RIGHTS, INDICATORS, FAQS } from 'containers/App/constants';
 import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 import saga from 'containers/App/saga';
+import AboutMetricSources from 'containers/AboutMetricSources';
 import FAQs from 'containers/FAQs';
 
 import AboutMetric from 'components/AboutMetric';
@@ -81,6 +82,7 @@ export function AboutMetricContainer({
   showFAQs,
   showMetricLink,
   showTitle,
+  showSources,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -136,133 +138,136 @@ export function AboutMetricContainer({
         standard={standard}
         showTitle={showTitle}
       />
-      {showRelated && (
-        <Box
-          direction="column"
-          pad={{ bottom: 'medium', horizontal: 'medium' }}
-          justify="start"
-        >
-          {metricType !== 'dimensions' && (
-            <Pad>
-              <Heading
-                responsive={false}
-                level={5}
-                margin={{ vertical: 'xsmall' }}
-              >
-                {typeof metric.aggregate === 'undefined' && (
-                  <FormattedMessage {...messages.titleParent[metricType]} />
-                )}
-                {typeof metric.aggregate !== 'undefined' && (
-                  <FormattedMessage {...messages.titleParent.subrights} />
-                )}
-              </Heading>
-              <ButtonRelative
-                onClick={evt => {
-                  if (evt) evt.preventDefault();
-                  onSelectMetric(ancestors[ancestors.length - 1].key);
-                }}
-                previous
-              >
-                <FormPrevious size="large" />
-                <TextRelative>
-                  <FormattedMessage
-                    {...rootMessages[ancestors[ancestors.length - 1].type][
-                      ancestors[ancestors.length - 1].key
-                    ]}
-                  />
-                </TextRelative>
-              </ButtonRelative>
-            </Pad>
-          )}
-          {metricType !== 'indicators' && children.length > 0 && (
-            <Pad>
-              <Heading
-                responsive={false}
-                level={5}
-                margin={{ vertical: 'xsmall' }}
-              >
-                {metricType === 'dimensions' && (
-                  <FormattedMessage {...messages.titleChildren[metricType]} />
-                )}
-                {metricType === 'rights' && (
-                  <FormattedMessage
-                    {...messages.titleChildren[metricType][metric.type]}
-                  />
-                )}
-              </Heading>
-              {((metricType === 'rights' && metric.type === 'cpr') ||
-                metricType === 'dimensions') && (
-                <>
-                  {children.map(child => (
-                    <ButtonRelative
-                      key={child.key}
-                      onClick={evt => {
-                        if (evt) evt.preventDefault();
-                        onSelectMetric(child.key);
-                      }}
-                    >
-                      <TextRelative>
-                        <FormattedMessage {...rootMessages.rights[child.key]} />
-                      </TextRelative>
-                      <FormNext size="large" />
-                    </ButtonRelative>
-                  ))}
-                </>
+      <Box
+        direction="column"
+        pad={{ bottom: 'medium', horizontal: 'medium' }}
+        justify="start"
+      >
+        {showRelated && metricType !== 'dimensions' && (
+          <Pad>
+            <Heading
+              responsive={false}
+              level={5}
+              margin={{ vertical: 'xsmall' }}
+            >
+              {typeof metric.aggregate === 'undefined' && (
+                <FormattedMessage {...messages.titleParent[metricType]} />
               )}
-              {metricType === 'rights' && metric.type === 'esr' && (
-                <>
-                  {children.map(as => (
-                    <Pad key={as.key}>
-                      <Text size="small">
-                        {`${intl.formatMessage(
-                          rootMessages.settings.standard.name,
-                        )}: '${intl.formatMessage(
-                          rootMessages.settings.standard[as.key],
-                        )}'`}
-                      </Text>
-                      <>
-                        {as.indicators.map(child => (
-                          <ButtonRelative
-                            key={child.key}
-                            onClick={evt => {
-                              if (evt) evt.preventDefault();
-                              onSelectMetric(child.key);
-                            }}
-                          >
-                            <TextRelative>
-                              <FormattedMessage
-                                {...rootMessages.indicators[child.key]}
-                              />
-                            </TextRelative>
-                            <FormNext size="large" />
-                          </ButtonRelative>
-                        ))}
-                      </>
-                    </Pad>
-                  ))}
-                </>
+              {typeof metric.aggregate !== 'undefined' && (
+                <FormattedMessage {...messages.titleParent.subrights} />
               )}
-            </Pad>
-          )}
-        </Box>
-      )}
-      {showFAQs && (
-        <Box>
+            </Heading>
+            <ButtonRelative
+              onClick={evt => {
+                if (evt) evt.preventDefault();
+                onSelectMetric(ancestors[ancestors.length - 1].key);
+              }}
+              previous
+            >
+              <FormPrevious size="large" />
+              <TextRelative>
+                <FormattedMessage
+                  {...rootMessages[ancestors[ancestors.length - 1].type][
+                    ancestors[ancestors.length - 1].key
+                  ]}
+                />
+              </TextRelative>
+            </ButtonRelative>
+          </Pad>
+        )}
+        {showRelated && metricType !== 'indicators' && children.length > 0 && (
+          <Pad>
+            <Heading
+              responsive={false}
+              level={5}
+              margin={{ vertical: 'xsmall' }}
+            >
+              {metricType === 'dimensions' && (
+                <FormattedMessage {...messages.titleChildren[metricType]} />
+              )}
+              {metricType === 'rights' && (
+                <FormattedMessage
+                  {...messages.titleChildren[metricType][metric.type]}
+                />
+              )}
+            </Heading>
+            {((metricType === 'rights' && metric.type === 'cpr') ||
+              metricType === 'dimensions') && (
+              <>
+                {children.map(child => (
+                  <ButtonRelative
+                    key={child.key}
+                    onClick={evt => {
+                      if (evt) evt.preventDefault();
+                      onSelectMetric(child.key);
+                    }}
+                  >
+                    <TextRelative>
+                      <FormattedMessage {...rootMessages.rights[child.key]} />
+                    </TextRelative>
+                    <FormNext size="large" />
+                  </ButtonRelative>
+                ))}
+              </>
+            )}
+            {metricType === 'rights' && metric.type === 'esr' && (
+              <>
+                {children.map(as => (
+                  <Pad key={as.key}>
+                    <Text size="small">
+                      {`${intl.formatMessage(
+                        rootMessages.settings.standard.name,
+                      )}: '${intl.formatMessage(
+                        rootMessages.settings.standard[as.key],
+                      )}'`}
+                    </Text>
+                    <>
+                      {as.indicators.map(child => (
+                        <ButtonRelative
+                          key={child.key}
+                          onClick={evt => {
+                            if (evt) evt.preventDefault();
+                            onSelectMetric(child.key);
+                          }}
+                        >
+                          <TextRelative>
+                            <FormattedMessage
+                              {...rootMessages.indicators[child.key]}
+                            />
+                          </TextRelative>
+                          <FormNext size="large" />
+                        </ButtonRelative>
+                      ))}
+                    </>
+                  </Pad>
+                ))}
+              </>
+            )}
+          </Pad>
+        )}
+        {showFAQs && (
           <FAQs
             questions={questions}
             metric={intl.formatMessage(
               rootMessages[metric.metricType][metric.key],
             )}
           />
-        </Box>
-      )}
-      {showMetricLink && (
-        <ButtonHighlight onClick={() => onSelectMetric(metricCode)}>
-          {`Explore ${intl.formatMessage(
-            rootMessages[metric.metricType][metricCode],
-          )} for all countries`}
-        </ButtonHighlight>
-      )}
+        )}
+        {showMetricLink && (
+          <ButtonHighlight onClick={() => onSelectMetric(metricCode)}>
+            {`Explore ${intl.formatMessage(
+              rootMessages[metric.metricType][metricCode],
+            )} for all countries`}
+          </ButtonHighlight>
+        )}
+        {showSources && (
+          <AboutMetricSources
+            metric={metric}
+            indicatorInfo={metricInfo}
+            onSelectMetric={onSelectMetric}
+          />
+        )}
+      </Box>
     </Box>
   );
 }
@@ -280,6 +285,7 @@ AboutMetricContainer.propTypes = {
   showMetricLink: PropTypes.bool,
   showFAQs: PropTypes.bool,
   showRelated: PropTypes.bool,
+  showSources: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

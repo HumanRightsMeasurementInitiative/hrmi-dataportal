@@ -118,6 +118,7 @@ export function PathCountry({
               metric={getMetricDetails(aboutMetric)}
               showTitle
               showMetricLink
+              showSources
             />
           }
           onClose={() => setAboutMetric(null)}
