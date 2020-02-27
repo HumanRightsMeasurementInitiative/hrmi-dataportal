@@ -34,7 +34,7 @@ const ButtonWrap = styled.div`
   right: 1em;
 `;
 
-function HowToReadLayer({ layer, theme, onClose }) {
+function LayerHowToRead({ layer, theme, onClose }) {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions(),
   );
@@ -99,7 +99,7 @@ function HowToReadLayer({ layer, theme, onClose }) {
   );
 }
 
-HowToReadLayer.propTypes = {
+LayerHowToRead.propTypes = {
   layer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onClose: PropTypes.func,
   theme: PropTypes.object,
@@ -120,4 +120,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withTheme(HowToReadLayer));
+export default compose(withConnect)(withTheme(LayerHowToRead));

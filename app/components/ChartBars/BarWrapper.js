@@ -26,7 +26,6 @@ export function BarWrapper({
   score,
   bullet,
   allowWordBreak,
-  // onClick,
   // currentBenchmark,
   // standard,
 }) {
@@ -42,7 +41,7 @@ export function BarWrapper({
           >
             {score.label && (
               <BarLabelButton
-                onClick={() => console.log('label click')}
+                onClick={() => score.onClick && score.onClick()}
                 label={score.label}
                 allowWordBreak={allowWordBreak}
               />

@@ -111,6 +111,7 @@ export function ChartContainerCountrySnapshot({
   dimensionAverages,
   intl,
   goToTab,
+  onMetricClick,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -163,6 +164,7 @@ export function ChartContainerCountrySnapshot({
         standard={standard}
         year={esrYear}
         maxValue={100}
+        onMetricClick={onMetricClick}
       />
       {dimensions.empowerment.score && (
         <ChartCountrySnapshot
@@ -172,6 +174,7 @@ export function ChartContainerCountrySnapshot({
           rights={getRightsScoresForDimension(rights, 'empowerment')}
           year={cprYear}
           maxValue={10}
+          onMetricClick={onMetricClick}
         />
       )}
       {dimensions.physint.score && (
@@ -182,6 +185,7 @@ export function ChartContainerCountrySnapshot({
           rights={getRightsScoresForDimension(rights, 'physint')}
           year={cprYear}
           maxValue={10}
+          onMetricClick={onMetricClick}
         />
       )}
       <Source />
@@ -199,8 +203,13 @@ export function ChartContainerCountrySnapshot({
           country={country}
           countryGrammar={countryGrammar}
           dimensionScore={dimensions.esr && dimensions.esr.score}
-          referenceScore={dimensionAverages.esr[standard].average[benchmark]}
-          referenceCount={dimensionAverages.esr[standard].count}
+          referenceScore={
+            dimensionAverages &&
+            dimensionAverages.esr[standard].average[benchmark]
+          }
+          referenceCount={
+            dimensionAverages && dimensionAverages.esr[standard].count
+          }
           benchmark={currentBenchmark}
         />
         <ButtonText onClick={() => goToTab('report-esr')}>
@@ -271,6 +280,7 @@ ChartContainerCountrySnapshot.propTypes = {
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   intl: intlShape.isRequired,
+  onMetricClick: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
