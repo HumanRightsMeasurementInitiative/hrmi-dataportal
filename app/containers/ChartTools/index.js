@@ -50,7 +50,7 @@ export function ChartTools({
             return onOpenSettings(settingsConfig);
           }}
         >
-          Chart settings
+          Settings
         </ButtonChartTool>
       )}
     </Styled>
