@@ -1,22 +1,35 @@
 /**
  *
- * CountryAbout
+ * AboutCountryContainer
  *
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Heading, Box, Text } from 'grommet';
 
 import roundValue from 'utils/round-score';
 
+import { selectCountry } from 'containers/App/actions';
+
+import {
+  getCountry,
+  getAuxIndicatorsForCountry,
+  getLatestCountryCurrentGDP,
+  getLatestCountry2011PPPGDP,
+} from 'containers/App/selectors';
+
 import Tooltip from 'components/Tooltip';
 import { COLUMNS } from 'containers/App/constants';
 
 import FAQs from 'containers/FAQs';
 import ButtonText from 'styled/ButtonText';
+import ButtonHighlight from 'styled/ButtonHighlight';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -44,14 +57,27 @@ const prepPopulationValue = (value, intl, year) => {
   };
 };
 
-function CountryAbout({
+const renderCategory = (label, onClick, cat, value) =>
+  onClick ? (
+    <Button onClick={() => onClick(cat, value)}>
+      <Text>{label}</Text>
+    </Button>
+  ) : (
+    <Text>{label}</Text>
+  );
+
+function AboutCountryContainer({
   intl,
   country,
   auxIndicators,
   currentGDP,
   pppGDP,
   onCategoryClick,
+  onCountryClick,
   showFAQs,
+  showTitle,
+  countryCode,
+  showCountryLink,
 }) {
   if (!country) return null;
   const incomeCode =
@@ -75,7 +101,10 @@ function CountryAbout({
       pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
     >
       <Heading responsive={false} level={3}>
-        <FormattedMessage {...messages.title} />
+        {!showTitle && <FormattedMessage {...messages.title} />}
+        {showTitle && (
+          <FormattedMessage {...rootMessages.countries[countryCode]} />
+        )}
       </Heading>
       {hasPopulation && (
         <Box direction="row" margin={{ bottom: 'xsmall' }}>
@@ -160,17 +189,14 @@ function CountryAbout({
           </Label>
         </Box>
         <Box width="50%">
-          <Button
-            onClick={() =>
-              onCategoryClick('region', country[COLUMNS.COUNTRIES.REGION])
-            }
-          >
-            <Text>
-              <FormattedMessage
-                {...rootMessages.regions[country[COLUMNS.COUNTRIES.REGION]]}
-              />
-            </Text>
-          </Button>
+          {renderCategory(
+            intl.formatMessage(
+              rootMessages.regions[country[COLUMNS.COUNTRIES.REGION]],
+            ),
+            onCategoryClick,
+            'region',
+            country[COLUMNS.COUNTRIES.REGION],
+          )}
         </Box>
       </Box>
       {country[COLUMNS.COUNTRIES.SUBREGION] && (
@@ -181,22 +207,14 @@ function CountryAbout({
             </Label>
           </Box>
           <Box width="50%">
-            <Button
-              onClick={() =>
-                onCategoryClick(
-                  'subregion',
-                  country[COLUMNS.COUNTRIES.SUBREGION],
-                )
-              }
-            >
-              <Text>
-                <FormattedMessage
-                  {...rootMessages.subregions[
-                    country[COLUMNS.COUNTRIES.SUBREGION]
-                  ]}
-                />
-              </Text>
-            </Button>
+            {renderCategory(
+              intl.formatMessage(
+                rootMessages.subregions[country[COLUMNS.COUNTRIES.SUBREGION]],
+              ),
+              onCategoryClick,
+              'subregion',
+              country[COLUMNS.COUNTRIES.SUBREGION],
+            )}
           </Box>
         </Box>
       )}
@@ -213,11 +231,14 @@ function CountryAbout({
           </Box>
           <Box width="50%">
             {countryGroups.map(g => (
-              <Button key={g} onClick={() => onCategoryClick('cgroup', g)}>
-                <Text>
-                  <FormattedMessage {...rootMessages.countryGroups[g]} />
-                </Text>
-              </Button>
+              <span key={g}>
+                {renderCategory(
+                  intl.formatMessage(rootMessages.countryGroups[g]),
+                  onCategoryClick,
+                  'cgroup',
+                  g,
+                )}
+              </span>
             ))}
           </Box>
         </Box>
@@ -235,11 +256,14 @@ function CountryAbout({
           </Box>
           <Box width="50%">
             {treaties.map(g => (
-              <Button key={g} onClick={() => onCategoryClick('treaty', g)}>
-                <Text>
-                  <FormattedMessage {...rootMessages.treaties[g]} />
-                </Text>
-              </Button>
+              <span key={g}>
+                {renderCategory(
+                  intl.formatMessage(rootMessages.treaties[g]),
+                  onCategoryClick,
+                  'treaty',
+                  g,
+                )}
+              </span>
             ))}
           </Box>
         </Box>
@@ -251,21 +275,31 @@ function CountryAbout({
           </Label>
         </Box>
         <Box width="50%">
-          <Button onClick={() => onCategoryClick('income', incomeCode)}>
-            <Text>
-              <FormattedMessage {...rootMessages.income[incomeCode]} />
-            </Text>
-          </Button>
+          {renderCategory(
+            intl.formatMessage(rootMessages.income[incomeCode]),
+            onCategoryClick,
+            'income',
+            incomeCode,
+          )}
         </Box>
       </Box>
-      <FAQs questions={showFAQs} />
+      {showFAQs && <FAQs questions={showFAQs} />}
+      {showCountryLink && (
+        <ButtonHighlight onClick={() => onCountryClick(countryCode)}>
+          {`Explore ${intl.formatMessage(rootMessages.countries[countryCode])}`}
+        </ButtonHighlight>
+      )}
     </Box>
   );
 }
 
-CountryAbout.propTypes = {
+AboutCountryContainer.propTypes = {
   onCategoryClick: PropTypes.func,
+  onCountryClick: PropTypes.func,
   showFAQs: PropTypes.array,
+  showTitle: PropTypes.bool,
+  showCountryLink: PropTypes.bool,
+  countryCode: PropTypes.string,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
@@ -273,4 +307,25 @@ CountryAbout.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(CountryAbout);
+const mapStateToProps = createStructuredSelector({
+  country: (state, { countryCode }) => getCountry(state, countryCode),
+  currentGDP: (state, { countryCode }) =>
+    getLatestCountryCurrentGDP(state, countryCode),
+  pppGDP: (state, { countryCode }) =>
+    getLatestCountry2011PPPGDP(state, countryCode),
+  auxIndicators: (state, { countryCode }) =>
+    getAuxIndicatorsForCountry(state, countryCode),
+});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onCountryClick: code => dispatch(selectCountry(code)),
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(injectIntl(AboutCountryContainer));

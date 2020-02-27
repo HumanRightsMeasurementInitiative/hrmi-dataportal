@@ -36,6 +36,7 @@ function TabCountryReport({
   standard,
   dataReady,
   hasDimensionScore,
+  // onMetricClick,
   // trackEvent,
   // onRawChange,
   // raw,
@@ -311,6 +312,7 @@ TabCountryReport.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimension: PropTypes.string,
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  onMetricClick: PropTypes.func,
 };
 
 // export default injectIntl(TabCountryReport);

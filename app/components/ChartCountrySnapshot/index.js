@@ -89,8 +89,14 @@ const getMetricLabel = score => score.key;
 // return label;
 // };
 
-// prettier-ignore
-const prepareData = ({ scores, dimensionCode, currentBenchmark, standard }) =>
+const prepareData = ({
+  scores,
+  dimensionCode,
+  currentBenchmark,
+  standard,
+  onClick,
+}) =>
+  // prettier-ignore
   scores.map(s =>
     dimensionCode === 'esr'
       ? {
@@ -102,6 +108,7 @@ const prepareData = ({ scores, dimensionCode, currentBenchmark, standard }) =>
         stripes: standard === 'hi',
         key: s.key,
         label: getMetricLabel(s),
+        onClick: () => onClick(s.key),
       }
       : {
         color: dimensionCode,
@@ -110,6 +117,7 @@ const prepareData = ({ scores, dimensionCode, currentBenchmark, standard }) =>
         unit: '',
         key: s.key,
         label: getMetricLabel(s),
+        onClick: () => onClick(s.key),
       }
   );
 
@@ -122,6 +130,7 @@ function ChartCountrySnapshot({
   standard,
   year,
   maxValue,
+  onMetricClick,
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
 
@@ -150,6 +159,7 @@ function ChartCountrySnapshot({
                 dimensionCode,
                 currentBenchmark,
                 standard,
+                onClick: onMetricClick,
               })}
               currentBenchmark={type === 'esr' && currentBenchmark}
               standard={type === 'esr' && standard}
@@ -172,6 +182,7 @@ ChartCountrySnapshot.propTypes = {
   maxValue: PropTypes.number,
   type: PropTypes.string,
   dimensionCode: PropTypes.string,
+  onMetricClick: PropTypes.func,
 };
 
 export default ChartCountrySnapshot;

@@ -1,12 +1,12 @@
 /*
- * CountryAbout Messages
+ * AboutCountryContainer Messages
  *
- * This contains all the text for the CountryAbout component.
+ * This contains all the text for the AboutCountryContainer component.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.CountryAbout';
+export const scope = 'hrmi.components.AboutCountryContainer';
 
 /* eslint-disable no-template-curly-in-string */
 export default defineMessages({
