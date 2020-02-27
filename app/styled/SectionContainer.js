@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Box } from 'grommet';
 
 const Styled = styled(Box)`
-  width: 100%;
   position: relative;
   padding-bottom: 40px;
   border-bottom: 1px solid;

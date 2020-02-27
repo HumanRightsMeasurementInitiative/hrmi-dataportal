@@ -6,7 +6,6 @@ const Styled = styled(Box)`
   width: 100%;
   position: relative;
   padding-bottom: ${props => (props.header ? '40px' : 0)};
-  margin-bottom: ${props => (props.header ? '-30px' : 0)};
   border-bottom: ${props => (props.header ? '1px solid' : 0)};
   border-color: ${props =>
     props.header ? props.theme.global.colors['light-3'] : 'transparent'};

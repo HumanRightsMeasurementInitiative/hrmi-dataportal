@@ -82,7 +82,6 @@ export function ChartContainerCountrySnapshot({
     onLoadData();
   }, []);
   const [showNarrative, setShowNarrative] = useState(false);
-
   if (!dataReady) return null;
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const currentStandard = STANDARDS.find(s => s.key === standard);
@@ -108,6 +107,7 @@ export function ChartContainerCountrySnapshot({
           showBenchmark: true,
         }}
       />
+      <NarrativeESRStandardHint country={country} standard={standard} />
       <ChartCountrySnapshot
         type="esr"
         dimensionCode="esr"
@@ -122,7 +122,6 @@ export function ChartContainerCountrySnapshot({
         year={esrYear}
         maxValue={100}
       />
-      <NarrativeESRStandardHint country={country} standard={standard} />
       {showNarrative && (
         <>
           <NarrativeESR
@@ -148,14 +147,16 @@ export function ChartContainerCountrySnapshot({
           </Paragraph>
         </>
       )}
-      <ChartCountrySnapshot
-        type="cpr"
-        dimensionCode="empowerment"
-        dimensionScore={getDimensionScore('cpr', dimensions.empowerment)}
-        rights={getRightsScoresForDimension(rights, 'empowerment')}
-        year={cprYear}
-        maxValue={10}
-      />
+      {dimensions.empowerment.score && (
+        <ChartCountrySnapshot
+          type="cpr"
+          dimensionCode="empowerment"
+          dimensionScore={getDimensionScore('cpr', dimensions.empowerment)}
+          rights={getRightsScoresForDimension(rights, 'empowerment')}
+          year={cprYear}
+          maxValue={10}
+        />
+      )}
       {showNarrative && (
         <>
           <NarrativeCPR
@@ -164,27 +165,31 @@ export function ChartContainerCountrySnapshot({
             country={country}
             countryGrammar={countryGrammar}
           />
-          <Paragraph>
-            <NarrativeCPRCompAssessment
-              dimensionKey="empowerment"
-              score={dimensions.empowerment.score}
-              country={country}
-              countryGrammar={countryGrammar}
-              referenceScore={dimensionAverages.empowerment.average}
-              referenceCount={dimensionAverages.empowerment.count}
-              start
-            />
-          </Paragraph>
+          {dimensions.empowerment.score && (
+            <Paragraph>
+              <NarrativeCPRCompAssessment
+                dimensionKey="empowerment"
+                score={dimensions.empowerment.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={dimensionAverages.empowerment.average}
+                referenceCount={dimensionAverages.empowerment.count}
+                start
+              />
+            </Paragraph>
+          )}
         </>
       )}
-      <ChartCountrySnapshot
-        type="cpr"
-        dimensionCode="physint"
-        dimensionScore={getDimensionScore('cpr', dimensions.physint)}
-        rights={getRightsScoresForDimension(rights, 'physint')}
-        year={cprYear}
-        maxValue={10}
-      />
+      {dimensions.physint.score && (
+        <ChartCountrySnapshot
+          type="cpr"
+          dimensionCode="physint"
+          dimensionScore={getDimensionScore('cpr', dimensions.physint)}
+          rights={getRightsScoresForDimension(rights, 'physint')}
+          year={cprYear}
+          maxValue={10}
+        />
+      )}
       {showNarrative && (
         <>
           <NarrativeCPR
@@ -193,17 +198,19 @@ export function ChartContainerCountrySnapshot({
             country={country}
             countryGrammar={countryGrammar}
           />
-          <Paragraph>
-            <NarrativeCPRCompAssessment
-              dimensionKey="physint"
-              score={dimensions.physint.score}
-              country={country}
-              countryGrammar={countryGrammar}
-              referenceScore={dimensionAverages.physint.average}
-              referenceCount={dimensionAverages.physint.count}
-              start
-            />
-          </Paragraph>
+          {dimensions.physint.score && (
+            <Paragraph>
+              <NarrativeCPRCompAssessment
+                dimensionKey="physint"
+                score={dimensions.physint.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={dimensionAverages.physint.average}
+                referenceCount={dimensionAverages.physint.count}
+                start
+              />
+            </Paragraph>
+          )}
         </>
       )}
       <Source />
