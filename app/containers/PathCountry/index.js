@@ -16,7 +16,6 @@ import { Box } from 'grommet';
 
 import rootMessages from 'messages';
 
-import Close from 'containers/Close';
 import CountryReport from 'components/CountryReport';
 import CountrySnapshot from 'components/CountrySnapshot';
 import CountryPeople from 'components/CountryPeople';
@@ -46,7 +45,6 @@ import {
   getESRYear,
   getCPRYear,
   getDependenciesReady,
-  getCloseTargetCountry,
   getESRIndicators,
   getRawSearch,
 } from 'containers/App/selectors';
@@ -104,7 +102,6 @@ export function PathCountry({
   cprYear,
   dataReady,
   onTrackEvent,
-  closeTarget,
   allIndicators,
   onRawChange,
   raw,
@@ -139,7 +136,6 @@ export function PathCountry({
       </Helmet>
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
-          <Close closeTarget={closeTarget} />
           <Box direction="column">
             {country && incomeGroup && (
               <HeaderLinks
@@ -341,7 +337,6 @@ PathCountry.propTypes = {
   activeTab: PropTypes.number,
   onAtRiskClick: PropTypes.func,
   match: PropTypes.object,
-  closeTarget: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -388,7 +383,6 @@ const mapStateToProps = createStructuredSelector({
     getLatestCountry2011PPPGDP(state, match.params.country),
   auxIndicators: (state, { match }) =>
     getAuxIndicatorsForCountry(state, match.params.country),
-  closeTarget: state => getCloseTargetCountry(state),
   allIndicators: state => getESRIndicators(state),
 });
 

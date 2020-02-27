@@ -1564,6 +1564,10 @@ export const getHowToRead = createSelector(
   getGlobal,
   global => global.howToRead,
 );
+export const getSettingsLayer = createSelector(
+  getGlobal,
+  global => global.settings,
+);
 
 export const getCookieConsent = createSelector(
   getGlobal,

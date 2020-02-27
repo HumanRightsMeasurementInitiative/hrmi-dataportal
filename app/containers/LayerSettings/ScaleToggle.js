@@ -6,18 +6,11 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import styled from 'styled-components';
 import ButtonToggleMainSetting from 'styled/ButtonToggleMainSetting';
 
-import { getScaleSearch } from 'containers/App/selectors';
-
 import { SCALES, RIGHTS, DIMENSIONS } from 'containers/App/constants';
-
-import { setScale } from 'containers/App/actions';
 
 import rootMessages from 'messages';
 
@@ -54,19 +47,4 @@ ScaleToggle.propTypes = {
   intl: intlShape.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  scale: state => getScaleSearch(state),
-});
-
-export function mapDispatchToProps(dispatch) {
-  return {
-    onSetScale: value => dispatch(setScale(value)),
-  };
-}
-
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
-
-export default compose(withConnect)(injectIntl(ScaleToggle));
+export default injectIntl(ScaleToggle);

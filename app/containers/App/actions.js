@@ -23,6 +23,7 @@ import {
   SET_BENCHMARK,
   SET_TAB,
   OPEN_HOW_TO,
+  OPEN_SETTINGS,
   CHECK_COOKIECONSENT,
   COOKIECONSENT_CHECKED,
   SET_COOKIECONSENT,
@@ -210,6 +211,12 @@ export function navigate(location, args) {
 export function openHowToRead(args) {
   return {
     type: OPEN_HOW_TO,
+    layer: args,
+  };
+}
+export function openSettings(args) {
+  return {
+    type: OPEN_SETTINGS,
     layer: args,
   };
 }

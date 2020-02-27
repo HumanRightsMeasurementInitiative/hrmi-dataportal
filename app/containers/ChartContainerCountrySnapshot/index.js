@@ -1,6 +1,6 @@
 /**
  *
- * ChartContainerCountrySummary
+ * ChartContainerCountrySnapshot
  *
  */
 
@@ -28,7 +28,9 @@ import {
 
 import { loadDataIfNeeded } from 'containers/App/actions';
 import saga from 'containers/App/saga';
-import ChartCountrySummary from 'components/ChartCountrySummary';
+import ChartTools from 'containers/ChartTools';
+import ChartCountrySnapshot from 'components/ChartCountrySnapshot';
+import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRStandardHint';
 import NarrativeESR from 'components/CountryNarrative/NarrativeESR';
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
@@ -61,7 +63,7 @@ const getDimensionScore = (type, data, benchmark) => {
   return false;
 };
 
-export function ChartContainerCountrySummary({
+export function ChartContainerCountrySnapshot({
   onLoadData,
   dataReady,
   rights,
@@ -95,7 +97,18 @@ export function ChartContainerCountrySummary({
     .reduce((m, s) => m || !!s.score, false);
   return (
     <div>
-      <ChartCountrySummary
+      <ChartTools
+        howToReadConfig={{
+          key: 'tab-snapshot',
+          chart: 'Bar',
+        }}
+        settingsConfig={{
+          key: 'tab-snapshot',
+          showStandard: true,
+          showBenchmark: true,
+        }}
+      />
+      <ChartCountrySnapshot
         type="esr"
         dimensionCode="esr"
         dimensionScore={getDimensionScore(
@@ -109,6 +122,7 @@ export function ChartContainerCountrySummary({
         year={esrYear}
         maxValue={100}
       />
+      <NarrativeESRStandardHint country={country} standard={standard} />
       {showNarrative && (
         <>
           <NarrativeESR
@@ -134,7 +148,7 @@ export function ChartContainerCountrySummary({
           </Paragraph>
         </>
       )}
-      <ChartCountrySummary
+      <ChartCountrySnapshot
         type="cpr"
         dimensionCode="empowerment"
         dimensionScore={getDimensionScore('cpr', dimensions.empowerment)}
@@ -163,7 +177,7 @@ export function ChartContainerCountrySummary({
           </Paragraph>
         </>
       )}
-      <ChartCountrySummary
+      <ChartCountrySnapshot
         type="cpr"
         dimensionCode="physint"
         dimensionScore={getDimensionScore('cpr', dimensions.physint)}
@@ -219,7 +233,7 @@ export function ChartContainerCountrySummary({
   );
 }
 
-ChartContainerCountrySummary.propTypes = {
+ChartContainerCountrySnapshot.propTypes = {
   // countryCode: PropTypes.string.isRequired,
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onLoadData: PropTypes.func.isRequired,
@@ -262,4 +276,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(ChartContainerCountrySummary);
+export default compose(withConnect)(ChartContainerCountrySnapshot);

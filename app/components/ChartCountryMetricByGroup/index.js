@@ -27,7 +27,6 @@ import {
 import ButtonToggleValueSetting from 'styled/ButtonToggleValueSetting';
 
 import rootMessages from 'messages';
-// import SettingsToggle from 'containers/Settings/SettingsToggle';
 
 const ScoreWrapper = props => <Box {...props} flex={{ shrink: 0 }} />;
 const BarWrap = props => <Box direction="row" {...props} align="center" />;
