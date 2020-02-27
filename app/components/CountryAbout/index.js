@@ -73,7 +73,6 @@ function CountryAbout({
     <Box
       direction="column"
       pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
-      style={{ maxWidth: '500px' }}
     >
       <Heading responsive={false} level={3}>
         <FormattedMessage {...messages.title} />

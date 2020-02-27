@@ -6,9 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 // import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-
 import {
   COLUMNS,
   DIMENSIONS,
@@ -23,27 +22,27 @@ import ChartContainerPeople from 'containers/ChartContainerPeople';
 import ChartContainerByGroup from 'containers/ChartContainerByGroup';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ChartSettingMetrics from 'components/ChartSettingMetrics';
-import MainColumn from 'styled/MainColumn';
-import SectionContainer from 'styled/SectionContainer';
+// import SectionContainer from 'styled/SectionContainer';
 
 import quasiEquals from 'utils/quasi-equals';
 
+const SectionContainer = styled.div``;
+
 function CountryReport({
-  dataReady,
-  hasAside,
   type,
   dimension,
   country,
   allIndicators,
   standard,
+  dataReady,
+  hasDimensionScore,
   // trackEvent,
   // onRawChange,
   // raw,
 }) {
   const currentStandard = STANDARDS.find(s => s.key === standard);
-
   return (
-    <MainColumn hasAside={hasAside}>
+    <>
       {!dataReady && <LoadingIndicator />}
       {dataReady && type === 'esr' && (
         <>
@@ -174,55 +173,59 @@ function CountryReport({
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
             />
           </SectionContainer>
-          <SectionContainer>
-            Category, rights & indicators over time
-            <ChartSettingMetrics
-              activeDefault={dimension}
-              metrics={DIMENSIONS.reduce((dims, d) => {
-                if (d.key !== dimension) {
-                  return dims;
-                }
-                return [
-                  ...dims,
-                  {
-                    ...d,
-                    children: RIGHTS.reduce((rights, r) => {
-                      if (r.dimension !== d.key) {
-                        return rights;
-                      }
-                      return [...rights, r];
-                    }, []),
-                  },
-                ];
-              }, [])}
-              chart={props => (
-                <ChartContainerTrend
-                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                  {...props}
+          {hasDimensionScore && (
+            <>
+              <SectionContainer>
+                Category, rights & indicators over time
+                <ChartSettingMetrics
+                  activeDefault={dimension}
+                  metrics={DIMENSIONS.reduce((dims, d) => {
+                    if (d.key !== dimension) {
+                      return dims;
+                    }
+                    return [
+                      ...dims,
+                      {
+                        ...d,
+                        children: RIGHTS.reduce((rights, r) => {
+                          if (r.dimension !== d.key) {
+                            return rights;
+                          }
+                          return [...rights, r];
+                        }, []),
+                      },
+                    ];
+                  }, [])}
+                  chart={props => (
+                    <ChartContainerTrend
+                      countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                      {...props}
+                    />
+                  )}
                 />
-              )}
-            />
-          </SectionContainer>
-          <SectionContainer>
-            People at risk word cloud && commentary
-            <ChartSettingMetrics
-              activeDefault={
-                RIGHTS.filter(r => r.dimension === dimension)[0].key
-              }
-              metrics={RIGHTS.reduce((rights, r) => {
-                if (r.dimension !== dimension) {
-                  return rights;
-                }
-                return [...rights, r];
-              }, [])}
-              chart={props => (
-                <ChartContainerPeople
-                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                  {...props}
+              </SectionContainer>
+              <SectionContainer>
+                People at risk word cloud && commentary
+                <ChartSettingMetrics
+                  activeDefault={
+                    RIGHTS.filter(r => r.dimension === dimension)[0].key
+                  }
+                  metrics={RIGHTS.reduce((rights, r) => {
+                    if (r.dimension !== dimension) {
+                      return rights;
+                    }
+                    return [...rights, r];
+                  }, [])}
+                  chart={props => (
+                    <ChartContainerPeople
+                      countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                      {...props}
+                    />
+                  )}
                 />
-              )}
-            />
-          </SectionContainer>
+              </SectionContainer>
+            </>
+          )}
         </>
       )}
       {dataReady && type === 'cpr' && dimension === 'empowerment' && (
@@ -235,58 +238,62 @@ function CountryReport({
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
             />
           </SectionContainer>
-          <SectionContainer>
-            Category, rights & indicators over time
-            <ChartSettingMetrics
-              activeDefault={dimension}
-              metrics={DIMENSIONS.reduce((dims, d) => {
-                if (d.key !== dimension) {
-                  return dims;
-                }
-                return [
-                  ...dims,
-                  {
-                    ...d,
-                    children: RIGHTS.reduce((rights, r) => {
-                      if (r.dimension !== d.key) {
-                        return rights;
-                      }
-                      return [...rights, r];
-                    }, []),
-                  },
-                ];
-              }, [])}
-              chart={props => (
-                <ChartContainerTrend
-                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                  {...props}
+          {hasDimensionScore && (
+            <>
+              <SectionContainer>
+                Category, rights & indicators over time
+                <ChartSettingMetrics
+                  activeDefault={dimension}
+                  metrics={DIMENSIONS.reduce((dims, d) => {
+                    if (d.key !== dimension) {
+                      return dims;
+                    }
+                    return [
+                      ...dims,
+                      {
+                        ...d,
+                        children: RIGHTS.reduce((rights, r) => {
+                          if (r.dimension !== d.key) {
+                            return rights;
+                          }
+                          return [...rights, r];
+                        }, []),
+                      },
+                    ];
+                  }, [])}
+                  chart={props => (
+                    <ChartContainerTrend
+                      countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                      {...props}
+                    />
+                  )}
                 />
-              )}
-            />
-          </SectionContainer>
-          <SectionContainer>
-            People at risk word cloud && commentary
-            <ChartSettingMetrics
-              activeDefault={
-                RIGHTS.filter(r => r.dimension === dimension)[0].key
-              }
-              metrics={RIGHTS.reduce((rights, r) => {
-                if (r.dimension !== dimension) {
-                  return rights;
-                }
-                return [...rights, r];
-              }, [])}
-              chart={props => (
-                <ChartContainerPeople
-                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                  {...props}
+              </SectionContainer>
+              <SectionContainer>
+                People at risk word cloud && commentary
+                <ChartSettingMetrics
+                  activeDefault={
+                    RIGHTS.filter(r => r.dimension === dimension)[0].key
+                  }
+                  metrics={RIGHTS.reduce((rights, r) => {
+                    if (r.dimension !== dimension) {
+                      return rights;
+                    }
+                    return [...rights, r];
+                  }, [])}
+                  chart={props => (
+                    <ChartContainerPeople
+                      countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                      {...props}
+                    />
+                  )}
                 />
-              )}
-            />
-          </SectionContainer>
+              </SectionContainer>
+            </>
+          )}
         </>
       )}
-    </MainColumn>
+    </>
   );
 }
 
@@ -299,6 +306,7 @@ CountryReport.propTypes = {
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   dataReady: PropTypes.bool,
+  hasDimensionScore: PropTypes.bool,
   type: PropTypes.string,
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimension: PropTypes.string,

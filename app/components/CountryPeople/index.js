@@ -14,7 +14,6 @@ import rootMessages from 'messages';
 import { FormattedMessage } from 'react-intl';
 
 import ChartWordCloud from 'components/ChartWordCloud';
-import MainColumn from 'styled/MainColumn';
 
 import messages from './messages';
 
@@ -44,9 +43,9 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-function CountryPeople({ data, hasAside }) {
+function CountryPeople({ data }) {
   return (
-    <MainColumn hasAside={hasAside}>
+    <>
       <StyledHeading responsive={false} level={2}>
         <FormattedMessage {...messages.title} />
       </StyledHeading>
@@ -87,7 +86,7 @@ function CountryPeople({ data, hasAside }) {
               ))}
           </Box>
         ))}
-    </MainColumn>
+    </>
   );
 }
 

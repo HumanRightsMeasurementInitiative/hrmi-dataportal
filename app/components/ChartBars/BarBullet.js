@@ -70,7 +70,7 @@ const BarBand = styled.div`
 
 function BarBullet({
   data,
-  level = 1,
+  level = 2,
   showLabels,
   showScore,
   scoreOnHover,

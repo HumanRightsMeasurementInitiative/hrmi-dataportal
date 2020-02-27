@@ -34,28 +34,16 @@ import {
   getIndicatorsForCountry,
   getCountry,
   getCountryGrammar,
-  getScaleSearch,
   getStandardSearch,
-  getBenchmarkSearch,
   getPeopleAtRiskForCountry,
-  getDimensionAverages,
   getAuxIndicatorsForCountry,
   getLatestCountryCurrentGDP,
   getLatestCountry2011PPPGDP,
-  getESRYear,
-  getCPRYear,
   getDependenciesReady,
   getESRIndicators,
-  getRawSearch,
 } from 'containers/App/selectors';
 
-import {
-  loadDataIfNeeded,
-  navigate,
-  setTab,
-  trackEvent,
-  setRaw,
-} from 'containers/App/actions';
+import { loadDataIfNeeded, navigate, trackEvent } from 'containers/App/actions';
 
 import {
   INCOME_GROUPS,
@@ -85,26 +73,16 @@ export function PathCountry({
   onCategoryClick,
   match,
   dimensions,
-  rights,
   indicators,
   country,
   countryGrammar,
-  scale,
-  benchmark,
   atRisk,
-  onAtRiskClick,
   standard,
-  dimensionAverages,
   auxIndicators,
   currentGDP,
   pppGDP,
-  esrYear,
-  cprYear,
   dataReady,
-  onTrackEvent,
   allIndicators,
-  onRawChange,
-  raw,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -127,7 +105,6 @@ export function PathCountry({
     countryCode && rootMessages.countries[countryCode]
       ? intl.formatMessage(rootMessages.countries[countryCode])
       : countryCode;
-
   return (
     <ContentWrap>
       <Helmet>
@@ -166,164 +143,126 @@ export function PathCountry({
           </Box>
         </ContentMaxWidth>
       </ContentContainer>
-      <ContentMaxWidth>
-        <TabContainer
-          tabs={[
-            {
-              key: 'snapshot',
-              title: intl.formatMessage(rootMessages.tabs.snapshot),
-              content: props => (
-                <CountrySnapshot
+      <TabContainer
+        tabs={[
+          {
+            key: 'snapshot',
+            title: intl.formatMessage(rootMessages.tabs.snapshot),
+            content: props => (
+              <CountrySnapshot
+                {...props}
+                countryCode={countryCode}
+                countryGrammar={countryGrammar}
+                dataReady={dataReady}
+              />
+            ),
+          },
+          {
+            key: 'report-esr',
+            title: intl.formatMessage(rootMessages.dimensions.esr),
+            content: props => (
+              <CountryReport
+                {...props}
+                type="esr"
+                dimension="esr"
+                countryTitle={countryTitle}
+                hasDimensionScore={dataReady && !!dimensions.esr.score}
+                indicators={indicators}
+                country={country}
+                standard={standard}
+                dataReady={dataReady}
+                allIndicators={allIndicators}
+              />
+            ),
+          },
+          {
+            key: 'report-physint',
+            title: intl.formatMessage(rootMessages.dimensions.physint),
+            content: props => (
+              <CountryReport
+                {...props}
+                type="cpr"
+                dimension="physint"
+                countryTitle={countryTitle}
+                hasDimensionScore={dataReady && hasCPR(dimensions)}
+                country={country}
+                dataReady={dataReady}
+              />
+            ),
+          },
+          {
+            key: 'report-empowerment',
+            title: intl.formatMessage(rootMessages.dimensions.empowerment),
+            content: props => (
+              <CountryReport
+                {...props}
+                type="cpr"
+                dimension="empowerment"
+                countryTitle={countryTitle}
+                hasDimensionScore={dataReady && hasCPR(dimensions)}
+                country={country}
+                dataReady={dataReady}
+              />
+            ),
+          },
+          {
+            key: 'atrisk',
+            title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+            // howToRead: {
+            //   contxt: 'PathCountry',
+            //   chart: 'ChartWordCloud',
+            //   data: 'atRisk',
+            // },
+            content: props =>
+              hasCPR(dimensions) && (
+                <CountryPeople
                   {...props}
+                  data={atRisk}
+                  countryTitle={countryTitle}
                   countryCode={countryCode}
-                  countryGrammar={countryGrammar}
-                  dataReady={dataReady}
                 />
               ),
-            },
-            {
-              key: 'report-esr',
-              title: intl.formatMessage(rootMessages.dimensions.esr),
-              content: props => (
-                <CountryReport
+          },
+          {
+            aside: true,
+            key: 'about',
+            title: intl.formatMessage(rootMessages.tabs.about),
+            content: props => {
+              let faqs = [];
+              if (
+                props &&
+                (props.activeTab === 0 || props.activeTab === 'snapshot')
+              ) {
+                faqs = FAQS.COUNTRY_SNAPSHOT;
+              }
+              if (
+                props &&
+                (props.activeTab === 1 || props.activeTab === 'esr-report')
+              ) {
+                faqs = FAQS.COUNTRY_ESR;
+              }
+              if (
+                props &&
+                (props.activeTab === 2 || props.activeTab === 'cpr-report')
+              ) {
+                faqs = FAQS.COUNTRY_CPR;
+              }
+              // TODO check about tab
+              return (
+                <CountryAbout
                   {...props}
-                  type="esr"
-                  dimension="esr"
-                  countryTitle={countryTitle}
-                  dimensions={dimensions}
-                  rights={rights}
-                  indicators={indicators}
                   country={country}
-                  countryGrammar={countryGrammar}
-                  scale={scale}
-                  benchmark={benchmark}
-                  atRiskData={atRisk}
-                  standard={standard}
-                  reference={dimensionAverages}
-                  onAtRiskClick={() => onAtRiskClick()}
-                  onMetricClick={(metric, tab) =>
-                    console.log('metric click', countryCode, metric, tab)
-                  }
-                  esrYear={esrYear}
-                  cprYear={cprYear}
-                  dataReady={dataReady}
-                  trackEvent={onTrackEvent}
-                  allIndicators={allIndicators}
-                  onRawChange={onRawChange}
-                  raw={raw}
+                  auxIndicators={auxIndicators}
+                  currentGDP={currentGDP}
+                  pppGDP={pppGDP}
+                  onCategoryClick={onCategoryClick}
+                  showFAQs={faqs}
                 />
-              ),
+              );
             },
-            {
-              key: 'report-physint',
-              title: intl.formatMessage(rootMessages.dimensions.physint),
-              content: props => (
-                <CountryReport
-                  {...props}
-                  type="cpr"
-                  dimension="physint"
-                  countryTitle={countryTitle}
-                  dimensions={dimensions}
-                  rights={rights}
-                  country={country}
-                  countryGrammar={countryGrammar}
-                  scale={scale}
-                  atRiskData={atRisk}
-                  reference={dimensionAverages}
-                  onAtRiskClick={() => onAtRiskClick()}
-                  onMetricClick={(metric, tab) =>
-                    console.log('metric click', countryCode, metric, tab)
-                  }
-                  cprYear={cprYear}
-                  dataReady={dataReady}
-                  trackEvent={onTrackEvent}
-                />
-              ),
-            },
-            {
-              key: 'report-empowerment',
-              title: intl.formatMessage(rootMessages.dimensions.empowerment),
-              content: props => (
-                <CountryReport
-                  {...props}
-                  type="cpr"
-                  dimension="empowerment"
-                  countryTitle={countryTitle}
-                  dimensions={dimensions}
-                  rights={rights}
-                  country={country}
-                  countryGrammar={countryGrammar}
-                  scale={scale}
-                  atRiskData={atRisk}
-                  reference={dimensionAverages}
-                  onAtRiskClick={() => onAtRiskClick()}
-                  onMetricClick={(metric, tab) =>
-                    console.log('metric click', countryCode, metric, tab)
-                  }
-                  cprYear={cprYear}
-                  dataReady={dataReady}
-                  trackEvent={onTrackEvent}
-                />
-              ),
-            },
-            {
-              key: 'atrisk',
-              title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-              // howToRead: {
-              //   contxt: 'PathCountry',
-              //   chart: 'ChartWordCloud',
-              //   data: 'atRisk',
-              // },
-              content: props =>
-                hasCPR(dimensions) && (
-                  <CountryPeople
-                    {...props}
-                    data={atRisk}
-                    countryTitle={countryTitle}
-                    countryCode={countryCode}
-                  />
-                ),
-            },
-            {
-              key: 'about',
-              title: intl.formatMessage(rootMessages.tabs.about),
-              content: props => {
-                let faqs = [];
-                if (
-                  props &&
-                  (props.activeTab === 0 || props.activeTab === 'snapshot')
-                ) {
-                  faqs = FAQS.COUNTRY_SNAPSHOT;
-                }
-                if (
-                  props &&
-                  (props.activeTab === 1 || props.activeTab === 'esr-report')
-                ) {
-                  faqs = FAQS.COUNTRY_ESR;
-                }
-                if (
-                  props &&
-                  (props.activeTab === 2 || props.activeTab === 'cpr-report')
-                ) {
-                  faqs = FAQS.COUNTRY_CPR;
-                }
-                // TODO check about tab
-                return (
-                  <CountryAbout
-                    {...props}
-                    country={country}
-                    auxIndicators={auxIndicators}
-                    currentGDP={currentGDP}
-                    pppGDP={pppGDP}
-                    onCategoryClick={onCategoryClick}
-                    showFAQs={faqs}
-                  />
-                );
-              },
-            },
-          ]}
-        />
-      </ContentMaxWidth>
+          },
+        ]}
+      />
     </ContentWrap>
   );
 }
@@ -332,10 +271,8 @@ PathCountry.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  onTrackEvent: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   activeTab: PropTypes.number,
-  onAtRiskClick: PropTypes.func,
   match: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -370,13 +307,7 @@ const mapStateToProps = createStructuredSelector({
   dimensions: (state, { match }) =>
     getDimensionsForCountry(state, match.params.country),
   atRisk: (state, { match }) => getPeopleAtRiskForCountry(state, match.params),
-  scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
-  benchmark: state => getBenchmarkSearch(state),
-  esrYear: state => getESRYear(state),
-  cprYear: state => getCPRYear(state),
-  raw: state => getRawSearch(state),
-  dimensionAverages: state => getDimensionAverages(state),
   currentGDP: (state, { match }) =>
     getLatestCountryCurrentGDP(state, match.params.country),
   pppGDP: (state, { match }) =>
@@ -390,9 +321,6 @@ export function mapDispatchToProps(dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
-    },
-    onRawChange: value => {
-      dispatch(setRaw(value));
     },
     onCategoryClick: (key, value) => {
       const deleteParams = COUNTRY_FILTERS;
@@ -413,10 +341,6 @@ export function mapDispatchToProps(dispatch) {
           },
         ),
       );
-    },
-    onAtRiskClick: () => {
-      window.scrollTo(0, 0);
-      return dispatch(setTab(1));
     },
     onTrackEvent: e => dispatch(trackEvent(e)),
   };

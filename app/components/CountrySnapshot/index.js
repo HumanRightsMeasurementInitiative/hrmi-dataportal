@@ -13,7 +13,6 @@ import { Heading } from 'grommet';
 
 import ChartContainerCountrySnapshot from 'containers/ChartContainerCountrySnapshot';
 import LoadingIndicator from 'components/LoadingIndicator';
-import MainColumn from 'styled/MainColumn';
 
 import { getMessageGrammar } from 'utils/narrative';
 
@@ -29,33 +28,18 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-function CountrySnapshot({
-  countryCode,
-  countryGrammar,
-  intl,
-  dataReady,
-  hasAside,
-}) {
+function CountrySnapshot({ countryCode, countryGrammar, intl, dataReady }) {
+  if (!dataReady) return <LoadingIndicator />;
   return (
-    <MainColumn hasAside={hasAside}>
-      {!dataReady && <LoadingIndicator />}
-      {dataReady && (
-        <>
-          <StyledHeading responsive={false} level={2}>
-            <FormattedMessage
-              {...messages.title}
-              values={getMessageGrammar(
-                intl,
-                countryCode,
-                null,
-                countryGrammar,
-              )}
-            />
-          </StyledHeading>
-          <ChartContainerCountrySnapshot countryCode={countryCode} />
-        </>
-      )}
-    </MainColumn>
+    <>
+      <StyledHeading responsive={false} level={2}>
+        <FormattedMessage
+          {...messages.title}
+          values={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+        />
+      </StyledHeading>
+      <ChartContainerCountrySnapshot countryCode={countryCode} />
+    </>
   );
 }
 CountrySnapshot.propTypes = {

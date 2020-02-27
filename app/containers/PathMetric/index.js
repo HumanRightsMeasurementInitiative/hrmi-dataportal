@@ -86,29 +86,35 @@ export function PathMetric({ match, intl, onMetricClick }) {
           </Box>
         </ContentMaxWidth>
       </ContentContainer>
-      <ContentMaxWidth>
-        <TabContainer
-          tabs={[
-            {
-              key: 'singleMetric',
-              title: intl.formatMessage(rootMessages.tabs.singleMetric),
-              content: props => <SingleMetric {...props} metric={metric} />,
+      <TabContainer
+        tabs={[
+          {
+            key: 'singleMetric',
+            title: intl.formatMessage(rootMessages.tabs.singleMetric),
+            content: props => <SingleMetric {...props} metric={metric} />,
+            chartTools: {
               howToRead: {
                 contxt: 'PathMetric',
                 chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
                 data: metric.color,
               },
+              settings: metric.type !== 'esr' && {
+                key: 'metric',
+                showStandard: true,
+                showBenchmark: metric.metricType !== 'indicators',
+              },
             },
-            {
-              key: 'about',
-              title: intl.formatMessage(rootMessages.tabs.about),
-              content: props => (
-                <MetricAside {...props} metric={metric} ancestors={ancestors} />
-              ),
-            },
-          ]}
-        />
-      </ContentMaxWidth>
+          },
+          {
+            aside: true,
+            key: 'about',
+            title: intl.formatMessage(rootMessages.tabs.about),
+            content: props => (
+              <MetricAside {...props} metric={metric} ancestors={ancestors} />
+            ),
+          },
+        ]}
+      />
     </ContentWrap>
   );
 }

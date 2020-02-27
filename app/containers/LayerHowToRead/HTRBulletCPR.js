@@ -10,7 +10,6 @@ import styled from 'styled-components';
 import { Heading, Box } from 'grommet';
 import BarBullet from 'components/ChartBars/BarBullet';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
-import Hint from 'styled/Hint';
 
 import HTRParagraph from './HTRParagraph';
 import messages from './messages';
@@ -18,19 +17,11 @@ import messages from './messages';
 const Styled = styled.div``;
 
 function HTRBulletCPR({ contxt, dimension, intl }) {
-  const level = contxt === 'narrative' ? 1 : 2;
   return (
     <Styled>
       <HTRParagraph>
         <FormattedMessage {...messages.bullet.intro} />
       </HTRParagraph>
-      {contxt === 'narrative' && (
-        <HTRParagraph>
-          <Hint italic>
-            <FormattedMessage {...messages.bullet.drilldownHint} />
-          </Hint>
-        </HTRParagraph>
-      )}
       <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
@@ -45,7 +36,6 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
           responsive={false}
         >
           <BarBullet
-            level={level}
             showLabels
             annotate
             hoverEnabled={false}
@@ -76,7 +66,6 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
         responsive={false}
       >
         <BarBullet
-          level={level}
           showLabels
           hoverEnabled={false}
           data={{
@@ -99,7 +88,6 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
         responsive={false}
       >
         <BarBullet
-          level={level}
           showLabels
           hoverEnabled={false}
           data={{
@@ -114,7 +102,7 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
           }}
         />
       </Box>
-      {contxt !== 'narrative' && (
+      {contxt === 'metrics' && (
         <>
           <HTRParagraph above>
             <FormattedHTMLMessage {...messages.bullet.countryComparison} />
@@ -124,7 +112,6 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
             responsive={false}
           >
             <BarBullet
-              level={level}
               showLabels
               hoverEnabled={false}
               data={{
@@ -144,7 +131,6 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
             responsive={false}
           >
             <BarBullet
-              level={level}
               showLabels
               hoverEnabled={false}
               data={{
