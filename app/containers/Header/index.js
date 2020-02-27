@@ -71,10 +71,9 @@ const NavBarBottom = props => (
     elevation="large"
     direction="row"
     align="center"
+    justify="end"
     background="dark"
     height={`${props.theme.sizes.header.heightBottom}px`}
-    width="full"
-    fill="horizontal"
     {...props}
   />
 );
@@ -162,13 +161,9 @@ const ToggleMenu = styled(Button)`
 const ButtonNavSecondary = styled(Button)`
   height: 56px;
   padding: 5px 10px;
-  min-width: 160px;
   width: 50%;
   background-color: ${({ active, theme }) =>
     active ? theme.global.colors['dark-2'] : 'transparent'};
-  border-right: ${({ last }) => last ? 2 : 1}px solid;
-  border-left: ${({ first }) => first ? 0 : 1}px solid;
-  border-color: ${({ theme }) => theme.global.colors['dark-2']};
   &:hover {
     background-color: ${({ active, theme }) =>
     theme.global.colors[active ? 'dark-2' : 'dark-3']};
@@ -221,11 +216,6 @@ export function Header({ nav, onLoadData, match, theme }) {
               {showMenu && <Close />}
             </ToggleMenu>
             <MenuList visible={showMenu}>
-              {appLocales.length > 1 && isMinSize(size, 'large') && (
-                <MenuGroup>
-                  <LocaleToggle />
-                </MenuGroup>
-              )}
               <MenuGroup>
                 {PAGES &&
                   Object.values(PAGES)
@@ -244,6 +234,11 @@ export function Header({ nav, onLoadData, match, theme }) {
                       </ButtonNavPrimary>
                     ))}
               </MenuGroup>
+              {appLocales.length > 1 && isMinSize(size, 'large') && (
+                <MenuGroup>
+                  <LocaleToggle />
+                </MenuGroup>
+              )}
             </MenuList>
           </NavBarTop>
           {showSecondary && (
@@ -256,13 +251,13 @@ export function Header({ nav, onLoadData, match, theme }) {
                   setShowMetrics(false);
                   setShowCountries(!showCountries);
                 }}
-                icon={<Icon name="COUNTRY" style={{ minWidth: '24px' }} />}
                 label={
                   <Box
                     direction="row"
                     align="center"
                     justify="between"
                     fill="horizontal"
+                    gap="xsmall"
                   >
                     <FormattedMessage {...rootMessages.labels.countries} />
                     {showCountries && <FormUp size="large" />}
@@ -279,7 +274,7 @@ export function Header({ nav, onLoadData, match, theme }) {
               )}
               {showCountries && isMinSize(size, 'medium') && (
                 <Drop
-                  align={{ top: 'bottom', left: 'left' }}
+                  align={{ top: 'bottom', right: 'right' }}
                   target={countryTarget.current}
                   onClickOutside={() => setShowCountries(false)}
                   overflow="hidden"
@@ -297,7 +292,6 @@ export function Header({ nav, onLoadData, match, theme }) {
                   setShowCountries(false);
                   setShowMetrics(!showMetrics);
                 }}
-                icon={<Icon name="METRICS" style={{ minWidth: '24px' }} />}
                 justify="between"
                 label={
                   <Box
@@ -305,6 +299,7 @@ export function Header({ nav, onLoadData, match, theme }) {
                     align="center"
                     justify="between"
                     fill="horizontal"
+                    gap="xsmall"
                   >
                     <FormattedMessage {...rootMessages.labels.metrics} />
                     {showMetrics && <FormUp size="large" />}
@@ -318,7 +313,7 @@ export function Header({ nav, onLoadData, match, theme }) {
               )}
               {showMetrics && isMinSize(size, 'medium') && (
                 <Drop
-                  align={{ top: 'bottom', left: 'left' }}
+                  align={{ top: 'bottom', right: 'right' }}
                   target={metricTarget.current}
                   onClickOutside={() => setShowMetrics(false)}
                 >

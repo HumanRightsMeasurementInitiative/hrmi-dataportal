@@ -42,9 +42,9 @@ export function Search({
 
   return (
     <Box
-      flex={{ grow: 1 }}
       margin={margin ? { horizontal: 'medium' } : null}
       width={stretch ? '100%' : null}
+      style={{ minWidth: '300px' }}
     >
       <Box
         background={dark ? 'dark' : 'white'}
