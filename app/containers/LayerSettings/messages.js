@@ -11,7 +11,7 @@ export const scope = 'hrmi.containers.Settings';
 export default defineMessages({
   label: {
     id: `${scope}.label`,
-    defaultMessage: 'Chart settings',
+    defaultMessage: 'Settings',
   },
   hi: {
     title: {
@@ -40,7 +40,7 @@ export default defineMessages({
     },
     title: {
       id: `${scope}.mobile.title`,
-      defaultMessage: 'Chart settings & key',
+      defaultMessage: 'Settings & key',
     },
   },
 });

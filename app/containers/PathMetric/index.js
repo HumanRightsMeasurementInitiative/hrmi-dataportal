@@ -130,6 +130,7 @@ export function PathMetric({ match, intl, onMetricClick }) {
                 ancestors={ancestors}
                 showFAQs
                 showRelated
+                showSources
               />
             ),
           },

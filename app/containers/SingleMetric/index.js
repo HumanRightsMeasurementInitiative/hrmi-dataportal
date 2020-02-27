@@ -13,13 +13,6 @@ import { compose } from 'redux';
 import { Box, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 
-import ChartTools from 'containers/ChartTools';
-import Source from 'components/Source';
-import Hint from 'styled/Hint';
-
-import { sortScores } from 'utils/scores';
-import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
-
 import {
   getESRDimensionScores,
   getCPRDimensionScores,
@@ -42,7 +35,6 @@ import {
   getFeaturedValues,
   getFeatured,
 } from 'containers/App/selectors';
-
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import {
   BENCHMARKS,
@@ -50,10 +42,18 @@ import {
   COUNTRY_SORTS,
   COUNTRY_FILTERS,
 } from 'containers/App/constants';
+import ChartTools from 'containers/ChartTools';
+
 import ChartSettingFilters from 'components/ChartSettingFilters';
 import ChartSettingSort from 'components/ChartSettingSort';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ChartBars from 'components/ChartBars';
+import Source from 'components/Source';
+
+import Hint from 'styled/Hint';
+
+import { sortScores } from 'utils/scores';
+import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
