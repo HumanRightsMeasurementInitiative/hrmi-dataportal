@@ -22,7 +22,6 @@ import {
   getDependenciesReady,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
-import Close from 'containers/Close';
 import OverviewMetrics from 'containers/OverviewMetrics';
 import rootMessages from 'messages';
 
@@ -76,7 +75,6 @@ export function PathMetricOverview({
     <ContentWrap>
       <ContentContainer header>
         <ContentMaxWidth>
-          <Close />
           <PageTitle level={2}>
             <FormattedMessage {...messages.title} />
           </PageTitle>

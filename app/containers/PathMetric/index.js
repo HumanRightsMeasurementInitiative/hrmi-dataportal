@@ -13,8 +13,6 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { Box } from 'grommet';
 
-import Close from 'containers/Close';
-
 import SingleMetric from 'containers/SingleMetric';
 
 import TabContainer from 'containers/TabContainer';
@@ -32,7 +30,7 @@ import getMetricDetails from 'utils/metric-details';
 import { navigate } from 'containers/App/actions';
 import { getCloseTargetMetric } from 'containers/App/selectors';
 
-export function PathMetric({ match, intl, onMetricClick, closeTarget }) {
+export function PathMetric({ match, intl, onMetricClick }) {
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
   const metricTitle = intl.formatMessage(
@@ -71,7 +69,6 @@ export function PathMetric({ match, intl, onMetricClick, closeTarget }) {
       </Helmet>
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
-          <Close closeTarget={closeTarget} />
           <Box direction="column">
             <HeaderLinks
               onItemClick={key => onMetricClick(key)}
@@ -119,7 +116,6 @@ export function PathMetric({ match, intl, onMetricClick, closeTarget }) {
 PathMetric.propTypes = {
   intl: intlShape.isRequired,
   onMetricClick: PropTypes.func,
-  closeTarget: PropTypes.object,
   match: PropTypes.object,
 };
 

@@ -35,6 +35,7 @@ import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 import { loadDataIfNeeded } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 import NarrativeESR from 'components/CountryNarrative/NarrativeESR';
+import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRStandardHint';
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
@@ -93,6 +94,7 @@ export function ChartContainerCountryDimension({
       <div>
         {type === 'esr' && dimension && (
           <>
+            <NarrativeESRStandardHint country={country} standard={standard} />
             <NarrativeESR
               dimensionScore={dimension.score}
               country={country}

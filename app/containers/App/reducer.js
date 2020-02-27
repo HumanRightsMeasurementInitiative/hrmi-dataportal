@@ -20,6 +20,7 @@ import {
   LOAD_CONTENT_SUCCESS,
   CONTENT_REQUESTED,
   OPEN_HOW_TO,
+  OPEN_SETTINGS,
   COOKIECONSENT_CHECKED,
   GA_INITIALISED,
   PATHS,
@@ -32,6 +33,7 @@ export const initialState = {
   loading: false,
   error: false,
   howToRead: false,
+  settings: false,
   /* eslint-disable no-param-reassign */
   // the data
   data: DATA_RESOURCES.reduce((memo, resource) => {
@@ -67,16 +69,6 @@ export const initialState = {
     search: '',
     hash: '',
   },
-  closeTargetCountry: {
-    pathname: '',
-    search: '',
-    hash: '',
-  },
-  closeTargetMetric: {
-    pathname: '',
-    search: '',
-    hash: '',
-  },
   /* eslint-enable no-param-reassign */
 };
 
@@ -91,19 +83,6 @@ const appReducer = (state = initialState, action) =>
           // last non-page for pages
           if (route !== PATHS.PAGE) {
             draft.closeTargetPage = action.payload.location;
-          }
-          // go back to country overview if visited prior
-          if (route === PATHS.COUNTRIES) {
-            draft.closeTargetCountry = action.payload.location;
-          }
-          // go back to metric overview if visited prior
-          if (route === PATHS.METRICS) {
-            draft.closeTargetMetric = action.payload.location;
-          }
-          // ... that is unless we hit the home page in the meantime
-          if (route === PATHS.HOME) {
-            draft.closeTargetCountry = action.payload.location;
-            draft.closeTargetMetric = action.payload.location;
           }
         }
         draft.howToRead = false;
@@ -139,7 +118,12 @@ const appReducer = (state = initialState, action) =>
         draft.contentRequested = initialState.contentRequested;
         break;
       case OPEN_HOW_TO:
+        draft.settings = false;
         draft.howToRead = action.layer;
+        break;
+      case OPEN_SETTINGS:
+        draft.howToRead = false;
+        draft.settings = action.layer;
         break;
       case COOKIECONSENT_CHECKED:
         draft.cookieConsent = action.status;

@@ -4,16 +4,9 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Box, Tabs, Tab, ResponsiveContext } from 'grommet';
-import styled from 'styled-components';
 
-import {
-  getTabSearch,
-  getRouterRoute,
-  getRouterMatch,
-} from 'containers/App/selectors';
+import { getTabSearch } from 'containers/App/selectors';
 import { setTab } from 'containers/App/actions';
-import { showSettings } from 'containers/Settings';
-import HowToRead from 'containers/HowToRead';
 import ColumnTitle from 'styled/ColumnTitle';
 import ColumnHeader from 'styled/ColumnHeader';
 import ColumnContent from 'styled/ColumnContent';
@@ -22,26 +15,7 @@ import isNumber from 'utils/is-number';
 
 import TabAside from './TabAside';
 
-const HowToReadWrapper = styled.div`
-  position: relative;
-  right: 0px;
-  top: 4px;
-  text-align: right;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    position: absolute;
-    right: ${({ theme }) => theme.global.edgeSize.medium};
-    top: 0;
-  }
-`;
-
-function TabContainer({
-  tabs,
-  tabKey,
-  onTabClick,
-  aside = true,
-  route,
-  match,
-}) {
+function TabContainer({ tabs, tabKey, onTabClick, aside = true }) {
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
@@ -88,14 +62,6 @@ function TabContainer({
                             ? tab.titleMobile
                             : tab.title} key={tab.key}
                       >
-                        {tab.howToRead && (
-                          <HowToReadWrapper>
-                            <HowToRead
-                              htr={`tab-${tab.key}`}
-                              {...tab.howToRead}
-                            />
-                          </HowToReadWrapper>
-                        )}
                         <ColumnContent>
                           {tab.content({ hasAside, activeTab: activeIndex })}
                         </ColumnContent>
@@ -108,18 +74,6 @@ function TabContainer({
                 <Box direction="column">
                   <ColumnHeader direction="row">
                     <ColumnTitle>{mainTabs[0].title}</ColumnTitle>
-                    {mainTabs[0].howToRead && (
-                      <Box
-                        alignSelf="end"
-                        margin={{ left: 'auto' }}
-                        pad={{ right: 'medium' }}
-                      >
-                        <HowToRead
-                          htr={`tab-${mainTabs[0].key}`}
-                          {...mainTabs[0].howToRead}
-                        />
-                      </Box>
-                    )}
                   </ColumnHeader>
                   <ColumnContent>
                     {mainTabs[0].content({ hasAside, activeTab: activeIndex })}
@@ -131,7 +85,6 @@ function TabContainer({
               <TabAside
                 asideTab={asideTab}
                 tabIndex={activeIndex}
-                hasSettings={showSettings({ route, match, tabKey })}
               />
             )}
           </Box>
@@ -145,16 +98,11 @@ TabContainer.propTypes = {
   tabs: PropTypes.array,
   onTabClick: PropTypes.func,
   aside: PropTypes.bool,
-  theme: PropTypes.object,
   tabKey: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  route: PropTypes.string.isRequired,
-  match: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   tabKey: state => getTabSearch(state),
-  route: state => getRouterRoute(state),
-  match: state => getRouterMatch(state),
 });
 
 export function mapDispatchToProps(dispatch) {

@@ -29,11 +29,10 @@ import {
 import { loadDataIfNeeded } from 'containers/App/actions';
 
 import OverviewCountries from 'containers/OverviewCountries';
-import Close from 'containers/Close';
 
 import rootMessages from 'messages';
 
-import HowToRead from 'containers/HowToRead';
+import ChartTools from 'containers/ChartTools';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
@@ -48,7 +47,7 @@ import saga from 'containers/App/saga';
 
 import messages from './messages';
 
-const HowToReadWrapper = styled.div`
+const ChartToolWrapper = styled.div`
   position: relative;
   right: 0px;
   top: 4px;
@@ -104,7 +103,6 @@ export function PathCountryOverview({
     <ContentWrap>
       <ContentContainer header>
         <ContentMaxWidth>
-          <Close />
           <PageTitle level={2}>
             <FormattedMessage {...messages.title} />
           </PageTitle>
@@ -123,14 +121,22 @@ export function PathCountryOverview({
                 }}
               />
             </div>
-            <HowToReadWrapper>
-              <HowToRead
-                htr="tab-countries"
-                contxt="PathCountryOverview"
-                chart="Diamonds"
-                data={scale}
+            <ChartToolWrapper>
+              <ChartTools
+                howToReadConfig={{
+                  key: 'tab-countries',
+                  contxt: 'PathCountryOverview',
+                  chart: 'Diamonds',
+                  type: scale,
+                }}
+                settingsConfig={{
+                  key: 'tab-countries',
+                  showStandard: true,
+                  showBenchmark: true,
+                  showScale: true,
+                }}
               />
-            </HowToReadWrapper>
+            </ChartToolWrapper>
             <ColumnContent>
               <OverviewCountries
                 countries={filteredCountries}

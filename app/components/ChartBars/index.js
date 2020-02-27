@@ -88,7 +88,7 @@ ChartBars.propTypes = {
   listHeader: PropTypes.bool,
   bullet: PropTypes.bool,
   metric: PropTypes.object,
-  currentBenchmark: PropTypes.object,
+  currentBenchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   // standard: PropTypes.string,
 };

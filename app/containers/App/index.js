@@ -17,7 +17,6 @@ import { Switch, Route } from 'react-router-dom';
 import GlobalStyle from 'global-styles';
 
 import Header from 'containers/Header';
-import Settings from 'containers/Settings';
 import PathHome from 'containers/PathHome';
 import PathMetric from 'containers/PathMetric';
 import PathMetricOverview from 'containers/PathMetricOverview';
@@ -25,7 +24,8 @@ import PathCountry from 'containers/PathCountry';
 import PathCountryOverview from 'containers/PathCountryOverview';
 import PathPage from 'containers/PathPage';
 import PathNotFoundPage from 'containers/PathNotFoundPage';
-import HowToReadLayer from 'containers/HowToRead/HowToReadLayer';
+import HowToReadLayer from 'containers/LayerHowToRead';
+import SettingsLayer from 'containers/LayerSettings';
 
 import CookieConsent from 'containers/CookieConsent';
 
@@ -76,6 +76,7 @@ export function App({ match, intl }) {
         <CookieConsent />
         <Header />
         <HowToReadLayer />
+        <SettingsLayer />
         <Main>
           <Switch>
             <Route exact path={`/${locale}`} component={PathHome} />
@@ -102,7 +103,6 @@ export function App({ match, intl }) {
             <Route path={`/${locale}`} component={PathNotFoundPage} />
           </Switch>
         </Main>
-        <Settings />
       </ScrollToTop>
       <GlobalStyle />
     </AppWrapper>
