@@ -9,7 +9,7 @@ import styled, { css } from 'styled-components';
 import { getTabSearch } from 'containers/App/selectors';
 import { setTab } from 'containers/App/actions';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-import ButtonNavPrimary from 'styled/ButtonNavPrimary';
+import ButtonNavTab from 'styled/ButtonNavTab';
 import MainColumn from 'styled/MainColumn';
 
 import { isMinSize, isMaxSize } from 'utils/responsive';
@@ -20,6 +20,10 @@ import TabAside from './TabAside';
 // const Tab = styled.div``;
 // prettier-ignore
 const Tabs = styled.div``;
+const Spacer = styled.div`
+  background: 'transparent';
+  height: ${({ height }) => height}px;
+`;
 const Fixed = styled.div`
   background: grey;
   ${({ fixed }) =>
@@ -39,6 +43,14 @@ const Fixed = styled.div`
 function TabContainer({ tabs, tabKey, onTabClick }) {
   const [scrollTop, setScrollTop] = useState(0);
   const tabsRef = useRef();
+  const fixedRef = useRef();
+  const tabsRefOffset =
+    tabsRef &&
+    tabsRef.current &&
+    tabsRef.current.getBoundingClientRect &&
+    tabsRef.current.getBoundingClientRect().top;
+  const fixedTop =
+    scrollTop > SIZES.header.height && tabsRefOffset < SIZES.header.height;
 
   useEffect(() => {
     function handleScroll() {
@@ -49,14 +61,18 @@ function TabContainer({ tabs, tabKey, onTabClick }) {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  const fixedTop =
-    scrollTop > SIZES.header.height &&
-    tabsRef &&
-    tabsRef.current &&
-    tabsRef.current.getBoundingClientRect &&
-    tabsRef.current.getBoundingClientRect().top < SIZES.header.height;
-
+  // make sure scroll to top on ctab change
+  useEffect(() => {
+    const tabsRefParentOffset =
+      tabsRef &&
+      tabsRef.current &&
+      tabsRef.current.offsetParent &&
+      tabsRef.current.offsetParent.offsetTop;
+    if (scrollTop > tabsRefParentOffset) {
+      window.scrollTo(0, tabsRefParentOffset - SIZES.header.height);
+    }
+    // }
+  }, [tabKey]);
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
@@ -88,13 +104,13 @@ function TabContainer({ tabs, tabKey, onTabClick }) {
               justify="start"
               ref={tabsRef}
             >
-              <Fixed fixed={fixedTop}>
+              <Fixed fixed={fixedTop} ref={fixedRef}>
                 <ContentMaxWidth>
                   {mainTabs.map(tab => (
-                    <ButtonNavPrimary
+                    <ButtonNavTab
                       key={tab.key}
                       active={tab.key === activeTab.key}
-                      onClick={() => onTabClick(tab)}
+                      onClick={() => onTabClick(tab.key)}
                     >
                       {isMaxSize(size, 'medium') && tab.titleMobile && (
                         <span>{tab.titleMobile}</span>
@@ -102,20 +118,27 @@ function TabContainer({ tabs, tabKey, onTabClick }) {
                       {(!isMaxSize(size, 'medium') || !tab.titleMobile) && (
                         <span>{tab.title}</span>
                       )}
-                    </ButtonNavPrimary>
+                    </ButtonNavTab>
                   ))}
                 </ContentMaxWidth>
               </Fixed>
+              {fixedTop && (
+                <Spacer height={fixedRef && fixedRef.current.offsetHeight} />
+              )}
             </Tabs>
             <ContentMaxWidth column>
               <Box direction="row" fill="horizontal">
                 <MainColumn hasAside={!!asideTab}>
-                  {activeTab.content({ activeTab: activeIndex })}
+                  {activeTab.content({
+                    activeTab: activeTab.key,
+                    goToTab: key => onTabClick(key),
+                    tabs: mainTabs,
+                  })}
                 </MainColumn>
                 {asideTab && (
                   <TabAside
                     asideTab={asideTab}
-                    tabIndex={activeIndex}
+                    activeTab={activeTab && activeTab.key}
                   />
                 )}
               </Box>
@@ -139,10 +162,7 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onTabClick: tab => {
-      const key = (tab && tab.key) || '0';
-      return dispatch(setTab(key));
-    },
+    onTabClick: key => dispatch(setTab(key || '0')),
   };
 }
 

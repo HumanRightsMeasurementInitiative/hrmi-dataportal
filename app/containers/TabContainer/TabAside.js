@@ -4,7 +4,7 @@ import { Box, ResponsiveContext } from 'grommet';
 
 import { getAsideWidth } from 'utils/responsive';
 
-function TabAside({ asideTab, tabIndex }) {
+function TabAside({ asideTab, activeTab }) {
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
@@ -15,7 +15,7 @@ function TabAside({ asideTab, tabIndex }) {
             direction="column"
             flex={{ shrink: 0 }}
           >
-            {asideTab.content({ activeTab: tabIndex })}
+            {asideTab.content({ activeTab })}
           </Box>
         </>
       )}
@@ -25,7 +25,7 @@ function TabAside({ asideTab, tabIndex }) {
 
 TabAside.propTypes = {
   asideTab: PropTypes.object,
-  tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+  activeTab: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 
 export default TabAside;

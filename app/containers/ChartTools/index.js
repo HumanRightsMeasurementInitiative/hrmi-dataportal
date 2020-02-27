@@ -38,7 +38,7 @@ export function ChartTools({
             return onOpenHowToRead(howToReadConfig);
           }}
         >
-          <FormattedMessage {...messages.label} />
+          <FormattedMessage {...messages.labelShort} />
         </ButtonChartTool>
       )}
       {settingsConfig && (
@@ -50,7 +50,7 @@ export function ChartTools({
             return onOpenSettings(settingsConfig);
           }}
         >
-          Settings
+          Chart settings
         </ButtonChartTool>
       )}
     </Styled>

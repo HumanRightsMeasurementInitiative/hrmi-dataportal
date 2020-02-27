@@ -328,12 +328,12 @@ export const RIGHTS_TYPES = ['esr', 'cpr'];
 // d: dimensions, r: rights
 export const SCALES = [
   {
-    key: 'r',
-    type: 'rights',
-  },
-  {
     key: 'd',
     type: 'dimensions',
+  },
+  {
+    key: 'r',
+    type: 'rights',
   },
 ];
 

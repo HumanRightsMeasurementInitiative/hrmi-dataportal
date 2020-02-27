@@ -11,9 +11,10 @@ import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { Box, ResponsiveContext } from 'grommet';
+import styled from 'styled-components';
 
+import ChartTools from 'containers/ChartTools';
 import Source from 'components/Source';
-import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
 
 import { sortScores } from 'utils/scores';
@@ -67,6 +68,18 @@ const DEPENDENCIES = [
   'auxIndicators',
   'featured',
 ];
+
+const ChartToolWrapper = styled.div`
+  position: relative;
+  right: 0px;
+  top: 4px;
+  text-align: right;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    /* position: absolute;
+    right: ${({ theme }) => theme.global.edgeSize.medium};
+    top: 0; */
+  }
+`;
 
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
 
@@ -170,7 +183,6 @@ export function SingleMetric({
   onOrderChange,
   countries,
   dataReady,
-  hasAside,
   auxIndicators,
   featuredValues,
   featuredCountries,
@@ -225,7 +237,23 @@ export function SingleMetric({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <MainColumn hasAside={hasAside}>
+        <>
+          <ChartToolWrapper>
+            <ChartTools
+              howToReadConfig={{
+                contxt: 'PathMetric',
+                chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
+                data: metric.color,
+              }}
+              settingsConfig={
+                metric.type === 'esr' && {
+                  key: 'metric',
+                  showStandard: true,
+                  showBenchmark: metric.metricType !== 'indicators',
+                }
+              }
+            />
+          </ChartToolWrapper>
           <Box
             direction="row"
             justify="between"
@@ -296,7 +324,7 @@ export function SingleMetric({
             </Box>
           )}
           {hasResults && <Source />}
-        </MainColumn>
+        </>
       )}
     </ResponsiveContext.Consumer>
   );
@@ -309,7 +337,6 @@ SingleMetric.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   metric: PropTypes.object.isRequired,
-  hasAside: PropTypes.bool,
   standard: PropTypes.string,
   benchmark: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),

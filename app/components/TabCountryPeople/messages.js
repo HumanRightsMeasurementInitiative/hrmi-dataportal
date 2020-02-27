@@ -1,12 +1,12 @@
 /*
- * CountryPeople Messages
+ * TabCountryPeople Messages
  *
- * This contains all the text for the CountryPeople component.
+ * This contains all the text for the TabCountryPeople component.
  */
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.CountryPeople';
+export const scope = 'hrmi.components.TabCountryPeople';
 
 export default defineMessages({
   title: {
