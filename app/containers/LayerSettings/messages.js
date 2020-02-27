@@ -9,6 +9,10 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.containers.Settings';
 
 export default defineMessages({
+  label: {
+    id: `${scope}.label`,
+    defaultMessage: 'Chart settings',
+  },
   hi: {
     title: {
       id: `${scope}.hi.title`,

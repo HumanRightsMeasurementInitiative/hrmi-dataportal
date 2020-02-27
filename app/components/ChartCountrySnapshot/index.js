@@ -1,6 +1,6 @@
 /**
  *
- * ChartCountrySummary
+ * ChartCountrySnapshot
  *
  */
 
@@ -113,7 +113,7 @@ const prepareData = ({ scores, dimensionCode, currentBenchmark, standard }) =>
       }
   );
 
-function ChartCountrySummary({
+function ChartCountrySnapshot({
   type,
   dimensionCode,
   dimensionScore,
@@ -163,7 +163,7 @@ function ChartCountrySummary({
 // )}
 // </ResponsiveContext.Consumer>
 
-ChartCountrySummary.propTypes = {
+ChartCountrySnapshot.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dimensionScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   currentBenchmark: PropTypes.object,
@@ -174,4 +174,4 @@ ChartCountrySummary.propTypes = {
   dimensionCode: PropTypes.string,
 };
 
-export default ChartCountrySummary;
+export default ChartCountrySnapshot;

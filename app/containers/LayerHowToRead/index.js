@@ -48,7 +48,7 @@ function HowToReadLayer({ layer, theme, onClose }) {
   }, []);
 
   if (!layer) return null;
-  const { contxt, chart, data } = layer;
+  const { contxt, chart, type } = layer;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -82,16 +82,16 @@ function HowToReadLayer({ layer, theme, onClose }) {
                 <CloseIcon size="xlarge" color="white" />
               </ButtonIcon>
             </ButtonWrap>
-            {chart === 'Diamonds' && data === 'd' && <HTROverviewDimensions />}
-            {chart === 'Diamonds' && data === 'r' && <HTROverviewRights />}
-            {chart === 'Summary' && data === 'd' && <HTRSummaryDimensions />}
-            {chart === 'Summary' && data === 'r' && <HTRSummaryRights />}
+            {chart === 'Diamonds' && type === 'd' && <HTROverviewDimensions />}
+            {chart === 'Diamonds' && type === 'r' && <HTROverviewRights />}
+            {chart === 'Summary' && type === 'd' && <HTRSummaryDimensions />}
+            {chart === 'Summary' && type === 'r' && <HTRSummaryRights />}
             {chart === 'Bullet' && (
-              <HTRBulletCPR contxt={contxt} dimension={data} />
+              <HTRBulletCPR contxt={contxt} dimension={type} />
             )}
             {chart === 'Bar' && <HTRBarESR contxt={contxt} />}
-            {chart === 'Trend' && data === 'esr' && <HTRTrendESR />}
-            {chart === 'Trend' && data === 'cpr' && <HTRTrendCPR />}
+            {chart === 'Trend' && type === 'esr' && <HTRTrendESR />}
+            {chart === 'Trend' && type === 'cpr' && <HTRTrendCPR />}
           </Box>
         </Layer>
       )}
@@ -101,8 +101,8 @@ function HowToReadLayer({ layer, theme, onClose }) {
 
 HowToReadLayer.propTypes = {
   layer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  theme: PropTypes.object,
   onClose: PropTypes.func,
+  theme: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

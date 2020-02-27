@@ -13,33 +13,6 @@ import { BENCHMARKS } from 'containers/App/constants';
 import rootMessages from 'messages';
 import messages from './messages';
 
-const getDefaultStandard = country =>
-  country.high_income_country === '1' ? 'hi' : 'core';
-
-const getIncomeCategory = country =>
-  country.high_income_country === '1' ? 'hi' : 'lmi';
-
-const renderStandardHint = (intl, standard, country) => (
-  <Paragraph>
-    <strong>
-      <FormattedMessage
-        {...messages.esr.changeStandardNote}
-        values={{
-          otherStandard: intl.formatMessage(
-            rootMessages.settings.standard[standard],
-          ),
-          isDefaultStandard: intl.formatMessage(
-            rootMessages.settings.standard[getDefaultStandard(country)],
-          ),
-          incomeCategory: intl.formatMessage(
-            rootMessages.income[getIncomeCategory(country)],
-          ),
-        }}
-      />
-    </strong>
-  </Paragraph>
-);
-
 function NarrativeESR({
   country,
   dimensionScore,
@@ -48,10 +21,8 @@ function NarrativeESR({
   countryGrammar,
   short = false,
   benchmark,
-  standard,
 }) {
   // console.log(score);
-  const isDefaultStandard = getDefaultStandard(country);
   const scoreAdjusted =
     dimensionScore &&
     dimensionScore[BENCHMARKS.find(s => s.key === 'adjusted').column];
@@ -82,7 +53,6 @@ function NarrativeESR({
     ),
     benchmarkBest: intl.formatMessage(rootMessages.settings.benchmark.best),
   };
-
   if (!dimensionScore) {
     return (
       <Paragraph>
@@ -103,7 +73,6 @@ function NarrativeESR({
     if (short) {
       return (
         <>
-          {!isDefaultStandard && renderStandardHint(intl, standard, country)}
           <Paragraph>
             {benchmark === 'adjusted' && (
               <FormattedMessage
@@ -123,7 +92,6 @@ function NarrativeESR({
     }
     return (
       <>
-        {!isDefaultStandard && renderStandardHint(intl, standard, country)}
         <Paragraph>
           <FormattedMessage {...messages.esr.start} values={messageValues} />
         </Paragraph>
@@ -188,7 +156,6 @@ NarrativeESR.propTypes = {
   country: PropTypes.object,
   countryGrammar: PropTypes.object,
   benchmark: PropTypes.string,
-  standard: PropTypes.string,
   intl: intlShape.isRequired,
 };
 

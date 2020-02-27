@@ -32,7 +32,7 @@ const FixedAside = styled.span`
     `} );
 `;
 
-function TabAside({ asideTab, tabIndex, hasSettings, theme }) {
+function TabAside({ asideTab, tabIndex, theme }) {
   const [scrollTop, setScrollTop] = useState(0);
   const asideRef = useRef();
   const [windowDimensions, setWindowDimensions] = useState(
@@ -79,7 +79,6 @@ function TabAside({ asideTab, tabIndex, hasSettings, theme }) {
                 ? getFloatingAsideWidth(size, theme, windowDimensions)
                 : 'auto'
               }
-              hasSettings={hasSettings}
             >
               <ColumnHeader>
                 {fixedAside && <ColumnTitle>&nbsp;</ColumnTitle>}
@@ -107,7 +106,6 @@ function TabAside({ asideTab, tabIndex, hasSettings, theme }) {
 TabAside.propTypes = {
   asideTab: PropTypes.object,
   tabIndex: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  hasSettings: PropTypes.bool,
   theme: PropTypes.object,
 };
 

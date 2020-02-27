@@ -27,7 +27,7 @@ import Source from 'components/Source';
 
 import { INDICATOR_LOOKBACK, PEOPLE_GROUPS } from 'containers/App/constants';
 
-import SettingsMultiToggle from 'containers/Settings/SettingsMultiToggle';
+import SettingsMultiToggle from 'containers/LayerSettings/SettingsMultiToggle';
 
 import ButtonToggleValueSetting from 'styled/ButtonToggleValueSetting';
 import WrapPlot from 'styled/WrapPlot';

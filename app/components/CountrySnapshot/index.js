@@ -11,7 +11,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { Heading } from 'grommet';
 
-import ChartContainerCountrySummary from 'containers/ChartContainerCountrySummary';
+import ChartContainerCountrySnapshot from 'containers/ChartContainerCountrySnapshot';
 import LoadingIndicator from 'components/LoadingIndicator';
 import MainColumn from 'styled/MainColumn';
 
@@ -52,7 +52,7 @@ function CountrySnapshot({
               )}
             />
           </StyledHeading>
-          <ChartContainerCountrySummary countryCode={countryCode} />
+          <ChartContainerCountrySnapshot countryCode={countryCode} />
         </>
       )}
     </MainColumn>
