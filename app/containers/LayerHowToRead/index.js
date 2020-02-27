@@ -48,7 +48,7 @@ function HowToReadLayer({ layer, theme, onClose }) {
   }, []);
 
   if (!layer) return null;
-  const { contxt, chart, type } = layer;
+  const { contxt, chart, type, dimension } = layer;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -87,7 +87,7 @@ function HowToReadLayer({ layer, theme, onClose }) {
             {chart === 'Summary' && type === 'd' && <HTRSummaryDimensions />}
             {chart === 'Summary' && type === 'r' && <HTRSummaryRights />}
             {chart === 'Bullet' && (
-              <HTRBulletCPR contxt={contxt} dimension={type} />
+              <HTRBulletCPR contxt={contxt} dimension={dimension} />
             )}
             {chart === 'Bar' && <HTRBarESR contxt={contxt} />}
             {chart === 'Trend' && type === 'esr' && <HTRTrendESR />}

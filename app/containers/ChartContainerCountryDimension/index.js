@@ -34,6 +34,7 @@ import {
 import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
 import { loadDataIfNeeded } from 'containers/App/actions';
 import saga from 'containers/App/saga';
+import ChartTools from 'containers/ChartTools';
 import NarrativeESR from 'components/CountryNarrative/NarrativeESR';
 import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRStandardHint';
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
@@ -94,6 +95,17 @@ export function ChartContainerCountryDimension({
       <div>
         {type === 'esr' && dimension && (
           <>
+            <ChartTools
+              howToReadConfig={{
+                key: 'country-dimension-esr',
+                chart: 'Bar',
+              }}
+              settingsConfig={{
+                key: 'country-dimension-esr',
+                showStandard: true,
+                showBenchmark: true,
+              }}
+            />
             <NarrativeESRStandardHint country={country} standard={standard} />
             <NarrativeESR
               dimensionScore={dimension.score}
@@ -116,23 +128,32 @@ export function ChartContainerCountryDimension({
         )}
         {type === 'cpr' && dimension && (
           <>
+            <ChartTools
+              howToReadConfig={{
+                key: 'country-dimension',
+                chart: 'Bullet',
+                dimension: dimensionCode,
+              }}
+            />
             <NarrativeCPR
               dimensionKey={dimensionCode}
               score={dimension.score}
               country={country}
               countryGrammar={countryGrammar}
             />
-            <Paragraph>
-              <NarrativeCPRCompAssessment
-                dimensionKey={dimensionCode}
-                score={dimension.score}
-                country={country}
-                countryGrammar={countryGrammar}
-                referenceScore={reference.average}
-                referenceCount={reference.count}
-                start
-              />
-            </Paragraph>
+            {dimension.score && (
+              <Paragraph>
+                <NarrativeCPRCompAssessment
+                  dimensionKey={dimensionCode}
+                  score={dimension.score}
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  referenceScore={reference.average}
+                  referenceCount={reference.count}
+                  start
+                />
+              </Paragraph>
+            )}
           </>
         )}
       </div>
