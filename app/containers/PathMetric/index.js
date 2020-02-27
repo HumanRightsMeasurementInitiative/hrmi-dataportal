@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -13,16 +13,19 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { Box } from 'grommet';
 
+import { PATHS } from 'containers/App/constants';
+import LayerInfo from 'containers/LayerInfo';
 import SingleMetric from 'containers/SingleMetric';
-
 import TabContainer from 'containers/TabContainer';
-import MetricAside from 'containers/MetricAside';
+import AboutMetricContainer from 'containers/AboutMetricContainer';
+import AboutCountryContainer from 'containers/AboutCountryContainer';
+
+import HeaderLinks from 'components/HeaderLinks';
+
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
-import HeaderLinks from 'components/HeaderLinks';
-import { PATHS } from 'containers/App/constants';
 import rootMessages from 'messages';
 
 import getMetricDetails from 'utils/metric-details';
@@ -31,6 +34,7 @@ import { navigate } from 'containers/App/actions';
 import { getCloseTargetMetric } from 'containers/App/selectors';
 
 export function PathMetric({ match, intl, onMetricClick }) {
+  const [aboutCountry, setAboutCountry] = useState(null);
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
   const metricTitle = intl.formatMessage(
@@ -61,12 +65,27 @@ export function PathMetric({ match, intl, onMetricClick }) {
       key: metric.right,
     });
   }
+  // onCategoryClick={(key, value) => {
+  //   onAddFilter(key, value);
+  // }}
   return (
     <ContentWrap>
       <Helmet>
         <title>{metricTitle}</title>
         <meta name="description" content="Description of metric" />
       </Helmet>
+      {aboutCountry && (
+        <LayerInfo
+          content={
+            <AboutCountryContainer
+              countryCode={aboutCountry}
+              showTitle
+              showCountryLink
+            />
+          }
+          onClose={() => setAboutCountry(null)}
+        />
+      )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
           <Box direction="column">
@@ -91,14 +110,27 @@ export function PathMetric({ match, intl, onMetricClick }) {
           {
             key: 'singleMetric',
             title: intl.formatMessage(rootMessages.tabs.singleMetric),
-            content: props => <SingleMetric {...props} metric={metric} />,
+            content: props => (
+              <SingleMetric
+                {...props}
+                metric={metric}
+                onCountryClick={code => setAboutCountry(code)}
+              />
+            ),
           },
           {
             aside: true,
             key: 'about',
             title: intl.formatMessage(rootMessages.tabs.about),
             content: props => (
-              <MetricAside {...props} metric={metric} ancestors={ancestors} />
+              <AboutMetricContainer
+                {...props}
+                metric={metric}
+                metricCode={metricCode}
+                ancestors={ancestors}
+                showFAQs
+                showRelated
+              />
             ),
           },
         ]}
@@ -110,6 +142,7 @@ export function PathMetric({ match, intl, onMetricClick }) {
 PathMetric.propTypes = {
   intl: intlShape.isRequired,
   onMetricClick: PropTypes.func,
+  // onAddFilter: PropTypes.func,
   match: PropTypes.object,
 };
 
@@ -135,6 +168,21 @@ export function mapDispatchToProps(dispatch) {
           },
         ),
       ),
+    // onAddFilter: (key, value) =>
+    //   dispatch(
+    //     navigate(
+    //       { search: `?${key}=${value}` },
+    //       {
+    //         replace: false,
+    //         multiple: true,
+    //         trackEvent: {
+    //           category: 'Data',
+    //           action: 'Country filter (Metric)',
+    //           value: `${key}/${value}`,
+    //         },
+    //       },
+    //     ),
+    //   ),
   };
 }
 

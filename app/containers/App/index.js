@@ -24,8 +24,8 @@ import PathCountry from 'containers/PathCountry';
 import PathCountryOverview from 'containers/PathCountryOverview';
 import PathPage from 'containers/PathPage';
 import PathNotFoundPage from 'containers/PathNotFoundPage';
-import HowToReadLayer from 'containers/LayerHowToRead';
-import SettingsLayer from 'containers/LayerSettings';
+import LayerHowToRead from 'containers/LayerHowToRead';
+import LayerSettings from 'containers/LayerSettings';
 
 import CookieConsent from 'containers/CookieConsent';
 
@@ -75,8 +75,8 @@ export function App({ match, intl }) {
       <ScrollToTop>
         <CookieConsent />
         <Header />
-        <HowToReadLayer />
-        <SettingsLayer />
+        <LayerHowToRead />
+        <LayerSettings />
         <Main>
           <Switch>
             <Route exact path={`/${locale}`} component={PathHome} />

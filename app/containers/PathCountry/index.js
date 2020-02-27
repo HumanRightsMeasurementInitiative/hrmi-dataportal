@@ -4,29 +4,17 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
+import { injectIntl, intlShape } from 'react-intl';
 
 import { Box } from 'grommet';
 
 import rootMessages from 'messages';
-
-import TabCountryReport from 'components/TabCountryReport';
-import TabCountrySnapshot from 'components/TabCountrySnapshot';
-import TabCountryPeople from 'components/TabCountryPeople';
-import CountryAbout from 'components/CountryAbout';
-import HeaderLinks from 'components/HeaderLinks';
-import TabContainer from 'containers/TabContainer';
-
-import ContentWrap from 'styled/ContentWrap';
-import ContentContainer from 'styled/ContentContainer';
-import ContentMaxWidth from 'styled/ContentMaxWidth';
-import PageTitle from 'styled/PageTitle';
 
 import {
   getDimensionsForCountry,
@@ -35,9 +23,6 @@ import {
   getCountry,
   getStandardSearch,
   getPeopleAtRiskForCountry,
-  getAuxIndicatorsForCountry,
-  getLatestCountryCurrentGDP,
-  getLatestCountry2011PPPGDP,
   getDependenciesReady,
   getESRIndicators,
 } from 'containers/App/selectors';
@@ -50,6 +35,23 @@ import {
   PATHS,
   FAQS,
 } from 'containers/App/constants';
+
+import TabContainer from 'containers/TabContainer';
+import AboutCountryContainer from 'containers/AboutCountryContainer';
+import AboutMetricContainer from 'containers/AboutMetricContainer';
+import LayerInfo from 'containers/LayerInfo';
+
+import TabCountryReport from 'components/TabCountryReport';
+import TabCountrySnapshot from 'components/TabCountrySnapshot';
+import TabCountryPeople from 'components/TabCountryPeople';
+import HeaderLinks from 'components/HeaderLinks';
+
+import ContentWrap from 'styled/ContentWrap';
+import ContentContainer from 'styled/ContentContainer';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
+import PageTitle from 'styled/PageTitle';
+import getMetricDetails from 'utils/metric-details';
+
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -76,12 +78,11 @@ export function PathCountry({
   country,
   atRisk,
   standard,
-  auxIndicators,
-  currentGDP,
-  pppGDP,
   dataReady,
   allIndicators,
 }) {
+  const [aboutMetric, setAboutMetric] = useState(null);
+
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -109,6 +110,19 @@ export function PathCountry({
         <title>{countryTitle}</title>
         <meta name="description" content="Description of Country page" />
       </Helmet>
+      {aboutMetric && (
+        <LayerInfo
+          content={
+            <AboutMetricContainer
+              metricCode={aboutMetric}
+              metric={getMetricDetails(aboutMetric)}
+              showTitle
+              showMetricLink
+            />
+          }
+          onClose={() => setAboutMetric(null)}
+        />
+      )}
       <ContentContainer direction="column" header>
         <ContentMaxWidth>
           <Box direction="column">
@@ -147,7 +161,11 @@ export function PathCountry({
             key: 'snapshot',
             title: intl.formatMessage(rootMessages.tabs.snapshot),
             content: props => (
-              <TabCountrySnapshot {...props} countryCode={countryCode} />
+              <TabCountrySnapshot
+                {...props}
+                countryCode={countryCode}
+                onMetricClick={code => setAboutMetric(code)}
+              />
             ),
           },
           {
@@ -165,6 +183,7 @@ export function PathCountry({
                 standard={standard}
                 dataReady={dataReady}
                 allIndicators={allIndicators}
+                onMetricClick={code => setAboutMetric(code)}
               />
             ),
           },
@@ -180,6 +199,7 @@ export function PathCountry({
                 hasDimensionScore={dataReady && hasCPR(dimensions)}
                 country={country}
                 dataReady={dataReady}
+                onMetricClick={code => setAboutMetric(code)}
               />
             ),
           },
@@ -195,6 +215,7 @@ export function PathCountry({
                 hasDimensionScore={dataReady && hasCPR(dimensions)}
                 country={country}
                 dataReady={dataReady}
+                onMetricClick={code => setAboutMetric(code)}
               />
             ),
           },
@@ -242,12 +263,9 @@ export function PathCountry({
               }
               // TODO check about tab
               return (
-                <CountryAbout
+                <AboutCountryContainer
                   {...props}
-                  country={country}
-                  auxIndicators={auxIndicators}
-                  currentGDP={currentGDP}
-                  pppGDP={pppGDP}
+                  countryCode={countryCode}
                   onCategoryClick={onCategoryClick}
                   showFAQs={faqs}
                 />
@@ -277,9 +295,6 @@ PathCountry.propTypes = {
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   esrYear: PropTypes.number,
   cprYear: PropTypes.number,
@@ -299,12 +314,6 @@ const mapStateToProps = createStructuredSelector({
     getDimensionsForCountry(state, match.params.country),
   atRisk: (state, { match }) => getPeopleAtRiskForCountry(state, match.params),
   standard: state => getStandardSearch(state),
-  currentGDP: (state, { match }) =>
-    getLatestCountryCurrentGDP(state, match.params.country),
-  pppGDP: (state, { match }) =>
-    getLatestCountry2011PPPGDP(state, match.params.country),
-  auxIndicators: (state, { match }) =>
-    getAuxIndicatorsForCountry(state, match.params.country),
   allIndicators: state => getESRIndicators(state),
 });
 

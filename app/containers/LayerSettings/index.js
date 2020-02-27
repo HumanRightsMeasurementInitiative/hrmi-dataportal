@@ -1,6 +1,6 @@
 /**
  *
- * SettingsLayer
+ * LayerSettings
  *
  */
 
@@ -48,7 +48,7 @@ const ButtonWrap = styled.div`
   right: 1em;
 `;
 
-export function SettingsLayer({
+export function LayerSettings({
   scale,
   standard,
   benchmark,
@@ -145,7 +145,7 @@ export function SettingsLayer({
   );
 }
 
-SettingsLayer.propTypes = {
+LayerSettings.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   standard: PropTypes.string,
   onSetStandard: PropTypes.func,
@@ -179,4 +179,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withTheme(SettingsLayer));
+export default compose(withConnect)(withTheme(LayerSettings));

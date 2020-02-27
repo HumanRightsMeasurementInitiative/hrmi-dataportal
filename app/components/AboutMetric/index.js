@@ -1,6 +1,6 @@
 /**
  *
- * MetricAbout
+ * AboutMetric
  *
  */
 
@@ -19,7 +19,14 @@ import messages from './messages';
 const StyledUL = styled(UL)`
   margin-top: 0;
 `;
-function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
+function AboutMetric({
+  metric,
+  metricInfo,
+  standard,
+  intl,
+  fullInfo,
+  showTitle,
+}) {
   const { metricType } = metric;
   return (
     <Box
@@ -27,6 +34,11 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
       pad={{ left: 'medium', top: 'small', bottom: 'medium' }}
     >
       <WrapAsideTop>
+        {showTitle && (
+          <Heading responsive={false} level={3}>
+            <FormattedMessage {...rootMessages[metricType][metric.key]} />
+          </Heading>
+        )}
         <Heading responsive={false} level={5} margin={{ vertical: 'xsmall' }}>
           <FormattedMessage {...messages.title[metricType]} />
         </Heading>
@@ -102,12 +114,13 @@ function MetricAbout({ metric, metricInfo, standard, intl, fullInfo }) {
   );
 }
 
-MetricAbout.propTypes = {
+AboutMetric.propTypes = {
   metric: PropTypes.object,
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   fullInfo: PropTypes.bool,
+  showTitle: PropTypes.bool,
   standard: PropTypes.object,
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(MetricAbout);
+export default injectIntl(AboutMetric);

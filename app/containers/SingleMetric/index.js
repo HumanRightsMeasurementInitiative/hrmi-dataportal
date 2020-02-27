@@ -137,8 +137,16 @@ const getCountryLabel = (score, countries, metric, intl) => {
   return label;
 };
 
-// prettier-ignore
-const prepareData = ({ scores, metric, currentBenchmark, standard, countries, intl }) =>
+const prepareData = ({
+  scores,
+  metric,
+  currentBenchmark,
+  standard,
+  countries,
+  intl,
+  onCountryClick,
+}) =>
+  // prettier-ignore
   scores.map(s =>
     metric.type === 'esr' || metric.metricType === 'indicators'
       ? {
@@ -150,6 +158,7 @@ const prepareData = ({ scores, metric, currentBenchmark, standard, countries, in
         stripes: standard === 'hi',
         key: s.country_code,
         label: getCountryLabel(s, countries, metric, intl),
+        onClick: () => onCountryClick(s.country_code),
       }
       : {
         color: metric.dimension || metric.key,
@@ -159,6 +168,7 @@ const prepareData = ({ scores, metric, currentBenchmark, standard, countries, in
         band: getBand(s),
         key: s.country_code,
         label: getCountryLabel(s, countries, metric, intl),
+        onClick: () => onCountryClick(s.country_code),
       }
   );
 
@@ -186,6 +196,7 @@ export function SingleMetric({
   auxIndicators,
   featuredValues,
   featuredCountries,
+  onCountryClick,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -294,6 +305,7 @@ export function SingleMetric({
                 standard,
                 intl,
                 countries,
+                onCountryClick,
               })}
               currentBenchmark={currentBenchmark}
               metric={metric}
@@ -315,6 +327,7 @@ export function SingleMetric({
                   standard,
                   intl,
                   countries,
+                  onCountryClick,
                 })}
                 currentBenchmark={currentBenchmark}
                 metric={metric}
@@ -361,6 +374,7 @@ SingleMetric.propTypes = {
   dataReady: PropTypes.bool,
   featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  onCountryClick: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

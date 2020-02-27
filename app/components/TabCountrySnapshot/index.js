@@ -14,6 +14,7 @@ function TabCountrySnapshot(props) {
 }
 TabCountrySnapshot.propTypes = {
   countryCode: PropTypes.string.isRequired,
+  onMetricClick: PropTypes.func,
 };
 
 export default TabCountrySnapshot;
