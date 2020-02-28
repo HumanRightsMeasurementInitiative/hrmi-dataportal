@@ -140,7 +140,7 @@ export function AboutMetricContainer({
       />
       <Box
         direction="column"
-        pad={{ bottom: 'medium', horizontal: 'medium' }}
+        pad={{ vertical: 'medium', horizontal: 'medium' }}
         justify="start"
       >
         {showRelated && metricType !== 'dimensions' && (
@@ -254,11 +254,13 @@ export function AboutMetricContainer({
           />
         )}
         {showMetricLink && (
-          <ButtonHighlight onClick={() => onSelectMetric(metricCode)}>
-            {`Explore ${intl.formatMessage(
-              rootMessages[metric.metricType][metricCode],
-            )} for all countries`}
-          </ButtonHighlight>
+          <Box>
+            <ButtonHighlight onClick={() => onSelectMetric(metricCode)}>
+              {`Explore ${intl.formatMessage(
+                rootMessages[metric.metricType][metricCode],
+              )} for all countries`}
+            </ButtonHighlight>
+          </Box>
         )}
         {showSources && (
           <AboutMetricSources
