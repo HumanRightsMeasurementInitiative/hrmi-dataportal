@@ -262,6 +262,7 @@ export function ChartCountryDiamond({
                     )}
                     benchmark={benchmark}
                     showLabels={showAnnotation}
+                    showBenchmark={showAnnotation}
                   />
                 )}
                 {scale === 'r' && (
@@ -277,6 +278,7 @@ export function ChartCountryDiamond({
                     )}
                     benchmark={benchmark}
                     showLabels={showAnnotation}
+                    showBenchmark={showAnnotation}
                   />
                 )}
                 <Box pad={{ top: 'small' }}>

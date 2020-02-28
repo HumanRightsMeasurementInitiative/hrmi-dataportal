@@ -36,6 +36,7 @@ function BarMultiple({
   heightIndividual,
   annotateBenchmarkAbove,
   scoreOnHover,
+  benchmarkTooltip,
 }) {
   const {
     color,
@@ -86,12 +87,20 @@ function BarMultiple({
             />
           </BarWrapInner>
         ))}
-      {showLabels && !!benchmark && (
+      {showLabels && !!benchmark && !benchmarkTooltip && (
         <AnnotateBenchmark
           rotate={rotate}
           benchmarkKey={benchmark}
           above={annotateBenchmarkAbove}
           margin={annotateBenchmarkAbove ? '0px 1px' : '0'}
+        />
+      )}
+      {benchmarkTooltip && (
+        <AnnotateBenchmark
+          rotate={rotate}
+          above
+          margin="1px"
+          benchmarkTooltipOnly
         />
       )}
       {showLabels && (
@@ -108,6 +117,7 @@ BarMultiple.propTypes = {
   dataMultiple: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   showLabels: PropTypes.bool,
   annotateBenchmarkAbove: PropTypes.bool,
+  benchmarkTooltip: PropTypes.bool,
   totalHeight: PropTypes.number,
   heightIndividual: PropTypes.number,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
