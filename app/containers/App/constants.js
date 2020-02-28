@@ -337,6 +337,45 @@ export const SCALES = [
   },
 ];
 
+export const GRADES = {
+  esr: [
+    {
+      class: 'poor',
+      min: 0,
+    },
+    {
+      class: 'bad',
+      min: 75,
+    },
+    {
+      class: 'fair',
+      min: 85,
+    },
+    {
+      class: 'good',
+      min: 95,
+    },
+  ],
+  cpr: [
+    {
+      class: 'poor',
+      min: 0,
+    },
+    {
+      class: 'bad',
+      min: 35,
+    },
+    {
+      class: 'fair',
+      min: 60,
+    },
+    {
+      class: 'good',
+      min: 80,
+    },
+  ],
+};
+
 export const DIMENSIONS = [
   {
     key: 'esr',
