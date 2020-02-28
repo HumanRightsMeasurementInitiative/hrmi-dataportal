@@ -70,6 +70,9 @@ const text = {
   xxsmall: { size: '12px', height: '14px', maxWidth: '400px' },
 };
 const theme = {
+  maxWidth: '1600px',
+  maxWidthMedium: '1200px',
+  maxWidthNarrow: '800px',
   sizes: SIZES,
   // used for grommet
   text,
@@ -292,9 +295,6 @@ const theme = {
       radius: 0,
     },
   },
-  maxWidth: '1600px',
-  maxWidthMedium: '1068px',
-  maxWidthNarrow: '800px',
 };
 
 /**

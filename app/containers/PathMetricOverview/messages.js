@@ -6,11 +6,11 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.MetricOverview';
+export const scope = 'hrmi.components.PathMetricOverview';
 
 export default defineMessages({
   title: {
     id: `${scope}.title`,
-    defaultMessage: 'Human rights performance overview by right',
+    defaultMessage: 'Rights overview',
   },
 });

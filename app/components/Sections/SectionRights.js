@@ -7,24 +7,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
+import { Heading } from 'grommet';
 
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-
 import ButtonText from 'styled/ButtonText';
 
 import rootMessages from 'messages';
 
 import Slider from './Slider';
 import Card from './Card';
+import ButtonWrap from './ButtonWrap';
 
-export function SectionRights({ rights, onSelectRight, navAllRights, intl }) {
+export function SectionRights({
+  rights,
+  onSelectRight,
+  navAllRights,
+  intl,
+  labelAllRights,
+  title,
+}) {
   return (
     <SectionContainer border>
       <ContentMaxWidth maxWidth="medium" column>
-        Section Rights Carousel
-        <ButtonText onClick={() => navAllRights()}>Rights overview</ButtonText>
+        <Heading level={2}>{title}</Heading>
+        <ButtonWrap>
+          <ButtonText onClick={() => navAllRights()}>
+            {labelAllRights}
+          </ButtonText>
+        </ButtonWrap>
         <Slider cardMargin="xsmall">
           {rights.map(r => (
             <Card
@@ -46,6 +58,8 @@ export function SectionRights({ rights, onSelectRight, navAllRights, intl }) {
 }
 
 SectionRights.propTypes = {
+  title: PropTypes.string,
+  labelAllRights: PropTypes.string,
   rights: PropTypes.array,
   onSelectRight: PropTypes.func,
   navAllRights: PropTypes.func,
