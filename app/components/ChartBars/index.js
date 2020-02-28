@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, ResponsiveContext } from 'grommet';
+import { Box, ResponsiveContext, Text } from 'grommet';
 // import { COLUMNS } from 'containers/App/constants';
 
 // import AnnotateBetter from 'components/AnnotateBetterWorse';
@@ -50,6 +50,9 @@ function ChartBars({
   currentBenchmark,
   bullet,
   allowWordBreak,
+  commonLabel,
+  labelColor,
+  padVertical,
 }) {
   if (!data) return null;
   return (
@@ -57,7 +60,7 @@ function ChartBars({
       {size => (
         <Styled
           pad={{
-            vertical: 'large',
+            vertical: padVertical || 'large',
             right: isMinSize(size, 'medium') ? 'xlarge' : 'medium',
           }}
           direction="column"
@@ -66,12 +69,14 @@ function ChartBars({
           {listHeader && (
             <ListHeader metric={metric} benchmark={currentBenchmark.key} />
           )}
+          {commonLabel && <Text>{commonLabel}</Text>}
           {data.map(d => (
             <BarWrapper
               key={d.key}
               score={d}
               bullet={bullet}
               allowWordBreak={allowWordBreak}
+              labelColor={labelColor}
             />
           ))}
         </Styled>
@@ -85,6 +90,9 @@ function ChartBars({
 
 ChartBars.propTypes = {
   allowWordBreak: PropTypes.bool,
+  commonLabel: PropTypes.string,
+  labelColor: PropTypes.string,
+  padVertical: PropTypes.string,
   listHeader: PropTypes.bool,
   bullet: PropTypes.bool,
   metric: PropTypes.object,

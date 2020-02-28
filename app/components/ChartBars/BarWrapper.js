@@ -26,6 +26,7 @@ export function BarWrapper({
   score,
   bullet,
   allowWordBreak,
+  labelColor,
   // currentBenchmark,
   // standard,
 }) {
@@ -34,8 +35,8 @@ export function BarWrapper({
       {size => (
         <Box key={score.key} direction="row" align="center" border="right">
           <LabelWrap
-            width={isMinSize(size, 'medium') ? '160px' : '80px'}
-            align="end"
+            width={isMinSize(size, 'medium') ? '180px' : '160px'}
+            align="start"
             flex={{ shrink: 0 }}
             pad={{ right: 'small' }}
           >
@@ -44,6 +45,7 @@ export function BarWrapper({
                 onClick={() => score.onClick && score.onClick()}
                 label={score.label}
                 allowWordBreak={allowWordBreak}
+                color={labelColor}
               />
             )}
           </LabelWrap>
@@ -77,6 +79,7 @@ BarWrapper.propTypes = {
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   bullet: PropTypes.bool,
   allowWordBreak: PropTypes.bool,
+  labelColor: PropTypes.string,
   // standard: PropTypes.string,
   // currentBenchmark: PropTypes.object,
 };
