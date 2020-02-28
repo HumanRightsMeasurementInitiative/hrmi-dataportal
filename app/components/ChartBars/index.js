@@ -69,7 +69,11 @@ function ChartBars({
           {listHeader && (
             <ListHeader metric={metric} benchmark={currentBenchmark.key} />
           )}
-          {commonLabel && <Text>{commonLabel}</Text>}
+          {commonLabel && (
+            <Text size="small" color={labelColor} weight="bold">
+              {commonLabel}
+            </Text>
+          )}
           {data.map(d => (
             <BarWrapper
               key={d.key}
