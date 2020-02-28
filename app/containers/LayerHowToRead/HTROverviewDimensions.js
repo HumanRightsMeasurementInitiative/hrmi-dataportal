@@ -48,6 +48,7 @@ function HTROverviewDimensions({ intl }) {
                 hideZeroLabels
                 hoverEnabled={false}
                 small
+                showBenchmark={false}
               />
             </Box>
             <Box width="50%" flex={{ shrink: 0 }} pad={{ left: 'medium' }}>

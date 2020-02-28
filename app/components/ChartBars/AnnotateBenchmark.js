@@ -29,6 +29,7 @@ function AnnotateBenchmark({
   align,
   label,
   tooltip = true,
+  benchmarkTooltipOnly,
 }) {
   // prettier-ignore
   return (
@@ -46,29 +47,33 @@ function AnnotateBenchmark({
             above={above || relative}
             relative={relative}
             align={align}
+            horizontal={!!rotate}
           />
           <AnnotateRefInner
             above={above || relative}
             relative={relative}
             style={{ textAlign: align }}
+            horizontal={!!rotate}
           >
-            <Text
-              size="xsmall"
-              color="dark-3"
-              style={
-                {
-                  textAlign: align,
-                  display: above ? 'inline ': 'block',
-                  verticalAlign: 'middle',
+            {!benchmarkTooltipOnly && (
+              <Text
+                size="xsmall"
+                color="dark-3"
+                style={
+                  {
+                    textAlign: align,
+                    display: above ? 'inline ': 'block',
+                    verticalAlign: 'middle',
+                  }
                 }
-              }
-            >
-              {label || `${intl.formatMessage(
-                rootMessages.settings.benchmark[benchmarkKey]
-              )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(
-                rootMessages.settings.benchmark.nameShort
-              ))}`}
-            </Text>
+              >
+                {label || `${intl.formatMessage(
+                  rootMessages.settings.benchmark[benchmarkKey]
+                )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(
+                  rootMessages.settings.benchmark.nameShort
+                ))}`}
+              </Text>
+            )}
             {!relative && tooltip &&
               <Tooltip
                 insideButton
@@ -93,6 +98,7 @@ AnnotateBenchmark.propTypes = {
   above: PropTypes.bool,
   relative: PropTypes.bool,
   tooltip: PropTypes.bool,
+  benchmarkTooltipOnly: PropTypes.bool,
   left: PropTypes.number,
   label: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),

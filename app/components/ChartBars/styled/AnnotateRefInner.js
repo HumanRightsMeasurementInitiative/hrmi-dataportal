@@ -3,7 +3,13 @@ import styled, { css } from 'styled-components';
 // prettier-ignore
 export default styled.div`
   position: ${({ above }) => (above ? 'relative' : 'absolute')};
-  ${({ above, relative }) => {
+  ${({ above, relative, horizontal }) => {
+    if (horizontal) return css`
+      bottom: 3px;
+      left: -15px;
+      width: auto;
+      white-space: nowrap;
+    `;
     if (relative) return css`
       bottom: 2px;
       width: auto;
