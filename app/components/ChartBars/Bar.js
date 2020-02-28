@@ -28,12 +28,7 @@ const BarReference = styled.div`
   display: block;
   height: ${props => props.height}px;
   width: 100%;
-  background-color: ${props => {
-    if (props.noData) {
-      return 'transparent';
-    }
-    return props.theme.global.colors[props.level >= 3 ? 'light-3' : 'light-2'];
-  }};
+  background-color: ${props => (props.noData ? 'white' : 'transparent')}};
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: transparent;
@@ -102,7 +97,7 @@ const MarkValue = styled.div`
 `;
 
 // level:
-const HEIGHT = [50, 36, 20, 12];
+const HEIGHT = [50, 36, 16, 12];
 
 function Bar({
   data,

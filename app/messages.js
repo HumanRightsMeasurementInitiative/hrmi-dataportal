@@ -61,6 +61,24 @@ export default defineMessages({
       id: `${scope}.labels.metrics`,
       defaultMessage: 'Metrics',
     },
+    grades: {
+      poor: {
+        id: `${scope}.labels.grades.poor`,
+        defaultMessage: 'Very Bad',
+      },
+      bad: {
+        id: `${scope}.labels.grades.bad`,
+        defaultMessage: 'Bad',
+      },
+      fair: {
+        id: `${scope}.labels.grades.fair`,
+        defaultMessage: 'Fair',
+      },
+      good: {
+        id: `${scope}.labels.grades.good`,
+        defaultMessage: 'Good',
+      },
+    },
   },
   tooltip: {
     empowerment: {

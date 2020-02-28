@@ -46,11 +46,11 @@ export function ListHeader({ metric, benchmark }) {
       {size => (
         <Box direction="row" align="end" pad={{ bottom: 'xsmall' }}>
           <CountryWrap
-            width={isMinSize(size, 'medium') ? '160px' : '80px'}
+            width={isMinSize(size, 'medium') ? '180px' : '160px'}
             noBorder
-            align="end"
-            pad={{ right: 'small' }}
+            align="start"
             flex={{ shrink: 0 }}
+            pad={{ right: 'small' }}
           >
             <StyledScoreText size="small" style={{ fontWeight: 600 }}>
               <FormattedMessage {...rootMessages.labels.score} />
