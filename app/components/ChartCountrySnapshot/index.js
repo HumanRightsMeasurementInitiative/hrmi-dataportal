@@ -10,7 +10,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Heading, Box, Text, ResponsiveContext } from 'grommet';
 
-import { COLUMNS } from 'containers/App/constants';
+import { COLUMNS, GRADES } from 'containers/App/constants';
 
 import ChartBars from 'components/ChartBars';
 
@@ -188,6 +188,7 @@ function ChartCountrySnapshot({
                   )}`}
                   labelColor={`${dimensionCode}Dark`}
                   padVertical="small"
+                  grades={GRADES[type]}
                 />
               </Dimension>
             </ChartArea>

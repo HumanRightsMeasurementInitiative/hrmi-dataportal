@@ -8,10 +8,12 @@ import { Box, ResponsiveContext, Text } from 'grommet';
 import { isMinSize } from 'utils/responsive';
 
 import BarWrapper from './BarWrapper';
+import Grades from './Grades';
 import ListHeader from './ListHeader';
 
 const Styled = styled(Box)`
   margin: 0 auto;
+  position: relative;
 `;
 //
 // const WrapAnnotateBetter = styled.div`
@@ -53,6 +55,7 @@ function ChartBars({
   commonLabel,
   labelColor,
   padVertical,
+  grades,
 }) {
   if (!data) return null;
   return (
@@ -74,6 +77,7 @@ function ChartBars({
               {commonLabel}
             </Text>
           )}
+          {grades && <Grades grades={grades} />}
           {data.map(d => (
             <BarWrapper
               key={d.key}
@@ -102,6 +106,7 @@ ChartBars.propTypes = {
   metric: PropTypes.object,
   currentBenchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  grades: PropTypes.object,
   // standard: PropTypes.string,
 };
 
