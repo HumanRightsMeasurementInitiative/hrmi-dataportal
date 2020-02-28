@@ -645,7 +645,7 @@ export default defineMessages({
       defaultMessage: 'expression',
     },
     participation: {
-      id: `${scope}.rights.participation`,
+      id: `${scope}.rights-short.participation`,
       defaultMessage: 'participation',
     },
     torture: {
@@ -682,6 +682,90 @@ export default defineMessages({
     },
     union: {
       id: `${scope}.rights-short.union`,
+      defaultMessage: 'union',
+    },
+  },
+  'rights-xshort-common': {
+    esr: {
+      id: `${scope}.rights-xshort-common.esr`,
+      defaultMessage: 'esr',
+    },
+    physint: {
+      id: `${scope}.rights-xshort-common.physint`,
+      defaultMessage: 'physint',
+    },
+    empowerment: {
+      id: `${scope}.rights-xshort-common.empowerment`,
+      defaultMessage: 'physint',
+    },
+  },
+  'rights-xshort': {
+    arrest: {
+      id: `${scope}.rights-xshort.arrest`,
+      defaultMessage: 'arrest',
+    },
+    assembly: {
+      id: `${scope}.rights-xshort.assembly`,
+      defaultMessage: 'assembly',
+    },
+    disappearance: {
+      id: `${scope}.rights-xshort.disappearance`,
+      defaultMessage: 'disappearance',
+    },
+    'death-penalty': {
+      id: `${scope}.rights-xshort.death-penalty`,
+      defaultMessage: 'death-penalty',
+    },
+    execution: {
+      id: `${scope}.rights-xshort.execution`,
+      defaultMessage: 'execution',
+    },
+    'extrajud-killing': {
+      id: `${scope}.rights-xshort.extrajud-killing`,
+      defaultMessage: 'extrajud-killing',
+    },
+    expression: {
+      id: `${scope}.rights-xshort.expression`,
+      defaultMessage: 'expression',
+    },
+    participation: {
+      id: `${scope}.rights-xshort.participation`,
+      defaultMessage: 'participation',
+    },
+    torture: {
+      id: `${scope}.rights-xshort.torture`,
+      defaultMessage: 'torture',
+    },
+    education: {
+      id: `${scope}.rights-xshort.education`,
+      defaultMessage: 'education',
+    },
+    food: {
+      id: `${scope}.rights-xshort.food`,
+      defaultMessage: 'food',
+    },
+    health: {
+      id: `${scope}.rights-short.health`,
+      defaultMessage: 'health',
+    },
+    housing: {
+      id: `${scope}.rights-xshort.housing`,
+      defaultMessage: 'housing',
+    },
+    work: {
+      id: `${scope}.rights-xshort.work`,
+      defaultMessage: 'work',
+    },
+    job: {
+      id: `${scope}.rights-xshort.job`,
+      defaultMessage: 'job',
+    },
+    jobcond: {
+      id: `${scope}.rights-xshort.jobcond`,
+      defaultMessage: 'jobcond',
+    },
+    union: {
+      id: `${scope}.rights-xshort.union`,
       defaultMessage: 'union',
     },
   },

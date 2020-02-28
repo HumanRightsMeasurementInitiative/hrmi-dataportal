@@ -6,19 +6,38 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Box, Text } from 'grommet';
+import { Heading, Box, Text, ResponsiveContext } from 'grommet';
+
+import { COLUMNS } from 'containers/App/constants';
+
+import ChartBars from 'components/ChartBars';
+
 import formatScoreMax from 'utils/format-score-max';
+import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 // import messages from './messages';
 
-import ChartBars from 'components/ChartBars';
-import { COLUMNS } from 'containers/App/constants';
-
 const Dimension = styled(Box)`
   margin-bottom: 6px;
+  position: relative;
+`;
+
+const DimensionScore = styled.div`
+  position: absolute;
+  right: 100px;
+  top: 0;
+  padding: 5px 10px;
+  min-width: 85px;
+  text-align: center;
+  background-color: ${({ hasScore, color, theme }) =>
+    hasScore ? theme.global.colors[color] : 'transparent'};
+  border: 1px solid;
+  border-color: ${({ hasScore, color, theme }) =>
+    !hasScore ? theme.global.colors[color] : 'transparent'};
+  border-radius: 99999px;
 `;
 const ChartArea = props => (
   <Box direction="column" fill="horizontal" {...props} />
@@ -36,7 +55,7 @@ const StyledDimensionHeading = styled(Heading)`
 const DimensionHeading = props => (
   <StyledDimensionHeading
     responsive={false}
-    level={4}
+    level={3}
     margin={{ vertical: 'none' }}
     {...props}
   />
@@ -70,24 +89,8 @@ const getDimensionRefs = (score, benchmark) => {
   return false;
 };
 
-const getMetricLabel = score => score.key;
-// const country = countries.find(c => c.country_code === score.country_code);
-// let label = '';
-// if (rootMessages.countries[country.country_code]) {
-//   label = intl.formatMessage(rootMessages.countries[country.country_code]);
-// } else {
-//   label = country.country_code;
-// }
-// if (
-//   metric &&
-//   (metric.type === 'esr' || metric.metricType === 'indicators') &&
-//   country &&
-//   country.high_income_country === '1'
-// ) {
-//   label = `${label} (${intl.formatMessage(rootMessages.labels.hiCountry)})`;
-// }
-// return label;
-// };
+const getMetricLabel = (score, intl) =>
+  intl.formatMessage(rootMessages['rights-xshort'][score.key]);
 
 const prepareData = ({
   scores,
@@ -95,6 +98,7 @@ const prepareData = ({
   currentBenchmark,
   standard,
   onClick,
+  intl,
 }) =>
   // prettier-ignore
   scores.map(s =>
@@ -107,7 +111,7 @@ const prepareData = ({
         unit: '%',
         stripes: standard === 'hi',
         key: s.key,
-        label: getMetricLabel(s),
+        label: getMetricLabel(s, intl),
         onClick: () => onClick(s.key),
       }
       : {
@@ -116,7 +120,7 @@ const prepareData = ({
         maxValue: 10,
         unit: '',
         key: s.key,
-        label: getMetricLabel(s),
+        label: getMetricLabel(s, intl),
         onClick: () => onClick(s.key),
       }
   );
@@ -131,49 +135,71 @@ function ChartCountrySnapshot({
   year,
   maxValue,
   onMetricClick,
+  intl,
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
 
-  // <ResponsiveContext.Consumer>
-  // {size => (
   return (
-    <Box
-      direction="column"
-      pad={{ bottom: 'small' }}
-      margin={{ bottom: 'small' }}
-    >
-      <Box direction="row">
-        <ChartArea>
-          <Dimension>
-            <DimensionHeading>
-              <FormattedMessage {...rootMessages.dimensions[dimensionCode]} />
-              {` (${formatScoreMax(dimensionScore, maxValue)})`}
-            </DimensionHeading>
-            <Text>
-              <FormattedMessage {...rootMessages['rights-types'][type]} />
-              {` (${year})`}
-            </Text>
-            <ChartBars
-              data={prepareData({
-                scores: rights,
-                dimensionCode,
-                currentBenchmark,
-                standard,
-                onClick: onMetricClick,
-              })}
-              currentBenchmark={type === 'esr' && currentBenchmark}
-              standard={type === 'esr' && standard}
-            />
-          </Dimension>
-        </ChartArea>
-      </Box>
-    </Box>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box
+          direction="column"
+          pad={{ bottom: 'small' }}
+          margin={{ bottom: 'small' }}
+        >
+          <Box direction="row">
+            <ChartArea>
+              <Dimension>
+                <DimensionHeading color={dimensionCode}>
+                  <FormattedMessage
+                    {...rootMessages.dimensions[dimensionCode]}
+                  />
+                </DimensionHeading>
+                <DimensionScore
+                  hasScore={!!dimensionScore}
+                  color={dimensionCode}
+                >
+                  <Text
+                    weight="bold"
+                    size={isMinSize(size, 'medium') ? 'large' : 'medium'}
+                    color={dimensionScore ? 'white' : dimensionCode}
+                  >
+                    {dimensionScore && formatScoreMax(dimensionScore, maxValue)}
+                    {!dimensionScore && 'N/A'}
+                  </Text>
+                </DimensionScore>
+                <Text>
+                  <FormattedMessage {...rootMessages['rights-types'][type]} />
+                  {` (${year})`}
+                </Text>
+                <ChartBars
+                  data={prepareData({
+                    scores: rights,
+                    dimensionCode,
+                    currentBenchmark,
+                    standard,
+                    onClick: onMetricClick,
+                    intl,
+                  })}
+                  currentBenchmark={type === 'esr' && currentBenchmark}
+                  standard={type === 'esr' && standard}
+                  commonLabel={`${intl.formatMessage(
+                    rootMessages['rights-xshort-common'][dimensionCode],
+                  )}`}
+                  labelColor={`${dimensionCode}Dark`}
+                  padVertical="small"
+                />
+              </Dimension>
+            </ChartArea>
+          </Box>
+        </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
-// )}
-// </ResponsiveContext.Consumer>
 
 ChartCountrySnapshot.propTypes = {
+  intl: intlShape.isRequired,
   rights: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dimensionScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   currentBenchmark: PropTypes.object,
@@ -185,4 +211,4 @@ ChartCountrySnapshot.propTypes = {
   onMetricClick: PropTypes.func,
 };
 
-export default ChartCountrySnapshot;
+export default injectIntl(ChartCountrySnapshot);

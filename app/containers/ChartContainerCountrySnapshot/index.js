@@ -166,23 +166,23 @@ export function ChartContainerCountrySnapshot({
         maxValue={100}
         onMetricClick={onMetricClick}
       />
-      {dimensions.empowerment.score && (
-        <ChartCountrySnapshot
-          type="cpr"
-          dimensionCode="empowerment"
-          dimensionScore={getDimensionScore('cpr', dimensions.empowerment)}
-          rights={getRightsScoresForDimension(rights, 'empowerment')}
-          year={cprYear}
-          maxValue={10}
-          onMetricClick={onMetricClick}
-        />
-      )}
       {dimensions.physint.score && (
         <ChartCountrySnapshot
           type="cpr"
           dimensionCode="physint"
           dimensionScore={getDimensionScore('cpr', dimensions.physint)}
           rights={getRightsScoresForDimension(rights, 'physint')}
+          year={cprYear}
+          maxValue={10}
+          onMetricClick={onMetricClick}
+        />
+      )}
+      {dimensions.empowerment.score && (
+        <ChartCountrySnapshot
+          type="cpr"
+          dimensionCode="empowerment"
+          dimensionScore={getDimensionScore('cpr', dimensions.empowerment)}
+          rights={getRightsScoresForDimension(rights, 'empowerment')}
           year={cprYear}
           maxValue={10}
           onMetricClick={onMetricClick}
@@ -229,8 +229,12 @@ export function ChartContainerCountrySnapshot({
             score={dimensions.empowerment.score}
             country={country}
             countryGrammar={countryGrammar}
-            referenceScore={dimensionAverages.empowerment.average}
-            referenceCount={dimensionAverages.empowerment.count}
+            referenceScore={
+              dimensionAverages && dimensionAverages.empowerment.average
+            }
+            referenceCount={
+              dimensionAverages && dimensionAverages.empowerment.count
+            }
             start
           />
           <ButtonText onClick={() => goToTab('report-empowerment')}>
@@ -251,8 +255,12 @@ export function ChartContainerCountrySnapshot({
             score={dimensions.physint.score}
             country={country}
             countryGrammar={countryGrammar}
-            referenceScore={dimensionAverages.physint.average}
-            referenceCount={dimensionAverages.physint.count}
+            referenceScore={
+              dimensionAverages && dimensionAverages.physint.average
+            }
+            referenceCount={
+              dimensionAverages && dimensionAverages.physint.count
+            }
             start
           />
           <ButtonText onClick={() => goToTab('report-physint')}>

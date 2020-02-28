@@ -312,6 +312,7 @@ export function SingleMetric({
               listHeader
               bullet={metric.type === 'cpr'}
               allowWordBreak
+              labelColor={`${metric.color}Dark`}
             />
           )}
           {hasResults && other && other.length > 0 && (
