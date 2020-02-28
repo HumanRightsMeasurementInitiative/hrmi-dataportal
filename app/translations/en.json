@@ -135,7 +135,7 @@
   "hrmi.components.AboutMetric.titleSource": "Data source",
   "hrmi.components.AboutMetric.titleStandards": "Assessment standard(s)",
   "hrmi.components.CountryOverview.title": "Human rights performance overview by country",
-  "hrmi.components.MetricOverview.title": "Human rights performance overview by right",
+  "hrmi.components.PathMetricOverview.title": "Human rights overview",
   "hrmi.components.Overview.title": "Welcome to the new data portal of the Human Rights Measurement Initiative (HRMI)",
   "hrmi.components.Overview.intro": "Explore the human rights performance of countries across 3 categories and 12 rights.",
   "hrmi.components.ChartSettingFilters.addFilter": "Add country filter",

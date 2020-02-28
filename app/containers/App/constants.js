@@ -339,6 +339,12 @@ export const SCALES = [
 
 export const DIMENSIONS = [
   {
+    key: 'esr',
+    code: 'SER_Average',
+    type: 'esr',
+    resource: 'esrScores',
+  },
+  {
     key: 'physint',
     code: 'physint',
     type: 'cpr',
@@ -349,12 +355,6 @@ export const DIMENSIONS = [
     code: 'empower',
     type: 'cpr',
     resource: 'cprScores',
-  },
-  {
-    key: 'esr',
-    code: 'SER_Average',
-    type: 'esr',
-    resource: 'esrScores',
   },
 ];
 
