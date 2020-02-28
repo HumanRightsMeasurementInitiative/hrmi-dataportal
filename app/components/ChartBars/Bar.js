@@ -117,6 +117,7 @@ function Bar({
   showAllBenchmarkAnnotations = false,
   scoreOnHover = false,
   hoverEnabled = true,
+  benchmarkTooltip = false,
 }) {
   const [hover, setHover] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -183,6 +184,14 @@ function Bar({
               lineStyle={theRefValue.style}
               style={{ left: `${(theRefValue.value / maxValue) * 100}%` }}
               level={level}
+            />
+          )}
+          {!showBenchmark && benchmarkTooltip && (
+            <AnnotateBenchmark
+              rotate={rotate}
+              above
+              margin="1px"
+              benchmarkTooltipOnly
             />
           )}
           {showBenchmark &&
@@ -259,6 +268,7 @@ Bar.propTypes = {
   showLabels: PropTypes.bool,
   showScore: PropTypes.bool,
   showBenchmark: PropTypes.bool,
+  benchmarkTooltip: PropTypes.bool,
   hoverEnabled: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),

@@ -31,7 +31,7 @@ const BarWrapInner = styled.div`
 const AnnotateBetter = styled.div`
   position: absolute;
   width: 100%;
-  bottom: 100%;
+  top: 100%;
   right: 0;
   border-bottom: 1px solid;
   border-color: ${({ theme }) => theme.global.colors['dark-4']};
@@ -71,7 +71,7 @@ const IndicateBetterBelow = styled.div`
 `;
 const AnnotateBetterInner = styled.div`
   position: absolute;
-  bottom: 100%;
+  top: 0;
   right: 0;
   display: table;
   text-align: right;
@@ -88,6 +88,7 @@ export function DiamondChart({
   hoverEnabled = true,
   small = false,
   indicateBetterBelow = false,
+  showBenchmark,
 }) {
   if (!dimensions && !rightGroups) return null;
   const w = small ? WIDTH[0] : WIDTH[1];
@@ -113,12 +114,13 @@ export function DiamondChart({
               <Bar
                 data={dim}
                 showLabels={(!hideZeroLabels || dim.value > 0) && showLabels}
-                showBenchmark={showLabels}
                 rotate={45}
                 showIncompleteAction={false}
                 scoreOnHover="top"
                 hoverEnabled={hoverEnabled}
                 height={(w - MARGINS * 2) / list.length}
+                annotateBenchmarkAbove
+                benchmarkTooltip={showBenchmark && index === 0}
               />
             </BarWrapInner>
           ))}
@@ -134,7 +136,9 @@ export function DiamondChart({
                 showLabels={showLabels}
                 rotate={45}
                 scoreOnHover="top"
-                heightIndividual={(w - MARGINS * 2) / 12}
+                heightIndividual={(w - MARGINS * 2) / 13}
+                annotateBenchmarkAbove
+                benchmarkTooltip={showBenchmark && index === 0}
               />
             </BarWrapInner>
           ))}
@@ -148,6 +152,7 @@ DiamondChart.propTypes = {
   rightGroups: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   dimensions: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   showLabels: PropTypes.bool,
+  showBenchmark: PropTypes.bool,
   hideZeroLabels: PropTypes.bool,
   hoverEnabled: PropTypes.bool,
   small: PropTypes.bool,
