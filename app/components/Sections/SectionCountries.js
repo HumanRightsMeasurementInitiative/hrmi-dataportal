@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Heading } from 'grommet';
 
 import { COLUMNS } from 'containers/App/constants';
 
@@ -21,6 +22,7 @@ import rootMessages from 'messages';
 
 import Slider from './Slider';
 import Card from './Card';
+import ButtonWrap from './ButtonWrap';
 
 // const Button = styled(ButtonPlain)`
 //   margin: 0 auto;
@@ -37,14 +39,18 @@ export function SectionCountries({
   onSelectCountry,
   navAllCountries,
   intl,
+  title,
+  labelAllCountries,
 }) {
   return (
     <SectionContainer border>
       <ContentMaxWidth maxWidth="medium" column>
-        Section Featured Countries
-        <ButtonText onClick={() => navAllCountries()}>
-          Countries overview
-        </ButtonText>
+        <Heading level={2}>{title}</Heading>
+        <ButtonWrap>
+          <ButtonText onClick={() => navAllCountries()}>
+            {labelAllCountries}
+          </ButtonText>
+        </ButtonWrap>
         {countries && (
           <Slider cardMargin="xsmall">
             {countries.map(country => {
@@ -93,6 +99,8 @@ export function SectionCountries({
 }
 
 SectionCountries.propTypes = {
+  title: PropTypes.string,
+  labelAllCountries: PropTypes.string,
   countries: PropTypes.array,
   onSelectCountry: PropTypes.func,
   navAllCountries: PropTypes.func,

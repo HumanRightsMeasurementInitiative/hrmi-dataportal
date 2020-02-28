@@ -9,9 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Box } from 'grommet';
-// import Carousel from 'react-multi-carousel';
-// import Slider from 'react-styled-carousel';
+import { Heading } from 'grommet';
 
 import {
   getCountries,
@@ -25,50 +23,20 @@ import {
   selectMetric,
 } from 'containers/App/actions';
 import { RIGHTS, PATHS, PAGES } from 'containers/App/constants';
+import saga from 'containers/App/saga';
+
+import SectionRights from 'components/Sections/SectionRights';
+import SectionIntro from 'components/Sections/SectionIntro';
+import SectionData from 'components/Sections/SectionData';
+import SectionCountries from 'components/Sections/SectionCountries';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-
 import ButtonText from 'styled/ButtonText';
 
 import { useInjectSaga } from 'utils/injectSaga';
-import saga from 'containers/App/saga';
-
-import SectionIntro from './SectionIntro';
-import SectionData from './SectionData';
-import SectionCountries from './SectionCountries';
-import SectionRights from './SectionRights';
-// import messages from './messages';
-
-const Bar = props => (
-  <Box
-    direction="row"
-    align="center"
-    height={`${props.theme.sizes.header.heightBottom}px`}
-    background="dark"
-    {...props}
-  />
-);
-Bar.propTypes = {
-  theme: PropTypes.object,
-};
-
-const Card = props => (
-  <Box
-    height="250px"
-    elevation="small"
-    width="300px"
-    responsive={false}
-    margin="small"
-    padding="small"
-    {...props}
-  />
-);
-Card.propTypes = {
-  theme: PropTypes.object,
-};
 
 const DEPENDENCIES = ['countries', 'featured', 'atRisk'];
 
@@ -103,15 +71,19 @@ export function PathHome({
         countries={countriesFeatured}
         onSelectCountry={onSelectCountry}
         navAllCountries={() => nav(PATHS.COUNTRIES)}
+        labelAllCountries="Countries overview"
+        title="Featured countries"
       />
       <SectionRights
         rights={RIGHTS}
         onSelectRight={onSelectMetric}
         navAllRights={() => nav(PATHS.METRICS)}
+        labelAllRights="Rights overview"
+        title="Explore rights"
       />
       <SectionContainer border>
         <ContentMaxWidth maxWidth="medium" column>
-          Section Groups
+          <Heading level={2}>Explore people at risk</Heading>
           <ButtonText onClick={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}>
             About Groups At Risk
           </ButtonText>

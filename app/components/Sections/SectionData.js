@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ResponsiveContext } from 'grommet';
+import { Heading, ResponsiveContext } from 'grommet';
 import { isMaxSize } from 'utils/responsive';
 
 // styles
@@ -29,7 +29,7 @@ export function SectionData({
       {size => (
         <SectionContainer border background="light-4">
           <ContentMaxWidth maxWidth="medium" column>
-            Our data
+            <Heading level={2}>Our data</Heading>
             <Slider
               stretch
               cardMargin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
