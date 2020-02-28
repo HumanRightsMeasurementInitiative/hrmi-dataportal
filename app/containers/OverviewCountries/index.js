@@ -194,7 +194,7 @@ export function OverviewCountries({
                         benchmark={benchmarkDetails}
                         onSelectCountry={() => onSelectCountry(c.country_code)}
                         indicators={indicators}
-                        onCountryHover={code => console.log(code)}
+                        onCountryHover={code => code || true}
                       />
                     )}
                   </InfiniteScroll>
