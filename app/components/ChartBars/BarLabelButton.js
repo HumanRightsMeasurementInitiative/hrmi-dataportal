@@ -9,25 +9,26 @@ const Styled = styled(Button)`
   text-align: left;
   padding: 2px 0 2px 0;
   line-height: 14px;
-  min-height: ${({ allowWordBreak }) => allowWordBreak ? 26 : 20}px;
-  font-size: 12px;
+  min-height: 20px;
+  font-size: ${({ level }) => (level > 1 ? '12px' : '14px' )};
   color: ${({ color, theme }) => color
     ? theme.global.colors[color]
     : theme.global.colors['dark-1']};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 2px 0 2px 0;
-    min-height: ${({ allowWordBreak }) => allowWordBreak ? 40 : 20}px;
+    min-height: 20px;
     line-height: 19px;
-    font-size: 14px;
+    font-size: ${({ level }) => (level > 1 ? '14px' : '16px' )};
   }
 `;
 
-function BarLabelButton({ label, onClick, allowWordBreak, color }) {
+function BarLabelButton({ label, onClick, allowWordBreak, color, level }) {
   return (
     <Styled
       allowWordBreak={allowWordBreak}
       onClick={() => onClick()}
       color={color}
+      level={level}
     >
       {label}
     </Styled>
@@ -39,6 +40,7 @@ BarLabelButton.propTypes = {
   label: PropTypes.string,
   color: PropTypes.string,
   allowWordBreak: PropTypes.bool,
+  level: PropTypes.number,
 };
 
 export default BarLabelButton;

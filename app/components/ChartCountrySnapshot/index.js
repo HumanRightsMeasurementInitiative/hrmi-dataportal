@@ -145,7 +145,7 @@ function ChartCountrySnapshot({
         <Box
           direction="column"
           pad={{ bottom: 'small' }}
-          margin={{ bottom: 'small' }}
+          margin={{ bottom: 'large' }}
         >
           <Box direction="row">
             <ChartArea>

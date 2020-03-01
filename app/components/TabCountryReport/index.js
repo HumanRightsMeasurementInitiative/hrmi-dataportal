@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 // import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+
 import {
   COLUMNS,
   DIMENSIONS,
@@ -36,9 +37,8 @@ function TabCountryReport({
   standard,
   dataReady,
   hasDimensionScore,
-  // onMetricClick,
+  onMetricClick,
   // trackEvent,
-  // onRawChange,
   // raw,
 }) {
   const currentStandard = STANDARDS.find(s => s.key === standard);
@@ -48,11 +48,11 @@ function TabCountryReport({
       {dataReady && type === 'esr' && (
         <>
           <SectionContainer>
-            ESR Summary Chart & Narrative
             <ChartContainerCountryDimension
               type={type}
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
+              onMetricClick={onMetricClick}
             />
           </SectionContainer>
           <SectionContainer>Indicators by right</SectionContainer>
@@ -167,11 +167,11 @@ function TabCountryReport({
       {dataReady && type === 'cpr' && dimension === 'physint' && (
         <>
           <SectionContainer>
-            Safety Summary Chart && Narrative
             <ChartContainerCountryDimension
               type={type}
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
+              onMetricClick={onMetricClick}
             />
           </SectionContainer>
           {hasDimensionScore && (
@@ -232,11 +232,11 @@ function TabCountryReport({
       {dataReady && type === 'cpr' && dimension === 'empowerment' && (
         <>
           <SectionContainer>
-            Empowerment Summary Chart && Narrative
             <ChartContainerCountryDimension
               type={type}
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
+              onMetricClick={onMetricClick}
             />
           </SectionContainer>
           {hasDimensionScore && (

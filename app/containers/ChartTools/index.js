@@ -58,10 +58,10 @@ export function ChartTools({
 }
 
 ChartTools.propTypes = {
-  howToReadConfig: PropTypes.object,
-  settingsConfig: PropTypes.object,
   onOpenHowToRead: PropTypes.func,
   onOpenSettings: PropTypes.func,
+  howToReadConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  settingsConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   layer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   settingsLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };

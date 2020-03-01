@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import styled from 'styled-components';
 import { Box } from 'grommet';
 
 import { STANDARDS } from 'containers/App/constants';
@@ -20,7 +19,6 @@ import {
   getScoresByCountry,
   getStandardSearch,
   getAssessedSearch,
-  getScaleSearch,
   getDependenciesReady,
   getAuxIndicatorsLatest,
   getFeaturedValues,
@@ -29,20 +27,6 @@ import {
 import { loadDataIfNeeded } from 'containers/App/actions';
 
 import OverviewCountries from 'containers/OverviewCountries';
-
-// import rootMessages from 'messages';
-// <div>
-//   <FormattedMessage
-//     {...rootMessages.tabs.countries}
-//     values={{
-//       count: filteredCountries
-//         ? `${filteredCountries.length} `
-//         : '',
-//     }}
-//   />
-// </div>
-
-import ChartTools from 'containers/ChartTools';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
@@ -56,18 +40,6 @@ import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
 
 import messages from './messages';
-
-const ChartToolWrapper = styled.div`
-  position: relative;
-  right: 0px;
-  top: 4px;
-  text-align: right;
-  /* @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    position: absolute;
-    right: ${({ theme }) => theme.global.edgeSize.medium};
-    top: 0;
-  } */
-`;
 
 const DEPENDENCIES = [
   'countries',
@@ -84,7 +56,6 @@ export function PathCountryOverview({
   scoresAllCountries,
   standard,
   assessed,
-  scale,
   onLoadData,
   dataReady,
   auxIndicators,
@@ -111,32 +82,16 @@ export function PathCountryOverview({
 
   return (
     <ContentWrap>
-      <ContentContainer header>
-        <ContentMaxWidth>
+      <ContentContainer header background="light-1">
+        <ContentMaxWidth maxWidth="medium">
           <PageTitle level={2}>
             <FormattedMessage {...messages.title} />
           </PageTitle>
         </ContentMaxWidth>
       </ContentContainer>
-      <ContentMaxWidth>
+      <ContentMaxWidth maxWidth="medium">
         <Box direction="row" margin="0 auto" width="100%">
           <Box direction="column" flex style={{ position: 'relative' }}>
-            <ChartToolWrapper>
-              <ChartTools
-                howToReadConfig={{
-                  key: 'tab-countries',
-                  contxt: 'PathCountryOverview',
-                  chart: 'Diamonds',
-                  type: scale,
-                }}
-                settingsConfig={{
-                  key: 'tab-countries',
-                  showStandard: true,
-                  showBenchmark: true,
-                  showScale: true,
-                }}
-              />
-            </ChartToolWrapper>
             <ColumnContent>
               <OverviewCountries
                 countries={filteredCountries}
@@ -162,7 +117,6 @@ PathCountryOverview.propTypes = {
   dataReady: PropTypes.bool,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
@@ -173,7 +127,6 @@ const mapStateToProps = createStructuredSelector({
   scoresAllCountries: state => getScoresByCountry(state),
   standard: state => getStandardSearch(state),
   assessed: state => getAssessedSearch(state),
-  scale: state => getScaleSearch(state),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   featuredValues: state => getFeaturedValues(state),
   featuredCountries: state => getFeatured(state),

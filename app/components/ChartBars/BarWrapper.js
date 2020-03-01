@@ -27,6 +27,8 @@ export function BarWrapper({
   bullet,
   allowWordBreak,
   labelColor,
+  hasBackground,
+  level,
   // currentBenchmark,
   // standard,
 }) {
@@ -46,6 +48,7 @@ export function BarWrapper({
                 label={score.label}
                 allowWordBreak={allowWordBreak}
                 color={labelColor}
+                level={level}
               />
             )}
           </LabelWrap>
@@ -66,6 +69,8 @@ export function BarWrapper({
                 data={score}
                 scoreOnHover="top"
                 bandOnHover="top"
+                showValueBar
+                hasBackground={hasBackground}
               />
             )}
           </BarWrap>
@@ -78,8 +83,10 @@ export function BarWrapper({
 BarWrapper.propTypes = {
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   bullet: PropTypes.bool,
+  hasBackground: PropTypes.bool,
   allowWordBreak: PropTypes.bool,
   labelColor: PropTypes.string,
+  level: PropTypes.number,
   // standard: PropTypes.string,
   // currentBenchmark: PropTypes.object,
 };

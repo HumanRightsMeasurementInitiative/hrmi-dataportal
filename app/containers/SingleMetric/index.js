@@ -10,8 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Box, ResponsiveContext } from 'grommet';
-import styled from 'styled-components';
+import { Box } from 'grommet';
 
 import {
   getESRDimensionScores,
@@ -42,19 +41,16 @@ import {
   COUNTRY_SORTS,
   COUNTRY_FILTERS,
 } from 'containers/App/constants';
-import ChartTools from 'containers/ChartTools';
 
-import ChartSettingFilters from 'components/ChartSettingFilters';
-import ChartSettingSort from 'components/ChartSettingSort';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ChartBars from 'components/ChartBars';
+import ChartHeader from 'components/ChartHeader';
 import Source from 'components/Source';
 
 import Hint from 'styled/Hint';
 
 import { sortScores } from 'utils/scores';
 import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
-import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 // import messages from './messages';
@@ -68,18 +64,6 @@ const DEPENDENCIES = [
   'auxIndicators',
   'featured',
 ];
-
-const ChartToolWrapper = styled.div`
-  position: relative;
-  right: 0px;
-  top: 4px;
-  text-align: right;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    /* position: absolute;
-    right: ${({ theme }) => theme.global.edgeSize.medium};
-    top: 0; */
-  }
-`;
 
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
 
@@ -246,101 +230,91 @@ export function SingleMetric({
   const hasResults =
     dataReady && ((sorted && sorted.length > 0) || (other && other.length > 0));
   return (
-    <ResponsiveContext.Consumer>
-      {size => (
-        <>
-          <ChartToolWrapper>
-            <ChartTools
-              howToReadConfig={{
-                contxt: 'PathMetric',
-                chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
-                data: metric.color,
-              }}
-              settingsConfig={
-                metric.type === 'esr' && {
-                  key: 'metric',
-                  showStandard: true,
-                  showBenchmark: metric.metricType !== 'indicators',
-                }
-              }
-            />
-          </ChartToolWrapper>
-          <Box
-            direction="row"
-            justify="between"
-            align={isMinSize(size, 'medium') ? 'center' : 'start'}
-            margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
-          >
-            <ChartSettingFilters
-              regionFilterValue={regionFilterValue}
-              subregionFilterValue={subregionFilterValue}
-              onRemoveFilter={onRemoveFilter}
-              onAddFilter={onAddFilter}
-              incomeFilterValue={incomeFilterValue}
-              countryGroupFilterValue={countryGroupFilterValue}
-              treatyFilterValue={treatyFilterValue}
-              featuredFilterValue={featuredFilterValue}
-              filterValues={filterValues}
-            />
-            <ChartSettingSort
-              sort={currentSort}
-              options={SORT_OPTIONS}
-              order={currentSortOrder}
-              onSortSelect={onSortSelect}
-              onOrderToggle={onOrderChange}
-            />
-          </Box>
-          {!dataReady && <LoadingIndicator />}
-          {!hasResults && dataReady && (
-            <Hint italic>
-              <FormattedMessage {...rootMessages.hints.noResults} />
-            </Hint>
-          )}
-          {hasResults && sorted && sorted.length > 0 && (
-            <ChartBars
-              data={prepareData({
-                scores: sorted,
-                metric,
-                currentBenchmark,
-                standard,
-                intl,
-                countries,
-                onCountryClick,
-              })}
-              currentBenchmark={currentBenchmark}
-              metric={metric}
-              listHeader
-              bullet={metric.type === 'cpr'}
-              allowWordBreak
-              labelColor={`${metric.color}Dark`}
-            />
-          )}
-          {hasResults && other && other.length > 0 && (
-            <Box border="top">
-              <Hint italic>
-                <FormattedMessage {...rootMessages.hints.noSortData} />
-              </Hint>
-              <ChartBars
-                data={prepareData({
-                  scores: other,
-                  metric,
-                  currentBenchmark,
-                  standard,
-                  intl,
-                  countries,
-                  onCountryClick,
-                })}
-                currentBenchmark={currentBenchmark}
-                metric={metric}
-                bullet={metric.type === 'cpr'}
-                allowWordBreak
-              />
-            </Box>
-          )}
-          {hasResults && <Source />}
-        </>
+    <>
+      <ChartHeader
+        title={`Scores for ${scores.length} countries`}
+        tools={{
+          howToReadConfig: {
+            contxt: 'PathMetric',
+            chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
+            data: metric.color,
+          },
+          settingsConfig: metric.type === 'esr' && {
+            key: 'metric',
+            showStandard: true,
+            showBenchmark: metric.metricType !== 'indicators',
+          },
+        }}
+        filter={{
+          regionFilterValue,
+          subregionFilterValue,
+          onRemoveFilter,
+          onAddFilter,
+          incomeFilterValue,
+          countryGroupFilterValue,
+          treatyFilterValue,
+          featuredFilterValue,
+          filterValues,
+        }}
+        sort={{
+          sort: currentSort,
+          options: SORT_OPTIONS,
+          order: currentSortOrder,
+          onSortSelect,
+          onOrderToggle: onOrderChange,
+        }}
+      />
+      {!dataReady && <LoadingIndicator />}
+      {!hasResults && dataReady && (
+        <Hint italic>
+          <FormattedMessage {...rootMessages.hints.noResults} />
+        </Hint>
       )}
-    </ResponsiveContext.Consumer>
+      {hasResults && sorted && sorted.length > 0 && (
+        <ChartBars
+          data={prepareData({
+            scores: sorted,
+            metric,
+            currentBenchmark,
+            standard,
+            intl,
+            countries,
+            onCountryClick,
+          })}
+          currentBenchmark={currentBenchmark}
+          metric={metric}
+          listHeader
+          bullet={metric.type === 'cpr'}
+          allowWordBreak
+          labelColor={`${metric.color}Dark`}
+          padVertical="xsmall"
+        />
+      )}
+      {hasResults && other && other.length > 0 && (
+        <Box border="top">
+          <Hint italic>
+            <FormattedMessage {...rootMessages.hints.noSortData} />
+          </Hint>
+          <ChartBars
+            data={prepareData({
+              scores: other,
+              metric,
+              currentBenchmark,
+              standard,
+              intl,
+              countries,
+              onCountryClick,
+            })}
+            currentBenchmark={currentBenchmark}
+            metric={metric}
+            bullet={metric.type === 'cpr'}
+            allowWordBreak
+            padVertical="xsmall"
+          />
+        </Box>
+      )}
+      {hasResults && <Source />}
+    </>
   );
 }
 // metric={metric}
