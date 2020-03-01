@@ -11,10 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
 
-import ChartCountryMetricByGroup from 'components/ChartCountryMetricByGroup';
-
-import getMetricDetails from 'utils/metric-details';
-
+import { BENCHMARKS } from 'containers/App/constants';
 import {
   getStandardSearch,
   getESRScoresForCountry,
@@ -25,9 +22,12 @@ import {
   getBenchmarkSearch,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, setRaw } from 'containers/App/actions';
-import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
-import { BENCHMARKS } from 'containers/App/constants';
+
+import ChartCountryMetricByGroup from 'components/ChartCountryMetricByGroup';
+
+import getMetricDetails from 'utils/metric-details';
+import { useInjectSaga } from 'utils/injectSaga';
 
 const getColour = metric => {
   if (metric.metricType === 'dimensions') {
