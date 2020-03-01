@@ -17,7 +17,7 @@ import {
   STANDARDS,
 } from 'containers/App/constants';
 
-import ChartContainerCountryDimension from 'containers/ChartContainerCountryDimension';
+import ChartContainerCountryRights from 'containers/ChartContainerCountryRights';
 import ChartContainerCountryIndicators from 'containers/ChartContainerCountryIndicators';
 import ChartContainerTrend from 'containers/ChartContainerTrend';
 import ChartContainerPeople from 'containers/ChartContainerPeople';
@@ -51,7 +51,7 @@ function TabCountryReport({
       {dataReady && type === 'esr' && (
         <>
           <SectionContainer>
-            <ChartContainerCountryDimension
+            <ChartContainerCountryRights
               type={type}
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
@@ -59,9 +59,36 @@ function TabCountryReport({
             />
           </SectionContainer>
           <SectionContainer>
-            <ChartContainerCountryIndicators
-              countryCode={country[COLUMNS.COUNTRIES.CODE]}
-              onMetricClick={onMetricClick}
+            <ChartSettingMetrics
+              activeDefault={
+                RIGHTS.filter(r => r.dimension === dimension && r.hasGroups)[0]
+                  .key
+              }
+              metrics={RIGHTS.filter(r => r.dimension === 'esr')}
+              chart={props => (
+                <ChartContainerCountryIndicators
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  onMetricClick={onMetricClick}
+                  {...props}
+                />
+              )}
+              header={props => (
+                <ChartHeader
+                  title="Indicators"
+                  tools={{
+                    howToReadConfig: {
+                      key: 'country-dimension-esr',
+                      chart: 'Bar',
+                    },
+                    settingsConfig: {
+                      key: 'country-dimension-esr',
+                      showStandard: true,
+                      showBenchmark: true,
+                    },
+                  }}
+                  {...props}
+                />
+              )}
             />
           </SectionContainer>
           <SectionContainer>
@@ -205,7 +232,7 @@ function TabCountryReport({
       {dataReady && type === 'cpr' && dimension === 'physint' && (
         <>
           <SectionContainer>
-            <ChartContainerCountryDimension
+            <ChartContainerCountryRights
               type={type}
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
@@ -272,7 +299,7 @@ function TabCountryReport({
       {dataReady && type === 'cpr' && dimension === 'empowerment' && (
         <>
           <SectionContainer>
-            <ChartContainerCountryDimension
+            <ChartContainerCountryRights
               type={type}
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}

@@ -53,7 +53,7 @@ export function Grades({ grades, labels = true, hasAside }) {
           right={getScoreAsideWidth(size, hasAside)}
         >
           {grades.map(grade => (
-            <BGScaleX min={grade.min}>
+            <BGScaleX min={grade.min} key={grade.class}>
               {labels && (
                 <BGScaleLabel>
                   <FormattedMessage

@@ -680,6 +680,28 @@ export const getESRScoresForCountry = createSelector(
     );
   },
 );
+export const getESRScoreForCountry = createSelector(
+  (state, { countryCode }) => countryCode,
+  (state, { metricCode }) => metricCode,
+  getESRScores,
+  getESRYear,
+  getStandardSearch,
+  (countryCode, metricCode, scores, esrYear, standardSearch) => {
+    const standard = STANDARDS.find(as => as.key === standardSearch);
+    const right = RIGHTS.find(r => r.key === metricCode);
+    return (
+      countryCode &&
+      scores &&
+      scores.find(
+        s =>
+          s.country_code === countryCode &&
+          s.metric_code === right.code &&
+          s.standard === standard.code &&
+          quasiEquals(s.year, esrYear),
+      )
+    );
+  },
+);
 
 export const getESRIndicatorScoresForCountry = createSelector(
   (state, { countryCode }) => countryCode,
@@ -766,12 +788,12 @@ export const getIndicatorScoresForCountry = createSelector(
       // first filter by country
       const filteredByCountry = scores.filter(s => s.country_code === country);
       // filter by standard
-      const filteredByStandard = filteredByCountry.filter(s =>
-        indicators.find(i => i.metric_code === s.metric_code),
-      );
+      // const filteredByStandard = filteredByCountry.filter(s =>
+      //   indicators.find(i => i.metric_code === s.metric_code),
+      // );
       // then get the most recent year for each metric
       // figure out most recent data by metric
-      const metricYears = filteredByStandard.reduce((memo, s) => {
+      const metricYears = filteredByCountry.reduce((memo, s) => {
         const result = memo;
         const metric = s.metric_code;
         if (
@@ -785,7 +807,7 @@ export const getIndicatorScoresForCountry = createSelector(
         return result;
       }, {});
       // filter by year or most recent year
-      const filteredByYear = filteredByStandard.filter(
+      const filteredByYear = filteredByCountry.filter(
         s =>
           quasiEquals(s.year, year) ||
           quasiEquals(s.year, metricYears[s.metric_code]),
@@ -795,6 +817,7 @@ export const getIndicatorScoresForCountry = createSelector(
     return false;
   },
 );
+
 export const getIndicatorsForCountry = createSelector(
   getIndicatorScoresForCountry,
   getESRIndicators,
@@ -822,6 +845,19 @@ export const getIndicatorsForCountry = createSelector(
         return memo;
       }, {})
     );
+  },
+);
+
+// single country, all indicators, single year
+export const getIndicatorsForCountryAndRight = createSelector(
+  (state, country, { metricCode }) => metricCode,
+  getIndicatorsForCountry,
+  (metricCode, indicators) => {
+    if (metricCode && indicators) {
+      // first filter by country
+      return Object.values(indicators).filter(i => i.right === metricCode);
+    }
+    return false;
   },
 );
 
