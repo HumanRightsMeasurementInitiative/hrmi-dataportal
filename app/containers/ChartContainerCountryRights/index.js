@@ -1,6 +1,6 @@
 /**
  *
- * ChartContainerCountryDimension
+ * ChartContainerCountryRights
  *
  */
 
@@ -136,7 +136,7 @@ const prepareData = ({
       }
   );
 
-export function ChartContainerCountryDimension({
+export function ChartContainerCountryRights({
   type,
   onLoadData,
   country,
@@ -358,7 +358,7 @@ export function ChartContainerCountryDimension({
   // return null;
 }
 
-ChartContainerCountryDimension.propTypes = {
+ChartContainerCountryRights.propTypes = {
   dimensionCode: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -401,5 +401,5 @@ const withConnect = connect(
 );
 
 export default compose(withConnect)(
-  withTheme(injectIntl(ChartContainerCountryDimension)),
+  withTheme(injectIntl(ChartContainerCountryRights)),
 );

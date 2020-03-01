@@ -11,20 +11,12 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
 // import { Paragraph, Box } from 'grommet';
-// import { injectIntl, intlShape } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 
-// import getMetricDetails from 'utils/metric-details';
-
-// import {
-//   STANDARDS,
-//   BENCHMARKS,
-//   GRADES,
-//   COLUMNS,
-// } from 'containers/App/constants';
+import { BENCHMARKS, GRADES, COLUMNS } from 'containers/App/constants';
 
 import {
-  getIndicatorsForCountry,
+  getIndicatorsForCountryAndRight,
   getCountry,
   getCountryGrammar,
   getStandardSearch,
@@ -32,6 +24,7 @@ import {
   getDimensionAverages,
   getDependenciesReady,
   getRightsForCountry,
+  getESRScoreForCountry,
   // getAuxIndicatorsForCountry,
   // getLatestCountryCurrentGDP,
   // getLatestCountry2011PPPGDP,
@@ -41,102 +34,81 @@ import {
 import { loadDataIfNeeded } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 
-import ChartHeader from 'components/ChartHeader';
-// import ChartBars from 'components/ChartBars';
+import ChartBars from 'components/ChartBars';
 
 import { useInjectSaga } from 'utils/injectSaga';
-// import { getRightsScoresForDimension } from 'utils/scores';
-//
-// import rootMessages from 'messages';
+import getMetricDetails from 'utils/metric-details';
 
-const DEPENDENCIES = [
-  'countries',
-  'countriesGrammar',
-  'esrIndicators',
-  'cprScores',
-  'esrScores',
-  'esrIndicatorScores',
-];
+import rootMessages from 'messages';
 
-// const getESRDimensionValue = (score, benchmark) => {
-//   if (score) {
-//     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-//     return score && parseFloat(score[col]);
-//   }
-//   return false;
-// };
-// const getCPRDimensionValue = score =>
-//   score && parseFloat(score[COLUMNS.CPR.MEAN]);
-//
-// const getDimensionRefs = (score, benchmark) => {
-//   if (benchmark && benchmark.key === 'adjusted') {
-//     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
-//   }
-//   if (benchmark && benchmark.key === 'best') {
-//     const col = benchmark.refColumn;
-//     return [
-//       { value: 100, style: 'solid', key: 'best' },
-//       {
-//         value: score && parseFloat(score[col]),
-//         style: 'dotted',
-//         key: 'adjusted',
-//       },
-//     ];
-//   }
-//   return false;
-// };
+const DEPENDENCIES = ['esrScores', 'esrIndicators', 'esrIndicatorScores'];
 
-// const getMetricLabel = (score, intl) =>
-//   intl.formatMessage(rootMessages['rights-xshort'][score.key]);
+const getRightValue = (score, benchmark) => {
+  if (score) {
+    const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
+    return score && parseFloat(score[col]);
+  }
+  return false;
+};
+
+const getRightRefs = (score, benchmark) => {
+  if (benchmark && benchmark.key === 'adjusted') {
+    return [{ value: 100, style: 'dotted', key: 'adjusted' }];
+  }
+  if (benchmark && benchmark.key === 'best') {
+    const col = benchmark.refColumn;
+    return [
+      { value: 100, style: 'solid', key: 'best' },
+      {
+        value: score && parseFloat(score[col]),
+        style: 'dotted',
+        key: 'adjusted',
+      },
+    ];
+  }
+  return false;
+};
+
+const getMetricLabel = (metricCode, intl) =>
+  intl.formatMessage(rootMessages['rights-xshort'][metricCode]);
+
+const getIndicatorLabel = (metricCode, intl) =>
+  intl.formatMessage(rootMessages.indicators[metricCode]);
 
 // const getDimensionLabel = (score, intl) =>
 //   intl.formatMessage(rootMessages.dimensions[score.key]);
 //
-// const prepareData = ({
-//   scores,
-//   dimensionCode,
-//   currentBenchmark,
-//   standard,
-//   onClick,
-//   intl,
-// }) =>
-//   // prettier-ignore
-//   scores.map(s =>
-//     dimensionCode === 'esr'
-//       ? {
-//         color: dimensionCode,
-//         refValues: getDimensionRefs(s.score, currentBenchmark),
-//         value: getESRDimensionValue(s.score, currentBenchmark),
-//         maxValue: 100,
-//         unit: '%',
-//         stripes: standard === 'hi',
-//         key: s.key,
-//         label: getMetricLabel(s, intl),
-//         onClick: () => onClick(s.key),
-//       }
-//       : {
-//         color: dimensionCode,
-//         value: getCPRDimensionValue(s.score),
-//         maxValue: 10,
-//         unit: '',
-//         key: s.key,
-//         band: getBand(s.score),
-//         label: getMetricLabel(s, intl),
-//         onClick: () => onClick(s.key),
-//       }
-//   );
+const prepareData = ({
+  indicators,
+  currentBenchmark,
+  standard,
+  onClick,
+  intl,
+}) =>
+  // prettier-ignore
+  indicators.map(i => ({
+    color: 'esr',
+    value: getRightValue(i.score, currentBenchmark),
+    maxValue: 100,
+    unit: '%',
+    stripes: standard === 'hi',
+    key: i.key,
+    label: getIndicatorLabel(i.key, intl),
+    onClick: () => onClick(i.key),
+  }));
 
 export function ChartContainerCountryIndicators({
+  metricCode,
   onLoadData,
   // country,
   // dimensionCode,
-  // rights,
-  // indicators,
-  // standard,
-  // benchmark,
+  right,
+  indicators,
+  standard,
+  benchmark,
   dataReady,
-  // intl,
-  // onMetricClick,
+  intl,
+  onMetricClick,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -145,105 +117,75 @@ export function ChartContainerCountryIndicators({
 
   if (!dataReady) return null;
 
-  // const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   // const currentStandard = STANDARDS.find(s => s.key === standard);
-  // const hasSomeIndicatorScores = Object.values(indicators)
-  //   .filter(s => {
-  //     if (!s.details) return false;
-  //     return (
-  //       s.details.standard === 'Both' ||
-  //       s.details.standard === currentStandard.code
-  //     );
-  //   })
-  //   .reduce((m, s) => m || !!s.score, false);
 
   return (
     <div>
-      <ChartHeader
-        title="Indicator overview"
-        tools={{
-          howToReadConfig: {
-            key: 'country-dimension-esr',
-            chart: 'Bar',
+      <ChartBars
+        data={[
+          {
+            color: 'esr',
+            refValues: getRightRefs(right, currentBenchmark),
+            value: getRightValue(right, currentBenchmark),
+            maxValue: 100,
+            unit: '%',
+            stripes: standard === 'hi',
+            key: metricCode,
+            label: getMetricLabel(metricCode, intl),
+            onClick: () => onMetricClick(metricCode),
           },
-          settingsConfig: {
-            key: 'country-dimension-esr',
-            showStandard: true,
-            showBenchmark: true,
-          },
-        }}
+        ]}
+        currentBenchmark={currentBenchmark}
+        standard={standard}
+        labelColor="esrDark"
+        padVertical="xsmall"
+        grades={GRADES.esr}
+        gradeLabels={false}
+        level={1}
+        commonLabel="Right to"
+        listHeader
+        metric={getMetricDetails(metricCode)}
+      />
+      <ChartBars
+        data={prepareData({
+          indicators,
+          currentBenchmark,
+          standard,
+          onClick: onMetricClick,
+          intl,
+        })}
+        currentBenchmark={currentBenchmark}
+        standard={standard}
+        commonLabel="Indicators"
+        labelColor="esrDark"
+        grades={GRADES.esr}
+        listHeader
       />
     </div>
   );
-  // <Box margin={{ bottom: 'large' }}>
-  // <ChartBars
-  // data={[
-  //   {
-  //     color: dimensionCode,
-  //     refValues: getDimensionRefs(
-  //       dimension.score,
-  //       currentBenchmark,
-  //     ),
-  //     value: getESRDimensionValue(
-  //       dimension.score,
-  //       currentBenchmark,
-  //     ),
-  //     maxValue: 100,
-  //     unit: '%',
-  //     stripes: standard === 'hi',
-  //     key: dimension.key,
-  //     label: getDimensionLabel(dimension, intl),
-  //     onClick: () => onMetricClick(dimension.key),
-  //   },
-  // ]}
-  // currentBenchmark={currentBenchmark}
-  // standard={standard}
-  // labelColor={`${dimensionCode}Dark`}
-  // padVertical="small"
-  // grades={GRADES.esr}
-  // gradeLabels={false}
-  // level={1}
-  // commonLabel="Category"
-  // />
-  // <ChartBars
-  // data={prepareData({
-  //   scores: getRightsScoresForDimension(rights, 'esr'),
-  //   dimensionCode,
-  //   currentBenchmark,
-  //   standard,
-  //   onClick: onMetricClick,
-  //   intl,
-  // })}
-  // currentBenchmark={currentBenchmark}
-  // standard={standard}
-  // commonLabel={`${intl.formatMessage(
-  //   rootMessages['rights-xshort-common'][dimensionCode],
-  // )}`}
-  // labelColor={`${dimensionCode}Dark`}
-  // padVertical="small"
-  // grades={GRADES.esr}
-  // />
-  // </Box>
 }
 
 ChartContainerCountryIndicators.propTypes = {
   onLoadData: PropTypes.func.isRequired,
+  metricCode: PropTypes.string.isRequired,
   dataReady: PropTypes.bool,
-  // dimensionCode: PropTypes.string.isRequired,
-  // indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  // benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  // rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // onMetricClick: PropTypes.func,
-  // intl: intlShape.isRequired,
+  right: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  onMetricClick: PropTypes.func,
+  intl: intlShape.isRequired,
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
   countryGrammar: (state, { countryCode }) =>
     getCountryGrammar(state, countryCode),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  indicators: (state, { countryCode }) =>
-    getIndicatorsForCountry(state, countryCode),
+  indicators: (state, { countryCode, metricCode }) =>
+    getIndicatorsForCountryAndRight(state, countryCode, { metricCode }),
+  right: (state, { countryCode, metricCode }) =>
+    getESRScoreForCountry(state, { countryCode, metricCode }),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
   dimensionAverages: state => getDimensionAverages(state),

@@ -12,7 +12,7 @@ import { Box } from 'grommet';
 
 import quasiEquals from 'utils/quasi-equals';
 
-import Source from 'components/Source';
+// import Source from 'components/Source';
 import ChartBars from 'components/ChartBars';
 
 import {
@@ -133,6 +133,7 @@ const prepareData = ({
       stripes: standard === 'hi',
       label: intl.formatMessage(rootMessages.groups[group.key]),
       unit: '%',
+      key: group.key,
     };
   });
 
@@ -169,7 +170,6 @@ function ChartCountryMetricByGroup({
         grades={GRADES.esr}
         commonLabel="By sex"
       />
-      <Source center />
       {hasRawOption && (
         <Settings direction="row" justify="end" pad="small" border="top">
           <Box direction="row" justify="end">
@@ -197,6 +197,7 @@ function ChartCountryMetricByGroup({
     </Styled>
   );
 }
+// <Source center />
 
 ChartCountryMetricByGroup.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
