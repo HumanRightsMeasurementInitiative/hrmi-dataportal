@@ -6,8 +6,13 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Box } from 'grommet';
 
 import { SIZES } from 'theme';
-import { DIMENSIONS, RIGHTS, INDICATORS } from 'containers/App/constants';
-import { selectMetric } from 'containers/App/actions';
+import {
+  DIMENSIONS,
+  RIGHTS,
+  INDICATORS,
+  PATHS,
+} from 'containers/App/constants';
+import { selectMetric, navigate } from 'containers/App/actions';
 
 import rootMessages from 'messages';
 
@@ -20,7 +25,7 @@ import NavOptionGroup from './NavOptionGroup';
 
 import messages from './messages';
 
-export function NavMetric({ onSelectMetric, intl, onClose, size }) {
+export function NavMetric({ onSelectMetric, intl, onClose, size, nav }) {
   const [search, setSearch] = useState('');
 
   const dimensions = prepMetrics(DIMENSIONS, 'dimensions', search, intl);
@@ -41,6 +46,23 @@ export function NavMetric({ onSelectMetric, intl, onClose, size }) {
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
+          {search === '' && (
+            <NavOptionGroup
+              label="All rights"
+              options={[
+                {
+                  key: 'metrics',
+                  code: 'metrics',
+                  label: 'Rights overview',
+                  special: true,
+                },
+              ]}
+              onClick={() => {
+                onClose();
+                nav(PATHS.METRICS);
+              }}
+            />
+          )}
           {!hasMetrics && <FormattedMessage {...messages.noResults} />}
           {dimensions.length > 0 && (
             <NavOptionGroup
@@ -81,6 +103,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size }) {
 NavMetric.propTypes = {
   onSelectMetric: PropTypes.func,
   onClose: PropTypes.func,
+  nav: PropTypes.func,
   intl: intlShape.isRequired,
   size: PropTypes.string,
 };
@@ -88,6 +111,18 @@ NavMetric.propTypes = {
 export function mapDispatchToProps(dispatch) {
   return {
     onSelectMetric: metric => dispatch(selectMetric(metric)),
+    nav: location => {
+      dispatch(
+        navigate(location, {
+          keepTab: true,
+          trackEvent: {
+            category: 'Content',
+            action: 'Header: navigate',
+            value: typeof location === 'object' ? location.pathname : location,
+          },
+        }),
+      );
+    },
   };
 }
 const withConnect = connect(

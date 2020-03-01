@@ -19,7 +19,11 @@ export function NavOptionGroup({ label, options, onClick }) {
         </Text>
       )}
       {options.map(m => (
-        <NavOption key={m.code} onClick={() => onClick(m.code)}>
+        <NavOption
+          key={m.code}
+          onClick={() => onClick(m.code)}
+          special={m.special}
+        >
           <Box direction="row" align="end" fill="horizontal" width="100%">
             <Text>{m.label}</Text>
             {m.labelSecondary && (
