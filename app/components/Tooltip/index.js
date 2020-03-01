@@ -76,16 +76,18 @@ function Tooltip({
     <ResponsiveContext.Consumer>
       {size => {
         const openModal = large && size === 'small';
+        // prettier-ignore
         return (
           <>
             <Button
               as={insideButton ? 'span' : 'button'}
               plain
               icon={
-                !textAnchor &&
-                (icon || (
-                  <CircleInformation size={iconSize} color="highlight2" />
-                ))
+                textAnchor
+                  ? null
+                  : icon || (
+                    <CircleInformation size={iconSize} color="highlight2" />
+                  )
               }
               ref={button}
               onClick={evt => {
