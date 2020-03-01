@@ -31,7 +31,7 @@ import messages from './messages';
 export function PathMetricOverview({ onSelectMetric, intl }) {
   return (
     <ContentWrap>
-      <ContentContainer header>
+      <ContentContainer header background="light-1">
         <ContentMaxWidth maxWidth="medium">
           <PageTitle level={2}>
             <FormattedMessage {...messages.title} />

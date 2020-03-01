@@ -74,7 +74,7 @@ function LayerHowToRead({ layer, theme, onClose }) {
             style={{ position: 'relative' }}
             responsive={false}
           >
-            <Heading level={3}>
+            <Heading level={2}>
               <FormattedMessage {...messages.label} />
             </Heading>
             <ButtonWrap>

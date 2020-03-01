@@ -56,6 +56,8 @@ function ChartBars({
   labelColor,
   padVertical,
   grades,
+  gradeLabels,
+  level = 2,
 }) {
   if (!data) return null;
   return (
@@ -63,7 +65,8 @@ function ChartBars({
       {size => (
         <Styled
           pad={{
-            vertical: padVertical || 'large',
+            top: 'medium',
+            bottom: padVertical || 'large',
             right: isMinSize(size, 'medium') ? 'xlarge' : 'medium',
           }}
           direction="column"
@@ -77,7 +80,7 @@ function ChartBars({
               {commonLabel}
             </Text>
           )}
-          {grades && <Grades grades={grades} />}
+          {grades && <Grades grades={grades} labels={gradeLabels} />}
           {data.map(d => (
             <BarWrapper
               key={d.key}
@@ -85,6 +88,8 @@ function ChartBars({
               bullet={bullet}
               allowWordBreak={allowWordBreak}
               labelColor={labelColor}
+              hasBackground={!!grades}
+              level={level}
             />
           ))}
         </Styled>
@@ -107,6 +112,8 @@ ChartBars.propTypes = {
   currentBenchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   grades: PropTypes.object,
+  gradeLabels: PropTypes.bool,
+  level: PropTypes.number,
   // standard: PropTypes.string,
 };
 

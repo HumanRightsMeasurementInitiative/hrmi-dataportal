@@ -40,12 +40,12 @@ import {
 import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
 import ChartCountryDiamond from 'components/ChartCountryDiamond';
-import ChartSettingSort from 'components/ChartSettingSort';
-import ChartSettingFilters from 'components/ChartSettingFilters';
+import ChartHeader from 'components/ChartHeader';
+
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
 
-import { isMinSize, isMaxSize } from 'utils/responsive';
+import { isMaxSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
 import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 
@@ -129,32 +129,42 @@ export function OverviewCountries({
     <ResponsiveContext.Consumer>
       {size => (
         <MainColumn hasAside={hasAside}>
-          <Box
-            direction="row"
-            justify="between"
-            align="start"
-            margin={{ vertical: isMinSize(size, 'medium') ? '0' : 'small' }}
-          >
-            <ChartSettingFilters
-              regionFilterValue={regionFilterValue}
-              subregionFilterValue={subregionFilterValue}
-              onRemoveFilter={onRemoveFilter}
-              onAddFilter={onAddFilter}
-              incomeFilterValue={incomeFilterValue}
-              assessedFilterValue={assessedFilterValue}
-              countryGroupFilterValue={countryGroupFilterValue}
-              treatyFilterValue={treatyFilterValue}
-              featuredFilterValue={featuredFilterValue}
-              filterValues={filterValues}
-            />
-            <ChartSettingSort
-              sort={currentSort}
-              options={SORT_OPTIONS}
-              order={currentSortOrder}
-              onSortSelect={onSortSelect}
-              onOrderToggle={onOrderChange}
-            />
-          </Box>
+          <ChartHeader
+            title={`${countries.length} countries`}
+            tools={{
+              howToReadConfig: {
+                key: 'tab-countries',
+                contxt: 'PathCountryOverview',
+                chart: 'Diamonds',
+                type: scale,
+              },
+              settingsConfig: {
+                key: 'tab-countries',
+                showStandard: true,
+                showBenchmark: true,
+                showScale: true,
+              },
+            }}
+            filter={{
+              regionFilterValue,
+              subregionFilterValue,
+              onRemoveFilter,
+              onAddFilter,
+              incomeFilterValue,
+              countryGroupFilterValue,
+              treatyFilterValue,
+              featuredFilterValue,
+              filterValues,
+              assessedFilterValue,
+            }}
+            sort={{
+              sort: currentSort,
+              options: SORT_OPTIONS,
+              order: currentSortOrder,
+              onSortSelect,
+              onOrderToggle: onOrderChange,
+            }}
+          />
           {sorted && scoresAllCountries && (
             <Box
               width="100%"

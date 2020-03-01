@@ -27,9 +27,9 @@ const WrapAnnotateBetter = styled.div`
 
 // prettier-ignore
 const StyledScoreText = styled(Text)`
-  padding: 0 5px;
+  padding: 0;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 0 8px;
+    padding: 0;
   }
 `;
 

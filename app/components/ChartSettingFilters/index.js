@@ -162,7 +162,7 @@ const getFilterOptions = (
 
 const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
   <Box
-    pad={{ horizontal: 'none', top: 'small', bottom: 'none' }}
+    pad={{ horizontal: 'none', top: '0', bottom: 'none' }}
     width={{ min: '280px' }}
     overflow="auto"
   >

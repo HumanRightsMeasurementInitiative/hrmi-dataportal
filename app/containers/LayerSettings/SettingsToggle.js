@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import styled, { css } from 'styled-components';
 import { Box, Text } from 'grommet';
 
-import Tooltip from 'components/Tooltip';
+// import Tooltip from 'components/Tooltip';
 import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
 import StandardOverlay from 'components/Tooltip/StandardOverlay';
 import ButtonToggleSetting from 'styled/ButtonToggleSetting';
@@ -85,18 +85,17 @@ function SettingsToggle({
   horizontal = false,
 }) {
   return (
-    <Box direction="column" flex={{ shrink: 0 }} responsive={false}>
+    <Box
+      direction="column"
+      flex={{ shrink: 0 }}
+      responsive={false}
+      margin={{ bottom: 'large' }}
+    >
       <Box direction="row" align="center">
         <Box pad={{ vertical: 'small' }} direction="row">
-          <Text size="small" style={{ fontWeight: 600 }}>
+          <Text size="large" style={{ fontWeight: 600 }}>
             <FormattedMessage {...rootMessages.settings[setting].name} />
           </Text>
-          {setting === 'standard' && (
-            <Tooltip iconSize="medium" large component={<StandardOverlay />} />
-          )}
-          {setting === 'benchmark' && (
-            <Tooltip iconSize="medium" large component={<BenchmarkOverlay />} />
-          )}
         </Box>
         {square && (
           <SquareWrap rotated={!horizontal}>
@@ -109,7 +108,7 @@ function SettingsToggle({
           </SquareWrap>
         )}
       </Box>
-      <Box direction="row" align="center">
+      <Box direction="row" align="center" margin={{ bottom: 'small' }}>
         {options.map(option => (
           <ButtonToggleSetting
             key={option.key}
@@ -127,6 +126,8 @@ function SettingsToggle({
           </ButtonToggleSetting>
         ))}
       </Box>
+      {setting === 'standard' && <StandardOverlay size="xsmall" />}
+      {setting === 'benchmark' && <BenchmarkOverlay size="xsmall" />}
     </Box>
   );
 }

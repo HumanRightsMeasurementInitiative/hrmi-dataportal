@@ -31,18 +31,21 @@ const BarReference = styled.div`
   position: absolute;
   left: 0;
   top: 50%;
-  margin-top: -2px;
+  margin-top: -1px;
   width: 100%;
-  height: 4px;
-  background-color: ${props => props.theme.global.colors['light-2']};
+  height: 2px;
+  background-color: ${({ theme, hasBackground }) =>
+    theme.global.colors[hasBackground ? 'white' : 'light-2']};
 `;
 
 const BarValue = styled.div`
   position: absolute;
   left: 0;
-  top: ${props => props.height / 2 - props.height * 0.15}px;
-  height: ${props => props.height * 0.3}px;
-  background-color: ${props => props.theme.global.colors['light-5']};
+  top: ${props => props.height / 2 - 1}px;
+  height: 2px;
+  background-color: ${({ theme, color }) =>
+    theme.global.colors[color || 'light-5']};
+  opacity: ${({ active }) => (active ? 0.4 : 0.6)};
 `;
 const MarkValue = styled.div`
   position: absolute;
@@ -79,6 +82,7 @@ function BarBullet({
   direction,
   annotateOnHover,
   hoverEnabled = true,
+  hasBackground,
 }) {
   const [hover, setHover] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -103,11 +107,12 @@ function BarBullet({
       {showLabels && <MinLabel>0</MinLabel>}
       <BarWrapper>
         <BarAnchor height={HEIGHT[level]}>
-          {value && <BarReference />}
+          {value && <BarReference hasBackground={hasBackground} />}
           {value && (
             <BarValue
               height={HEIGHT[level]}
               style={{ width: `${(value / maxValue) * 100}%` }}
+              color={color}
             />
           )}
           {value && (
@@ -227,6 +232,7 @@ BarBullet.propTypes = {
   level: PropTypes.number,
   showLabels: PropTypes.bool,
   showScore: PropTypes.bool,
+  hasBackground: PropTypes.bool,
   hoverEnabled: PropTypes.bool,
   direction: PropTypes.string,
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),

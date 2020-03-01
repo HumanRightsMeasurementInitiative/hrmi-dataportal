@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Paragraph, Heading } from 'grommet';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Paragraph, Box, Heading } from 'grommet';
 import styled from 'styled-components';
 
 import { COLUMNS, BENCHMARKS, STANDARDS } from 'containers/App/constants';
@@ -29,7 +29,7 @@ import {
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
 import saga from 'containers/App/saga';
-import ChartTools from 'containers/ChartTools';
+import ChartHeader from 'components/ChartHeader';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ChartCountrySnapshot from 'components/ChartCountrySnapshot';
 import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRStandardHint';
@@ -46,33 +46,11 @@ import { getRightsScoresForDimension } from 'utils/scores';
 
 import { getMessageGrammar } from 'utils/narrative';
 
+import rootMessages from 'messages';
 import messages from './messages';
 
 const Styled = styled.div`
-  position: relative;
-  margin-top: 35px;
-`;
-const ChartToolWrapper = styled.div`
-  position: relative;
-  right: 0px;
-  top: 4px;
-  text-align: right;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    position: absolute;
-    right: ${({ theme }) => theme.global.edgeSize.medium};
-    top: 0;
-  }
-`;
-
-// prettier-ignore
-const StyledHeading = styled(Heading)`
-  font-size: ${({ theme, level = 1 }) => theme.heading.level[level].small.size};
-  line-height: ${({ theme, level = 1 }) => theme.heading.level[level].small.height};
-  margin-top: 0;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    font-size: ${({ theme, level = 1 }) => theme.heading.level[level].medium.size};
-    line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
-  }
+  margin-bottom: 35px;
 `;
 
 const DEPENDENCIES = [
@@ -131,143 +109,169 @@ export function ChartContainerCountrySnapshot({
     .reduce((m, s) => m || !!s.score, false);
   return (
     <Styled>
-      <StyledHeading responsive={false} level={2}>
-        <FormattedMessage
-          {...messages.title}
-          values={getMessageGrammar(intl, countryCode, null, countryGrammar)}
-        />
-      </StyledHeading>
-      <ChartToolWrapper>
-        <ChartTools
-          howToReadConfig={{
+      <ChartHeader
+        title={intl.formatMessage(
+          messages.title,
+          getMessageGrammar(intl, countryCode, null, countryGrammar),
+        )}
+        tools={{
+          howToReadConfig: {
             key: 'tab-snapshot',
             chart: 'Bar',
-          }}
-          settingsConfig={{
+          },
+          settingsConfig: {
             key: 'tab-snapshot',
             showStandard: true,
             showBenchmark: true,
-          }}
-        />
-      </ChartToolWrapper>
+          },
+        }}
+      />
       <NarrativeESRStandardHint country={country} standard={standard} />
-      <ChartCountrySnapshot
-        type="esr"
-        dimensionCode="esr"
-        dimensionScore={getDimensionScore(
-          'esr',
-          dimensions.esr,
-          currentBenchmark,
+      <Box margin={{ bottom: 'large' }}>
+        <ChartCountrySnapshot
+          type="esr"
+          dimensionCode="esr"
+          dimensionScore={getDimensionScore(
+            'esr',
+            dimensions.esr,
+            currentBenchmark,
+          )}
+          rights={getRightsScoresForDimension(rights, 'esr')}
+          currentBenchmark={currentBenchmark}
+          standard={standard}
+          year={esrYear}
+          maxValue={100}
+          onMetricClick={onMetricClick}
+        />
+        {dimensions.physint.score && (
+          <ChartCountrySnapshot
+            type="cpr"
+            dimensionCode="physint"
+            dimensionScore={getDimensionScore('cpr', dimensions.physint)}
+            rights={getRightsScoresForDimension(rights, 'physint')}
+            year={cprYear}
+            maxValue={10}
+            onMetricClick={onMetricClick}
+          />
         )}
-        rights={getRightsScoresForDimension(rights, 'esr')}
-        currentBenchmark={currentBenchmark}
-        standard={standard}
-        year={esrYear}
-        maxValue={100}
-        onMetricClick={onMetricClick}
-      />
-      {dimensions.physint.score && (
-        <ChartCountrySnapshot
-          type="cpr"
-          dimensionCode="physint"
-          dimensionScore={getDimensionScore('cpr', dimensions.physint)}
-          rights={getRightsScoresForDimension(rights, 'physint')}
-          year={cprYear}
-          maxValue={10}
-          onMetricClick={onMetricClick}
-        />
-      )}
-      {dimensions.empowerment.score && (
-        <ChartCountrySnapshot
-          type="cpr"
-          dimensionCode="empowerment"
-          dimensionScore={getDimensionScore('cpr', dimensions.empowerment)}
-          rights={getRightsScoresForDimension(rights, 'empowerment')}
-          year={cprYear}
-          maxValue={10}
-          onMetricClick={onMetricClick}
-        />
-      )}
-      <Source />
-      <NarrativeESR
-        dimensionScore={dimensions.esr.score}
-        country={country}
-        countryGrammar={countryGrammar}
-        someData={hasSomeIndicatorScores}
-        standard={standard}
-        short
-        benchmark={benchmark}
-      />
-      <Paragraph>
-        <NarrativeESRCompAssessment
+        {dimensions.empowerment.score && (
+          <ChartCountrySnapshot
+            type="cpr"
+            dimensionCode="empowerment"
+            dimensionScore={getDimensionScore('cpr', dimensions.empowerment)}
+            rights={getRightsScoresForDimension(rights, 'empowerment')}
+            year={cprYear}
+            maxValue={10}
+            onMetricClick={onMetricClick}
+          />
+        )}
+        <Source />
+      </Box>
+      <Box margin={{ bottom: 'medium' }}>
+        <Heading level={4}>
+          <FormattedMessage {...rootMessages.dimensions.physint} />
+        </Heading>
+        <NarrativeESRStandardHint country={country} standard={standard} />
+        <NarrativeESR
+          dimensionScore={dimensions.esr.score}
           country={country}
           countryGrammar={countryGrammar}
-          dimensionScore={dimensions.esr && dimensions.esr.score}
-          referenceScore={
-            dimensionAverages &&
-            dimensionAverages.esr[standard].average[benchmark]
-          }
-          referenceCount={
-            dimensionAverages && dimensionAverages.esr[standard].count
-          }
-          benchmark={currentBenchmark}
+          someData={hasSomeIndicatorScores}
+          standard={standard}
+          short
+          benchmark={benchmark}
         />
-        <ButtonText onClick={() => goToTab('report-esr')}>
-          Explore details
-        </ButtonText>
-      </Paragraph>
-      <NarrativeCPR
-        dimensionKey="empowerment"
-        score={dimensions.empowerment.score}
-        country={country}
-        countryGrammar={countryGrammar}
-      />
-      {dimensions.empowerment.score && (
         <Paragraph>
-          <NarrativeCPRCompAssessment
-            dimensionKey="empowerment"
-            score={dimensions.empowerment.score}
+          <NarrativeESRCompAssessment
             country={country}
             countryGrammar={countryGrammar}
+            dimensionScore={dimensions.esr && dimensions.esr.score}
             referenceScore={
-              dimensionAverages && dimensionAverages.empowerment.average
+              dimensionAverages &&
+              dimensionAverages.esr[standard].average[benchmark]
             }
             referenceCount={
-              dimensionAverages && dimensionAverages.empowerment.count
+              dimensionAverages && dimensionAverages.esr[standard].count
             }
-            start
+            benchmark={currentBenchmark}
           />
-          <ButtonText onClick={() => goToTab('report-empowerment')}>
+        </Paragraph>
+        <Paragraph>
+          <ButtonText onClick={() => goToTab('report-esr')}>
             Explore details
           </ButtonText>
         </Paragraph>
-      )}
-      <NarrativeCPR
-        dimensionKey="physint"
-        score={dimensions.physint.score}
-        country={country}
-        countryGrammar={countryGrammar}
-      />
-      {dimensions.physint.score && (
-        <Paragraph>
-          <NarrativeCPRCompAssessment
-            dimensionKey="physint"
-            score={dimensions.physint.score}
-            country={country}
-            countryGrammar={countryGrammar}
-            referenceScore={
-              dimensionAverages && dimensionAverages.physint.average
-            }
-            referenceCount={
-              dimensionAverages && dimensionAverages.physint.count
-            }
-            start
-          />
-          <ButtonText onClick={() => goToTab('report-physint')}>
-            Explore details
-          </ButtonText>
-        </Paragraph>
-      )}
+      </Box>
+      <Box margin={{ bottom: 'medium' }}>
+        <Heading level={4}>
+          <FormattedMessage {...rootMessages.dimensions.physint} />
+        </Heading>
+        <NarrativeCPR
+          dimensionKey="physint"
+          score={dimensions.physint.score}
+          country={country}
+          countryGrammar={countryGrammar}
+        />
+        {dimensions.physint.score && (
+          <>
+            <Paragraph>
+              <NarrativeCPRCompAssessment
+                dimensionKey="physint"
+                score={dimensions.physint.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={
+                  dimensionAverages && dimensionAverages.physint.average
+                }
+                referenceCount={
+                  dimensionAverages && dimensionAverages.physint.count
+                }
+                start
+              />
+            </Paragraph>
+            <Paragraph>
+              <ButtonText onClick={() => goToTab('report-physint')}>
+                Explore details
+              </ButtonText>
+            </Paragraph>
+          </>
+        )}
+      </Box>
+      <Box margin={{ bottom: 'medium' }}>
+        <Heading level={4}>
+          <FormattedMessage {...rootMessages.dimensions.empowerment} />
+        </Heading>
+        <NarrativeCPR
+          dimensionKey="empowerment"
+          score={dimensions.empowerment.score}
+          country={country}
+          countryGrammar={countryGrammar}
+        />
+        {dimensions.empowerment.score && (
+          <>
+            <Paragraph>
+              <NarrativeCPRCompAssessment
+                dimensionKey="empowerment"
+                score={dimensions.empowerment.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={
+                  dimensionAverages && dimensionAverages.empowerment.average
+                }
+                referenceCount={
+                  dimensionAverages && dimensionAverages.empowerment.count
+                }
+                start
+              />
+            </Paragraph>
+            <Paragraph>
+              <ButtonText onClick={() => goToTab('report-empowerment')}>
+                Explore details
+              </ButtonText>
+            </Paragraph>
+          </>
+        )}
+      </Box>
     </Styled>
   );
 }
