@@ -11,12 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
 
-import ChartCountryMetricTrend from 'components/ChartCountryMetricTrend';
-
 import { BENCHMARKS, COLUMNS } from 'containers/App/constants';
-
-import getMetricDetails from 'utils/metric-details';
-
 import {
   getStandardSearch,
   getBenchmarkSearch,
@@ -31,7 +26,6 @@ import {
   getRawSearch,
   getActiveGroupsSearch,
 } from 'containers/App/selectors';
-
 import {
   navigate,
   loadDataIfNeeded,
@@ -40,8 +34,12 @@ import {
   setRaw,
   toggleGroup,
 } from 'containers/App/actions';
-import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
+
+import ChartCountryMetricTrend from 'components/ChartCountryMetricTrend';
+
+import getMetricDetails from 'utils/metric-details';
+import { useInjectSaga } from 'utils/injectSaga';
 
 const getColour = metric => {
   if (metric.metricType === 'dimensions') {
