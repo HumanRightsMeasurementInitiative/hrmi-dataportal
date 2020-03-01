@@ -18,9 +18,12 @@ import {
 } from 'containers/App/constants';
 
 import ChartContainerCountryDimension from 'containers/ChartContainerCountryDimension';
+import ChartContainerCountryIndicators from 'containers/ChartContainerCountryIndicators';
 import ChartContainerTrend from 'containers/ChartContainerTrend';
 import ChartContainerPeople from 'containers/ChartContainerPeople';
 import ChartContainerByGroup from 'containers/ChartContainerByGroup';
+
+import ChartHeader from 'components/ChartHeader';
 import LoadingIndicator from 'components/LoadingIndicator';
 import ChartSettingMetrics from 'components/ChartSettingMetrics';
 // import SectionContainer from 'styled/SectionContainer';
@@ -55,9 +58,13 @@ function TabCountryReport({
               onMetricClick={onMetricClick}
             />
           </SectionContainer>
-          <SectionContainer>Indicators by right</SectionContainer>
           <SectionContainer>
-            Rights and indicators by sex
+            <ChartContainerCountryIndicators
+              countryCode={country[COLUMNS.COUNTRIES.CODE]}
+              onMetricClick={onMetricClick}
+            />
+          </SectionContainer>
+          <SectionContainer>
             <ChartSettingMetrics
               activeDefault={
                 RIGHTS.filter(r => r.dimension === dimension && r.hasGroups)[0]
@@ -93,10 +100,26 @@ function TabCountryReport({
                   {...props}
                 />
               )}
+              header={props => (
+                <ChartHeader
+                  title="By Group"
+                  tools={{
+                    howToReadConfig: {
+                      key: 'country-dimension-esr',
+                      chart: 'Bar',
+                    },
+                    settingsConfig: {
+                      key: 'country-dimension-esr',
+                      showStandard: true,
+                      showBenchmark: true,
+                    },
+                  }}
+                  {...props}
+                />
+              )}
             />
           </SectionContainer>
           <SectionContainer>
-            Category, rights & indicators over time
             <ChartSettingMetrics
               activeDefault="esr"
               metrics={DIMENSIONS.reduce((dims, d) => {
@@ -140,10 +163,22 @@ function TabCountryReport({
                   {...props}
                 />
               )}
+              header={props => (
+                <ChartHeader
+                  title="Over time"
+                  tools={{
+                    settingsConfig: {
+                      key: 'country-dimension-esr',
+                      showStandard: true,
+                      showBenchmark: true,
+                    },
+                  }}
+                  {...props}
+                />
+              )}
             />
           </SectionContainer>
           <SectionContainer>
-            People at risk word cloud and narrative
             <ChartSettingMetrics
               activeDefault={
                 RIGHTS.filter(r => r.dimension === dimension)[0].key
@@ -159,6 +194,9 @@ function TabCountryReport({
                   countryCode={country[COLUMNS.COUNTRIES.CODE]}
                   {...props}
                 />
+              )}
+              header={props => (
+                <ChartHeader title="People at risk" {...props} />
               )}
             />
           </SectionContainer>
@@ -177,7 +215,6 @@ function TabCountryReport({
           {hasDimensionScore && (
             <>
               <SectionContainer>
-                Category, rights & indicators over time
                 <ChartSettingMetrics
                   activeDefault={dimension}
                   metrics={DIMENSIONS.reduce((dims, d) => {
@@ -203,10 +240,10 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
+                  header={props => <ChartHeader title="Over time" {...props} />}
                 />
               </SectionContainer>
               <SectionContainer>
-                People at risk word cloud && commentary
                 <ChartSettingMetrics
                   activeDefault={
                     RIGHTS.filter(r => r.dimension === dimension)[0].key
@@ -222,6 +259,9 @@ function TabCountryReport({
                       countryCode={country[COLUMNS.COUNTRIES.CODE]}
                       {...props}
                     />
+                  )}
+                  header={props => (
+                    <ChartHeader title="People at risk" {...props} />
                   )}
                 />
               </SectionContainer>

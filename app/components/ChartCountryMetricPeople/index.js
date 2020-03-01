@@ -59,7 +59,7 @@ function ChartCountryMetricPeople({
   hasSubrightAnalysis,
 }) {
   return (
-    <Styled pad="medium" direction="column">
+    <Styled pad={{ vertical: 'medium' }} direction="column">
       {metric.metricType === 'rights' && (
         <Box>
           <Paragraph>
