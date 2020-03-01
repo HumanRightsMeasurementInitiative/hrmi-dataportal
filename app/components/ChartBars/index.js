@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, ResponsiveContext, Text } from 'grommet';
+import { Box } from 'grommet';
 // import { COLUMNS } from 'containers/App/constants';
 
 // import AnnotateBetter from 'components/AnnotateBetterWorse';
-import { isMinSize } from 'utils/responsive';
 
 import BarWrapper from './BarWrapper';
 import Grades from './Grades';
@@ -15,36 +14,10 @@ const Styled = styled(Box)`
   margin: 0 auto;
   position: relative;
 `;
-//
-// const WrapAnnotateBetter = styled.div`
-//   position: absolute;
-//   left: ${({ theme }) => theme.global.edgeSize.medium};
-//   right: ${({ theme }) => theme.global.edgeSize.large};
-//   top: 100%;
-//   margin-top: -4px;
-// `;
+const WrapInnerChart = styled(Box)`
+  position: relative;
+`;
 
-// const getDimensionRefs = (score, standard, benchmark) => {
-//   if (benchmark && benchmark.key === 'adjusted') {
-//     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
-//   }
-//   if (benchmark && benchmark.key === 'best') {
-//     return [{ value: 100, style: 'solid', key: 'best' }];
-//   }
-//   return false;
-// };
-// const getDimensionValue = (data, benchmark) => {
-//   if (data.type === 'cpr' && data.score) {
-//     return parseFloat(data.score[COLUMNS.CPR.MEAN]);
-//   }
-//   if (data.type === 'esr' && data.score) {
-//     const col = (benchmark && benchmark.column) || COLUMNS.ESR.SCORE_ADJUSTED;
-//     return parseFloat(data.score[col]);
-//   }
-//   return false;
-// };
-
-// function ChartBars({ data, standard, currentBenchmark, metric, listHeader }) {
 function ChartBars({
   data,
   listHeader,
@@ -58,43 +31,49 @@ function ChartBars({
   grades,
   gradeLabels,
   level = 2,
+  annotateBetter = true,
+  scoreOnHover,
+  scoresAside,
 }) {
   if (!data) return null;
   return (
-    <ResponsiveContext.Consumer>
-      {size => (
-        <Styled
-          pad={{
-            top: 'medium',
-            bottom: padVertical || 'large',
-            right: isMinSize(size, 'medium') ? 'xlarge' : 'medium',
-          }}
-          direction="column"
-          fill="horizontal"
-        >
-          {listHeader && (
-            <ListHeader metric={metric} benchmark={currentBenchmark.key} />
-          )}
-          {commonLabel && (
-            <Text size="small" color={labelColor} weight="bold">
-              {commonLabel}
-            </Text>
-          )}
-          {grades && <Grades grades={grades} labels={gradeLabels} />}
-          {data.map(d => (
-            <BarWrapper
-              key={d.key}
-              score={d}
-              bullet={bullet}
-              allowWordBreak={allowWordBreak}
-              labelColor={labelColor}
-              hasBackground={!!grades}
-              level={level}
-            />
-          ))}
-        </Styled>
+    <Styled
+      pad={{
+        top: 'small',
+        bottom: padVertical || 'medium',
+      }}
+      direction="column"
+      fill="horizontal"
+    >
+      {(commonLabel || listHeader) && (
+        <ListHeader
+          metric={metric}
+          benchmark={currentBenchmark && currentBenchmark.key}
+          commonLabel={commonLabel}
+          labelColor={labelColor}
+          annotateBetter={!grades && annotateBetter}
+          hasAside={scoresAside}
+        />
       )}
-    </ResponsiveContext.Consumer>
+      <WrapInnerChart>
+        {grades && (
+          <Grades grades={grades} labels={gradeLabels} hasAside={scoresAside} />
+        )}
+        {data.map(d => (
+          <BarWrapper
+            key={d.key}
+            score={d}
+            bullet={bullet}
+            allowWordBreak={allowWordBreak}
+            labelColor={labelColor}
+            hasBackground={!!grades}
+            level={level}
+            scoreOnHover={scoreOnHover}
+            scoresAside={scoresAside}
+          />
+        ))}
+      </WrapInnerChart>
+    </Styled>
   );
 }
 // metric={metric}
@@ -103,6 +82,9 @@ function ChartBars({
 
 ChartBars.propTypes = {
   allowWordBreak: PropTypes.bool,
+  annotateBetter: PropTypes.bool,
+  scoreOnHover: PropTypes.bool,
+  scoresAside: PropTypes.bool,
   commonLabel: PropTypes.string,
   labelColor: PropTypes.string,
   padVertical: PropTypes.string,
@@ -111,7 +93,7 @@ ChartBars.propTypes = {
   metric: PropTypes.object,
   currentBenchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  grades: PropTypes.object,
+  grades: PropTypes.array,
   gradeLabels: PropTypes.bool,
   level: PropTypes.number,
   // standard: PropTypes.string,

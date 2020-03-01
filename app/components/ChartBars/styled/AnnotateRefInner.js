@@ -17,8 +17,8 @@ export default styled.div`
     `;
     return above
       ? css`
-        bottom: 10px;
-        right: -8px;
+        bottom: -1px;
+        right: -1px;
       `
       : css`
         min-width: 70px;

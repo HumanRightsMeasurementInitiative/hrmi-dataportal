@@ -15,11 +15,10 @@ import rootMessages from 'messages';
 // prettier-ignore
 const BGScale = styled.div`
   position: absolute;
-  margin-left: ${({ left }) => left};
-  left: 0;
-  right: ${({ theme }) => theme.global.edgeSize.xlarge};
-  top: ${({ theme }) => theme.global.edgeSize.ml};
-  bottom: ${({ theme }) => theme.global.edgeSize.xsmall};
+  left: ${({ left }) => left};
+  right: ${({ right }) => right};
+  top: 0;
+  bottom: 0;
 `;
 
 // background: rgba(0, 0, 0, 0.05);
@@ -39,11 +38,20 @@ const BGScaleLabel = styled.span`
   left: 3px;
   opacity: 0.6;
 `;
-export function Grades({ grades, labels = true }) {
+const getScoreAsideWidth = (size, hasAside = false) => {
+  if (hasAside) {
+    return isMinSize(size, 'medium') ? '80px' : '60px';
+  }
+  return 0;
+};
+export function Grades({ grades, labels = true, hasAside }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <BGScale left={isMinSize(size, 'medium') ? '180px' : '160px'}>
+        <BGScale
+          left={isMinSize(size, 'medium') ? '180px' : '160px'}
+          right={getScoreAsideWidth(size, hasAside)}
+        >
           {grades.map(grade => (
             <BGScaleX min={grade.min}>
               {labels && (
@@ -62,8 +70,9 @@ export function Grades({ grades, labels = true }) {
 }
 
 Grades.propTypes = {
-  grades: PropTypes.object,
+  grades: PropTypes.array,
   labels: PropTypes.bool,
+  hasAside: PropTypes.bool,
 };
 
 export default Grades;

@@ -51,6 +51,7 @@ import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPR
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { getRightsScoresForDimension } from 'utils/scores';
+import getMetricDetails from 'utils/metric-details';
 
 import rootMessages from 'messages';
 
@@ -177,7 +178,9 @@ export function ChartContainerCountryDimension({
       {type === 'esr' && dimension && (
         <>
           <ChartHeader
-            title="Quality of Life overview"
+            title={`${intl.formatMessage(
+              rootMessages.dimensions[dimensionCode],
+            )} overview`}
             tools={{
               howToReadConfig: {
                 key: 'country-dimension-esr',
@@ -215,11 +218,13 @@ export function ChartContainerCountryDimension({
               currentBenchmark={currentBenchmark}
               standard={standard}
               labelColor={`${dimensionCode}Dark`}
-              padVertical="small"
+              padVertical="xsmall"
               grades={GRADES[type]}
               gradeLabels={false}
               level={1}
               commonLabel="Category"
+              listHeader
+              metric={getMetricDetails(dimensionCode)}
             />
             <ChartBars
               data={prepareData({
@@ -236,8 +241,8 @@ export function ChartContainerCountryDimension({
                 rootMessages['rights-xshort-common'][dimensionCode],
               )}`}
               labelColor={`${dimensionCode}Dark`}
-              padVertical="small"
               grades={GRADES[type]}
+              listHeader
             />
           </Box>
           <NarrativeESR
@@ -264,7 +269,9 @@ export function ChartContainerCountryDimension({
           {dimension.score && (
             <>
               <ChartHeader
-                title={`${dimensionCode} overview`}
+                title={`${intl.formatMessage(
+                  rootMessages.dimensions[dimensionCode],
+                )} overview`}
                 tools={{
                   howToReadConfig: {
                     key: 'country-dimension-cpr',
@@ -293,6 +300,8 @@ export function ChartContainerCountryDimension({
                   level={1}
                   commonLabel="Category"
                   bullet
+                  listHeader
+                  metric={getMetricDetails(dimensionCode)}
                 />
                 <ChartBars
                   data={prepareData({
@@ -308,6 +317,7 @@ export function ChartContainerCountryDimension({
                   padVertical="small"
                   grades={GRADES[type]}
                   bullet
+                  listHeader
                 />
               </Box>
             </>

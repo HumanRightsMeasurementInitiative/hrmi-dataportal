@@ -21,7 +21,7 @@ import rootMessages from 'messages';
 const WrapAnnotateBetter = styled.div`
   position: absolute;
   left: ${({ theme }) => theme.global.edgeSize.small};
-  right: ${({ theme }) => theme.global.edgeSize.medium};
+  right: ${({ theme }) => theme.global.edgeSize.small};
   top: -2px;
 `;
 
@@ -39,12 +39,24 @@ const CountryWrap = styled(Box)`
   border-right: 1px solid;
   border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
 `;
-
-export function ListHeader({ metric, benchmark }) {
+const getScoreAsideWidth = (size, hasAside = false) => {
+  if (hasAside) {
+    return isMinSize(size, 'medium') ? '80px' : '60px';
+  }
+  return 0;
+};
+export function ListHeader({
+  metric,
+  benchmark,
+  commonLabel,
+  labelColor = 'dark',
+  annotateBetter = true,
+  hasAside = false,
+}) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box direction="row" align="end" pad={{ bottom: 'xsmall' }}>
+        <Box direction="row" align="end" pad={{ bottom: 'xxsmall' }}>
           <CountryWrap
             width={isMinSize(size, 'medium') ? '180px' : '160px'}
             noBorder
@@ -52,8 +64,14 @@ export function ListHeader({ metric, benchmark }) {
             flex={{ shrink: 0 }}
             pad={{ right: 'small' }}
           >
-            <StyledScoreText size="small" style={{ fontWeight: 600 }}>
-              <FormattedMessage {...rootMessages.labels.score} />
+            <StyledScoreText
+              size="small"
+              style={{ fontWeight: 600 }}
+              color={labelColor}
+            >
+              {commonLabel || (
+                <FormattedMessage {...rootMessages.labels.score} />
+              )}
             </StyledScoreText>
           </CountryWrap>
           <BarWrap
@@ -62,22 +80,30 @@ export function ListHeader({ metric, benchmark }) {
             style={{ position: 'relative' }}
             align="center"
           >
-            <Text size="small" style={{ transform: 'translateX(-50%)' }}>
-              0
-            </Text>
-            <Text
-              size="small"
-              margin={{ left: 'auto' }}
-              style={{ transform: 'translateX(50%)' }}
-            >
-              {metric.type === 'esr' || metric.metricType === 'indicators'
-                ? '100%'
-                : '10'}
-            </Text>
-            <WrapAnnotateBetter>
-              <AnnotateBetter />
-            </WrapAnnotateBetter>
-            {metric.type === 'esr' && (
+            {metric && (
+              <>
+                <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
+                  0
+                </Text>
+                <Text
+                  size="xsmall"
+                  margin={{ left: 'auto' }}
+                  style={{
+                    transform: !hasAside && 'translateX(100%)',
+                  }}
+                >
+                  {metric.type === 'esr' || metric.metricType === 'indicators'
+                    ? '100%'
+                    : '10'}
+                </Text>
+              </>
+            )}
+            {annotateBetter && (
+              <WrapAnnotateBetter>
+                <AnnotateBetter />
+              </WrapAnnotateBetter>
+            )}
+            {metric && metric.type === 'esr' && (
               <AnnotateBenchmark
                 benchmarkKey={benchmark}
                 above
@@ -85,6 +111,9 @@ export function ListHeader({ metric, benchmark }) {
               />
             )}
           </BarWrap>
+          {hasAside && (
+            <Box width={getScoreAsideWidth(size, true)} flex={{ shrink: 0 }} />
+          )}
         </Box>
       )}
     </ResponsiveContext.Consumer>
@@ -92,8 +121,12 @@ export function ListHeader({ metric, benchmark }) {
 }
 
 ListHeader.propTypes = {
-  metric: PropTypes.object.isRequired,
+  metric: PropTypes.object,
   benchmark: PropTypes.string,
+  commonLabel: PropTypes.string,
+  labelColor: PropTypes.string,
+  annotateBetter: PropTypes.bool,
+  hasAside: PropTypes.bool,
 };
 
 export default ListHeader;

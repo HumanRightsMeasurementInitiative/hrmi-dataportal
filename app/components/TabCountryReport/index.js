@@ -308,6 +308,7 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
+                  header={props => <ChartHeader title="Over time" {...props} />}
                 />
               </SectionContainer>
               <SectionContainer>
