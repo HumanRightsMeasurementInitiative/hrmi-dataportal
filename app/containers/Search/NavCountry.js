@@ -6,7 +6,8 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Box } from 'grommet';
 
 import { SIZES } from 'theme';
-import { selectCountry } from 'containers/App/actions';
+import { PATHS } from 'containers/App/constants';
+import { selectCountry, navigate } from 'containers/App/actions';
 import { getCountries } from 'containers/App/selectors';
 
 import { prepCountries } from './search';
@@ -24,6 +25,7 @@ export function NavCountry({
   intl,
   onClose,
   size,
+  nav,
 }) {
   const [search, setSearch] = useState('');
 
@@ -41,11 +43,30 @@ export function NavCountry({
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
+          {search === '' && (
+            <NavOptionGroup
+              label="All countries"
+              options={[
+                {
+                  key: 'countries',
+                  code: 'countries',
+                  label: 'Countries overview',
+                  special: true,
+                },
+              ]}
+              onClick={() => {
+                onClose();
+                nav(PATHS.COUNTRIES);
+              }}
+              special
+            />
+          )}
           {(!sorted || sorted.length === 0) && (
             <FormattedMessage {...messages.noResults} />
           )}
           {sorted && sorted.length > 0 && (
             <NavOptionGroup
+              label="Country profiles"
               options={sorted}
               onClick={key => {
                 onClose();
@@ -62,6 +83,7 @@ export function NavCountry({
 NavCountry.propTypes = {
   onSelectCountry: PropTypes.func,
   onClose: PropTypes.func,
+  nav: PropTypes.func,
   // currentCountry: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   intl: intlShape.isRequired,
@@ -75,6 +97,18 @@ const mapStateToProps = state => ({
 export function mapDispatchToProps(dispatch) {
   return {
     onSelectCountry: country => dispatch(selectCountry(country)),
+    nav: location => {
+      dispatch(
+        navigate(location, {
+          keepTab: true,
+          trackEvent: {
+            category: 'Content',
+            action: 'Header: navigate',
+            value: typeof location === 'object' ? location.pathname : location,
+          },
+        }),
+      );
+    },
   };
 }
 
