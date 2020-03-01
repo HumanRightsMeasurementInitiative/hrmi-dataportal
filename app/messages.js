@@ -193,8 +193,8 @@ export default defineMessages({
       id: `${scope}.tabs.reportCPR`,
       defaultMessage: 'CPR',
     },
-    singleMetric: {
-      id: `${scope}.tabs.singleMetric`,
+    ChartContainerMetric: {
+      id: `${scope}.tabs.ChartContainerMetric`,
       defaultMessage: 'Explore metric',
     },
     'people-at-risk': {

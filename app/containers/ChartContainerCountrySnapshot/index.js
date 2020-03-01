@@ -144,33 +144,35 @@ export function ChartContainerCountrySnapshot({
           maxValue={100}
           onMetricClick={onMetricClick}
         />
-        {dimensions.physint.score && (
-          <ChartCountrySnapshot
-            type="cpr"
-            dimensionCode="physint"
-            dimensionScore={getDimensionScore('cpr', dimensions.physint)}
-            rights={getRightsScoresForDimension(rights, 'physint')}
-            year={cprYear}
-            maxValue={10}
-            onMetricClick={onMetricClick}
-          />
-        )}
-        {dimensions.empowerment.score && (
-          <ChartCountrySnapshot
-            type="cpr"
-            dimensionCode="empowerment"
-            dimensionScore={getDimensionScore('cpr', dimensions.empowerment)}
-            rights={getRightsScoresForDimension(rights, 'empowerment')}
-            year={cprYear}
-            maxValue={10}
-            onMetricClick={onMetricClick}
-          />
-        )}
+        <ChartCountrySnapshot
+          type="cpr"
+          dimensionCode="physint"
+          dimensionScore={
+            dimensions.physint.score &&
+            getDimensionScore('cpr', dimensions.physint)
+          }
+          rights={getRightsScoresForDimension(rights, 'physint')}
+          year={cprYear}
+          maxValue={10}
+          onMetricClick={onMetricClick}
+        />
+        <ChartCountrySnapshot
+          type="cpr"
+          dimensionCode="empowerment"
+          dimensionScore={
+            dimensions.empowerment.score &&
+            getDimensionScore('cpr', dimensions.empowerment)
+          }
+          rights={getRightsScoresForDimension(rights, 'empowerment')}
+          year={cprYear}
+          maxValue={10}
+          onMetricClick={onMetricClick}
+        />
         <Source />
       </Box>
       <Box margin={{ bottom: 'medium' }}>
         <Heading level={4}>
-          <FormattedMessage {...rootMessages.dimensions.physint} />
+          <FormattedMessage {...rootMessages.dimensions.esr} />
         </Heading>
         <NarrativeESRStandardHint country={country} standard={standard} />
         <NarrativeESR

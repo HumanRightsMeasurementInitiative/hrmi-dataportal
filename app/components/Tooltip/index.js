@@ -65,6 +65,7 @@ function Tooltip({
   insideButton,
   margin,
   large,
+  textAnchor,
 }) {
   const [over, setOver] = useState(false);
   const [open, setOpen] = useState(false);
@@ -81,7 +82,10 @@ function Tooltip({
               as={insideButton ? 'span' : 'button'}
               plain
               icon={
-                icon || <CircleInformation size={iconSize} color="highlight2" />
+                !textAnchor &&
+                (icon || (
+                  <CircleInformation size={iconSize} color="highlight2" />
+                ))
               }
               ref={button}
               onClick={evt => {
@@ -98,7 +102,9 @@ function Tooltip({
                 WebkitAppearance: 'none',
                 MozAppearance: 'none',
               }}
-            />
+            >
+              {textAnchor}
+            </Button>
             {(over || open) && !openModal && button.current && (
               <StyledDrop
                 align={{ bottom: 'top' }}
@@ -138,6 +144,7 @@ Tooltip.propTypes = {
   text: PropTypes.string,
   iconSize: PropTypes.string,
   icon: PropTypes.node,
+  textAnchor: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
   component: PropTypes.node,
   maxWidth: PropTypes.string,
   insideButton: PropTypes.bool,
