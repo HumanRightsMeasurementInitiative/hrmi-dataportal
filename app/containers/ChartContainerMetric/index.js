@@ -1,6 +1,6 @@
 /**
  *
- * SingleMetric
+ * ChartContainerMetric
  *
  */
 
@@ -156,7 +156,7 @@ const prepareData = ({
       }
   );
 
-export function SingleMetric({
+export function ChartContainerMetric({
   onLoadData,
   metric,
   scores,
@@ -288,6 +288,7 @@ export function SingleMetric({
           allowWordBreak
           labelColor={`${metric.color}Dark`}
           padVertical="xsmall"
+          annotateBetter
         />
       )}
       {hasResults && other && other.length > 0 && (
@@ -321,7 +322,7 @@ export function SingleMetric({
 // currentBenchmark={currentBenchmark}
 // standard={standard}
 
-SingleMetric.propTypes = {
+ChartContainerMetric.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   metric: PropTypes.object.isRequired,
@@ -461,4 +462,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(SingleMetric));
+export default compose(withConnect)(injectIntl(ChartContainerMetric));

@@ -15,7 +15,7 @@ import { Box } from 'grommet';
 
 import { PATHS } from 'containers/App/constants';
 import LayerInfo from 'containers/LayerInfo';
-import SingleMetric from 'containers/SingleMetric';
+import ChartContainerMetric from 'containers/ChartContainerMetric';
 import TabContainer from 'containers/TabContainer';
 import AboutMetricContainer from 'containers/AboutMetricContainer';
 import AboutCountryContainer from 'containers/AboutCountryContainer';
@@ -108,10 +108,10 @@ export function PathMetric({ match, intl, onMetricClick }) {
       <TabContainer
         tabs={[
           {
-            key: 'singleMetric',
-            title: intl.formatMessage(rootMessages.tabs.singleMetric),
+            key: 'ChartContainerMetric',
+            title: intl.formatMessage(rootMessages.tabs.ChartContainerMetric),
             content: props => (
-              <SingleMetric
+              <ChartContainerMetric
                 {...props}
                 metric={metric}
                 onCountryClick={code => setAboutCountry(code)}

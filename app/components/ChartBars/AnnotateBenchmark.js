@@ -43,39 +43,41 @@ function AnnotateBenchmark({
           left={left}
           align={align}
         >
-          <AnnotateRefLine
-            above={above || relative}
-            relative={relative}
-            align={align}
-            horizontal={!!rotate}
-          />
+          {!above && (
+            <AnnotateRefLine
+              above={above || relative}
+              relative={relative}
+              align={align}
+              horizontal={!!rotate}
+            />
+          )}
           <AnnotateRefInner
             above={above || relative}
             relative={relative}
             style={{ textAlign: align }}
             horizontal={!!rotate}
           >
-            {!benchmarkTooltipOnly && (
-              <Text
-                size="xsmall"
-                color="dark-3"
-                style={
-                  {
-                    textAlign: align,
-                    display: above ? 'inline ': 'block',
-                    verticalAlign: 'middle',
-                  }
-                }
-              >
-                {label || `${intl.formatMessage(
-                  rootMessages.settings.benchmark[benchmarkKey]
-                )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(
-                  rootMessages.settings.benchmark.nameShort
-                ))}`}
-              </Text>
-            )}
             {!relative && tooltip &&
               <Tooltip
+                textAnchor={!benchmarkTooltipOnly && (
+                  <Text
+                    size="xsmall"
+                    color="highlight2"
+                    style={
+                      {
+                        textAlign: align,
+                        display: above ? 'inline ': 'block',
+                        verticalAlign: 'middle',
+                      }
+                    }
+                  >
+                    {label || `${intl.formatMessage(
+                      rootMessages.settings.benchmark[benchmarkKey]
+                    )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(
+                      rootMessages.settings.benchmark.nameShort
+                    ))}`}
+                  </Text>
+                )}
                 insideButton
                 margin={above ? { left: 'xsmall' } : { top: 'xsmall' }}
                 iconSize="medium"

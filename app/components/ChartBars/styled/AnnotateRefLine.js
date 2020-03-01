@@ -25,7 +25,7 @@ export default styled.div`
     }
     return above
       ? css`
-        bottom: 2px;
+        bottom: -2px;
         right: -1px;
         height: 6px;
       `

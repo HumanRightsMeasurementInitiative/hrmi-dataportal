@@ -10,7 +10,6 @@ import messages from './messages';
 const Styled = styled(Hint)`
   font-size: 13px;
   line-height: 16px;
-  margin-top: 1em;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     font-size: 14px;

@@ -212,7 +212,7 @@
   "hrmi.tabs.metrics": "Explora los parámetros de derechos humanos",
   "hrmi.tabs.mobile.countries": "Explora países",
   "hrmi.tabs.mobile.metrics": "Explora derechos",
-  "hrmi.tabs.singleMetric": "Explora derechos",
+  "hrmi.tabs.ChartContainerMetric": "Explora derechos",
   "hrmi.tabs.reportESR": "TODO: Economic and Social Rights",
   "hrmi.tabs.reportCPR": "TODO: Civil and Political Rights",
   "hrmi.tabs.mobile.reportESR": "TODO: ESR",

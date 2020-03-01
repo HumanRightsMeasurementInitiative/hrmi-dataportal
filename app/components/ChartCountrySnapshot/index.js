@@ -13,8 +13,10 @@ import { Heading, Box, Text, ResponsiveContext } from 'grommet';
 import { COLUMNS, GRADES } from 'containers/App/constants';
 
 import ChartBars from 'components/ChartBars';
+import Source from 'components/Source';
 
 import formatScoreMax from 'utils/format-score-max';
+import getMetricDetails from 'utils/metric-details';
 import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
@@ -27,7 +29,7 @@ const Dimension = styled(Box)`
 
 const DimensionScore = styled.div`
   position: absolute;
-  right: 100px;
+  right: 0;
   top: 0;
   padding: 5px 10px;
   min-width: 85px;
@@ -136,16 +138,17 @@ function ChartCountrySnapshot({
   maxValue,
   onMetricClick,
   intl,
+  source,
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
-
+  const hasRights = rights.some(r => !!r.score);
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box
           direction="column"
           pad={{ bottom: 'small' }}
-          margin={{ bottom: 'large' }}
+          margin={{ bottom: 'ml' }}
         >
           <Box direction="row">
             <ChartArea>
@@ -172,27 +175,35 @@ function ChartCountrySnapshot({
                   <FormattedMessage {...rootMessages['rights-types'][type]} />
                   {` (${year})`}
                 </Text>
-                <ChartBars
-                  data={prepareData({
-                    scores: rights,
-                    dimensionCode,
-                    currentBenchmark,
-                    standard,
-                    onClick: onMetricClick,
-                    intl,
-                  })}
-                  currentBenchmark={type === 'esr' && currentBenchmark}
-                  standard={type === 'esr' && standard}
-                  commonLabel={`${intl.formatMessage(
-                    rootMessages['rights-xshort-common'][dimensionCode],
-                  )}`}
-                  labelColor={`${dimensionCode}Dark`}
-                  padVertical="small"
-                  grades={GRADES[type]}
-                />
+                {hasRights && (
+                  <ChartBars
+                    data={prepareData({
+                      scores: rights,
+                      dimensionCode,
+                      currentBenchmark,
+                      standard,
+                      onClick: onMetricClick,
+                      intl,
+                    })}
+                    currentBenchmark={type === 'esr' && currentBenchmark}
+                    standard={type === 'esr' && standard}
+                    commonLabel={`${intl.formatMessage(
+                      rootMessages['rights-xshort-common'][dimensionCode],
+                    )}`}
+                    labelColor={`${dimensionCode}Dark`}
+                    padVertical="small"
+                    grades={GRADES[type]}
+                    listHeader
+                    metric={getMetricDetails(dimensionCode)}
+                    annotateBetter={false}
+                    scoreOnHover={false}
+                    scoresAside
+                  />
+                )}
               </Dimension>
             </ChartArea>
           </Box>
+          {source && <Source />}
         </Box>
       )}
     </ResponsiveContext.Consumer>
@@ -210,6 +221,7 @@ ChartCountrySnapshot.propTypes = {
   type: PropTypes.string,
   dimensionCode: PropTypes.string,
   onMetricClick: PropTypes.func,
+  source: PropTypes.bool,
 };
 
 export default injectIntl(ChartCountrySnapshot);
