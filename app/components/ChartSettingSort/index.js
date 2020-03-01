@@ -58,7 +58,7 @@ export function ChartSettingSort({
             direction="row"
             pad={
               isMaxSize(size, 'medium')
-                ? { top: 'small' }
+                ? { top: '0' }
                 : { vertical: '10px', left: 'small' }
             }
             align="center"

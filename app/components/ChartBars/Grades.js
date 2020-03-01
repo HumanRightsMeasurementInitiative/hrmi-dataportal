@@ -18,10 +18,11 @@ const BGScale = styled.div`
   margin-left: ${({ left }) => left};
   left: 0;
   right: ${({ theme }) => theme.global.edgeSize.xlarge};
-  top: ${({ theme }) => theme.global.edgeSize.medium};
+  top: ${({ theme }) => theme.global.edgeSize.ml};
   bottom: ${({ theme }) => theme.global.edgeSize.xsmall};
 `;
 
+// background: rgba(0, 0, 0, 0.05);
 const BGScaleX = styled.div`
   background: ${({ min }) => (min > 0 ? 'rgba(0, 0, 0, 0.08)' : 'transparent')};
   /* border-left: 1px solid rgba(0, 0, 0, 0.2); */
@@ -38,18 +39,20 @@ const BGScaleLabel = styled.span`
   left: 3px;
   opacity: 0.6;
 `;
-export function Grades({ grades }) {
+export function Grades({ grades, labels = true }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <BGScale left={isMinSize(size, 'medium') ? '180px' : '160px'}>
           {grades.map(grade => (
             <BGScaleX min={grade.min}>
-              <BGScaleLabel>
-                <FormattedMessage
-                  {...rootMessages.labels.grades[grade.class]}
-                />
-              </BGScaleLabel>
+              {labels && (
+                <BGScaleLabel>
+                  <FormattedMessage
+                    {...rootMessages.labels.grades[grade.class]}
+                  />
+                </BGScaleLabel>
+              )}
             </BGScaleX>
           ))}
         </BGScale>
@@ -60,6 +63,7 @@ export function Grades({ grades }) {
 
 Grades.propTypes = {
   grades: PropTypes.object,
+  labels: PropTypes.bool,
 };
 
 export default Grades;
