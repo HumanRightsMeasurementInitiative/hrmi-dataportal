@@ -35,17 +35,17 @@ const BarReference = styled.div`
   width: 100%;
   height: 2px;
   background-color: ${({ theme, hasBackground }) =>
-    theme.global.colors[hasBackground ? 'white' : 'light-2']};
+    theme.global.colors[hasBackground ? 'transparent' : 'light-2']};
 `;
 
 const BarValue = styled.div`
   position: absolute;
   left: 0;
-  top: ${props => props.height / 2 - 1}px;
-  height: 2px;
+  top: ${props => props.height / 2 - 2}px;
+  height: 4px;
   background-color: ${({ theme, color }) =>
     theme.global.colors[color || 'light-5']};
-  opacity: ${({ active }) => (active ? 0.4 : 0.6)};
+  opacity: 0.2;
 `;
 const MarkValue = styled.div`
   position: absolute;
