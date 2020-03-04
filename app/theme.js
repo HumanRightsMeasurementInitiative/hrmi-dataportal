@@ -74,6 +74,18 @@ const text = {
   xsmall: { size: '13px', height: '16px', maxWidth: '400px' },
   xxsmall: { size: '12px', height: '14px', maxWidth: '400px' },
 };
+const edgeSize = {
+  hair: '1px',
+  xxsmall: '3px',
+  xsmall: '6px',
+  small: '12px',
+  ms: '16px',
+  medium: '24px',
+  ml: '36px',
+  large: '48px',
+  xlarge: '72px',
+};
+
 const theme = {
   maxWidth: '1600px',
   maxWidthMedium: '1200px',
@@ -119,8 +131,8 @@ const theme = {
       black: '#101D24',
       white: '#FFFFFF',
       text: {
-        dark: '#262064', // empowerment
-        light: '#3A5161',
+        dark: '#FFFFFF', //  on dark background
+        light: '#262064', // on light background (empowerment)
       },
       border: { light: '#E8EAE9' },
       'light-0': '#F8F8F8', // <<< lightest      empowerment: '#262064', // AA large
@@ -133,8 +145,7 @@ const theme = {
       'dark-2': '#2C3F4B',
       'dark-3': '#757575', // AA
       'dark-4': '#8896A0', // AA large
-      font: '#262064', // empowerment',
-      dark: '#3A5161',
+      dark: '#262064', // empowerment',
       brand: '#3A5161',
       highlight: '#FDB933',
       highlight2: '#DB7E00', // AA large
@@ -154,19 +165,12 @@ const theme = {
       esrDark: '#027AC0', // AA
       esrCloud: '#004f8f', // AA
       hover: '#6C3F99',
+      countries: '#0D6D64',
+      metrics: '#7F59A6',
+      people: '#BD5747',
     },
     // margins & paddings
-    edgeSize: {
-      hair: '1px',
-      xxsmall: '3px',
-      xsmall: '6px',
-      small: '12px',
-      ms: '16px',
-      medium: '24px',
-      ml: '36px',
-      large: '48px',
-      xlarge: '72px',
-    },
+    edgeSize,
     breakpoints: {
       small: {
         value: BREAKPOINTS.small.max,

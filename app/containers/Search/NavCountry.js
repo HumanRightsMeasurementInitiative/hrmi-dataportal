@@ -26,6 +26,7 @@ export function NavCountry({
   onClose,
   size,
   nav,
+  subject,
 }) {
   const [search, setSearch] = useState('');
 
@@ -40,12 +41,14 @@ export function NavCountry({
         onSearch={s => setSearch(s)}
         placeholder={intl.formatMessage(messages.countrySearch)}
         size={size}
+        subject={subject}
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
           {search === '' && (
             <NavOptionGroup
               label="All countries"
+              subject={subject}
               options={[
                 {
                   key: 'countries',
@@ -66,6 +69,7 @@ export function NavCountry({
           )}
           {sorted && sorted.length > 0 && (
             <NavOptionGroup
+              subject={subject}
               label="Country profiles"
               options={sorted}
               onClick={key => {
@@ -88,6 +92,7 @@ NavCountry.propTypes = {
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   intl: intlShape.isRequired,
   size: PropTypes.string,
+  subject: PropTypes.string,
 };
 
 const mapStateToProps = state => ({

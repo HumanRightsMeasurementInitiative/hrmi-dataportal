@@ -25,7 +25,14 @@ import NavOptionGroup from './NavOptionGroup';
 
 import messages from './messages';
 
-export function NavMetric({ onSelectMetric, intl, onClose, size, nav }) {
+export function NavMetric({
+  onSelectMetric,
+  intl,
+  onClose,
+  size,
+  nav,
+  subject,
+}) {
   const [search, setSearch] = useState('');
 
   const dimensions = prepMetrics(DIMENSIONS, 'dimensions', search, intl);
@@ -43,6 +50,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav }) {
         onSearch={s => setSearch(s)}
         placeholder={intl.formatMessage(messages.metricSearch)}
         size={size}
+        subject={subject}
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
@@ -106,6 +114,7 @@ NavMetric.propTypes = {
   nav: PropTypes.func,
   intl: intlShape.isRequired,
   size: PropTypes.string,
+  subject: PropTypes.string,
 };
 
 export function mapDispatchToProps(dispatch) {
