@@ -18,16 +18,16 @@ const StyledButtonIcon = styled(ButtonIcon)`
     background: transparent;
   }
 `;
-// prettier-ignore
 const Top = styled.div`
-  background-color: ${({ theme }) => theme.global.colors['dark-2']};
+  background-color: ${({ theme, subject }) =>
+    theme.global.colors[subject || 'dark']};
   width: 100%;
   height: ${({ theme }) => theme.navTop};
 `;
 
 const StyledTextInput = styled(TextInput)`
   &::placeholder {
-    color: black;
+    color: ${({ subject, theme }) => theme.global.colors[subject]};
   }
 `;
 
@@ -49,9 +49,10 @@ class NavTop extends React.Component {
       onSearch,
       placeholder = 'search',
       size,
+      subject,
     } = this.props;
     return (
-      <Top>
+      <Top subject={subject}>
         <Box
           pad={{
             left: size === 'small' ? 'small' : 'medium',
@@ -65,20 +66,20 @@ class NavTop extends React.Component {
         >
           <Box
             background="white"
-            width="large"
             direction="row"
             align="center"
-            pad={{ horizontal: 'small', vertical: 'xsmall' }}
-            round="small"
-            margin={{ right: 'small' }}
+            round="xlarge"
+            height="32px"
+            pad={{ horizontal: 'ms', vertical: 'xsmall' }}
+            fill="horizontal"
           >
             <StyledTextInput
               plain
               value={search}
               onChange={evt => evt && evt.target && onSearch(evt.target.value)}
               placeholder={placeholder}
-              pad="xsmall"
               ref={isMinSize(size, 'medium') && this.textInput}
+              subject={subject}
             />
             {search && search.length > 0 && (
               <Button onClick={() => onSearch('')} pad="xsmall">
@@ -87,10 +88,7 @@ class NavTop extends React.Component {
             )}
             {(!search || search.length === 0) && <Search />}
           </Box>
-          <Box
-            pad={{ left: 'medium', vertical: 'xsmall' }}
-            flex={{ shrink: 0 }}
-          >
+          <Box pad={{ vertical: 'xsmall' }} flex={{ shrink: 0 }}>
             <StyledButtonIcon onClick={() => onClose()}>
               <Close color="white" size="large" />
             </StyledButtonIcon>
@@ -107,6 +105,7 @@ NavTop.propTypes = {
   search: PropTypes.string,
   placeholder: PropTypes.string,
   size: PropTypes.string,
+  subject: PropTypes.string,
 };
 
 export default NavTop;

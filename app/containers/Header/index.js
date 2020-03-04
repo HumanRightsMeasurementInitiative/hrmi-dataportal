@@ -56,6 +56,7 @@ const NavBarTop = props => (
     background="white"
     height={`${props.theme.sizes.header.heightTop}px`}
     fill="horizontal"
+    pad={{ horizontal: 'small' }}
     {...props}
   />
 );
@@ -66,11 +67,12 @@ NavBarTop.propTypes = {
 const NavBarBottom = props => (
   <Box
     direction="row"
-    align="center"
+    align="end"
     justify="end"
     background="white"
     fill="horizontal"
     height={`${props.theme.sizes.header.heightBottom}px`}
+    pad={{ horizontal: 'small' }}
     {...props}
   />
 );
@@ -148,55 +150,73 @@ const ToggleMenu = styled(Button)`
   }
 `;
 
+const SearchWrap = styled(Box)`
+  height: ${({ theme }) => theme.sizes.header.heightBottom}px;
+`;
 // prettier-ignore
 const ButtonNavSecondary = styled(Button)`
-  padding: 0px 10px;
-  font-weight: bold;
-  background-color: ${({ active, theme }) =>
-    active ? theme.global.colors['dark-2'] : 'transparent'};
+  margin: 0px 10px;
+  padding-left: 3px;
+  font-weight: 600;
+  height: ${({ theme }) => theme.sizes.header.heightBottom - 4}px;
+  color: ${({ theme, subject, active, open }) => (
+    (active || open) ? theme.global.colors[subject] : 'inherit'
+  )};
+  background: transparent;
+  border-bottom: 4px solid;
+  border-color: ${({ theme, subject, active }) => (
+    (active) ? theme.global.colors[subject] : 'transparent'
+  )};
   &:hover {
-    background-color: ${({ active, theme }) =>
-    theme.global.colors[active ? 'dark-2' : 'dark-3']};
+    color: ${({ theme, subject }) => theme.global.colors[subject]};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 0 10px;
+    margin: 0 20px;
   }
 `;
 
-const ButtonSecondary = React.forwardRef(({ active, onClick, label }, ref) => (
-  <ButtonNavSecondary
-    plain
-    active={active}
-    onClick={onClick}
-    justify="between"
-    ref={ref}
-    label={
-      <Box
-        direction="row"
-        align="center"
-        justify="between"
-        fill="horizontal"
-        gap="xsmall"
-      >
-        <Text size="large">
-          <FormattedMessage {...rootMessages.labels[label]} />
-        </Text>
-        {active && <FormUp size="large" color="font" />}
-        {!active && <FormDown size="xlarge" color="font" />}
-      </Box>
-    }
-  />
-));
+const ButtonSecondary = React.forwardRef(
+  ({ active, open, onClick, label, subject }, ref) => (
+    <ButtonNavSecondary
+      plain
+      active={active}
+      open={open}
+      subject={subject}
+      onClick={onClick}
+      justify="between"
+      ref={ref}
+      label={
+        <Box
+          direction="row"
+          align="center"
+          justify="between"
+          fill="horizontal"
+          gap="xsmall"
+        >
+          <Text size="large">
+            <FormattedMessage {...rootMessages.labels[label]} />
+          </Text>
+          {open && <FormUp size="xlarge" style={{ stroke: 'currentColor' }} />}
+          {!open && (
+            <FormDown size="xlarge" style={{ stroke: 'currentColor' }} />
+          )}
+        </Box>
+      }
+    />
+  ),
+);
 
 ButtonSecondary.propTypes = {
   active: PropTypes.bool,
+  open: PropTypes.bool,
   onClick: PropTypes.func,
   label: PropTypes.string,
+  subject: PropTypes.string,
 };
 
 const DEPENDENCIES = ['countries'];
 
-export function Header({ nav, onLoadData, match, theme, intl }) {
+export function Header({ nav, onLoadData, match, path, theme, intl }) {
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -205,6 +225,7 @@ export function Header({ nav, onLoadData, match, theme, intl }) {
   }, []);
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [showCountries, setShowCountries] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
   const countryTarget = useRef(null);
@@ -285,75 +306,96 @@ export function Header({ nav, onLoadData, match, theme, intl }) {
               </NavBarTop>
               {showSecondary && (
                 <NavBarBottom theme={theme}>
-                  <ButtonSecondary
-                    active={showCountries}
-                    onClick={() => {
-                      setShowMetrics(false);
-                      setShowCountries(!showCountries);
-                    }}
-                    label="countries"
-                    ref={countryTarget}
-                  />
-                  {showCountries && size === 'small' && (
-                    <NavCountry
-                      onClose={() => setShowCountries(false)}
-                      size={size}
-                    />
-                  )}
-                  {showCountries && isMinSize(size, 'medium') && (
-                    <Drop
-                      align={{ top: 'bottom', right: 'right' }}
-                      target={countryTarget.current}
-                      onClickOutside={() => setShowCountries(false)}
-                      overflow="hidden"
-                    >
-                      <NavCountry
-                        onClose={() => setShowCountries(false)}
-                        size={size}
+                  {(!showSearch || isMaxSize(size, 'small')) && (
+                    <>
+                      <ButtonSecondary
+                        active={
+                          path === PATHS.COUNTRIES || path === PATHS.COUNTRY
+                        }
+                        open={showCountries}
+                        onClick={() => {
+                          setShowMetrics(false);
+                          setShowCountries(!showCountries);
+                        }}
+                        label="countries"
+                        ref={countryTarget}
+                        subject="countries"
                       />
-                    </Drop>
-                  )}
-                  <ButtonSecondary
-                    active={showMetrics}
-                    onClick={() => {
-                      setShowCountries(false);
-                      setShowMetrics(!showMetrics);
-                    }}
-                    label="metrics"
-                    ref={metricTarget}
-                  />
-                  {showMetrics && size === 'small' && (
-                    <NavMetric
-                      onClose={() => setShowMetrics(false)}
-                      size={size}
-                    />
-                  )}
-                  {showMetrics && isMinSize(size, 'medium') && (
-                    <Drop
-                      align={{ top: 'bottom', right: 'right' }}
-                      target={metricTarget.current}
-                      onClickOutside={() => setShowMetrics(false)}
-                    >
-                      <NavMetric
-                        onClose={() => setShowMetrics(false)}
-                        size={size}
+                      {showCountries && size === 'small' && (
+                        <NavCountry
+                          onClose={() => setShowCountries(false)}
+                          size={size}
+                        />
+                      )}
+                      {showCountries && isMinSize(size, 'medium') && (
+                        <Drop
+                          align={{ top: 'bottom', right: 'right' }}
+                          target={countryTarget.current}
+                          onClickOutside={() => setShowCountries(false)}
+                          overflow="hidden"
+                        >
+                          <NavCountry
+                            onClose={() => setShowCountries(false)}
+                            size={size}
+                            subject="countries"
+                          />
+                        </Drop>
+                      )}
+                      <ButtonSecondary
+                        active={path === PATHS.METRICS || path === PATHS.METRIC}
+                        open={showMetrics}
+                        onClick={() => {
+                          setShowCountries(false);
+                          setShowMetrics(!showMetrics);
+                        }}
+                        label="metrics"
+                        subject="metrics"
+                        ref={metricTarget}
                       />
-                    </Drop>
+                      {showMetrics && size === 'small' && (
+                        <NavMetric
+                          onClose={() => setShowMetrics(false)}
+                          size={size}
+                        />
+                      )}
+                      {showMetrics && isMinSize(size, 'medium') && (
+                        <Drop
+                          align={{ top: 'bottom', right: 'right' }}
+                          target={metricTarget.current}
+                          onClickOutside={() => setShowMetrics(false)}
+                        >
+                          <NavMetric
+                            onClose={() => setShowMetrics(false)}
+                            size={size}
+                            subject="metrics"
+                          />
+                        </Drop>
+                      )}
+                      <ButtonNavSecondary
+                        key="at-risk"
+                        subject="people"
+                        plain
+                        last
+                        active={match === 'at-risk'}
+                        onClick={() => {
+                          nav('page/at-risk/');
+                        }}
+                      >
+                        <Text size="large">
+                          <FormattedMessage {...rootMessages.page['at-risk']} />
+                        </Text>
+                      </ButtonNavSecondary>
+                    </>
                   )}
-                  <ButtonNavSecondary
-                    key="at-risk"
-                    plain
-                    last
-                    active={match === 'at-risk'}
-                    onClick={() => {
-                      nav('page/at-risk/');
-                    }}
-                  >
-                    <Text size="large">
-                      <FormattedMessage {...rootMessages.page['at-risk']} />
-                    </Text>
-                  </ButtonNavSecondary>
-                  {isMinSize(size, 'medium') && <Search margin />}
+                  {isMinSize(size, 'medium') && (
+                    <SearchWrap justify="center">
+                      <Search
+                        expand={showSearch}
+                        onToggle={() => setShowSearch(!showSearch)}
+                        dark
+                      />
+                    </SearchWrap>
+                  )}
                 </NavBarBottom>
               )}
             </Box>
@@ -368,7 +410,7 @@ Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
   match: PropTypes.string,
-  // route: PropTypes.string,
+  path: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   theme: PropTypes.object,
   intl: intlShape.isRequired,
@@ -395,7 +437,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = createStructuredSelector({
   match: state => getRouterMatch(state),
-  route: state => getRouterRoute(state),
+  path: state => getRouterRoute(state),
 });
 
 const withConnect = connect(

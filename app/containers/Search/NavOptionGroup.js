@@ -10,7 +10,7 @@ const NavOptionWrap = styled(Box)`
   padding-bottom: 30px;
 `;
 
-export function NavOptionGroup({ label, options, onClick }) {
+export function NavOptionGroup({ label, options, onClick, subject }) {
   return (
     <NavOptionWrap>
       {label && (
@@ -25,14 +25,7 @@ export function NavOptionGroup({ label, options, onClick }) {
           special={m.special}
         >
           <Box direction="row" align="end" fill="horizontal" width="100%">
-            <Text>{m.label}</Text>
-            {m.labelSecondary && (
-              <Box margin={{ left: 'auto' }}>
-                <Text color="dark-4" size="xsmall">
-                  {m.labelSecondary}
-                </Text>
-              </Box>
-            )}
+            <Text color={subject}>{m.label}</Text>
           </Box>
         </NavOption>
       ))}
@@ -42,6 +35,7 @@ export function NavOptionGroup({ label, options, onClick }) {
 
 NavOptionGroup.propTypes = {
   label: PropTypes.string,
+  subject: PropTypes.string,
   options: PropTypes.array,
   onClick: PropTypes.func,
 };
