@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -12,7 +12,7 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import styled from 'styled-components';
 import { Box, Button, Drop, TextInput } from 'grommet';
-import { FormClose, Search as SearchIcon } from 'grommet-icons';
+import { Close, Search as SearchIcon } from 'grommet-icons';
 
 import { navigate, trackEvent } from 'containers/App/actions';
 // import { isMinSize, isMaxSize } from 'utils/responsive';
@@ -34,46 +34,87 @@ export function Search({
   margin,
   dark = false,
   stretch = false,
+  expand = true,
+  onToggle,
 }) {
   useInjectSaga({ key: 'app', saga });
+  useEffect(() => {
+    if (expand && textInputRef) {
+      textInputRef.current.focus();
+    }
+  });
 
   const [search, setSearch] = useState('');
   const searchRef = useRef(null);
+  const textInputRef = useRef(null);
 
   return (
     <Box
       margin={margin ? { horizontal: 'medium' } : null}
-      width={stretch ? '100%' : null}
-      style={{ minWidth: '300px' }}
+      width={expand && stretch ? '100%' : null}
+      style={{ minWidth: expand ? '400px' : 0 }}
     >
       <Box
-        background={dark ? 'dark' : 'white'}
+        background="dark"
         direction="row"
         align="center"
-        pad={{ horizontal: 'small', vertical: 'xsmall' }}
-        round="small"
+        round="xlarge"
         ref={searchRef}
         style={stretch ? null : { maxWidth: '500px' }}
+        height="32px"
+        width={expand ? 'auto' : '32px'}
+        pad={{ left: expand ? 'ms' : '0' }}
+        margin={{ left: !expand ? 'ms' : '0' }}
       >
-        <StyledTextInput
-          plain
-          value={search}
-          onChange={evt => {
-            if (evt && evt.target) {
-              searched(evt.target.value);
-              setSearch(evt.target.value);
-            }
-          }}
-          placeholder={intl.formatMessage(messages.allSearch)}
-          pad="xsmall"
-          dark={dark}
-        />
-        {search && search.length > 0 && (
-          <Button onClick={() => setSearch('')} pad="xsmall">
-            <FormClose />
-          </Button>
+        {!expand && (
+          <Button
+            plain
+            onClick={() => {
+              onToggle();
+            }}
+            fill
+            icon={<SearchIcon size="medium" />}
+            style={{ textAlign: 'center' }}
+          />
         )}
-        {(!search || search.length === 0) && <SearchIcon />}
+        {expand && (
+          <>
+            <StyledTextInput
+              plain
+              value={search}
+              onChange={evt => {
+                if (evt && evt.target) {
+                  searched(evt.target.value);
+                  setSearch(evt.target.value);
+                }
+              }}
+              placeholder={intl.formatMessage(messages.allSearch)}
+              dark={dark}
+              ref={textInputRef}
+            />
+            {!onToggle && (
+              <Box width="32px">
+                <SearchIcon size="medium" />
+              </Box>
+            )}
+            {onToggle && (
+              <Button
+                plain
+                fill="vertical"
+                onClick={() => {
+                  setSearch('');
+                  onToggle();
+                }}
+                icon={<Close size="medium" />}
+                style={{
+                  textAlign: 'center',
+                  width: '32px',
+                  paddingRight: '5px',
+                }}
+              />
+            )}
+          </>
+        )}
       </Box>
       {search.length > 1 && (
         <Drop
@@ -90,10 +131,12 @@ export function Search({
 
 Search.propTypes = {
   searched: PropTypes.func.isRequired,
+  onToggle: PropTypes.func,
   intl: intlShape.isRequired,
   margin: PropTypes.bool,
   dark: PropTypes.bool,
   stretch: PropTypes.bool,
+  expand: PropTypes.bool,
 };
 
 const mapDispatchToProps = dispatch => ({

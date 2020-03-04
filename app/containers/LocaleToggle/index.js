@@ -24,7 +24,7 @@ import messages from './messages';
 const Styled = styled.span``;
 // prettier-ignore
 const StyledDropButton = styled(DropButton)`
-  padding: 0px 10px;
+  padding: 0 0 0 10px;
   color: ${({ theme, light }) => theme.global.colors[light ? 'dark-2' : 'dark-3' ]};
   font-weight: 600;
   &:hover {
