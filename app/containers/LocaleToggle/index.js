@@ -24,23 +24,19 @@ import messages from './messages';
 const Styled = styled.span``;
 // prettier-ignore
 const StyledDropButton = styled(DropButton)`
-  height: 44px;
-  padding: 5px 10px;
-  background-color: ${({ theme, active, light }) => (active && !light) ? theme.global.colors['dark-3'] : 'transparent' };
+  padding: 0px 10px;
+  color: ${({ theme, light }) => theme.global.colors[light ? 'dark-2' : 'dark-3' ]};
+  font-weight: 600;
   &:hover {
-    background-color: ${({ theme, light }) => light ? 'transparent' : theme.global.colors['dark-3']};
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:active {
-    background-color: ${({ theme, light }) => light ? 'transparent' : theme.global.colors['dark-3']};
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:visited {
-    background-color: ${({ theme, light }) => light ? 'transparent' : theme.global.colors['dark-3']};
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
   &:focus {
-    background-color: ${({ theme, light }) => light ? 'transparent' : theme.global.colors['dark-3']};
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
 `;
