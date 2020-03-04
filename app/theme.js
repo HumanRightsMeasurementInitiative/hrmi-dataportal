@@ -1,10 +1,15 @@
-import { css } from 'styled-components';
-
 export const SIZES = {
   header: {
     height: 100,
-    heightTop: 44,
-    heightBottom: 56,
+    heightTop: 50,
+    heightBottom: 50,
+    padTop: 18,
+    padLeft: 28,
+    padBottom: 15,
+    padTopBottom: 10,
+    brandWidth: 400,
+    logoWidth: 200,
+    brandWidthSmall: 150,
   },
   aside: {
     width: [0, 0, 280, 360, 440],
@@ -62,8 +67,8 @@ export const BREAKPOINTS = {
 
 const text = {
   xxlarge: { size: '30px', height: '36px', maxWidth: '700px' },
-  xlarge: { size: '24px', height: '30px', maxWidth: '700px' },
-  large: { size: '20px', height: '25px', maxWidth: '700px' },
+  xlarge: { size: '22px', height: '30px', maxWidth: '700px' },
+  large: { size: '18px', height: '24px', maxWidth: '700px' },
   medium: { size: '16px', height: '21px', maxWidth: '700px' },
   small: { size: '14px', height: '18px', maxWidth: '600px' },
   xsmall: { size: '13px', height: '16px', maxWidth: '400px' },
@@ -113,7 +118,10 @@ const theme = {
     colors: {
       black: '#101D24',
       white: '#FFFFFF',
-      text: { light: '#3A5161' },
+      text: {
+        dark: '#262064', // empowerment
+        light: '#3A5161',
+      },
       border: { light: '#E8EAE9' },
       'light-0': '#F8F8F8', // <<< lightest      empowerment: '#262064', // AA large
       'light-1': '#F2F3F4', // <<< lightest      empowerment: '#262064', // AA large
@@ -123,8 +131,9 @@ const theme = {
       'light-5': '#D0D2D3',
       'dark-1': '#192E3A', // darkest >>>
       'dark-2': '#2C3F4B',
-      'dark-3': '#667884', // AA
+      'dark-3': '#757575', // AA
       'dark-4': '#8896A0', // AA large
+      font: '#262064', // empowerment',
       dark: '#3A5161',
       brand: '#3A5161',
       highlight: '#FDB933',
@@ -144,6 +153,7 @@ const theme = {
       esr: '#27AAE1', // AA large
       esrDark: '#027AC0', // AA
       esrCloud: '#004f8f', // AA
+      hover: '#6C3F99',
     },
     // margins & paddings
     edgeSize: {
@@ -249,43 +259,6 @@ const theme = {
       },
     },
   },
-  tab: {
-    pad: {
-      horizontal: 'small',
-      bottom: '8px',
-    },
-    margin: {
-      right: '4px',
-      left: 'none',
-      vertical: 'none',
-    },
-    color: '#3A5161',
-    active: {
-      color: '#3A5161',
-    },
-    hover: {
-      color: '#667884',
-    },
-    border: {
-      size: '4px',
-      color: 'transparent',
-      active: {
-        color: '#3A5161',
-      },
-      hover: {
-        color: '#667884',
-      },
-    },
-    extend: props => css`
-      font-weight: ${props.theme.columnHeader.fontWeight};
-      height: 30px;
-    `,
-  },
-  accordion: {
-    heading: {
-      level: 6,
-    },
-  },
   columnHeader: {
     border: '1px solid',
     fontWeight: 600,
@@ -342,6 +315,13 @@ export const ICONS = {
   },
   SETTINGS:
     'M14.56,22H10.44a.52.52,0,0,1-.51-.42l-.39-2.65a7.57,7.57,0,0,1-1.73-1L5.25,19a.57.57,0,0,1-.18,0,.52.52,0,0,1-.45-.25L2.56,15.26a.51.51,0,0,1,.13-.64L4.86,13a5.61,5.61,0,0,1,0-2L2.7,9.38a.49.49,0,0,1-.13-.64L4.63,5.28a.52.52,0,0,1,.63-.23l2.56,1a7.75,7.75,0,0,1,1.73-1l.39-2.65a.51.51,0,0,1,.5-.43h4.12a.51.51,0,0,1,.51.43l.39,2.64a7.57,7.57,0,0,1,1.73,1l2.56-1,.18,0a.52.52,0,0,1,.45.25l2.06,3.47a.51.51,0,0,1-.13.63L20.14,11a6.46,6.46,0,0,1,.07,1,8.06,8.06,0,0,1-.06,1l2.15,1.64a.49.49,0,0,1,.13.64l-2.06,3.47a.52.52,0,0,1-.63.22l-2.56-1a7.18,7.18,0,0,1-1.73,1l-.39,2.65A.48.48,0,0,1,14.56,22ZM12.5,8.25A3.81,3.81,0,0,0,8.64,12a3.86,3.86,0,0,0,7.72,0A3.81,3.81,0,0,0,12.5,8.25Z',
+};
+
+export const IMAGES = {
+  BRAND: {
+    url: 'images/HRMI-Logo-HOR-RGB-x2.png',
+    sizes: [264, 93],
+  },
 };
 
 export default theme;
