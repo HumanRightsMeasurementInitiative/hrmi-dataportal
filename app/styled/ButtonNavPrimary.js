@@ -3,15 +3,13 @@ import Button from './Button';
 // prettier-ignore
 export default styled(Button)`
   display: block;
-  width: 100%;
-  text-align: center;
   color: ${({ theme, active }) => theme.global.colors[active ? 'dark-2' : 'dark-3' ]};
-  padding: 0px 10px;
+  padding: 10px 10px;
   font-size: 1em;
-  border-top: 1px solid;
-  border-color: ${({ theme }) => theme.global.colors['light-4']};
   font-weight: 600;
+  text-align: center;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    text-align: center;
     padding: 0px 10px;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {

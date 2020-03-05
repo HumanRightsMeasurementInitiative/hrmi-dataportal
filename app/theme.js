@@ -1,15 +1,24 @@
 export const SIZES = {
   header: {
     height: 100,
-    heightTop: 50,
-    heightBottom: 50,
     padTop: 18,
     padLeft: 28,
     padBottom: 15,
     padTopBottom: 10,
     brandWidth: 400,
     logoWidth: 200,
-    brandWidthSmall: 150,
+    heightTop: 50,
+    heightBottom: 50,
+    small: {
+      heightTop: 50,
+      heightBottom: 50,
+      padTop: 9,
+      padLeft: 14,
+      padBottom: 9,
+      padTopBottom: 0,
+      logoWidth: 200,
+      brandWidth: 150,
+    },
   },
   aside: {
     width: [0, 0, 280, 360, 440],
