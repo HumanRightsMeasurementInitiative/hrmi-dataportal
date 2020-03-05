@@ -92,12 +92,12 @@ export function Search({
               dark={dark}
               ref={textInputRef}
             />
-            {!onToggle && (
+            {!onToggle && search.length <= 1 && (
               <Box width="32px">
                 <SearchIcon size="medium" />
               </Box>
             )}
-            {onToggle && (
+            {(onToggle || search.length > 1) && (
               <Button
                 plain
                 fill="vertical"
