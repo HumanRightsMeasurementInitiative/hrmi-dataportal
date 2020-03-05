@@ -24,9 +24,10 @@ import messages from './messages';
 const Styled = styled.span``;
 // prettier-ignore
 const StyledDropButton = styled(DropButton)`
-  padding: 0 0 0 10px;
+  padding: 0 0 0 6px;
   color: ${({ theme, light }) => theme.global.colors[light ? 'dark-2' : 'dark-3' ]};
   font-weight: 600;
+  background: transparent;
   &:hover {
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
   }
@@ -38,6 +39,9 @@ const StyledDropButton = styled(DropButton)`
   }
   &:focus {
     color: ${({ theme, light }) => light && theme.global.colors.highlight3};
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    padding-left: 10px;
   }
 `;
 
