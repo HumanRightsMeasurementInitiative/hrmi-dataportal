@@ -170,13 +170,13 @@ const ButtonNavSecondary = styled(Button)`
     (active) ? theme.global.colors[subject] : 'transparent'
   )};
   &:first-child {
-    margin: 0;
+    margin-left: 0;
   }
   &:hover {
     color: ${({ theme, subject }) => theme.global.colors[subject]};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    margin: 0 20px;
+    margin: 0 15px;
   }
 `;
 

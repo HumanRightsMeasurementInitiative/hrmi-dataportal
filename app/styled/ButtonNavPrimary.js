@@ -10,9 +10,10 @@ export default styled(Button)`
   text-align: center;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     text-align: center;
-    padding: 0px 10px;
+    padding: 0px 6px;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    padding: 0px 10px;
     display: inline-block;
     border: none;
     width: auto;
