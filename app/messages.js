@@ -9,6 +9,16 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi';
 
 export default defineMessages({
+  app: {
+    title: {
+      id: `${scope}.app.title`,
+      defaultMessage: 'Rights Tracker',
+    },
+    claim: {
+      id: `${scope}.app.claim`,
+      defaultMessage: 'Measuring What Matters',
+    },
+  },
   hints: {
     noResults: {
       id: `${scope}.hints.noResults`,

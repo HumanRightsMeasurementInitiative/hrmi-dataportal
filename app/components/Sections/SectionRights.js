@@ -7,36 +7,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-import { Heading } from 'grommet';
 
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-import ButtonText from 'styled/ButtonText';
 
 import rootMessages from 'messages';
+import messages from './messages';
 
+import SectionTitle from './SectionTitle';
 import Slider from './Slider';
 import Card from './Card';
-import ButtonWrap from './ButtonWrap';
+import AllLinkButton from './AllLinkButton';
 
 export function SectionRights({
   rights,
   onSelectRight,
   navAllRights,
   intl,
-  labelAllRights,
   title,
+  allLink,
 }) {
   return (
     <SectionContainer border>
       <ContentMaxWidth maxWidth="medium" column>
-        <Heading level={2}>{title}</Heading>
-        <ButtonWrap>
-          <ButtonText onClick={() => navAllRights()}>
-            {labelAllRights}
-          </ButtonText>
-        </ButtonWrap>
+        <SectionTitle
+          title={title || intl.formatMessage(messages.metrics.title)}
+        />
+        <AllLinkButton
+          onClick={() => navAllRights()}
+          label={allLink || intl.formatMessage(messages.metrics.allLink)}
+        />
         <Slider cardMargin="xsmall">
           {rights.map(r => (
             <Card
@@ -59,7 +60,7 @@ export function SectionRights({
 
 SectionRights.propTypes = {
   title: PropTypes.string,
-  labelAllRights: PropTypes.string,
+  allLink: PropTypes.string,
   rights: PropTypes.array,
   onSelectRight: PropTypes.func,
   navAllRights: PropTypes.func,
