@@ -43,7 +43,6 @@ import NavCountry from 'containers/Search/NavCountry';
 import NavMetric from 'containers/Search/NavMetric';
 
 import rootMessages from 'messages';
-import messages from './messages';
 
 const Styled = styled.header`
   position: fixed;
@@ -280,22 +279,24 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                     direction="row"
                     justify="start"
                     gap="10px"
-                    fill="false"
+                    fill={false}
                   >
                     <LogoWrap
                       justify="start"
                       width={`${theme.sizes.header.logoWidth}px`}
-                      flex={{ shrink: false }}
+                      flex={{ shrink: 0 }}
                     >
                       <Logo
                         src={size === 'small' ? logoS : logo}
-                        alt={`${intl.formatMessage(messages.appTitle)}`}
-                        a11yTitle={`${intl.formatMessage(messages.appTitle)}`}
+                        alt={`${intl.formatMessage(rootMessages.app.title)}`}
+                        a11yTitle={`${intl.formatMessage(
+                          rootMessages.app.title,
+                        )}`}
                         fit="contain"
                       />
                     </LogoWrap>
                     <TitleWrap>
-                      <FormattedMessage {...messages.appTitle} />
+                      <FormattedMessage {...rootMessages.app.title} />
                     </TitleWrap>
                   </BrandInner>
                 </BrandButton>

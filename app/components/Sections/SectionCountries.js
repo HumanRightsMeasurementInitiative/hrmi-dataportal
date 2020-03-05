@@ -7,7 +7,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Heading } from 'grommet';
 
 import { COLUMNS } from 'containers/App/constants';
 
@@ -15,24 +14,13 @@ import { COLUMNS } from 'containers/App/constants';
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
-import ButtonText from 'styled/ButtonText';
-// import ButtonPlain from 'styled/ButtonPlain';
-
 import rootMessages from 'messages';
+import messages from './messages';
 
+import SectionTitle from './SectionTitle';
 import Slider from './Slider';
 import Card from './Card';
-import ButtonWrap from './ButtonWrap';
-
-// const Button = styled(ButtonPlain)`
-//   margin: 0 auto;
-//   @media (min-width: 520px) {
-//     margin: 0;
-//   }
-//   &:hover {
-//     text-decoration: underline;
-//   }
-// `;
+import AllLinkButton from './AllLinkButton';
 
 export function SectionCountries({
   countries,
@@ -40,17 +28,18 @@ export function SectionCountries({
   navAllCountries,
   intl,
   title,
-  labelAllCountries,
+  allLink,
 }) {
   return (
     <SectionContainer border>
       <ContentMaxWidth maxWidth="medium" column>
-        <Heading level={2}>{title}</Heading>
-        <ButtonWrap>
-          <ButtonText onClick={() => navAllCountries()}>
-            {labelAllCountries}
-          </ButtonText>
-        </ButtonWrap>
+        <SectionTitle
+          title={title || intl.formatMessage(messages.countries.title)}
+        />
+        <AllLinkButton
+          onClick={() => navAllCountries()}
+          label={allLink || intl.formatMessage(messages.countries.allLink)}
+        />
         {countries && (
           <Slider cardMargin="xsmall">
             {countries.map(country => {
@@ -100,7 +89,7 @@ export function SectionCountries({
 
 SectionCountries.propTypes = {
   title: PropTypes.string,
-  labelAllCountries: PropTypes.string,
+  allLink: PropTypes.string,
   countries: PropTypes.array,
   onSelectCountry: PropTypes.func,
   navAllCountries: PropTypes.func,

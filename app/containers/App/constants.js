@@ -700,3 +700,6 @@ export const INDICATORS = [
 
 export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';
 export const GA_PROPERTY_ID = 'UA-103815452-2';
+
+export const IMAGE_PATH =
+  '//humanrightsmeasurement.org/wp-content/uploads/2020/03';

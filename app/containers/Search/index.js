@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { Box, Button, Drop, TextInput } from 'grommet';
 import { Close, Search as SearchIcon } from 'grommet-icons';
 
@@ -32,10 +32,13 @@ export function Search({
   intl,
   searched,
   margin,
-  dark = false,
-  stretch = false,
+  dark,
+  stretch,
   expand = true,
+  large,
   onToggle,
+  float,
+  theme,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -55,14 +58,18 @@ export function Search({
       style={{ minWidth: expand ? '400px' : 0 }}
     >
       <Box
+        elevation={float && 'medium'}
         background="dark"
         direction="row"
         align="center"
         round="xlarge"
         ref={searchRef}
         style={stretch ? null : { maxWidth: '500px' }}
-        height="32px"
-        width={expand ? 'auto' : '32px'}
+        height={`${theme.sizes.search[large ? 'heightLarge' : 'height']}px`}
+        width={() => {
+          if (expand) return 'auto';
+          return `${theme.sizes.search[large ? 'heightLarge' : 'height']}px`;
+        }}
         pad={{ left: expand ? 'ms' : '0' }}
         margin={{ left: !expand ? 'ms' : '0' }}
       >
@@ -93,7 +100,7 @@ export function Search({
               ref={textInputRef}
             />
             {!onToggle && search.length <= 1 && (
-              <Box width="32px">
+              <Box width={`${theme.sizes.search.height}px`}>
                 <SearchIcon size="medium" />
               </Box>
             )}
@@ -108,7 +115,7 @@ export function Search({
                 icon={<Close size="medium" />}
                 style={{
                   textAlign: 'center',
-                  width: '32px',
+                  width: `${theme.sizes.search.height}px`,
                   paddingRight: '5px',
                 }}
               />
@@ -137,6 +144,9 @@ Search.propTypes = {
   dark: PropTypes.bool,
   stretch: PropTypes.bool,
   expand: PropTypes.bool,
+  float: PropTypes.bool,
+  large: PropTypes.bool,
+  theme: PropTypes.object,
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -168,4 +178,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(Search));
+export default compose(withConnect)(injectIntl(withTheme(Search)));
