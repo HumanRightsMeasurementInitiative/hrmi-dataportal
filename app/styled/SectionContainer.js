@@ -15,7 +15,7 @@ export function SectionContainer(props) {
   return (
     <Styled
       responsive={false}
-      pad={props.pad || { vertical: 'large' }}
+      pad={props.pad || { top: 'small', bottom: 'large' }}
       {...props}
     />
   );

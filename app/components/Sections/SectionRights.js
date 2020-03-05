@@ -29,7 +29,7 @@ export function SectionRights({
   allLink,
 }) {
   return (
-    <SectionContainer border>
+    <SectionContainer>
       <ContentMaxWidth maxWidth="medium" column>
         <SectionTitle
           title={title || intl.formatMessage(messages.metrics.title)}
