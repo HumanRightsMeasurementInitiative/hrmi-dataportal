@@ -45,7 +45,7 @@ export function PathMetricOverview({ onSelectMetric, intl }) {
             rights={rights}
             onSelectRight={onSelectMetric}
             navAllRights={() => onSelectMetric(d.key)}
-            labelAllRights={`${intl.formatMessage(
+            allLink={`${intl.formatMessage(
               rootMessages.dimensions[d.key],
             )} scores`}
             title={`${rights.length} ${intl.formatMessage(

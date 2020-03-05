@@ -6,33 +6,58 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { Box, Button, Text, ResponsiveContext } from 'grommet';
+import { isMaxSize } from 'utils/responsive';
 
-import { Box, Button } from 'grommet';
+const Number = styled(Text)``;
+const Subject = styled(Text)``;
+const Teaser = styled(Text)``;
+const StyledButton = styled(Button)`
+  &:hover {
+    color: ${({ theme }) => theme.global.colors.metrics};
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  }
+`;
 
-export function CardData({ onCardClick, no, title, margin }) {
+export function CardData({ onCardClick, no = 0, title, teaser }) {
   return (
-    <Box
-      elevation="small"
-      responsive={false}
-      margin={margin || 'medium'}
-      pad="none"
-      background="white"
-    >
-      <Button onClick={onCardClick} fill plain>
-        <Box height={{ min: '200px' }} pad="small">
-          <div>{no}</div>
-          <div>{title}</div>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box
+          elevation="small"
+          responsive={false}
+          margin={{
+            horizontal: isMaxSize(size, 'small') ? 'xsmall' : 'small',
+          }}
+          pad="none"
+          background="white"
+        >
+          <StyledButton onClick={onCardClick} fill plain>
+            <Box
+              height={{ min: '200px' }}
+              pad={{ horizontal: 'medium', top: 'ms', bottom: 'large' }}
+            >
+              <Number size="xxxlarge" weight={600}>
+                {no}
+              </Number>
+              <Subject size="xlarge" weight={600} margin={{ bottom: 'large' }}>
+                {title}
+              </Subject>
+              <Teaser size="medium">{teaser}</Teaser>
+            </Box>
+          </StyledButton>
         </Box>
-      </Button>
-    </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 
 CardData.propTypes = {
   no: PropTypes.number,
   title: PropTypes.string,
+  teaser: PropTypes.string,
   onCardClick: PropTypes.func,
-  margin: PropTypes.string,
 };
 
 export default CardData;

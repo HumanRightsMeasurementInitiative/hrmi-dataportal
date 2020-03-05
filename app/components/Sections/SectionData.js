@@ -6,15 +6,19 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Heading, ResponsiveContext } from 'grommet';
-import { isMaxSize } from 'utils/responsive';
+import { ResponsiveContext } from 'grommet';
+import { intlShape, injectIntl } from 'react-intl';
 
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
+import { isMaxSize } from 'utils/responsive';
+
+import SectionTitle from './SectionTitle';
 import Slider from './Slider';
 import CardData from './CardData';
+import messages from './messages';
 
 export function SectionData({
   noCountries = 0,
@@ -23,13 +27,17 @@ export function SectionData({
   navCountries,
   navRights,
   navGroups,
+  intl,
 }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer border background="light-4">
+        <SectionContainer
+          background="data"
+          pad={{ top: 'small', bottom: 'large' }}
+        >
           <ContentMaxWidth maxWidth="medium" column>
-            <Heading level={2}>Our data</Heading>
+            <SectionTitle title={intl.formatMessage(messages.data.title)} />
             <Slider
               stretch
               cardMargin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
@@ -37,20 +45,20 @@ export function SectionData({
               <CardData
                 onCardClick={navCountries}
                 no={noCountries}
-                title="Country Profiles"
-                margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
+                title={intl.formatMessage(messages.data.countries)}
+                teaser={intl.formatMessage(messages.data.countriesTeaser)}
               />
               <CardData
                 onCardClick={navRights}
                 no={noRights}
-                title="Rights"
-                margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
+                title={intl.formatMessage(messages.data.metrics)}
+                teaser={intl.formatMessage(messages.data.metricsTeaser)}
               />
               <CardData
                 onCardClick={navGroups}
                 no={noGroups}
-                title="Risk Groups"
-                margin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
+                title={intl.formatMessage(messages.data.people)}
+                teaser={intl.formatMessage(messages.data.peopleTeaser)}
               />
             </Slider>
           </ContentMaxWidth>
@@ -67,6 +75,7 @@ SectionData.propTypes = {
   navCountries: PropTypes.func,
   navRights: PropTypes.func,
   navGroups: PropTypes.func,
+  intl: intlShape.isRequired,
 };
 
-export default SectionData;
+export default injectIntl(SectionData);

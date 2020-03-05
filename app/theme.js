@@ -27,6 +27,10 @@ export const SIZES = {
     height: 90,
     heightCollapsed: 40,
   },
+  search: {
+    height: 32,
+    heightLarge: 38,
+  },
 };
 
 export const CARD_WIDTH = {
@@ -75,6 +79,7 @@ export const BREAKPOINTS = {
 };
 
 const text = {
+  xxxlarge: { size: '55px', height: '75px', maxWidth: '700px' },
   xxlarge: { size: '30px', height: '36px', maxWidth: '700px' },
   xlarge: { size: '22px', height: '30px', maxWidth: '700px' },
   large: { size: '18px', height: '24px', maxWidth: '700px' },
@@ -141,7 +146,7 @@ const theme = {
       white: '#FFFFFF',
       text: {
         dark: '#FFFFFF', //  on dark background
-        light: '#262064', // on light background (empowerment)
+        light: '#262262', // on light background (empowerment)
       },
       border: { light: '#E8EAE9' },
       'light-0': '#F8F8F8', // <<< lightest      empowerment: '#262064', // AA large
@@ -154,7 +159,7 @@ const theme = {
       'dark-2': '#2C3F4B',
       'dark-3': '#757575', // AA
       'dark-4': '#8896A0', // AA large
-      dark: '#262064', // empowerment',
+      dark: '#262262', // empowerment',
       brand: '#3A5161',
       highlight: '#FDB933',
       highlight2: '#DB7E00', // AA large
@@ -162,9 +167,9 @@ const theme = {
       focus: 'transparent',
       selected: 'brand',
       empowermentTrans: 'rgba(38, 32, 100, 0.3)', // AA
-      empowerment: '#262064', // AA
-      empowermentDark: '#262064', // AA
-      empowermentCloud: '#262064', // AA
+      empowerment: '#262262', // AA
+      empowermentDark: '#262262', // AA
+      empowermentCloud: '#262262', // AA
       physintTrans: 'rgba(108, 63, 153, 0.3)', // AA
       physint: '#6C3F99', // AA large
       physintDark: '#6C3F99', // AA
@@ -177,6 +182,7 @@ const theme = {
       countries: '#0D6D64',
       metrics: '#7F59A6',
       people: '#BD5747',
+      data: '#FFE6D0',
     },
     // margins & paddings
     edgeSize,
