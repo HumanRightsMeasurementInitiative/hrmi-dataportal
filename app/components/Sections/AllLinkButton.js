@@ -8,6 +8,7 @@ import AllLinkButtonWrap from './AllLinkButtonWrap';
 
 const StyledButton = styled(Button)`
   font-size: ${({ theme }) => theme.text.large.size};
+  font-weight: 600;
 `;
 
 export function AllLinkButton({ label, onClick }) {
