@@ -100,6 +100,7 @@ const edgeSize = {
   ml: '36px',
   large: '48px',
   xlarge: '72px',
+  xxlarge: '144px',
 };
 
 const theme = {
