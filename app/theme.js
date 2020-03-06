@@ -1,7 +1,7 @@
 export const SIZES = {
   containerMaxWidth: 1200,
   // containerMaxWidth / 2 + edgesize.xxlarge
-  imageHomeMaxWidth: 744,
+  imageHomeMaxWidth: 700,
   header: {
     height: 100,
     padTop: 18,
@@ -102,7 +102,7 @@ const edgeSize = {
   ml: '36px',
   large: '48px',
   xlarge: '72px',
-  xxlarge: '144px',
+  xxlarge: '100px',
 };
 
 const theme = {
