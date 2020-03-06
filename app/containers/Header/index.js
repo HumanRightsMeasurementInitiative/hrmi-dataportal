@@ -22,25 +22,30 @@ import {
 } from 'grommet';
 import { Menu, Close, FormDown, FormUp } from 'grommet-icons';
 
-import { getRouterMatch, getRouterRoute } from 'containers/App/selectors';
-
-import ButtonNavPrimary from 'styled/ButtonNavPrimary';
-import { isMinSize, isMaxSize } from 'utils/responsive';
-
 import logo from 'images/HRMI-Logo-HOR-RGB-x2.png';
 import logoS from 'images/HRMI-Logo-HOR-RGB-small-x2.png';
 
-import LocaleToggle from 'containers/LocaleToggle';
 import { appLocales } from 'i18n';
+import LocaleToggle from 'containers/LocaleToggle';
+import { getRouterMatch, getRouterRoute } from 'containers/App/selectors';
 import { PAGES, PATHS } from 'containers/App/constants';
 import { navigate, loadDataIfNeeded } from 'containers/App/actions';
-
-// import { isMinSize, isMaxSize } from 'utils/responsive';
-import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
 import Search from 'containers/Search';
 import NavCountry from 'containers/Search/NavCountry';
 import NavMetric from 'containers/Search/NavMetric';
+
+import ButtonNavPrimary from 'styled/ButtonNavPrimary';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
+
+import { useInjectSaga } from 'utils/injectSaga';
+import {
+  getHeaderHeight,
+  getHeaderHeightTop,
+  getHeaderHeightBottom,
+  isMinSize,
+  isMaxSize,
+} from 'utils/responsive';
 
 import rootMessages from 'messages';
 
@@ -50,10 +55,10 @@ const Styled = styled.header`
   left: 0;
   z-index: 9;
   width: 100%;
-  height: ${({ theme, showSecondary }) =>
-    showSecondary
-      ? theme.sizes.header.heightTop
-      : theme.sizes.header.heightTop + theme.sizes.header.heightBottom}px;
+  height: ${({ theme }) => getHeaderHeight('small', theme)}px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    height: ${({ theme }) => getHeaderHeight('medium', theme)}px;
+  }
 `;
 
 const NavBarTop = props => (
@@ -61,13 +66,13 @@ const NavBarTop = props => (
     direction="row"
     align="center"
     justify="end"
-    height={`${props.theme.sizes.header.heightTop}px`}
-    pad={{ horizontal: 'small' }}
+    height={`${getHeaderHeightTop(props.size, props.theme)}px`}
     {...props}
   />
 );
 NavBarTop.propTypes = {
   theme: PropTypes.object,
+  size: PropTypes.string,
 };
 
 const NavBarBottom = props => (
@@ -75,8 +80,7 @@ const NavBarBottom = props => (
     direction="row"
     align="end"
     justify={props.size === 'small' ? 'start' : 'end'}
-    height={`${props.theme.sizes.header.heightBottom}px`}
-    pad={{ horizontal: 'small' }}
+    height={`${getHeaderHeightBottom(props.size, props.theme)}px`}
     {...props}
   />
 );
@@ -86,6 +90,7 @@ NavBarBottom.propTypes = {
 };
 
 const BrandButton = styled(Button)`
+  height: ${({ theme }) => theme.sizes.header.small.heightTop}px;
   width: ${({ theme }) => theme.sizes.header.small.brandWidth}px;
   &:hover {
     opacity: 0.8;
@@ -99,15 +104,13 @@ const BrandButton = styled(Button)`
 const BrandInner = styled(Box)`
   padding-top: ${({ theme }) => theme.sizes.header.small.padTop}px;
   padding-bottom: ${({ theme }) => theme.sizes.header.small.padBottom - 2}px;
-  padding-left: ${({ theme }) => theme.sizes.header.small.padLeft}px;
-  padding-right: ${({ theme }) => theme.sizes.header.small.padLeft}px;
+  padding-right: ${({ theme }) => theme.sizes.header.small.padRight}px;
   height: ${({ theme }) => theme.sizes.header.small.heightTop}px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     height: ${({ theme }) => theme.sizes.header.height}px;
     padding-top: ${({ theme }) => theme.sizes.header.padTop}px;
     padding-bottom: ${({ theme }) => theme.sizes.header.padBottom - 2}px;
-    padding-left: ${({ theme }) => theme.sizes.header.padLeft}px;
-    padding-right: ${({ theme }) => theme.sizes.header.padLeft}px;
+    padding-right: ${({ theme }) => theme.sizes.header.padRight}px;
   }
 `;
 
@@ -127,14 +130,6 @@ const TitleWrap = styled(Box)`
   }
 `;
 
-// prettier-ignore
-// display: ${props => (props.visible ? 'block' : 'none')};
-// position: fixed;
-// left: 0;
-// right: 0;
-// bottom: 0;
-// width: 100%;
-// background: ${props => props.theme.global.colors['dark-2']};
 const MenuList = styled(Box)`
   padding: ${({ theme }) => theme.global.edgeSize.medium} 0;
 `;
@@ -145,21 +140,24 @@ const MenuGroup = styled(Box)`
 // prettier-ignore
 const ToggleMenu = styled(Button)`
   z-index: 300;
-  width: 44px;
-  height: 44px;
+  width: 30px;
+  height: 30px;
   background-color: transparent;
   text-align: center;
 `;
 
 const SearchWrap = styled(Box)`
-  height: ${({ theme }) => theme.sizes.header.heightBottom}px;
+  height: ${({ theme }) => getHeaderHeightBottom('small', theme)}px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
+  }
 `;
 // prettier-ignore
 const ButtonNavSecondary = styled(Button)`
-  margin: 0px 5px;
-  padding-left: 3px;
+  margin: 0 5px;
+  padding-left: 1px;
   font-weight: 600;
-  height: ${({ theme }) => theme.sizes.header.heightBottom - 4}px;
+  height: ${({ theme }) => getHeaderHeightBottom('small', theme)}px;
   color: ${({ theme, subject, active, open }) => (
     (active || open) ? theme.global.colors[subject] : 'inherit'
   )};
@@ -175,13 +173,20 @@ const ButtonNavSecondary = styled(Button)`
     color: ${({ theme, subject }) => theme.global.colors[subject]};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    margin: 0 15px;
+    height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    margin-left: 27px;
+    margin-right: 27px;
   }
 `;
 
 const ButtonSecondary = React.forwardRef(
   ({ active, open, onClick, label, subject, size }, ref) => (
     <ButtonNavSecondary
+      size={size}
       plain
       active={active}
       open={open}
@@ -203,13 +208,13 @@ const ButtonSecondary = React.forwardRef(
           {open && (
             <FormUp
               size={size === 'small' ? 'large' : 'xlarge'}
-              style={{ stroke: 'currentColor' }}
+              style={{ stroke: 'currentColor', marginRight: '-3px' }}
             />
           )}
           {!open && (
             <FormDown
               size={size === 'small' ? 'large' : 'xlarge'}
-              style={{ stroke: 'currentColor' }}
+              style={{ stroke: 'currentColor', marginRight: '-3px' }}
             />
           )}
         </Box>
@@ -270,10 +275,15 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Styled role="banner">
+        <Styled role="banner" size={size}>
           <Box elevation="medium" background="white">
-            <Box direction={size === 'small' ? 'column' : 'row'}>
-              <Box direction="row" align="center">
+            <ContentMaxWidth column={size === 'small'}>
+              <Box
+                direction="row"
+                align="center"
+                justify="stretch"
+                fill={isMaxSize(size, 'small') ? 'horizontal' : false}
+              >
                 <BrandButton plain onClick={onHome}>
                   <BrandInner
                     direction="row"
@@ -283,7 +293,11 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                   >
                     <LogoWrap
                       justify="start"
-                      width={`${theme.sizes.header.logoWidth}px`}
+                      width={`${
+                        size === 'small'
+                          ? theme.sizes.header.small.logoWidth
+                          : theme.sizes.header.logoWidth
+                      }px`}
                       flex={{ shrink: 0 }}
                     >
                       <Logo
@@ -335,7 +349,12 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
               </Box>
               <Box fill>
                 {isMinSize(size, 'medium') && (
-                  <NavBarTop theme={theme} direction="row" justify="end">
+                  <NavBarTop
+                    theme={theme}
+                    direction="row"
+                    justify="end"
+                    size={size}
+                  >
                     {renderPages(match, nav)}
                     {appLocales.length > 1 && isMinSize(size, 'medium') && (
                       <LocaleToggle />
@@ -438,7 +457,7 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                   )}
                 </NavBarBottom>
               </Box>
-            </Box>
+            </ContentMaxWidth>
           </Box>
         </Styled>
       )}

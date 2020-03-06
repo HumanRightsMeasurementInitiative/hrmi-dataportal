@@ -10,19 +10,9 @@ const Styled = styled(Box)`
   position: relative;
   min-height: auto;
   padding: 0 ${({ theme }) => theme.global.edgeSize.small};
+  max-width: ${({ theme }) => `${theme.sizes.containerMaxWidth}px` || '1600px'};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0 ${({ theme }) => theme.global.edgeSize.medium};
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    max-width: ${({ theme, maxWidth }) => {
-    if (maxWidth) {
-      if (maxWidth === 'medium') return theme.maxWidthMedium;
-      if (maxWidth === 'narrow') return theme.maxWidthNarrow;
-      return maxWidth;
-    }
-    return theme.maxWidth || '1600px';
-  }};
-    padding: 0 ${({ theme }) => theme.global.edgeSize.xlarge};
   }
 `;
 

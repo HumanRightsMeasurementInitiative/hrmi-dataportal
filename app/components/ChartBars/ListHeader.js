@@ -122,7 +122,7 @@ export function ListHeader({
 
 ListHeader.propTypes = {
   metric: PropTypes.object,
-  benchmark: PropTypes.string,
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   commonLabel: PropTypes.string,
   labelColor: PropTypes.string,
   annotateBetter: PropTypes.bool,

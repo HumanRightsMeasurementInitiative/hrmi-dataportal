@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { Box } from 'grommet';
+import { Box, ResponsiveContext } from 'grommet';
 
 import rootMessages from 'messages';
 
@@ -156,125 +156,130 @@ export function PathCountry({
           </Box>
         </ContentMaxWidth>
       </ContentContainer>
-      <TabContainer
-        tabs={[
-          {
-            key: 'snapshot',
-            title: intl.formatMessage(rootMessages.tabs.snapshot),
-            content: props => (
-              <TabCountrySnapshot
-                {...props}
-                countryCode={countryCode}
-                onMetricClick={code => setAboutMetric(code)}
-              />
-            ),
-          },
-          {
-            key: 'report-esr',
-            title: intl.formatMessage(rootMessages.dimensions.esr),
-            content: props => (
-              <TabCountryReport
-                {...props}
-                type="esr"
-                dimension="esr"
-                countryTitle={countryTitle}
-                hasDimensionScore={dataReady && !!dimensions.esr.score}
-                indicators={indicators}
-                country={country}
-                standard={standard}
-                dataReady={dataReady}
-                allIndicators={allIndicators}
-                onMetricClick={code => setAboutMetric(code)}
-              />
-            ),
-          },
-          {
-            key: 'report-physint',
-            title: intl.formatMessage(rootMessages.dimensions.physint),
-            content: props => (
-              <TabCountryReport
-                {...props}
-                type="cpr"
-                dimension="physint"
-                countryTitle={countryTitle}
-                hasDimensionScore={dataReady && hasCPR(dimensions)}
-                country={country}
-                dataReady={dataReady}
-                onMetricClick={code => setAboutMetric(code)}
-              />
-            ),
-          },
-          {
-            key: 'report-empowerment',
-            title: intl.formatMessage(rootMessages.dimensions.empowerment),
-            content: props => (
-              <TabCountryReport
-                {...props}
-                type="cpr"
-                dimension="empowerment"
-                countryTitle={countryTitle}
-                hasDimensionScore={dataReady && hasCPR(dimensions)}
-                country={country}
-                dataReady={dataReady}
-                onMetricClick={code => setAboutMetric(code)}
-              />
-            ),
-          },
-          {
-            key: 'atrisk',
-            title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-            // howToRead: {
-            //   contxt: 'PathCountry',
-            //   chart: 'ChartWordCloud',
-            //   data: 'atRisk',
-            // },
-            content: props =>
-              hasCPR(dimensions) && (
-                <TabCountryPeople
-                  {...props}
-                  data={atRisk}
-                  countryTitle={countryTitle}
-                  countryCode={countryCode}
-                />
-              ),
-          },
-          {
-            aside: true,
-            key: 'about',
-            title: intl.formatMessage(rootMessages.tabs.about),
-            content: props => {
-              let faqs = [];
-              if (
-                props &&
-                (props.activeTab === 0 || props.activeTab === 'snapshot')
-              ) {
-                faqs = FAQS.COUNTRY_SNAPSHOT;
-              }
-              if (
-                props &&
-                (props.activeTab === 1 || props.activeTab === 'esr-report')
-              ) {
-                faqs = FAQS.COUNTRY_ESR;
-              }
-              if (
-                props &&
-                (props.activeTab === 2 || props.activeTab === 'cpr-report')
-              ) {
-                faqs = FAQS.COUNTRY_CPR;
-              }
-              // TODO check about tab
-              return (
-                <AboutCountryContainer
-                  {...props}
-                  countryCode={countryCode}
-                  onCategoryClick={onCategoryClick}
-                  showFAQs={faqs}
-                />
-              );
-            },
-          },
-        ]}
-      />
+      <ResponsiveContext.Consumer>
+        {size => (
+          <TabContainer
+            size={size}
+            tabs={[
+              {
+                key: 'snapshot',
+                title: intl.formatMessage(rootMessages.tabs.snapshot),
+                content: props => (
+                  <TabCountrySnapshot
+                    {...props}
+                    countryCode={countryCode}
+                    onMetricClick={code => setAboutMetric(code)}
+                  />
+                ),
+              },
+              {
+                key: 'report-esr',
+                title: intl.formatMessage(rootMessages.dimensions.esr),
+                content: props => (
+                  <TabCountryReport
+                    {...props}
+                    type="esr"
+                    dimension="esr"
+                    countryTitle={countryTitle}
+                    hasDimensionScore={dataReady && !!dimensions.esr.score}
+                    indicators={indicators}
+                    country={country}
+                    standard={standard}
+                    dataReady={dataReady}
+                    allIndicators={allIndicators}
+                    onMetricClick={code => setAboutMetric(code)}
+                  />
+                ),
+              },
+              {
+                key: 'report-physint',
+                title: intl.formatMessage(rootMessages.dimensions.physint),
+                content: props => (
+                  <TabCountryReport
+                    {...props}
+                    type="cpr"
+                    dimension="physint"
+                    countryTitle={countryTitle}
+                    hasDimensionScore={dataReady && hasCPR(dimensions)}
+                    country={country}
+                    dataReady={dataReady}
+                    onMetricClick={code => setAboutMetric(code)}
+                  />
+                ),
+              },
+              {
+                key: 'report-empowerment',
+                title: intl.formatMessage(rootMessages.dimensions.empowerment),
+                content: props => (
+                  <TabCountryReport
+                    {...props}
+                    type="cpr"
+                    dimension="empowerment"
+                    countryTitle={countryTitle}
+                    hasDimensionScore={dataReady && hasCPR(dimensions)}
+                    country={country}
+                    dataReady={dataReady}
+                    onMetricClick={code => setAboutMetric(code)}
+                  />
+                ),
+              },
+              {
+                key: 'atrisk',
+                title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
+                // howToRead: {
+                //   contxt: 'PathCountry',
+                //   chart: 'ChartWordCloud',
+                //   data: 'atRisk',
+                // },
+                content: props =>
+                  hasCPR(dimensions) && (
+                    <TabCountryPeople
+                      {...props}
+                      data={atRisk}
+                      countryTitle={countryTitle}
+                      countryCode={countryCode}
+                    />
+                  ),
+              },
+              {
+                aside: true,
+                key: 'about',
+                title: intl.formatMessage(rootMessages.tabs.about),
+                content: props => {
+                  let faqs = [];
+                  if (
+                    props &&
+                    (props.activeTab === 0 || props.activeTab === 'snapshot')
+                  ) {
+                    faqs = FAQS.COUNTRY_SNAPSHOT;
+                  }
+                  if (
+                    props &&
+                    (props.activeTab === 1 || props.activeTab === 'esr-report')
+                  ) {
+                    faqs = FAQS.COUNTRY_ESR;
+                  }
+                  if (
+                    props &&
+                    (props.activeTab === 2 || props.activeTab === 'cpr-report')
+                  ) {
+                    faqs = FAQS.COUNTRY_CPR;
+                  }
+                  // TODO check about tab
+                  return (
+                    <AboutCountryContainer
+                      {...props}
+                      countryCode={countryCode}
+                      onCategoryClick={onCategoryClick}
+                      showFAQs={faqs}
+                    />
+                  );
+                },
+              },
+            ]}
+          />
+        )}
+      </ResponsiveContext.Consumer>
     </ContentWrap>
   );
 }

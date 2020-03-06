@@ -32,7 +32,7 @@ export function PathMetricOverview({ onSelectMetric, intl }) {
   return (
     <ContentWrap>
       <ContentContainer header background="light-1">
-        <ContentMaxWidth maxWidth="medium">
+        <ContentMaxWidth>
           <PageTitle level={2}>
             <FormattedMessage {...messages.title} />
           </PageTitle>

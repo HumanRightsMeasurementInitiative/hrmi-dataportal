@@ -86,7 +86,7 @@ export function BarWrapper({
               flex={{ shrink: 0 }}
               pad={{ left: 'small' }}
             >
-              <Text color={`${score.color}Dark`} size="small" weight="600">
+              <Text color={`${score.color}Dark`} size="small" weight={600}>
                 {score.value && `${formatScore(score.value)}${score.unit}`}
                 {!score.value && 'N/A'}
               </Text>

@@ -50,7 +50,10 @@ export function Search({
   const [search, setSearch] = useState('');
   const searchRef = useRef(null);
   const textInputRef = useRef(null);
-
+  let width;
+  if (!expand) {
+    width = `${theme.sizes.search[large ? 'heightLarge' : 'height']}px`;
+  }
   return (
     <Box
       margin={margin ? { horizontal: 'medium' } : null}
@@ -66,10 +69,7 @@ export function Search({
         ref={searchRef}
         style={stretch ? null : { maxWidth: '500px' }}
         height={`${theme.sizes.search[large ? 'heightLarge' : 'height']}px`}
-        width={() => {
-          if (expand) return 'auto';
-          return `${theme.sizes.search[large ? 'heightLarge' : 'height']}px`;
-        }}
+        width={width}
         pad={{ left: expand ? 'ms' : '0' }}
         margin={{ left: !expand ? 'ms' : '0' }}
       >

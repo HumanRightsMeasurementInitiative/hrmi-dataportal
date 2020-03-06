@@ -58,7 +58,7 @@ export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
       </Helmet>
       <ContentContainer direction="column" header>
         <Close closeTarget={closeTarget} keepTab topRight float />
-        <ContentMaxWidth maxWidth="narrow">
+        <ContentMaxWidth>
           <StyledContent>
             <PageTitle level={1}>{pageTitle}</PageTitle>
             {content && <HTMLWrapper innerhtml={content.content} />}

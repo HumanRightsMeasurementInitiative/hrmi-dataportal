@@ -33,7 +33,7 @@ export function SectionData({
     <ResponsiveContext.Consumer>
       {size => (
         <SectionContainer background="data">
-          <ContentMaxWidth maxWidth="medium" column>
+          <ContentMaxWidth column>
             <SectionTitle title={intl.formatMessage(messages.data.title)} />
             <Slider
               stretch

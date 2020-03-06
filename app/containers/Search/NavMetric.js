@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Box } from 'grommet';
+import { withTheme } from 'styled-components';
 
-import { SIZES } from 'theme';
 import {
   DIMENSIONS,
   RIGHTS,
@@ -13,6 +13,8 @@ import {
   PATHS,
 } from 'containers/App/constants';
 import { selectMetric, navigate } from 'containers/App/actions';
+
+import { getHeaderHeight } from 'utils/responsive';
 
 import rootMessages from 'messages';
 
@@ -32,6 +34,7 @@ export function NavMetric({
   size,
   nav,
   subject,
+  theme,
 }) {
   const [search, setSearch] = useState('');
 
@@ -41,7 +44,7 @@ export function NavMetric({
   const hasMetrics =
     dimensions.length > 0 || rights.length > 0 || indicators.length > 0;
   // figure out available height for IE11
-  const h = window.innerHeight - SIZES.header.height;
+  const h = window.innerHeight - getHeaderHeight(size, theme);
   return (
     <NavWrapper h={h}>
       <NavTop
@@ -115,6 +118,7 @@ NavMetric.propTypes = {
   intl: intlShape.isRequired,
   size: PropTypes.string,
   subject: PropTypes.string,
+  theme: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -139,4 +143,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(NavMetric));
+export default compose(withConnect)(injectIntl(withTheme(NavMetric)));
