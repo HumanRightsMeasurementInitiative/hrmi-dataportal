@@ -8,14 +8,16 @@ import styled, { css, withTheme } from 'styled-components';
 
 import { getTabSearch } from 'containers/App/selectors';
 import { setTab } from 'containers/App/actions';
+
+import Aside from 'components/Aside';
+import AsideBackground from 'components/AsideBackground';
+
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import ButtonNavTab from 'styled/ButtonNavTab';
 import MainColumn from 'styled/MainColumn';
 
 import { isMinSize, isMaxSize, getHeaderHeight } from 'utils/responsive';
 import isNumber from 'utils/is-number';
-
-import TabAside from './TabAside';
 
 // const Tab = styled.div``;
 // prettier-ignore
@@ -25,7 +27,7 @@ const Spacer = styled.div`
   height: ${({ height }) => height}px;
 `;
 const Fixed = styled.div`
-  background: grey;
+  background: ${({ theme }) => theme.global.colors.dark};
   ${({ fixed, top }) =>
     fixed &&
     css`
@@ -116,23 +118,23 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
           <Spacer height={fixedRef && fixedRef.current.offsetHeight} />
         )}
       </Tabs>
-      <ContentMaxWidth column>
-        <Box direction="row" fill="horizontal">
-          <MainColumn hasAside={!!asideTab}>
-            {activeTab.content({
-              activeTab: activeTab.key,
-              goToTab: key => onTabClick(key),
-              tabs: mainTabs,
-            })}
-          </MainColumn>
-          {asideTab && (
-            <TabAside
-              asideTab={asideTab}
-              activeTab={activeTab && activeTab.key}
-            />
-          )}
-        </Box>
-      </ContentMaxWidth>
+      <Box direction="column" style={{ position: 'relative' }}>
+        {asideTab && <AsideBackground />}
+        <ContentMaxWidth column hasAside={asideTab}>
+          <Box direction="row" fill="horizontal">
+            <MainColumn hasAside={!!asideTab}>
+              {activeTab.content({
+                activeTab: activeTab.key,
+                goToTab: key => onTabClick(key),
+                tabs: mainTabs,
+              })}
+            </MainColumn>
+            {asideTab && (
+              <Aside content={asideTab} active={activeTab && activeTab.key} />
+            )}
+          </Box>
+        </ContentMaxWidth>
+      </Box>
     </Box>
   );
 }

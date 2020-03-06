@@ -7,15 +7,11 @@ import { Box } from 'grommet';
 const Styled = styled(Box)`
   width: 100%;
   position: relative;
-  padding-bottom: ${props => (props.header ? '40px' : 0)};
-  padding-top: ${props => (props.header ? '10px' : 0)};
   min-height: ${props => (props.header ? '120px' : 'auto')};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding-top: ${props => (props.header ? '25px' : 0)};
     min-height: ${props => (props.header ? '140px' : 'auto')};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    padding-top: ${props => (props.header ? '25px' : 0)};
     min-height: ${props => (props.header ? '160px' : 'auto')};
   }
 `;
