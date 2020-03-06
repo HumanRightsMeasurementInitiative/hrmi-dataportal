@@ -1,5 +1,7 @@
 export const SIZES = {
   containerMaxWidth: 1200,
+  // containerMaxWidth / 2 + edgesize.xxlarge
+  imageHomeMaxWidth: 744,
   header: {
     height: 100,
     padTop: 18,
@@ -31,7 +33,7 @@ export const SIZES = {
   },
   search: {
     height: 32,
-    heightLarge: 38,
+    heightLarge: 44,
   },
 };
 
@@ -183,6 +185,7 @@ const theme = {
       metrics: '#7F59A6',
       people: '#BD5747',
       data: '#FFE6D0',
+      graphicRed: '#EF4123',
     },
     // margins & paddings
     edgeSize,

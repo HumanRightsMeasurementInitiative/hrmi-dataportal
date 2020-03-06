@@ -80,7 +80,7 @@ export function Search({
               onToggle();
             }}
             fill
-            icon={<SearchIcon size="medium" />}
+            icon={<SearchIcon size={large ? 'large' : 'medium'} />}
             style={{ textAlign: 'center' }}
           />
         )}
@@ -100,8 +100,11 @@ export function Search({
               ref={textInputRef}
             />
             {!onToggle && search.length <= 1 && (
-              <Box width={`${theme.sizes.search.height}px`}>
-                <SearchIcon size="medium" />
+              <Box
+                width={`${theme.sizes.search.height}px`}
+                margin={{ right: large ? 'xsmall' : 0 }}
+              >
+                <SearchIcon size={large ? 'large' : 'medium'} />
               </Box>
             )}
             {(onToggle || search.length > 1) && (
@@ -115,6 +118,7 @@ export function Search({
                 icon={<Close size="medium" />}
                 style={{
                   textAlign: 'center',
+                  height: `${theme.sizes.search.height}px`,
                   width: `${theme.sizes.search.height}px`,
                   paddingRight: '5px',
                 }}
