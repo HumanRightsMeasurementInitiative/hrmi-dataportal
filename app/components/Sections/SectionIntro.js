@@ -67,7 +67,7 @@ export function SectionIntro({ theme }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer pad={{ top: 'xxlarge', bottom: 'xlarge' }}>
+        <SectionContainer pad={{ top: 'xxlarge', bottom: 'xxlarge' }}>
           <Box
             align="start"
             direction="row"
@@ -105,11 +105,13 @@ export function SectionIntro({ theme }) {
               >
                 <GraphicCircle color="graphicRed" size="100px" />
               </GraphicWrap>
-              <GraphicWrap
-                style={{ top: 0, right: 0, transform: 'translate(65%, 65%)' }}
-              >
-                <GraphicDiamond color="physint" size={100} />
-              </GraphicWrap>
+              {isMinSize(size, 'large') && (
+                <GraphicWrap
+                  style={{ top: 0, right: 0, transform: 'translate(65%, 65%)' }}
+                >
+                  <GraphicDiamond color="physint" size={100} />
+                </GraphicWrap>
+              )}
               <div style={{ position: 'relative' }}>
                 <PageTitle>
                   <FormattedMessage {...rootMessages.app.title} />
