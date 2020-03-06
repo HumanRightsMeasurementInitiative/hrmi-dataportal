@@ -7,6 +7,7 @@ const Styled = styled(Box)`
   position: relative;
   min-height: 100vh;
   padding-right: ${({ hasAside }) => (hasAside ? '40px' : 0)};
+  overflow-x: hidden;
 `;
 
 function MainColumn(props) {

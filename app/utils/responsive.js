@@ -60,3 +60,16 @@ export const getFloatingAsideWidth = (size, theme, { width }) => {
   const padding = parseInt(theme.global.edgeSize.large, 10);
   return asideWidth + padding + Math.max(0, (width - maxWidth) / 2);
 };
+
+export const getHeaderHeight = (size, theme) =>
+  isMinSize(size, 'medium')
+    ? theme.sizes.header.height
+    : theme.sizes.header.small.height;
+export const getHeaderHeightTop = (size, theme) =>
+  isMinSize(size, 'medium')
+    ? theme.sizes.header.heightTop
+    : theme.sizes.header.small.heightTop;
+export const getHeaderHeightBottom = (size, theme) =>
+  isMinSize(size, 'medium')
+    ? theme.sizes.header.heightBottom
+    : theme.sizes.header.small.heightBottom;

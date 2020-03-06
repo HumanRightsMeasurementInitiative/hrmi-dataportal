@@ -1,23 +1,25 @@
 export const SIZES = {
+  containerMaxWidth: 1200,
   header: {
     height: 100,
     padTop: 18,
-    padLeft: 28,
+    padRight: 28,
     padBottom: 15,
     padTopBottom: 10,
-    brandWidth: 400,
+    brandWidth: 380,
     logoWidth: 200,
     heightTop: 50,
     heightBottom: 50,
     small: {
+      height: 80,
       heightTop: 50,
-      heightBottom: 50,
+      heightBottom: 30,
       padTop: 9,
-      padLeft: 14,
+      padRight: 14,
       padBottom: 9,
       padTopBottom: 0,
-      logoWidth: 200,
-      brandWidth: 150,
+      logoWidth: 120,
+      brandWidth: 200,
     },
   },
   aside: {
@@ -101,9 +103,6 @@ const edgeSize = {
 };
 
 const theme = {
-  maxWidth: '1600px',
-  maxWidthMedium: '1200px',
-  maxWidthNarrow: '800px',
   sizes: SIZES,
   // used for grommet
   text,
