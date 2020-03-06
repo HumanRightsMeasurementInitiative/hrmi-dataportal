@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import { Box } from 'grommet';
+import { Box, ResponsiveContext } from 'grommet';
 
 import { PATHS } from 'containers/App/constants';
 import LayerInfo from 'containers/LayerInfo';
@@ -105,37 +105,44 @@ export function PathMetric({ match, intl, onMetricClick }) {
           </Box>
         </ContentMaxWidth>
       </ContentContainer>
-      <TabContainer
-        tabs={[
-          {
-            key: 'ChartContainerMetric',
-            title: intl.formatMessage(rootMessages.tabs.ChartContainerMetric),
-            content: props => (
-              <ChartContainerMetric
-                {...props}
-                metric={metric}
-                onCountryClick={code => setAboutCountry(code)}
-              />
-            ),
-          },
-          {
-            aside: true,
-            key: 'about',
-            title: intl.formatMessage(rootMessages.tabs.about),
-            content: props => (
-              <AboutMetricContainer
-                {...props}
-                metric={metric}
-                metricCode={metricCode}
-                ancestors={ancestors}
-                showFAQs
-                showRelated
-                showSources
-              />
-            ),
-          },
-        ]}
-      />
+      <ResponsiveContext.Consumer>
+        {size => (
+          <TabContainer
+            size={size}
+            tabs={[
+              {
+                key: 'ChartContainerMetric',
+                title: intl.formatMessage(
+                  rootMessages.tabs.ChartContainerMetric,
+                ),
+                content: props => (
+                  <ChartContainerMetric
+                    {...props}
+                    metric={metric}
+                    onCountryClick={code => setAboutCountry(code)}
+                  />
+                ),
+              },
+              {
+                aside: true,
+                key: 'about',
+                title: intl.formatMessage(rootMessages.tabs.about),
+                content: props => (
+                  <AboutMetricContainer
+                    {...props}
+                    metric={metric}
+                    metricCode={metricCode}
+                    ancestors={ancestors}
+                    showFAQs
+                    showRelated
+                    showSources
+                  />
+                ),
+              },
+            ]}
+          />
+        )}
+      </ResponsiveContext.Consumer>
     </ContentWrap>
   );
 }

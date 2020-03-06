@@ -30,7 +30,7 @@ export function SectionRights({
 }) {
   return (
     <SectionContainer>
-      <ContentMaxWidth maxWidth="medium" column>
+      <ContentMaxWidth column>
         <SectionTitle
           title={title || intl.formatMessage(messages.metrics.title)}
         />

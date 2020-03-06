@@ -32,7 +32,7 @@ export function SectionCountries({
 }) {
   return (
     <SectionContainer>
-      <ContentMaxWidth maxWidth="medium" column>
+      <ContentMaxWidth column>
         <SectionTitle
           title={title || intl.formatMessage(messages.countries.title)}
         />

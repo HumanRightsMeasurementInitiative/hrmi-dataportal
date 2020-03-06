@@ -82,7 +82,7 @@ export function PathHome({
         title="Explore rights"
       />
       <SectionContainer>
-        <ContentMaxWidth maxWidth="medium" column>
+        <ContentMaxWidth column>
           <Heading level={2}>Explore people at risk</Heading>
           <ButtonText onClick={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}>
             About Groups At Risk
@@ -90,7 +90,7 @@ export function PathHome({
         </ContentMaxWidth>
       </SectionContainer>
       <SectionContainer>
-        <ContentMaxWidth maxWidth="medium" column>
+        <ContentMaxWidth column>
           Section Other
           <ButtonText
             onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}

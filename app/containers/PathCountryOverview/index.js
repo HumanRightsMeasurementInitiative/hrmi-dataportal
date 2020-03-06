@@ -83,13 +83,13 @@ export function PathCountryOverview({
   return (
     <ContentWrap>
       <ContentContainer header background="light-1">
-        <ContentMaxWidth maxWidth="medium">
+        <ContentMaxWidth>
           <PageTitle level={2}>
             <FormattedMessage {...messages.title} />
           </PageTitle>
         </ContentMaxWidth>
       </ContentContainer>
-      <ContentMaxWidth maxWidth="medium">
+      <ContentMaxWidth>
         <Box direction="row" margin="0 auto" width="100%">
           <Box direction="column" flex style={{ position: 'relative' }}>
             <ColumnContent>

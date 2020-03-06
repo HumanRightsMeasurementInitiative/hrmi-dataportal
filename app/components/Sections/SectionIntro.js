@@ -52,7 +52,7 @@ export function SectionIntro() {
     <ResponsiveContext.Consumer>
       {size => (
         <SectionContainer pad={{ vertical: 'xlarge' }}>
-          <ContentMaxWidth maxWidth="medium" align="start">
+          <ContentMaxWidth align="start">
             <Box
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
               pad={{ right: 'xlarge' }}

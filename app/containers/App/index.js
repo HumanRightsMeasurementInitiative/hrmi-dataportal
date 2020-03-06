@@ -31,6 +31,8 @@ import CookieConsent from 'containers/CookieConsent';
 
 import headerMessages from 'containers/Header/messages';
 
+import { getHeaderHeight } from 'utils/responsive';
+
 import { PATHS } from './constants';
 import ScrollToTop from './ScrollToTop';
 
@@ -44,10 +46,13 @@ const AppWrapper = styled.div`
 
 const Main = styled.main`
   min-height: 100%;
-  padding-top: ${({ theme }) => theme.sizes.header.height}px;
+  padding-top: ${({ theme }) => getHeaderHeight('small', theme)}px;
   padding-bottom: 80px;
   &:focus {
     outline: none;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    height: ${({ theme }) => getHeaderHeight('medium', theme)}px;
   }
 `;
 // ${props => console.log(props.theme)}
