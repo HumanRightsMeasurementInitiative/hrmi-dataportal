@@ -25,7 +25,7 @@ export const SIZES = {
     },
   },
   aside: {
-    width: [0, 0, 280, 360, 440],
+    width: [0, 0, 320, 360, 360],
   },
   settings: {
     height: 90,
@@ -152,7 +152,7 @@ const theme = {
       },
       border: { light: '#E8EAE9' },
       'light-0': '#F8F8F8', // <<< lightest      empowerment: '#262064', // AA large
-      'light-1': '#F2F3F4', // <<< lightest      empowerment: '#262064', // AA large
+      'light-1': '#F0EFF5', // <<< lightest      empowerment: '#262064', // AA large
       'light-2': '#EFEFEF',
       'light-3': '#E8EAE9',
       'light-4': '#D7D9DB',

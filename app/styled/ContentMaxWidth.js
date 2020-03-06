@@ -13,22 +13,17 @@ const Styled = styled(Box)`
   max-width: ${({ theme }) => `${theme.sizes.containerMaxWidth}px` || '1600px'};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding-left: ${({ theme }) => theme.global.edgeSize.medium};
-    padding-right: ${({ theme }) => theme.global.edgeSize.medium};
+    padding-right: ${({ theme, hasAside }) => hasAside ? 0 : theme.global.edgeSize.medium};
   }
 `;
 
 export function ContentMaxWidth(props) {
-  return (
-    <Styled
-      direction={props.column ? 'column' : 'row'}
-      align={props.column ? 'start' : 'center'}
-      {...props}
-    />
-  );
+  return <Styled direction={props.column ? 'column' : 'row'} {...props} />;
 }
 
 ContentMaxWidth.propTypes = {
   column: PropTypes.bool,
+  hasAside: PropTypes.bool,
 };
 
 export default ContentMaxWidth;
