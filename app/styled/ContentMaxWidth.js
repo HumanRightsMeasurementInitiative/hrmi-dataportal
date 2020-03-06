@@ -12,7 +12,8 @@ const Styled = styled(Box)`
   padding: 0 ${({ theme }) => theme.global.edgeSize.small};
   max-width: ${({ theme }) => `${theme.sizes.containerMaxWidth}px` || '1600px'};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 0 ${({ theme }) => theme.global.edgeSize.medium};
+    padding-left: ${({ theme }) => theme.global.edgeSize.medium};
+    padding-right: ${({ theme }) => theme.global.edgeSize.medium};
   }
 `;
 

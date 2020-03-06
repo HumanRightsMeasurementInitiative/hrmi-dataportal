@@ -52,7 +52,7 @@ const Main = styled.main`
     outline: none;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    height: ${({ theme }) => getHeaderHeight('medium', theme)}px;
+    padding-top: ${({ theme }) => getHeaderHeight('medium', theme)}px;
   }
 `;
 // ${props => console.log(props.theme)}
