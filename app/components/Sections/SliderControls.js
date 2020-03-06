@@ -21,10 +21,37 @@ const ArrowWrapper = styled.div`
   opacity: 1;
   left: ${({ right }) => (right ? '100%' : 'auto')};
   right: ${({ left }) => (left ? '100%' : 'auto')};
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    background: rgba(255, 255, 255, 0.7);
-  }
   width: 9999px;
+`;
+const ArrowWrapperGradient = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 8;
+  opacity: 1;
+  left: ${({ right }) => (right ? '0' : 'auto')};
+  right: ${({ left }) => (left ? '0' : 'auto')};
+  width: ${({ theme }) => theme.global.edgeSize.xxlarge};
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, ${({ right }) => (right ? 0 : 1)}) 0%,
+      rgba(255, 255, 255, ${({ right }) => (right ? 1 : 0)}) 100%
+    );
+  }
+`;
+const ArrowWrapperFull = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 8;
+  opacity: 1;
+  left: ${({ right, theme }) => (right ? theme.global.edgeSize.xxlarge : '0')};
+  right: ${({ left, theme }) => (left ? theme.global.edgeSize.xxlarge : '0')};
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    background: rgb(255, 255, 255);
+  }
 `;
 // right: ${({ right }) => (right ? 0 : 'auto')};
 // left: ${({ left }) => (left ? 0 : 'auto')};
@@ -77,16 +104,22 @@ const SliderControls = ({ next, previous, carouselState }) => {
     <SliderControlsWrapper>
       {hasLeft && (
         <ArrowWrapper left>
-          <StyledButtonIcon left onClick={previous}>
-            <Previous />
-          </StyledButtonIcon>
+          <ArrowWrapperFull left />
+          <ArrowWrapperGradient left>
+            <StyledButtonIcon left onClick={previous}>
+              <Previous />
+            </StyledButtonIcon>
+          </ArrowWrapperGradient>
         </ArrowWrapper>
       )}
       {hasRight && (
         <ArrowWrapper right>
-          <StyledButtonIcon right onClick={next}>
-            <Next />
-          </StyledButtonIcon>
+          <ArrowWrapperFull right />
+          <ArrowWrapperGradient right>
+            <StyledButtonIcon right onClick={next}>
+              <Next />
+            </StyledButtonIcon>
+          </ArrowWrapperGradient>
         </ArrowWrapper>
       )}
     </SliderControlsWrapper>
