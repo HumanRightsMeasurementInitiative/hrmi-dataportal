@@ -8,7 +8,4 @@ export default styled.div`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     right: ${({ theme }) => theme.global.edgeSize.medium};
   }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    right: ${({ theme }) => theme.global.edgeSize.xlarge};
-  }
 `;
