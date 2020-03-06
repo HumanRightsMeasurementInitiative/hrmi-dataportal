@@ -56,9 +56,8 @@ export const getWindowDimensions = () => {
 
 export const getFloatingAsideWidth = (size, theme, { width }) => {
   const asideWidth = parseInt(getAsideWidth(size), 10);
-  const maxWidth = parseInt(theme.maxWidth, 10);
-  const padding = parseInt(theme.global.edgeSize.large, 10);
-  return asideWidth + padding + Math.max(0, (width - maxWidth) / 2);
+  const maxWidth = parseInt(theme.sizes.containerMaxWidth, 10);
+  return asideWidth + Math.max(0, (width - maxWidth) / 2);
 };
 
 export const getHeaderHeight = (size, theme) =>

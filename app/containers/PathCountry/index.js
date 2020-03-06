@@ -12,7 +12,8 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { Box, ResponsiveContext } from 'grommet';
+import { Box, ResponsiveContext, Image as GImage } from 'grommet';
+import { withTheme } from 'styled-components';
 
 import rootMessages from 'messages';
 
@@ -34,8 +35,9 @@ import {
   COUNTRY_FILTERS,
   PATHS,
   FAQS,
+  IMAGE_PATH,
 } from 'containers/App/constants';
-
+import saga from 'containers/App/saga';
 import TabContainer from 'containers/TabContainer';
 import AboutCountryContainer from 'containers/AboutCountryContainer';
 import AboutMetricContainer from 'containers/AboutMetricContainer';
@@ -45,17 +47,24 @@ import TabCountryReport from 'components/TabCountryReport';
 import TabCountrySnapshot from 'components/TabCountrySnapshot';
 import TabCountryPeople from 'components/TabCountryPeople';
 import HeaderLinks from 'components/HeaderLinks';
+import AsideBackground from 'components/AsideBackground';
+import Aside from 'components/Aside';
 
 import ContentWrap from 'styled/ContentWrap';
-import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
-import getMetricDetails from 'utils/metric-details';
+import ContentContainer from 'styled/ContentContainer';
+import MainColumn from 'styled/MainColumn';
 
+import getMetricDetails from 'utils/metric-details';
 import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
-import saga from 'containers/App/saga';
+import { isMinSize } from 'utils/responsive';
+//
+// const Image = styled.img`
+//   width: 100%;
+// `;
 
 const DEPENDENCIES = [
   'countries',
@@ -104,60 +113,69 @@ export function PathCountry({
     countryCode && rootMessages.countries[countryCode]
       ? intl.formatMessage(rootMessages.countries[countryCode])
       : countryCode;
+  // prettier-ignore
   return (
-    <ContentWrap>
-      <Helmet>
-        <title>{countryTitle}</title>
-        <meta name="description" content="Description of Country page" />
-      </Helmet>
-      {aboutMetric && (
-        <LayerInfo
-          content={
-            <AboutMetricContainer
-              metricCode={aboutMetric}
-              metric={getMetricDetails(aboutMetric)}
-              showTitle
-              showMetricLink
-              showSources
+    <ResponsiveContext.Consumer>
+      {size => (
+        <ContentWrap>
+          <Helmet>
+            <title>{countryTitle}</title>
+            <meta name="description" content="Description of Country page" />
+          </Helmet>
+          {aboutMetric && (
+            <LayerInfo
+              content={
+                <AboutMetricContainer
+                  metricCode={aboutMetric}
+                  metric={getMetricDetails(aboutMetric)}
+                  showTitle
+                  showMetricLink
+                  showSources
+                />
+              }
+              onClose={() => setAboutMetric(null)}
             />
-          }
-          onClose={() => setAboutMetric(null)}
-        />
-      )}
-      <ContentContainer direction="column" header>
-        <ContentMaxWidth>
-          <Box direction="column">
-            {country && incomeGroup && (
-              <HeaderLinks
-                onItemClick={(key, value) => onCategoryClick(key, value)}
-                items={[
-                  {
-                    key: 'all',
-                    label: intl.formatMessage(rootMessages.labels.allCountries),
-                  },
-                  {
-                    key: 'region',
-                    value: country.region_code,
-                    label: intl.formatMessage(
-                      rootMessages.regions[country.region_code],
-                    ),
-                  },
-                  {
-                    key: 'income',
-                    value: incomeGroup.key,
-                    label: intl.formatMessage(
-                      rootMessages.income[incomeGroup.key],
-                    ),
-                  },
-                ]}
-              />
-            )}
-            <PageTitle>{countryTitle}</PageTitle>
+          )}
+          <Box style={{ position: 'relative' }} height="280px">
+            {isMinSize(size, 'large') && <AsideBackground />}
+            <ContentContainer direction="column" header>
+              <ContentMaxWidth header height="280px" hasAside={isMinSize(size, 'large')}>
+                <MainColumn hasAside={isMinSize(size, 'large')} header>
+                  {country && incomeGroup && (
+                    <HeaderLinks
+                      onItemClick={(key, value) => onCategoryClick(key, value)}
+                      items={[
+                        {
+                          key: 'all',
+                          label: intl.formatMessage(rootMessages.labels.allCountries),
+                        },
+                        {
+                          key: 'region',
+                          value: country.region_code,
+                          label: intl.formatMessage(
+                            rootMessages.regions[country.region_code],
+                          ),
+                        },
+                        {
+                          key: 'income',
+                          value: incomeGroup.key,
+                          label: intl.formatMessage(
+                            rootMessages.income[incomeGroup.key],
+                          ),
+                        },
+                      ]}
+                    />
+                  )}
+                  <PageTitle>{countryTitle}</PageTitle>
+                </MainColumn>
+                {isMinSize(size, 'large') && (
+                  <Aside>
+                    <GImage src={`${IMAGE_PATH}/Quality-of-LIfe.jpg`} fit="cover" />
+                  </Aside>
+                )}
+              </ContentMaxWidth>
+            </ContentContainer>
           </Box>
-        </ContentMaxWidth>
-      </ContentContainer>
-      <ResponsiveContext.Consumer>
-        {size => (
           <TabContainer
             size={size}
             tabs={[
@@ -249,19 +267,19 @@ export function PathCountry({
                   let faqs = [];
                   if (
                     props &&
-                    (props.activeTab === 0 || props.activeTab === 'snapshot')
+                    (props.active === 0 || props.active === 'snapshot')
                   ) {
                     faqs = FAQS.COUNTRY_SNAPSHOT;
                   }
                   if (
                     props &&
-                    (props.activeTab === 1 || props.activeTab === 'esr-report')
+                    (props.active === 1 || props.active === 'esr-report')
                   ) {
                     faqs = FAQS.COUNTRY_ESR;
                   }
                   if (
                     props &&
-                    (props.activeTab === 2 || props.activeTab === 'cpr-report')
+                    (props.active === 2 || props.active === 'cpr-report')
                   ) {
                     faqs = FAQS.COUNTRY_CPR;
                   }
@@ -278,9 +296,9 @@ export function PathCountry({
               },
             ]}
           />
-        )}
-      </ResponsiveContext.Consumer>
-    </ContentWrap>
+        </ContentWrap>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 
@@ -289,7 +307,7 @@ PathCountry.propTypes = {
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
-  activeTab: PropTypes.number,
+  active: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   match: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -307,6 +325,7 @@ PathCountry.propTypes = {
   dataReady: PropTypes.bool,
   onRawChange: PropTypes.func,
   raw: PropTypes.bool,
+  theme: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -357,4 +376,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(PathCountry));
+export default compose(withConnect)(injectIntl(withTheme(PathCountry)));
