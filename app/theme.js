@@ -130,7 +130,7 @@ const theme = {
       small: '12px',
       medium: '16px',
       large: '20px',
-      xlarge: '24px',
+      xlarge: '40px',
     },
   },
   navTop: '60px',
