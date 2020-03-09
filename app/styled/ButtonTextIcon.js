@@ -12,7 +12,7 @@ const Styled = styled(Button)`
   }
 `;
 
-export function ButtonTextIcon({ onClick, icon, hasIcon, label, ...props }) {
+export function ButtonTextIcon({ icon, hasIcon, label, ...props }) {
   return (
     <Styled
       label={label}

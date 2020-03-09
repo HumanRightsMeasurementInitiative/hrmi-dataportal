@@ -171,14 +171,17 @@ const theme = {
       selected: 'brand',
       empowermentTrans: 'rgba(38, 32, 100, 0.3)', // AA
       empowerment: '#262262', // AA
+      empowermentLight: '#DFDFEF', // AA
       empowermentDark: '#262262', // AA
       empowermentCloud: '#262262', // AA
       physintTrans: 'rgba(108, 63, 153, 0.3)', // AA
       physint: '#6C3F99', // AA large
+      physintLight: '#E7DFEF', // AA large
       physintDark: '#6C3F99', // AA
       physintCloud: '#6C3F99', // AA
       esrTrans: 'rgba(39, 170, 225, 0.3)', // AA large
       esr: '#27AAE1', // AA large
+      esrLight: '#D9EBF2', // AA large
       esrDark: '#027AC0', // AA
       esrCloud: '#004f8f', // AA
       hover: '#6C3F99',

@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.Overview';
+export const scope = 'hrmi.containers.PathHome';
 
 export default defineMessages({
   title: {

@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
+import { Paragraph } from 'grommet';
 
 // styles
 import SectionContainer from 'styled/SectionContainer';
@@ -27,9 +28,11 @@ export function SectionRights({
   intl,
   title,
   allLink,
+  background,
+  description,
 }) {
   return (
-    <SectionContainer>
+    <SectionContainer background={background}>
       <ContentMaxWidth column>
         <SectionTitle
           title={title || intl.formatMessage(messages.metrics.title)}
@@ -53,6 +56,7 @@ export function SectionRights({
             </Card>
           ))}
         </Slider>
+        {description && <Paragraph>{description}</Paragraph>}
       </ContentMaxWidth>
     </SectionContainer>
   );
@@ -64,6 +68,8 @@ SectionRights.propTypes = {
   rights: PropTypes.array,
   onSelectRight: PropTypes.func,
   navAllRights: PropTypes.func,
+  background: PropTypes.string,
+  description: PropTypes.string,
   intl: intlShape.isRequired,
 };
 
