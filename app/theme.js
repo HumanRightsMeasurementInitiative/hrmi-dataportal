@@ -32,8 +32,9 @@ export const SIZES = {
     heightCollapsed: 40,
   },
   search: {
-    height: 32,
-    heightLarge: 44,
+    medium: 32,
+    large: 44,
+    xlarge: 56,
   },
 };
 
@@ -185,7 +186,9 @@ const theme = {
       metrics: '#7F59A6',
       people: '#BD5747',
       data: '#FFE6D0',
+      search: '#FFE6D0',
       graphicRed: '#EF4123',
+      buttonPrimary: '#7F59A6',
     },
     // margins & paddings
     edgeSize,

@@ -1,6 +1,6 @@
 /**
  *
- * Overview
+ * SectionDataCards
  *
  */
 
@@ -20,7 +20,7 @@ import Slider from './Slider';
 import CardData from './CardData';
 import messages from './messages';
 
-export function SectionData({
+export function SectionDataCards({
   noCountries = 0,
   noRights = 0,
   noGroups = 0,
@@ -34,7 +34,9 @@ export function SectionData({
       {size => (
         <SectionContainer background="data">
           <ContentMaxWidth column>
-            <SectionTitle title={intl.formatMessage(messages.data.title)} />
+            <SectionTitle
+              title={intl.formatMessage(messages.dataCards.title)}
+            />
             <Slider
               stretch
               cardMargin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
@@ -42,20 +44,20 @@ export function SectionData({
               <CardData
                 onCardClick={navCountries}
                 no={noCountries}
-                title={intl.formatMessage(messages.data.countries)}
-                teaser={intl.formatMessage(messages.data.countriesTeaser)}
+                title={intl.formatMessage(messages.dataCards.countries)}
+                teaser={intl.formatMessage(messages.dataCards.countriesTeaser)}
               />
               <CardData
                 onCardClick={navRights}
                 no={noRights}
-                title={intl.formatMessage(messages.data.metrics)}
-                teaser={intl.formatMessage(messages.data.metricsTeaser)}
+                title={intl.formatMessage(messages.dataCards.metrics)}
+                teaser={intl.formatMessage(messages.dataCards.metricsTeaser)}
               />
               <CardData
                 onCardClick={navGroups}
                 no={noGroups}
-                title={intl.formatMessage(messages.data.people)}
-                teaser={intl.formatMessage(messages.data.peopleTeaser)}
+                title={intl.formatMessage(messages.dataCards.people)}
+                teaser={intl.formatMessage(messages.dataCards.peopleTeaser)}
               />
             </Slider>
           </ContentMaxWidth>
@@ -65,7 +67,7 @@ export function SectionData({
   );
 }
 
-SectionData.propTypes = {
+SectionDataCards.propTypes = {
   noCountries: PropTypes.number,
   noRights: PropTypes.number,
   noGroups: PropTypes.number,
@@ -75,4 +77,4 @@ SectionData.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(SectionData);
+export default injectIntl(SectionDataCards);
