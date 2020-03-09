@@ -39,7 +39,7 @@ export function SectionOurData({ nav, intl }) {
             <ButtonTextIcon
               onClick={() => nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)}
               label={intl.formatMessage(messages.ourData.aboutLink)}
-              icon
+              hasIcon
             />
           </Box>
         </Box>

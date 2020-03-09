@@ -113,4 +113,10 @@ export default defineMessages({
       defaultMessage: 'Read more',
     },
   },
+  footer: {
+    contactLink: {
+      id: `${scope}.footer.contactLink`,
+      defaultMessage: 'Contact us',
+    },
+  },
 });
