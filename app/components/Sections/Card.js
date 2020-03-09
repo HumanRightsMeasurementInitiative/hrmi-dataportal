@@ -11,8 +11,9 @@ import styled from 'styled-components';
 
 const Image = styled.img`
   width: 100%;
-  max-height: 140px;
-  padding-top: ${({ pad, theme }) => (pad ? theme.global.edgeSize.small : 0)};
+  max-height: ${({ type }) => (type === 'icon' ? 140 : 120)}px;
+  padding-top: ${({ type, theme }) =>
+    type === 'icon' ? theme.global.edgeSize.small : 0};
 `;
 // prettier-ignore
 const StyledButton = styled(Button)`
@@ -42,10 +43,10 @@ export function Card({
   onCardClick,
   label,
   superLabel,
-  imageWhitespace,
   activeColor,
   minHeight,
   banner,
+  type,
   ...rest
 }) {
   let textHeight = 0;
@@ -65,9 +66,7 @@ export function Card({
     >
       <StyledButton onClick={onCardClick} fill plain activeColor={activeColor}>
         <Box>
-          {imageSrc && (
-            <Image src={imageSrc} alt={label} pad={imageWhitespace} />
-          )}
+          {imageSrc && <Image src={imageSrc} alt={label} type={type} />}
         </Box>
         <Box
           height={{ min: `${textHeight}px` }}
@@ -110,7 +109,7 @@ Card.propTypes = {
   superLabel: PropTypes.string,
   activeColor: PropTypes.string,
   minHeight: PropTypes.bool,
-  imageWhitespace: PropTypes.bool,
+  type: PropTypes.string,
 };
 
 export default Card;
