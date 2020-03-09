@@ -16,6 +16,7 @@ export function Card({ children, margin, onCardClick, ...rest }) {
       margin={margin || 'xsmall'}
       pad="none"
       align="start"
+      background="white"
       {...rest}
     >
       <Button onClick={onCardClick} fill plain>
