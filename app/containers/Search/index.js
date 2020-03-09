@@ -34,7 +34,7 @@ export function Search({
   margin,
   dark,
   stretch,
-  expand = true,
+  expand,
   size = 'medium',
   onToggle,
   float,
@@ -52,13 +52,15 @@ export function Search({
   const searchRef = useRef(null);
   const textInputRef = useRef(null);
   let width;
-  if (!expand) {
+  if (onToggle && !expand) {
     width = `${theme.sizes.search[size]}px`;
   }
+
+  console.log(expand, stretch, onToggle);
   return (
     <Box
       margin={margin ? { horizontal: 'medium' } : null}
-      width={expand && stretch ? '100%' : null}
+      width={(onToggle && expand) || stretch ? '100%' : null}
       style={{ minWidth: expand ? '400px' : 0 }}
     >
       <Box
@@ -72,12 +74,12 @@ export function Search({
         height={`${theme.sizes.search[size]}px`}
         width={width}
         pad={{
-          left: expand ? 'ms' : '0',
-          right: expand ? 'xsmall' : '0',
+          left: !onToggle || expand ? 'ms' : '0',
+          right: !onToggle || expand ? 'xsmall' : '0',
         }}
-        margin={{ left: !expand ? 'ms' : '0' }}
+        margin={{ left: onToggle ? 'ms' : '0' }}
       >
-        {!expand && (
+        {onToggle && !expand && (
           <Button
             plain
             onClick={() => {
@@ -88,7 +90,7 @@ export function Search({
             style={{ textAlign: 'center' }}
           />
         )}
-        {expand && (
+        {((onToggle && expand) || stretch) && (
           <>
             <StyledTextInput
               plain
@@ -107,7 +109,7 @@ export function Search({
             />
             {!onToggle && search.length <= 1 && (
               <Box
-                width={`${theme.sizes.search.height}px`}
+                width={`${theme.sizes.search[size]}px`}
                 margin={{ right: size === 'medium' ? 0 : 'xsmall' }}
               >
                 <SearchIcon size={size} />
@@ -124,8 +126,8 @@ export function Search({
                 icon={<Close size={size} />}
                 style={{
                   textAlign: 'center',
-                  height: `${theme.sizes.search.height}px`,
-                  width: `${theme.sizes.search.height}px`,
+                  height: `${theme.sizes.search[size]}px`,
+                  width: `${theme.sizes.search[size]}px`,
                   paddingRight: '5px',
                 }}
               />

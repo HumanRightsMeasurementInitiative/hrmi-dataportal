@@ -86,7 +86,7 @@ class NavTop extends React.Component {
                 <FormClose />
               </Button>
             )}
-            {(!search || search.length === 0) && <Search />}
+            {(!search || search.length === 0) && <Search stretch />}
           </Box>
           <Box pad={{ vertical: 'xsmall' }} flex={{ shrink: 0 }}>
             <StyledButtonIcon onClick={() => onClose()}>
