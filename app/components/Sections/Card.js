@@ -54,7 +54,7 @@ export function Card({
   }
   return (
     <Box
-      elevation="small"
+      elevation="medium"
       responsive={false}
       margin={margin || 'xsmall'}
       pad="none"

@@ -4,7 +4,7 @@ import Button from './Button';
 export default styled(Button)`
   color: ${({ theme }) => theme.global.colors.white};
   background-color: ${({ theme, subtle }) =>
-    theme.global.colors[subtle ? 'white' : 'dark']};
+    subtle ? 'transparent' : theme.global.colors.dark};
   border-radius: 100%;
   width: ${({ small }) => (small ? 30 : 50)}px;
   height: ${({ small }) => (small ? 30 : 50)}px;
@@ -13,11 +13,11 @@ export default styled(Button)`
   box-shadow: ${({ float }) => float ? '0 0 3px 1px rgba(0, 0, 0, 0.15)' : ''};
   &:hover{
     color: ${({ theme }) => theme.global.colors.white};
-    background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-2' : 'dark-1']};
+    background-color: ${({ theme, subtle }) => subtle ? 'transparent' : theme.global.colors['dark-1']};
   }
   &:active{
     color: ${({ theme }) => theme.global.colors.white};
-    background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-1' : 'dark']};
+    background-color: ${({ theme, subtle }) => subtle ? 'transparent' : theme.global.colors.dark};
   }
   &:visited{
     color: ${({ theme }) => theme.global.colors.white};
@@ -25,7 +25,7 @@ export default styled(Button)`
   }
   &:focus{
     color: ${({ theme }) => theme.global.colors.white};
-    background-color: ${({ theme, subtle }) => theme.global.colors[subtle ? 'light-1' : 'dark-1']};
+    background-color: ${({ theme, subtle }) => subtle ? 'transparent' : theme.global.colors['dark-1']};
     box-shadow: none;
     border-radius: 100%;
   }

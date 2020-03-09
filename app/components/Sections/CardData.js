@@ -25,7 +25,7 @@ export function CardData({ onCardClick, no = 0, title, teaser }) {
     <ResponsiveContext.Consumer>
       {size => (
         <Box
-          elevation="small"
+          elevation="medium"
           responsive={false}
           margin={{
             horizontal: isMaxSize(size, 'small') ? 'xsmall' : 'small',
