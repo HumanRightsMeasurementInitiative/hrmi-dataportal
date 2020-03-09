@@ -14,7 +14,7 @@ import { PATHS, PAGES, IMAGE_PATH } from 'containers/App/constants';
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-import ButtonPrimary from 'styled/ButtonPrimary';
+import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import { isMinSize } from 'utils/responsive';
 
@@ -31,7 +31,7 @@ export function SectionPeople({ nav, intl, theme }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer>
+        <SectionContainer pad={{ top: 'small', bottom: 'xxlarge' }}>
           <Box
             align="start"
             direction="row"
@@ -66,13 +66,14 @@ export function SectionPeople({ nav, intl, theme }) {
               justify="start"
             >
               <SectionTitle title={intl.formatMessage(messages.people.title)} />
-              <Paragraph size="large">
+              <Paragraph size="large" margin={{ bottom: 'medium' }}>
                 <FormattedMessage {...messages.people.teaser} />
               </Paragraph>
-              <Box direction="row" margin={{ top: 'large' }}>
-                <ButtonPrimary
+              <Box direction="row">
+                <ButtonTextIcon
                   onClick={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}
                   label={intl.formatMessage(messages.people.link)}
+                  hasIcon
                 />
               </Box>
             </Box>

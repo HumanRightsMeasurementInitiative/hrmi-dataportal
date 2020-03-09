@@ -8,10 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Heading } from 'grommet';
 
-export function SectionTitle({ title }) {
+export function SectionTitle({ title, level = 1 }) {
   return (
     <Heading
-      level={1}
+      level={level}
       margin={{ bottom: 'small', top: 'medium' }}
       style={{ fontWeight: 600 }}
     >
@@ -22,6 +22,7 @@ export function SectionTitle({ title }) {
 
 SectionTitle.propTypes = {
   title: PropTypes.string,
+  level: PropTypes.number,
 };
 
 export default SectionTitle;

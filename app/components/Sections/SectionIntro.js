@@ -81,8 +81,8 @@ export function SectionIntro({ theme }) {
                 <Box
                   basis="1/2"
                   style={{
-                    minHeight: '350px',
-                    maxHeight: '350px',
+                    minHeight: '400px',
+                    maxHeight: '400px',
                     overflow: 'hidden',
                     maxWidth: `${theme.sizes.imageHomeMaxWidth}px`,
                     position: 'relative',
@@ -98,7 +98,7 @@ export function SectionIntro({ theme }) {
           <ContentMaxWidth align="start" direction="row" stretch>
             <Box
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
-              pad={{ right: 'xlarge' }}
+              pad={{ right: isMinSize(size, 'large') ? 'xlarge' : 0 }}
               style={{ position: 'relative' }}
             >
               <GraphicWrap
@@ -120,7 +120,7 @@ export function SectionIntro({ theme }) {
                 <Claim>
                   <FormattedMessage {...rootMessages.app.claim} />
                 </Claim>
-                <Paragraph size="xlarge">
+                <Paragraph size="xlarge" margin={{ bottom: 'xlarge' }}>
                   <FormattedMessage {...messages.intro} />
                 </Paragraph>
                 <SearchWrapper>
