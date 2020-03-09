@@ -6,9 +6,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 
-import { COLUMNS } from 'containers/App/constants';
+import { COLUMNS, IMAGE_PATH } from 'containers/App/constants';
 
 // styles
 import SectionContainer from 'styled/SectionContainer';
@@ -29,7 +29,9 @@ export function SectionCountries({
   intl,
   title,
   allLink,
+  onCatClick,
 }) {
+  // prettier-ignore
   return (
     <SectionContainer>
       <ContentMaxWidth column>
@@ -51,12 +53,8 @@ export function SectionCountries({
                 return null;
               }
               const cats = country.featured.split(',');
-              const catLabels = cats.reduce(
-                (memo, cat) =>
-                  `${memo}${memo === '' ? '' : ', '}${intl.formatMessage(
-                    rootMessages.featured[cat],
-                  )}`,
-                '',
+              const catLabel = cats && intl.formatMessage(
+                rootMessages.featured[cats[0]]
               );
               return (
                 <Card
@@ -65,19 +63,24 @@ export function SectionCountries({
                   onCardClick={() =>
                     onSelectCountry(country[COLUMNS.COUNTRIES.CODE])
                   }
-                >
-                  {rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]] && (
-                    <FormattedMessage
-                      {...rootMessages.countries[
-                        country[COLUMNS.COUNTRIES.CODE]
-                      ]}
-                    />
-                  )}
-                  {!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]] && (
-                    <span>{country[COLUMNS.COUNTRIES.CODE]}</span>
-                  )}
-                  {` (${catLabels})`}
-                </Card>
+                  imageSrc={
+                    `${IMAGE_PATH}/${country[COLUMNS.COUNTRIES.CODE]}.jpg`
+                  }
+                  label={
+                    rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]
+                      ? intl.formatMessage(
+                        rootMessages.countries[
+                          country[COLUMNS.COUNTRIES.CODE]
+                        ],
+                      )
+                      : country[COLUMNS.COUNTRIES.CODE]
+                  }
+                  activeColor="countries"
+                  banner={{
+                    label: catLabel,
+                    onClick: () => onCatClick(cats[0]),
+                  }}
+                />
               );
             })}
           </Slider>
@@ -86,6 +89,7 @@ export function SectionCountries({
     </SectionContainer>
   );
 }
+// {` (${catLabels})`}
 
 SectionCountries.propTypes = {
   title: PropTypes.string,
@@ -93,6 +97,7 @@ SectionCountries.propTypes = {
   countries: PropTypes.array,
   onSelectCountry: PropTypes.func,
   navAllCountries: PropTypes.func,
+  onCatClick: PropTypes.func,
   intl: intlShape.isRequired,
 };
 

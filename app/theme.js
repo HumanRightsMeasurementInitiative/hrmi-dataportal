@@ -186,6 +186,8 @@ const theme = {
       esrCloud: '#004f8f', // AA
       hover: '#6C3F99',
       countries: '#0D6D64',
+      countriesLight: '#C9E0D4',
+      countriesLightRGBA: 'rgba(201, 224, 212, .85)',
       metrics: '#7F59A6',
       people: '#BD5747',
       data: '#FFE6D0',
