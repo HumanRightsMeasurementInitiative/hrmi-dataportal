@@ -11,7 +11,6 @@ import styled from 'styled-components';
 
 const Image = styled.img`
   width: 100%;
-  max-height: ${({ type }) => (type === 'icon' ? 140 : 120)}px;
   padding-top: ${({ type, theme }) =>
     type === 'icon' ? theme.global.edgeSize.small : 0};
 `;
@@ -65,7 +64,16 @@ export function Card({
       {...rest}
     >
       <StyledButton onClick={onCardClick} fill plain activeColor={activeColor}>
-        <Box>
+        <Box
+          style={{
+            minHeight: type === 'icon' ? '160px' : '150px',
+            maxHeight: type === 'icon' ? '160px' : '150px',
+            overflow: 'hidden',
+            position: 'relative',
+          }}
+          justify="start"
+          align="start"
+        >
           {imageSrc && <Image src={imageSrc} alt={label} type={type} />}
         </Box>
         <Box

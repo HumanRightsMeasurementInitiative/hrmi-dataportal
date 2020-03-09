@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200.159" height="200" viewBox="0 0 200.159 200">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #6c3f99;
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        opacity: 0.78;
+      }
+
+      .cls-3 {
+        fill: #27aae1;
+      }
+
+      .cls-4 {
+        fill: #262262;
+      }
+    </style>
+  </defs>
+  <g id="Group_6028" data-name="Group 6028" transform="translate(-717.841 -131)">
+    <rect id="Rectangle_3762" data-name="Rectangle 3762" class="cls-1" width="200" height="200" transform="translate(718 131)"/>
+    <g id="Group_5888" data-name="Group 5888" transform="translate(755.518 140.024)">
+      <rect id="Rectangle_3373" data-name="Rectangle 3373" class="cls-2" width="118.466" height="29.058" transform="translate(29.901 110.679) rotate(-45)"/>
+      <rect id="Rectangle_3383" data-name="Rectangle 3383" class="cls-2" width="118.466" height="29.058" transform="translate(0 83.768) rotate(-45)"/>
+      <rect id="Rectangle_3374" data-name="Rectangle 3374" class="cls-2" width="118.466" height="29.058" transform="translate(58.008 137.268) rotate(-45)"/>
+    </g>
+    <g id="Group_5889" data-name="Group 5889" transform="translate(717.841 131)">
+      <rect id="Rectangle_3373-2" data-name="Rectangle 3373" class="cls-3" width="118.466" height="29.058" transform="translate(29.901 110.679) rotate(-45)"/>
+      <rect id="Rectangle_3383-2" data-name="Rectangle 3383" class="cls-3" width="118.466" height="29.058" transform="translate(0 83.768) rotate(-45)"/>
+      <rect id="Rectangle_3374-2" data-name="Rectangle 3374" class="cls-3" width="118.466" height="29.058" transform="translate(58.008 137.268) rotate(-45)"/>
+    </g>
+    <g id="Group_5890" data-name="Group 5890" transform="translate(742.206 173.121)">
+      <rect id="Rectangle_3373-3" data-name="Rectangle 3373" class="cls-4" width="118.466" height="29.058" transform="translate(30.251 110.679) rotate(-45)"/>
+      <rect id="Rectangle_3383-3" data-name="Rectangle 3383" class="cls-4" width="118.466" height="29.058" transform="translate(0 83.768) rotate(-45)"/>
+      <rect id="Rectangle_3374-3" data-name="Rectangle 3374" class="cls-4" width="118.466" height="29.058" transform="translate(58.686 137.268) rotate(-45)"/>
+    </g>
+  </g>
+</svg>
