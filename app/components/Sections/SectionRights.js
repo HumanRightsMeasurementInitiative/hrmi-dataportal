@@ -30,6 +30,7 @@ export function SectionRights({
   allLink,
   background,
   description,
+  allCats,
 }) {
   return (
     <SectionContainer background={background}>
@@ -49,11 +50,16 @@ export function SectionRights({
               onCardClick={() => {
                 onSelectRight(r.key);
               }}
-            >
-              {`${intl.formatMessage(rootMessages.rights[r.key])} (${
-                r.dimension
-              })`}
-            </Card>
+              imageSrc={r.icon}
+              label={`${intl.formatMessage(rootMessages.rights[r.key])}`}
+              superLabel={
+                allCats &&
+                intl.formatMessage(rootMessages.dimensions[r.dimension])
+              }
+              imageWhitespace
+              activeColor={r.dimension}
+              minHeight={allCats}
+            />
           ))}
         </Slider>
         {description && <Paragraph>{description}</Paragraph>}
@@ -70,6 +76,7 @@ SectionRights.propTypes = {
   navAllRights: PropTypes.func,
   background: PropTypes.string,
   description: PropTypes.string,
+  allCats: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

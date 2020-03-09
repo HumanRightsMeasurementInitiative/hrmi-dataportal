@@ -22,7 +22,12 @@ import {
   selectCountry,
   selectMetric,
 } from 'containers/App/actions';
-import { RIGHTS, PATHS, PAGES } from 'containers/App/constants';
+import {
+  RIGHTS,
+  PATHS,
+  PAGES,
+  COUNTRY_FILTERS,
+} from 'containers/App/constants';
 import saga from 'containers/App/saga';
 
 import SectionRights from 'components/Sections/SectionRights';
@@ -49,6 +54,7 @@ export function PathHome({
   groups,
   onSelectMetric,
   onSelectCountry,
+  onSelectCountryCategory,
   locale,
 }) {
   useInjectSaga({ key: 'app', saga });
@@ -73,15 +79,13 @@ export function PathHome({
         countries={countriesFeatured}
         onSelectCountry={onSelectCountry}
         navAllCountries={() => nav(PATHS.COUNTRIES)}
-        labelAllCountries="Countries overview"
-        title="Featured countries"
+        onCatClick={cat => onSelectCountryCategory('featured', cat)}
       />
       <SectionRights
         rights={RIGHTS}
         onSelectRight={onSelectMetric}
         navAllRights={() => nav(PATHS.METRICS)}
-        labelAllRights="Rights overview"
-        title="Explore rights"
+        allCats
       />
       <SectionPeople nav={nav} />
       <SectionSearch />
@@ -100,6 +104,7 @@ PathHome.propTypes = {
   groups: PropTypes.array,
   onSelectMetric: PropTypes.func,
   onSelectCountry: PropTypes.func,
+  onSelectCountryCategory: PropTypes.func,
   locale: PropTypes.string,
 };
 
@@ -117,6 +122,25 @@ export function mapDispatchToProps(dispatch) {
     },
     onSelectCountry: country => dispatch(selectCountry(country)),
     onSelectMetric: metric => dispatch(selectMetric(metric)),
+    onSelectCountryCategory: (key, value) =>
+      dispatch(
+        navigate(
+          {
+            pathname: `/${PATHS.COUNTRIES}`,
+            search: `?${key}=${value}`,
+          },
+          {
+            replace: false,
+            deleteParams: COUNTRY_FILTERS,
+            multiple: true,
+            trackEvent: {
+              category: 'Data',
+              action: 'Country filter (Overview)',
+              value: `${key}/${value}`,
+            },
+          },
+        ),
+      ),
     // navigate to location
     nav: location => {
       dispatch(
