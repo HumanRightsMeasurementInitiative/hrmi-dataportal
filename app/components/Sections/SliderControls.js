@@ -14,8 +14,8 @@ import styled from 'styled-components';
 
 const ArrowWrapper = styled.div`
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: -10px;
+  bottom: -10px;
   transition: all 0.5s;
   z-index: 8;
   opacity: 1;
@@ -36,8 +36,8 @@ const ArrowWrapperGradient = styled.div`
     background: rgb(255, 255, 255);
     background: linear-gradient(
       90deg,
-      rgba(255, 255, 255, ${({ right }) => (right ? 0 : 1)}) 0%,
-      rgba(255, 255, 255, ${({ right }) => (right ? 1 : 0)}) 100%
+      rgba(255, 255, 255, ${({ right }) => (right ? 0.5 : 1)}) 0%,
+      rgba(255, 255, 255, ${({ right }) => (right ? 1 : 0.5)}) 100%
     );
   }
 `;
@@ -53,17 +53,6 @@ const ArrowWrapperFull = styled.div`
     background: rgb(255, 255, 255);
   }
 `;
-// right: ${({ right }) => (right ? 0 : 'auto')};
-// left: ${({ left }) => (left ? 0 : 'auto')};
-// const IconWrapper = styled.button`
-//   outline: 0;
-//   border: 0;
-//   cursor: pointer;
-//   background: ${({ theme }) => theme.global.colors.highlight};
-//   min-width: 46px;
-//   min-height: 46px;
-//   border-radius: 35px;
-// `;
 
 // prettier-ignore
 const StyledButtonIcon = styled(ButtonIcon)`
@@ -71,11 +60,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: ${({ theme, subtle }) =>
-    subtle ? 'transparent' : theme.global.colors.highlight};
   &:hover {
-    background: ${({ theme, subtle }) =>
-    theme.global.colors[subtle ? 'highlight' : 'highlight2']};
   }
   left: ${({ left }) => (left ? '100%' : 'auto')};
   right: ${({ right }) => (right ? '100%' : 'auto')};
@@ -92,7 +77,6 @@ const SliderControlsWrapper = styled.div`
   top: 0;
   bottom: 0;
   width: 100%;
-  pointer-events: none;
 `;
 
 const SliderControls = ({ next, previous, carouselState }) => {
@@ -106,8 +90,8 @@ const SliderControls = ({ next, previous, carouselState }) => {
         <ArrowWrapper left>
           <ArrowWrapperFull left />
           <ArrowWrapperGradient left>
-            <StyledButtonIcon left onClick={previous}>
-              <Previous />
+            <StyledButtonIcon left onClick={previous} subtle>
+              <Previous size="xlarge" color="black" />
             </StyledButtonIcon>
           </ArrowWrapperGradient>
         </ArrowWrapper>
@@ -116,8 +100,8 @@ const SliderControls = ({ next, previous, carouselState }) => {
         <ArrowWrapper right>
           <ArrowWrapperFull right />
           <ArrowWrapperGradient right>
-            <StyledButtonIcon right onClick={next}>
-              <Next />
+            <StyledButtonIcon right onClick={next} subtle>
+              <Next size="xlarge" color="black" />
             </StyledButtonIcon>
           </ArrowWrapperGradient>
         </ArrowWrapper>
