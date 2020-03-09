@@ -27,6 +27,8 @@
   "hrmi.containers.PathCountry.header": "How well {isPlural, select, true {are} false {is}} {countryWithArticle} respecting people's human rights?",
   "hrmi.containers.PathCountry.header2": "Use the tabs below to explore the scores.",
   "hrmi.containers.PathCountryOverview.title": "{no} countries",
+  "hrmi.containers.PathCountryOverview.header.d": "Compare how countries perform across the three human rights categories: {esrLink}, {physintLink} and {empowerLink}",
+  "hrmi.containers.PathCountryOverview.header.r": "Compare how countries perform across the {no} human rights of our three categories: {esrLink}, {physintLink} and {empowerLink}",
   "hrmi.containers.PathMetricOverview.title": "{no} human rights",
   "hrmi.containers.PathMetricOverview.header": "We currently track {no} internationally recognised human rights, in three categories: {esrLink}, {physintLink} and {empowerLink}. Scores are updated annually. Measurements for more rights are coming. ",
   "hrmi.containers.PathMetricOverview.sectionTitle": "{no} {category} rights",
