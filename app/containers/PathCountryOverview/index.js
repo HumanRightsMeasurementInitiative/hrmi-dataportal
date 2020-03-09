@@ -7,12 +7,12 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Box } from 'grommet';
+import { Box, Paragraph } from 'grommet';
 
-import { STANDARDS } from 'containers/App/constants';
+import { STANDARDS, RIGHTS } from 'containers/App/constants';
 
 import {
   getCountriesFiltered,
@@ -23,8 +23,9 @@ import {
   getAuxIndicatorsLatest,
   getFeaturedValues,
   getFeatured,
+  getScaleSearch,
 } from 'containers/App/selectors';
-import { loadDataIfNeeded } from 'containers/App/actions';
+import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 
 import OverviewCountries from 'containers/OverviewCountries';
 
@@ -34,11 +35,13 @@ import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import ColumnContent from 'styled/ColumnContent';
 import PageTitle from 'styled/PageTitle';
+import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import { filterByAssessment } from 'utils/filters';
 import { useInjectSaga } from 'utils/injectSaga';
 import saga from 'containers/App/saga';
 
+import rootMessages from 'messages';
 import messages from './messages';
 
 const DEPENDENCIES = [
@@ -61,6 +64,9 @@ export function PathCountryOverview({
   auxIndicators,
   featuredValues,
   featuredCountries,
+  scale,
+  intl,
+  onSelectMetric,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -79,14 +85,51 @@ export function PathCountryOverview({
       ),
     )
     : countries;
-
   return (
     <ContentWrap>
       <ContentContainer header background="light-1">
-        <ContentMaxWidth>
-          <PageTitle level={2}>
-            <FormattedMessage {...messages.title} />
+        <ContentMaxWidth column>
+          <PageTitle>
+            <FormattedMessage
+              {...messages.title}
+              values={{ no: filteredCountries.length }}
+            />
           </PageTitle>
+          {scale && (
+            <Paragraph>
+              <FormattedMessage
+                {...messages.header[scale]}
+                values={{
+                  no: RIGHTS.length,
+                  esrLink: (
+                    <ButtonTextIcon
+                      color="esrDark"
+                      label={intl.formatMessage(rootMessages.dimensions.esr)}
+                      onClick={() => onSelectMetric('esr')}
+                    />
+                  ),
+                  physintLink: (
+                    <ButtonTextIcon
+                      color="physintDark"
+                      label={intl.formatMessage(
+                        rootMessages.dimensions.physint,
+                      )}
+                      onClick={() => onSelectMetric('physint')}
+                    />
+                  ),
+                  empowerLink: (
+                    <ButtonTextIcon
+                      color="empowermentDark"
+                      label={intl.formatMessage(
+                        rootMessages.dimensions.empowerment,
+                      )}
+                      onClick={() => onSelectMetric('empowerment')}
+                    />
+                  ),
+                }}
+              />
+            </Paragraph>
+          )}
         </ContentMaxWidth>
       </ContentContainer>
       <ContentMaxWidth>
@@ -117,8 +160,11 @@ PathCountryOverview.propTypes = {
   dataReady: PropTypes.bool,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  onSelectMetric: PropTypes.func,
+  intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -127,6 +173,7 @@ const mapStateToProps = createStructuredSelector({
   scoresAllCountries: state => getScoresByCountry(state),
   standard: state => getStandardSearch(state),
   assessed: state => getAssessedSearch(state),
+  scale: state => getScaleSearch(state),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   featuredValues: state => getFeaturedValues(state),
   featuredCountries: state => getFeatured(state),
@@ -136,6 +183,7 @@ export function mapDispatchToProps(dispatch) {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
+    onSelectMetric: metric => dispatch(selectMetric(metric)),
   };
 }
 
@@ -144,4 +192,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(PathCountryOverview);
+export default compose(withConnect)(injectIntl(PathCountryOverview));
