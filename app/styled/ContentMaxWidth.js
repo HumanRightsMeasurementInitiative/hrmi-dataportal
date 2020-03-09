@@ -15,6 +15,10 @@ const Styled = styled(Box)`
     padding-left: ${({ theme }) => theme.global.edgeSize.medium};
     padding-right: ${({ theme, hasAside }) => hasAside ? 0 : theme.global.edgeSize.medium};
   }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    padding-left: ${({ theme }) => theme.global.edgeSize.xlarge};
+    padding-right: ${({ theme, hasAside }) => hasAside ? 0 : theme.global.edgeSize.xlarge};
+  }
 `;
 
 export function ContentMaxWidth(props) {

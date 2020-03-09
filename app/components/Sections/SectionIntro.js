@@ -51,9 +51,10 @@ const Claim = styled(Heading)`
 `;
 
 const images = [
-  `${IMAGE_PATH}/Quality-of-LIfe.jpg`,
-  `${IMAGE_PATH}/Empowerment.jpg`,
-  `${IMAGE_PATH}/Safety-from-the-State-1.jpg`,
+  `${IMAGE_PATH}/Header-Ethiopian-girl-768x510.jpg`,
+  `${IMAGE_PATH}/Header-Kazakh-768x576.jpg`,
+  `${IMAGE_PATH}/Header-Cambodian-boy-768x513.jpg`,
+  `${IMAGE_PATH}/Header-boy-stripes-768x512.jpg`,
 ];
 
 export function SectionIntro({ theme }) {
@@ -80,8 +81,8 @@ export function SectionIntro({ theme }) {
                 <Box
                   basis="1/2"
                   style={{
-                    minHeight: '300px',
-                    maxHeight: '300px',
+                    minHeight: '350px',
+                    maxHeight: '350px',
                     overflow: 'hidden',
                     maxWidth: `${theme.sizes.imageHomeMaxWidth}px`,
                     position: 'relative',
@@ -142,8 +143,8 @@ export function SectionIntro({ theme }) {
               <Box
                 basis="1/2"
                 style={{
-                  minHeight: '300px',
-                  maxHeight: '300px',
+                  minHeight: '350px',
+                  maxHeight: '350px',
                   overflow: 'hidden',
                   position: 'relative',
                 }}
