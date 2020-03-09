@@ -105,10 +105,6 @@ Card.propTypes = {
   banner: PropTypes.object,
   onCardClick: PropTypes.func,
   margin: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
   imageSrc: PropTypes.string,
   label: PropTypes.string,
   superLabel: PropTypes.string,

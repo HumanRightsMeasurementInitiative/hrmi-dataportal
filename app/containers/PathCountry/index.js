@@ -119,7 +119,6 @@ export function PathCountry({
       ? intl.formatMessage(rootMessages.countries[countryCode])
       : countryCode;
   // prettier-ignore
-  console.log(getMessageGrammar(intl, countryCode, null, countryGrammar))
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -188,7 +187,7 @@ export function PathCountry({
                   </Paragraph>
                 </MainColumn>
                 {isMinSize(size, 'large') && (
-                  <Aside>
+                  <Aside image>
                     <GImage
                       src={`${IMAGE_PATH}/${countryCode}.jpg`}
                       fit="cover"

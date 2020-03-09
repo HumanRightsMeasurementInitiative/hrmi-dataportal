@@ -139,7 +139,7 @@ export function PathMetric({ match, intl, onMetricClick, nav }) {
                   )}
                 </MainColumn>
                 {isMinSize(size, 'large') && (
-                  <Aside>
+                  <Aside image>
                     <GImage src={`${IMAGE_PATH}/Empowerment.jpg`} fit="cover" />
                   </Aside>
                 )}

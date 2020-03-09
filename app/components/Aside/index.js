@@ -1,31 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, ResponsiveContext } from 'grommet';
-
+import styled from 'styled-components';
 import { getAsideWidth } from 'utils/responsive';
 
-function Aside({ content, active, children }) {
+// prettier-ignore
+const Styled = styled(Box)`
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding-right: ${({ theme, image }) =>
+    image ? 0 : theme.global.edgeSize.medium};
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    padding-right: ${({ theme, image }) =>
+    image ? 0 : theme.global.edgeSize.xlarge};
+  }
+`;
+
+function Aside({ content, image, active, children }) {
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box
+        <Styled
           width={getAsideWidth(size)}
           direction="column"
           flex={{ shrink: 0 }}
           fill="vertical"
+          image={image}
         >
           {content
             ? content.content({ active })
             : children
           }
-        </Box>
+        </Styled>
       )}
     </ResponsiveContext.Consumer>
   );
 }
 
 Aside.propTypes = {
+  image: PropTypes.bool,
   content: PropTypes.object,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
