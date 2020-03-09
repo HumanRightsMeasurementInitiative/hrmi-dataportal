@@ -39,8 +39,8 @@ export const SIZES = {
 };
 
 export const CARD_WIDTH = {
-  min: 200,
-  max: 250,
+  min: 220,
+  max: 300,
 };
 
 // theme defining breakpoints, colors, sizes, grid gutters
@@ -84,7 +84,7 @@ export const BREAKPOINTS = {
 };
 
 const text = {
-  xxxlarge: { size: '55px', height: '75px', maxWidth: '700px' },
+  xxxlarge: { size: '60px', height: '75px', maxWidth: '700px' },
   xxlarge: { size: '30px', height: '36px', maxWidth: '700px' },
   xlarge: { size: '22px', height: '30px', maxWidth: '700px' },
   large: { size: '18px', height: '24px', maxWidth: '700px' },

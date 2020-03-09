@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: #f7e5be;
+      }
+
+      .cls-3 {
+        fill: #efb432;
+        opacity: 0.678;
+      }
+
+      .cls-4 {
+        fill: #ea553c;
+        opacity: 0.643;
+      }
+    </style>
+  </defs>
+  <g id="Group_6026" data-name="Group 6026" transform="translate(-704 -107)">
+    <g id="Group_6025" data-name="Group 6025">
+      <rect id="Rectangle_3764" data-name="Rectangle 3764" class="cls-1" width="200" height="200" transform="translate(704 107)"/>
+    </g>
+    <g id="Group_6022" data-name="Group 6022" transform="translate(0 5.921)">
+      <circle id="Ellipse_388" data-name="Ellipse 388" class="cls-2" cx="67.224" cy="67.224" r="67.224" transform="translate(704.165 127.075)"/>
+      <circle id="Ellipse_1581" data-name="Ellipse 1581" class="cls-3" cx="55.093" cy="55.093" r="55.093" transform="translate(792.98 101.079)"/>
+      <circle id="Ellipse_1582" data-name="Ellipse 1582" class="cls-4" cx="42.095" cy="42.095" r="42.095" transform="translate(743.688 215.127)"/>
+    </g>
+  </g>
+</svg>

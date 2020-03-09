@@ -46,18 +46,21 @@ export function SectionDataCards({
                 no={noCountries}
                 title={intl.formatMessage(messages.dataCards.countries)}
                 teaser={intl.formatMessage(messages.dataCards.countriesTeaser)}
+                subject="countries"
               />
               <CardData
                 onCardClick={navRights}
                 no={noRights}
                 title={intl.formatMessage(messages.dataCards.metrics)}
                 teaser={intl.formatMessage(messages.dataCards.metricsTeaser)}
+                subject="metrics"
               />
               <CardData
                 onCardClick={navGroups}
                 no={noGroups}
                 title={intl.formatMessage(messages.dataCards.people)}
                 teaser={intl.formatMessage(messages.dataCards.peopleTeaser)}
+                subject="people"
               />
             </Slider>
           </ContentMaxWidth>
