@@ -134,6 +134,19 @@ export const PATHS = {
   COUNTRY: 'country',
   PAGE: 'page',
 };
+export const IMAGE_PATH =
+  '//humanrightsmeasurement.org/wp-content/uploads/2020/03';
+
+export const XPATHS = {
+  contact: {
+    en: '//humanrightsmeasurement.org/about-hrmi/contact-hrmi/',
+    fr: '//humanrightsmeasurement.org/fr/a-propos-de-hrmi/contactez-hrmi/',
+    es: '//humanrightsmeasurement.org/es/sobre-hrmi/contactar-con-hrmi/',
+    pt:
+      '//humanrightsmeasurement.org/pt-pt/about-hrmi/entre-em-contato-com-hrmi/',
+  },
+};
+
 export const FAQS = {
   COUNTRY_SNAPSHOT: ['scale', 'year', 'benchmarks', 'standards'],
   COUNTRY_ESR: ['benchmarks', 'standards'],
@@ -700,6 +713,3 @@ export const INDICATORS = [
 
 export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';
 export const GA_PROPERTY_ID = 'UA-103815452-2';
-
-export const IMAGE_PATH =
-  '//humanrightsmeasurement.org/wp-content/uploads/2020/03';
