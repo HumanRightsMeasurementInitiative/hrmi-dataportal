@@ -80,6 +80,7 @@ export function SectionCountries({
                     label: catLabel,
                     onClick: () => onCatClick(cats[0]),
                   }}
+                  type="photos"
                 />
               );
             })}
