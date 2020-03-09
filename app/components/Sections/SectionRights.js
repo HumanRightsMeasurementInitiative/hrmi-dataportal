@@ -59,6 +59,7 @@ export function SectionRights({
               imageWhitespace
               activeColor={r.dimension}
               minHeight={allCats}
+              type="icon"
             />
           ))}
         </Slider>
