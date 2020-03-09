@@ -14,6 +14,7 @@ import {
   getCountries,
   getCountriesFeaturedOnly,
   getPeopleAtRiskGroups,
+  getLocale,
 } from 'containers/App/selectors';
 import {
   loadDataIfNeeded,
@@ -31,6 +32,7 @@ import SectionDataCards from 'components/Sections/SectionDataCards';
 import SectionCountries from 'components/Sections/SectionCountries';
 import SectionSearch from 'components/Sections/SectionSearch';
 import SectionPeople from 'components/Sections/SectionPeople';
+import SectionFooter from 'components/Sections/SectionFooter';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
@@ -47,6 +49,7 @@ export function PathHome({
   groups,
   onSelectMetric,
   onSelectCountry,
+  locale,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -83,6 +86,7 @@ export function PathHome({
       <SectionPeople nav={nav} />
       <SectionSearch />
       <SectionOurData nav={nav} />
+      <SectionFooter locale={locale} nav={nav} />
     </ContentWrap>
   );
 }
@@ -96,12 +100,14 @@ PathHome.propTypes = {
   groups: PropTypes.array,
   onSelectMetric: PropTypes.func,
   onSelectCountry: PropTypes.func,
+  locale: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
   countriesFeatured: state => getCountriesFeaturedOnly(state),
   countries: state => getCountries(state),
   groups: state => getPeopleAtRiskGroups(state),
+  locale: state => getLocale(state),
 });
 
 export function mapDispatchToProps(dispatch) {

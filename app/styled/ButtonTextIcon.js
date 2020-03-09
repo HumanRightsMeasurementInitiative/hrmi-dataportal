@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from 'grommet';
-import { FormNext } from 'grommet-icons';
+import { Next } from 'grommet-icons';
 
 // prettier-ignore
 const Styled = styled(Button)`
@@ -12,24 +12,26 @@ const Styled = styled(Button)`
   }
 `;
 
-export function ButtonTextIcon({ onClick, icon, label }) {
+export function ButtonTextIcon({ onClick, icon, hasIcon, label, ...props }) {
   return (
     <Styled
       label={label}
       a11Title={label}
       onClick={onClick}
-      icon={icon && <FormNext />}
+      icon={icon || (hasIcon && <Next color="dark" />)}
       plain
       reverse
-      gap="xxsmall"
+      gap="xsmall"
       fill={false}
+      {...props}
     />
   );
 }
 
 ButtonTextIcon.propTypes = {
   onClick: PropTypes.func.isRequired,
-  icon: PropTypes.bool,
+  icon: PropTypes.node,
+  hasIcon: PropTypes.bool,
   label: PropTypes.string,
 };
 

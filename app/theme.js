@@ -189,6 +189,7 @@ const theme = {
       search: '#FFE6D0',
       graphicRed: '#EF4123',
       buttonPrimary: '#7F59A6',
+      footer: '#423E86',
     },
     // margins & paddings
     edgeSize,
