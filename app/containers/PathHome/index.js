@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Heading } from 'grommet';
 
 import {
   getCountries,
@@ -27,14 +26,14 @@ import saga from 'containers/App/saga';
 
 import SectionRights from 'components/Sections/SectionRights';
 import SectionIntro from 'components/Sections/SectionIntro';
-import SectionData from 'components/Sections/SectionData';
+import SectionOurData from 'components/Sections/SectionOurData';
+import SectionDataCards from 'components/Sections/SectionDataCards';
 import SectionCountries from 'components/Sections/SectionCountries';
+import SectionSearch from 'components/Sections/SectionSearch';
+import SectionPeople from 'components/Sections/SectionPeople';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
-import SectionContainer from 'styled/SectionContainer';
-import ContentMaxWidth from 'styled/ContentMaxWidth';
-import ButtonText from 'styled/ButtonText';
 
 import { useInjectSaga } from 'utils/injectSaga';
 
@@ -59,7 +58,7 @@ export function PathHome({
   return (
     <ContentWrap>
       <SectionIntro />
-      <SectionData
+      <SectionDataCards
         noCountries={countries ? countries.length : 0}
         noRights={RIGHTS.length}
         noGroups={groups ? groups.length : 0}
@@ -81,32 +80,9 @@ export function PathHome({
         labelAllRights="Rights overview"
         title="Explore rights"
       />
-      <SectionContainer>
-        <ContentMaxWidth column>
-          <Heading level={2}>Explore people at risk</Heading>
-          <ButtonText onClick={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}>
-            About Groups At Risk
-          </ButtonText>
-        </ContentMaxWidth>
-      </SectionContainer>
-      <SectionContainer>
-        <ContentMaxWidth column>
-          Section Other
-          <ButtonText
-            onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}
-          >
-            Download Data
-          </ButtonText>
-          <ButtonText
-            onClick={() => nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)}
-          >
-            About our methodology
-          </ButtonText>
-          <ButtonText onClick={() => nav(`${PATHS.PAGE}/${PAGES.about.key}`)}>
-            About HRMI
-          </ButtonText>
-        </ContentMaxWidth>
-      </SectionContainer>
+      <SectionPeople nav={nav} />
+      <SectionSearch />
+      <SectionOurData nav={nav} />
     </ContentWrap>
   );
 }

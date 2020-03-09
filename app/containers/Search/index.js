@@ -35,10 +35,11 @@ export function Search({
   dark,
   stretch,
   expand = true,
-  large,
+  size = 'medium',
   onToggle,
   float,
   theme,
+  placeholder,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -52,7 +53,7 @@ export function Search({
   const textInputRef = useRef(null);
   let width;
   if (!expand) {
-    width = `${theme.sizes.search[large ? 'heightLarge' : 'height']}px`;
+    width = `${theme.sizes.search[size]}px`;
   }
   return (
     <Box
@@ -62,15 +63,18 @@ export function Search({
     >
       <Box
         elevation={float && 'medium'}
-        background="dark"
+        background={dark ? 'dark' : 'white'}
         direction="row"
         align="center"
         round="xlarge"
         ref={searchRef}
         style={stretch ? null : { maxWidth: '500px' }}
-        height={`${theme.sizes.search[large ? 'heightLarge' : 'height']}px`}
+        height={`${theme.sizes.search[size]}px`}
         width={width}
-        pad={{ left: expand ? 'ms' : '0' }}
+        pad={{
+          left: expand ? 'ms' : '0',
+          right: expand ? 'xsmall' : '0',
+        }}
         margin={{ left: !expand ? 'ms' : '0' }}
       >
         {!expand && (
@@ -80,7 +84,7 @@ export function Search({
               onToggle();
             }}
             fill
-            icon={<SearchIcon size={large ? 'large' : 'medium'} />}
+            icon={<SearchIcon size={size} />}
             style={{ textAlign: 'center' }}
           />
         )}
@@ -95,16 +99,18 @@ export function Search({
                   setSearch(evt.target.value);
                 }
               }}
-              placeholder={intl.formatMessage(messages.allSearch)}
+              placeholder={
+                placeholder || intl.formatMessage(messages.allSearch)
+              }
               dark={dark}
               ref={textInputRef}
             />
             {!onToggle && search.length <= 1 && (
               <Box
                 width={`${theme.sizes.search.height}px`}
-                margin={{ right: large ? 'xsmall' : 0 }}
+                margin={{ right: size === 'medium' ? 0 : 'xsmall' }}
               >
-                <SearchIcon size={large ? 'large' : 'medium'} />
+                <SearchIcon size={size} />
               </Box>
             )}
             {(onToggle || search.length > 1) && (
@@ -115,7 +121,7 @@ export function Search({
                   setSearch('');
                   onToggle();
                 }}
-                icon={<Close size="medium" />}
+                icon={<Close size={size} />}
                 style={{
                   textAlign: 'center',
                   height: `${theme.sizes.search.height}px`,
@@ -149,8 +155,9 @@ Search.propTypes = {
   stretch: PropTypes.bool,
   expand: PropTypes.bool,
   float: PropTypes.bool,
-  large: PropTypes.bool,
+  size: PropTypes.string,
   theme: PropTypes.object,
+  placeholder: PropTypes.string,
 };
 
 const mapDispatchToProps = dispatch => ({

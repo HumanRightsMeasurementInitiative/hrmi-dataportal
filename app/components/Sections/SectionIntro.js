@@ -81,7 +81,7 @@ export function SectionIntro({ theme }) {
                   basis="1/2"
                   style={{
                     minHeight: '300px',
-                    maxHeight: '200px',
+                    maxHeight: '300px',
                     overflow: 'hidden',
                     maxWidth: `${theme.sizes.imageHomeMaxWidth}px`,
                     position: 'relative',
@@ -123,7 +123,7 @@ export function SectionIntro({ theme }) {
                   <FormattedMessage {...messages.intro} />
                 </Paragraph>
                 <SearchWrapper>
-                  <Search dark stretch large float />
+                  <Search dark stretch size="large" float />
                 </SearchWrapper>
               </div>
             </Box>
@@ -143,7 +143,7 @@ export function SectionIntro({ theme }) {
                 basis="1/2"
                 style={{
                   minHeight: '300px',
-                  maxHeight: '200px',
+                  maxHeight: '300px',
                   overflow: 'hidden',
                   position: 'relative',
                 }}
