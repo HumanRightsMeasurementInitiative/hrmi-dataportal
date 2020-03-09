@@ -56,7 +56,6 @@ export function Search({
     width = `${theme.sizes.search[size]}px`;
   }
 
-  console.log(expand, stretch, onToggle);
   return (
     <Box
       margin={margin ? { horizontal: 'medium' } : null}

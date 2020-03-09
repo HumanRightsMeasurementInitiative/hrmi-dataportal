@@ -12,7 +12,7 @@ const HeaderCategories = styled(Box)`
 const CategoryLink = styled(Button)`
   padding: 0 3px;
   padding-left: ${({ firstChild }) => (firstChild ? 0 : 3)}px;
-  color: ${({ theme }) => theme.global.colors['dark-3']};
+  color: ${({ theme }) => theme.global.colors.dark};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0 6px;
     padding-left: ${({ firstChild }) => (firstChild ? 2 : 6)}px;
@@ -44,7 +44,7 @@ function HeaderLinks({ items, onItemClick, breadcrumb }) {
             {item.label}
           </CategoryLink>
           {!breadcrumb && index < list.length - 1 && <SepWrap>|</SepWrap>}
-          {breadcrumb && (
+          {breadcrumb && index < list.length - 1 && (
             <IconWrap>
               <FormNext />
             </IconWrap>

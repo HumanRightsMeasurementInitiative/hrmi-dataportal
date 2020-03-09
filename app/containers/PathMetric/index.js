@@ -8,14 +8,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import { Box, ResponsiveContext, Image as GImage } from 'grommet';
+import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
 
 import { navigate } from 'containers/App/actions';
 import { getCloseTargetMetric } from 'containers/App/selectors';
-import { PATHS, IMAGE_PATH } from 'containers/App/constants';
+import { PATHS, IMAGE_PATH, PAGES } from 'containers/App/constants';
 import LayerInfo from 'containers/LayerInfo';
 import ChartContainerMetric from 'containers/ChartContainerMetric';
 import TabContainer from 'containers/TabContainer';
@@ -31,12 +31,15 @@ import MainColumn from 'styled/MainColumn';
 import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
-import rootMessages from 'messages';
+import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import getMetricDetails from 'utils/metric-details';
 import { isMinSize } from 'utils/responsive';
 
-export function PathMetric({ match, intl, onMetricClick }) {
+import rootMessages from 'messages';
+import messages from './messages';
+
+export function PathMetric({ match, intl, onMetricClick, nav }) {
   const [aboutCountry, setAboutCountry] = useState(null);
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
@@ -68,9 +71,6 @@ export function PathMetric({ match, intl, onMetricClick }) {
       key: metric.right,
     });
   }
-  // onCategoryClick={(key, value) => {
-  //   onAddFilter(key, value);
-  // }}
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -113,6 +113,30 @@ export function PathMetric({ match, intl, onMetricClick }) {
                     }))}
                   />
                   <PageTitle>{metricTitle}</PageTitle>
+                  {metric.metricType !== 'indicators' && (
+                    <>
+                      <Paragraph>
+                        <FormattedMessage
+                          {...messages[metric.metricType][metricCode].header}
+                        />
+                      </Paragraph>
+                      <Paragraph>
+                        <FormattedMessage
+                          {...messages[metric.metricType][metricCode].header2}
+                        />
+                      </Paragraph>
+                      <Paragraph>
+                        <ButtonTextIcon
+                          label={intl.formatMessage(
+                            messages[metric.metricType][metricCode].link,
+                          )}
+                          onClick={() =>
+                            nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)
+                          }
+                        />
+                      </Paragraph>
+                    </>
+                  )}
                 </MainColumn>
                 {isMinSize(size, 'large') && (
                   <Aside>
@@ -165,7 +189,7 @@ export function PathMetric({ match, intl, onMetricClick }) {
 PathMetric.propTypes = {
   intl: intlShape.isRequired,
   onMetricClick: PropTypes.func,
-  // onAddFilter: PropTypes.func,
+  nav: PropTypes.func,
   match: PropTypes.object,
 };
 
@@ -191,21 +215,18 @@ export function mapDispatchToProps(dispatch) {
           },
         ),
       ),
-    // onAddFilter: (key, value) =>
-    //   dispatch(
-    //     navigate(
-    //       { search: `?${key}=${value}` },
-    //       {
-    //         replace: false,
-    //         multiple: true,
-    //         trackEvent: {
-    //           category: 'Data',
-    //           action: 'Country filter (Metric)',
-    //           value: `${key}/${value}`,
-    //         },
-    //       },
-    //     ),
-    //   ),
+    nav: location => {
+      dispatch(
+        navigate(location, {
+          keepTab: true,
+          trackEvent: {
+            category: 'Content',
+            action: 'Header: navigate',
+            value: typeof location === 'object' ? location.pathname : location,
+          },
+        }),
+      );
+    },
   };
 }
 

@@ -10,9 +10,9 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
-import { Box, ResponsiveContext, Image as GImage } from 'grommet';
+import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
 import { withTheme } from 'styled-components';
 
 import rootMessages from 'messages';
@@ -26,12 +26,13 @@ import {
   getPeopleAtRiskForCountry,
   getDependenciesReady,
   getESRIndicators,
+  getCountryGrammar,
 } from 'containers/App/selectors';
 
 import { loadDataIfNeeded, navigate, trackEvent } from 'containers/App/actions';
 
 import {
-  INCOME_GROUPS,
+  // INCOME_GROUPS,
   COUNTRY_FILTERS,
   PATHS,
   FAQS,
@@ -57,14 +58,17 @@ import ContentContainer from 'styled/ContentContainer';
 import MainColumn from 'styled/MainColumn';
 
 import getMetricDetails from 'utils/metric-details';
-import quasiEquals from 'utils/quasi-equals';
+// import quasiEquals from 'utils/quasi-equals';
 import { hasCPR } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
 import { isMinSize } from 'utils/responsive';
+import { getMessageGrammar } from 'utils/narrative';
 //
 // const Image = styled.img`
 //   width: 100%;
 // `;
+
+import messages from './messages';
 
 const DEPENDENCIES = [
   'countries',
@@ -89,6 +93,7 @@ export function PathCountry({
   standard,
   dataReady,
   allIndicators,
+  countryGrammar,
 }) {
   const [aboutMetric, setAboutMetric] = useState(null);
 
@@ -101,11 +106,11 @@ export function PathCountry({
 
   const countryCode = match.params.country;
 
-  const incomeGroup =
-    country &&
-    INCOME_GROUPS.values.find(g =>
-      quasiEquals(g.value, country.high_income_country),
-    );
+  // const incomeGroup =
+  //   country &&
+  //   INCOME_GROUPS.values.find(g =>
+  //     quasiEquals(g.value, country.high_income_country),
+  //   );
   if (!rootMessages.countries[countryCode]) {
     console.log('Country code not in language files:', countryCode);
   }
@@ -114,6 +119,7 @@ export function PathCountry({
       ? intl.formatMessage(rootMessages.countries[countryCode])
       : countryCode;
   // prettier-ignore
+  console.log(getMessageGrammar(intl, countryCode, null, countryGrammar))
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -139,38 +145,54 @@ export function PathCountry({
           <Box style={{ position: 'relative' }} height="280px">
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>
-              <ContentMaxWidth header height="280px" hasAside={isMinSize(size, 'large')}>
+              <ContentMaxWidth
+                header
+                height="280px"
+                hasAside={isMinSize(size, 'large')}
+              >
                 <MainColumn hasAside={isMinSize(size, 'large')} header>
-                  {country && incomeGroup && (
-                    <HeaderLinks
-                      onItemClick={(key, value) => onCategoryClick(key, value)}
-                      items={[
-                        {
-                          key: 'all',
-                          label: intl.formatMessage(rootMessages.labels.allCountries),
-                        },
-                        {
-                          key: 'region',
-                          value: country.region_code,
-                          label: intl.formatMessage(
-                            rootMessages.regions[country.region_code],
-                          ),
-                        },
-                        {
-                          key: 'income',
-                          value: incomeGroup.key,
-                          label: intl.formatMessage(
-                            rootMessages.income[incomeGroup.key],
-                          ),
-                        },
-                      ]}
-                    />
-                  )}
+                  <HeaderLinks
+                    onItemClick={(key, value) => onCategoryClick(key, value)}
+                    breadcrumb
+                    items={[
+                      {
+                        key: 'all',
+                        label: intl.formatMessage(
+                          rootMessages.labels.allCountries,
+                        ),
+                      },
+                    ]}
+                  />
                   <PageTitle>{countryTitle}</PageTitle>
+                  <Paragraph>
+                    <FormattedMessage
+                      {...messages.header}
+                      values={getMessageGrammar(
+                        intl,
+                        countryCode,
+                        null,
+                        countryGrammar,
+                      )}
+                    />
+                  </Paragraph>
+                  <Paragraph>
+                    <FormattedMessage
+                      {...messages.header2}
+                      values={getMessageGrammar(
+                        intl,
+                        countryCode,
+                        null,
+                        countryGrammar,
+                      )}
+                    />
+                  </Paragraph>
                 </MainColumn>
                 {isMinSize(size, 'large') && (
                   <Aside>
-                    <GImage src={`${IMAGE_PATH}/Quality-of-LIfe.jpg`} fit="cover" />
+                    <GImage
+                      src={`${IMAGE_PATH}/Quality-of-LIfe.jpg`}
+                      fit="cover"
+                    />
                   </Aside>
                 )}
               </ContentMaxWidth>
@@ -340,6 +362,8 @@ const mapStateToProps = createStructuredSelector({
   atRisk: (state, { match }) => getPeopleAtRiskForCountry(state, match.params),
   standard: state => getStandardSearch(state),
   allIndicators: state => getESRIndicators(state),
+  countryGrammar: (state, { countryCode }) =>
+    getCountryGrammar(state, countryCode),
 });
 
 export function mapDispatchToProps(dispatch) {
