@@ -17,19 +17,17 @@ export function ButtonTextIcon({ onClick, icon, hasIcon, label, ...props }) {
     <Styled
       label={label}
       a11Title={label}
-      onClick={onClick}
       icon={icon || (hasIcon && <Next color="dark" />)}
       plain
       reverse
       gap="xsmall"
-      fill={false}
       {...props}
     />
   );
 }
 
 ButtonTextIcon.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   icon: PropTypes.node,
   hasIcon: PropTypes.bool,
   label: PropTypes.string,
