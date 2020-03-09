@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Next, Previous } from 'grommet-icons';
-import ButtonIcon from 'styled/ButtonIcon';
+import Button from 'styled/Button';
 
 import styled from 'styled-components';
 
@@ -22,29 +22,15 @@ const ArrowWrapper = styled.div`
   left: ${({ right }) => (right ? '100%' : 'auto')};
   right: ${({ left }) => (left ? '100%' : 'auto')};
   width: 9999px;
+  pointer-events: all;
 `;
-const ArrowWrapperGradient = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 8;
-  opacity: 1;
-  left: ${({ right }) => (right ? '0' : 'auto')};
-  right: ${({ left }) => (left ? '0' : 'auto')};
-  width: ${({ theme }) => theme.global.edgeSize.xxlarge};
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    background: rgb(255, 255, 255);
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, ${({ right }) => (right ? 0.5 : 1)}) 0%,
-      rgba(255, 255, 255, ${({ right }) => (right ? 1 : 0.5)}) 100%
-    );
-  }
-`;
+
 const ArrowWrapperFull = styled.div`
   position: absolute;
   top: 0;
   bottom: 0;
+  right: 0;
+  left: 0;
   z-index: 8;
   opacity: 1;
   left: ${({ right, theme }) => (right ? theme.global.edgeSize.xxlarge : '0')};
@@ -55,22 +41,34 @@ const ArrowWrapperFull = styled.div`
 `;
 
 // prettier-ignore
-const StyledButtonIcon = styled(ButtonIcon)`
+const StyledButtonIcon = styled(Button)`
   pointer-events: all;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  &:hover {
-  }
-  left: ${({ left }) => (left ? '100%' : 'auto')};
-  right: ${({ right }) => (right ? '100%' : 'auto')};
+  top: 0;
+  bottom: 0;
+  left: ${({ right }) => (right ? 0 : 'auto')};
+  right: ${({ left }) => (left ? 0 : 'auto')};
+  width: ${({ theme }) => theme.global.edgeSize.xxlarge};
+  text-align: ${({ left }) => (left ? 'right' : 'left')};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    left: ${({ right }) => (right ? '3px' : 'auto')};
-    right: ${({ left }) => (left ? '3px' : 'auto')};
+    background: rgb(255, 255, 255);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, ${({ right }) => (right ? 0.5 : 1)}) 0%,
+      rgba(255, 255, 255, ${({ right }) => (right ? 1 : 0.5)}) 100%
+    );
+    &:hover {
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, ${({ right }) => (right ? 0.75 : 1)}) 0%,
+        rgba(255, 255, 255, ${({ right }) => (right ? 1 : 0.75)}) 100%
+      );
+    }
   }
 `;
 
 const SliderControlsWrapper = styled.div`
+  pointer-events: none;
   position: absolute;
   left: 0;
   right: 0;
@@ -89,21 +87,17 @@ const SliderControls = ({ next, previous, carouselState }) => {
       {hasLeft && (
         <ArrowWrapper left>
           <ArrowWrapperFull left />
-          <ArrowWrapperGradient left>
-            <StyledButtonIcon left onClick={previous} subtle>
-              <Previous size="xlarge" color="black" />
-            </StyledButtonIcon>
-          </ArrowWrapperGradient>
+          <StyledButtonIcon left onClick={previous} subtle>
+            <Previous size="xlarge" color="black" />
+          </StyledButtonIcon>
         </ArrowWrapper>
       )}
       {hasRight && (
         <ArrowWrapper right>
           <ArrowWrapperFull right />
-          <ArrowWrapperGradient right>
-            <StyledButtonIcon right onClick={next} subtle>
-              <Next size="xlarge" color="black" />
-            </StyledButtonIcon>
-          </ArrowWrapperGradient>
+          <StyledButtonIcon right onClick={next} subtle>
+            <Next size="xlarge" color="black" />
+          </StyledButtonIcon>
         </ArrowWrapper>
       )}
     </SliderControlsWrapper>

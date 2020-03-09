@@ -1,5 +1,5 @@
 export const SIZES = {
-  containerMaxWidth: 1200,
+  containerMaxWidth: 1328,
   // containerMaxWidth / 2 + edgesize.xxlarge
   imageHomeMaxWidth: 700,
   header: {
@@ -25,7 +25,7 @@ export const SIZES = {
     },
   },
   aside: {
-    width: [0, 0, 320, 360, 360],
+    width: [0, 0, 360, 420, 420],
   },
   settings: {
     height: 90,
@@ -102,7 +102,7 @@ const edgeSize = {
   medium: '24px',
   ml: '36px',
   large: '48px',
-  xlarge: '72px',
+  xlarge: '64px',
   xxlarge: '100px',
 };
 
