@@ -18,12 +18,7 @@ function SettingsMultiToggle({
   defaultColor,
 }) {
   return (
-    <Box
-      pad={{ vertical: 'small' }}
-      direction="column"
-      flex={{ shrink: 0 }}
-      responsive={false}
-    >
+    <Box direction="column" flex={{ shrink: 0 }} responsive={false}>
       <Box direction="row" align="center">
         <Box pad={{ vertical: 'small' }} direction="row">
           <Text size="small" style={{ fontWeight: 600 }}>

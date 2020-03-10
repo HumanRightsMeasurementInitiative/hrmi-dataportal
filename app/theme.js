@@ -197,6 +197,8 @@ const theme = {
       footer: '#423E86',
       female: '#EE5A45',
       male: '#0D6D64',
+      femaleTrans: 'rgba(238, 90, 69, 0.3)',
+      maleTrans: 'rgba(13, 109, 100, 0.3)',
     },
     // margins & paddings
     edgeSize,
