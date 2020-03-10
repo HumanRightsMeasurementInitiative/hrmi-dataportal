@@ -68,6 +68,7 @@ function HTRBarESR({ contxt, intl }) {
                     refValues: [{ value: 100, style: 'solid', key: 'best' }],
                   }}
                   showLabels
+                  hasBackground
                 />
                 <AnnotateBetterWorse absolute />
               </Box>
