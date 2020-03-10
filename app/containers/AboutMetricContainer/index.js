@@ -132,12 +132,6 @@ export function AboutMetricContainer({
 
   return (
     <Box direction="column">
-      <AboutMetric
-        metric={metric}
-        metricInfo={metricInfo}
-        standard={standard}
-        showTitle={showTitle}
-      />
       <Box
         direction="column"
         pad={{ vertical: 'medium', horizontal: 'medium' }}
@@ -245,6 +239,18 @@ export function AboutMetricContainer({
             )}
           </Pad>
         )}
+      </Box>
+      <AboutMetric
+        metric={metric}
+        metricInfo={metricInfo}
+        standard={standard}
+        showTitle={showTitle}
+      />
+      <Box
+        direction="column"
+        pad={{ vertical: 'small', horizontal: 'medium' }}
+        justify="start"
+      >
         {showFAQs && (
           <FAQs
             questions={questions}

@@ -80,4 +80,12 @@ export default defineMessages({
     id: `${scope}.income`,
     defaultMessage: 'Income group',
   },
+  more: {
+    id: `${scope}.more`,
+    defaultMessage: 'Show country categories',
+  },
+  less: {
+    id: `${scope}.less`,
+    defaultMessage: 'Hide country categories',
+  },
 });
