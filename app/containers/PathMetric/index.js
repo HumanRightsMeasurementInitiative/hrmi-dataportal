@@ -163,7 +163,7 @@ export function PathMetric({ match, intl, onMetricClick, nav }) {
                   howToReadConfig: {
                     contxt: 'PathMetric',
                     charts: [metric.type === 'cpr' ? 'Bullet' : 'Bar'],
-                    data: metric.color,
+                    dimension: metric.color,
                   },
                   settingsConfig: (metric.type === 'esr' ||
                     metric.metricType === 'indicators') && {
