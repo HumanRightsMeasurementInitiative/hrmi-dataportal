@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { Box, ResponsiveContext } from 'grommet';
 import {
   FlexibleWidthXYPlot,
@@ -35,7 +35,7 @@ import WrapPlot from 'styled/WrapPlot';
 import rootMessages from 'messages';
 
 const PlotHint = styled.div`
-  color: ${({ color }) => color};
+  color: ${({ color, theme }) => theme.global.colors[color]};
   background: ${({ theme }) => theme.global.colors.white};
   padding: 5px 10px;
   margin-bottom: 10px;
@@ -46,10 +46,7 @@ const PlotHint = styled.div`
   white-space: nowrap;
 `;
 
-const Settings = styled(Box)`
-  background: ${({ theme }) => theme.global.colors['light-0']};
-  min-height: 80px;
-`;
+const Settings = styled(Box)``;
 
 const isEven = n => n % 2 === 0;
 const isOdd = n => Math.abs(n % 2) === 1;
@@ -137,6 +134,7 @@ function ChartCountryMetricTrend({
   metric,
   onGroupToggle,
   groupsActive,
+  theme,
 }) {
   const [highlight, setHighlight] = useState(false);
   const [highlightFemale, setHighlightFemale] = useState(false);
@@ -383,7 +381,7 @@ function ChartCountryMetricTrend({
                   fill={
                     metric.metricType === 'indicators'
                       ? 'white'
-                      : PEOPLE_GROUPS[1].color
+                      : theme.global.colors[PEOPLE_GROUPS[1].color]
                   }
                   onNearestX={(point, { index }) =>
                     setHighlightFemale({ point, index })
@@ -401,7 +399,7 @@ function ChartCountryMetricTrend({
                   fill={
                     metric.metricType === 'indicators'
                       ? 'white'
-                      : PEOPLE_GROUPS[2].color
+                      : theme.global.colors[PEOPLE_GROUPS[2].color]
                   }
                   onNearestX={(point, { index }) =>
                     setHighlightMale({ point, index })
@@ -426,10 +424,10 @@ function ChartCountryMetricTrend({
                   data={scoresFemaleRawAvailable}
                   size={3}
                   style={{
-                    stroke: PEOPLE_GROUPS[1].color,
+                    stroke: theme.global.colors[PEOPLE_GROUPS[1].color],
                     strokeWidth: 1,
                   }}
-                  fill={PEOPLE_GROUPS[1].color}
+                  fill={theme.global.colors[PEOPLE_GROUPS[1].color]}
                 />
               )}
               {groupsMale && scoresMaleRawAvailable && (
@@ -438,10 +436,10 @@ function ChartCountryMetricTrend({
                   data={scoresMaleRawAvailable}
                   size={3}
                   style={{
-                    stroke: PEOPLE_GROUPS[2].color,
+                    stroke: theme.global.colors[PEOPLE_GROUPS[2].color],
                     strokeWidth: 1,
                   }}
-                  fill={PEOPLE_GROUPS[2].color}
+                  fill={theme.global.colors[PEOPLE_GROUPS[2].color]}
                 />
               )}
               {highlight && highlight.point && (
@@ -496,7 +494,7 @@ function ChartCountryMetricTrend({
               direction="row"
               justify="end"
               pad="xsmall"
-              margin={{ vertical: 'small' }}
+              margin={{ bottom: 'small' }}
             >
               {hasGroupOption && (
                 <Box
@@ -565,6 +563,7 @@ ChartCountryMetricTrend.propTypes = {
   onRawChange: PropTypes.func,
   onGroupToggle: PropTypes.func,
   groupsActive: PropTypes.array,
+  theme: PropTypes.object,
 };
 
-export default ChartCountryMetricTrend;
+export default withTheme(ChartCountryMetricTrend);

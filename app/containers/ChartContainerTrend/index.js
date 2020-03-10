@@ -176,9 +176,7 @@ export function ChartContainerTrend({
       standard={standard}
       benchmark={benchmark}
       metric={metric}
-      hasRawOption={
-        isESR && metric.metricType === 'indicators'
-      }
+      hasRawOption={false}
       raw={raw}
       onRawChange={onRawChange}
       groupsActive={activeGroups}
