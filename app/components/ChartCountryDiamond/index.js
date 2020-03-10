@@ -36,8 +36,10 @@ const Button = styled(ButtonPlain)`
   @media (min-width: 520px) {
     margin: 0;
   }
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   &:hover {
     text-decoration: underline;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
   }
 `;
 const CountryLabel = styled.span`
@@ -115,29 +117,7 @@ const getDimensionValue = (dim, scores, standard, benchmark) => {
   }
   return false;
 };
-// const getTooltip = (standard, country, intl) => {
-//   if (country.high_income_country === '1' && standard.key === 'core') {
-//     return (
-//       <Tooltip
-//         icon={<StyledEmergency size="small" />}
-//         text={intl.formatMessage(messages.hiForCore)}
-//         insideButton
-//         maxWidth="150px"
-//       />
-//     );
-//   }
-//   if (country.high_income_country === '0' && standard.key === 'hi') {
-//     return (
-//       <Tooltip
-//         icon={<StyledEmergency size="small" />}
-//         text={intl.formatMessage(messages.loForHi)}
-//         insideButton
-//         maxWidth="150px"
-//       />
-//     );
-//   }
-//   return null;
-// };
+
 const getDimensions = (
   scores,
   standard,
@@ -230,8 +210,8 @@ export function ChartCountryDiamond({
     <ResponsiveContext.Consumer>
       {size => (
         <Box
-          pad="none"
-          basis={isMinSize(size, 'large') ? '250px' : '280px'}
+          pad="small"
+          basis={isMinSize(size, 'large') ? '240px' : '280px'}
           alignContent="center"
         >
           {country && (

@@ -9,7 +9,6 @@ const Styled = styled(Box)`
   min-height: ${({ header }) => (header ? 0 : '100vh')};
   padding-right: ${({ hasAside, theme }) =>
     hasAside ? theme.global.edgeSize.xlarge : 0};
-  overflow-x: hidden;
   padding-bottom: ${props => (props.header ? '40px' : 0)};
   padding-top: ${({ header }) => {
     if (header) {

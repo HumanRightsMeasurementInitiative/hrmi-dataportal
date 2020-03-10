@@ -32,7 +32,7 @@ const SepWrap = styled.span`
   }
 `;
 
-function HeaderLinks({ items, onItemClick, breadcrumb }) {
+function Breadcrumb({ items, onItemClick, breadcrumb }) {
   return (
     <HeaderCategories direction="row" wrap>
       {items.map((item, index, list) => (
@@ -44,7 +44,7 @@ function HeaderLinks({ items, onItemClick, breadcrumb }) {
             {item.label}
           </CategoryLink>
           {!breadcrumb && index < list.length - 1 && <SepWrap>|</SepWrap>}
-          {breadcrumb && index < list.length - 1 && (
+          {breadcrumb && (
             <IconWrap>
               <FormNext />
             </IconWrap>
@@ -55,10 +55,10 @@ function HeaderLinks({ items, onItemClick, breadcrumb }) {
   );
 }
 
-HeaderLinks.propTypes = {
+Breadcrumb.propTypes = {
   items: PropTypes.array,
   onItemClick: PropTypes.func,
   breadcrumb: PropTypes.bool,
 };
 
-export default HeaderLinks;
+export default Breadcrumb;
