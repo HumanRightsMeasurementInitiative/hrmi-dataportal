@@ -53,6 +53,7 @@ export function ListHeader({
   annotateBetter = true,
   hasAside = false,
 }) {
+  const annotateBenchmark = metric && metric.type === 'esr';
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -85,17 +86,19 @@ export function ListHeader({
                 <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
                   0
                 </Text>
-                <Text
-                  size="xsmall"
+                <Box
                   margin={{ left: 'auto' }}
+                  pad={annotateBenchmark && { left: 'xsmall' }}
                   style={{
-                    transform: !hasAside && 'translateX(100%)',
+                    transform: 'translateX(100%)',
                   }}
                 >
-                  {metric.type === 'esr' || metric.metricType === 'indicators'
-                    ? '100%'
-                    : '10'}
-                </Text>
+                  <Text size="xsmall">
+                    {metric.type === 'esr' || metric.metricType === 'indicators'
+                      ? '100%'
+                      : '10'}
+                  </Text>
+                </Box>
               </>
             )}
             {annotateBetter && (
@@ -103,7 +106,7 @@ export function ListHeader({
                 <AnnotateBetter />
               </WrapAnnotateBetter>
             )}
-            {metric && metric.type === 'esr' && (
+            {annotateBenchmark && (
               <AnnotateBenchmark
                 benchmarkKey={benchmark}
                 above

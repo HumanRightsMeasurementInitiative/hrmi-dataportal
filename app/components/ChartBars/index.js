@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box } from 'grommet';
+import { Box, Text, ResponsiveContext } from 'grommet';
 // import { COLUMNS } from 'containers/App/constants';
 
 // import AnnotateBetter from 'components/AnnotateBetterWorse';
+import formatScoreMax from 'utils/format-score-max';
+import { isMinSize } from 'utils/responsive';
 
 import BarWrapper from './BarWrapper';
 import Grades from './Grades';
@@ -17,6 +19,47 @@ const Styled = styled(Box)`
 const WrapInnerChart = styled(Box)`
   position: relative;
 `;
+const SummaryWrap = styled(Box)`
+  position: absolute;
+  left: 0;
+  top: -18px;
+  bottom: -3px;
+  right: 0;
+  pointer-events: none;
+`;
+const DimensionScoreWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  border-left: 1px solid black;
+  left: ${({ score }) => {
+    if (score) {
+      if (score.maxValue === 100) {
+        return score.score;
+      }
+      return (score.score / score.maxValue) * 100;
+    }
+    return 0;
+  }}%;
+`;
+const DimensionScore = styled.div`
+  position: absolute;
+  bottom: 100%;
+  transform: translateX(-50%);
+  padding: 1px 8px;
+  text-align: center;
+  background-color: ${({ color, theme }) => theme.global.colors[color]};
+  border-radius: 99999px;
+`;
+
+const getScoreAsideWidth = (size, hasAside = false) => {
+  if (hasAside) {
+    return isMinSize(size, 'medium') ? '80px' : '60px';
+  }
+  return 0;
+};
 
 function ChartBars({
   data,
@@ -34,46 +77,89 @@ function ChartBars({
   annotateBetter = true,
   scoreOnHover,
   scoresAside,
+  summaryScore,
 }) {
   if (!data) return null;
   return (
-    <Styled
-      pad={{
-        top: 'small',
-        bottom: padVertical || 'medium',
-      }}
-      direction="column"
-      fill="horizontal"
-    >
-      {(commonLabel || listHeader) && (
-        <ListHeader
-          metric={metric}
-          benchmark={currentBenchmark && currentBenchmark.key}
-          commonLabel={commonLabel}
-          labelColor={labelColor}
-          annotateBetter={!grades && annotateBetter}
-          hasAside={scoresAside}
-        />
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Styled
+          pad={{
+            top: 'ms',
+            bottom: padVertical || 'medium',
+          }}
+          direction="column"
+          fill="horizontal"
+        >
+          {(commonLabel || listHeader) && (
+            <ListHeader
+              metric={metric}
+              benchmark={currentBenchmark && currentBenchmark.key}
+              commonLabel={commonLabel}
+              labelColor={labelColor}
+              annotateBetter={!grades && annotateBetter}
+              hasAside={scoresAside}
+            />
+          )}
+          <WrapInnerChart>
+            {grades && (
+              <Grades
+                grades={grades}
+                labels={gradeLabels}
+                hasAside={scoresAside}
+              />
+            )}
+            {data.map(d => (
+              <BarWrapper
+                key={d.key}
+                score={d}
+                bullet={bullet}
+                allowWordBreak={allowWordBreak}
+                labelColor={labelColor}
+                hasBackground={!grades}
+                level={level}
+                scoreOnHover={scoreOnHover}
+                scoresAside={scoresAside}
+                summaryScore={summaryScore}
+              />
+            ))}
+            {summaryScore && (
+              <SummaryWrap direction="row">
+                <Box
+                  width={isMinSize(size, 'medium') ? '180px' : '160px'}
+                  flex={{ shrink: 0 }}
+                />
+                <Box
+                  flex
+                  direction="row"
+                  style={{ position: 'relative' }}
+                  align="center"
+                >
+                  <DimensionScoreWrapper score={summaryScore}>
+                    <DimensionScore color={labelColor}>
+                      <Text weight="600" size="medium" color="white">
+                        {formatScoreMax(
+                          summaryScore.score,
+                          summaryScore.maxValue,
+                          1,
+                          false,
+                        )}
+                      </Text>
+                    </DimensionScore>
+                  </DimensionScoreWrapper>
+                </Box>
+                {scoresAside && (
+                  <Box
+                    width={getScoreAsideWidth(size, true)}
+                    flex={{ shrink: 0 }}
+                  />
+                )}
+              </SummaryWrap>
+            )}
+          </WrapInnerChart>
+        </Styled>
       )}
-      <WrapInnerChart>
-        {grades && (
-          <Grades grades={grades} labels={gradeLabels} hasAside={scoresAside} />
-        )}
-        {data.map(d => (
-          <BarWrapper
-            key={d.key}
-            score={d}
-            bullet={bullet}
-            allowWordBreak={allowWordBreak}
-            labelColor={labelColor}
-            hasBackground={!grades}
-            level={level}
-            scoreOnHover={scoreOnHover}
-            scoresAside={scoresAside}
-          />
-        ))}
-      </WrapInnerChart>
-    </Styled>
+    </ResponsiveContext.Consumer>
   );
 }
 // metric={metric}
@@ -96,6 +182,7 @@ ChartBars.propTypes = {
   grades: PropTypes.array,
   gradeLabels: PropTypes.bool,
   level: PropTypes.number,
+  summaryScore: PropTypes.object,
   // standard: PropTypes.string,
 };
 
