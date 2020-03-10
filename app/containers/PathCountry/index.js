@@ -52,7 +52,7 @@ import LayerInfo from 'containers/LayerInfo';
 import TabCountryReport from 'components/TabCountryReport';
 import TabCountrySnapshot from 'components/TabCountrySnapshot';
 import TabCountryPeople from 'components/TabCountryPeople';
-import HeaderLinks from 'components/HeaderLinks';
+import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
 import Aside from 'components/Aside';
 
@@ -156,7 +156,7 @@ export function PathCountry({
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
-                  <HeaderLinks
+                  <Breadcrumb
                     onItemClick={(key, value) => onCategoryClick(key, value)}
                     breadcrumb
                     items={[
