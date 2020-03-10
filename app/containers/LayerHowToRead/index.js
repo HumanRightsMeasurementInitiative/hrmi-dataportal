@@ -78,8 +78,8 @@ function LayerHowToRead({ layer, theme, onClose }) {
               <FormattedMessage {...messages.label} />
             </Heading>
             <ButtonWrap>
-              <ButtonIcon onClick={() => onClose()}>
-                <CloseIcon size="xlarge" color="white" />
+              <ButtonIcon onClick={() => onClose()} subtle>
+                <CloseIcon size="xlarge" color="dark" />
               </ButtonIcon>
             </ButtonWrap>
             {charts &&
