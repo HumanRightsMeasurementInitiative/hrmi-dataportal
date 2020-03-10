@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import { Heading, ResponsiveContext, Box } from 'grommet';
 import styled from 'styled-components';
 
-import ChartTools from 'containers/ChartTools';
 import ChartSettingFilters from 'components/ChartSettingFilters';
 import ChartSettingSort from 'components/ChartSettingSort';
 
@@ -19,24 +18,9 @@ const Styled = styled.div`
   margin-top: 60px;
   margin-bottom: 40px;
 `;
-const Top = styled.div`
-  position: relative;
-  border-bottom: 1px solid;
-  border-color: ${({ theme }) => theme.global.colors['light-4']};
-`;
-const ChartToolWrapper = styled.div`
-  position: absolute;
-  top: 4px;
-  right: 0px;
-  text-align: right;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    /* position: absolute;
-    right: ${({ theme }) => theme.global.edgeSize.medium};
-    top: 0; */
-  }
-`;
+const Top = styled.div``;
 
-export function ChartHeader({ title, tools, filter, sort }) {
+export function ChartHeader({ title, filter, sort }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -45,14 +29,6 @@ export function ChartHeader({ title, tools, filter, sort }) {
             <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
               {title}
             </Heading>
-            {tools && (
-              <ChartToolWrapper>
-                <ChartTools
-                  howToReadConfig={tools.howToReadConfig}
-                  settingsConfig={tools.settingsConfig}
-                />
-              </ChartToolWrapper>
-            )}
           </Top>
           {(filter || sort) && (
             <Box
@@ -97,7 +73,6 @@ export function ChartHeader({ title, tools, filter, sort }) {
 ChartHeader.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   title: PropTypes.string,
-  tools: PropTypes.object,
   filter: PropTypes.object,
   sort: PropTypes.object,
 };

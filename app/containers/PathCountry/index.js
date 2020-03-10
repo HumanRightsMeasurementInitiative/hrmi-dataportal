@@ -210,6 +210,17 @@ export function PathCountry({
                     onMetricClick={code => setAboutMetric(code)}
                   />
                 ),
+                tools: {
+                  howToReadConfig: {
+                    key: 'tab-snapshot',
+                    charts: ['Bar'],
+                  },
+                  settingsConfig: {
+                    key: 'tab-snapshot',
+                    showStandard: true,
+                    showBenchmark: true,
+                  },
+                },
               },
               {
                 key: 'report-esr',
@@ -229,6 +240,17 @@ export function PathCountry({
                     onMetricClick={code => setAboutMetric(code)}
                   />
                 ),
+                tools: {
+                  howToReadConfig: {
+                    key: 'country-dimension-esr',
+                    charts: ['Bar'],
+                  },
+                  settingsConfig: {
+                    key: 'country-dimension-esr',
+                    showStandard: true,
+                    showBenchmark: true,
+                  },
+                },
               },
               {
                 key: 'report-physint',
@@ -245,6 +267,13 @@ export function PathCountry({
                     onMetricClick={code => setAboutMetric(code)}
                   />
                 ),
+                tools: {
+                  howToReadConfig: {
+                    key: 'country-dimension-physint',
+                    charts: ['Bullet'],
+                    dimension: 'physint',
+                  },
+                },
               },
               {
                 key: 'report-empowerment',
@@ -261,6 +290,13 @@ export function PathCountry({
                     onMetricClick={code => setAboutMetric(code)}
                   />
                 ),
+                tools: {
+                  howToReadConfig: {
+                    key: 'country-dimension-empowerment',
+                    charts: ['Bullet'],
+                    dimension: 'empowerment',
+                  },
+                },
               },
               {
                 key: 'atrisk',

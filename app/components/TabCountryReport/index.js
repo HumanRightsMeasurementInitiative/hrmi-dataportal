@@ -72,23 +72,7 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => (
-                <ChartHeader
-                  title="Indicators"
-                  tools={{
-                    howToReadConfig: {
-                      key: 'country-dimension-esr',
-                      chart: 'Bar',
-                    },
-                    settingsConfig: {
-                      key: 'country-dimension-esr',
-                      showStandard: true,
-                      showBenchmark: true,
-                    },
-                  }}
-                  {...props}
-                />
-              )}
+              header={props => <ChartHeader title="Indicators" {...props} />}
             />
           </SectionContainer>
           <SectionContainer>
@@ -127,23 +111,7 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => (
-                <ChartHeader
-                  title="By Group"
-                  tools={{
-                    howToReadConfig: {
-                      key: 'country-dimension-esr',
-                      chart: 'Bar',
-                    },
-                    settingsConfig: {
-                      key: 'country-dimension-esr',
-                      showStandard: true,
-                      showBenchmark: true,
-                    },
-                  }}
-                  {...props}
-                />
-              )}
+              header={props => <ChartHeader title="By Group" {...props} />}
             />
           </SectionContainer>
           <SectionContainer>
@@ -190,19 +158,7 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => (
-                <ChartHeader
-                  title="Over time"
-                  tools={{
-                    settingsConfig: {
-                      key: 'country-dimension-esr',
-                      showStandard: true,
-                      showBenchmark: true,
-                    },
-                  }}
-                  {...props}
-                />
-              )}
+              header={props => <ChartHeader title="Over time" {...props} />}
             />
           </SectionContainer>
           <SectionContainer>
