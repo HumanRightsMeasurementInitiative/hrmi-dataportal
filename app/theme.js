@@ -195,6 +195,8 @@ const theme = {
       graphicRed: '#EF4123',
       buttonPrimary: '#7F59A6',
       footer: '#423E86',
+      female: '#EE5A45',
+      male: '#0D6D64',
     },
     // margins & paddings
     edgeSize,

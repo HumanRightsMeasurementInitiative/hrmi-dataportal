@@ -75,7 +75,7 @@ export function ChartContainerByGroup({
       standard={standard}
       percentage
       maxValue={100}
-      hasRawOption={metric.metricType === 'indicators'}
+      hasRawOption={false}
       raw={raw}
       onRawChange={onRawChange}
       currentYear={currentYear}

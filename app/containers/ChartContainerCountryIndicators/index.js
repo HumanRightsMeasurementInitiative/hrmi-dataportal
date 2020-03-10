@@ -25,11 +25,6 @@ import {
   getDependenciesReady,
   getRightsForCountry,
   getESRScoreForCountry,
-  // getAuxIndicatorsForCountry,
-  // getLatestCountryCurrentGDP,
-  // getLatestCountry2011PPPGDP,
-  // getESRYear,
-  // getCPRYear,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
 import saga from 'containers/App/saga';
@@ -75,9 +70,6 @@ const getMetricLabel = (metricCode, intl) =>
 const getIndicatorLabel = (metricCode, intl) =>
   intl.formatMessage(rootMessages.indicators[metricCode]);
 
-// const getDimensionLabel = (score, intl) =>
-//   intl.formatMessage(rootMessages.dimensions[score.key]);
-//
 const prepareData = ({
   indicators,
   currentBenchmark,
@@ -146,8 +138,10 @@ export function ChartContainerCountryIndicators({
         commonLabel="Right to"
         listHeader
         metric={getMetricDetails(metricCode)}
+        scoresAside
       />
       <ChartBars
+        scoresAside
         data={prepareData({
           indicators,
           currentBenchmark,

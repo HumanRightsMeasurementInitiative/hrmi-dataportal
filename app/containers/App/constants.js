@@ -337,13 +337,13 @@ export const PEOPLE_GROUPS = [
     key: 'female',
     code: 'Female',
     breakdown: 'sex',
-    color: '#EE5A45',
+    color: 'female',
   },
   {
     key: 'male',
     code: 'Male',
     breakdown: 'sex',
-    color: '#0D6D64',
+    color: 'male',
   },
 ];
 

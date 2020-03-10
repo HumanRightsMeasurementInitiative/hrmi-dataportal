@@ -86,6 +86,7 @@ const appReducer = (state = initialState, action) =>
           }
         }
         draft.howToRead = false;
+        draft.settings = false;
         break;
       case DATA_REQUESTED:
         draft.dataRequested[action.key] = action.time;

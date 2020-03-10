@@ -222,11 +222,17 @@ export function ChartContainerCountryRights({
               grades={GRADES[type]}
               gradeLabels={false}
               level={1}
-              commonLabel="Category"
+              commonLabel="Summary score"
               listHeader
               metric={getMetricDetails(dimensionCode)}
+              summaryScore={{
+                score: getESRDimensionValue(dimension.score, currentBenchmark),
+                maxValue: 100,
+              }}
+              scoresAside
             />
             <ChartBars
+              scoresAside
               data={prepareData({
                 scores: getRightsScoresForDimension(rights, 'esr'),
                 dimensionCode,
@@ -295,6 +301,11 @@ export function ChartContainerCountryRights({
                   bullet
                   listHeader
                   metric={getMetricDetails(dimensionCode)}
+                  scoresAside
+                  summaryScore={{
+                    score: getCPRDimensionValue(dimension.score),
+                    maxValue: 10,
+                  }}
                 />
                 <ChartBars
                   data={prepareData({
@@ -311,6 +322,7 @@ export function ChartContainerCountryRights({
                   grades={GRADES[type]}
                   bullet
                   listHeader
+                  scoresAside
                 />
               </Box>
             </>
@@ -338,17 +350,6 @@ export function ChartContainerCountryRights({
       )}
     </div>
   );
-  // rightsAverageScore={scoreESR}
-  // some={rightsESRScoreCount < rightsESR.length}
-  // one={rightsESRScoreCount === 1}
-  // // prettier-ignore
-  // if (type === 'esr') {
-  //   return (
-  //     {dimensions.esr && reference && reference.esr && (
-  //     )}
-  //   );
-  // }
-  // return null;
 }
 
 ChartContainerCountryRights.propTypes = {
