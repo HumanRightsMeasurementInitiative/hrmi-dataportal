@@ -24,6 +24,8 @@
   "hrmi.containers.Sections.search.title": "Find country or human right",
   "hrmi.containers.Sections.search.placeholder": "Search for a country or right",
   "hrmi.containers.Sections.footer.contactLink": "Contact us",
+  "hrmi.containers.ChartTools.howToRead": "How to read",
+  "hrmi.containers.ChartTools.settings": "Data Settings",
   "hrmi.containers.PathCountry.header": "How well {isPlural, select, true {are} false {is}} {countryWithArticle} respecting people's human rights?",
   "hrmi.containers.PathCountry.header2": "Use the tabs below to explore the scores.",
   "hrmi.containers.PathCountryOverview.title": "{no} countries",

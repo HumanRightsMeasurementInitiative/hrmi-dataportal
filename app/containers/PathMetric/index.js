@@ -151,9 +151,7 @@ export function PathMetric({ match, intl, onMetricClick, nav }) {
             tabs={[
               {
                 key: 'ChartContainerMetric',
-                title: intl.formatMessage(
-                  rootMessages.tabs.ChartContainerMetric,
-                ),
+                title: metricTitle,
                 content: props => (
                   <ChartContainerMetric
                     {...props}
@@ -161,6 +159,18 @@ export function PathMetric({ match, intl, onMetricClick, nav }) {
                     onCountryClick={code => setAboutCountry(code)}
                   />
                 ),
+                tools: {
+                  howToReadConfig: {
+                    contxt: 'PathMetric',
+                    charts: [metric.type === 'cpr' ? 'Bullet' : 'Bar'],
+                    data: metric.color,
+                  },
+                  settingsConfig: metric.type === 'esr' && {
+                    key: 'metric',
+                    showStandard: true,
+                    showBenchmark: metric.metricType !== 'indicators',
+                  },
+                },
               },
               {
                 aside: true,

@@ -233,18 +233,6 @@ export function ChartContainerMetric({
     <>
       <ChartHeader
         title={`Scores for ${scores.length} countries`}
-        tools={{
-          howToReadConfig: {
-            contxt: 'PathMetric',
-            chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
-            data: metric.color,
-          },
-          settingsConfig: metric.type === 'esr' && {
-            key: 'metric',
-            showStandard: true,
-            showBenchmark: metric.metricType !== 'indicators',
-          },
-        }}
         filter={{
           regionFilterValue,
           subregionFilterValue,

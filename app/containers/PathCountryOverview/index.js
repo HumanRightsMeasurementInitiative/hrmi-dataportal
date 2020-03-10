@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Box, Paragraph } from 'grommet';
+import { Paragraph, ResponsiveContext } from 'grommet';
 
 import { STANDARDS, RIGHTS } from 'containers/App/constants';
 
@@ -28,12 +28,12 @@ import {
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 
 import OverviewCountries from 'containers/OverviewCountries';
+import TabContainer from 'containers/TabContainer';
 
 // styles
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-import ColumnContent from 'styled/ColumnContent';
 import PageTitle from 'styled/PageTitle';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
@@ -86,69 +86,94 @@ export function PathCountryOverview({
     )
     : countries;
   return (
-    <ContentWrap>
-      <ContentContainer header background="light-1">
-        <ContentMaxWidth column>
-          <PageTitle>
-            <FormattedMessage
-              {...messages.title}
-              values={{ no: filteredCountries.length }}
-            />
-          </PageTitle>
-          {scale && (
-            <Paragraph>
-              <FormattedMessage
-                {...messages.header[scale]}
-                values={{
-                  no: RIGHTS.length,
-                  esrLink: (
-                    <ButtonTextIcon
-                      color="esrDark"
-                      label={intl.formatMessage(rootMessages.dimensions.esr)}
-                      onClick={() => onSelectMetric('esr')}
-                    />
-                  ),
-                  physintLink: (
-                    <ButtonTextIcon
-                      color="physintDark"
-                      label={intl.formatMessage(
-                        rootMessages.dimensions.physint,
-                      )}
-                      onClick={() => onSelectMetric('physint')}
-                    />
-                  ),
-                  empowerLink: (
-                    <ButtonTextIcon
-                      color="empowermentDark"
-                      label={intl.formatMessage(
-                        rootMessages.dimensions.empowerment,
-                      )}
-                      onClick={() => onSelectMetric('empowerment')}
-                    />
-                  ),
-                }}
-              />
-            </Paragraph>
-          )}
-        </ContentMaxWidth>
-      </ContentContainer>
-      <ContentMaxWidth>
-        <Box direction="row" margin="0 auto" width="100%">
-          <Box direction="column" flex style={{ position: 'relative' }}>
-            <ColumnContent>
-              <OverviewCountries
-                countries={filteredCountries}
-                scoresAllCountries={scoresAllCountries}
-                auxIndicators={auxIndicators}
-                dataReady={dataReady}
-                featuredValues={featuredValues}
-                featuredCountries={featuredCountries}
-              />
-            </ColumnContent>
-          </Box>
-        </Box>
-      </ContentMaxWidth>
-    </ContentWrap>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <ContentWrap>
+          <ContentContainer header background="light-1">
+            <ContentMaxWidth column>
+              <PageTitle>
+                <FormattedMessage
+                  {...messages.title}
+                  values={{ no: filteredCountries.length }}
+                />
+              </PageTitle>
+              {scale && (
+                <Paragraph>
+                  <FormattedMessage
+                    {...messages.header[scale]}
+                    values={{
+                      no: RIGHTS.length,
+                      esrLink: (
+                        <ButtonTextIcon
+                          color="esrDark"
+                          label={intl.formatMessage(
+                            rootMessages.dimensions.esr,
+                          )}
+                          onClick={() => onSelectMetric('esr')}
+                        />
+                      ),
+                      physintLink: (
+                        <ButtonTextIcon
+                          color="physintDark"
+                          label={intl.formatMessage(
+                            rootMessages.dimensions.physint,
+                          )}
+                          onClick={() => onSelectMetric('physint')}
+                        />
+                      ),
+                      empowerLink: (
+                        <ButtonTextIcon
+                          color="empowermentDark"
+                          label={intl.formatMessage(
+                            rootMessages.dimensions.empowerment,
+                          )}
+                          onClick={() => onSelectMetric('empowerment')}
+                        />
+                      ),
+                    }}
+                  />
+                </Paragraph>
+              )}
+            </ContentMaxWidth>
+          </ContentContainer>
+          <TabContainer
+            size={size}
+            tabs={[
+              {
+                key: 'ChartContainerMetric',
+                title: 'Overview',
+                content: props => (
+                  <OverviewCountries
+                    countries={filteredCountries}
+                    scoresAllCountries={scoresAllCountries}
+                    auxIndicators={auxIndicators}
+                    dataReady={dataReady}
+                    featuredValues={featuredValues}
+                    featuredCountries={featuredCountries}
+                    {...props}
+                  />
+                ),
+                tools: {
+                  align: 'end',
+                  howToReadConfig: {
+                    key: 'tab-countries',
+                    contxt: 'PathCountryOverview',
+                    charts: ['Diamonds'],
+                    type: scale,
+                  },
+                  settingsConfig: {
+                    key: 'tab-countries',
+                    showStandard: true,
+                    showBenchmark: true,
+                    showScale: true,
+                  },
+                },
+              },
+            ]}
+          />
+        </ContentWrap>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 
