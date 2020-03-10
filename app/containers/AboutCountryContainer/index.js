@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -40,6 +40,19 @@ const Button = styled(ButtonText)`
 
 const Label = styled(Text)`
   font-weight: 600;
+`;
+
+const MoreWrap = styled.div`
+  text-align: left;
+  margin-top: 10px;
+`;
+const StyledButtonText = styled(ButtonText)`
+  font-size: 14px;
+  line-height: 18px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    font-size: 16px;
+    line-height: 21px;
+  }
 `;
 
 const prepPopulationValue = (value, intl, year) => {
@@ -78,7 +91,9 @@ function AboutCountryContainer({
   showTitle,
   countryCode,
   showCountryLink,
+  collapsible = true,
 }) {
+  const [more, setMore] = useState(false);
   if (!country) return null;
   const incomeCode =
     country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
@@ -182,107 +197,120 @@ function AboutCountryContainer({
           </Box>
         </Box>
       )}
-      <Box direction="row" margin={{ bottom: 'xsmall' }}>
-        <Box width="50%">
-          <Label>
-            <FormattedMessage {...messages.region} />
-          </Label>
-        </Box>
-        <Box width="50%">
-          {renderCategory(
-            intl.formatMessage(
-              rootMessages.regions[country[COLUMNS.COUNTRIES.REGION]],
-            ),
-            onCategoryClick,
-            'region',
-            country[COLUMNS.COUNTRIES.REGION],
-          )}
-        </Box>
-      </Box>
-      {country[COLUMNS.COUNTRIES.SUBREGION] && (
-        <Box direction="row" margin={{ bottom: 'xsmall' }}>
-          <Box width="50%">
-            <Label>
-              <FormattedMessage {...messages.subregion} />
-            </Label>
+      {(!collapsible || more) && (
+        <>
+          <Box direction="row" margin={{ bottom: 'xsmall' }}>
+            <Box width="50%">
+              <Label>
+                <FormattedMessage {...messages.region} />
+              </Label>
+            </Box>
+            <Box width="50%">
+              {renderCategory(
+                intl.formatMessage(
+                  rootMessages.regions[country[COLUMNS.COUNTRIES.REGION]],
+                ),
+                onCategoryClick,
+                'region',
+                country[COLUMNS.COUNTRIES.REGION],
+              )}
+            </Box>
           </Box>
-          <Box width="50%">
-            {renderCategory(
-              intl.formatMessage(
-                rootMessages.subregions[country[COLUMNS.COUNTRIES.SUBREGION]],
-              ),
-              onCategoryClick,
-              'subregion',
-              country[COLUMNS.COUNTRIES.SUBREGION],
-            )}
-          </Box>
-        </Box>
-      )}
-      {countryGroups && (
-        <Box direction="row" margin={{ bottom: 'xsmall' }}>
-          <Box width="50%">
-            <Label>
-              <FormattedMessage
-                {...messages.groups[
-                  countryGroups.length === 1 ? 'single' : 'plural'
-                ]}
-              />
-            </Label>
-          </Box>
-          <Box width="50%">
-            {countryGroups.map(g => (
-              <span key={g}>
+          {country[COLUMNS.COUNTRIES.SUBREGION] && (
+            <Box direction="row" margin={{ bottom: 'xsmall' }}>
+              <Box width="50%">
+                <Label>
+                  <FormattedMessage {...messages.subregion} />
+                </Label>
+              </Box>
+              <Box width="50%">
                 {renderCategory(
-                  intl.formatMessage(rootMessages.countryGroups[g]),
+                  intl.formatMessage(
+                    rootMessages.subregions[
+                      country[COLUMNS.COUNTRIES.SUBREGION]
+                    ],
+                  ),
                   onCategoryClick,
-                  'cgroup',
-                  g,
+                  'subregion',
+                  country[COLUMNS.COUNTRIES.SUBREGION],
                 )}
-              </span>
-            ))}
-          </Box>
-        </Box>
-      )}
-      {treaties && (
-        <Box direction="row" margin={{ bottom: 'xsmall' }}>
-          <Box width="50%">
-            <Label>
-              <FormattedMessage
-                {...messages.treaties[
-                  treaties.length === 1 ? 'single' : 'plural'
-                ]}
-              />
-            </Label>
-          </Box>
-          <Box width="50%">
-            {treaties.map(g => (
-              <span key={g}>
-                {renderCategory(
-                  intl.formatMessage(rootMessages.treaties[g]),
-                  onCategoryClick,
-                  'treaty',
-                  g,
-                )}
-              </span>
-            ))}
-          </Box>
-        </Box>
-      )}
-      <Box direction="row" margin={{ bottom: 'xsmall' }}>
-        <Box width="50%">
-          <Label>
-            <FormattedMessage {...messages.income} />
-          </Label>
-        </Box>
-        <Box width="50%">
-          {renderCategory(
-            intl.formatMessage(rootMessages.income[incomeCode]),
-            onCategoryClick,
-            'income',
-            incomeCode,
+              </Box>
+            </Box>
           )}
-        </Box>
-      </Box>
+          {countryGroups && (
+            <Box direction="row" margin={{ bottom: 'xsmall' }}>
+              <Box width="50%">
+                <Label>
+                  <FormattedMessage
+                    {...messages.groups[
+                      countryGroups.length === 1 ? 'single' : 'plural'
+                    ]}
+                  />
+                </Label>
+              </Box>
+              <Box width="50%">
+                {countryGroups.map(g => (
+                  <span key={g}>
+                    {renderCategory(
+                      intl.formatMessage(rootMessages.countryGroups[g]),
+                      onCategoryClick,
+                      'cgroup',
+                      g,
+                    )}
+                  </span>
+                ))}
+              </Box>
+            </Box>
+          )}
+          {treaties && (
+            <Box direction="row" margin={{ bottom: 'xsmall' }}>
+              <Box width="50%">
+                <Label>
+                  <FormattedMessage
+                    {...messages.treaties[
+                      treaties.length === 1 ? 'single' : 'plural'
+                    ]}
+                  />
+                </Label>
+              </Box>
+              <Box width="50%">
+                {treaties.map(g => (
+                  <span key={g}>
+                    {renderCategory(
+                      intl.formatMessage(rootMessages.treaties[g]),
+                      onCategoryClick,
+                      'treaty',
+                      g,
+                    )}
+                  </span>
+                ))}
+              </Box>
+            </Box>
+          )}
+          <Box direction="row" margin={{ bottom: 'xsmall' }}>
+            <Box width="50%">
+              <Label>
+                <FormattedMessage {...messages.income} />
+              </Label>
+            </Box>
+            <Box width="50%">
+              {renderCategory(
+                intl.formatMessage(rootMessages.income[incomeCode]),
+                onCategoryClick,
+                'income',
+                incomeCode,
+              )}
+            </Box>
+          </Box>
+        </>
+      )}
+      {collapsible && (
+        <MoreWrap>
+          <StyledButtonText onClick={() => setMore(!more)}>
+            <FormattedMessage {...messages[more ? 'less' : 'more']} />
+          </StyledButtonText>
+        </MoreWrap>
+      )}
       {showFAQs && <FAQs questions={showFAQs} />}
       {showCountryLink && (
         <ButtonHighlight onClick={() => onCountryClick(countryCode)}>
@@ -299,6 +327,7 @@ AboutCountryContainer.propTypes = {
   showFAQs: PropTypes.array,
   showTitle: PropTypes.bool,
   showCountryLink: PropTypes.bool,
+  collapsible: PropTypes.bool,
   countryCode: PropTypes.string,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
