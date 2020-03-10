@@ -7,7 +7,7 @@ import { Box, Text } from 'grommet';
 import styled, { css, withTheme } from 'styled-components';
 
 import { getTabSearch } from 'containers/App/selectors';
-import { setTab } from 'containers/App/actions';
+import { setTab, openHowToRead, openSettings } from 'containers/App/actions';
 import ChartTools from 'containers/ChartTools';
 
 import Aside from 'components/Aside';
@@ -149,7 +149,7 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
               {activeTab.key && activeTab.tools && (
                 <ChartToolWrapper
                   flex={{ shrink: 0 }}
-                  width={isMinSize(size, 'large') && getAsideWidth(size)}
+                  width={isMinSize(size, 'large') ? getAsideWidth(size) : null}
                   justify="center"
                   align={activeTab.align || (asideTab ? 'start' : 'end')}
                 >
@@ -201,7 +201,11 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onTabClick: key => dispatch(setTab(key || '0')),
+    onTabClick: key => {
+      dispatch(openHowToRead(null));
+      dispatch(openSettings(null));
+      dispatch(setTab(key || '0'));
+    },
   };
 }
 
