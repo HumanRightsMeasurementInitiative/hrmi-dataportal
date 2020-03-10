@@ -8,16 +8,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Box, Text, ResponsiveContext } from 'grommet';
+import { Heading, Box, Text } from 'grommet';
 
 import { COLUMNS, GRADES } from 'containers/App/constants';
 
 import ChartBars from 'components/ChartBars';
 import Source from 'components/Source';
 
-import formatScoreMax from 'utils/format-score-max';
 import getMetricDetails from 'utils/metric-details';
-import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 // import messages from './messages';
@@ -27,20 +25,6 @@ const Dimension = styled(Box)`
   position: relative;
 `;
 
-const DimensionScore = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 5px 10px;
-  min-width: 85px;
-  text-align: center;
-  background-color: ${({ hasScore, color, theme }) =>
-    hasScore ? theme.global.colors[color] : 'transparent'};
-  border: 1px solid;
-  border-color: ${({ hasScore, color, theme }) =>
-    !hasScore ? theme.global.colors[color] : 'transparent'};
-  border-radius: 99999px;
-`;
 const ChartArea = props => (
   <Box direction="column" fill="horizontal" {...props} />
 );
@@ -52,12 +36,14 @@ const StyledDimensionHeading = styled(Heading)`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     font-size: ${({ theme, level = 1 }) => theme.heading.level[level].medium.size};
     line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
+    min-width: 180px;
+    padding-right: 10px;
   }
 `;
 const DimensionHeading = props => (
   <StyledDimensionHeading
     responsive={false}
-    level={3}
+    level={4}
     margin={{ vertical: 'none' }}
     {...props}
   />
@@ -142,71 +128,56 @@ function ChartCountrySnapshot({
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
   const hasRights = rights.some(r => !!r.score);
+  if (!hasRights) return null;
   return (
-    <ResponsiveContext.Consumer>
-      {size => (
-        <Box
-          direction="column"
-          pad={{ bottom: 'small' }}
-          margin={{ bottom: 'ml' }}
-        >
-          <Box direction="row">
-            <ChartArea>
-              <Dimension>
-                <DimensionHeading color={dimensionCode}>
-                  <FormattedMessage
-                    {...rootMessages.dimensions[dimensionCode]}
-                  />
-                </DimensionHeading>
-                <DimensionScore
-                  hasScore={!!dimensionScore}
-                  color={dimensionCode}
-                >
-                  <Text
-                    weight="bold"
-                    size={isMinSize(size, 'medium') ? 'large' : 'medium'}
-                    color={dimensionScore ? 'white' : dimensionCode}
-                  >
-                    {dimensionScore && formatScoreMax(dimensionScore, maxValue)}
-                    {!dimensionScore && 'N/A'}
-                  </Text>
-                </DimensionScore>
-                <Text>
-                  <FormattedMessage {...rootMessages['rights-types'][type]} />
-                  {` (${year})`}
-                </Text>
-                {hasRights && (
-                  <ChartBars
-                    data={prepareData({
-                      scores: rights,
-                      dimensionCode,
-                      currentBenchmark,
-                      standard,
-                      onClick: onMetricClick,
-                      intl,
-                    })}
-                    currentBenchmark={type === 'esr' && currentBenchmark}
-                    standard={type === 'esr' && standard}
-                    commonLabel={`${intl.formatMessage(
-                      rootMessages['rights-xshort-common'][dimensionCode],
-                    )}`}
-                    labelColor={`${dimensionCode}Dark`}
-                    padVertical="small"
-                    grades={GRADES[type]}
-                    listHeader
-                    metric={getMetricDetails(dimensionCode)}
-                    annotateBetter={false}
-                    scoreOnHover={false}
-                    scoresAside
-                  />
-                )}
-              </Dimension>
-            </ChartArea>
-          </Box>
-          {source && <Source />}
-        </Box>
-      )}
-    </ResponsiveContext.Consumer>
+    <Box
+      direction="column"
+      pad={{ bottom: 'small' }}
+      margin={{ bottom: 'small' }}
+    >
+      <Box direction="row">
+        <ChartArea>
+          <Dimension>
+            <Box direction="row" align="center">
+              <DimensionHeading color={dimensionCode}>
+                <FormattedMessage {...rootMessages.dimensions[dimensionCode]} />
+              </DimensionHeading>
+              <Text>
+                <FormattedMessage {...rootMessages['rights-types'][type]} />
+                {` (${year})`}
+              </Text>
+            </Box>
+            <ChartBars
+              summaryScore={
+                dimensionScore && { score: dimensionScore, maxValue }
+              }
+              data={prepareData({
+                scores: rights,
+                dimensionCode,
+                currentBenchmark,
+                standard,
+                onClick: onMetricClick,
+                intl,
+              })}
+              currentBenchmark={type === 'esr' && currentBenchmark}
+              standard={type === 'esr' && standard}
+              commonLabel={`${intl.formatMessage(
+                rootMessages['rights-xshort-common'][dimensionCode],
+              )}`}
+              labelColor={`${dimensionCode}Dark`}
+              padVertical="small"
+              grades={GRADES[type]}
+              listHeader
+              metric={getMetricDetails(dimensionCode)}
+              annotateBetter={false}
+              scoreOnHover={false}
+              scoresAside
+            />
+          </Dimension>
+        </ChartArea>
+      </Box>
+      {source && <Source />}
+    </Box>
   );
 }
 
