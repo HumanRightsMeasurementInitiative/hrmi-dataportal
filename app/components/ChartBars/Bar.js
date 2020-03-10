@@ -28,7 +28,11 @@ const BarReference = styled.div`
   display: block;
   height: ${props => props.height}px;
   width: 100%;
-  background-color: ${props => (props.noData ? 'white' : 'transparent')}};
+  background-color: ${({ noData, hasBackground, theme }) => {
+    if (noData) return 'white';
+    if (hasBackground) return theme.global.colors['light-2'];
+    return 'transparent';
+  }};
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-color: transparent;
@@ -113,6 +117,7 @@ function Bar({
   scoreOnHover = false,
   hoverEnabled = true,
   benchmarkTooltip = false,
+  hasBackground,
 }) {
   const [hover, setHover] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -150,7 +155,12 @@ function Bar({
         onMouseEnter={() => scoreOnHover && setHover(true) }
         onMouseLeave={() => setHover(false)}
       >
-        <BarReference height={h} noData={!hasValue} level={level}>
+        <BarReference
+          height={h}
+          noData={!hasValue}
+          level={level}
+          hasBackground={hasBackground}
+        >
           {!hasValue && <BarNoValue height={h} color={color} />}
           {hasValue && (
             <BarValue
@@ -261,6 +271,7 @@ Bar.propTypes = {
   height: PropTypes.number,
   level: PropTypes.number,
   showLabels: PropTypes.bool,
+  hasBackground: PropTypes.bool,
   showScore: PropTypes.bool,
   showBenchmark: PropTypes.bool,
   benchmarkTooltip: PropTypes.bool,

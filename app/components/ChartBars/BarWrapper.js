@@ -64,6 +64,7 @@ export function BarWrapper({
                 level={2}
                 data={score}
                 scoreOnHover={scoreOnHover && 'top'}
+                hasBackground={hasBackground}
               />
             )}
             {bullet && (
