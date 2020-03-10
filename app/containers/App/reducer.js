@@ -85,7 +85,6 @@ const appReducer = (state = initialState, action) =>
             draft.closeTargetPage = action.payload.location;
           }
         }
-        console.log(action, state);
         draft.howToRead = false;
         break;
       case DATA_REQUESTED:

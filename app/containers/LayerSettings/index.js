@@ -26,7 +26,7 @@ import {
   setScale,
   openSettings,
 } from 'containers/App/actions';
-import { STANDARDS, BENCHMARKS } from 'containers/App/constants';
+import { STANDARDS, BENCHMARKS, SCALES } from 'containers/App/constants';
 
 import ButtonIcon from 'styled/ButtonIcon';
 
@@ -36,12 +36,10 @@ import {
   getFloatingAsideWidth,
 } from 'utils/responsive';
 
-import messages from './messages';
+import messages from 'containers/ChartTools/messages';
 
-import ScaleToggle from './ScaleToggle';
 import SettingsToggle from './SettingsToggle';
 
-const SetScaleWrap = styled.div``;
 const ButtonWrap = styled.div`
   position: absolute;
   top: 1em;
@@ -98,17 +96,24 @@ export function LayerSettings({
             responsive={false}
           >
             <Heading level={2}>
-              <FormattedMessage {...messages.label} />
+              <FormattedMessage {...messages.settings} />
             </Heading>
             <ButtonWrap>
-              <ButtonIcon onClick={() => onClose()}>
-                <CloseIcon size="xlarge" color="white" />
+              <ButtonIcon onClick={() => onClose()} subtle>
+                <CloseIcon size="xlarge" color="dark" />
               </ButtonIcon>
             </ButtonWrap>
             {layer.showScale && (
-              <SetScaleWrap>
-                <ScaleToggle scale={scale} onSetScale={onSetScale} />
-              </SetScaleWrap>
+              <SettingsToggle
+                setting="scale"
+                active={scale}
+                onActivate={onSetScale}
+                options={SCALES.map(s => ({
+                  label: s.type,
+                  ...s,
+                }))}
+                horizontal
+              />
             )}
             {layer.showBenchmark && (
               <SettingsToggle
@@ -116,11 +121,6 @@ export function LayerSettings({
                 active={benchmark}
                 onActivate={onSetBenchmark}
                 options={BENCHMARKS}
-                square={{
-                  type: 'line',
-                  style: benchmark === 'best' ? 'solid' : 'dashed',
-                  color: 'light-2',
-                }}
                 horizontal
               />
             )}
@@ -130,11 +130,6 @@ export function LayerSettings({
                 active={standard}
                 onActivate={onSetStandard}
                 options={STANDARDS}
-                square={{
-                  type: 'square',
-                  style: standard === 'core' ? 'solid' : 'stripes',
-                  color: 'esr',
-                }}
                 horizontal
               />
             )}
