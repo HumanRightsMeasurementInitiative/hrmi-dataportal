@@ -272,13 +272,6 @@ export function ChartContainerCountryRights({
                 title={`${intl.formatMessage(
                   rootMessages.dimensions[dimensionCode],
                 )} overview`}
-                tools={{
-                  howToReadConfig: {
-                    key: 'country-dimension-cpr',
-                    chart: 'Bullet',
-                    dimension: dimensionCode,
-                  },
-                }}
               />
               <Box margin={{ bottom: 'large' }}>
                 <ChartBars

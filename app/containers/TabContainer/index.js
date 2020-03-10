@@ -8,6 +8,7 @@ import styled, { css, withTheme } from 'styled-components';
 
 import { getTabSearch } from 'containers/App/selectors';
 import { setTab } from 'containers/App/actions';
+import ChartTools from 'containers/ChartTools';
 
 import Aside from 'components/Aside';
 import AsideBackground from 'components/AsideBackground';
@@ -16,7 +17,12 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 import ButtonNavTab from 'styled/ButtonNavTab';
 import MainColumn from 'styled/MainColumn';
 
-import { isMinSize, isMaxSize, getHeaderHeight } from 'utils/responsive';
+import {
+  isMinSize,
+  isMaxSize,
+  getHeaderHeight,
+  getAsideWidth,
+} from 'utils/responsive';
 import isNumber from 'utils/is-number';
 
 // const Tab = styled.div``;
@@ -40,6 +46,16 @@ const Fixed = styled.div`
       box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.1);
       z-index: 9;
     `};
+`;
+
+const TabLinks = styled(Box)``;
+const ChartToolWrapper = styled(Box)`
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding: 0 ${({ theme }) => theme.global.edgeSize.medium};
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    padding-right: ${({ theme }) => theme.global.edgeSize.xlarge};
+  }
 `;
 
 function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
@@ -97,21 +113,38 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
     <Box direction="column" style={{ position: 'relative' }}>
       <Tabs justify="start" ref={tabsRef}>
         <Fixed fixed={fixedTop} ref={fixedRef} top={hh}>
-          <ContentMaxWidth>
-            {mainTabs.map(tab => (
-              <ButtonNavTab
-                key={tab.key}
-                active={tab.key === activeTab.key}
-                onClick={() => onTabClick(tab.key)}
-              >
-                {isMaxSize(size, 'medium') && tab.titleMobile && (
-                  <span>{tab.titleMobile}</span>
-                )}
-                {(!isMaxSize(size, 'medium') || !tab.titleMobile) && (
-                  <span>{tab.title}</span>
-                )}
-              </ButtonNavTab>
-            ))}
+          <ContentMaxWidth hasAside>
+            <Box direction="row" fill="horizontal">
+              <TabLinks direction="row" flex>
+                {mainTabs.map(tab => (
+                  <ButtonNavTab
+                    key={tab.key}
+                    active={tab.key === activeTab.key}
+                    onClick={() => onTabClick(tab.key)}
+                  >
+                    {isMaxSize(size, 'medium') && tab.titleMobile && (
+                      <span>{tab.titleMobile}</span>
+                    )}
+                    {(!isMaxSize(size, 'medium') || !tab.titleMobile) && (
+                      <span>{tab.title}</span>
+                    )}
+                  </ButtonNavTab>
+                ))}
+              </TabLinks>
+              {activeTab.key && activeTab.tools && (
+                <ChartToolWrapper
+                  flex={{ shrink: 0 }}
+                  width={isMinSize(size, 'large') && getAsideWidth(size)}
+                  justify="center"
+                  align={activeTab.align || (asideTab ? 'start' : 'end')}
+                >
+                  <ChartTools
+                    howToReadConfig={activeTab.tools.howToReadConfig}
+                    settingsConfig={activeTab.tools.settingsConfig}
+                  />
+                </ChartToolWrapper>
+              )}
+            </Box>
           </ContentMaxWidth>
         </Fixed>
         {fixedTop && (

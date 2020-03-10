@@ -48,7 +48,7 @@ function LayerHowToRead({ layer, theme, onClose }) {
   }, []);
 
   if (!layer) return null;
-  const { contxt, chart, type, dimension } = layer;
+  const { contxt, type, dimension, charts } = layer;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -82,16 +82,27 @@ function LayerHowToRead({ layer, theme, onClose }) {
                 <CloseIcon size="xlarge" color="white" />
               </ButtonIcon>
             </ButtonWrap>
-            {chart === 'Diamonds' && type === 'd' && <HTROverviewDimensions />}
-            {chart === 'Diamonds' && type === 'r' && <HTROverviewRights />}
-            {chart === 'Summary' && type === 'd' && <HTRSummaryDimensions />}
-            {chart === 'Summary' && type === 'r' && <HTRSummaryRights />}
-            {chart === 'Bullet' && (
-              <HTRBulletCPR contxt={contxt} dimension={dimension} />
-            )}
-            {chart === 'Bar' && <HTRBarESR contxt={contxt} />}
-            {chart === 'Trend' && type === 'esr' && <HTRTrendESR />}
-            {chart === 'Trend' && type === 'cpr' && <HTRTrendCPR />}
+            {charts &&
+              charts.map(chart => (
+                <div key={chart}>
+                  {chart === 'Diamonds' && type === 'd' && (
+                    <HTROverviewDimensions />
+                  )}
+                  {chart === 'Diamonds' && type === 'r' && (
+                    <HTROverviewRights />
+                  )}
+                  {chart === 'Summary' && type === 'd' && (
+                    <HTRSummaryDimensions />
+                  )}
+                  {chart === 'Summary' && type === 'r' && <HTRSummaryRights />}
+                  {chart === 'Bullet' && (
+                    <HTRBulletCPR contxt={contxt} dimension={dimension} />
+                  )}
+                  {chart === 'Bar' && <HTRBarESR contxt={contxt} />}
+                  {chart === 'Trend' && type === 'esr' && <HTRTrendESR />}
+                  {chart === 'Trend' && type === 'cpr' && <HTRTrendCPR />}
+                </div>
+              ))}
           </Box>
         </Layer>
       )}

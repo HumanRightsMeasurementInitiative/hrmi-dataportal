@@ -275,7 +275,7 @@ export function AboutMetricContainer({
 }
 
 AboutMetricContainer.propTypes = {
-  metricCode: PropTypes.object,
+  metricCode: PropTypes.string,
   metric: PropTypes.object,
   onSelectMetric: PropTypes.func,
   onLoadData: PropTypes.func.isRequired,

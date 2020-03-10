@@ -131,20 +131,6 @@ export function OverviewCountries({
         <MainColumn hasAside={hasAside}>
           <ChartHeader
             title={`${countries.length} countries`}
-            tools={{
-              howToReadConfig: {
-                key: 'tab-countries',
-                contxt: 'PathCountryOverview',
-                chart: 'Diamonds',
-                type: scale,
-              },
-              settingsConfig: {
-                key: 'tab-countries',
-                showStandard: true,
-                showBenchmark: true,
-                showScale: true,
-              },
-            }}
             filter={{
               regionFilterValue,
               subregionFilterValue,
