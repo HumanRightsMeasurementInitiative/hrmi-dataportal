@@ -99,7 +99,7 @@ export function PathMetric({ match, intl, onMetricClick, nav }) {
                 height="280px"
                 hasAside={isMinSize(size, 'large')}
               >
-                <MainColumn hasAside={isMinSize(size, 'large')} header>
+                <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
                   <HeaderLinks
                     onItemClick={key => onMetricClick(key)}
                     breadcrumb

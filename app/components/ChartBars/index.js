@@ -48,7 +48,7 @@ const DimensionScore = styled.div`
   position: absolute;
   bottom: 100%;
   transform: translateX(-50%);
-  padding: 1px 8px;
+  padding: 0px 8px;
   text-align: center;
   background-color: ${({ color, theme }) => theme.global.colors[color]};
   border-radius: 99999px;
@@ -137,7 +137,7 @@ function ChartBars({
                 >
                   <DimensionScoreWrapper score={summaryScore}>
                     <DimensionScore color={labelColor}>
-                      <Text weight="600" size="medium" color="white">
+                      <Text weight="600" size="small" color="white">
                         {formatScoreMax(
                           summaryScore.score,
                           summaryScore.maxValue,
