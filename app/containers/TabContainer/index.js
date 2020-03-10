@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { Box } from 'grommet';
+import { Box, Text } from 'grommet';
 import styled, { css, withTheme } from 'styled-components';
 
 import { getTabSearch } from 'containers/App/selectors';
@@ -48,7 +48,11 @@ const Fixed = styled.div`
     `};
 `;
 
-const TabLinks = styled(Box)``;
+const TabLinks = styled(Box)`
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    height: 44px;
+  }
+`;
 const ChartToolWrapper = styled(Box)`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0 ${({ theme }) => theme.global.edgeSize.medium};
@@ -56,6 +60,10 @@ const ChartToolWrapper = styled(Box)`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding-right: ${({ theme }) => theme.global.edgeSize.xlarge};
   }
+`;
+
+const SingleTabLabel = styled(Text)`
+  color: white;
 `;
 
 function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
@@ -115,21 +123,28 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
         <Fixed fixed={fixedTop} ref={fixedRef} top={hh}>
           <ContentMaxWidth hasAside>
             <Box direction="row" fill="horizontal">
-              <TabLinks direction="row" flex>
-                {mainTabs.map(tab => (
-                  <ButtonNavTab
-                    key={tab.key}
-                    active={tab.key === activeTab.key}
-                    onClick={() => onTabClick(tab.key)}
-                  >
-                    {isMaxSize(size, 'medium') && tab.titleMobile && (
-                      <span>{tab.titleMobile}</span>
-                    )}
-                    {(!isMaxSize(size, 'medium') || !tab.titleMobile) && (
-                      <span>{tab.title}</span>
-                    )}
-                  </ButtonNavTab>
-                ))}
+              <TabLinks direction="row" flex align="center">
+                {mainTabs &&
+                  mainTabs.length > 1 &&
+                  mainTabs.map(tab => (
+                    <ButtonNavTab
+                      key={tab.key}
+                      active={tab.key === activeTab.key}
+                      onClick={() => onTabClick(tab.key)}
+                    >
+                      {isMaxSize(size, 'medium') && tab.titleMobile && (
+                        <span>{tab.titleMobile}</span>
+                      )}
+                      {(!isMaxSize(size, 'medium') || !tab.titleMobile) && (
+                        <span>{tab.title}</span>
+                      )}
+                    </ButtonNavTab>
+                  ))}
+                {mainTabs && mainTabs.length === 1 && (
+                  <SingleTabLabel alignSelf="center">
+                    {mainTabs[0].title}
+                  </SingleTabLabel>
+                )}
               </TabLinks>
               {activeTab.key && activeTab.tools && (
                 <ChartToolWrapper

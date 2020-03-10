@@ -66,7 +66,7 @@ function ChartBars({
             bullet={bullet}
             allowWordBreak={allowWordBreak}
             labelColor={labelColor}
-            hasBackground={!!grades}
+            hasBackground={!grades}
             level={level}
             scoreOnHover={scoreOnHover}
             scoresAside={scoresAside}

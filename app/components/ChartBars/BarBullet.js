@@ -35,7 +35,7 @@ const BarReference = styled.div`
   width: 100%;
   height: 2px;
   background-color: ${({ theme, hasBackground }) =>
-    theme.global.colors[hasBackground ? 'transparent' : 'light-2']};
+    theme.global.colors[hasBackground ? 'light-2' : 'light-2']};
 `;
 
 const BarValue = styled.div`
