@@ -120,7 +120,7 @@ const prepareData = ({
     }
 
     return {
-      color: 'esr',
+      color: group.key,
       value: getDimensionValue(groupScore, currentBenchmark, raw),
       refValues: getDimensionRefs(
         metric,
@@ -151,7 +151,7 @@ function ChartCountryMetricByGroup({
   intl,
 }) {
   return (
-    <Styled pad="medium" direction="column">
+    <Styled direction="column">
       <ChartBars
         data={prepareData({
           scores,
@@ -169,6 +169,7 @@ function ChartCountryMetricByGroup({
         padVertical="small"
         grades={GRADES.esr}
         commonLabel="By sex"
+        scoresAside
       />
       {hasRawOption && (
         <Settings direction="row" justify="end" pad="small" border="top">
