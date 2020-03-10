@@ -16,7 +16,7 @@ const Styled = styled(Box)`
   }
 `;
 
-function Aside({ content, image, active, children }) {
+function Aside({ content, image, active, children, ...other }) {
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
@@ -27,6 +27,7 @@ function Aside({ content, image, active, children }) {
           flex={{ shrink: 0 }}
           fill="vertical"
           image={image}
+          {...other}
         >
           {content
             ? content.content({ active })
