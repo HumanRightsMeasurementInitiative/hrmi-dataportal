@@ -11,6 +11,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Paragraph, ResponsiveContext } from 'grommet';
+import styled from 'styled-components';
 
 import { STANDARDS, RIGHTS } from 'containers/App/constants';
 
@@ -26,11 +27,15 @@ import {
   getScaleSearch,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
+import saga from 'containers/App/saga';
 
 import OverviewCountries from 'containers/OverviewCountries';
 import TabContainer from 'containers/TabContainer';
 
+import Aside from 'components/Aside';
+
 // styles
+import MainColumn from 'styled/MainColumn';
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
@@ -39,10 +44,17 @@ import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import { filterByAssessment } from 'utils/filters';
 import { useInjectSaga } from 'utils/injectSaga';
-import saga from 'containers/App/saga';
+import { isMinSize } from 'utils/responsive';
+
+import graphic from 'images/graphics/countries_overview.svg';
 
 import rootMessages from 'messages';
 import messages from './messages';
+
+const Image = styled.img`
+  width: 100%;
+  max-width: 200px;
+`;
 
 const DEPENDENCIES = [
   'countries',
@@ -89,50 +101,61 @@ export function PathCountryOverview({
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
-          <ContentContainer header background="light-1">
-            <ContentMaxWidth column>
-              <PageTitle>
-                <FormattedMessage
-                  {...messages.title}
-                  values={{ no: filteredCountries.length }}
-                />
-              </PageTitle>
-              {scale && (
-                <Paragraph>
+          <ContentContainer direction="column" header>
+            <ContentMaxWidth
+              header
+              height="280px"
+              hasAside={isMinSize(size, 'large')}
+            >
+              <MainColumn hasAside={isMinSize(size, 'large')} header>
+                <PageTitle>
                   <FormattedMessage
-                    {...messages.header[scale]}
-                    values={{
-                      no: RIGHTS.length,
-                      esrLink: (
-                        <ButtonTextIcon
-                          color="esrDark"
-                          label={intl.formatMessage(
-                            rootMessages.dimensions.esr,
-                          )}
-                          onClick={() => onSelectMetric('esr')}
-                        />
-                      ),
-                      physintLink: (
-                        <ButtonTextIcon
-                          color="physintDark"
-                          label={intl.formatMessage(
-                            rootMessages.dimensions.physint,
-                          )}
-                          onClick={() => onSelectMetric('physint')}
-                        />
-                      ),
-                      empowerLink: (
-                        <ButtonTextIcon
-                          color="empowermentDark"
-                          label={intl.formatMessage(
-                            rootMessages.dimensions.empowerment,
-                          )}
-                          onClick={() => onSelectMetric('empowerment')}
-                        />
-                      ),
-                    }}
+                    {...messages.title}
+                    values={{ no: filteredCountries.length }}
                   />
-                </Paragraph>
+                </PageTitle>
+                {scale && (
+                  <Paragraph size="large">
+                    <FormattedMessage
+                      {...messages.header[scale]}
+                      values={{
+                        no: RIGHTS.length,
+                        esrLink: (
+                          <ButtonTextIcon
+                            color="esrDark"
+                            label={intl.formatMessage(
+                              rootMessages.dimensions.esr,
+                            )}
+                            onClick={() => onSelectMetric('esr')}
+                          />
+                        ),
+                        physintLink: (
+                          <ButtonTextIcon
+                            color="physintDark"
+                            label={intl.formatMessage(
+                              rootMessages.dimensions.physint,
+                            )}
+                            onClick={() => onSelectMetric('physint')}
+                          />
+                        ),
+                        empowerLink: (
+                          <ButtonTextIcon
+                            color="empowermentDark"
+                            label={intl.formatMessage(
+                              rootMessages.dimensions.empowerment,
+                            )}
+                            onClick={() => onSelectMetric('empowerment')}
+                          />
+                        ),
+                      }}
+                    />
+                  </Paragraph>
+                )}
+              </MainColumn>
+              {isMinSize(size, 'large') && (
+                <Aside align="start" justify="center">
+                  <Image src={graphic} />
+                </Aside>
               )}
             </ContentMaxWidth>
           </ContentContainer>

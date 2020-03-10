@@ -139,7 +139,7 @@ function ChartCountrySnapshot({
         <ChartArea>
           <Dimension>
             <Box direction="row" align="center">
-              <DimensionHeading color={dimensionCode}>
+              <DimensionHeading color={`${dimensionCode}Dark`}>
                 <FormattedMessage {...rootMessages.dimensions[dimensionCode]} />
               </DimensionHeading>
               <Text>

@@ -149,7 +149,7 @@ export function PathCountry({
                 height="280px"
                 hasAside={isMinSize(size, 'large')}
               >
-                <MainColumn hasAside={isMinSize(size, 'large')} header>
+                <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
                   <HeaderLinks
                     onItemClick={(key, value) => onCategoryClick(key, value)}
                     breadcrumb
