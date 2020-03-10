@@ -16,6 +16,8 @@ import formatScore from 'utils/format-score';
 
 import BarLabelButton from './BarLabelButton';
 
+const BarLabel = styled(Text)``;
+
 const BarWrap = styled(Box)``;
 // prettier-ignore
 const LabelWrap = styled(Box)`
@@ -47,14 +49,19 @@ export function BarWrapper({
             flex={{ shrink: 0 }}
             pad={{ right: 'small' }}
           >
-            {score.label && (
+            {score.label && score.onClick && (
               <BarLabelButton
-                onClick={() => score.onClick && score.onClick()}
+                onClick={() => score.onClick()}
                 label={score.label}
                 allowWordBreak={allowWordBreak}
                 color={labelColor}
                 level={level}
               />
+            )}
+            {score.label && !score.onClick && (
+              <BarLabel label={score.label} color="dark" size="small">
+                {score.label}
+              </BarLabel>
             )}
           </LabelWrap>
           <BarWrap flex border="right">
@@ -88,7 +95,8 @@ export function BarWrapper({
               pad={{ left: 'small' }}
             >
               <Text color={`${score.color}Dark`} size="small" weight={600}>
-                {score.value && `${formatScore(score.value)}${score.unit}`}
+                {score.value &&
+                  `${formatScore(score.value)}${score.unit || ''}`}
                 {!score.value && 'N/A'}
               </Text>
             </ScoreAsideWrap>
