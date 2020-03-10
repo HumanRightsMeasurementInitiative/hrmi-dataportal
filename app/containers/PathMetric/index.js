@@ -165,7 +165,8 @@ export function PathMetric({ match, intl, onMetricClick, nav }) {
                     charts: [metric.type === 'cpr' ? 'Bullet' : 'Bar'],
                     data: metric.color,
                   },
-                  settingsConfig: metric.type === 'esr' && {
+                  settingsConfig: (metric.type === 'esr' ||
+                    metric.metricType === 'indicators') && {
                     key: 'metric',
                     showStandard: true,
                     showBenchmark: metric.metricType !== 'indicators',
