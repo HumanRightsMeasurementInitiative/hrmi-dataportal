@@ -13,7 +13,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
 
-import { navigate } from 'containers/App/actions';
+import { navigate, openHowToRead, openSettings } from 'containers/App/actions';
 import { getCloseTargetMetric } from 'containers/App/selectors';
 import { PATHS, IMAGE_PATH, PAGES } from 'containers/App/constants';
 import LayerInfo from 'containers/LayerInfo';
@@ -39,7 +39,7 @@ import { isMinSize } from 'utils/responsive';
 import rootMessages from 'messages';
 import messages from './messages';
 
-export function PathMetric({ match, intl, onMetricClick, nav }) {
+export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
   const [aboutCountry, setAboutCountry] = useState(null);
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
@@ -156,7 +156,10 @@ export function PathMetric({ match, intl, onMetricClick, nav }) {
                   <ChartContainerMetric
                     {...props}
                     metric={metric}
-                    onCountryClick={code => setAboutCountry(code)}
+                    onCountryClick={code => {
+                      closeLayers();
+                      setAboutCountry(aboutCountry ? null : code);
+                    }}
                   />
                 ),
                 tools: {
@@ -202,6 +205,7 @@ PathMetric.propTypes = {
   onMetricClick: PropTypes.func,
   nav: PropTypes.func,
   match: PropTypes.object,
+  closeLayers: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -210,6 +214,10 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
+    closeLayers: () => {
+      dispatch(openHowToRead(null));
+      dispatch(openSettings(null));
+    },
     onMetricClick: code =>
       dispatch(
         navigate(

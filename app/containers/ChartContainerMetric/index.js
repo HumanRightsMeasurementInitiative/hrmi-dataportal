@@ -77,22 +77,23 @@ const getESRDimensionValue = (score, benchmark) => {
 const getCPRDimensionValue = score =>
   score && parseFloat(score[COLUMNS.CPR.MEAN]);
 
-const getDimensionRefs = (score, benchmark, metricType) => {
+// const getDimensionRefs = (score, benchmark, metricType) => {
+const getDimensionRefs = (score, benchmark) => {
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col =
-      metricType === 'indicators'
-        ? benchmark.refIndicatorColumn
-        : benchmark.refColumn;
+    // const col =
+    //   metricType === 'indicators'
+    //     ? benchmark.refIndicatorColumn
+    //     : benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
-      {
-        value: score && parseFloat(score[col]),
-        style: 'dotted',
-        key: 'adjusted',
-      },
+      // {
+      //   value: score && parseFloat(score[col]),
+      //   style: 'dotted',
+      //   key: 'adjusted',
+      // },
     ];
   }
   return false;

@@ -38,6 +38,8 @@ import {
   checkCookieConsent,
   setGAinitialised,
   trackEvent,
+  openHowToRead,
+  openSettings,
 } from './actions';
 import {
   LOAD_DATA_IF_NEEDED,
@@ -220,6 +222,8 @@ export function* selectCountrySaga({ code }) {
       value: code,
     }),
   );
+  yield put(openHowToRead(null));
+  yield put(openSettings(null));
   yield put(push(`/${requestLocale}/country/${code}${search}`));
 }
 
@@ -324,6 +328,8 @@ export function* setTabSaga({ value }) {
       value,
     }),
   );
+  yield put(openHowToRead(null));
+  yield put(openSettings(null));
   yield put(push(`${path}?${searchParams.toString()}`));
 }
 
@@ -341,6 +347,8 @@ export function* selectMetricSaga({ code }) {
       value: code,
     }),
   );
+  yield put(openHowToRead(null));
+  yield put(openSettings(null));
   yield put(push(`/${requestLocale}/metric/${code}${search}`));
 }
 export function* openHowToReadSaga({ layer }) {
@@ -456,6 +464,10 @@ export function* navigateSaga({ location, args }) {
   // convert to string and append if necessary
   const newSearch = newSearchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
+  if (newPathname !== currentLocation.pathname) {
+    yield put(openHowToRead(null));
+    yield put(openSettings(null));
+  }
   yield put(push(`${newPathname}${search}`));
 }
 

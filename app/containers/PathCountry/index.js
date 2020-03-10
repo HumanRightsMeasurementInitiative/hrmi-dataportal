@@ -29,8 +29,13 @@ import {
   getCountryGrammar,
 } from 'containers/App/selectors';
 
-import { loadDataIfNeeded, navigate, trackEvent } from 'containers/App/actions';
-
+import {
+  loadDataIfNeeded,
+  navigate,
+  trackEvent,
+  openHowToRead,
+  openSettings,
+} from 'containers/App/actions';
 import {
   // INCOME_GROUPS,
   COUNTRY_FILTERS,
@@ -94,6 +99,7 @@ export function PathCountry({
   dataReady,
   allIndicators,
   countryGrammar,
+  closeLayers,
 }) {
   const [aboutMetric, setAboutMetric] = useState(null);
 
@@ -207,7 +213,10 @@ export function PathCountry({
                   <TabCountrySnapshot
                     {...props}
                     countryCode={countryCode}
-                    onMetricClick={code => setAboutMetric(code)}
+                    onMetricClick={code => {
+                      closeLayers();
+                      setAboutMetric(aboutMetric ? null : code);
+                    }}
                   />
                 ),
                 tools: {
@@ -237,7 +246,10 @@ export function PathCountry({
                     standard={standard}
                     dataReady={dataReady}
                     allIndicators={allIndicators}
-                    onMetricClick={code => setAboutMetric(code)}
+                    onMetricClick={code => {
+                      closeLayers();
+                      setAboutMetric(aboutMetric ? null : code);
+                    }}
                   />
                 ),
                 tools: {
@@ -264,7 +276,10 @@ export function PathCountry({
                     hasDimensionScore={dataReady && hasCPR(dimensions)}
                     country={country}
                     dataReady={dataReady}
-                    onMetricClick={code => setAboutMetric(code)}
+                    onMetricClick={code => {
+                      closeLayers();
+                      setAboutMetric(aboutMetric ? null : code);
+                    }}
                   />
                 ),
                 tools: {
@@ -287,7 +302,10 @@ export function PathCountry({
                     hasDimensionScore={dataReady && hasCPR(dimensions)}
                     country={country}
                     dataReady={dataReady}
-                    onMetricClick={code => setAboutMetric(code)}
+                    onMetricClick={code => {
+                      closeLayers();
+                      setAboutMetric(aboutMetric ? null : code);
+                    }}
                   />
                 ),
                 tools: {
@@ -383,6 +401,7 @@ PathCountry.propTypes = {
   onRawChange: PropTypes.func,
   raw: PropTypes.bool,
   theme: PropTypes.object,
+  closeLayers: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -403,6 +422,10 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
+    closeLayers: () => {
+      dispatch(openHowToRead(null));
+      dispatch(openSettings(null));
+    },
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
