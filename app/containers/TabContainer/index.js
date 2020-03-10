@@ -32,7 +32,10 @@ const Spacer = styled.div`
   background: 'transparent';
   height: ${({ height }) => height}px;
 `;
-const Fixed = styled.div`
+const Bar = styled.div`
+  background: ${({ theme }) => theme.global.colors.dark};
+`;
+const FixedBar = styled(Bar)`
   background: ${({ theme }) => theme.global.colors.dark};
   ${({ fixed, top }) =>
     fixed &&
@@ -120,7 +123,7 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
   return (
     <Box direction="column" style={{ position: 'relative' }}>
       <Tabs justify="start" ref={tabsRef}>
-        <Fixed fixed={fixedTop} ref={fixedRef} top={hh}>
+        <FixedBar fixed={fixedTop} ref={fixedRef} top={hh}>
           <ContentMaxWidth hasAside>
             <Box direction="row" fill="horizontal">
               <TabLinks direction="row" flex align="center">
@@ -161,7 +164,7 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
               )}
             </Box>
           </ContentMaxWidth>
-        </Fixed>
+        </FixedBar>
         {fixedTop && (
           <Spacer height={fixedRef && fixedRef.current.offsetHeight} />
         )}

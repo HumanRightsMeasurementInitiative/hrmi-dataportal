@@ -11,6 +11,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Box, InfiniteScroll, ResponsiveContext } from 'grommet';
+import { withTheme } from 'styled-components';
 
 import {
   getRegionSearch,
@@ -86,6 +87,7 @@ export function OverviewCountries({
   auxIndicators,
   featuredValues,
   featuredCountries,
+  theme,
 }) {
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
@@ -157,6 +159,7 @@ export function OverviewCountries({
               pad={{ top: size === 'small' ? 'xsmall' : '0' }}
               align="start"
               responsive={false}
+              margin={{ horizontal: `-${theme.global.edgeSize.small}` }}
             >
               {!dataReady && <LoadingIndicator />}
               {!hasResults && dataReady && (
@@ -170,7 +173,6 @@ export function OverviewCountries({
                   wrap
                   overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
-                  margin="0"
                   align="start"
                 >
                   <InfiniteScroll items={sorted} step={36} show={0}>
@@ -293,6 +295,7 @@ OverviewCountries.propTypes = {
   hasAside: PropTypes.bool,
   featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+  theme: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -385,4 +388,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(OverviewCountries));
+export default compose(withConnect)(injectIntl(withTheme(OverviewCountries)));

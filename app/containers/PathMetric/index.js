@@ -22,7 +22,7 @@ import TabContainer from 'containers/TabContainer';
 import AboutMetricContainer from 'containers/AboutMetricContainer';
 import AboutCountryContainer from 'containers/AboutCountryContainer';
 
-import HeaderLinks from 'components/HeaderLinks';
+import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
 import Aside from 'components/Aside';
 
@@ -100,7 +100,7 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
-                  <HeaderLinks
+                  <Breadcrumb
                     onItemClick={key => onMetricClick(key)}
                     breadcrumb
                     items={ancestors.map(ancestor => ({
