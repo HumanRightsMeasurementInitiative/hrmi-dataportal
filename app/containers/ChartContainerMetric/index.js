@@ -233,7 +233,8 @@ export function ChartContainerMetric({
   return (
     <>
       <ChartHeader
-        title={`Scores for ${scores.length} countries`}
+        chartId="single-metric"
+        messageValues={{ no: scores.length }}
         filter={{
           regionFilterValue,
           subregionFilterValue,
