@@ -132,7 +132,8 @@ export function OverviewCountries({
       {size => (
         <MainColumn hasAside={hasAside}>
           <ChartHeader
-            title={`${countries.length} countries`}
+            chartId="countries-overview"
+            messageValues={{ no: countries.length }}
             filter={{
               regionFilterValue,
               subregionFilterValue,

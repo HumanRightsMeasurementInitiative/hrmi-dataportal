@@ -125,6 +125,15 @@ export function PathCountry({
       ? intl.formatMessage(rootMessages.countries[countryCode])
       : countryCode;
   // prettier-ignore
+  const messageValues = {
+    ...getMessageGrammar(
+      intl,
+      countryCode,
+      country.region_code,
+      countryGrammar,
+    ),
+  };
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -172,23 +181,13 @@ export function PathCountry({
                   <Paragraph>
                     <FormattedMessage
                       {...messages.header}
-                      values={getMessageGrammar(
-                        intl,
-                        countryCode,
-                        null,
-                        countryGrammar,
-                      )}
+                      values={messageValues}
                     />
                   </Paragraph>
                   <Paragraph>
                     <FormattedMessage
                       {...messages.header2}
-                      values={getMessageGrammar(
-                        intl,
-                        countryCode,
-                        null,
-                        countryGrammar,
-                      )}
+                      values={messageValues}
                     />
                   </Paragraph>
                 </MainColumn>
@@ -217,6 +216,7 @@ export function PathCountry({
                       closeLayers();
                       setAboutMetric(aboutMetric ? null : code);
                     }}
+                    messageValues={messageValues}
                   />
                 ),
                 tools: {
@@ -250,6 +250,7 @@ export function PathCountry({
                       closeLayers();
                       setAboutMetric(aboutMetric ? null : code);
                     }}
+                    messageValues={messageValues}
                   />
                 ),
                 tools: {
@@ -280,6 +281,7 @@ export function PathCountry({
                       closeLayers();
                       setAboutMetric(aboutMetric ? null : code);
                     }}
+                    messageValues={messageValues}
                   />
                 ),
                 tools: {
@@ -306,6 +308,7 @@ export function PathCountry({
                       closeLayers();
                       setAboutMetric(aboutMetric ? null : code);
                     }}
+                    messageValues={messageValues}
                   />
                 ),
                 tools: {
@@ -331,6 +334,7 @@ export function PathCountry({
                       data={atRisk}
                       countryTitle={countryTitle}
                       countryCode={countryCode}
+                      messageValues={messageValues}
                     />
                   ),
               },
@@ -365,6 +369,7 @@ export function PathCountry({
                       countryCode={countryCode}
                       onCategoryClick={onCategoryClick}
                       showFAQs={faqs}
+                      messageValues={messageValues}
                     />
                   );
                 },

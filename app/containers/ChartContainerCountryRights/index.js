@@ -178,9 +178,12 @@ export function ChartContainerCountryRights({
       {type === 'esr' && dimension && (
         <>
           <ChartHeader
-            title={`${intl.formatMessage(
-              rootMessages.dimensions[dimensionCode],
-            )} overview`}
+            chartId="dimension-overview"
+            messageValues={{
+              dimension: intl.formatMessage(
+                rootMessages.dimensions[dimensionCode],
+              ),
+            }}
             tools={{
               howToReadConfig: {
                 key: 'country-dimension-esr',
@@ -279,9 +282,12 @@ export function ChartContainerCountryRights({
           {dimension.score && (
             <>
               <ChartHeader
-                title={`${intl.formatMessage(
-                  rootMessages.dimensions[dimensionCode],
-                )} overview`}
+                chartId="dimension-overview"
+                messageValues={{
+                  dimension: intl.formatMessage(
+                    rootMessages.dimensions[dimensionCode],
+                  ),
+                }}
               />
               <Box margin={{ bottom: 'large' }}>
                 <ChartBars
