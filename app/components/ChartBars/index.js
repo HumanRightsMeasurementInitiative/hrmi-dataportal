@@ -137,7 +137,7 @@ function ChartBars({
                 >
                   <DimensionScoreWrapper score={summaryScore}>
                     <DimensionScore color={labelColor}>
-                      <Text weight="600" size="small" color="white">
+                      <Text weight={600} size="small" color="white">
                         {formatScoreMax(
                           summaryScore.score,
                           summaryScore.maxValue,

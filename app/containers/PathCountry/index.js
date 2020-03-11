@@ -133,7 +133,6 @@ export function PathCountry({
       countryGrammar,
     ),
   };
-
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -421,8 +420,8 @@ const mapStateToProps = createStructuredSelector({
   atRisk: (state, { match }) => getPeopleAtRiskForCountry(state, match.params),
   standard: state => getStandardSearch(state),
   allIndicators: state => getESRIndicators(state),
-  countryGrammar: (state, { countryCode }) =>
-    getCountryGrammar(state, countryCode),
+  countryGrammar: (state, { match }) =>
+    getCountryGrammar(state, match.params.country),
 });
 
 export function mapDispatchToProps(dispatch) {
