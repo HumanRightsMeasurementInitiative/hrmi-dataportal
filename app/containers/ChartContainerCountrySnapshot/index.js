@@ -116,7 +116,11 @@ export function ChartContainerCountrySnapshot({
           getMessageGrammar(intl, countryCode, null, countryGrammar),
         )}
       />
-      <NarrativeESRStandardHint country={country} standard={standard} />
+      <NarrativeESRStandardHint
+        country={country}
+        standard={standard}
+        countryGrammar={countryGrammar}
+      />
       <Box margin={{ bottom: 'large' }}>
         <ChartCountrySnapshot
           type="esr"
@@ -163,7 +167,11 @@ export function ChartContainerCountrySnapshot({
         <Heading level={4}>
           <FormattedMessage {...rootMessages.dimensions.esr} />
         </Heading>
-        <NarrativeESRStandardHint country={country} standard={standard} />
+        <NarrativeESRStandardHint
+          country={country}
+          standard={standard}
+          countryGrammar={countryGrammar}
+        />
         <NarrativeESR
           dimensionScore={dimensions.esr.score}
           country={country}
