@@ -39,6 +39,12 @@ import { isMinSize } from 'utils/responsive';
 import rootMessages from 'messages';
 import messages from './messages';
 
+const images = {
+  empowerment: `${IMAGE_PATH}/Empowerment-768x512.jpg`,
+  physint: `${IMAGE_PATH}/Safety-from-the-State-1-768x490.jpg`,
+  esr: `${IMAGE_PATH}/Quality-of-LIfe-768x512.jpg`,
+};
+
 export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
   const [aboutCountry, setAboutCountry] = useState(null);
   const metricCode = match.params.metric;
@@ -48,8 +54,13 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
   );
 
   const ancestors = [{ key: 'all' }];
+  let imageSrc;
 
+  if (metric.metricType === 'dimensions') {
+    imageSrc = images[metricCode];
+  }
   if (metric.metricType === 'rights') {
+    imageSrc = images[metric.dimension];
     ancestors.push({
       type: 'dimensions',
       key: metric.dimension,
@@ -62,6 +73,7 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
     }
   }
   if (metric.metricType === 'indicators') {
+    imageSrc = images.esr;
     ancestors.push({
       type: 'dimensions',
       key: 'esr',
@@ -140,7 +152,7 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
                 </MainColumn>
                 {isMinSize(size, 'large') && (
                   <Aside image>
-                    <GImage src={`${IMAGE_PATH}/Empowerment.jpg`} fit="cover" />
+                    <GImage src={imageSrc} fit="cover" />
                   </Aside>
                 )}
               </ContentMaxWidth>
