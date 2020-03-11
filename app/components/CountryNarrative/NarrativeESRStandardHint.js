@@ -2,8 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
+import styled from 'styled-components';
 
 import { COLUMNS } from 'containers/App/constants';
+
+import { getMessageGrammar } from 'utils/narrative';
+import { lowerCase } from 'utils/string';
+
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -16,31 +21,40 @@ const isDefaultStandard = (country, standard) =>
 const getIncomeCategory = country =>
   country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1' ? 'hi' : 'lmi';
 
-function NarrativeESRStandardHint({ standard, country, intl }) {
+const StyledParagraph = styled(Paragraph)`
+  font-weight: 600;
+`;
+
+function NarrativeESRStandardHint({ standard, country, intl, countryGrammar }) {
+  const messageValues = {
+    ...getMessageGrammar(
+      intl,
+      country.country_code,
+      country.region_code,
+      countryGrammar,
+    ),
+    otherStandard: intl.formatMessage(rootMessages.settings.standard[standard]),
+    defaultStandard: intl.formatMessage(
+      rootMessages.settings.standard[getDefaultStandard(country)],
+    ),
+    incomeCategory: lowerCase(
+      intl.formatMessage(rootMessages.income[getIncomeCategory(country)]),
+    ),
+  };
+
   return isDefaultStandard(country, standard) ? null : (
-    <Paragraph>
-      <strong>
-        <FormattedMessage
-          {...messages.esr.changeStandardNote}
-          values={{
-            otherStandard: intl.formatMessage(
-              rootMessages.settings.standard[standard],
-            ),
-            defaultStandard: intl.formatMessage(
-              rootMessages.settings.standard[getDefaultStandard(country)],
-            ),
-            incomeCategory: intl.formatMessage(
-              rootMessages.income[getIncomeCategory(country)],
-            ),
-          }}
-        />
-      </strong>
-    </Paragraph>
+    <StyledParagraph margin={{ bottom: 'large' }}>
+      <FormattedMessage
+        {...messages.esr.changeStandardNote}
+        values={messageValues}
+      />
+    </StyledParagraph>
   );
 }
 
 NarrativeESRStandardHint.propTypes = {
   country: PropTypes.object,
+  countryGrammar: PropTypes.object,
   standard: PropTypes.string,
   intl: intlShape.isRequired,
 };
