@@ -171,8 +171,8 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
                   settingsConfig: (metric.type === 'esr' ||
                     metric.metricType === 'indicators') && {
                     key: 'metric',
-                    showStandard: true,
-                    showBenchmark: metric.metricType !== 'indicators',
+                    showStandard: metric.metricType !== 'indicators',
+                    showBenchmark: true,
                   },
                 },
               },
