@@ -41,8 +41,7 @@ function TabCountryReport({
   dataReady,
   hasDimensionScore,
   onMetricClick,
-  // trackEvent,
-  // raw,
+  messageValues,
 }) {
   const currentStandard = STANDARDS.find(s => s.key === standard);
   return (
@@ -56,6 +55,7 @@ function TabCountryReport({
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
               onMetricClick={onMetricClick}
+              countryMessageValues={messageValues}
             />
           </SectionContainer>
           <SectionContainer>
@@ -72,7 +72,9 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => <ChartHeader title="Indicators" {...props} />}
+              header={props => <ChartHeader chartId="indicators" {...props} />}
+              countryMessageValues={messageValues}
+              chartId="indicators"
             />
           </SectionContainer>
           <SectionContainer>
@@ -111,7 +113,9 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => <ChartHeader title="By Group" {...props} />}
+              header={props => <ChartHeader chartId="sex" {...props} />}
+              countryMessageValues={messageValues}
+              chartId="sex"
             />
           </SectionContainer>
           <SectionContainer>
@@ -158,7 +162,9 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => <ChartHeader title="Over time" {...props} />}
+              header={props => <ChartHeader chartId="trend" {...props} />}
+              countryMessageValues={messageValues}
+              chartId="trend"
             />
           </SectionContainer>
           <SectionContainer>
@@ -178,9 +184,9 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => (
-                <ChartHeader title="People at risk" {...props} />
-              )}
+              header={props => <ChartHeader chartId="people" {...props} />}
+              countryMessageValues={messageValues}
+              chartId="people"
             />
           </SectionContainer>
         </>
@@ -193,6 +199,7 @@ function TabCountryReport({
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
               onMetricClick={onMetricClick}
+              countryMessageValues={messageValues}
             />
           </SectionContainer>
           {hasDimensionScore && (
@@ -223,7 +230,9 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
-                  header={props => <ChartHeader title="Over time" {...props} />}
+                  header={props => <ChartHeader chartId="trend" {...props} />}
+                  countryMessageValues={messageValues}
+                  chartId="trend"
                 />
               </SectionContainer>
               <SectionContainer>
@@ -243,9 +252,9 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
-                  header={props => (
-                    <ChartHeader title="People at risk" {...props} />
-                  )}
+                  header={props => <ChartHeader chartId="people" {...props} />}
+                  countryMessageValues={messageValues}
+                  chartId="people"
                 />
               </SectionContainer>
             </>
@@ -260,12 +269,12 @@ function TabCountryReport({
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
               onMetricClick={onMetricClick}
+              countryMessageValues={messageValues}
             />
           </SectionContainer>
           {hasDimensionScore && (
             <>
               <SectionContainer>
-                Category, rights & indicators over time
                 <ChartSettingMetrics
                   activeDefault={dimension}
                   metrics={DIMENSIONS.reduce((dims, d) => {
@@ -291,11 +300,12 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
-                  header={props => <ChartHeader title="Over time" {...props} />}
+                  header={props => <ChartHeader chartId="trend" {...props} />}
+                  countryMessageValues={messageValues}
+                  chartId="trend"
                 />
               </SectionContainer>
               <SectionContainer>
-                People at risk word cloud && commentary
                 <ChartSettingMetrics
                   activeDefault={
                     RIGHTS.filter(r => r.dimension === dimension)[0].key
@@ -312,6 +322,9 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
+                  header={props => <ChartHeader chartId="people" {...props} />}
+                  countryMessageValues={messageValues}
+                  chartId="people"
                 />
               </SectionContainer>
             </>
@@ -337,6 +350,7 @@ TabCountryReport.propTypes = {
   dimension: PropTypes.string,
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   onMetricClick: PropTypes.func,
+  messageValues: PropTypes.object,
 };
 
 // export default injectIntl(TabCountryReport);

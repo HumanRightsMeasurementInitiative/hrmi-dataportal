@@ -8,6 +8,7 @@ import { FormDown, FormUp } from 'grommet-icons';
 import getMetricDetails from 'utils/metric-details';
 
 import rootMessages from 'messages';
+import messages from './messages';
 
 import MetricSelect from './MetricSelect';
 
@@ -16,6 +17,7 @@ import MetricSelect from './MetricSelect';
 // }
 // prettier-ignore
 const ButtonDropdown = styled(Button)`
+  display: inline;
   padding: 0px 3px;
   margin: 0px 3px;
   border-bottom: 1px solid;
@@ -26,7 +28,15 @@ const ButtonDropdown = styled(Button)`
   }
 `;
 
-function ChartSettingMetrics({ activeDefault, metrics, chart, header }) {
+function ChartSettingMetrics({
+  activeDefault,
+  metrics,
+  chart,
+  header,
+  chartId = 'indicators',
+  countryMessageValues,
+  noOfScores,
+}) {
   const [activeMetric, setActiveMetric] = useState(activeDefault);
   const [open, setOpen] = useState(false);
   const dropButton = useRef(null);
@@ -35,51 +45,54 @@ function ChartSettingMetrics({ activeDefault, metrics, chart, header }) {
   return (
     <Box margin={{ bottom: 'xlarge' }}>
       {header && header({ metricCode: activeMetric })}
-      <Box direction="row" margin={{ bottom: 'medium' }} wrap>
-        <Text>See how this country performs</Text>
-        <ButtonDropdown
-          plain
-          first
-          onClick={() => setOpen(!open)}
-          label={
-            <Box
-              direction="row"
-              align="center"
-              justify="between"
-              fill="horizontal"
-              gap="xsmall"
-              flex={{ shrink: 0 }}
-            >
-              <Text style={{ whiteSpace: 'nowrap' }}>
-                <FormattedMessage
-                  {...rootMessages[details.metricType][activeMetric]}
+      <Box margin={{ bottom: 'small' }}>
+        <Text size="medium">
+          <FormattedMessage
+            {...messages[chartId]}
+            values={{
+              no: noOfScores,
+              hasMany: noOfScores !== 1,
+              ...countryMessageValues,
+              dropdown: (
+                <ButtonDropdown
+                  plain
+                  first
+                  onClick={() => setOpen(!open)}
+                  label={
+                    <span>
+                      <Text style={{ whiteSpace: 'nowrap' }}>
+                        <FormattedMessage
+                          {...rootMessages[details.metricType][activeMetric]}
+                        />
+                      </Text>
+                      {open && <FormUp size="large" />}
+                      {!open && <FormDown size="large" />}
+                    </span>
+                  }
+                  ref={dropButton}
                 />
-              </Text>
-              {open && <FormUp size="large" />}
-              {!open && <FormDown size="large" />}
-            </Box>
-          }
-          ref={dropButton}
-        />
-        <Text>when looking at indicators/sex/over/time/at-risk data</Text>
-        {open && (
-          <Drop
-            align={{ top: 'bottom', left: 'left' }}
-            target={dropButton.current}
-            onClickOutside={() => setOpen(false)}
-            overflow="hidden"
-          >
-            <MetricSelect
-              onClose={() => setOpen(false)}
-              metrics={metrics}
-              activeMetric={activeMetric}
-              setActiveMetric={code => {
-                setActiveMetric(code);
-                setOpen(false);
-              }}
-            />
-          </Drop>
-        )}
+              ),
+            }}
+          />
+          {open && (
+            <Drop
+              align={{ top: 'bottom', left: 'left' }}
+              target={dropButton.current}
+              onClickOutside={() => setOpen(false)}
+              overflow="hidden"
+            >
+              <MetricSelect
+                onClose={() => setOpen(false)}
+                metrics={metrics}
+                activeMetric={activeMetric}
+                setActiveMetric={code => {
+                  setActiveMetric(code);
+                  setOpen(false);
+                }}
+              />
+            </Drop>
+          )}
+        </Text>
       </Box>
       {chart && chart({ metricCode: activeMetric })}
     </Box>
@@ -87,9 +100,12 @@ function ChartSettingMetrics({ activeDefault, metrics, chart, header }) {
 }
 ChartSettingMetrics.propTypes = {
   activeDefault: PropTypes.string, // the key
+  chartId: PropTypes.string, // the key
   metrics: PropTypes.array, // the available metrics
   chart: PropTypes.func,
   header: PropTypes.func,
+  countryMessageValues: PropTypes.object,
+  noOfScores: PropTypes.number,
 };
 
 export default ChartSettingMetrics;
