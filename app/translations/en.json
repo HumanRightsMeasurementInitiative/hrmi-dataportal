@@ -86,6 +86,8 @@
   "hrmi.containers.PathMetric.rights.participation.header": "Are people able to vote and participate in public life?",
   "hrmi.containers.PathMetric.rights.participation.header2": "The estimated score is displayed within an uncertainty band.",
   "hrmi.containers.PathMetric.rights.participation.link": "More about the methodology",
+  "hrmi.components.ChartCountrySnapshot.rightsScoresUnavailable.esr": "Data not yet available",
+  "hrmi.components.ChartCountrySnapshot.rightsScoresUnavailable.cpr": "Data not yet available",
   "hrmi.containers.Search.allSearch": "Find country or human right",
   "hrmi.containers.Search.countrySearch": "Find country",
   "hrmi.containers.Search.metricSearch": "Find right or indicator",
