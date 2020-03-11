@@ -101,6 +101,9 @@ const prepareData = ({
         key: s.key,
         label: getMetricLabel(s, intl),
         onClick: () => onClick(s.key),
+        hasScoreAlternate: s.hasScoreAlternate,
+        hasScoreIndicators: s.hasScoreIndicators,
+        hasScoreIndicatorsAlternate: s.hasScoreIndicatorsAlternate,
       }
       : {
         color: dimensionCode,
@@ -126,7 +129,6 @@ function ChartCountrySnapshot({
   intl,
   source,
 }) {
-  // const currentStandard = STANDARDS.find(s => s.key === standard);
   const hasRights = rights.some(r => !!r.score);
   return (
     <Box
