@@ -10,6 +10,7 @@ const Styled = styled.div`
   display: table;
   height: 100%;
   width: 100%;
+  font-size: 0;
 `;
 const StyledTextWrap = styled.div`
   display: table-cell;
