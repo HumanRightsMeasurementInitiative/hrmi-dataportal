@@ -193,7 +193,11 @@ export function ChartContainerCountryRights({
               },
             }}
           />
-          <NarrativeESRStandardHint country={country} standard={standard} />
+          <NarrativeESRStandardHint
+            country={country}
+            standard={standard}
+            countryGrammar={countryGrammar}
+          />
           <Box margin={{ bottom: 'large' }}>
             <ChartBars
               data={[
