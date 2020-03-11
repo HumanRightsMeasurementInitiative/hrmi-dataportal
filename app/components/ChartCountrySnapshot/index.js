@@ -148,7 +148,7 @@ function ChartCountrySnapshot({
                 {` (${year})`}
               </Text>
             </Box>
-            {hasRights && (
+            {(hasRights || type === 'esr') && (
               <ChartBars
                 summaryScore={
                   dimensionScore && { score: dimensionScore, maxValue }
