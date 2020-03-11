@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
-import NoDataHint from 'components/NoDataHint';
 
+import NoDataHint from './NoDataHint';
 import Wrapper from './styled/BarWrapper';
 import MinLabel from './styled/MinLabel';
 import MaxLabelOriginal from './styled/MaxLabel';
