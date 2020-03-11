@@ -9,8 +9,14 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.components.ChartCountrySnapshot';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the ChartCountrySnapshot component!',
+  rightsScoresUnavailable: {
+    esr: {
+      id: `${scope}.rightsScoresUnavailable.esr`,
+      defaultMessage: 'Data not yet available.',
+    },
+    cpr: {
+      id: `${scope}.rightsScoresUnavailable.cpr`,
+      defaultMessage: 'Data not yet available.',
+    },
   },
 });

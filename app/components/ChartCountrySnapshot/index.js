@@ -18,7 +18,7 @@ import Source from 'components/Source';
 import getMetricDetails from 'utils/metric-details';
 
 import rootMessages from 'messages';
-// import messages from './messages';
+import messages from './messages';
 
 const Dimension = styled(Box)`
   margin-bottom: 6px;
@@ -128,7 +128,6 @@ function ChartCountrySnapshot({
 }) {
   // const currentStandard = STANDARDS.find(s => s.key === standard);
   const hasRights = rights.some(r => !!r.score);
-  if (!hasRights) return null;
   return (
     <Box
       direction="column"
@@ -147,32 +146,52 @@ function ChartCountrySnapshot({
                 {` (${year})`}
               </Text>
             </Box>
-            <ChartBars
-              summaryScore={
-                dimensionScore && { score: dimensionScore, maxValue }
-              }
-              data={prepareData({
-                scores: rights,
-                dimensionCode,
-                currentBenchmark,
-                standard,
-                onClick: onMetricClick,
-                intl,
-              })}
-              currentBenchmark={type === 'esr' && currentBenchmark}
-              standard={type === 'esr' && standard}
-              commonLabel={`${intl.formatMessage(
-                rootMessages['rights-xshort-common'][dimensionCode],
-              )}`}
-              labelColor={`${dimensionCode}Dark`}
-              padVertical="small"
-              grades={GRADES[type]}
-              listHeader
-              metric={getMetricDetails(dimensionCode)}
-              annotateBetter={false}
-              scoreOnHover={false}
-              scoresAside
-            />
+            {hasRights && (
+              <ChartBars
+                summaryScore={
+                  dimensionScore && { score: dimensionScore, maxValue }
+                }
+                data={prepareData({
+                  scores: rights,
+                  dimensionCode,
+                  currentBenchmark,
+                  standard,
+                  onClick: onMetricClick,
+                  intl,
+                })}
+                currentBenchmark={type === 'esr' && currentBenchmark}
+                standard={type === 'esr' && standard}
+                commonLabel={`${intl.formatMessage(
+                  rootMessages['rights-xshort-common'][dimensionCode],
+                )}`}
+                labelColor={`${dimensionCode}Dark`}
+                padVertical="small"
+                grades={GRADES[type]}
+                listHeader
+                metric={getMetricDetails(dimensionCode)}
+                annotateBetter={false}
+                scoreOnHover={false}
+                scoresAside
+              />
+            )}
+            {!hasRights && (
+              <Box margin={{ top: 'small' }}>
+                {type === 'esr' && (
+                  <Text>
+                    <FormattedMessage
+                      {...messages.rightsScoresUnavailable.esr}
+                    />
+                  </Text>
+                )}
+                {type === 'cpr' && (
+                  <Text>
+                    <FormattedMessage
+                      {...messages.rightsScoresUnavailable.cpr}
+                    />
+                  </Text>
+                )}
+              </Box>
+            )}
           </Dimension>
         </ChartArea>
       </Box>
