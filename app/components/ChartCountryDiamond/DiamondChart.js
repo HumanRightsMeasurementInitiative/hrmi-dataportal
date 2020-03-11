@@ -140,6 +140,7 @@ export function DiamondChart({
                 heightIndividual={(w - MARGINS * 2) / 13}
                 annotateBenchmarkAbove
                 benchmarkTooltip={showBenchmark && index === 0}
+                hasBackground
               />
             </BarWrapInner>
           ))}

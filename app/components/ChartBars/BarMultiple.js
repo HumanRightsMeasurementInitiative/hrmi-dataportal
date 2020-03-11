@@ -37,6 +37,7 @@ function BarMultiple({
   annotateBenchmarkAbove,
   scoreOnHover,
   benchmarkTooltip,
+  hasBackground,
 }) {
   const {
     color,
@@ -84,6 +85,7 @@ function BarMultiple({
               showIncompleteAction={false}
               height={Math.round(hi)}
               scoreOnHover={scoreOnHover}
+              hasBackground={hasBackground}
             />
           </BarWrapInner>
         ))}
@@ -116,6 +118,7 @@ function BarMultiple({
 BarMultiple.propTypes = {
   dataMultiple: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   showLabels: PropTypes.bool,
+  hasBackground: PropTypes.bool,
   annotateBenchmarkAbove: PropTypes.bool,
   benchmarkTooltip: PropTypes.bool,
   totalHeight: PropTypes.number,
