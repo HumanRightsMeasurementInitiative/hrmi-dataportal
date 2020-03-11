@@ -88,7 +88,7 @@ export function ListHeader({
                 </Text>
                 <Box
                   margin={{ left: 'auto' }}
-                  pad={annotateBenchmark && { left: 'xsmall' }}
+                  pad={annotateBenchmark ? { left: 'xsmall' } : null}
                   style={{
                     transform: 'translateX(100%)',
                   }}
