@@ -17,10 +17,11 @@ function NarrativeESR({
   country,
   dimensionScore,
   intl,
-  someData,
+  // someData,
   countryGrammar,
   short = false,
   benchmark,
+  showNoData,
 }) {
   // console.log(score);
   const scoreAdjusted =
@@ -53,13 +54,10 @@ function NarrativeESR({
     ),
     benchmarkBest: intl.formatMessage(rootMessages.settings.benchmark.best),
   };
-  if (!dimensionScore) {
+  if (!dimensionScore && showNoData) {
     return (
       <Paragraph>
         <FormattedMessage {...messages.esr.noData} values={messageValues} />
-        {someData && (
-          <FormattedMessage {...messages.esr.someData} values={messageValues} />
-        )}
         <FormattedMessage
           {...messages.esr.noDataFunding}
           values={messageValues}
@@ -72,22 +70,20 @@ function NarrativeESR({
     const rangeBest = getESRScoreRange(scoreBest);
     if (short) {
       return (
-        <>
-          <Paragraph>
-            {benchmark === 'adjusted' && (
-              <FormattedMessage
-                {...messages.esr.scoreAdjusted}
-                values={messageValues}
-              />
-            )}
-            {benchmark !== 'adjusted' && (
-              <FormattedMessage
-                {...messages.esr.scoreBestSimple}
-                values={messageValues}
-              />
-            )}
-          </Paragraph>
-        </>
+        <Paragraph>
+          {benchmark === 'adjusted' && (
+            <FormattedMessage
+              {...messages.esr.scoreAdjusted}
+              values={messageValues}
+            />
+          )}
+          {benchmark !== 'adjusted' && (
+            <FormattedMessage
+              {...messages.esr.scoreBestSimple}
+              values={messageValues}
+            />
+          )}
+        </Paragraph>
       );
     }
     return (
@@ -152,6 +148,7 @@ function NarrativeESR({
 NarrativeESR.propTypes = {
   dimensionScore: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   someData: PropTypes.bool,
+  showNoData: PropTypes.bool,
   short: PropTypes.bool,
   country: PropTypes.object,
   countryGrammar: PropTypes.object,

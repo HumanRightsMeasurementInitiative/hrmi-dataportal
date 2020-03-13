@@ -264,6 +264,7 @@ export function ChartContainerCountryRights({
             countryGrammar={countryGrammar}
             someData={hasSomeIndicatorScores}
             standard={standard}
+            showNoData
           />
           <Paragraph>
             <NarrativeESRCompAssessment

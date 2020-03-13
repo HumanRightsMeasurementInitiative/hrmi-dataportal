@@ -54,19 +54,21 @@ export default defineMessages({
   compAssessmentESR: {
     start: {
       id: `${scope}.compAssessmentESR.start`,
-      defaultMessage: 'On {esr}, ',
-    },
-    performing: {
-      id: `${scope}.compAssessmentESR.all`,
       defaultMessage:
-        '{needsArticle, select, true {the } false { }}{country} is performing ',
+        'On {esr}, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
     },
-    some: {
-      id: `${scope}.compAssessmentESR.some`,
-      defaultMessage: 'when we look across the rights for which we have data, ',
+    startSome: {
+      id: `${scope}.compAssessmentESR.startSome`,
+      defaultMessage:
+        'On {esr} rights, when we look across the rights for which we have data, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
     },
-    one: {
-      id: `${scope}.compAssessmentESR.one`,
+    startOne: {
+      id: `${scope}.compAssessmentESR.start`,
+      defaultMessage:
+        'On {esr} rights, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
+    },
+    oneRight: {
+      id: `${scope}.compAssessmentESR.oneRight`,
       defaultMessage: 'on the {right} ',
     },
     end: {
@@ -78,6 +80,15 @@ export default defineMessages({
       id: `${scope}.compAssessmentESR.endHi`,
       defaultMessage:
         ', compared with the other HI countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
+    },
+    benchmarkNote: {
+      id: `${scope}.compAssessmentESR.benchmarkNote`,
+      defaultMessage:
+        " (this comparison is calculated using the '{benchmark}' benchmark).",
+    },
+    noData: {
+      id: `${scope}.compAssessmentESR.noData`,
+      defaultMessage: 'compAssessmentESR.noData',
     },
   },
   esr: {

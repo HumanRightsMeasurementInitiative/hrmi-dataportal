@@ -151,7 +151,7 @@ function ChartCountrySnapshot({
             {(hasRights || type === 'esr') && (
               <ChartBars
                 summaryScore={
-                  dimensionScore && { score: dimensionScore, maxValue }
+                  dimensionScore ? { score: dimensionScore, maxValue } : null
                 }
                 data={prepareData({
                   scores: rights,

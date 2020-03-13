@@ -14,11 +14,11 @@ const isCountryHighIncome = country => country.high_income_country === '1';
 function NarrativeESRCompAssessment({
   benchmark,
   country,
-  dimensionScore,
-  referenceScore,
-  referenceCount,
   intl,
   countryGrammar,
+  comparativeScore,
+  comparativeRights,
+  groupAverageScore,
 }) {
   const messageValues = {
     ...getMessageGrammar(
@@ -26,17 +26,19 @@ function NarrativeESRCompAssessment({
       country.country_code,
       country.region_code,
       countryGrammar,
+      country.subregion_code,
     ),
     esr: intl.formatMessage(rootMessages.dimensions.esr),
-    referenceCount,
-    referenceCountLessOne: referenceCount - 1,
     dimension: intl.formatMessage(rootMessages.dimensions.esr),
   };
 
-  if (!dimensionScore) {
+  if (!comparativeScore) {
     return (
       <>
-        <FormattedMessage {...messages.esr.noData} values={messageValues} />
+        <FormattedMessage
+          {...messages.compAssessmentESR.noData}
+          values={messageValues}
+        />
         <FormattedMessage
           {...messages.esr.noDataFunding}
           values={messageValues}
@@ -44,27 +46,54 @@ function NarrativeESRCompAssessment({
       </>
     );
   }
-  if (dimensionScore) {
-    const rangeLo = parseFloat(dimensionScore[benchmark.column]) - RANGE;
-    const rangeHi = parseFloat(dimensionScore[benchmark.column]) + RANGE;
+  // all, some or one right
+  if (comparativeScore) {
+    const rangeLo = comparativeScore - RANGE;
+    const rangeHi = comparativeScore + RANGE;
     return (
       <>
-        <FormattedMessage
-          {...messages.compAssessmentESR.start}
-          values={messageValues}
-        />
+        {comparativeRights === 'all' && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.start}
+            values={messageValues}
+          />
+        )}
+        {comparativeRights === 'some' && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.startSome}
+            values={messageValues}
+          />
+        )}
+        {comparativeRights !== 'all' && comparativeRights !== 'some' && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.startOne}
+            values={{
+              ...messageValues,
+              right: intl.formatMessage(rootMessages.rights[comparativeRights]),
+            }}
+          />
+        )}
         <strong>
           <FormattedMessage
             {...messages.compAssessment.result[
               compareRange({
                 lo: rangeLo,
                 hi: rangeHi,
-                reference: referenceScore,
+                reference: groupAverageScore,
               })
             ]}
             values={messageValues}
           />
         </strong>
+        {comparativeRights !== 'all' && comparativeRights !== 'some' && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.oneRight}
+            values={{
+              ...messageValues,
+              right: intl.formatMessage(rootMessages.rights[comparativeRights]),
+            }}
+          />
+        )}
         {isCountryHighIncome(country) && (
           <FormattedMessage
             {...messages.compAssessmentESR.endHi}
@@ -77,6 +106,14 @@ function NarrativeESRCompAssessment({
             values={messageValues}
           />
         )}
+        <FormattedMessage
+          {...messages.compAssessmentESR.benchmarkNote}
+          values={{
+            benchmark: intl.formatMessage(
+              rootMessages.settings.benchmark[benchmark.key],
+            ),
+          }}
+        />
       </>
     );
   }
@@ -92,6 +129,9 @@ NarrativeESRCompAssessment.propTypes = {
   dimensionScore: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   rightsAverageScore: PropTypes.number,
   intl: intlShape.isRequired,
+  comparativeScore: PropTypes.number,
+  comparativeRights: PropTypes.string,
+  groupAverageScore: PropTypes.number,
 };
 
 export default injectIntl(NarrativeESRCompAssessment);

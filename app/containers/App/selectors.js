@@ -902,22 +902,60 @@ export const getDimensionsForCountry = createSelector(
         const indicatorsAlternate = indicators
           .filter(i => i.standard !== 'Both' && i.standard !== standardCode)
           .map(i => i.metric_code);
+
+        const rightsScoresStandardAll =
+          rightScores.esr &&
+          rightScores.esr.filter(
+            s => s.standard === standardCode && s.group === 'All',
+          );
+        const rightsScoresSum =
+          rightsScoresStandardAll &&
+          rightsScoresStandardAll.reduce((sum, s) => {
+            if (!sum) {
+              const metric = RIGHTS.find(r =>
+                quasiEquals(r.code, s.metric_code),
+              );
+              return {
+                ...s,
+                metric: metric.key,
+              };
+            }
+            const sSum = sum;
+            BENCHMARKS.forEach(b => {
+              sSum[b.column] =
+                parseFloat(sum[b.column]) + parseFloat(s[b.column]);
+            });
+            return {
+              ...sSum,
+              metric: 'some',
+              metric_code: '',
+            };
+          }, null);
+        // prettier-ignore
+        const rightsScoresAvg =
+          rightsScoresStandardAll.length > 1
+            ? BENCHMARKS.reduce((avg, b) => ({
+              ...avg,
+              [b.column]: avg[b.column] / rightsScoresStandardAll.length
+            }), rightsScoresSum)
+            : rightsScoresSum;
         return {
           [d.key]: {
             score: false,
-            hasScoreAlternate: !!scores.esr.find(
+            scoreSome: rightsScoresAvg,
+            hasScoreAlternate: scores.esr.some(
               s => s.standard !== standardCode,
             ),
-            hasScoreRights: !!rightScores.esr.find(
+            hasScoreRights: rightScores.esr.some(
               s => s.standard === standardCode,
             ),
-            hasScoreRightsAlternate: !!rightScores.esr.find(
+            hasScoreRightsAlternate: rightScores.esr.some(
               s => s.standard !== standardCode,
             ),
-            hasScoreIndicators: !!indicatorScores.find(
+            hasScoreIndicators: indicatorScores.some(
               s => indicatorsStandard.indexOf(s.metric_code) > -1,
             ),
-            hasScoreIndicatorsAlternate: !!indicatorScores.find(
+            hasScoreIndicatorsAlternate: indicatorScores.some(
               s => indicatorsAlternate.indexOf(s.metric_code) > -1,
             ),
             ...d,
