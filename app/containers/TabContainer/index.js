@@ -171,7 +171,7 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
       </Tabs>
       <Box direction="column" style={{ position: 'relative' }}>
         {asideTab && <AsideBackground />}
-        <ContentMaxWidth column hasAside={asideTab}>
+        <ContentMaxWidth column hasAside={!!asideTab}>
           <Box direction="row" fill="horizontal">
             <MainColumn hasAside={!!asideTab}>
               {activeTab.content({

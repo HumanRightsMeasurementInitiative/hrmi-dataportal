@@ -166,7 +166,7 @@ export const getCountryOf = (locale, countryGrammar, countryLabel) => {
 };
 
 const regionsNeedArticle = {
-  en: ['americas', 'middle-east-north-africa'],
+  en: ['americas', 'middle-east-north-africa', 'pacific', 'middle-east'],
   fr: ['americas'],
   es: ['americas'],
   pt: ['americas'],
@@ -211,13 +211,16 @@ const regionsAreFeminine = {
 };
 
 export const needsArticleRegion = (locale, code) =>
-  regionsNeedArticle[locale].indexOf(code) > -1;
+  code && regionsNeedArticle[locale].indexOf(code) > -1;
+
 export const isPluralRegion = (locale, code) =>
-  regionsArePlural[locale].indexOf(code) > -1;
+  code && regionsArePlural[locale].indexOf(code) > -1;
+
 export const isFeminineRegion = (locale, code) =>
-  regionsAreFeminine[locale].indexOf(code) > -1;
+  code && regionsAreFeminine[locale].indexOf(code) > -1;
 
 export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
+  if (regionCode) return false;
   if (!needsArticleRegion(locale, regionCode)) {
     return regionLabel;
   }
@@ -264,6 +267,7 @@ export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
 };
 
 export const getRegionOf = (locale, regionCode, regionLabel) => {
+  if (regionCode) return false;
   if (locale === 'en') {
     return regionLabel;
   }
@@ -320,13 +324,20 @@ export const getMessageGrammar = (
   countryCode,
   regionCode,
   countryGrammar,
+  subregionCode,
 ) => {
   const { locale } = intl;
+  const useSubregion = subregionCode && subregionCode === 'pacific';
   const countryLabel = rootMessages.countries[countryCode]
     ? intl.formatMessage(rootMessages.countries[countryCode])
     : countryCode;
-  const regionLabel =
-    regionCode && intl.formatMessage(rootMessages.regions[regionCode]);
+  let regionLabel;
+  if (!useSubregion && regionCode) {
+    regionLabel = intl.formatMessage(rootMessages.regions[regionCode]);
+  }
+  if (useSubregion) {
+    regionLabel = intl.formatMessage(rootMessages.subregions[subregionCode]);
+  }
   const countryWithArticle = getCountryWithArticle(
     locale,
     countryGrammar,
@@ -346,11 +357,20 @@ export const getMessageGrammar = (
     genderNumber: genderNumber(locale, countryGrammar),
     countryOf: getCountryOf(locale, countryGrammar, countryLabel),
     region: regionLabel,
-    regionWithArticle:
-      regionCode && getRegionWithArticle(locale, regionCode, regionLabel),
-    regionOf: regionCode && getRegionOf(locale, regionCode, regionLabel),
-    needsArticleRegion:
-      regionCode && needsArticleRegion(intl.locale, regionCode),
+    regionWithArticle: getRegionWithArticle(
+      locale,
+      useSubregion ? subregionCode : regionCode,
+      regionLabel,
+    ),
+    regionOf: getRegionOf(
+      locale,
+      useSubregion ? subregionCode : regionCode,
+      regionLabel,
+    ),
+    needsArticleRegion: needsArticleRegion(
+      locale,
+      useSubregion ? subregionCode : regionCode,
+    ),
   };
 };
 
