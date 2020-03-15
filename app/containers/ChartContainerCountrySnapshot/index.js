@@ -25,7 +25,7 @@ import {
   getIndicatorsForCountry,
   getCountry,
   getCountryGrammar,
-  getDimensionAverages,
+  getReferenceScores,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
 import saga from 'containers/App/saga';
@@ -119,6 +119,7 @@ export function ChartContainerCountrySnapshot({
     comparativeScoreESR = dimensions.esr.scoreSome[currentBenchmark.column];
     comparativeRightsESR = dimensions.esr.scoreSome.metric;
   }
+
   return (
     <Styled>
       <ChartHeader
@@ -197,11 +198,13 @@ export function ChartContainerCountrySnapshot({
           <NarrativeESRCompAssessment
             country={country}
             countryGrammar={countryGrammar}
-            comparativeScore={comparativeScoreESR}
+            comparativeScore={parseFloat(comparativeScoreESR)}
             comparativeRights={comparativeRightsESR}
             groupAverageScore={
               dimensionAverages &&
-              dimensionAverages.esr[standard].average[benchmark]
+              dimensionAverages.esr &&
+              dimensionAverages.esr.average &&
+              dimensionAverages.esr.average[benchmark]
             }
             benchmark={currentBenchmark}
           />
@@ -319,7 +322,7 @@ const mapStateToProps = createStructuredSelector({
   esrYear: state => getESRYear(state),
   cprYear: state => getCPRYear(state),
   dimensionAverages: (state, { countryCode }) =>
-    getDimensionAverages(state, countryCode),
+    getReferenceScores(state, countryCode),
 });
 
 export function mapDispatchToProps(dispatch) {
