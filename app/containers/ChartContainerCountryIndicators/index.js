@@ -21,7 +21,6 @@ import {
   getCountryGrammar,
   getStandardSearch,
   getBenchmarkSearch,
-  getDimensionAverages,
   getDependenciesReady,
   getRightsForCountry,
   getESRScoreForCountry,
@@ -182,7 +181,6 @@ const mapStateToProps = createStructuredSelector({
     getESRScoreForCountry(state, { countryCode, metricCode }),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
-  dimensionAverages: state => getDimensionAverages(state),
   rights: (state, { countryCode }) => getRightsForCountry(state, countryCode),
 });
 

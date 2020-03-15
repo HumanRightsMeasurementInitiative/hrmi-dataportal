@@ -29,7 +29,7 @@ import {
   getCountryGrammar,
   getStandardSearch,
   getBenchmarkSearch,
-  getDimensionAverages,
+  getReferenceScores,
   getDependenciesReady,
   getRightsForCountry,
   // getAuxIndicatorsForCountry,
@@ -173,6 +173,18 @@ export function ChartContainerCountryRights({
 
   const dimension = dimensions[dimensionCode];
   const reference = dimensionAverages[dimensionCode];
+
+  let comparativeScoreESR;
+  let comparativeRightsESR;
+  if (dimensionCode === 'esr' && dimension && dimension.score) {
+    comparativeScoreESR = dimension.score[currentBenchmark.column];
+    comparativeRightsESR = 'all';
+  }
+  if (dimensionCode === 'esr' && dimension && dimension.scoreSome) {
+    comparativeScoreESR = dimension.scoreSome[currentBenchmark.column];
+    comparativeRightsESR = dimension.scoreSome.metric;
+  }
+
   return (
     <div>
       {type === 'esr' && dimension && (
@@ -270,9 +282,11 @@ export function ChartContainerCountryRights({
             <NarrativeESRCompAssessment
               country={country}
               countryGrammar={countryGrammar}
-              dimensionScore={dimension && dimension.score}
-              referenceScore={reference[standard].average[benchmark]}
-              referenceCount={reference[standard].count}
+              comparativeScore={parseFloat(comparativeScoreESR)}
+              comparativeRights={comparativeRightsESR}
+              groupAverageScore={
+                reference && reference.average && reference.average[benchmark]
+              }
               benchmark={currentBenchmark}
             />
           </Paragraph>
@@ -390,7 +404,7 @@ const mapStateToProps = createStructuredSelector({
     getDimensionsForCountry(state, countryCode),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
-  dimensionAverages: state => getDimensionAverages(state),
+  dimensionAverages: state => getReferenceScores(state),
   rights: (state, { countryCode }) => getRightsForCountry(state, countryCode),
 });
 
