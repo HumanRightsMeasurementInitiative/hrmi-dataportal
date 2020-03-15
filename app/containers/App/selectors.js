@@ -1296,9 +1296,9 @@ export const getReferenceScores = createSelector(
         countryRightsScores = countryScores.filter(
           s => s.metric_code !== dimension.code,
         );
-        countryMetrics = countryRightsScores.map(s =>
-          RIGHTS.find(r => r.code === s.metric_code),
-        );
+        countryMetrics = countryRightsScores
+          .map(s => RIGHTS.find(r => r.code === s.metric_code))
+          .filter(s => !!s);
         hasCountryRightsScores =
           countryRightsScores && countryRightsScores.length > 0;
       }

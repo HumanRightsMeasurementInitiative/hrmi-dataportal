@@ -1,28 +1,25 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const getRotation = rotation => `rotate(${rotation}deg)`;
 
 export default styled.div`
-  position: absolute;
-  top: ${({ above }) => (above ? 'auto' : '100%')};
-  left: ${({ above, relative, left }) => {
-    if (relative && left) return `${left}%`;
-    return above ? 'auto' : '100%';
+  position: ${({ relative }) => (relative ? 'relative' : 'absolute')};
+  right: ${({ relative, rotate }) => {
+    if (rotate) {
+      return '-20px';
+    }
+    return relative ? 'auto' : '0';
   }};
-  right: ${({ above, relative }) => {
-    if (relative) return 'auto';
-    return above ? '-2px' : 'auto';
+  bottom: ${({ rotate }) => {
+    if (rotate) {
+      return '30px';
+    }
+    return 'auto';
   }};
   border-right: 1px solid;
-  border-color: ${({ above }) => (above ? 'black' : 'transparent')};
+  border-color: ${({ hasBorder }) => (hasBorder ? 'black' : 'transparent')};
   padding-left: 0px;
-  padding-right: ${({ above }) => (above ? 5 : 0)}px;
+  padding-right: ${({ offsetTop }) => (offsetTop ? 0 : '5px')};
   transform: ${({ rotate }) => (rotate ? getRotation(rotate) : '')};
   margin: ${({ margin }) => margin || 0};
-  ${({ align, relative }) =>
-    align === 'right' &&
-    relative &&
-    css`
-      transform: translateX(-100%);
-    `}
 `;

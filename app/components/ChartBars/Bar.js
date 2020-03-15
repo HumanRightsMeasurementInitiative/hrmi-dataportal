@@ -108,15 +108,13 @@ function Bar({
   level = 1,
   showLabels = false,
   showScore = false,
-  showBenchmark = false,
   rotate,
   showIncompleteAction = true,
   height,
-  annotateBenchmarkAbove = false,
-  showAllBenchmarkAnnotations = false,
+  annotateBenchmark,
+  benchmarkKey,
   scoreOnHover = false,
   hoverEnabled = true,
-  benchmarkTooltip = false,
   hasBackground,
 }) {
   const [hover, setHover] = useState(false);
@@ -191,47 +189,13 @@ function Bar({
               level={level}
             />
           )}
-          {!showBenchmark && benchmarkTooltip && (
+          {annotateBenchmark && (
             <AnnotateBenchmark
-              rotate={rotate}
-              above
-              margin="1px"
-              benchmarkTooltipOnly
+              type={annotateBenchmark}
+              benchmarkKey={benchmarkKey}
             />
           )}
-          {showBenchmark &&
-            refValues &&
-            !showAllBenchmarkAnnotations && (
-            !!theRefValue &&
-            <AnnotateBenchmark
-              rotate={rotate}
-              benchmarkKey={theRefValue.key}
-              above={annotateBenchmarkAbove}
-              margin="1px"
-            />
-          )}
-          {showBenchmark &&
-            refValues &&
-            showAllBenchmarkAnnotations &&
-            annotateBenchmarkAbove &&
-            refValues
-              .filter(ref =>
-                ref.value !== null &&
-                ref.value !== false &&
-                typeof ref.value !== 'undefined'
-              ).map((ref, index, list) => (
-                <AnnotateBenchmark
-                  relative
-                  key={ref.key}
-                  left={(ref.value / maxValue) * 100}
-                  align={ref.align || (list.length > 1 && index === 0 ? 'left' : 'right')}
-                  benchmarkKey={ref.key}
-                  above
-                  margin="1px"
-                  label={ref.label || false}
-                />
-              ))
-          }
+
           {!hasValue && data && level < 3 && (
             <NoDataHint
               hints={[
@@ -273,13 +237,11 @@ Bar.propTypes = {
   showLabels: PropTypes.bool,
   hasBackground: PropTypes.bool,
   showScore: PropTypes.bool,
-  showBenchmark: PropTypes.bool,
-  benchmarkTooltip: PropTypes.bool,
+  annotateBenchmark: PropTypes.string,
+  benchmarkKey: PropTypes.string,
   hoverEnabled: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
-  annotateBenchmarkAbove: PropTypes.bool,
-  showAllBenchmarkAnnotations: PropTypes.bool,
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 

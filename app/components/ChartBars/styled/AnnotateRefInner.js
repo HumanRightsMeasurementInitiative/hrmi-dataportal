@@ -2,8 +2,9 @@ import styled, { css } from 'styled-components';
 
 // prettier-ignore
 export default styled.div`
-  position: ${({ above }) => (above ? 'relative' : 'absolute')};
-  ${({ above, relative, horizontal }) => {
+  position: relative;
+  text-align: right;
+  ${({ relative, horizontal, offsetTop }) => {
     if (horizontal) return css`
       bottom: 3px;
       left: -15px;
@@ -15,18 +16,14 @@ export default styled.div`
       width: auto;
       white-space: nowrap;
     `;
-    return above
-      ? css`
-        bottom: -1px;
-        right: -1px;
-      `
-      : css`
-        min-width: 70px;
-        top: 14px;
-        left: -1px;
-        text-align: left;
-        display: table;
-      `;
+    if (offsetTop) return css`
+      bottom: 17px;
+      right: 0;
+    `;
+    return css`
+      bottom: 2px;
+      right: -1px;
+    `;
   }}
   font-size: 12px;
   line-height: 12px;
