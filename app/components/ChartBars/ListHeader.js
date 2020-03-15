@@ -109,8 +109,8 @@ export function ListHeader({
             {annotateBenchmark && (
               <AnnotateBenchmark
                 benchmarkKey={benchmark}
-                above
-                margin="0 2px"
+                hasBetter={annotateBetter}
+                type="header"
               />
             )}
           </BarWrap>

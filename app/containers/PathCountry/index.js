@@ -322,7 +322,6 @@ export function PathCountry({
                 key: 'atrisk',
                 title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
                 // howToRead: {
-                //   contxt: 'PathCountry',
                 //   chart: 'ChartWordCloud',
                 //   data: 'atRisk',
                 // },
