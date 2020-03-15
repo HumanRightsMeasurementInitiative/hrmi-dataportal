@@ -180,7 +180,6 @@ export function PathCountryOverview({
                   align: 'end',
                   howToReadConfig: {
                     key: 'tab-countries',
-                    contxt: 'PathCountryOverview',
                     charts: ['Diamonds'],
                     type: scale,
                   },

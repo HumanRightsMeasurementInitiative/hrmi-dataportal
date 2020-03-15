@@ -109,6 +109,11 @@ export default defineMessages({
         defaultMessage:
           'For the quality of life rights, HRMI measures countries against 2 different benchmarks.',
       },
+      introSingle: {
+        id: `${scope}.tooltip.benchmark.introSingle`,
+        defaultMessage:
+          'For the quality of life rights, HRMI measures countries against 2 different benchmarks. The current benchmark is:',
+      },
       adjusted: {
         id: `${scope}.tooltip.benchmark.adjusted`,
         defaultMessage:

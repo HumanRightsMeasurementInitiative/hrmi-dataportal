@@ -39,38 +39,55 @@ const Square = styled.div`
     `}
 `;
 
-function BenchmarkOverlay({ intl, size = 'small', hasKey }) {
+function BenchmarkOverlay({ intl, size = 'small', hasKey, onlyBenchmark }) {
   return (
     <>
-      <Paragraph margin={{ vertical: 'small' }} size={size}>
-        <FormattedMessage {...rootMessages.tooltip.benchmark.intro} />
-      </Paragraph>
-      {hasKey && (
-        <SquareWrap>
-          <Square color="light-2" type="line" lineStyle="dashed" />
-        </SquareWrap>
+      {!onlyBenchmark && (
+        <Paragraph margin={{ vertical: 'small' }} size={size}>
+          <FormattedMessage {...rootMessages.tooltip.benchmark.intro} />
+        </Paragraph>
       )}
-      <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
-        <span style={{ fontWeight: 600 }}>
-          {`${intl.formatMessage(rootMessages.settings.benchmark.adjusted)}: `}
-        </span>
-        <span>
-          {intl.formatMessage(rootMessages.tooltip.benchmark.adjusted)}
-        </span>
-      </Paragraph>
-      {hasKey && (
-        <SquareWrap>
-          <Square color="light-2" type="line" lineStyle="solid" />
-        </SquareWrap>
+      {onlyBenchmark && (
+        <Paragraph margin={{ vertical: 'small' }} size={size}>
+          <FormattedMessage {...rootMessages.tooltip.benchmark.introSingle} />
+        </Paragraph>
       )}
-      <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
-        <span style={{ fontWeight: 600 }}>
-          {`${intl.formatMessage(rootMessages.settings.benchmark.best)}: `}
-        </span>
-        <span>
-          <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
-        </span>
-      </Paragraph>
+      {(!onlyBenchmark || onlyBenchmark === 'adjusted') && (
+        <>
+          {hasKey && (
+            <SquareWrap>
+              <Square color="light-2" type="line" lineStyle="dashed" />
+            </SquareWrap>
+          )}
+          <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
+            <span style={{ fontWeight: 600 }}>
+              {`${intl.formatMessage(
+                rootMessages.settings.benchmark.adjusted,
+              )}: `}
+            </span>
+            <span>
+              {intl.formatMessage(rootMessages.tooltip.benchmark.adjusted)}
+            </span>
+          </Paragraph>
+        </>
+      )}
+      {(!onlyBenchmark || onlyBenchmark === 'best') && (
+        <>
+          {hasKey && (
+            <SquareWrap>
+              <Square color="light-2" type="line" lineStyle="solid" />
+            </SquareWrap>
+          )}
+          <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
+            <span style={{ fontWeight: 600 }}>
+              {`${intl.formatMessage(rootMessages.settings.benchmark.best)}: `}
+            </span>
+            <span>
+              <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
+            </span>
+          </Paragraph>
+        </>
+      )}
     </>
   );
 }
@@ -78,6 +95,7 @@ function BenchmarkOverlay({ intl, size = 'small', hasKey }) {
 BenchmarkOverlay.propTypes = {
   intl: intlShape.isRequired,
   size: PropTypes.string,
+  onlyBenchmark: PropTypes.string,
   hasKey: PropTypes.bool,
 };
 

@@ -176,7 +176,7 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
                 ),
                 tools: {
                   howToReadConfig: {
-                    contxt: 'PathMetric',
+                    contxt: 'metrics',
                     charts: [metric.type === 'cpr' ? 'Bullet' : 'Bar'],
                     dimension: metric.color,
                   },

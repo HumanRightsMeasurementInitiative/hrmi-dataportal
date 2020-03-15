@@ -6,7 +6,6 @@ import { Box, ResponsiveContext } from 'grommet';
 import Bar from 'components/ChartBars/Bar';
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
-import Hint from 'styled/Hint';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -20,13 +19,6 @@ function HTRBarESR({ contxt, intl }) {
     <ResponsiveContext.Consumer>
       {size => (
         <Styled>
-          {contxt === 'narrative' && (
-            <HTRParagraph>
-              <Hint italic>
-                <FormattedMessage {...messages.simpleBar.drilldownHint} />
-              </Hint>
-            </HTRParagraph>
-          )}
           <Box
             direction={stackContent(size) ? 'column' : 'row'}
             align="center"
@@ -48,18 +40,13 @@ function HTRBarESR({ contxt, intl }) {
                 responsive={false}
               >
                 <AnnotateBenchmark
-                  tooltip={false}
                   label={intl.formatMessage(
                     rootMessages.settings.benchmark.name,
                   )}
-                  above
-                  align="right"
-                  relative
-                  left={100}
-                  margin="1px"
+                  type="htr"
                 />
                 <Bar
-                  level={contxt === 'narrative' ? 1 : 2}
+                  level={2}
                   data={{
                     value: 78,
                     unit: '%',
@@ -113,7 +100,7 @@ function HTRBarESR({ contxt, intl }) {
               <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
             </HTRParagraph>
           </Box>
-          {contxt !== 'narrative' && (
+          {contxt === 'metrics' && (
             <HTRParagraph>
               <FormattedMessage {...messages.simpleBar.countryComparison} />
             </HTRParagraph>

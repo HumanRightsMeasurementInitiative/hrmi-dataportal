@@ -20,8 +20,6 @@ import {
 
 import HTROverviewDimensions from './HTROverviewDimensions';
 import HTROverviewRights from './HTROverviewRights';
-import HTRSummaryDimensions from './HTRSummaryDimensions';
-import HTRSummaryRights from './HTRSummaryRights';
 import HTRBulletCPR from './HTRBulletCPR';
 import HTRBarESR from './HTRBarESR';
 import HTRTrendESR from './HTRTrendESR';
@@ -91,10 +89,6 @@ function LayerHowToRead({ layer, theme, onClose }) {
                   {chart === 'Diamonds' && type === 'r' && (
                     <HTROverviewRights />
                   )}
-                  {chart === 'Summary' && type === 'd' && (
-                    <HTRSummaryDimensions />
-                  )}
-                  {chart === 'Summary' && type === 'r' && <HTRSummaryRights />}
                   {chart === 'Bullet' && (
                     <HTRBulletCPR contxt={contxt} dimension={dimension} />
                   )}

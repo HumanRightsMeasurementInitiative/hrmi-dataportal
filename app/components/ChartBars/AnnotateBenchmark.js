@@ -15,22 +15,28 @@ import Tooltip from 'components/Tooltip';
 import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
 
 import AnnotateRefInner from './styled/AnnotateRefInner';
-import AnnotateRefLine from './styled/AnnotateRefLine';
 import AnnotateRef from './styled/AnnotateRef';
 
-function AnnotateBenchmark({
-  intl,
-  rotate,
-  benchmarkKey,
-  margin,
-  above = false,
-  relative = false,
-  left,
-  align,
-  label,
-  tooltip = true,
-  benchmarkTooltipOnly,
-}) {
+function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
+  let rotate;
+  let margin = 0;
+  let relative = false;
+  let tooltip = true;
+  let hasLabel = true;
+  let hasLine = true;
+  if (type === 'diamond') {
+    rotate = 45;
+    margin = 0;
+    tooltip = true;
+    hasLabel = false;
+    hasLine = false;
+    relative = false;
+  }
+  if (type === 'htr') {
+    margin = '1px -1px 1px 0';
+    tooltip = false;
+    relative = true;
+  }
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
@@ -38,35 +44,24 @@ function AnnotateBenchmark({
         <AnnotateRef
           rotate={rotate}
           margin={margin}
-          above={above}
           relative={relative}
-          left={left}
-          align={align}
+          offsetTop={hasBetter}
+          hasBorder={hasLine}
         >
-          {!above && (
-            <AnnotateRefLine
-              above={above || relative}
-              relative={relative}
-              align={align}
-              horizontal={!!rotate}
-            />
-          )}
           <AnnotateRefInner
-            above={above || relative}
             relative={relative}
-            style={{ textAlign: align }}
             horizontal={!!rotate}
+            offsetTop={hasBetter}
           >
-            {!relative && tooltip &&
+            {tooltip && (
               <Tooltip
-                textAnchor={!benchmarkTooltipOnly && (
+                textAnchor={hasLabel && (
                   <Text
                     size="xsmall"
                     color="highlight2"
                     style={
                       {
-                        textAlign: align,
-                        display: above ? 'inline ': 'block',
+                        display: 'inline',
                         verticalAlign: 'middle',
                       }
                     }
@@ -79,13 +74,30 @@ function AnnotateBenchmark({
                   </Text>
                 )}
                 insideButton
-                margin={above ? { left: 'xsmall' } : { top: 'xsmall' }}
+                margin={{ left: 'xsmall' }}
                 iconSize="medium"
                 maxWidth="300px"
                 large
-                component={<BenchmarkOverlay size="xsmall" />}
+                component={<BenchmarkOverlay size="xsmall" onlyBenchmark={benchmarkKey} />}
               />
-            }
+            )}
+            {!tooltip && (
+              <Text
+                size="xsmall"
+                style={
+                  {
+                    display: 'inline',
+                    verticalAlign: 'middle',
+                  }
+                }
+              >
+                {label || `${intl.formatMessage(
+                  rootMessages.settings.benchmark[benchmarkKey]
+                )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(
+                  rootMessages.settings.benchmark.nameShort
+                ))}`}
+              </Text>
+            )}
           </AnnotateRefInner>
         </AnnotateRef>
       )}
@@ -94,16 +106,10 @@ function AnnotateBenchmark({
 }
 
 AnnotateBenchmark.propTypes = {
-  margin: PropTypes.string,
   benchmarkKey: PropTypes.string,
-  align: PropTypes.string,
-  above: PropTypes.bool,
-  relative: PropTypes.bool,
-  tooltip: PropTypes.bool,
-  benchmarkTooltipOnly: PropTypes.bool,
-  left: PropTypes.number,
+  type: PropTypes.string,
+  hasBetter: PropTypes.bool,
   label: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   intl: intlShape.isRequired,
 };
 

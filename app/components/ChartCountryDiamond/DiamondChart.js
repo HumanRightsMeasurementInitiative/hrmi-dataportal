@@ -89,6 +89,7 @@ export function DiamondChart({
   small = false,
   indicateBetterBelow = false,
   showBenchmark,
+  benchmark,
 }) {
   if (!dimensions && !rightGroups) return null;
   const w = small ? WIDTH[0] : WIDTH[1];
@@ -119,8 +120,10 @@ export function DiamondChart({
                 scoreOnHover="top"
                 hoverEnabled={hoverEnabled}
                 height={(w - MARGINS * 2) / list.length}
-                annotateBenchmarkAbove
-                benchmarkTooltip={showBenchmark && index === 0}
+                annotateBenchmark={
+                  showBenchmark && index === 0 ? 'diamond' : null
+                }
+                benchmarkKey={benchmark ? benchmark.key : null}
                 hasBackground
               />
             </BarWrapInner>
@@ -138,7 +141,7 @@ export function DiamondChart({
                 rotate={45}
                 scoreOnHover="top"
                 heightIndividual={(w - MARGINS * 2) / 13}
-                annotateBenchmarkAbove
+                benchmarkTooltipOnly
                 benchmarkTooltip={showBenchmark && index === 0}
                 hasBackground
               />
@@ -158,6 +161,7 @@ DiamondChart.propTypes = {
   hideZeroLabels: PropTypes.bool,
   hoverEnabled: PropTypes.bool,
   small: PropTypes.bool,
+  benchmark: PropTypes.object,
   indicateBetterBelow: PropTypes.bool,
 };
 
