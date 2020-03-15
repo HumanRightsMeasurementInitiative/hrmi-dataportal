@@ -350,13 +350,13 @@ export function PathCountry({
                   }
                   if (
                     props &&
-                    (props.active === 1 || props.active === 'esr-report')
+                    (props.active === 1 || props.active === 'report-esr')
                   ) {
                     faqs = FAQS.COUNTRY_ESR;
                   }
                   if (
                     props &&
-                    (props.active === 2 || props.active === 'cpr-report')
+                    (props.active === 2 || props.active === 'report-cpr')
                   ) {
                     faqs = FAQS.COUNTRY_CPR;
                   }
