@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled, { css } from 'styled-components';
 
-import { Paragraph } from 'grommet';
+import { Paragraph, Box } from 'grommet';
 import rootMessages from 'messages';
 
 const HEIGHT = '15px';
@@ -40,9 +40,9 @@ const Square = styled.div`
 `;
 function StandardOverlay({ intl, size = 'small', hasKey }) {
   return (
-    <>
+    <Box>
       <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
-        <FormattedMessage {...rootMessages.tooltip.standard.intro} />
+        <FormattedMessage {...rootMessages.settings.standard.intro} />
       </Paragraph>
       {hasKey && (
         <SquareWrap>
@@ -53,7 +53,9 @@ function StandardOverlay({ intl, size = 'small', hasKey }) {
         <span style={{ fontWeight: 600 }}>
           {`${intl.formatMessage(rootMessages.settings.standard.core)}: `}
         </span>
-        <span>{intl.formatMessage(rootMessages.tooltip.standard.core)}</span>
+        <span>
+          {intl.formatMessage(rootMessages.settings.standard.coreInfo)}
+        </span>
       </Paragraph>
       {hasKey && (
         <SquareWrap>
@@ -65,10 +67,10 @@ function StandardOverlay({ intl, size = 'small', hasKey }) {
           {`${intl.formatMessage(rootMessages.settings.standard.hi)}: `}
         </span>
         <span>
-          <FormattedMessage {...rootMessages.tooltip.standard.hi} />
+          <FormattedMessage {...rootMessages.settings.standard.hiInfo} />
         </span>
       </Paragraph>
-    </>
+    </Box>
   );
 }
 
