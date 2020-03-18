@@ -11,23 +11,16 @@ import { injectIntl, intlShape } from 'react-intl';
 import { lowerCase } from 'utils/string';
 import rootMessages from 'messages';
 
+import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
 import Tooltip from 'components/Tooltip';
-import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
 
 import AnnotateRef from './styled/AnnotateRef';
 import AnnotateRefLine from './styled/AnnotateRefLine';
 import AnnotateRefInner from './styled/AnnotateRefInner';
 
 function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
-  let tooltip = true;
-  let labelOrIcon = 'label';
-  if (type === 'diamond') {
-    tooltip = true;
-    labelOrIcon = 'icon';
-  }
-  if (type === 'htr') {
-    tooltip = false;
-  }
+  const tooltip = type !== 'htr';
+  const labelOrIcon = type === 'diamond' ? 'icon' : 'label';
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
@@ -62,7 +55,13 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
                 iconSize="medium"
                 maxWidth="300px"
                 large
-                component={<BenchmarkOverlay size="xsmall" onlyBenchmark={benchmarkKey} />}
+                component={
+                  <InfoBenchmark
+                    size="xsmall"
+                    singleBenchmark={type === 'diamond'}
+                    benchmarkKey={benchmarkKey}
+                  />
+                }
               />
             )}
             {!tooltip && (

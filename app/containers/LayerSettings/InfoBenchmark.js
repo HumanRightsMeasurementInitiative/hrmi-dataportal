@@ -39,20 +39,26 @@ const Square = styled.div`
     `}
 `;
 
-function BenchmarkOverlay({ intl, size = 'small', hasKey, onlyBenchmark }) {
+function BenchmarkOverlay({
+  intl,
+  size = 'small',
+  hasKey,
+  singleBenchmark,
+  benchmarkKey,
+}) {
   return (
     <>
-      {!onlyBenchmark && (
+      {!singleBenchmark && (
         <Paragraph margin={{ vertical: 'small' }} size={size}>
-          <FormattedMessage {...rootMessages.tooltip.benchmark.intro} />
+          <FormattedMessage {...rootMessages.settings.benchmark.intro} />
         </Paragraph>
       )}
-      {onlyBenchmark && (
+      {singleBenchmark && (
         <Paragraph margin={{ vertical: 'small' }} size={size}>
-          <FormattedMessage {...rootMessages.tooltip.benchmark.introSingle} />
+          <FormattedMessage {...rootMessages.settings.benchmark.introSingle} />
         </Paragraph>
       )}
-      {(!onlyBenchmark || onlyBenchmark === 'adjusted') && (
+      {(!singleBenchmark || benchmarkKey === 'adjusted') && (
         <>
           {hasKey && (
             <SquareWrap>
@@ -66,12 +72,12 @@ function BenchmarkOverlay({ intl, size = 'small', hasKey, onlyBenchmark }) {
               )}: `}
             </span>
             <span>
-              {intl.formatMessage(rootMessages.tooltip.benchmark.adjusted)}
+              {intl.formatMessage(rootMessages.settings.benchmark.adjustedInfo)}
             </span>
           </Paragraph>
         </>
       )}
-      {(!onlyBenchmark || onlyBenchmark === 'best') && (
+      {(!singleBenchmark || benchmarkKey === 'best') && (
         <>
           {hasKey && (
             <SquareWrap>
@@ -83,7 +89,7 @@ function BenchmarkOverlay({ intl, size = 'small', hasKey, onlyBenchmark }) {
               {`${intl.formatMessage(rootMessages.settings.benchmark.best)}: `}
             </span>
             <span>
-              <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
+              <FormattedMessage {...rootMessages.settings.benchmark.bestInfo} />
             </span>
           </Paragraph>
         </>
@@ -95,7 +101,8 @@ function BenchmarkOverlay({ intl, size = 'small', hasKey, onlyBenchmark }) {
 BenchmarkOverlay.propTypes = {
   intl: intlShape.isRequired,
   size: PropTypes.string,
-  onlyBenchmark: PropTypes.string,
+  singleBenchmark: PropTypes.bool,
+  benchmarkKey: PropTypes.string,
   hasKey: PropTypes.bool,
 };
 

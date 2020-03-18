@@ -19,7 +19,7 @@ import { getHowToRead, getSettingsLayer } from 'containers/App/selectors';
 
 import { isMinSize } from 'utils/responsive';
 
-import messages from './messages';
+import rootMessages from 'messages';
 
 const Styled = styled.div``;
 const StyledButton = styled(Button)`
@@ -64,7 +64,7 @@ export function ChartTools({
               plain
               label={
                 isMinSize(size, 'large')
-                  ? intl.formatMessage(messages.howToRead)
+                  ? intl.formatMessage(rootMessages.labels.tools.howToRead)
                   : null
               }
               gap="xsmall"
@@ -82,7 +82,7 @@ export function ChartTools({
               plain
               label={
                 isMinSize(size, 'large')
-                  ? intl.formatMessage(messages.settings)
+                  ? intl.formatMessage(rootMessages.labels.tools.settings)
                   : null
               }
               gap="xsmall"

@@ -5,8 +5,6 @@ import { FormattedMessage } from 'react-intl';
 import { Box, Text } from 'grommet';
 
 // import Tooltip from 'components/Tooltip';
-import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
-import StandardOverlay from 'components/Tooltip/StandardOverlay';
 import ButtonToggleSetting from 'styled/ButtonToggleSetting';
 
 import rootMessages from 'messages';
@@ -16,12 +14,7 @@ import rootMessages from 'messages';
 
 function SettingsToggle({ options, onActivate, active, setting }) {
   return (
-    <Box
-      direction="column"
-      flex={{ shrink: 0 }}
-      responsive={false}
-      margin={{ bottom: 'large' }}
-    >
+    <Box direction="column" flex={{ shrink: 0 }} responsive={false}>
       <Box direction="row" align="center">
         <Box pad={{ vertical: 'small' }} direction="row">
           <Text size="large" style={{ fontWeight: 600 }}>
@@ -47,8 +40,6 @@ function SettingsToggle({ options, onActivate, active, setting }) {
           </ButtonToggleSetting>
         ))}
       </Box>
-      {setting === 'standard' && <StandardOverlay size="xsmall" hasKey />}
-      {setting === 'benchmark' && <BenchmarkOverlay size="xsmall" hasKey />}
     </Box>
   );
 }

@@ -89,7 +89,9 @@ function HTRBarESR({ contxt, intl }) {
                   rootMessages.settings.benchmark.adjusted,
                 )}: `}
               </span>
-              <FormattedMessage {...rootMessages.tooltip.benchmark.adjusted} />
+              <FormattedMessage
+                {...rootMessages.settins.benchmark.adjustedInfo}
+              />
             </HTRParagraph>
             <HTRParagraph margin={{ vertical: 'xsmall' }}>
               <span style={{ fontWeight: 600 }}>
@@ -97,7 +99,7 @@ function HTRBarESR({ contxt, intl }) {
                   rootMessages.settings.benchmark.best,
                 )}: `}
               </span>
-              <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
+              <FormattedMessage {...rootMessages.settings.benchmark.bestInfo} />
             </HTRParagraph>
           </Box>
           {contxt === 'metrics' && (
