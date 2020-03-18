@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import { Text } from 'grommet';
 
+import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import BarMultiple from 'components/ChartBars/BarMultiple';
 import Bar from 'components/ChartBars/Bar';
 import rootMessages from 'messages';
@@ -105,6 +106,9 @@ export function DiamondChart({
             </AnnotateBetterInner>
           </AnnotateBetter>
         )}
+        {showBenchmark && (
+          <AnnotateBenchmark type="diamond" benchmarkKey={benchmark.key} />
+        )}
         {dimensions &&
           dimensions.map((dim, index, list) => (
             <BarWrapInner
@@ -120,10 +124,6 @@ export function DiamondChart({
                 scoreOnHover="top"
                 hoverEnabled={hoverEnabled}
                 height={(w - MARGINS * 2) / list.length}
-                annotateBenchmark={
-                  showBenchmark && index === 0 ? 'diamond' : null
-                }
-                benchmarkKey={benchmark ? benchmark.key : null}
                 hasBackground
               />
             </BarWrapInner>
@@ -141,8 +141,6 @@ export function DiamondChart({
                 rotate={45}
                 scoreOnHover="top"
                 heightIndividual={(w - MARGINS * 2) / 13}
-                benchmarkTooltipOnly
-                benchmarkTooltip={showBenchmark && index === 0}
                 hasBackground
               />
             </BarWrapInner>

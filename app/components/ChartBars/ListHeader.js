@@ -90,7 +90,10 @@ export function ListHeader({
                   margin={{ left: 'auto' }}
                   pad={annotateBenchmark ? { left: 'xsmall' } : null}
                   style={{
-                    transform: 'translateX(100%)',
+                    transform:
+                      metric.type === 'esr'
+                        ? 'translateX(100%)'
+                        : 'translateX(50%)',
                   }}
                 >
                   <Text size="xsmall">
