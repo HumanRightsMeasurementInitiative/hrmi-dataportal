@@ -80,7 +80,7 @@ function HTROverviewDimensions({ intl }) {
                   )}: `}
                 </span>
                 <FormattedMessage
-                  {...rootMessages.tooltip.benchmark.adjusted}
+                  {...rootMessages.settings.benchmark.adjustedInfo}
                 />
               </HTRParagraph>
               <HTRParagraph margin={{ vertical: 'xsmall' }}>
@@ -89,7 +89,9 @@ function HTROverviewDimensions({ intl }) {
                     rootMessages.settings.benchmark.best,
                   )}: `}
                 </span>
-                <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
+                <FormattedMessage
+                  {...rootMessages.settings.benchmark.bestInfo}
+                />
               </HTRParagraph>
             </Box>
           )}

@@ -14,8 +14,8 @@ import {
 import { Down, Up } from 'grommet-icons';
 
 import { navigate } from 'containers/App/actions';
-import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
-import StandardOverlay from 'components/Tooltip/StandardOverlay';
+import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
+import InfoStandard from 'containers/LayerSettings/InfoStandard';
 
 import ButtonIcon from 'styled/ButtonIcon';
 import MethodologyLink from './MethodologyLink';
@@ -77,7 +77,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'standards') {
     return (
       <>
-        <StandardOverlay />
+        <InfoStandard />
         <MethodologyLink onClick={() => navMethodology()} />
       </>
     );
@@ -85,7 +85,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'benchmarks') {
     return (
       <>
-        <BenchmarkOverlay />
+        <InfoBenchmark />
         <MethodologyLink onClick={() => navMethodology()} />
       </>
     );

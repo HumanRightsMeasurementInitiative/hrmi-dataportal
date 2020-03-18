@@ -33,7 +33,7 @@ function HTRTrendESR({ contxt, intl }) {
           {`${intl.formatMessage(rootMessages.settings.benchmark.adjusted)}: `}
         </Text>
         <Text size="small">
-          {intl.formatMessage(rootMessages.tooltip.benchmark.adjusted)}
+          {intl.formatMessage(rootMessages.settings.benchmark.adjustedInfo)}
         </Text>
       </HTRParagraph>
       <HTRParagraph margin={{ vertical: 'xsmall' }}>
@@ -41,7 +41,7 @@ function HTRTrendESR({ contxt, intl }) {
           {`${intl.formatMessage(rootMessages.settings.benchmark.best)}: `}
         </Text>
         <Text size="small">
-          <FormattedMessage {...rootMessages.tooltip.benchmark.best} />
+          <FormattedMessage {...rootMessages.settings.benchmark.bestInfo} />
         </Text>
       </HTRParagraph>
       {contxt !== 'narrative' && (

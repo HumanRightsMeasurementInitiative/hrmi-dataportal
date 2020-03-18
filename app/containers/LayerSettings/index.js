@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
-import { Layer, Box, ResponsiveContext, Heading } from 'grommet';
+import { Layer, Box, ResponsiveContext, Heading, Paragraph } from 'grommet';
 import { Close as CloseIcon } from 'grommet-icons';
 
 import {
@@ -36,14 +36,22 @@ import {
   getFloatingAsideWidth,
 } from 'utils/responsive';
 
-import messages from 'containers/ChartTools/messages';
+import rootMessages from 'messages';
+import messages from './messages';
 
 import SettingsToggle from './SettingsToggle';
+import InfoBenchmark from './InfoBenchmark';
+import InfoStandard from './InfoStandard';
+import InfoScale from './InfoScale';
 
 const ButtonWrap = styled.div`
   position: absolute;
   top: 1em;
   right: 1em;
+`;
+
+const SettingWrap = styled.div`
+  margin-bottom: 30px;
 `;
 
 export function LayerSettings({
@@ -96,42 +104,54 @@ export function LayerSettings({
             responsive={false}
           >
             <Heading level={2}>
-              <FormattedMessage {...messages.settings} />
+              <FormattedMessage {...rootMessages.labels.tools.settings} />
             </Heading>
+            <Paragraph>
+              <FormattedMessage {...messages.intro} />
+            </Paragraph>
             <ButtonWrap>
               <ButtonIcon onClick={() => onClose()} subtle>
                 <CloseIcon size="xlarge" color="dark" />
               </ButtonIcon>
             </ButtonWrap>
             {layer.showScale && (
-              <SettingsToggle
-                setting="scale"
-                active={scale}
-                onActivate={onSetScale}
-                options={SCALES.map(s => ({
-                  label: s.type,
-                  ...s,
-                }))}
-                horizontal
-              />
+              <SettingWrap>
+                <SettingsToggle
+                  setting="scale"
+                  active={scale}
+                  onActivate={onSetScale}
+                  options={SCALES.map(s => ({
+                    label: s.type,
+                    ...s,
+                  }))}
+                  horizontal
+                />
+                <InfoScale size="xsmall" />
+              </SettingWrap>
             )}
             {layer.showBenchmark && (
-              <SettingsToggle
-                setting="benchmark"
-                active={benchmark}
-                onActivate={onSetBenchmark}
-                options={BENCHMARKS}
-                horizontal
-              />
+              <SettingWrap>
+                <SettingsToggle
+                  setting="benchmark"
+                  active={benchmark}
+                  onActivate={onSetBenchmark}
+                  options={BENCHMARKS}
+                  horizontal
+                />
+                <InfoBenchmark size="xsmall" hasKey />
+              </SettingWrap>
             )}
             {layer.showStandard && (
-              <SettingsToggle
-                setting="standard"
-                active={standard}
-                onActivate={onSetStandard}
-                options={STANDARDS}
-                horizontal
-              />
+              <SettingWrap>
+                <SettingsToggle
+                  setting="standard"
+                  active={standard}
+                  onActivate={onSetStandard}
+                  options={STANDARDS}
+                  horizontal
+                />
+                <InfoStandard size="xsmall" hasKey />
+              </SettingWrap>
             )}
           </Box>
         </Layer>
