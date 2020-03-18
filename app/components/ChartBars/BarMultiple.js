@@ -9,7 +9,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Bar from './Bar';
-import AnnotateBenchmark from './AnnotateBenchmark';
 import BarWrapper from './styled/BarWrapper';
 import MinLabel from './styled/MinLabel';
 import MaxLabel from './styled/MaxLabel';
@@ -34,9 +33,7 @@ function BarMultiple({
   rotate,
   totalHeight,
   heightIndividual,
-  annotateBenchmarkAbove,
   scoreOnHover,
-  benchmarkTooltip,
   hasBackground,
 }) {
   const {
@@ -46,7 +43,6 @@ function BarMultiple({
     stripes = false,
     unit,
     tooltip,
-    benchmark,
   } = dataMultiple;
   const barCount = data ? data.length : 1;
   const barGap = (PAD_BOTTOM + PAD_TOP) * (barCount - 1);
@@ -80,7 +76,6 @@ function BarMultiple({
               }}
               level={3}
               showLabels={false}
-              showBenchmark={false}
               rotate={rotate}
               showIncompleteAction={false}
               height={Math.round(hi)}
@@ -89,22 +84,6 @@ function BarMultiple({
             />
           </BarWrapInner>
         ))}
-      {showLabels && !!benchmark && !benchmarkTooltip && (
-        <AnnotateBenchmark
-          rotate={rotate}
-          benchmarkKey={benchmark}
-          above={annotateBenchmarkAbove}
-          margin={annotateBenchmarkAbove ? '0px 1px' : '0'}
-        />
-      )}
-      {benchmarkTooltip && (
-        <AnnotateBenchmark
-          rotate={rotate}
-          above
-          margin="1px"
-          benchmarkTooltipOnly
-        />
-      )}
       {showLabels && (
         <MaxLabel rotate={rotate} bottom={tooltip}>
           {unit ? `${maxValue}${unit}` : `${maxValue}`}
@@ -119,8 +98,6 @@ BarMultiple.propTypes = {
   dataMultiple: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   showLabels: PropTypes.bool,
   hasBackground: PropTypes.bool,
-  annotateBenchmarkAbove: PropTypes.bool,
-  benchmarkTooltip: PropTypes.bool,
   totalHeight: PropTypes.number,
   heightIndividual: PropTypes.number,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
