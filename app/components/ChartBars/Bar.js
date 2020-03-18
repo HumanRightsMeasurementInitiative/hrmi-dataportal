@@ -14,7 +14,6 @@ import NoDataHint from './NoDataHint';
 import Wrapper from './styled/BarWrapper';
 import MinLabel from './styled/MinLabel';
 import MaxLabelOriginal from './styled/MaxLabel';
-import AnnotateBenchmark from './AnnotateBenchmark';
 import WrapTooltip from './styled/WrapTooltip';
 import Score from './styled/Score';
 const MaxLabel = styled(MaxLabelOriginal)`
@@ -111,8 +110,6 @@ function Bar({
   rotate,
   showIncompleteAction = true,
   height,
-  annotateBenchmark,
-  benchmarkKey,
   scoreOnHover = false,
   hoverEnabled = true,
   hasBackground,
@@ -189,13 +186,6 @@ function Bar({
               level={level}
             />
           )}
-          {annotateBenchmark && (
-            <AnnotateBenchmark
-              type={annotateBenchmark}
-              benchmarkKey={benchmarkKey}
-            />
-          )}
-
           {!hasValue && data && level < 3 && (
             <NoDataHint
               hints={[
@@ -237,8 +227,6 @@ Bar.propTypes = {
   showLabels: PropTypes.bool,
   hasBackground: PropTypes.bool,
   showScore: PropTypes.bool,
-  annotateBenchmark: PropTypes.string,
-  benchmarkKey: PropTypes.string,
   hoverEnabled: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),

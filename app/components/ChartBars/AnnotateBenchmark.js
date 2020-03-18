@@ -14,48 +14,32 @@ import rootMessages from 'messages';
 import Tooltip from 'components/Tooltip';
 import BenchmarkOverlay from 'components/Tooltip/BenchmarkOverlay';
 
-import AnnotateRefInner from './styled/AnnotateRefInner';
 import AnnotateRef from './styled/AnnotateRef';
+import AnnotateRefLine from './styled/AnnotateRefLine';
+import AnnotateRefInner from './styled/AnnotateRefInner';
 
 function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
-  let rotate;
-  let margin = 0;
-  let relative = false;
   let tooltip = true;
-  let hasLabel = true;
-  let hasLine = true;
+  let labelOrIcon = 'label';
   if (type === 'diamond') {
-    rotate = 45;
-    margin = 0;
     tooltip = true;
-    hasLabel = false;
-    hasLine = false;
-    relative = false;
+    labelOrIcon = 'icon';
   }
   if (type === 'htr') {
-    margin = '1px -1px 1px 0';
     tooltip = false;
-    relative = true;
   }
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <AnnotateRef
-          rotate={rotate}
-          margin={margin}
-          relative={relative}
-          offsetTop={hasBetter}
-          hasBorder={hasLine}
-        >
-          <AnnotateRefInner
-            relative={relative}
-            horizontal={!!rotate}
-            offsetTop={hasBetter}
-          >
+        <AnnotateRef type={type} offsetTop={hasBetter}>
+          {type !== 'diamond' && (
+            <AnnotateRefLine type={type} offsetTop={hasBetter} />
+          )}
+          <AnnotateRefInner type={type} offsetTop={hasBetter}>
             {tooltip && (
               <Tooltip
-                textAnchor={hasLabel && (
+                textAnchor={labelOrIcon === 'label' && (
                   <Text
                     size="xsmall"
                     color="highlight2"
@@ -68,7 +52,7 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
                   >
                     {label || `${intl.formatMessage(
                       rootMessages.settings.benchmark[benchmarkKey]
-                    )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(
+                    )} ${size === 'small' ? '' : lowerCase(intl.formatMessage(
                       rootMessages.settings.benchmark.nameShort
                     ))}`}
                   </Text>
@@ -93,7 +77,7 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
               >
                 {label || `${intl.formatMessage(
                   rootMessages.settings.benchmark[benchmarkKey]
-                )} ${relative || size === 'small' ? '' : lowerCase(intl.formatMessage(
+                )} ${size === 'small' ? '' : lowerCase(intl.formatMessage(
                   rootMessages.settings.benchmark.nameShort
                 ))}`}
               </Text>
