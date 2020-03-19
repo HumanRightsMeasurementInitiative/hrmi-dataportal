@@ -25,6 +25,7 @@ import UL from 'styled/UL';
 import ButtonText from 'styled/ButtonText';
 
 import rootMessages from 'messages';
+import aboutMessages from 'components/AboutMetric/messages';
 import messages from './messages';
 
 const StyledUL = styled(UL)`
@@ -156,7 +157,7 @@ export function AboutMetricSources({
                   </div>
                   <div>
                     <Text size="xsmall">
-                      <FormattedMessage {...messages.titleStandards} />
+                      <FormattedMessage {...aboutMessages.titleStandards} />
                     </Text>
                     <Text size="xsmall">
                       {`: ${getStandards(i.standard, intl)}`}

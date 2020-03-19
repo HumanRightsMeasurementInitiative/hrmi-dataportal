@@ -232,7 +232,7 @@ export function PathCountry({
               },
               {
                 key: 'report-esr',
-                title: intl.formatMessage(rootMessages.dimensions.esr),
+                title: intl.formatMessage(rootMessages.tabs.esr),
                 content: props => (
                   <TabCountryReport
                     {...props}
@@ -266,7 +266,7 @@ export function PathCountry({
               },
               {
                 key: 'report-physint',
-                title: intl.formatMessage(rootMessages.dimensions.physint),
+                title: intl.formatMessage(rootMessages.tabs.physint),
                 content: props => (
                   <TabCountryReport
                     {...props}
@@ -293,7 +293,7 @@ export function PathCountry({
               },
               {
                 key: 'report-empowerment',
-                title: intl.formatMessage(rootMessages.dimensions.empowerment),
+                title: intl.formatMessage(rootMessages.tabs.empowerment),
                 content: props => (
                   <TabCountryReport
                     {...props}

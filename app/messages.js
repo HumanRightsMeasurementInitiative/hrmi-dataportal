@@ -18,6 +18,14 @@ export default defineMessages({
       id: `${scope}.app.claim`,
       defaultMessage: 'Measuring What Matters',
     },
+    metaTitle: {
+      id: `${scope}.app.metaTitle`,
+      defaultMessage: 'HRMI Rights Tracker',
+    },
+    metaDescription: {
+      id: `${scope}.app.metaDescription`,
+      defaultMessage: 'HRMI Rights Tracker - Measuring what matters',
+    },
   },
   hints: {
     noResults: {
@@ -119,55 +127,21 @@ export default defineMessages({
     },
   },
   tabs: {
-    countries: {
-      id: `${scope}.tabs.countries`,
-      defaultMessage: 'Explore by country',
-    },
-    metrics: {
-      id: `${scope}.tabs.metrics`,
-      defaultMessage: 'Explore by metric',
-    },
-    mobile: {
-      countries: {
-        id: `${scope}.tabs.mobile.countries`,
-        defaultMessage: 'Explore countries',
-      },
-      metrics: {
-        id: `${scope}.tabs.mobile.metrics`,
-        defaultMessage: 'Explore metrics',
-      },
-      'people-at-risk': {
-        id: `${scope}.tabs.mobile.people-at-risk`,
-        defaultMessage: 'At risk',
-      },
-      trend: {
-        id: `${scope}.tabs.trend`,
-        defaultMessage: 'Trend',
-      },
-      reportESR: {
-        id: `${scope}.tabs.mobile.reportESR`,
-        defaultMessage: 'ESR',
-      },
-      reportCPR: {
-        id: `${scope}.tabs.mobile.reportCPR`,
-        defaultMessage: 'CPR',
-      },
-    },
     snapshot: {
       id: `${scope}.tabs.snapshot`,
       defaultMessage: 'Snapshot',
     },
-    reportESR: {
-      id: `${scope}.tabs.reportESR`,
-      defaultMessage: 'ESR',
+    esr: {
+      id: `${scope}.tabs.esr`,
+      defaultMessage: 'Quality of Life',
     },
-    reportCPR: {
-      id: `${scope}.tabs.reportCPR`,
-      defaultMessage: 'CPR',
+    physint: {
+      id: `${scope}.tabs.physint`,
+      defaultMessage: 'Safety from the State',
     },
-    ChartContainerMetric: {
-      id: `${scope}.tabs.ChartContainerMetric`,
-      defaultMessage: 'Explore metric',
+    empowerment: {
+      id: `${scope}.tabs.empowerment`,
+      defaultMessage: 'Empowerment',
     },
     'people-at-risk': {
       id: `${scope}.tabs.people-at-risk`,
@@ -177,13 +151,31 @@ export default defineMessages({
       id: `${scope}.tabs.about`,
       defaultMessage: 'About',
     },
-    trend: {
-      id: `${scope}.tabs.trend`,
-      defaultMessage: 'Over time',
-    },
-    groups: {
-      id: `${scope}.tabs.groups`,
-      defaultMessage: 'By sex',
+    mobile: {
+      snapshot: {
+        id: `${scope}.tabs.mobile.snapshot`,
+        defaultMessage: 'Snapshot',
+      },
+      esr: {
+        id: `${scope}.tabs.mobile.esr`,
+        defaultMessage: 'Quality of Life',
+      },
+      physint: {
+        id: `${scope}.tabs.mobile.physint`,
+        defaultMessage: 'Safety from the State',
+      },
+      empowerment: {
+        id: `${scope}.tabs.mobile.empowerment`,
+        defaultMessage: 'Empowerment',
+      },
+      'people-at-risk': {
+        id: `${scope}.tabs.mobile.people-at-risk`,
+        defaultMessage: 'People at risk',
+      },
+      about: {
+        id: `${scope}.tabs.mobile.about`,
+        defaultMessage: 'About',
+      },
     },
   },
   charts: {
@@ -687,10 +679,6 @@ export default defineMessages({
       id: `${scope}.rights-short.death-penalty`,
       defaultMessage: 'death-penalty',
     },
-    execution: {
-      id: `${scope}.rights-short.execution`,
-      defaultMessage: 'execution',
-    },
     'extrajud-killing': {
       id: `${scope}.rights-short.extrajud-killing`,
       defaultMessage: 'extrajud-killing',
@@ -756,10 +744,6 @@ export default defineMessages({
     'death-penalty': {
       id: `${scope}.rights-xshort.death-penalty`,
       defaultMessage: 'death-penalty',
-    },
-    execution: {
-      id: `${scope}.rights-xshort.execution`,
-      defaultMessage: 'execution',
     },
     'extrajud-killing': {
       id: `${scope}.rights-xshort.extrajud-killing`,
