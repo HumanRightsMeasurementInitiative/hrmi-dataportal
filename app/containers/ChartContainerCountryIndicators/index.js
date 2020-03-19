@@ -134,7 +134,9 @@ export function ChartContainerCountryIndicators({
         grades={GRADES.esr}
         gradeLabels={false}
         level={1}
-        commonLabel="Right to"
+        commonLabel={intl.formatMessage(
+          rootMessages.charts.rightsColumnLabel.esr,
+        )}
         listHeader
         metric={getMetricDetails(metricCode)}
         scoresAside
@@ -150,7 +152,9 @@ export function ChartContainerCountryIndicators({
         })}
         currentBenchmark={currentBenchmark}
         standard={standard}
-        commonLabel="Indicators"
+        commonLabel={intl.formatMessage(
+          rootMessages.charts.indicatorsColumnLabel,
+        )}
         labelColor="esrDark"
         grades={GRADES.esr}
         listHeader

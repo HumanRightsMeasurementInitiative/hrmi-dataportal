@@ -12,35 +12,6 @@ import { Box, Text } from 'grommet';
 
 import rootMessages from 'messages';
 import messages from 'containers/LayerSettings/messages';
-//
-// const showHINote = ({ route, match }) => {
-//   const metricDetails = getMetricDetails(match);
-//   if (metricDetails && metricDetails.metricType === 'indicators') return false;
-//   if (route === 'country') return false;
-//   return route === 'countries';
-// };
-// const showHIIndicatorNote = ({ match, metricInfo }) => {
-//   const metricDetails = getMetricDetails(match);
-//   if (
-//     metricDetails &&
-//     metricDetails.metricType === 'indicators' &&
-//     metricInfo &&
-//     metricInfo.standard === 'Core'
-//   ) {
-//     return true;
-//   }
-//   return false;
-// };
-// const showHICountryNote = ({ route, country, standard }) => {
-//   if (
-//     route === 'country' &&
-//     country.high_income_country === '1' &&
-//     standard !== 'hi'
-//   ) {
-//     return true;
-//   }
-//   return false;
-// };
 
 // prettier-ignore
 export function HINotes({

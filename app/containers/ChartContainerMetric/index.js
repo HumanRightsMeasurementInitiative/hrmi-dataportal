@@ -53,7 +53,6 @@ import { sortScores } from 'utils/scores';
 import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 
 import rootMessages from 'messages';
-// import messages from './messages';
 
 const DEPENDENCIES = [
   'countries',

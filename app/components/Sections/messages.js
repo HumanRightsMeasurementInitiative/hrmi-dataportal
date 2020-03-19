@@ -1,5 +1,5 @@
 /*
- * Overview Messages
+ * Sections Messages
  *
  * This contains all the text for the Overview container.
  */

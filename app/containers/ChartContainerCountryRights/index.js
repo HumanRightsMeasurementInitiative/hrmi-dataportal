@@ -32,11 +32,6 @@ import {
   getReferenceScores,
   getDependenciesReady,
   getRightsForCountry,
-  // getAuxIndicatorsForCountry,
-  // getLatestCountryCurrentGDP,
-  // getLatestCountry2011PPPGDP,
-  // getESRYear,
-  // getCPRYear,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
 import saga from 'containers/App/saga';
@@ -241,7 +236,9 @@ export function ChartContainerCountryRights({
               grades={GRADES[type]}
               gradeLabels={false}
               level={1}
-              commonLabel="Summary score"
+              commonLabel={intl.formatMessage(
+                rootMessages.charts.dimensionSummaryLabel,
+              )}
               listHeader
               metric={getMetricDetails(dimensionCode)}
               summaryScore={{
@@ -262,9 +259,9 @@ export function ChartContainerCountryRights({
               })}
               currentBenchmark={currentBenchmark}
               standard={standard}
-              commonLabel={`${intl.formatMessage(
-                rootMessages['rights-xshort-common'][dimensionCode],
-              )}`}
+              commonLabel={intl.formatMessage(
+                rootMessages.charts.rightsColumnLabel[dimensionCode],
+              )}
               labelColor={`${dimensionCode}Dark`}
               grades={GRADES[type]}
               listHeader
