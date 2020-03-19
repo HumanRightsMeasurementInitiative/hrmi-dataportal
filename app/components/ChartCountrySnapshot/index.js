@@ -164,7 +164,7 @@ function ChartCountrySnapshot({
                 currentBenchmark={type === 'esr' && currentBenchmark}
                 standard={type === 'esr' && standard}
                 commonLabel={`${intl.formatMessage(
-                  rootMessages['rights-xshort-common'][dimensionCode],
+                  rootMessages.charts.rightsColumnLabel[dimensionCode],
                 )}`}
                 labelColor={`${dimensionCode}Dark`}
                 padVertical="small"

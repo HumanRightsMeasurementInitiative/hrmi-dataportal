@@ -187,6 +187,28 @@ export default defineMessages({
     },
   },
   charts: {
+    dimensionSummaryLabel: {
+      id: `${scope}.charts.dimensionSummaryLabel`,
+      defaultMessage: 'Summary Score',
+    },
+    rightsColumnLabel: {
+      esr: {
+        id: `${scope}.charts.rightsColumnLabel.esr`,
+        defaultMessage: 'Right to',
+      },
+      empowerment: {
+        id: `${scope}.charts.rightsColumnLabel.empowerment`,
+        defaultMessage: 'Right to',
+      },
+      physint: {
+        id: `${scope}.charts.rightsColumnLabel.physint`,
+        defaultMessage: 'Right to freedom from',
+      },
+    },
+    indicatorsColumnLabel: {
+      id: `${scope}.charts.indicatorsColumnLabel`,
+      defaultMessage: 'Indicators',
+    },
     noData: {
       id: `${scope}.charts.noData`,
       defaultMessage: 'No data',
@@ -374,10 +396,6 @@ export default defineMessages({
     rights: {
       id: `${scope}.metricTypes.rights`,
       defaultMessage: 'Rights',
-    },
-    subrights: {
-      id: `${scope}.metricTypes.subrights`,
-      defaultMessage: 'Subrights',
     },
     indicators: {
       id: `${scope}.metricTypes.indicators`,
@@ -720,20 +738,6 @@ export default defineMessages({
     union: {
       id: `${scope}.rights-short.union`,
       defaultMessage: 'union',
-    },
-  },
-  'rights-xshort-common': {
-    esr: {
-      id: `${scope}.rights-xshort-common.esr`,
-      defaultMessage: 'esr',
-    },
-    physint: {
-      id: `${scope}.rights-xshort-common.physint`,
-      defaultMessage: 'physint',
-    },
-    empowerment: {
-      id: `${scope}.rights-xshort-common.empowerment`,
-      defaultMessage: 'physint',
     },
   },
   'rights-xshort': {
