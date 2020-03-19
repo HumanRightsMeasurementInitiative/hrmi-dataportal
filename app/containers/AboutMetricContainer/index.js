@@ -147,9 +147,6 @@ export function AboutMetricContainer({
               {typeof metric.aggregate === 'undefined' && (
                 <FormattedMessage {...messages.titleParent[metricType]} />
               )}
-              {typeof metric.aggregate !== 'undefined' && (
-                <FormattedMessage {...messages.titleParent.subrights} />
-              )}
             </Heading>
             <ButtonRelative
               onClick={evt => {

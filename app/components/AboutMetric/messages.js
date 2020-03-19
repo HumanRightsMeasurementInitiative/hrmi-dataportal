@@ -28,10 +28,6 @@ export default defineMessages({
       defaultMessage: 'How is this indicator defined?',
     },
   },
-  titleSource: {
-    id: `${scope}.titleSource`,
-    defaultMessage: 'Data source',
-  },
   titleStandards: {
     id: `${scope}.titleStandards`,
     defaultMessage: 'What assessment standard is it used for?',

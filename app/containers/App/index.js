@@ -29,7 +29,7 @@ import LayerSettings from 'containers/LayerSettings';
 
 import CookieConsent from 'containers/CookieConsent';
 
-import headerMessages from 'containers/Header/messages';
+import rootMessages from 'messages';
 
 import { getHeaderHeight } from 'utils/responsive';
 
@@ -54,7 +54,7 @@ const Main = styled.main`
     padding-top: ${({ theme }) => getHeaderHeight('medium', theme)}px;
   }
 `;
-// ${props => console.log(props.theme)}
+// ${props => console.log(props.thesme)}
 
 /**
  * routes: /[locale] +
@@ -67,10 +67,8 @@ const Main = styled.main`
 
 export function App({ match, intl }) {
   const locale = match.params ? match.params.locale : DEFAULT_LOCALE;
-  const title = `HRMI ${intl.formatMessage(headerMessages.appTitle)}`;
-  const description = `Human Rights Measurement Initiative ${intl.formatMessage(
-    headerMessages.appTitle,
-  )}`;
+  const title = intl.formatMessage(rootMessages.app.metaTitle);
+  const description = intl.formatMessage(rootMessages.app.metaDescription);
   return (
     <AppWrapper>
       <Helmet titleTemplate={`%s - ${title}`} defaultTitle={title}>

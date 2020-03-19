@@ -15,10 +15,6 @@ export default defineMessages({
       defaultMessage:
         'What category score was this human rights score used for?',
     },
-    subrights: {
-      id: `${scope}.titleParent.subrights`,
-      defaultMessage: 'What human rights score was this score used for?',
-    },
     indicators: {
       id: `${scope}.titleParent.indicators`,
       defaultMessage: 'What human rights score was this indicator used for?',
@@ -35,10 +31,6 @@ export default defineMessages({
         id: `${scope}.titleChildren.rights.esr`,
         defaultMessage:
           'What indicators were used to measure this human right?',
-      },
-      cpr: {
-        id: `${scope}.titleChildren.rights.cpr`,
-        defaultMessage: 'What subrights were used to measure this human right?',
       },
     },
   },

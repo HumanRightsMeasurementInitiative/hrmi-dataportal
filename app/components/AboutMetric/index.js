@@ -65,24 +65,6 @@ function AboutMetric({
               level={5}
               margin={{ vertical: 'xsmall' }}
             >
-              <FormattedMessage {...messages.titleSource} />
-            </Heading>
-            <Box>
-              <StyledUL>
-                {metricInfo.source_codes.split(',').map(source => (
-                  <li key={source}>
-                    <FormattedMessage {...rootMessages.sources[source]} />
-                  </li>
-                ))}
-              </StyledUL>
-            </Box>
-          </Box>
-          <Box>
-            <Heading
-              responsive={false}
-              level={5}
-              margin={{ vertical: 'xsmall' }}
-            >
               <FormattedMessage {...messages.titleStandards} />
             </Heading>
             <Box>
