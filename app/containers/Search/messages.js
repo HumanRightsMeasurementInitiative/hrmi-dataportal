@@ -13,10 +13,6 @@ export default defineMessages({
     id: `${scope}.allSearch`,
     defaultMessage: 'Search country or metric',
   },
-  noResults: {
-    id: `${scope}.noResults`,
-    defaultMessage: 'We are sorry! Your search did not return any results.',
-  },
   countrySearch: {
     id: `${scope}.countrySearch`,
     defaultMessage: 'Search country',
@@ -24,5 +20,9 @@ export default defineMessages({
   metricSearch: {
     id: `${scope}.metricSearch`,
     defaultMessage: 'Search metric',
+  },
+  noResults: {
+    id: `${scope}.noResults`,
+    defaultMessage: 'We are sorry! Your search did not return any results.',
   },
 });

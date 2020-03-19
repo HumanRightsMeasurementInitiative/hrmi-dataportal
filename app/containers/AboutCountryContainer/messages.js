@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.AboutCountryContainer';
+export const scope = 'hrmi.containers.AboutCountryContainer';
 
 /* eslint-disable no-template-curly-in-string */
 export default defineMessages({
