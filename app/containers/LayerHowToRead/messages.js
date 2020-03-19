@@ -6,7 +6,7 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.containers.HowToRead';
+export const scope = 'hrmi.containers.LayerHowToRead';
 
 export default defineMessages({
   label: {

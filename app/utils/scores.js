@@ -3,17 +3,11 @@ import { RIGHTS, COUNTRY_SORTS } from 'containers/App/constants';
 import quasiEquals from 'utils/quasi-equals';
 import isNumber from 'utils/is-number';
 
-export const getRightsScoresForDimension = (
-  rights,
-  dimensionKey,
-  keepSubrights = false,
-) =>
+export const getRightsScoresForDimension = (rights, dimensionKey) =>
   rights &&
   Object.values(rights)
     .filter(
-      r =>
-        r.dimension === dimensionKey &&
-        (keepSubrights || typeof r.aggregate === 'undefined'),
+      r => r.dimension === dimensionKey && typeof r.aggregate === 'undefined',
     )
     .sort((a, b) =>
       RIGHTS.map(r => r.key).indexOf(a.key) >
