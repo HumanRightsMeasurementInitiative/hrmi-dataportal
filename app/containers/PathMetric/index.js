@@ -129,12 +129,12 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
                     <>
                       <Paragraph>
                         <FormattedMessage
-                          {...messages[metric.metricType][metricCode].header}
+                          {...messages[metric.metricType][metricCode].header.a}
                         />
                       </Paragraph>
                       <Paragraph>
                         <FormattedMessage
-                          {...messages[metric.metricType][metricCode].header2}
+                          {...messages[metric.metricType][metricCode].header.b}
                         />
                       </Paragraph>
                       <Paragraph>

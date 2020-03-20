@@ -10,12 +10,14 @@ export const scope = 'hrmi.containers.PathCountry';
 
 export default defineMessages({
   header: {
-    id: `${scope}.header`,
-    defaultMessage:
-      "How well {isPlural, select, true {are} false {is}} {countryWithArticle} respecting people's human rights?",
-  },
-  header2: {
-    id: `${scope}.header2`,
-    defaultMessage: 'Use the tabs below to explore the scores',
+    a: {
+      id: `${scope}.header.a`,
+      defaultMessage:
+        "How well {isPlural, select, true {are} false {is}} {countryWithArticle} respecting people's human rights?",
+    },
+    b: {
+      id: `${scope}.header.b`,
+      defaultMessage: 'Use the tabs below to explore the scores',
+    },
   },
 });
