@@ -179,13 +179,13 @@ export function PathCountry({
                   <PageTitle>{countryTitle}</PageTitle>
                   <Paragraph>
                     <FormattedMessage
-                      {...messages.header}
+                      {...messages.header.a}
                       values={messageValues}
                     />
                   </Paragraph>
                   <Paragraph>
                     <FormattedMessage
-                      {...messages.header2}
+                      {...messages.header.b}
                       values={messageValues}
                     />
                   </Paragraph>

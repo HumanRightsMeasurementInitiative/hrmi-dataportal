@@ -12,13 +12,15 @@ export default defineMessages({
   dimensions: {
     esr: {
       header: {
-        id: `${scope}.dimensions.esr.header`,
-        defaultMessage: 'Are people’s economic and social rights being met?',
-      },
-      header2: {
-        id: `${scope}.dimensions.esr.header2`,
-        defaultMessage:
-          'These scores measure how well a country is using its resources to ensure people’s economic and social rights are fulfilled.',
+        a: {
+          id: `${scope}.dimensions.esr.header.a`,
+          defaultMessage: 'Are people’s economic and social rights being met?',
+        },
+        b: {
+          id: `${scope}.dimensions.esr.header.b`,
+          defaultMessage:
+            'These scores measure how well a country is using its resources to ensure people’s economic and social rights are fulfilled.',
+        },
       },
       link: {
         id: `${scope}.dimensions.esr.link`,
@@ -27,13 +29,15 @@ export default defineMessages({
     },
     physint: {
       header: {
-        id: `${scope}.dimensions.physint.header`,
-        defaultMessage: 'Are people safe from harmful state actions?',
-      },
-      header2: {
-        id: `${scope}.dimensions.physint.header2`,
-        defaultMessage:
-          'The estimated score is displayed within an uncertainty band.',
+        a: {
+          id: `${scope}.dimensions.physint.header.a`,
+          defaultMessage: 'Are people safe from harmful state actions?',
+        },
+        b: {
+          id: `${scope}.dimensions.physint.header.b`,
+          defaultMessage:
+            'The estimated score is displayed within an uncertainty band.',
+        },
       },
       link: {
         id: `${scope}.dimensions.physint.link`,
@@ -42,13 +46,16 @@ export default defineMessages({
     },
     empowerment: {
       header: {
-        id: `${scope}.dimensions.empowerment.header`,
-        defaultMessage: 'Are people empowered to fully participate in society?',
-      },
-      header2: {
-        id: `${scope}.dimensions.empowerment.header2`,
-        defaultMessage:
-          'The estimated score is displayed within an uncertainty band.',
+        a: {
+          id: `${scope}.dimensions.empowerment.header.a`,
+          defaultMessage:
+            'Are people empowered to fully participate in society?',
+        },
+        b: {
+          id: `${scope}.dimensions.empowerment.header.b`,
+          defaultMessage:
+            'The estimated score is displayed within an uncertainty band.',
+        },
       },
       link: {
         id: `${scope}.dimensions.empowerment.link`,
@@ -59,12 +66,14 @@ export default defineMessages({
   rights: {
     food: {
       header: {
-        id: `${scope}.rights.food.header`,
-        defaultMessage: 'rights.food.header',
-      },
-      header2: {
-        id: `${scope}.rights.food.header2`,
-        defaultMessage: 'rights.food.header2',
+        a: {
+          id: `${scope}.rights.food.header.a`,
+          defaultMessage: 'rights.food.header.a',
+        },
+        b: {
+          id: `${scope}.rights.food.header.b`,
+          defaultMessage: 'rights.food.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.food.link`,
@@ -73,12 +82,14 @@ export default defineMessages({
     },
     education: {
       header: {
-        id: `${scope}.rights.education.header`,
-        defaultMessage: 'rights.education.header',
-      },
-      header2: {
-        id: `${scope}.rights.education.header2`,
-        defaultMessage: 'rights.education.header2',
+        a: {
+          id: `${scope}.rights.education.header.a`,
+          defaultMessage: 'rights.education.header.a',
+        },
+        b: {
+          id: `${scope}.rights.education.header.b`,
+          defaultMessage: 'rights.education.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.education.link`,
@@ -87,12 +98,14 @@ export default defineMessages({
     },
     health: {
       header: {
-        id: `${scope}.rights.health.header`,
-        defaultMessage: 'rights.health.header',
-      },
-      header2: {
-        id: `${scope}.rights.health.header2`,
-        defaultMessage: 'rights.health.header2',
+        a: {
+          id: `${scope}.rights.health.header.a`,
+          defaultMessage: 'rights.health.header.a',
+        },
+        b: {
+          id: `${scope}.rights.health.header.b`,
+          defaultMessage: 'rights.health.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.health.link`,
@@ -101,12 +114,14 @@ export default defineMessages({
     },
     housing: {
       header: {
-        id: `${scope}.rights.housing.header`,
-        defaultMessage: 'rights.housing.header',
-      },
-      header2: {
-        id: `${scope}.rights.housing.header2`,
-        defaultMessage: 'rights.housing.header2',
+        a: {
+          id: `${scope}.rights.housing.header.a`,
+          defaultMessage: 'rights.housing.header.a',
+        },
+        b: {
+          id: `${scope}.rights.housing.header.b`,
+          defaultMessage: 'rights.housing.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.housing.link`,
@@ -115,12 +130,14 @@ export default defineMessages({
     },
     work: {
       header: {
-        id: `${scope}.rights.work.header`,
-        defaultMessage: 'rights.work.header',
-      },
-      header2: {
-        id: `${scope}.rights.work.header2`,
-        defaultMessage: 'rights.work.header2',
+        a: {
+          id: `${scope}.rights.work.header.a`,
+          defaultMessage: 'rights.work.header.a',
+        },
+        b: {
+          id: `${scope}.rights.work.header.b`,
+          defaultMessage: 'rights.work.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.work.link`,
@@ -129,12 +146,14 @@ export default defineMessages({
     },
     arrest: {
       header: {
-        id: `${scope}.rights.arrest.header`,
-        defaultMessage: 'rights.arrest.header',
-      },
-      header2: {
-        id: `${scope}.rights.arrest.header2`,
-        defaultMessage: 'rights.arrest.header2',
+        a: {
+          id: `${scope}.rights.arrest.header.a`,
+          defaultMessage: 'rights.arrest.header.a',
+        },
+        b: {
+          id: `${scope}.rights.arrest.header.b`,
+          defaultMessage: 'rights.arrest.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.arrest.link`,
@@ -143,12 +162,14 @@ export default defineMessages({
     },
     disappearance: {
       header: {
-        id: `${scope}.rights.disappearance.header`,
-        defaultMessage: 'rights.disappearance.header',
-      },
-      header2: {
-        id: `${scope}.rights.disappearance.header2`,
-        defaultMessage: 'rights.disappearance.header2',
+        a: {
+          id: `${scope}.rights.disappearance.header.a`,
+          defaultMessage: 'rights.disappearance.header.a',
+        },
+        b: {
+          id: `${scope}.rights.disappearance.header.b`,
+          defaultMessage: 'rights.disappearance.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.disappearance.link`,
@@ -157,12 +178,14 @@ export default defineMessages({
     },
     'death-penalty': {
       header: {
-        id: `${scope}.rights.death-penalty.header`,
-        defaultMessage: 'rights.death-penalty.header',
-      },
-      header2: {
-        id: `${scope}.rights.death-penalty.header2`,
-        defaultMessage: 'rights.death-penalty.header2',
+        a: {
+          id: `${scope}.rights.death-penalty.header.a`,
+          defaultMessage: 'rights.death-penalty.header.a',
+        },
+        b: {
+          id: `${scope}.rights.death-penalty.header.b`,
+          defaultMessage: 'rights.death-penalty.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.death-penalty.link`,
@@ -171,12 +194,14 @@ export default defineMessages({
     },
     'extrajud-killing': {
       header: {
-        id: `${scope}.rights.extrajud-killing.header`,
-        defaultMessage: 'rights.extrajud-killing.header',
-      },
-      header2: {
-        id: `${scope}.rights.extrajud-killing.header2`,
-        defaultMessage: 'rights.extrajud-killing.header2',
+        a: {
+          id: `${scope}.rights.extrajud-killing.header.a`,
+          defaultMessage: 'rights.extrajud-killing.header.a',
+        },
+        b: {
+          id: `${scope}.rights.extrajud-killing.header.b`,
+          defaultMessage: 'rights.extrajud-killing.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.extrajud-killing.link`,
@@ -185,12 +210,14 @@ export default defineMessages({
     },
     torture: {
       header: {
-        id: `${scope}.rights.torture.header`,
-        defaultMessage: 'rights.torture.header',
-      },
-      header2: {
-        id: `${scope}.rights.torture.header2`,
-        defaultMessage: 'rights.torture.header2',
+        a: {
+          id: `${scope}.rights.torture.header.a`,
+          defaultMessage: 'rights.torture.header.a',
+        },
+        b: {
+          id: `${scope}.rights.torture.header.b`,
+          defaultMessage: 'rights.torture.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.torture.link`,
@@ -199,12 +226,14 @@ export default defineMessages({
     },
     assembly: {
       header: {
-        id: `${scope}.rights.assembly.header`,
-        defaultMessage: 'rights.assembly.header',
-      },
-      header2: {
-        id: `${scope}.rights.assembly.header2`,
-        defaultMessage: 'rights.assembly.header2',
+        a: {
+          id: `${scope}.rights.assembly.header.a`,
+          defaultMessage: 'rights.assembly.header.a',
+        },
+        b: {
+          id: `${scope}.rights.assembly.header.b`,
+          defaultMessage: 'rights.assembly.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.assembly.link`,
@@ -213,12 +242,14 @@ export default defineMessages({
     },
     expression: {
       header: {
-        id: `${scope}.rights.expression.header`,
-        defaultMessage: 'rights.expression.header',
-      },
-      header2: {
-        id: `${scope}.rights.expression.header2`,
-        defaultMessage: 'rights.expression.header2',
+        a: {
+          id: `${scope}.rights.expression.header.a`,
+          defaultMessage: 'rights.expression.header.a',
+        },
+        b: {
+          id: `${scope}.rights.expression.header.b`,
+          defaultMessage: 'rights.expression.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.expression.link`,
@@ -227,12 +258,14 @@ export default defineMessages({
     },
     participation: {
       header: {
-        id: `${scope}.rights.participation.header`,
-        defaultMessage: 'rights.participation.header',
-      },
-      header2: {
-        id: `${scope}.rights.participation.header2`,
-        defaultMessage: 'rights.participation.header2',
+        a: {
+          id: `${scope}.rights.participation.header.a`,
+          defaultMessage: 'rights.participation.header.a',
+        },
+        b: {
+          id: `${scope}.rights.participation.header.b`,
+          defaultMessage: 'rights.participation.header.b',
+        },
       },
       link: {
         id: `${scope}.rights.participation.link`,
