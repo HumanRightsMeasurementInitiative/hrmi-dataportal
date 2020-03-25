@@ -38,13 +38,13 @@ const WelcomeHeading = styled.h1`
   line-height: 1.33;
   margin-left: 32px;
   margin-right: 32px;
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 0;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     margin-left: 22px;
     margin-right: 22px;
     margin-top: 0.67em;
-    font-size: 24px;
+    font-size: 22px;
   }
 `;
 const StyledButtonHighlight = styled(ButtonHighlight)`
