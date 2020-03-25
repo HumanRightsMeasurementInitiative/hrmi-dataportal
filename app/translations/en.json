@@ -127,7 +127,7 @@
   "hrmi.components.MetricAbout.titleStandards": "Assessment standard(s)",
   "hrmi.components.Overview.aboveTitle": "Human rights performance overview",
   "hrmi.components.Overview.title": "{number} countries",
-  "hrmi.components.Overview.welcome.heading": "Welcome to the new data portal of the Human Rights Measurement Initiative (HRMI)",
+  "hrmi.components.Overview.welcome.heading": "Welcome to the data portal of the Human Rights Measurement Initiative (HRMI). Please note, we will be launching a new and improved version of this website in April 2020",
   "hrmi.components.Overview.welcome.intro": "Explore the human rights performance of countries across 3 categories and 12 rights.",
   "hrmi.components.Overview.welcome.dimensionScores": "Category scores for",
   "hrmi.components.Overview.welcome.better": "The higher the score, the better the performance",
