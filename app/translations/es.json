@@ -127,7 +127,7 @@
   "hrmi.components.MetricAbout.titleStandards": "¿Para qué estándar de evaluación se utiliza?",
   "hrmi.components.Overview.aboveTitle": "Resumen del desempeño de los derechos humanos",
   "hrmi.components.Overview.title": "{number} países",
-  "hrmi.components.Overview.welcome.heading": "Bienvenidos al nuevo portal de datos de la Iniciativa de Medición de Derechos Humano (HRMI)",
+  "hrmi.components.Overview.welcome.heading": "Bienvenidos al portal de datos de la Iniciativa de Medición de Derechos Humano (HRMI)",
   "hrmi.components.Overview.welcome.intro": "Examine el desempeño de los derechos humanos en los países en 3 categorías y 12 derechos.",
   "hrmi.components.Overview.welcome.dimensionScores": "Puntuaciones de categoría para",
   "hrmi.components.Overview.welcome.better": "Cuanto más alto sea el puntaje, mejor será el desempeño",
