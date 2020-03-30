@@ -119,14 +119,14 @@ const Logo = styled(Image)``;
 
 const TitleWrap = styled(Box)`
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 700;
   margin-top: -1px;
   font-size: 15px;
   line-height: 18px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    margin-top: -5px;
-    font-size: 19px;
-    line-height: 30px;
+    margin-top: -8px;
+    font-size: 22px;
+    line-height: 31px;
   }
 `;
 
