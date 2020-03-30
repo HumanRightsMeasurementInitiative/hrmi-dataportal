@@ -337,7 +337,7 @@ export function ChartContainerCountryRights({
                     intl,
                   })}
                   commonLabel={`${intl.formatMessage(
-                    rootMessages['rights-xshort-common'][dimensionCode],
+                    rootMessages.charts.rightsColumnLabel[dimensionCode],
                   )}`}
                   labelColor={`${dimensionCode}Dark`}
                   padVertical="small"
