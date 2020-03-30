@@ -90,7 +90,7 @@ function HTRBarESR({ contxt, intl }) {
                 )}: `}
               </span>
               <FormattedMessage
-                {...rootMessages.settins.benchmark.adjustedInfo}
+                {...rootMessages.settings.benchmark.adjustedInfo}
               />
             </HTRParagraph>
             <HTRParagraph margin={{ vertical: 'xsmall' }}>
