@@ -194,6 +194,7 @@
   "hrmi.containers.LayerHowToRead.trendCPR.rangeTitle": "Cómo debo interpretar las franjas de incertidumbre?",
   "hrmi.containers.LayerHowToRead.trendCPR.largeRange": "Un rango amplio indica más incertidumbre acerca de cuál es el puntaje verdadero porque los expertos calificaron al país por un derecho de manera muy diferente. ",
   "hrmi.containers.LayerHowToRead.trendCPR.smallRange": "Un rango pequeño indica menos incertidumbre ya que la mayoría de los expertos calificaron al país de manera similar. ",
+  "hrmi.containers.LayerSettings.intro": "TODO: An optional introduction",
   "hrmi.containers.CookieConsent.nonEssentialConsentInfo": "Nos gustaría almacenar cookies y datos de uso para mejorar su experiencia.",
   "hrmi.containers.CookieConsent.buttonAccept": "Estoy de acuerdo",
   "hrmi.containers.CookieConsent.buttonReject": "No, gracias",
