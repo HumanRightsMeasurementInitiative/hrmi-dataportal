@@ -1,6 +1,6 @@
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.containers.LayerSettings.intro';
+export const scope = 'hrmi.containers.LayerSettings';
 
 export default defineMessages({
   intro: {

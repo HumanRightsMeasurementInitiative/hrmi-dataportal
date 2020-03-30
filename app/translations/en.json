@@ -194,6 +194,7 @@
   "hrmi.containers.LayerHowToRead.trendCPR.rangeTitle": "How to interpet the uncertainty bands",
   "hrmi.containers.LayerHowToRead.trendCPR.largeRange": "A large range indicate more uncertainty about what the true score is because the experts scored the country for a right very differently. ",
   "hrmi.containers.LayerHowToRead.trendCPR.smallRange": "A small range indicate less uncertainty since most experts scored the country similar. ",
+  "hrmi.containers.LayerSettings.intro": "TODO: An optional introduction",
   "hrmi.containers.CookieConsent.nonEssentialConsentInfo": "We'd like to store cookies and usage data to improve your experience.",
   "hrmi.containers.CookieConsent.buttonAccept": "I'm ok with that",
   "hrmi.containers.CookieConsent.buttonReject": "No thanks",
