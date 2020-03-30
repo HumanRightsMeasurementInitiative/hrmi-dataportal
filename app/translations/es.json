@@ -299,7 +299,6 @@
   "hrmi.labels.grades.good": "Good",
   "hrmi.labels.tools.howToRead": "Cómo leer",
   "hrmi.labels.tools.settings": "TODO: Switch view",
-  "hrmi.components.ChartCountryDiamond.hiForCore": "País de ingresos altos: para estos países es mejor utilizar la norma de evaluación de 'ingresos altos'.",
   "hrmi.hints.noResults": "No pudimos encontrar ningún país para su configuración de filtro actual",
   "hrmi.hints.noSortData": "Falta información de clasificación",
   "hrmi.tabs.snapshot": "NEW At a glance",
