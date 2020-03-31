@@ -24,6 +24,7 @@ export default function(code) {
     return {
       metricType: 'indicators',
       metricTypeSingle: 'indicator',
+      type: 'esr',
       color: 'esr',
       ...indicator,
     };

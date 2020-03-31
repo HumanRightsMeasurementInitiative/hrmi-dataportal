@@ -83,6 +83,7 @@ export function AboutMetricContainer({
   showMetricLink,
   showTitle,
   showSources,
+  countryScoreMsg,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -242,6 +243,7 @@ export function AboutMetricContainer({
         metricInfo={metricInfo}
         standard={standard}
         showTitle={showTitle}
+        countryScoreMsg={countryScoreMsg}
       />
       <Box
         direction="column"
@@ -291,6 +293,7 @@ AboutMetricContainer.propTypes = {
   showFAQs: PropTypes.bool,
   showRelated: PropTypes.bool,
   showSources: PropTypes.bool,
+  countryScoreMsg: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
