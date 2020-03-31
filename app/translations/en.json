@@ -88,7 +88,7 @@
   "hrmi.containers.PathMetricOverview.description.physint": "These physical integrity rights are measured using an expert survey methodology.",
   "hrmi.components.ChartCountrySnapshot.rightsScoresUnavailable.esr": "Data not yet available",
   "hrmi.components.ChartCountrySnapshot.rightsScoresUnavailable.cpr": "Data not yet available",
-  "hrmi.components.ChartHeader.single-metric": "Scores for {no} countries",
+  "hrmi.components.ChartHeader.single-metric": "Scores available for {no} countries",
   "hrmi.components.ChartHeader.countries-overview": "{no} countries",
   "hrmi.components.ChartHeader.dimension-overview": "{dimension} overview",
   "hrmi.components.ChartHeader.indicators": "Indicator data",
