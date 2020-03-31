@@ -148,6 +148,7 @@ export function ChartContainerCountrySnapshot({
           year={esrYear}
           maxValue={100}
           onMetricClick={onMetricClick}
+          grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
         />
         <ChartCountrySnapshot
           type="cpr"
@@ -160,6 +161,7 @@ export function ChartContainerCountrySnapshot({
           year={cprYear}
           maxValue={10}
           onMetricClick={onMetricClick}
+          grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
         />
         <ChartCountrySnapshot
           type="cpr"
@@ -172,6 +174,7 @@ export function ChartContainerCountrySnapshot({
           year={cprYear}
           maxValue={10}
           onMetricClick={onMetricClick}
+          grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
         />
         <Source />
       </Box>
