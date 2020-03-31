@@ -326,12 +326,12 @@ export default defineMessages({
           'For the quality of life rights, HRMI measures countries against 2 different benchmarks. The current benchmark is:',
       },
       adjustedInfo: {
-        id: `${scope}.tooltip.benchmark.adjustedInfo`,
+        id: `${scope}.settings.benchmark.adjustedInfo`,
         defaultMessage:
           'How well is the country doing compared to the best performance of other countries at roughly the same income level?',
       },
       bestInfo: {
-        id: `${scope}.tooltip.benchmark.bestInfo`,
+        id: `${scope}.settings.benchmark.bestInfo`,
         defaultMessage:
           'How well is the country doing compared to the best performance of all countries?',
       },
