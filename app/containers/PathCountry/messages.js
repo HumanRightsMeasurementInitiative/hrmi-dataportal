@@ -20,4 +20,23 @@ export default defineMessages({
       defaultMessage: 'Use the tabs below to explore the scores',
     },
   },
+  countryScoreExplainer: {
+    esr: {
+      adjusted: {
+        id: `${scope}.countryScoreExplainer.esr.adjusted`,
+        defaultMessage:
+          '{countryWithArticleCap} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at {isPlural, select, true {their} false {its}} level of income',
+      },
+      best: {
+        id: `${scope}.countryScoreExplainer.esr.best`,
+        defaultMessage:
+          '{countryWithArticleCap} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at any income level',
+      },
+    },
+    cpr: {
+      id: `${scope}.countryScoreExplainer.cpr`,
+      defaultMessage:
+        '{countryWithArticleCap} {isPlural, select, true {have} false {has}} a median score of {score} out of 10 according to our survey of human rights experts',
+    },
+  },
 });
