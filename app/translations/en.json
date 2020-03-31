@@ -92,7 +92,7 @@
   "hrmi.components.ChartCountrySnapshot.dimensionIntro.esr.best": "How well {isPlural, select, true {are} false {is}} {countryWithArticle} doing compared to the best in the world?",
   "hrmi.components.ChartCountrySnapshot.dimensionIntro.physint": "How well is {needsArticle, select, true {the } false { }}{countryPossessive} government respecting each right?",
   "hrmi.components.ChartCountrySnapshot.dimensionIntro.empowerment": "How well is {needsArticle, select, true {the } false { }}{countryPossessive} government respecting each right?",
-  "hrmi.components.ChartHeader.single-metric": "Scores for {no} countries",
+  "hrmi.components.ChartHeader.single-metric": "Scores available for {no} countries",
   "hrmi.components.ChartHeader.countries-overview": "{no} countries",
   "hrmi.components.ChartHeader.dimension-overview": "{dimension} overview",
   "hrmi.components.ChartHeader.indicators": "Indicator data",
