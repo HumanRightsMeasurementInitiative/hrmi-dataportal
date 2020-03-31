@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Heading, Box } from 'grommet';
+import { Heading, Box, Text } from 'grommet';
 import styled from 'styled-components';
 import { STANDARDS } from 'containers/App/constants';
 import ReadMore from 'components/ReadMore';
@@ -26,6 +26,7 @@ function AboutMetric({
   intl,
   fullInfo,
   showTitle,
+  countryScoreMsg,
 }) {
   const { metricType } = metric;
   return (
@@ -38,6 +39,11 @@ function AboutMetric({
           <Heading responsive={false} level={3}>
             <FormattedMessage {...rootMessages[metricType][metric.key]} />
           </Heading>
+        )}
+        {countryScoreMsg && (
+          <Box>
+            <Text>{countryScoreMsg}</Text>
+          </Box>
         )}
         <Heading responsive={false} level={5} margin={{ vertical: 'xsmall' }}>
           <FormattedMessage {...messages.title[metricType]} />
@@ -103,6 +109,7 @@ AboutMetric.propTypes = {
   showTitle: PropTypes.bool,
   standard: PropTypes.object,
   intl: intlShape.isRequired,
+  countryScoreMsg: PropTypes.string,
 };
 
 export default injectIntl(AboutMetric);

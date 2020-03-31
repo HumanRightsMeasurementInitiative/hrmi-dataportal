@@ -23,6 +23,7 @@ import {
   getIndicatorsForCountry,
   getCountry,
   getStandardSearch,
+  getBenchmarkSearch,
   getPeopleAtRiskForCountry,
   getDependenciesReady,
   getESRIndicators,
@@ -86,12 +87,20 @@ const DEPENDENCIES = [
   'atRisk',
 ];
 
+const getMetricScore = () => 5;
+// {
+//   }(metric, dimensions, rights, indicators) => {
+//   console.log(metric);
+//   return 5;
+// };
+
 export function PathCountry({
   intl,
   onLoadData,
   onCategoryClick,
   match,
   dimensions,
+  rights,
   indicators,
   country,
   atRisk,
@@ -100,6 +109,7 @@ export function PathCountry({
   allIndicators,
   countryGrammar,
   closeLayers,
+  benchmark,
 }) {
   const [aboutMetric, setAboutMetric] = useState(null);
 
@@ -124,6 +134,7 @@ export function PathCountry({
     countryCode && rootMessages.countries[countryCode]
       ? intl.formatMessage(rootMessages.countries[countryCode])
       : countryCode;
+  const aboutMetricDetails = aboutMetric && getMetricDetails(aboutMetric);
   // prettier-ignore
   const messageValues = {
     ...getMessageGrammar(
@@ -133,6 +144,34 @@ export function PathCountry({
       countryGrammar,
     ),
   };
+  let countryScoreMsg;
+  if (aboutMetric) {
+    if (aboutMetricDetails.type === 'esr') {
+      countryScoreMsg = intl.formatMessage(
+        messages.countryScoreExplainer.esr[benchmark],
+        {
+          ...messageValues,
+          score: getMetricScore(
+            aboutMetricDetails,
+            dimensions,
+            rights,
+            indicators,
+          ),
+        },
+      );
+    }
+    if (aboutMetricDetails.type === 'cpr') {
+      countryScoreMsg = intl.formatMessage(messages.countryScoreExplainer.cpr, {
+        ...messageValues,
+        score: getMetricScore(
+          aboutMetricDetails,
+          dimensions,
+          rights,
+          indicators,
+        ),
+      });
+    }
+  }
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -146,10 +185,11 @@ export function PathCountry({
               content={
                 <AboutMetricContainer
                   metricCode={aboutMetric}
-                  metric={getMetricDetails(aboutMetric)}
+                  metric={aboutMetricDetails}
                   showTitle
                   showMetricLink
                   showSources
+                  countryScoreMsg={countryScoreMsg}
                 />
               }
               onClose={() => setAboutMetric(null)}
@@ -418,6 +458,7 @@ const mapStateToProps = createStructuredSelector({
     getDimensionsForCountry(state, match.params.country),
   atRisk: (state, { match }) => getPeopleAtRiskForCountry(state, match.params),
   standard: state => getStandardSearch(state),
+  benchmark: state => getBenchmarkSearch(state),
   allIndicators: state => getESRIndicators(state),
   countryGrammar: (state, { match }) =>
     getCountryGrammar(state, match.params.country),
