@@ -128,6 +128,7 @@ function ChartCountrySnapshot({
   onMetricClick,
   intl,
   source,
+  grammar,
 }) {
   const hasRights = rights.some(r => !!r.score);
   return (
@@ -148,6 +149,20 @@ function ChartCountrySnapshot({
                 {` (${year})`}
               </Text>
             </Box>
+            <Text>
+              {type === 'esr' && currentBenchmark && (
+                <FormattedMessage
+                  {...messages.dimensionIntro.esr[currentBenchmark.key]}
+                  values={grammar}
+                />
+              )}
+              {type === 'cpr' && (
+                <FormattedMessage
+                  {...messages.dimensionIntro[dimensionCode]}
+                  values={grammar}
+                />
+              )}
+            </Text>
             {(hasRights || type === 'esr') && (
               <ChartBars
                 summaryScore={
@@ -207,6 +222,7 @@ ChartCountrySnapshot.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dimensionScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   currentBenchmark: PropTypes.object,
+  grammar: PropTypes.object,
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   year: PropTypes.number,
   maxValue: PropTypes.number,
