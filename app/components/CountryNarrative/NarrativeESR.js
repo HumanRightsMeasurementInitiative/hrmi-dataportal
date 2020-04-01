@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
 
-import formatScore from 'utils/format-score';
+import { formatScore } from 'utils/scores';
 import { getESRScoreRange, getMessageGrammar } from 'utils/narrative';
 
 import OL from 'styled/OL';

@@ -13,8 +13,6 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Heading, Box, Text } from 'grommet';
 
-import roundValue from 'utils/round-score';
-
 import { selectCountry } from 'containers/App/actions';
 
 import {
@@ -30,6 +28,8 @@ import { COLUMNS } from 'containers/App/constants';
 import FAQs from 'containers/FAQs';
 import ButtonText from 'styled/ButtonText';
 import ButtonHighlight from 'styled/ButtonHighlight';
+
+import { roundScore } from 'utils/scores';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -58,13 +58,13 @@ const StyledButtonText = styled(ButtonText)`
 const prepPopulationValue = (value, intl, year) => {
   if (parseInt(value, 10) > 1000000) {
     return {
-      value: intl.formatNumber(roundValue(value / 1000000, 1)),
+      value: intl.formatNumber(roundScore(value / 1000000, 1)),
       abbrev: 'millions',
       year,
     };
   }
   return {
-    value: intl.formatNumber(roundValue(value / 1000, 1)),
+    value: intl.formatNumber(roundScore(value / 1000, 1)),
     abbrev: 'thousands',
     year,
   };
@@ -156,7 +156,7 @@ function AboutCountryContainer({
                   <FormattedMessage
                     {...messages.gdpValue}
                     values={{
-                      value: intl.formatNumber(roundValue(currentGDP.value, 0)),
+                      value: intl.formatNumber(roundScore(currentGDP.value, 0)),
                       year: currentGDP.year,
                     }}
                   />
@@ -178,7 +178,7 @@ function AboutCountryContainer({
                   <FormattedMessage
                     {...messages.gdpValue}
                     values={{
-                      value: intl.formatNumber(roundValue(pppGDP.value, 0)),
+                      value: intl.formatNumber(roundScore(pppGDP.value, 0)),
                       year: pppGDP.year,
                     }}
                   />

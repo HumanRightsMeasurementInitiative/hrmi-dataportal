@@ -21,7 +21,7 @@ import {
   Hint,
 } from 'react-vis';
 import { utcFormat as timeFormat } from 'd3-time-format';
-import formatScore from 'utils/format-score';
+import { formatScore } from 'utils/scores';
 
 import Source from 'components/Source';
 
