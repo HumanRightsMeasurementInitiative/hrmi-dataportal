@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
-import { Paragraph, Box } from 'grommet';
-import { injectIntl, intlShape } from 'react-intl';
+import { Paragraph, Box, Text } from 'grommet';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 // import getMetricDetails from 'utils/metric-details';
 
@@ -47,6 +47,7 @@ import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPR
 import { useInjectSaga } from 'utils/injectSaga';
 import { getRightsScoresForDimension } from 'utils/scores';
 import getMetricDetails from 'utils/metric-details';
+import { getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 
@@ -135,6 +136,7 @@ export function ChartContainerCountryRights({
   type,
   onLoadData,
   country,
+  countryCode,
   dimensions,
   dimensionCode,
   dimensionAverages,
@@ -179,7 +181,6 @@ export function ChartContainerCountryRights({
     comparativeScoreESR = dimension.scoreSome[currentBenchmark.column];
     comparativeRightsESR = dimension.scoreSome.metric;
   }
-
   return (
     <div>
       {type === 'esr' && dimension && (
@@ -203,6 +204,21 @@ export function ChartContainerCountryRights({
               },
             }}
           />
+          <Text>
+            {currentBenchmark && (
+              <FormattedMessage
+                {...rootMessages.charts.dimensionIntro.esr[
+                  currentBenchmark.key
+                ]}
+                values={getMessageGrammar(
+                  intl,
+                  countryCode,
+                  null,
+                  countryGrammar,
+                )}
+              />
+            )}
+          </Text>
           <NarrativeESRStandardHint
             country={country}
             standard={standard}
@@ -301,6 +317,17 @@ export function ChartContainerCountryRights({
                   ),
                 }}
               />
+              <Text>
+                <FormattedMessage
+                  {...rootMessages.charts.dimensionIntro[dimensionCode]}
+                  values={getMessageGrammar(
+                    intl,
+                    countryCode,
+                    null,
+                    countryGrammar,
+                  )}
+                />
+              </Text>
               <Box margin={{ bottom: 'large' }}>
                 <ChartBars
                   data={[
@@ -375,6 +402,7 @@ export function ChartContainerCountryRights({
 }
 
 ChartContainerCountryRights.propTypes = {
+  countryCode: PropTypes.string.isRequired,
   dimensionCode: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
