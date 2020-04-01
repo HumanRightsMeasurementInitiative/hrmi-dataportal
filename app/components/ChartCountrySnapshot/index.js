@@ -152,13 +152,15 @@ function ChartCountrySnapshot({
             <Text>
               {type === 'esr' && currentBenchmark && (
                 <FormattedMessage
-                  {...messages.dimensionIntro.esr[currentBenchmark.key]}
+                  {...rootMessages.charts.dimensionIntro.esr[
+                    currentBenchmark.key
+                  ]}
                   values={grammar}
                 />
               )}
               {type === 'cpr' && (
                 <FormattedMessage
-                  {...messages.dimensionIntro[dimensionCode]}
+                  {...rootMessages.charts.dimensionIntro[dimensionCode]}
                   values={grammar}
                 />
               )}
