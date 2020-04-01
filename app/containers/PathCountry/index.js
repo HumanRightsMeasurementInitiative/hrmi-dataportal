@@ -43,6 +43,8 @@ import {
   PATHS,
   FAQS,
   IMAGE_PATH,
+  BENCHMARKS,
+  COLUMNS,
 } from 'containers/App/constants';
 import saga from 'containers/App/saga';
 import TabContainer from 'containers/TabContainer';
@@ -65,7 +67,7 @@ import MainColumn from 'styled/MainColumn';
 
 import getMetricDetails from 'utils/metric-details';
 // import quasiEquals from 'utils/quasi-equals';
-import { hasCPR } from 'utils/scores';
+import { hasCPR, formatScore } from 'utils/scores';
 import { useInjectSaga } from 'utils/injectSaga';
 import { isMinSize } from 'utils/responsive';
 import { getMessageGrammar } from 'utils/narrative';
@@ -87,12 +89,26 @@ const DEPENDENCIES = [
   'atRisk',
 ];
 
-const getMetricScore = () => 5;
-// {
-//   }(metric, dimensions, rights, indicators) => {
-//   console.log(metric);
-//   return 5;
-// };
+const getMetricScore = (metric, dimensions, rights, indicators, benchmark) => {
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
+  let currentMetric;
+  if (metric.metricType === 'dimensions' && dimensions) {
+    currentMetric = dimensions[metric.key];
+  }
+  if (metric.metricType === 'rights' && rights) {
+    currentMetric = rights[metric.key];
+  }
+  if (metric.metricType === 'indicators') {
+    currentMetric = indicators[metric.key];
+  }
+  if (currentMetric) {
+    if (metric.type === 'esr') {
+      return currentMetric.score[currentBenchmark.column];
+    }
+    return currentMetric.score[COLUMNS.CPR.MEAN];
+  }
+  return null;
+};
 
 export function PathCountry({
   intl,
@@ -146,30 +162,35 @@ export function PathCountry({
   };
   let countryScoreMsg;
   if (aboutMetric) {
+    const score = getMetricScore(
+      aboutMetricDetails,
+      dimensions,
+      rights,
+      indicators,
+      benchmark,
+    );
+    console.log(score);
     if (aboutMetricDetails.type === 'esr') {
-      countryScoreMsg = intl.formatMessage(
-        messages.countryScoreExplainer.esr[benchmark],
-        {
+      // prettier-ignore
+      countryScoreMsg = score
+        ? intl.formatMessage(messages.countryScoreExplainer.esr[benchmark], {
           ...messageValues,
-          score: getMetricScore(
-            aboutMetricDetails,
-            dimensions,
-            rights,
-            indicators,
-          ),
-        },
-      );
+          score: formatScore(score),
+        })
+        : intl.formatMessage(messages.countryScoreExplainer.noData, {
+          ...messageValues,
+        });
     }
     if (aboutMetricDetails.type === 'cpr') {
-      countryScoreMsg = intl.formatMessage(messages.countryScoreExplainer.cpr, {
-        ...messageValues,
-        score: getMetricScore(
-          aboutMetricDetails,
-          dimensions,
-          rights,
-          indicators,
-        ),
-      });
+      // prettier-ignore
+      countryScoreMsg = score
+        ? intl.formatMessage(messages.countryScoreExplainer.cpr, {
+          ...messageValues,
+          score: formatScore(score),
+        })
+        : intl.formatMessage(messages.countryScoreExplainer.noData, {
+          ...messageValues,
+        });
     }
   }
   return (
