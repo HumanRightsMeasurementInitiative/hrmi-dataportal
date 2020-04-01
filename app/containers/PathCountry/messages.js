@@ -25,18 +25,18 @@ export default defineMessages({
       adjusted: {
         id: `${scope}.countryScoreExplainer.esr.adjusted`,
         defaultMessage:
-          '{countryWithArticleCap} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at {isPlural, select, true {their} false {its}} level of income',
+          'On the {metric}, {countryWithArticle} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at {isPlural, select, true {their} false {its}} level of income (measured against the income-adjusted benchmark).',
       },
       best: {
         id: `${scope}.countryScoreExplainer.esr.best`,
         defaultMessage:
-          '{countryWithArticleCap} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at any income level',
+          'On the {metric}, {countryWithArticle} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at any income level (measured against the global best benchmark)',
       },
     },
     cpr: {
       id: `${scope}.countryScoreExplainer.cpr`,
       defaultMessage:
-        '{countryWithArticleCap} {isPlural, select, true {have} false {has}} a median score of {score} out of 10 according to our survey of human rights experts',
+        'On the {metric}, {countryWithArticle} {isPlural, select, true {have} false {has}} scores {score} out of 10, based on responses from our survey of human rights experts',
     },
     // TODO?
     noData: {
