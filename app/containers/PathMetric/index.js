@@ -125,29 +125,31 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
                     }))}
                   />
                   <PageTitle>{metricTitle}</PageTitle>
-                  {metric.metricType !== 'indicators' && (
-                    <>
-                      <Paragraph>
-                        <FormattedMessage
-                          {...messages[metric.metricType][metricCode].header.a}
-                        />
-                      </Paragraph>
-                      <Paragraph>
-                        <FormattedMessage
-                          {...messages[metric.metricType][metricCode].header.b}
-                        />
-                      </Paragraph>
-                      <Paragraph>
-                        <ButtonTextIcon
-                          label={intl.formatMessage(
-                            messages[metric.metricType][metricCode].link,
-                          )}
-                          onClick={() =>
-                            nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)
-                          }
-                        />
-                      </Paragraph>
-                    </>
+                  {messages[metric.metricType][metricCode].header.a && (
+                    <Paragraph>
+                      <FormattedMessage
+                        {...messages[metric.metricType][metricCode].header.a}
+                      />
+                    </Paragraph>
+                  )}
+                  {messages[metric.metricType][metricCode].header.b && (
+                    <Paragraph>
+                      <FormattedMessage
+                        {...messages[metric.metricType][metricCode].header.b}
+                      />
+                    </Paragraph>
+                  )}
+                  {messages[metric.metricType][metricCode].link && (
+                    <Paragraph>
+                      <ButtonTextIcon
+                        label={intl.formatMessage(
+                          messages[metric.metricType][metricCode].link,
+                        )}
+                        onClick={() =>
+                          nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)
+                        }
+                      />
+                    </Paragraph>
                   )}
                 </MainColumn>
                 {isMinSize(size, 'large') && (
