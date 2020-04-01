@@ -273,4 +273,210 @@ export default defineMessages({
       },
     },
   },
+  indicators: {
+    'net-primary': {
+      header: {
+        a: {
+          id: `${scope}.indicators.net-primary.header.a`,
+          defaultMessage: 'indicators.net-primary.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.net-primary.header.b`,
+          defaultMessage: 'indicators.net-primary.header.b',
+        },
+      },
+    },
+    'sec-enrol': {
+      header: {
+        a: {
+          id: `${scope}.indicators.sec-enrol.header.a`,
+          defaultMessage: 'indicators.sec-enrol.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.net-primary.header.b`,
+          defaultMessage: 'indicators.sec-enrol.header.b',
+        },
+      },
+    },
+    'pisa-science': {
+      header: {
+        a: {
+          id: `${scope}.indicators.pisa-science.header.a`,
+          defaultMessage: 'indicators.pisa-science.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.net-primary.header.b`,
+          defaultMessage: 'indicators.pisa-science.header.b',
+        },
+      },
+    },
+    'pisa-math': {
+      header: {
+        a: {
+          id: `${scope}.indicators.pisa-math.header.a`,
+          defaultMessage: 'indicators.pisa-math.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.pisa-math.header.b`,
+          defaultMessage: 'indicators.pisa-math.header.b',
+        },
+      },
+    },
+    'pisa-reading': {
+      header: {
+        a: {
+          id: `${scope}.indicators.pisa-reading.header.a`,
+          defaultMessage: 'indicators.pisa-reading.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.pisa-reading.header.b`,
+          defaultMessage: 'indicators.pisa-reading.header.b',
+        },
+      },
+    },
+    'not-stunted': {
+      header: {
+        a: {
+          id: `${scope}.indicators.not-stunted.header.a`,
+          defaultMessage: 'indicators.not-stunted.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.not-stunted.header.b`,
+          defaultMessage: 'indicators.not-stunted.header.b',
+        },
+      },
+    },
+    'food-security': {
+      header: {
+        a: {
+          id: `${scope}.indicators.food-security.header.a`,
+          defaultMessage: 'indicators.food-security.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.food-security.header.b`,
+          defaultMessage: 'indicators.food-security.header.b',
+        },
+      },
+    },
+    'survival-65': {
+      header: {
+        a: {
+          id: `${scope}.indicators.survival-65.header.a`,
+          defaultMessage: 'indicators.survival-65.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.survival-65.header.b`,
+          defaultMessage: 'indicators.survival-65.header.b',
+        },
+      },
+    },
+    'under-5-survival': {
+      header: {
+        a: {
+          id: `${scope}.indicators.under-5-survival.header.a`,
+          defaultMessage: 'indicators.under-5-survival.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.under-5-survival.header.b`,
+          defaultMessage: 'indicators.under-5-survival.header.b',
+        },
+      },
+    },
+    contraception: {
+      header: {
+        a: {
+          id: `${scope}.indicators.contraception.header.a`,
+          defaultMessage: 'indicators.contraception.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.contraception.header.b`,
+          defaultMessage: 'indicators.contraception.header.b',
+        },
+      },
+    },
+    'birth-weight': {
+      header: {
+        a: {
+          id: `${scope}.indicators.birth-weight.header.a`,
+          defaultMessage: 'indicators.birth-weight.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.birth-weight.header.b`,
+          defaultMessage: 'indicators.birth-weight.header.b',
+        },
+      },
+    },
+    'water-in-home': {
+      header: {
+        a: {
+          id: `${scope}.indicators.water-in-home.header.a`,
+          defaultMessage: 'indicators.water-in-home.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.water-in-home.header.b`,
+          defaultMessage: 'indicators.water-in-home.header.b',
+        },
+      },
+    },
+    'basic-sanitation': {
+      header: {
+        a: {
+          id: `${scope}.indicators.basic-sanitation.header.a`,
+          defaultMessage: 'indicators.basic-sanitation.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.basic-sanitation.header.b`,
+          defaultMessage: 'indicators.basic-sanitation.header.b',
+        },
+      },
+    },
+    'safe-sanitation': {
+      header: {
+        a: {
+          id: `${scope}.indicators.safe-sanitation.header.a`,
+          defaultMessage: 'indicators.safe-sanitation.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.safe-sanitation.header.b`,
+          defaultMessage: 'indicators.safe-sanitation.header.b',
+        },
+      },
+    },
+    'relative-poverty': {
+      header: {
+        a: {
+          id: `${scope}.indicators.relative-poverty.header.a`,
+          defaultMessage: 'indicators.relative-poverty.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.relative-poverty.header.b`,
+          defaultMessage: 'indicators.relative-poverty.header.b',
+        },
+      },
+    },
+    'absolute-poverty': {
+      header: {
+        a: {
+          id: `${scope}.indicators.absolute-poverty.header.a`,
+          defaultMessage: 'indicators.absolute-poverty.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.absolute-poverty.header.b`,
+          defaultMessage: 'indicators.absolute-poverty.header.b',
+        },
+      },
+    },
+    'longterm-unemployment': {
+      header: {
+        a: {
+          id: `${scope}.indicators.longterm-unemployment.header.a`,
+          defaultMessage: 'indicators.longterm-unemployment.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.longterm-unemployment.header.b`,
+          defaultMessage: 'indicators.longterm-unemployment.header.b',
+        },
+      },
+    },
+  },
 });
