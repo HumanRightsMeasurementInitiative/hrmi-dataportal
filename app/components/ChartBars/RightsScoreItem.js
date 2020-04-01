@@ -6,7 +6,7 @@ import { Text } from 'grommet';
 
 import rootMessages from 'messages';
 
-import formatScoreMax from 'utils/format-score-max';
+import { formatScoreMax } from 'utils/scores';
 
 const RightsScoresWrapperRow = styled.div`
   display: table-row;
