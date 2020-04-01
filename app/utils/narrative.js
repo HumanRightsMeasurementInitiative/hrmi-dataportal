@@ -1,5 +1,5 @@
 import rootMessages from 'messages';
-import roundScore from './round-score';
+import { roundScore } from './scores';
 import { startsWithVowel, upperCaseFirst } from './string';
 
 const ARTICLES_DEFAULT = {

@@ -5,7 +5,7 @@ import { Box, Text, ResponsiveContext } from 'grommet';
 // import { COLUMNS } from 'containers/App/constants';
 
 // import AnnotateBetter from 'components/AnnotateBetterWorse';
-import formatScoreMax from 'utils/format-score-max';
+import { formatScoreMax } from 'utils/scores';
 import { isMinSize } from 'utils/responsive';
 
 import BarWrapper from './BarWrapper';

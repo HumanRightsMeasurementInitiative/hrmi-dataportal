@@ -12,7 +12,7 @@ import Bar from 'components/ChartBars/Bar';
 import BarBullet from 'components/ChartBars/BarBullet';
 
 import { isMinSize } from 'utils/responsive';
-import formatScore from 'utils/format-score';
+import { formatScore } from 'utils/scores';
 
 import BarLabelButton from './BarLabelButton';
 

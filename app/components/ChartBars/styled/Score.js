@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
-import formatScore from 'utils/format-score';
+import { formatScore } from 'utils/scores';
 
 const getRotation = rotation => `rotate(${rotation}deg)`;
 

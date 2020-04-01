@@ -255,3 +255,21 @@ export const sortScores = ({
       .sort((a, b) => sortByNumber(a[column], b[column], order)),
   };
 };
+export const roundScore = (value, digits = 1) => {
+  const factor = 10 ** Math.min(digits, 3);
+  return isNumber(value) && Math.round(value * factor) / factor;
+};
+export const formatScore = (value, digits = 1) => {
+  const d = Math.min(digits, 3);
+  return isNumber(value) && roundScore(value, d).toFixed(d);
+};
+export const formatScoreMax = (value, maxValue = 100, digits = 1, showMax) => {
+  const formatted = formatScore(value, digits);
+  if (formatted && maxValue === 100) {
+    return `${formatted}%`;
+  }
+  if (formatted && !showMax) {
+    return formatted;
+  }
+  return formatted && `${formatted}/${maxValue}`;
+};
