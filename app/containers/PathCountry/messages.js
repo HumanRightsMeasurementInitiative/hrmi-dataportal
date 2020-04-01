@@ -38,5 +38,10 @@ export default defineMessages({
       defaultMessage:
         '{countryWithArticleCap} {isPlural, select, true {have} false {has}} a median score of {score} out of 10 according to our survey of human rights experts',
     },
+    // TODO?
+    noData: {
+      id: `${scope}.countryScoreExplainer.cpr`,
+      defaultMessage: 'Score not available for {countryWithArticle}',
+    },
   },
 });
