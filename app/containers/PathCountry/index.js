@@ -169,13 +169,13 @@ export function PathCountry({
       indicators,
       benchmark,
     );
-    console.log(score);
     if (aboutMetricDetails.type === 'esr') {
       // prettier-ignore
       countryScoreMsg = score
         ? intl.formatMessage(messages.countryScoreExplainer.esr[benchmark], {
           ...messageValues,
           score: formatScore(score),
+          metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
         })
         : intl.formatMessage(messages.countryScoreExplainer.noData, {
           ...messageValues,
@@ -187,6 +187,7 @@ export function PathCountry({
         ? intl.formatMessage(messages.countryScoreExplainer.cpr, {
           ...messageValues,
           score: formatScore(score),
+          metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
         })
         : intl.formatMessage(messages.countryScoreExplainer.noData, {
           ...messageValues,
