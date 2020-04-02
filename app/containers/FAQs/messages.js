@@ -58,6 +58,15 @@ export default defineMessages({
       id: `${scope}.questions.measureDimensionCPR`,
       defaultMessage: 'How has HRMI measured {metric}?',
     },
+    uncertainty: {
+      id: `${scope}.questions.uncertainty`,
+      defaultMessage: 'Why do some uncertainty bands go under 0 or above 10?',
+    },
+    grades: {
+      id: `${scope}.questions.grades`,
+      defaultMessage:
+        'What do the good, fair, bad, and very bad ranges mean, exactly?',
+    },
   },
   answers: {
     scale: {
@@ -116,6 +125,16 @@ export default defineMessages({
     measureDimensionCPR: {
       id: `${scope}.answers.measureDimensionCPR`,
       defaultMessage: ' ',
+    },
+    uncertainty: {
+      id: `${scope}.answers.uncertainty`,
+      defaultMessage:
+        'The short answer is that this sometimes happens when we convert our statistical calculations into scores from 0 to 10, and it doesn’t mean anything special.',
+    },
+    grades: {
+      id: `${scope}.answers.grades`,
+      defaultMessage:
+        'The labels on the graphs of good, fair, bad, and very bad are used here to give a general indication of how to understand the scores. They are NOT comprehensive descriptions of a country’s performance on an individual right.',
     },
   },
 });
