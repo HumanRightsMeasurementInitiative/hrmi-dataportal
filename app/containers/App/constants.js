@@ -161,14 +161,14 @@ export const XPATHS = {
 };
 
 export const FAQS = {
-  COUNTRY_SNAPSHOT: ['scale', 'year', 'benchmarks', 'standards'],
-  COUNTRY_ESR: ['benchmarks', 'standards'],
-  COUNTRY_CPR: [],
+  COUNTRY_SNAPSHOT: ['scale', 'year', 'benchmarks', 'standards', 'grades'],
+  COUNTRY_ESR: ['benchmarks', 'standards', 'grades'],
+  COUNTRY_CPR: ['grades', 'uncertainty'],
   ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],
   ESR_RIGHT: ['measureRightESR', 'benchmarks', 'standards'],
   ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],
-  CPR_DIMENSION: ['measureDimensionCPR'],
-  CPR_RIGHT: ['measureRightCPR'],
+  CPR_DIMENSION: ['measureDimensionCPR', 'uncertainty'],
+  CPR_RIGHT: ['measureRightCPR', 'uncertainty'],
 };
 
 // countries: country lookup table

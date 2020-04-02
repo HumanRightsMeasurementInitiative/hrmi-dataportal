@@ -822,5 +822,9 @@
   "hrmi.featured.D": "Featured D",
   "hrmi.featured.E": "Featured E",
   "hrmi.featured.F": "Featured F",
-  "hrmi.featured.any": "Featured"
+  "hrmi.featured.any": "Featured",
+  "hrmi.containers.FAQs.questions.uncertainty": "Why do some uncertainty bands go under 0 or above 10?",
+  "hrmi.containers.FAQs.questions.grades": "What do the good, fair, bad, and very bad ranges mean, exactly?",
+  "hrmi.containers.FAQs.answers.uncertainty": "The short answer is that this sometimes happens when we convert our statistical calculations into scores from 0 to 10, and it doesn’t mean anything special.",
+  "hrmi.containers.FAQs.answers.grades": "The labels on the graphs of good, fair, bad, and very bad are used here to give a general indication of how to understand the scores. They are NOT comprehensive descriptions of a country’s performance on an individual right."
 }

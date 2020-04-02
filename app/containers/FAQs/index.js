@@ -100,7 +100,15 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
           />
         </Text>
       </Paragraph>
-      <MethodologyLink onClick={() => navMethodology()} />
+      {(question === 'scale' ||
+        question === 'year' ||
+        question === 'indicators' ||
+        question === 'measureIndicators' ||
+        question === 'measureRightCPR' ||
+        question === 'measureDimensionESR' ||
+        question === 'measureDimensionCPR') && (
+        <MethodologyLink onClick={() => navMethodology()} />
+      )}
     </>
   );
 };
