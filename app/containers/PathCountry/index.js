@@ -172,26 +172,42 @@ export function PathCountry({
     if (aboutMetricDetails.type === 'esr') {
       // prettier-ignore
       countryScoreMsg = score
-        ? intl.formatMessage(messages.countryScoreExplainer.esr[benchmark], {
-          ...messageValues,
-          score: formatScore(score),
-          metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
-        })
-        : intl.formatMessage(messages.countryScoreExplainer.noData, {
-          ...messageValues,
-        });
+        ? (<FormattedMessage
+          {...messages.countryScoreExplainer.esr[benchmark]}
+          values={{
+            ...messageValues,
+            score: formatScore(score),
+            metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
+          }}
+        />)
+        : (<FormattedMessage
+          {...messages.countryScoreExplainer.noDate}
+          values={messageValues}
+        />);
     }
     if (aboutMetricDetails.type === 'cpr') {
       // prettier-ignore
       countryScoreMsg = score
-        ? intl.formatMessage(messages.countryScoreExplainer.cpr, {
-          ...messageValues,
-          score: formatScore(score),
-          metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
-        })
-        : intl.formatMessage(messages.countryScoreExplainer.noData, {
-          ...messageValues,
-        });
+        ? (<FormattedMessage
+          {...messages.countryScoreExplainer.cpr}
+          values={{
+            ...messageValues,
+            score: formatScore(score),
+            metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
+            link: (
+              <a
+                href={intl.formatMessage(messages.countryScoreExplainer.cprLink.url)}
+                target="_blank"
+              >
+                {intl.formatMessage(messages.countryScoreExplainer.cprLink.anchor)}
+              </a>
+            ),
+          }}
+        />)
+        : (<FormattedMessage
+          {...messages.countryScoreExplainer.noDate}
+          values={messageValues}
+        />);
     }
   }
   return (
