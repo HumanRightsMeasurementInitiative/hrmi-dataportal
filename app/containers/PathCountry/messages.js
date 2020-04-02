@@ -36,7 +36,17 @@ export default defineMessages({
     cpr: {
       id: `${scope}.countryScoreExplainer.cpr`,
       defaultMessage:
-        'On the {metric}, {countryWithArticle} {isPlural, select, true {have} false {has}} scores {score} out of 10, based on responses from our survey of human rights experts',
+        'On the {metric}, {countryWithArticle} {isPlural, select, true {have} false {has}} scores {score} out of 10, based on responses from our survey of <link>human rights experts</link>',
+    },
+    cprLink: {
+      anchor: {
+        id: `${scope}.countryScoreExplainer.cprLink.anchor`,
+        defaultMessage: 'anchor',
+      },
+      url: {
+        id: `${scope}.countryScoreExplainer.cprLink.url`,
+        defaultMessage: 'url',
+      },
     },
     // TODO?
     noData: {
