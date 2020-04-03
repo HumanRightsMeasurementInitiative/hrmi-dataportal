@@ -17,6 +17,7 @@ import { navigate } from 'containers/App/actions';
 import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
 import InfoStandard from 'containers/LayerSettings/InfoStandard';
 
+import ButtonText from 'styled/ButtonText';
 import ButtonIcon from 'styled/ButtonIcon';
 import MethodologyLink from './MethodologyLink';
 
@@ -70,7 +71,11 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
             </li>
           </ol>
         </Box>
-        <MethodologyLink onClick={() => navMethodology()} />
+        <MethodologyLink>
+          <ButtonText onClick={() => navMethodology()}>
+            <FormattedMessage {...messages.methodology} />
+          </ButtonText>
+        </MethodologyLink>
       </>
     );
   }
@@ -78,7 +83,11 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
     return (
       <>
         <InfoStandard />
-        <MethodologyLink onClick={() => navMethodology()} />
+        <MethodologyLink>
+          <ButtonText onClick={() => navMethodology()}>
+            <FormattedMessage {...messages.methodology} />
+          </ButtonText>
+        </MethodologyLink>
       </>
     );
   }
@@ -86,7 +95,36 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
     return (
       <>
         <InfoBenchmark />
-        <MethodologyLink onClick={() => navMethodology()} />
+        <MethodologyLink>
+          <ButtonText onClick={() => navMethodology()}>
+            <FormattedMessage {...messages.methodology} />
+          </ButtonText>
+        </MethodologyLink>
+      </>
+    );
+  }
+  if (question === 'uncertainty') {
+    return (
+      <>
+        <Paragraph margin={{ vertical: 'xsmall' }}>
+          <Text size="small">
+            <FormattedMessage {...messages.answers.uncertainty} />
+          </Text>
+        </Paragraph>
+        <Paragraph margin={{ vertical: 'xsmall' }}>
+          <Text size="small">
+            <FormattedMessage {...messages.answers.uncertaintyLong} />
+          </Text>
+        </Paragraph>
+        <MethodologyLink>
+          <ButtonText
+            as="a"
+            href={intl.formatMessage(messages.methodologyUncertaintyURL)}
+            target="_blank"
+          >
+            <FormattedMessage {...messages.methodologyUncertainty} />
+          </ButtonText>
+        </MethodologyLink>
       </>
     );
   }
@@ -100,15 +138,16 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
           />
         </Text>
       </Paragraph>
-      {(question === 'scale' ||
-        question === 'year' ||
-        question === 'indicators' ||
-        question === 'measureIndicators' ||
-        question === 'measureRightCPR' ||
-        question === 'measureDimensionESR' ||
-        question === 'measureDimensionCPR') && (
-        <MethodologyLink onClick={() => navMethodology()} />
-      )}
+      <MethodologyLink>
+        <ButtonText onClick={() => navMethodology()}>
+          {question !== 'grades' && (
+            <FormattedMessage {...messages.methodology} />
+          )}
+          {question === 'grades' && (
+            <FormattedMessage {...messages.methodologyGrades} />
+          )}
+        </ButtonText>
+      </MethodologyLink>
     </>
   );
 };
