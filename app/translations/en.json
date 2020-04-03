@@ -109,7 +109,7 @@
   "hrmi.containers.PathMetric.indicators.water-in-home.header.a": "How well are countries doing at ensuring people have access to water in their houses?",
   "hrmi.containers.PathMetric.indicators.water-in-home.header.b": "These are scores for how well the countries are doing, not numbers or percentages of people.",
   "hrmi.containers.PathMetric.indicators.basic-sanitation.header.a": "How well are countries doing at ensuring people have access to at least basic sanitation?",
-  "hrmi.containers.PathMetric.indicators.basic-sanitation.header.b": "TODO: indicator header b",
+  "hrmi.containers.PathMetric.indicators.basic-sanitation.header.b": "These are scores for how well the countries are doing, not numbers or percentages of people.",
   "hrmi.containers.PathMetric.indicators.safe-sanitation.header.a": "How well are countries doing at ensuring households and communities have safely managed sanitation systems?",
   "hrmi.containers.PathMetric.indicators.safe-sanitation.header.b": "These are scores for how well the countries are doing, not numbers or percentages of people.",
   "hrmi.containers.PathMetric.indicators.relative-poverty.header.a": "How well are countries doing at ensuring people have enough money to live decent lives?",
