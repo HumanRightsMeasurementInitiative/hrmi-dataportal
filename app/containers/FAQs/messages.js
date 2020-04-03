@@ -13,6 +13,14 @@ export default defineMessages({
     id: `${scope}.methodology`,
     defaultMessage: 'Learn more about the HRMI methodology',
   },
+  methodologyUncertainty: {
+    id: `${scope}.methodologyUncertainty`,
+    defaultMessage: 'Learn more about the HRMI methodology',
+  },
+  methodologyUncertaintyURL: {
+    id: `${scope}.methodologyUncertaintyURL`,
+    defaultMessage: 'Learn more about the HRMI methodology',
+  },
   methodologyGrades: {
     id: `${scope}.methodologyGrades`,
     defaultMessage: 'placeghoderfsdgh',
@@ -134,6 +142,10 @@ export default defineMessages({
       id: `${scope}.answers.uncertainty`,
       defaultMessage:
         'The short answer is that this sometimes happens when we convert our statistical calculations into scores from 0 to 10, and it doesn’t mean anything special.',
+    },
+    uncertaintyLong: {
+      id: `${scope}.answers.uncertaintyLong`,
+      defaultMessage: 'long answer',
     },
     grades: {
       id: `${scope}.answers.grades`,
