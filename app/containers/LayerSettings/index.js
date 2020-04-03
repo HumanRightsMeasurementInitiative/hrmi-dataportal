@@ -104,7 +104,7 @@ export function LayerSettings({
             responsive={false}
           >
             <Heading level={2}>
-              <FormattedMessage {...rootMessages.labels.tools.settings} />
+              <FormattedMessage {...rootMessages.labels.chartTools.settings} />
             </Heading>
             <Paragraph>
               <FormattedMessage {...messages.intro} />

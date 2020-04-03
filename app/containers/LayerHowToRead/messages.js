@@ -13,8 +13,8 @@ export default defineMessages({
     id: `${scope}.label`,
     defaultMessage: 'How to read this chart',
   },
-  labelShort: {
-    id: `${scope}.labelShort`,
+  labelMobile: {
+    id: `${scope}.labelMobile`,
     defaultMessage: 'How to read',
   },
   general: {
