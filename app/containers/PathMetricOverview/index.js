@@ -15,7 +15,7 @@ import { ResponsiveContext, Paragraph } from 'grommet';
 
 // containers
 import { RIGHTS, DIMENSIONS } from 'containers/App/constants';
-import { selectMetric } from 'containers/App/actions';
+import { selectMetric, navigate } from 'containers/App/actions';
 
 // components
 import SectionRights from 'components/Sections/SectionRights';
@@ -28,6 +28,7 @@ import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
+import ButtonText from 'styled/ButtonText';
 import { isMinSize } from 'utils/responsive';
 
 import graphic from 'images/graphics/rights_overview.svg';
@@ -40,7 +41,7 @@ const Image = styled.img`
   max-width: 200px;
 `;
 
-export function PathMetricOverview({ onSelectMetric, intl }) {
+export function PathMetricOverview({ onSelectMetric, navMethodology, intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -115,7 +116,20 @@ export function PathMetricOverview({ onSelectMetric, intl }) {
                   category: intl.formatMessage(rootMessages.dimensions[d.key]),
                 })}`}
                 background={index % 2 === 0 ? `${d.key}Light` : 'white'}
-                description={intl.formatMessage(messages.description[d.key])}
+                description={
+                  <FormattedMessage
+                    {...messages.description[d.key]}
+                    values={{
+                      methodologyLink: (
+                        <ButtonText onClick={() => navMethodology()}>
+                          <FormattedMessage
+                            {...messages.description.methodologyLink[d.type]}
+                          />
+                        </ButtonText>
+                      ),
+                    }}
+                  />
+                }
               />
             );
           })}
@@ -127,12 +141,25 @@ export function PathMetricOverview({ onSelectMetric, intl }) {
 
 PathMetricOverview.propTypes = {
   onSelectMetric: PropTypes.func,
+  navMethodology: PropTypes.func,
   intl: intlShape.isRequired,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     onSelectMetric: metric => dispatch(selectMetric(metric)),
+    // navigate to location
+    navMethodology: () => {
+      dispatch(
+        navigate('page/methodology', {
+          trackEvent: {
+            category: 'Content',
+            action: 'FAQs: open page',
+            value: 'methodology',
+          },
+        }),
+      );
+    },
   };
 }
 
