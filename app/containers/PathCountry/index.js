@@ -64,6 +64,7 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 import ContentContainer from 'styled/ContentContainer';
 import MainColumn from 'styled/MainColumn';
+import ButtonText from 'styled/ButtonText';
 
 import getMetricDetails from 'utils/metric-details';
 // import quasiEquals from 'utils/quasi-equals';
@@ -195,12 +196,13 @@ export function PathCountry({
             score: formatScore(score),
             metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
             link: (
-              <a
+              <ButtonText
+                as="a"
                 href={intl.formatMessage(messages.countryScoreExplainer.cprLink.url)}
                 target="_blank"
               >
                 {intl.formatMessage(messages.countryScoreExplainer.cprLink.anchor)}
-              </a>
+              </ButtonText>
             ),
           }}
         />)
@@ -426,15 +428,13 @@ export function PathCountry({
                   ) {
                     faqs = FAQS.COUNTRY_SNAPSHOT;
                   }
-                  if (
-                    props &&
-                    (props.active === 1 || props.active === 'report-esr')
-                  ) {
+                  if (props && props.active === 'report-esr') {
                     faqs = FAQS.COUNTRY_ESR;
                   }
                   if (
                     props &&
-                    (props.active === 2 || props.active === 'report-cpr')
+                    (props.active === 'report-physint' ||
+                      props.active === 'report-empowerment')
                   ) {
                     faqs = FAQS.COUNTRY_CPR;
                   }
