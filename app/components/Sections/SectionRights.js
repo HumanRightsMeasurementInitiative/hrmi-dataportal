@@ -76,7 +76,7 @@ SectionRights.propTypes = {
   onSelectRight: PropTypes.func,
   navAllRights: PropTypes.func,
   background: PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
   allCats: PropTypes.bool,
   intl: intlShape.isRequired,
 };

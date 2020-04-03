@@ -97,13 +97,13 @@ export default defineMessages({
         defaultMessage: 'Good',
       },
     },
-    tools: {
+    chartTools: {
       howToRead: {
-        id: `${scope}.labels.tools.howToRead`,
+        id: `${scope}.labels.chartTools.howToRead`,
         defaultMessage: 'How to read',
       },
       settings: {
-        id: `${scope}.labels.tools.settings`,
+        id: `${scope}.labels.chartTools.settings`,
         defaultMessage: 'Data settings',
       },
     },

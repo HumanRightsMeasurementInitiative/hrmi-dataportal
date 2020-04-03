@@ -204,7 +204,7 @@
   "hrmi.containers.FAQs.answers.uncertainty": "The short answer is that this sometimes happens when we convert our statistical calculations into scores from 0 to 10, and it doesn’t mean anything special.",
   "hrmi.containers.FAQs.answers.grades": "The labels on the graphs of good, fair, bad, and very bad are used here to give a general indication of how to understand the scores. They are NOT comprehensive descriptions of a country’s performance on an individual right.",
   "hrmi.containers.LayerHowToRead.label": "Cómo leer este gráfico",
-  "hrmi.containers.LayerHowToRead.labelShort": "Cómo leer",
+  "hrmi.containers.LayerHowToRead.labelMobile": "Cómo leer",
   "hrmi.containers.LayerHowToRead.general.benchmarkIntro": "El valor máximo del 100% se refiere a la {benchmark} elejida:",
   "hrmi.containers.LayerHowToRead.overview.dimensions.intro": "Cada gráfico muestra el desempeño de los derechos humanos en cada país de un vistazo. Los puntajes de los países se muestran para nuestras tres categorías de derechos humanos: ",
   "hrmi.containers.LayerHowToRead.overview.dimensions.empowerment": "Puntaje global para 3 derechos civiles y políticos, evaluados en una escala del 0 al 10. ",

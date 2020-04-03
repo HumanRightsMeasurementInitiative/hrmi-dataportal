@@ -64,7 +64,7 @@ export function ChartTools({
               plain
               label={
                 isMinSize(size, 'large')
-                  ? intl.formatMessage(rootMessages.labels.tools.howToRead)
+                  ? intl.formatMessage(rootMessages.labels.chartTools.howToRead)
                   : null
               }
               gap="xsmall"
@@ -82,7 +82,7 @@ export function ChartTools({
               plain
               label={
                 isMinSize(size, 'large')
-                  ? intl.formatMessage(rootMessages.labels.tools.settings)
+                  ? intl.formatMessage(rootMessages.labels.chartTools.settings)
                   : null
               }
               gap="xsmall"

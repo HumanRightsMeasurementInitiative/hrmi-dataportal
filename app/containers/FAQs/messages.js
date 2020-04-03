@@ -13,6 +13,10 @@ export default defineMessages({
     id: `${scope}.methodology`,
     defaultMessage: 'Learn more about the HRMI methodology',
   },
+  methodologyGrades: {
+    id: `${scope}.methodologyGrades`,
+    defaultMessage: 'placeghoderfsdgh',
+  },
   questions: {
     scale: {
       id: `${scope}.questions.scale`,

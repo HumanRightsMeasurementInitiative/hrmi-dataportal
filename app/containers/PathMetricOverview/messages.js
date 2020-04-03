@@ -35,12 +35,22 @@ export default defineMessages({
     physint: {
       id: `${scope}.description.physint`,
       defaultMessage:
-        'These physical integrity rights are measured using an expert survey methodology.',
+        'These physical integrity rights are measured using an {methodologyLink}.',
     },
     empowerment: {
       id: `${scope}.description.empowerment`,
       defaultMessage:
-        'These physical integrity rights are measured using an expert survey methodology.',
+        'These empowerment rights are measured using an {methodologyLink}.',
+    },
+    methodologyLink: {
+      esr: {
+        id: `${scope}.description.methodologyLink.esr`,
+        defaultMessage: 'methodology',
+      },
+      cpr: {
+        id: `${scope}.description.methodologyLink.cpr`,
+        defaultMessage: 'expert survey methodology',
+      },
     },
   },
 });
