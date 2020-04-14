@@ -75,20 +75,20 @@ export function PathHome({
         navRights={() => nav(PATHS.METRICS)}
         navGroups={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}
       />
-      <SectionCountries
-        countries={countriesFeatured}
-        onSelectCountry={onSelectCountry}
-        navAllCountries={() => nav(PATHS.COUNTRIES)}
-        onCatClick={cat => onSelectCountryCategory('featured', cat)}
-      />
       <SectionRights
         rights={RIGHTS}
         onSelectRight={onSelectMetric}
         navAllRights={() => nav(PATHS.METRICS)}
         allCats
       />
-      <SectionPeople nav={nav} />
+      <SectionCountries
+        countries={countriesFeatured}
+        onSelectCountry={onSelectCountry}
+        navAllCountries={() => nav(PATHS.COUNTRIES)}
+        onCatClick={cat => onSelectCountryCategory('featured', cat)}
+      />
       <SectionSearch />
+      <SectionPeople nav={nav} />
       <SectionOurData nav={nav} />
       <SectionFooter locale={locale} nav={nav} />
     </ContentWrap>
