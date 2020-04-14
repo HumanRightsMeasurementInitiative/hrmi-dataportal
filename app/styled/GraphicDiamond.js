@@ -9,20 +9,23 @@ const Styled = styled.div`
   height: ${({ size }) => size || '50px'};
 `;
 const Bar = styled.div`
-  opacity: 0.8;
+  opacity: 0.6;
   background-color: ${({ theme, color }) =>
     color ? theme.global.colors[color] : 'red'};
-  margin-bottom: 5px;
   width: ${({ width }) => width || '50px'};
   height: ${({ height }) => height || '50px'};
+  margin-bottom: 16px;
+  & :last-child {
+    margin-bottom: 0;
+  }
 `;
 
 export function GraphicDiamond({ color, size }) {
   return (
     <Styled size={`${size}px`}>
-      <Bar color={color} width={`${size}px`} height={`${size / 3 - 5}px`} />
-      <Bar color={color} width={`${size}px`} height={`${size / 3 - 5}px`} />
-      <Bar color={color} width={`${size}px`} height={`${size / 3 - 5}px`} />
+      <Bar color={color} width={`${size}px`} height={`${size / 3 - 16}px`} />
+      <Bar color={color} width={`${size}px`} height={`${size / 3 - 16}px`} />
+      <Bar color={color} width={`${size}px`} height={`${size / 3 - 16}px`} />
     </Styled>
   );
 }

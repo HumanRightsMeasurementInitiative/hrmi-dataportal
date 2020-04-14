@@ -108,9 +108,9 @@ export function SectionIntro({ theme }) {
               </GraphicWrap>
               {isMinSize(size, 'large') && (
                 <GraphicWrap
-                  style={{ top: 0, right: 0, transform: 'translate(65%, 65%)' }}
+                  style={{ top: 0, right: 0, transform: 'translate(85%, 40%)' }}
                 >
-                  <GraphicDiamond color="physint" size={100} />
+                  <GraphicDiamond color="physint" size={200} />
                 </GraphicWrap>
               )}
               <div style={{ position: 'relative' }}>
