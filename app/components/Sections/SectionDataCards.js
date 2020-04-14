@@ -42,25 +42,25 @@ export function SectionDataCards({
               cardMargin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
             >
               <CardData
-                onCardClick={navCountries}
-                no={noCountries}
-                title={intl.formatMessage(messages.dataCards.countries)}
-                teaser={intl.formatMessage(messages.dataCards.countriesTeaser)}
-                subject="countries"
-              />
-              <CardData
-                onCardClick={navRights}
+                onClick={navRights}
                 no={noRights}
                 title={intl.formatMessage(messages.dataCards.metrics)}
                 teaser={intl.formatMessage(messages.dataCards.metricsTeaser)}
-                subject="metrics"
+                anchor={intl.formatMessage(messages.metrics.allLink)}
               />
               <CardData
-                onCardClick={navGroups}
+                onClick={navCountries}
+                no={noCountries}
+                title={intl.formatMessage(messages.dataCards.countries)}
+                teaser={intl.formatMessage(messages.dataCards.countriesTeaser)}
+                anchor={intl.formatMessage(messages.countries.allLink)}
+              />
+              <CardData
+                onClick={navGroups}
                 no={noGroups}
                 title={intl.formatMessage(messages.dataCards.people)}
                 teaser={intl.formatMessage(messages.dataCards.peopleTeaser)}
-                subject="people"
+                anchor={intl.formatMessage(messages.people.link)}
               />
             </Slider>
           </ContentMaxWidth>

@@ -21,6 +21,7 @@ export function ButtonTextIcon({ icon, hasIcon, label, ...props }) {
       plain
       reverse
       gap="xsmall"
+      alignSelf="start"
       {...props}
     />
   );
