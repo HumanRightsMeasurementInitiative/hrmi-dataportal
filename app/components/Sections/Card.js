@@ -10,10 +10,10 @@ import { Box, Button, Text } from 'grommet';
 import styled from 'styled-components';
 
 const Image = styled.img`
-  width: 100%;
-  padding-top: ${({ type, theme }) =>
-    type === 'icon' ? theme.global.edgeSize.small : 0};
+  width: ${({ type }) => (type === 'icon' ? 80 : 100)}%;
 `;
+// padding-top: ${({ type, theme }) =>
+// type === 'icon' ? theme.global.edgeSize.small : 0};
 // prettier-ignore
 const StyledButton = styled(Button)`
   &:hover {
@@ -66,13 +66,13 @@ export function Card({
       <StyledButton onClick={onCardClick} fill plain activeColor={activeColor}>
         <Box
           style={{
-            minHeight: type === 'icon' ? '160px' : '150px',
-            maxHeight: type === 'icon' ? '160px' : '150px',
+            minHeight: type === 'icon' ? 'auto' : '150px',
+            maxHeight: type === 'icon' ? 'auto' : '150px',
             overflow: 'hidden',
             position: 'relative',
           }}
           justify="start"
-          align="start"
+          align="center"
         >
           {imageSrc && <Image src={imageSrc} alt={label} type={type} />}
         </Box>
