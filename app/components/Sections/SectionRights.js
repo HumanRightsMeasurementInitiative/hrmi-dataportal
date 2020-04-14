@@ -57,7 +57,7 @@ export function SectionRights({
                 intl.formatMessage(rootMessages.dimensions[r.dimension])
               }
               imageWhitespace
-              activeColor={r.dimension}
+              activeColor={`${r.dimension}Dark`}
               minHeight={allCats}
               type="icon"
             />
