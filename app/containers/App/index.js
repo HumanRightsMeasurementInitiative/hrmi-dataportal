@@ -22,6 +22,8 @@ import PathMetric from 'containers/PathMetric';
 import PathMetricOverview from 'containers/PathMetricOverview';
 import PathCountry from 'containers/PathCountry';
 import PathCountryOverview from 'containers/PathCountryOverview';
+import PathPeople from 'containers/PathPeople';
+import PathPeopleOverview from 'containers/PathPeopleOverview';
 import PathPage from 'containers/PathPage';
 import PathNotFoundPage from 'containers/PathNotFoundPage';
 import LayerHowToRead from 'containers/LayerHowToRead';
@@ -87,7 +89,7 @@ export function App({ match, intl }) {
               component={PathMetricOverview}
             />
             <Route
-              path={`/${locale}/${PATHS.METRIC}/:metric/:country?`}
+              path={`/${locale}/${PATHS.METRIC}/:metric`}
               component={PathMetric}
             />
             <Route
@@ -95,8 +97,16 @@ export function App({ match, intl }) {
               component={PathCountryOverview}
             />
             <Route
-              path={`/${locale}/${PATHS.COUNTRY}/:country/:metric?`}
+              path={`/${locale}/${PATHS.COUNTRY}/:country`}
               component={PathCountry}
+            />
+            <Route
+              path={`/${locale}/${PATHS.GROUPS}`}
+              component={PathPeopleOverview}
+            />
+            <Route
+              path={`/${locale}/${PATHS.GROUP}/:group`}
+              component={PathPeople}
             />
             <Route
               path={`/${locale}/${PATHS.PAGE}/:page`}

@@ -19,7 +19,6 @@ import SliderControls from './SliderControls';
 
 // prettier-ignore
 const SliderWrapper = styled.div`
-  width: 100%;
   position: relative;
   margin: 0 -${({ theme, edge }) => (edge && theme.global.edgeSize[edge]) || 0};
   width: calc(
