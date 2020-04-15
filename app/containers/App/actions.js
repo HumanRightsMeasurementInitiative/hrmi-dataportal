@@ -17,6 +17,7 @@ import {
   CONTENT_REQUESTED,
   SELECT_COUNTRY,
   SELECT_METRIC,
+  SELECT_GROUP,
   NAVIGATE,
   SET_SCALE,
   SET_STANDARD,
@@ -155,6 +156,12 @@ export function selectCountry(code) {
 export function selectMetric(code) {
   return {
     type: SELECT_METRIC,
+    code,
+  };
+}
+export function selectGroup(code) {
+  return {
+    type: SELECT_GROUP,
     code,
   };
 }

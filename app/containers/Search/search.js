@@ -21,6 +21,23 @@ export const prepCountries = (countries, search, intl) => {
       .sort((a, b) => (a.label < b.label ? -1 : 1))
   );
 };
+export const prepGroups = (groups, search, intl) => {
+  const regex = new RegExp(regExMultipleWords(search), 'i');
+  return (
+    groups &&
+    groups
+      .map(group => ({
+        code: group.key,
+        // prettier-ignore
+        label: rootMessages['people-at-risk'][group.key]
+          ? intl.formatMessage(
+            rootMessages['people-at-risk'][group.key],
+          )
+          : group.key
+      }))
+      .filter(group => filterGroup(group, search, regex))
+  );
+};
 export const prepMetrics = (metrics, metricType, search, intl) => {
   const regex = new RegExp(regExMultipleWords(search), 'i');
   return (
@@ -50,6 +67,14 @@ export const filterMetric = (m, search, regex) => {
   if (!search || search.length < 2) return true;
   try {
     return regex.test(cleanupSearchTarget(m.label));
+  } catch (e) {
+    return true;
+  }
+};
+export const filterGroup = (g, search, regex) => {
+  if (!search || search.length < 2) return true;
+  try {
+    return regex.test(cleanupSearchTarget(g.label));
   } catch (e) {
     return true;
   }

@@ -35,6 +35,7 @@ import {
   PEOPLE_GROUPS,
   INDICATOR_LOOKBACK,
   AT_RISK_INDICATORS,
+  AT_RISK_GROUPS,
   COLUMNS,
   ASSESSED_FILTERS,
   SUBREGIONS_FOR_COMPARISON,
@@ -1053,6 +1054,7 @@ const atRiskScores = (
   const indicators = AT_RISK_INDICATORS.filter(
     i => i.right === rightKey || (includeSubright && i.subright === rightKey),
   );
+  const atRiskCodes = AT_RISK_GROUPS.map(g => g.code);
   return indicators.reduce(
     (m, i) => ({
       ...m,
@@ -1063,7 +1065,7 @@ const atRiskScores = (
             quasiEquals(d.year, year) &&
             d.country_code === countryCode &&
             d.metric_code === i.code &&
-            !quasiEquals(d.people_code, 0) &&
+            atRiskCodes.indexOf(d.people_code) > -1 &&
             parseInt(d.count, 10) > 0,
         ),
       },
@@ -1071,18 +1073,6 @@ const atRiskScores = (
     {},
   );
 };
-
-export const getPeopleAtRiskGroups = createSelector(
-  getAtRiskData,
-  data => {
-    if (!data) return null;
-    const year = calcMaxYear(data);
-    const groups = data
-      .filter(d => quasiEquals(d.year, year))
-      .map(d => d[COLUMNS.AT_RISK.CODE]);
-    return uniq(groups);
-  },
-);
 
 // single country, multiple rights, single year
 export const getPeopleAtRiskForCountry = createSelector(
@@ -1138,6 +1128,18 @@ export const getPeopleAtRisk = createSelector(
       // return atRiskScores(data, right.key, country, year, true);
     }
     return false;
+  },
+);
+
+export const getPeopleAtRiskCountryNo = createSelector(
+  getAtRiskData,
+  data => {
+    if (!data) return 0;
+    const year = calcMaxYear(data);
+    const countries = data
+      .filter(d => quasiEquals(d.year, year))
+      .map(d => d[COLUMNS.AT_RISK.COUNTRY_CODE]);
+    return countries ? uniq(countries).length : 0;
   },
 );
 
