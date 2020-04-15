@@ -34,6 +34,7 @@ import saga from 'containers/App/saga';
 import Search from 'containers/Search';
 import NavCountry from 'containers/Search/NavCountry';
 import NavMetric from 'containers/Search/NavMetric';
+import NavGroups from 'containers/Search/NavGroups';
 
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
@@ -264,8 +265,10 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
   const [showSearch, setShowSearch] = useState(false);
   const [showCountries, setShowCountries] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
+  const [showGroups, setShowGroups] = useState(false);
   const countryTarget = useRef(null);
   const metricTarget = useRef(null);
+  const groupTarget = useRef(null);
   const menuRef = useRef(null);
 
   const onHome = () => {
@@ -371,6 +374,7 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                         open={showCountries}
                         onClick={() => {
                           setShowMetrics(false);
+                          setShowGroups(false);
                           setShowCountries(!showCountries);
                         }}
                         label="countries"
@@ -403,6 +407,7 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                         open={showMetrics}
                         onClick={() => {
                           setShowCountries(false);
+                          setShowGroups(false);
                           setShowMetrics(!showMetrics);
                         }}
                         label="metrics"
@@ -429,21 +434,38 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                           />
                         </Drop>
                       )}
-                      <ButtonNavSecondary
-                        key="at-risk"
-                        subject="people"
-                        plain
-                        last
-                        active={match === 'at-risk'}
+                      <ButtonSecondary
+                        active={path === PATHS.GROUPS || path === PATHS.GROUP}
+                        open={showGroups}
                         onClick={() => {
-                          nav('page/at-risk/');
+                          setShowCountries(false);
+                          setShowMetrics(false);
+                          setShowGroups(!showGroups);
                         }}
+                        label="people"
+                        subject="people"
+                        ref={groupTarget}
                         size={size}
-                      >
-                        <Text size={size === 'small' ? 'medium' : 'large'}>
-                          <FormattedMessage {...rootMessages.page['at-risk']} />
-                        </Text>
-                      </ButtonNavSecondary>
+                      />
+                      {showGroups && size === 'small' && (
+                        <NavMetric
+                          onClose={() => setShowGroups(false)}
+                          size={size}
+                        />
+                      )}
+                      {showGroups && isMinSize(size, 'medium') && (
+                        <Drop
+                          align={{ top: 'bottom', right: 'right' }}
+                          target={groupTarget.current}
+                          onClickOutside={() => setShowGroups(false)}
+                        >
+                          <NavGroups
+                            onClose={() => setShowGroups(false)}
+                            size={size}
+                            subject="people"
+                          />
+                        </Drop>
+                      )}
                     </>
                   )}
                   {isMinSize(size, 'medium') && (

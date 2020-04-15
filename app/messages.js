@@ -71,6 +71,10 @@ export default defineMessages({
       id: `${scope}.labels.allMetrics`,
       defaultMessage: 'All metrics',
     },
+    allPeople: {
+      id: `${scope}.labels.allPeople`,
+      defaultMessage: 'All people',
+    },
     countries: {
       id: `${scope}.labels.countries`,
       defaultMessage: 'Countries',
@@ -78,6 +82,10 @@ export default defineMessages({
     metrics: {
       id: `${scope}.labels.metrics`,
       defaultMessage: 'Metrics',
+    },
+    people: {
+      id: `${scope}.labels.people`,
+      defaultMessage: 'People',
     },
     grades: {
       poor: {
@@ -579,6 +587,136 @@ export default defineMessages({
     },
     31: {
       id: `${scope}.people-at-risk.31`,
+      defaultMessage: 'People 31',
+    },
+  },
+  'people-at-risk-intro': {
+    0: {
+      id: `${scope}.people-at-risk-intro.0`,
+      defaultMessage: 'People 0',
+    },
+    1: {
+      id: `${scope}.people-at-risk-intro.1`,
+      defaultMessage: 'People 1',
+    },
+    2: {
+      id: `${scope}.people-at-risk-intro.2`,
+      defaultMessage: 'People 2',
+    },
+    3: {
+      id: `${scope}.people-at-risk-intro.3`,
+      defaultMessage: 'People 3',
+    },
+    4: {
+      id: `${scope}.people-at-risk-intro.4`,
+      defaultMessage: 'People 4',
+    },
+    5: {
+      id: `${scope}.people-at-risk-intro.5`,
+      defaultMessage: 'People 5',
+    },
+    6: {
+      id: `${scope}.people-at-risk-intro.6`,
+      defaultMessage: 'People 6',
+    },
+    7: {
+      id: `${scope}.people-at-risk-intro.7`,
+      defaultMessage: 'People 7',
+    },
+    8: {
+      id: `${scope}.people-at-risk-intro.8`,
+      defaultMessage: 'People 8',
+    },
+    9: {
+      id: `${scope}.people-at-risk-intro.9`,
+      defaultMessage: 'People 9',
+    },
+    10: {
+      id: `${scope}.people-at-risk-intro.10`,
+      defaultMessage: 'People 10',
+    },
+    11: {
+      id: `${scope}.people-at-risk-intro.11`,
+      defaultMessage: 'People 11',
+    },
+    12: {
+      id: `${scope}.people-at-risk-intro.12`,
+      defaultMessage: 'People 12',
+    },
+    13: {
+      id: `${scope}.people-at-risk-intro.13`,
+      defaultMessage: 'People 13',
+    },
+    14: {
+      id: `${scope}.people-at-risk-intro.14`,
+      defaultMessage: 'People 14',
+    },
+    15: {
+      id: `${scope}.people-at-risk-intro.15`,
+      defaultMessage: 'People 15',
+    },
+    16: {
+      id: `${scope}.people-at-risk-intro.16`,
+      defaultMessage: 'People 16',
+    },
+    17: {
+      id: `${scope}.people-at-risk-intro.17`,
+      defaultMessage: 'People 17',
+    },
+    18: {
+      id: `${scope}.people-at-risk-intro.18`,
+      defaultMessage: 'People 18',
+    },
+    19: {
+      id: `${scope}.people-at-risk-intro.19`,
+      defaultMessage: 'People 19',
+    },
+    20: {
+      id: `${scope}.people-at-risk-intro.20`,
+      defaultMessage: 'People 20',
+    },
+    21: {
+      id: `${scope}.people-at-risk-intro.21`,
+      defaultMessage: 'People 21',
+    },
+    22: {
+      id: `${scope}.people-at-risk-intro.22`,
+      defaultMessage: 'People 22',
+    },
+    23: {
+      id: `${scope}.people-at-risk-intro.23`,
+      defaultMessage: 'People 23',
+    },
+    24: {
+      id: `${scope}.people-at-risk-intro.24`,
+      defaultMessage: 'People 24',
+    },
+    25: {
+      id: `${scope}.people-at-risk-intro.25`,
+      defaultMessage: 'People 25',
+    },
+    26: {
+      id: `${scope}.people-at-risk-intro.26`,
+      defaultMessage: 'People 26',
+    },
+    27: {
+      id: `${scope}.people-at-risk-intro.27`,
+      defaultMessage: 'People 27',
+    },
+    28: {
+      id: `${scope}.people-at-risk-intro.28`,
+      defaultMessage: 'People 28',
+    },
+    29: {
+      id: `${scope}.people-at-risk-intro.29`,
+      defaultMessage: 'People 29',
+    },
+    30: {
+      id: `${scope}.people-at-risk-intro.30`,
+      defaultMessage: 'People 30',
+    },
+    31: {
+      id: `${scope}.people-at-risk-intro.31`,
       defaultMessage: 'People 31',
     },
   },

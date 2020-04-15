@@ -13,7 +13,6 @@ import { compose } from 'redux';
 import {
   getCountries,
   getCountriesFeaturedOnly,
-  getPeopleAtRiskGroups,
   getLocale,
 } from 'containers/App/selectors';
 import {
@@ -25,8 +24,8 @@ import {
 import {
   RIGHTS,
   PATHS,
-  PAGES,
   COUNTRY_FILTERS,
+  AT_RISK_GROUPS,
 } from 'containers/App/constants';
 import saga from 'containers/App/saga';
 
@@ -51,7 +50,6 @@ export function PathHome({
   nav,
   countries,
   countriesFeatured,
-  groups,
   onSelectMetric,
   onSelectCountry,
   onSelectCountryCategory,
@@ -70,10 +68,10 @@ export function PathHome({
       <SectionDataCards
         noCountries={countries ? countries.length : 0}
         noRights={RIGHTS.length}
-        noGroups={groups ? groups.length : 0}
+        noGroups={AT_RISK_GROUPS.length}
         navCountries={() => nav(PATHS.COUNTRIES)}
         navRights={() => nav(PATHS.METRICS)}
-        navGroups={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}
+        navGroups={() => nav(PATHS.GROUPS)}
       />
       <SectionRights
         rights={RIGHTS}
@@ -101,7 +99,6 @@ PathHome.propTypes = {
   // dataReady: PropTypes.bool,
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   countriesFeatured: PropTypes.array,
-  groups: PropTypes.array,
   onSelectMetric: PropTypes.func,
   onSelectCountry: PropTypes.func,
   onSelectCountryCategory: PropTypes.func,
@@ -111,7 +108,6 @@ PathHome.propTypes = {
 const mapStateToProps = createStructuredSelector({
   countriesFeatured: state => getCountriesFeaturedOnly(state),
   countries: state => getCountries(state),
-  groups: state => getPeopleAtRiskGroups(state),
   locale: state => getLocale(state),
 });
 
@@ -148,7 +144,7 @@ export function mapDispatchToProps(dispatch) {
           keepTab: true,
           trackEvent: {
             category: 'Content',
-            action: 'Header: navigate',
+            action: 'Home: navigate',
             value: typeof location === 'object' ? location.pathname : location,
           },
         }),

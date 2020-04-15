@@ -42,6 +42,7 @@ export const CONTENT_READY = 'hrmi/App/CONTENT_READY';
 // navigation actions
 export const SELECT_COUNTRY = 'hrmi/App/SELECT_COUNTRY';
 export const SELECT_METRIC = 'hrmi/App/SELECT_METRIC';
+export const SELECT_GROUP = 'hrmi/App/SELECT_GROUP';
 export const NAVIGATE = 'hrmi/App/NAVIGATE';
 export const SET_SCALE = 'hrmi/App/SET_SCALE';
 export const SET_STANDARD = 'hrmi/App/SET_STANDARD';
@@ -98,6 +99,7 @@ export const COLUMNS = {
   AT_RISK: {
     CODE: 'people_code',
     METRIC_CODE: 'metric_code',
+    COUNTRY_CODE: 'country_code',
   },
 };
 
@@ -133,10 +135,6 @@ export const PAGES = {
     key: 'download',
     primary: true,
   },
-  atRisk: {
-    key: 'at-risk',
-    primary: false,
-  },
 };
 
 export const PATHS = {
@@ -146,6 +144,8 @@ export const PATHS = {
   COUNTRIES: 'countries',
   COUNTRY: 'country',
   PAGE: 'page',
+  GROUPS: 'groups',
+  GROUP: 'group',
 };
 export const IMAGE_PATH =
   '//humanrightsmeasurement.org/wp-content/uploads/2020/03';
@@ -738,6 +738,40 @@ export const INDICATORS = [
     resource: 'esrIndicatorScores',
     hasGroups: false,
   },
+];
+
+export const AT_RISK_GROUPS = [
+  { key: '1', code: '1' },
+  { key: '2', code: '2' },
+  { key: '3', code: '3' },
+  { key: '4', code: '4' },
+  { key: '5', code: '5' },
+  { key: '6', code: '6' },
+  { key: '7', code: '7' },
+  { key: '8', code: '8' },
+  { key: '9', code: '9' },
+  { key: '10', code: '10' },
+  { key: '11', code: '11' },
+  { key: '12', code: '12' },
+  { key: '13', code: '13' },
+  { key: '14', code: '14' },
+  { key: '15', code: '15' },
+  { key: '16', code: '16' },
+  { key: '17', code: '17' },
+  { key: '18', code: '18' },
+  { key: '19', code: '19' },
+  { key: '20', code: '20' },
+  { key: '21', code: '21' },
+  { key: '22', code: '22' },
+  { key: '23', code: '23' },
+  { key: '24', code: '24' },
+  { key: '25', code: '25' },
+  { key: '26', code: '26' },
+  { key: '27', code: '27' },
+  { key: '28', code: '28' },
+  { key: '29', code: '29' },
+  { key: '30', code: '30' },
+  { key: '31', code: '31' },
 ];
 
 export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';

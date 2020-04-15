@@ -50,6 +50,7 @@ import {
   PAGES_URL,
   SELECT_COUNTRY,
   SELECT_METRIC,
+  SELECT_GROUP,
   NAVIGATE,
   STANDARDS,
   INCOME_GROUPS,
@@ -66,6 +67,7 @@ import {
   TRACK_EVENT,
   OPEN_HOW_TO,
   TOGGLE_GROUP,
+  PATHS,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -224,7 +226,7 @@ export function* selectCountrySaga({ code }) {
   );
   yield put(openHowToRead(null));
   yield put(openSettings(null));
-  yield put(push(`/${requestLocale}/country/${code}${search}`));
+  yield put(push(`/${requestLocale}/${PATHS.COUNTRY}/${code}${search}`));
 }
 
 const getScaleValue = value => {
@@ -349,7 +351,23 @@ export function* selectMetricSaga({ code }) {
   );
   yield put(openHowToRead(null));
   yield put(openSettings(null));
-  yield put(push(`/${requestLocale}/metric/${code}${search}`));
+  yield put(push(`/${requestLocale}//${PATHS.METRIC}/${code}${search}`));
+}
+export function* selectGroupSaga({ code }) {
+  const requestLocale = yield select(getLocale);
+  const currentLocation = yield select(getRouterLocation);
+  const currentSearchParams = new URLSearchParams(currentLocation.search);
+  currentSearchParams.delete('tab');
+  const newSearch = currentSearchParams.toString();
+  const search = newSearch.length > 0 ? `?${newSearch}` : '';
+  yield put(
+    trackEvent({
+      category: 'Content',
+      action: 'Select group',
+      value: code,
+    }),
+  );
+  yield put(push(`/${requestLocale}/${PATHS.GROUP}/${code}${search}`));
 }
 export function* openHowToReadSaga({ layer }) {
   if (layer) {
@@ -542,6 +560,7 @@ export default function* defaultSaga() {
   );
   yield takeLatest(SELECT_COUNTRY, selectCountrySaga);
   yield takeLatest(SELECT_METRIC, selectMetricSaga);
+  yield takeLatest(SELECT_GROUP, selectGroupSaga);
   yield takeLatest(SET_SCALE, setScaleSaga);
   yield takeLatest(SET_STANDARD, setStandardSaga);
   yield takeLatest(SET_BENCHMARK, setBenchmarkSaga);
