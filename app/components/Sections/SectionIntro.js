@@ -124,7 +124,7 @@ export function SectionIntro({ theme }) {
                   <FormattedMessage {...messages.intro} />
                 </Paragraph>
                 <SearchWrapper>
-                  <Search stretch size="large" />
+                  <Search stretch size="large" example />
                 </SearchWrapper>
               </div>
             </Box>
