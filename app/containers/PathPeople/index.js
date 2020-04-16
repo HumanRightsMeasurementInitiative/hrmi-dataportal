@@ -12,14 +12,28 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
-import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
-import { withTheme } from 'styled-components';
+import {
+  Heading,
+  Box,
+  ResponsiveContext,
+  Image as GImage,
+  Paragraph,
+} from 'grommet';
+import styled, { withTheme } from 'styled-components';
 
 import rootMessages from 'messages';
 
-import { getPeopleAtRiskForCountry } from 'containers/App/selectors';
+import {
+  getPeopleAtRiskForGroup,
+  getCountries,
+  getDependenciesReady,
+} from 'containers/App/selectors';
 
-import { loadDataIfNeeded, navigate } from 'containers/App/actions';
+import {
+  loadDataIfNeeded,
+  navigate,
+  selectCountry,
+} from 'containers/App/actions';
 import { PATHS, IMAGE_PATH } from 'containers/App/constants';
 import saga from 'containers/App/saga';
 
@@ -28,29 +42,35 @@ import AsideBackground from 'components/AsideBackground';
 import Aside from 'components/Aside';
 
 import ContentWrap from 'styled/ContentWrap';
+import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 import ContentContainer from 'styled/ContentContainer';
 import MainColumn from 'styled/MainColumn';
+import ButtonText from 'styled/ButtonText';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { isMinSize } from 'utils/responsive';
-//
-// const Image = styled.img`
-//   width: 100%;
-// `;
 
 import messages from './messages';
 
-const DEPENDENCIES = ['atRisk'];
+const Styled = styled.div`
+  margin-top: 60px;
+  margin-bottom: 20px;
+`;
+const Top = styled.div``;
+
+const DEPENDENCIES = ['atRisk', 'countries'];
 
 export function PathPeople({
   intl,
   onLoadData,
   nav,
   match,
-  // atRisk,
-  // dataReady,
+  atRisk,
+  countries,
+  dataReady,
+  onSelectCountry,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -58,6 +78,8 @@ export function PathPeople({
     // kick off loading of data
     onLoadData();
   }, []);
+  console.log(atRisk);
+  console.log(countries);
 
   const peopleCode = match.params.group;
   let groupTitle = peopleCode;
@@ -114,6 +136,30 @@ export function PathPeople({
               </ContentMaxWidth>
             </ContentContainer>
           </Box>
+          <SectionContainer>
+            <ContentMaxWidth column>
+              <Styled>
+                <Top>
+                  <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
+                    <FormattedMessage {...messages.header} />
+                  </Heading>
+                </Top>
+                {dataReady && (
+                  <Box>
+                    {atRisk.map(c => (
+                      <ButtonText
+                        onClick={() => onSelectCountry(c, peopleCode)}
+                      >
+                        {rootMessages.countries[c] && (
+                          <FormattedMessage {...rootMessages.countries[c]} />
+                        )}
+                      </ButtonText>
+                    ))}
+                  </Box>
+                )}
+              </Styled>
+            </ContentMaxWidth>
+          </SectionContainer>
         </ContentWrap>
       )}
     </ResponsiveContext.Consumer>
@@ -125,20 +171,27 @@ PathPeople.propTypes = {
   intl: intlShape.isRequired,
   onLoadData: PropTypes.func.isRequired,
   nav: PropTypes.func,
+  onSelectCountry: PropTypes.func,
   match: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dataReady: PropTypes.bool,
   theme: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  atRisk: (state, { match }) => getPeopleAtRiskForCountry(state, match.params),
+  dataReady: state => getDependenciesReady(state, DEPENDENCIES),
+  atRisk: (state, { match }) => getPeopleAtRiskForGroup(state, match.params),
+  countries: state => getCountries(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
+    },
+    onSelectCountry: (countryCode, peopleCode) => {
+      dispatch(selectCountry(countryCode, 'atrisk', peopleCode));
     },
     nav: location => {
       dispatch(
