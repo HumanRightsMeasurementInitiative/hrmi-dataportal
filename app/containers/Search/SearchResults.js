@@ -3,17 +3,26 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Box, Heading } from 'grommet';
+import { Box } from 'grommet';
 
-import { DIMENSIONS, RIGHTS, INDICATORS } from 'containers/App/constants';
+import {
+  DIMENSIONS,
+  RIGHTS,
+  INDICATORS,
+  AT_RISK_GROUPS,
+} from 'containers/App/constants';
 import { getCountries } from 'containers/App/selectors';
-import { selectCountry, selectMetric } from 'containers/App/actions';
+import {
+  selectCountry,
+  selectMetric,
+  selectGroup,
+} from 'containers/App/actions';
 import Hint from 'styled/Hint';
 
 import rootMessages from 'messages';
 import messages from './messages';
 
-import { prepMetrics, prepCountries } from './search';
+import { prepMetrics, prepCountries, prepGroups } from './search';
 
 import NavOptionGroup from './NavOptionGroup';
 
@@ -21,6 +30,8 @@ export function SearchResults({
   countries,
   onSelectCountry,
   onSelectMetric,
+  onSelectGroup,
+  onSelect,
   intl,
   onClose,
   search,
@@ -29,9 +40,11 @@ export function SearchResults({
   const dimensions = prepMetrics(DIMENSIONS, 'dimensions', search, intl);
   const rights = prepMetrics(RIGHTS, 'rights', search, intl);
   const indicators = prepMetrics(INDICATORS, 'indicators', search, intl);
+  const groups = prepGroups(AT_RISK_GROUPS, search, intl);
   const hasMetrics =
     dimensions.length > 0 || rights.length > 0 || indicators.length > 0;
   const hasCountries = sortedCountries && sortedCountries.length > 0;
+  const hasGroups = groups && groups.length > 0;
   return (
     <Box direction="column" pad="medium">
       {!hasCountries && !hasMetrics && (
@@ -39,56 +52,60 @@ export function SearchResults({
           <FormattedMessage {...messages.noResults} />
         </Hint>
       )}
-      {hasCountries && (
-        <div>
-          <Heading responsive={false} level="5" margin={{ bottom: 'xsmall' }}>
-            <FormattedMessage {...rootMessages.labels.countries} />
-          </Heading>
-          <NavOptionGroup
-            options={sortedCountries}
-            onClick={key => {
-              onClose();
-              onSelectCountry(key);
-            }}
-          />
-        </div>
+      {dimensions.length > 0 && (
+        <NavOptionGroup
+          label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
+          options={dimensions}
+          onClick={key => {
+            onClose();
+            onSelect();
+            onSelectMetric(key);
+          }}
+        />
       )}
-      {hasMetrics && (
-        <div>
-          <Heading responsive={false} level="5" margin={{ bottom: 'xsmall' }}>
-            <FormattedMessage {...rootMessages.labels.metrics} />
-          </Heading>
-          {dimensions.length > 0 && (
-            <NavOptionGroup
-              label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
-              options={dimensions}
-              onClick={key => {
-                onClose();
-                onSelectMetric(key);
-              }}
-            />
-          )}
-          {rights.length > 0 && (
-            <NavOptionGroup
-              label={intl.formatMessage(rootMessages.metricTypes.rights)}
-              options={rights}
-              onClick={key => {
-                onClose();
-                onSelectMetric(key);
-              }}
-            />
-          )}
-          {indicators.length > 0 && (
-            <NavOptionGroup
-              label={intl.formatMessage(rootMessages.metricTypes.indicators)}
-              options={indicators}
-              onClick={key => {
-                onClose();
-                onSelectMetric(key);
-              }}
-            />
-          )}
-        </div>
+      {rights.length > 0 && (
+        <NavOptionGroup
+          label={intl.formatMessage(rootMessages.metricTypes.rights)}
+          options={rights}
+          onClick={key => {
+            onClose();
+            onSelect();
+            onSelectMetric(key);
+          }}
+        />
+      )}
+      {indicators.length > 0 && (
+        <NavOptionGroup
+          label={intl.formatMessage(rootMessages.metricTypes.indicators)}
+          options={indicators}
+          onClick={key => {
+            onClose();
+            onSelect();
+            onSelectMetric(key);
+          }}
+        />
+      )}
+      {hasCountries && (
+        <NavOptionGroup
+          label={intl.formatMessage(rootMessages.labels.countries)}
+          options={sortedCountries}
+          onClick={key => {
+            onClose();
+            onSelect();
+            onSelectCountry(key);
+          }}
+        />
+      )}
+      {hasGroups && (
+        <NavOptionGroup
+          label={intl.formatMessage(rootMessages.labels.people)}
+          options={groups}
+          onClick={key => {
+            onClose();
+            onSelect();
+            onSelectGroup(key);
+          }}
+        />
       )}
     </Box>
   );
@@ -97,8 +114,10 @@ export function SearchResults({
 SearchResults.propTypes = {
   onSelectCountry: PropTypes.func,
   onSelectMetric: PropTypes.func,
+  onSelectGroup: PropTypes.func,
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   onClose: PropTypes.func,
+  onSelect: PropTypes.func,
   search: PropTypes.string,
   intl: intlShape.isRequired,
 };
@@ -109,8 +128,9 @@ const mapStateToProps = state => ({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onSelectMetric: metric => dispatch(selectMetric(metric)),
-    onSelectCountry: country => dispatch(selectCountry(country)),
+    onSelectMetric: code => dispatch(selectMetric(code)),
+    onSelectCountry: code => dispatch(selectCountry(code)),
+    onSelectGroup: code => dispatch(selectGroup(code)),
     intl: intlShape.isRequired,
   };
 }
