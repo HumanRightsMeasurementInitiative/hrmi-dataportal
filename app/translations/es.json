@@ -147,7 +147,7 @@
   "hrmi.containers.Search.countrySearch": "Encontrar país",
   "hrmi.containers.Search.metricSearch": "Buscar derecho o indicador",
   "hrmi.containers.Search.noResults": "¡Lo sentimos! Su búsqueda no obtuvo ningún resultado.",
-  "hrmi.containers.LocaleToggle.language": "Idioma: ",
+  "hrmi.containers.LocaleToggle.language": "Language: ",
   "hrmi.containers.NotFoundPage.header": "Página no encontrada.",
   "hrmi.containers.AboutCountryContainer.title": "Detalles del país",
   "hrmi.containers.AboutCountryContainer.population": "Población",
