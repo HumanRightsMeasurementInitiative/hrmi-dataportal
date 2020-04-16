@@ -136,7 +136,11 @@ export function Search({
           target={searchRef.current}
           onClickOutside={() => setSearch('')}
         >
-          <SearchResults onClose={() => setSearch('')} search={search} />
+          <SearchResults
+            onClose={() => setSearch('')}
+            search={search}
+            onSelect={() => onToggle && onToggle()}
+          />
         </Drop>
       )}
     </Box>
