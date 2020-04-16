@@ -49,19 +49,11 @@ export default defineMessages({
       id: `${scope}.countries.title`,
       defaultMessage: 'Featured Countries',
     },
-    allLink: {
-      id: `${scope}.countries.allLink`,
-      defaultMessage: 'All countries',
-    },
   },
   metrics: {
     title: {
       id: `${scope}.metrics.title`,
       defaultMessage: 'Rights',
-    },
-    allLink: {
-      id: `${scope}.metrics.allLink`,
-      defaultMessage: 'Rights overview',
     },
   },
   people: {
@@ -69,14 +61,14 @@ export default defineMessages({
       id: `${scope}.people.title`,
       defaultMessage: 'People at Risk',
     },
-    teaser: {
-      id: `${scope}.people.teaser`,
+    para1: {
+      id: `${scope}.people.para1`,
       defaultMessage:
         'Find out who is particularly at risk of rights violations in each country.',
     },
-    link: {
-      id: `${scope}.people.link`,
-      defaultMessage: 'Learn more',
+    para2: {
+      id: `${scope}.people.para2`,
+      defaultMessage: ' ',
     },
   },
   search: {
@@ -113,10 +105,29 @@ export default defineMessages({
       defaultMessage: 'Read more',
     },
   },
+  about: {
+    title: {
+      id: `${scope}.about.title`,
+      defaultMessage: 'About us',
+    },
+    lead: {
+      id: `${scope}.about.lead`,
+      defaultMessage: 'About us lead',
+    },
+    text: {
+      id: `${scope}.about.text`,
+      defaultMessage: 'About us text',
+    },
+    link: {
+      id: `${scope}.about.link`,
+      defaultMessage: 'About us link',
+    },
+  },
   footer: {
-    contactLink: {
-      id: `${scope}.footer.contactLink`,
-      defaultMessage: 'Contact us',
+    text: {
+      id: `${scope}.footer.text`,
+      defaultMessage:
+        'Web site content © HRMI. Unless otherwise noted, all content is licensed under a Creative Commons Attribution 4.0 international licence.',
     },
   },
 });

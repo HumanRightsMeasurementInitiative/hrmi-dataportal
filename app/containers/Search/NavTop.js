@@ -19,17 +19,12 @@ const StyledButtonIcon = styled(ButtonIcon)`
   }
 `;
 const Top = styled.div`
-  background-color: ${({ theme, subject }) =>
-    theme.global.colors[subject || 'dark']};
+  background-color: ${({ theme }) => theme.global.colors.dark};
   width: 100%;
   height: ${({ theme }) => theme.navTop};
 `;
 
-const StyledTextInput = styled(TextInput)`
-  &::placeholder {
-    color: ${({ subject, theme }) => theme.global.colors[subject]};
-  }
-`;
+const StyledTextInput = styled(TextInput)``;
 
 class NavTop extends React.Component {
   constructor(props) {
@@ -49,10 +44,9 @@ class NavTop extends React.Component {
       onSearch,
       placeholder = 'search',
       size,
-      subject,
     } = this.props;
     return (
-      <Top subject={subject}>
+      <Top>
         <Box
           pad={{
             left: size === 'small' ? 'small' : 'medium',
@@ -79,7 +73,6 @@ class NavTop extends React.Component {
               onChange={evt => evt && evt.target && onSearch(evt.target.value)}
               placeholder={placeholder}
               ref={isMinSize(size, 'medium') && this.textInput}
-              subject={subject}
             />
             {search && search.length > 0 && (
               <Button onClick={() => onSearch('')} pad="xsmall">
@@ -105,7 +98,6 @@ NavTop.propTypes = {
   search: PropTypes.string,
   placeholder: PropTypes.string,
   size: PropTypes.string,
-  subject: PropTypes.string,
 };
 
 export default NavTop;

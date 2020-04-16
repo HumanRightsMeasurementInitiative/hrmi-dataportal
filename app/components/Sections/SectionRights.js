@@ -40,7 +40,7 @@ export function SectionRights({
         />
         <AllLinkButton
           onClick={() => navAllRights()}
-          label={allLink || intl.formatMessage(messages.metrics.allLink)}
+          label={allLink || intl.formatMessage(rootMessages.labels.allMetrics)}
         />
         <Slider cardMargin="xsmall">
           {rights.map(r => (

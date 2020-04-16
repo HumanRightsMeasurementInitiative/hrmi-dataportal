@@ -14,6 +14,10 @@ export default defineMessages({
       id: `${scope}.app.title`,
       defaultMessage: 'Rights Tracker',
     },
+    hrmi: {
+      id: `${scope}.app.hrmi`,
+      defaultMessage: 'Humen Rights Measurement Initiative',
+    },
     claim: {
       id: `${scope}.app.claim`,
       defaultMessage: 'Measuring What Matters',

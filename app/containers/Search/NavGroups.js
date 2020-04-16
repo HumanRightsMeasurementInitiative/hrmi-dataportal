@@ -11,7 +11,7 @@ import { selectGroup, navigate } from 'containers/App/actions';
 
 import { getHeaderHeight } from 'utils/responsive';
 
-// import rootMessages from 'messages';
+import rootMessages from 'messages';
 
 import { prepGroups } from './search';
 
@@ -22,15 +22,7 @@ import NavOptionGroup from './NavOptionGroup';
 
 import messages from './messages';
 
-export function NavGroups({
-  onSelectGroup,
-  intl,
-  onClose,
-  size,
-  nav,
-  subject,
-  theme,
-}) {
+export function NavGroups({ onSelectGroup, intl, onClose, size, nav, theme }) {
   const [search, setSearch] = useState('');
 
   const groups = prepGroups(AT_RISK_GROUPS, search, intl);
@@ -43,20 +35,19 @@ export function NavGroups({
         onClose={() => onClose()}
         search={search}
         onSearch={s => setSearch(s)}
-        placeholder={intl.formatMessage(messages.metricSearch)}
+        placeholder={intl.formatMessage(messages.peopleSearch)}
         size={size}
-        subject={subject}
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
           {search === '' && (
             <NavOptionGroup
-              label="All people"
+              label={intl.formatMessage(messages.optionGroups.overview)}
               options={[
                 {
                   key: 'groups',
                   code: 'groups',
-                  label: 'People at risk overview',
+                  label: intl.formatMessage(rootMessages.labels.allPeople),
                   special: true,
                 },
               ]}
@@ -68,7 +59,7 @@ export function NavGroups({
           )}
           {groups.length > 0 && (
             <NavOptionGroup
-              label="People at risk"
+              label={intl.formatMessage(messages.optionGroups.people)}
               options={groups}
               onClick={key => {
                 onClose();
@@ -88,7 +79,6 @@ NavGroups.propTypes = {
   nav: PropTypes.func,
   intl: intlShape.isRequired,
   size: PropTypes.string,
-  subject: PropTypes.string,
   theme: PropTypes.object,
 };
 
