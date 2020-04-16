@@ -68,7 +68,7 @@ export function PathPeople({
   nav,
   match,
   atRisk,
-  countries,
+  // countries,
   dataReady,
   onSelectCountry,
 }) {
@@ -78,8 +78,6 @@ export function PathPeople({
     // kick off loading of data
     onLoadData();
   }, []);
-  console.log(atRisk);
-  console.log(countries);
 
   const peopleCode = match.params.group;
   let groupTitle = peopleCode;
