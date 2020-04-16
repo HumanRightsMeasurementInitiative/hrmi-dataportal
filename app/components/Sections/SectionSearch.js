@@ -32,11 +32,7 @@ export function SectionSearch({ intl }) {
           level={1}
         />
         <SearchWrapper>
-          <Search
-            stretch
-            size="large"
-            placeholder={intl.formatMessage(messages.search.placeholder)}
-          />
+          <Search stretch size="large" example />
         </SearchWrapper>
       </ContentMaxWidth>
     </SectionContainer>
