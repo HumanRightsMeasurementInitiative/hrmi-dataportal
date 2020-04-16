@@ -10,7 +10,7 @@ import { ResponsiveContext, Paragraph, Box } from 'grommet';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
 
-import { PATHS, PAGES, IMAGE_PATH } from 'containers/App/constants';
+import { PATHS, IMAGE_PATH } from 'containers/App/constants';
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
@@ -85,7 +85,7 @@ export function SectionPeople({ nav, intl, theme }) {
               )}
               <Box direction="row">
                 <ButtonTextIcon
-                  onClick={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}
+                  onClick={() => nav(PATHS.GROUPS)}
                   label={intl.formatMessage(rootMessages.labels.allPeople)}
                   hasIcon
                 />
