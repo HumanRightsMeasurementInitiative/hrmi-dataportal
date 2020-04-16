@@ -147,10 +147,12 @@ export function contentReady(key, time) {
   };
 }
 
-export function selectCountry(code) {
+export function selectCountry(code, tab, atRisk) {
   return {
     type: SELECT_COUNTRY,
     code,
+    tab,
+    atRisk,
   };
 }
 export function selectMetric(code) {

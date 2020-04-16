@@ -1143,6 +1143,20 @@ export const getPeopleAtRiskCountryNo = createSelector(
   },
 );
 
+export const getPeopleAtRiskForGroup = createSelector(
+  (state, { group }) => group,
+  getAtRiskData,
+  (group, data) => {
+    if (!data) return null;
+    const year = calcMaxYear(data);
+    const groupData = data
+      .filter(d => quasiEquals(d.year, year))
+      .filter(d => quasiEquals(d[COLUMNS.AT_RISK.CODE], group))
+      .map(d => d[COLUMNS.AT_RISK.COUNTRY_CODE]);
+    return uniq(groupData);
+  },
+);
+
 export const getCountryFromRouter = createSelector(
   getRouterMatch,
   getCountries,

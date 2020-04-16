@@ -190,7 +190,7 @@ function* loadContentErrorHandler(err, { key }) {
   yield put(contentLoadingError(err, key));
 }
 
-export function* selectCountrySaga({ code }) {
+export function* selectCountrySaga({ code, tab, atRisk }) {
   // figure out country group and default standard
   const country = yield select(getCountry, code);
   const group =
@@ -209,6 +209,12 @@ export function* selectCountrySaga({ code }) {
   const currentStandard = yield select(getStandardSearch);
   if (countryDefaultStandard.key !== currentStandard) {
     yield searchParams.set('as', countryDefaultStandard.key);
+  }
+  if (tab) {
+    yield searchParams.set('tab', tab);
+  }
+  if (atRisk) {
+    yield searchParams.set('atRisk', atRisk);
   }
 
   // navigate to country and default standard
