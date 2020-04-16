@@ -141,7 +141,7 @@ export function PathPeople({
                   <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
                     <FormattedMessage
                       {...messages.availability}
-                      values={{ no: atRisk.length }}
+                      values={{ no: dataReady ? atRisk.length : 0 }}
                     />
                   </Heading>
                 </Top>
