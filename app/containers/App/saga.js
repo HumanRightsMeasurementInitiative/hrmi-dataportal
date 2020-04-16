@@ -357,7 +357,7 @@ export function* selectMetricSaga({ code }) {
   );
   yield put(openHowToRead(null));
   yield put(openSettings(null));
-  yield put(push(`/${requestLocale}//${PATHS.METRIC}/${code}${search}`));
+  yield put(push(`/${requestLocale}/${PATHS.METRIC}/${code}${search}`));
 }
 export function* selectGroupSaga({ code }) {
   const requestLocale = yield select(getLocale);
