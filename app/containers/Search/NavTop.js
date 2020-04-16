@@ -24,7 +24,14 @@ const Top = styled.div`
   height: ${({ theme }) => theme.navTop};
 `;
 
-const StyledTextInput = styled(TextInput)``;
+const StyledTextInput = styled(TextInput)`
+  font-weight: 600;
+  &::placeholder {
+    color: ${({ theme }) => theme.global.colors.dark};
+    font-weight: 400;
+    opacity: 0.8;
+  }
+`;
 
 class NavTop extends React.Component {
   constructor(props) {
@@ -51,7 +58,7 @@ class NavTop extends React.Component {
           pad={{
             left: size === 'small' ? 'small' : 'medium',
             vertical: 'small',
-            right: size === 'small' ? 'none' : 'xsmall',
+            right: size === 'small' ? 'none' : 'medium',
           }}
           direction="row"
           fill="vertical"
@@ -76,16 +83,18 @@ class NavTop extends React.Component {
             />
             {search && search.length > 0 && (
               <Button onClick={() => onSearch('')} pad="xsmall">
-                <FormClose />
+                <FormClose color="dark" />
               </Button>
             )}
-            {(!search || search.length === 0) && <Search />}
+            {(!search || search.length === 0) && <Search color="dark" />}
           </Box>
-          <Box pad={{ vertical: 'xsmall' }} flex={{ shrink: 0 }}>
-            <StyledButtonIcon onClick={() => onClose()}>
-              <Close color="white" size="large" />
-            </StyledButtonIcon>
-          </Box>
+          {size === 'small' && (
+            <Box pad={{ vertical: 'xsmall' }} flex={{ shrink: 0 }}>
+              <StyledButtonIcon onClick={() => onClose()}>
+                <Close color="white" size="large" />
+              </StyledButtonIcon>
+            </Box>
+          )}
         </Box>
       </Top>
     );
