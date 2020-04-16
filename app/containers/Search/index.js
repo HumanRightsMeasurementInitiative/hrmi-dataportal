@@ -41,6 +41,7 @@ export function Search({
   onToggle,
   theme,
   placeholder,
+  example,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -99,7 +100,10 @@ export function Search({
                 }
               }}
               placeholder={
-                placeholder || intl.formatMessage(messages.allSearch)
+                placeholder ||
+                intl.formatMessage(
+                  example ? messages.exampleSearch : messages.allSearch,
+                )
               }
               ref={textInputRef}
             />
@@ -146,6 +150,7 @@ Search.propTypes = {
   margin: PropTypes.bool,
   stretch: PropTypes.bool,
   expand: PropTypes.bool,
+  example: PropTypes.bool,
   size: PropTypes.string,
   theme: PropTypes.object,
   placeholder: PropTypes.string,
