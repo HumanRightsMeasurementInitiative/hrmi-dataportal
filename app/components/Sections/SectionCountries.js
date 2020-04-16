@@ -40,7 +40,7 @@ export function SectionCountries({
         />
         <AllLinkButton
           onClick={() => navAllCountries()}
-          label={allLink || intl.formatMessage(messages.countries.allLink)}
+          label={allLink || intl.formatMessage(rootMessages.labels.allCountries)}
         />
         {countries && (
           <Slider cardMargin="xsmall">

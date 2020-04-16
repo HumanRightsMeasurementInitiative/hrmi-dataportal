@@ -5,41 +5,56 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Box } from 'grommet';
-import { intlShape, injectIntl } from 'react-intl';
-import { NewWindow } from 'grommet-icons';
+// import PropTypes from 'prop-types';
+import { Box, ResponsiveContext, Text } from 'grommet';
+// import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
-import { DEFAULT_LOCALE } from 'i18n';
-import { XPATHS } from 'containers/App/constants';
+import Icon from 'components/Icon';
+
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-import ButtonTextIcon from 'styled/ButtonTextIcon';
 
+import { isMinSize } from 'utils/responsive';
+
+import rootMessages from 'messages';
 import messages from './messages';
 
-export function SectionFooter({ intl, locale }) {
+export function SectionFooter() {
   return (
-    <SectionContainer background="footer">
-      <ContentMaxWidth align="start">
-        <Box direction="row" margin={{ top: 'large' }}>
-          <ButtonTextIcon
-            href={XPATHS.contact[locale] || XPATHS.contact[DEFAULT_LOCALE]}
-            label={intl.formatMessage(messages.footer.contactLink)}
-            target="_blank"
-            icon={<NewWindow color="white" />}
-          />
-        </Box>
-      </ContentMaxWidth>
-    </SectionContainer>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <SectionContainer background="footer" pad={{ top: 'medium' }}>
+          <ContentMaxWidth stretch direction="column">
+            <Icon name="BRAND" />
+            <Box margin={{ top: 'xsmall', bottom: 'small' }}>
+              <Text weight={600}>
+                <FormattedMessage {...rootMessages.app.hrmi} />
+              </Text>
+            </Box>
+            <Box direction="row">
+              <Box
+                basis={isMinSize(size, 'large') ? '1/2' : '1'}
+                pad={{ right: isMinSize(size, 'large') ? 'ms' : '0' }}
+                margin={{ bottom: 'large' }}
+              >
+                <Text size="small">
+                  <FormattedMessage {...messages.footer.text} />
+                </Text>
+              </Box>
+            </Box>
+          </ContentMaxWidth>
+        </SectionContainer>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 
-SectionFooter.propTypes = {
-  // nav: PropTypes.func,
-  locale: PropTypes.string,
-  intl: intlShape.isRequired,
-};
+// SectionFooter.propTypes = {
+//   // nav: PropTypes.func,
+//   locale: PropTypes.string,
+//   intl: intlShape.isRequired,
+// };
 
-export default injectIntl(SectionFooter);
+export default SectionFooter;

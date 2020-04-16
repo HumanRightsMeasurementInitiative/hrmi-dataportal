@@ -17,7 +17,7 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import { isMinSize } from 'utils/responsive';
-
+import rootMessages from 'messages';
 import SectionTitle from './SectionTitle';
 import messages from './messages';
 
@@ -28,14 +28,20 @@ const Image = styled.img`
 const imageSrc = `${IMAGE_PATH}/Quality-of-LIfe.jpg`;
 
 export function SectionPeople({ nav, intl, theme }) {
+  const hasSecondPara =
+    intl.formatMessage(messages.people.para2) &&
+    intl.formatMessage(messages.people.para2).trim() !== '';
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer pad={{ top: 'small', bottom: 'xxlarge' }}>
+        <SectionContainer
+          margin={{ top: 'small', bottom: 'large' }}
+          pad="0"
+          background="sectionDark"
+        >
           <Box
             align="start"
             direction="row"
-            pad={{ top: 'medium' }}
             style={{ position: 'absolute', top: 0, left: 0, right: 0 }}
           >
             {isMinSize(size, 'large') && (
@@ -66,13 +72,21 @@ export function SectionPeople({ nav, intl, theme }) {
               justify="start"
             >
               <SectionTitle title={intl.formatMessage(messages.people.title)} />
-              <Paragraph size="large" margin={{ bottom: 'medium' }}>
-                <FormattedMessage {...messages.people.teaser} />
+              <Paragraph
+                size="large"
+                margin={{ bottom: hasSecondPara ? 'small' : 'medium' }}
+              >
+                <FormattedMessage {...messages.people.para1} />
               </Paragraph>
+              {hasSecondPara && (
+                <Paragraph size="large" margin={{ bottom: 'medium' }}>
+                  <FormattedMessage {...messages.people.para2} />
+                </Paragraph>
+              )}
               <Box direction="row">
                 <ButtonTextIcon
                   onClick={() => nav(`${PATHS.PAGE}/${PAGES.atRisk.key}`)}
-                  label={intl.formatMessage(messages.people.link)}
+                  label={intl.formatMessage(rootMessages.labels.allPeople)}
                   hasIcon
                 />
               </Box>

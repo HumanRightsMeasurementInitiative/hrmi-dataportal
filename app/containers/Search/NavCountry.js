@@ -11,6 +11,7 @@ import { selectCountry, navigate } from 'containers/App/actions';
 import { getCountries } from 'containers/App/selectors';
 
 import { getHeaderHeight } from 'utils/responsive';
+import rootMessages from 'messages';
 
 import { prepCountries } from './search';
 
@@ -28,7 +29,6 @@ export function NavCountry({
   onClose,
   size,
   nav,
-  subject,
   theme,
 }) {
   const [search, setSearch] = useState('');
@@ -44,19 +44,17 @@ export function NavCountry({
         onSearch={s => setSearch(s)}
         placeholder={intl.formatMessage(messages.countrySearch)}
         size={size}
-        subject={subject}
       />
       <NavScroll>
         <Box flex overflow="auto" pad="medium">
           {search === '' && (
             <NavOptionGroup
-              label="All countries"
-              subject={subject}
+              label={intl.formatMessage(messages.optionGroups.overview)}
               options={[
                 {
                   key: 'countries',
                   code: 'countries',
-                  label: 'Countries overview',
+                  label: intl.formatMessage(rootMessages.labels.allCountries),
                   special: true,
                 },
               ]}
@@ -72,8 +70,7 @@ export function NavCountry({
           )}
           {sorted && sorted.length > 0 && (
             <NavOptionGroup
-              subject={subject}
-              label="Country profiles"
+              label={intl.formatMessage(messages.optionGroups.countries)}
               options={sorted}
               onClick={key => {
                 onClose();
@@ -95,7 +92,6 @@ NavCountry.propTypes = {
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   intl: intlShape.isRequired,
   size: PropTypes.string,
-  subject: PropTypes.string,
   theme: PropTypes.object,
 };
 

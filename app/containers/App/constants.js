@@ -151,6 +151,12 @@ export const IMAGE_PATH =
   '//humanrightsmeasurement.org/wp-content/uploads/2020/03';
 
 export const XPATHS = {
+  home: {
+    en: '//humanrightsmeasurement.org',
+    fr: '//humanrightsmeasurement.org/fr',
+    es: '//humanrightsmeasurement.org/es',
+    pt: '//humanrightsmeasurement.org/pt-pt',
+  },
   contact: {
     en: '//humanrightsmeasurement.org/about-hrmi/contact-hrmi/',
     fr: '//humanrightsmeasurement.org/fr/a-propos-de-hrmi/contactez-hrmi/',

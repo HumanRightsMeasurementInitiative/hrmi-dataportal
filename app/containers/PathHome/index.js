@@ -36,6 +36,7 @@ import SectionDataCards from 'components/Sections/SectionDataCards';
 import SectionCountries from 'components/Sections/SectionCountries';
 import SectionSearch from 'components/Sections/SectionSearch';
 import SectionPeople from 'components/Sections/SectionPeople';
+import SectionAbout from 'components/Sections/SectionAbout';
 import SectionFooter from 'components/Sections/SectionFooter';
 
 // styles
@@ -88,6 +89,7 @@ export function PathHome({
       <SectionSearch />
       <SectionPeople nav={nav} />
       <SectionOurData nav={nav} />
+      <SectionAbout locale={locale} nav={nav} />
       <SectionFooter locale={locale} nav={nav} />
     </ContentWrap>
   );
