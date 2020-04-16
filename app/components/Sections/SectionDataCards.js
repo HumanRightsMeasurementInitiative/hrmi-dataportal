@@ -15,10 +15,11 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 
 import { isMaxSize } from 'utils/responsive';
 
+import rootMessages from 'messages';
+import messages from './messages';
 import SectionTitle from './SectionTitle';
 import Slider from './Slider';
 import CardData from './CardData';
-import messages from './messages';
 
 export function SectionDataCards({
   noCountries = 0,
@@ -32,7 +33,7 @@ export function SectionDataCards({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer background="data">
+        <SectionContainer background="sectionDark">
           <ContentMaxWidth column>
             <SectionTitle
               title={intl.formatMessage(messages.dataCards.title)}
@@ -46,21 +47,21 @@ export function SectionDataCards({
                 no={noRights}
                 title={intl.formatMessage(messages.dataCards.metrics)}
                 teaser={intl.formatMessage(messages.dataCards.metricsTeaser)}
-                anchor={intl.formatMessage(messages.metrics.allLink)}
+                anchor={intl.formatMessage(rootMessages.labels.allMetrics)}
               />
               <CardData
                 onClick={navCountries}
                 no={noCountries}
                 title={intl.formatMessage(messages.dataCards.countries)}
                 teaser={intl.formatMessage(messages.dataCards.countriesTeaser)}
-                anchor={intl.formatMessage(messages.countries.allLink)}
+                anchor={intl.formatMessage(rootMessages.labels.allCountries)}
               />
               <CardData
                 onClick={navGroups}
                 no={noGroups}
                 title={intl.formatMessage(messages.dataCards.people)}
                 teaser={intl.formatMessage(messages.dataCards.peopleTeaser)}
-                anchor={intl.formatMessage(messages.people.link)}
+                anchor={intl.formatMessage(rootMessages.labels.allPeople)}
               />
             </Slider>
           </ContentMaxWidth>

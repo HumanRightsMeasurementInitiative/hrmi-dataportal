@@ -55,7 +55,7 @@ export function SectionOurData({ nav, intl }) {
           <ContentMaxWidth>
             <Box
               basis={getBasisMain(size)}
-              pad={{ right: isMinSize(size, 'large') ? 'xlarge' : 0 }}
+              pad={{ right: isMinSize(size, 'large') ? 'xlarge' : '0' }}
             >
               <SectionTitle
                 title={intl.formatMessage(messages.ourData.title)}

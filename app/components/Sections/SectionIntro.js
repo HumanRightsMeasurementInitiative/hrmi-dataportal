@@ -98,7 +98,7 @@ export function SectionIntro({ theme }) {
           <ContentMaxWidth align="start" direction="row" stretch>
             <Box
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
-              pad={{ right: isMinSize(size, 'large') ? 'xlarge' : 0 }}
+              pad={{ right: isMinSize(size, 'large') ? 'xlarge' : '0' }}
               style={{ position: 'relative' }}
             >
               <GraphicWrap
@@ -124,7 +124,7 @@ export function SectionIntro({ theme }) {
                   <FormattedMessage {...messages.intro} />
                 </Paragraph>
                 <SearchWrapper>
-                  <Search dark stretch size="large" float />
+                  <Search stretch size="large" />
                 </SearchWrapper>
               </div>
             </Box>

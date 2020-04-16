@@ -159,19 +159,16 @@ const ButtonNavSecondary = styled(Button)`
   padding-left: 1px;
   font-weight: 600;
   height: ${({ theme }) => getHeaderHeightBottom('small', theme)}px;
-  color: ${({ theme, subject, active, open }) => (
-    (active || open) ? theme.global.colors[subject] : 'inherit'
-  )};
   background: transparent;
   border-bottom: 4px solid;
-  border-color: ${({ theme, subject, active }) => (
-    (active) ? theme.global.colors[subject] : 'transparent'
+  border-color: ${({ theme, active }) => (
+    active ? theme.global.colors.dark : 'transparent'
   )};
   &:first-child {
     margin-left: 0;
   }
   &:hover {
-    color: ${({ theme, subject }) => theme.global.colors[subject]};
+    border-color: ${({ theme }) => theme.global.colors.dark};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
@@ -179,28 +176,28 @@ const ButtonNavSecondary = styled(Button)`
     margin-right: 20px;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    margin-left: 27px;
-    margin-right: 27px;
+    margin-left: 20px;
+    margin-right: 20px;
   }
 `;
 
 const ButtonSecondary = React.forwardRef(
-  ({ active, open, onClick, label, subject, size }, ref) => (
+  ({ active, open, onClick, label, size }, ref) => (
     <ButtonNavSecondary
       size={size}
       plain
       active={active}
       open={open}
-      subject={subject}
       onClick={onClick}
       justify="between"
+      align="center"
       ref={ref}
       label={
         <Box
           direction="row"
           align="center"
           justify="between"
-          fill="horizontal"
+          fill
           gap={size === 'small' ? 'xxsmall' : 'xsmall'}
         >
           <Text size={size === 'small' ? 'medium' : 'large'}>
@@ -229,7 +226,6 @@ ButtonSecondary.propTypes = {
   open: PropTypes.bool,
   onClick: PropTypes.func,
   label: PropTypes.string,
-  subject: PropTypes.string,
   size: PropTypes.string,
 };
 
@@ -368,41 +364,6 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                   {(!showSearch || isMaxSize(size, 'small')) && (
                     <>
                       <ButtonSecondary
-                        active={
-                          path === PATHS.COUNTRIES || path === PATHS.COUNTRY
-                        }
-                        open={showCountries}
-                        onClick={() => {
-                          setShowMetrics(false);
-                          setShowGroups(false);
-                          setShowCountries(!showCountries);
-                        }}
-                        label="countries"
-                        ref={countryTarget}
-                        subject="countries"
-                        size={size}
-                      />
-                      {showCountries && size === 'small' && (
-                        <NavCountry
-                          onClose={() => setShowCountries(false)}
-                          size={size}
-                        />
-                      )}
-                      {showCountries && isMinSize(size, 'medium') && (
-                        <Drop
-                          align={{ top: 'bottom', right: 'right' }}
-                          target={countryTarget.current}
-                          onClickOutside={() => setShowCountries(false)}
-                          overflow="hidden"
-                        >
-                          <NavCountry
-                            onClose={() => setShowCountries(false)}
-                            size={size}
-                            subject="countries"
-                          />
-                        </Drop>
-                      )}
-                      <ButtonSecondary
                         active={path === PATHS.METRICS || path === PATHS.METRIC}
                         open={showMetrics}
                         onClick={() => {
@@ -411,7 +372,6 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                           setShowMetrics(!showMetrics);
                         }}
                         label="metrics"
-                        subject="metrics"
                         ref={metricTarget}
                         size={size}
                       />
@@ -430,7 +390,39 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                           <NavMetric
                             onClose={() => setShowMetrics(false)}
                             size={size}
-                            subject="metrics"
+                          />
+                        </Drop>
+                      )}
+                      <ButtonSecondary
+                        active={
+                          path === PATHS.COUNTRIES || path === PATHS.COUNTRY
+                        }
+                        open={showCountries}
+                        onClick={() => {
+                          setShowMetrics(false);
+                          setShowGroups(false);
+                          setShowCountries(!showCountries);
+                        }}
+                        label="countries"
+                        ref={countryTarget}
+                        size={size}
+                      />
+                      {showCountries && size === 'small' && (
+                        <NavCountry
+                          onClose={() => setShowCountries(false)}
+                          size={size}
+                        />
+                      )}
+                      {showCountries && isMinSize(size, 'medium') && (
+                        <Drop
+                          align={{ top: 'bottom', right: 'right' }}
+                          target={countryTarget.current}
+                          onClickOutside={() => setShowCountries(false)}
+                          overflow="hidden"
+                        >
+                          <NavCountry
+                            onClose={() => setShowCountries(false)}
+                            size={size}
                           />
                         </Drop>
                       )}
@@ -443,7 +435,6 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                           setShowGroups(!showGroups);
                         }}
                         label="people"
-                        subject="people"
                         ref={groupTarget}
                         size={size}
                       />
@@ -462,7 +453,6 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                           <NavGroups
                             onClose={() => setShowGroups(false)}
                             size={size}
-                            subject="people"
                           />
                         </Drop>
                       )}

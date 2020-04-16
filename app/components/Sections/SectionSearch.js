@@ -25,10 +25,7 @@ const SearchWrapper = styled.div`
 
 export function SectionSearch({ intl }) {
   return (
-    <SectionContainer
-      pad={{ top: 'medium', bottom: 'large' }}
-      background="search"
-    >
+    <SectionContainer pad={{ top: 'medium', bottom: 'large' }}>
       <ContentMaxWidth align="start" column>
         <SectionTitle
           title={intl.formatMessage(messages.search.title)}
@@ -38,7 +35,6 @@ export function SectionSearch({ intl }) {
           <Search
             stretch
             size="large"
-            float
             placeholder={intl.formatMessage(messages.search.placeholder)}
           />
         </SearchWrapper>
