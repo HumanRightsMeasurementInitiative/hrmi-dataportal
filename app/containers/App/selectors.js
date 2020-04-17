@@ -3,7 +3,7 @@
  */
 
 import { createSelector } from 'reselect';
-import { uniq } from 'lodash';
+import { uniq } from 'lodash/array';
 import { DEFAULT_LOCALE, appLocales } from 'i18n';
 import isInteger from 'utils/is-integer';
 import quasiEquals from 'utils/quasi-equals';
