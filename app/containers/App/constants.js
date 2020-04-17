@@ -52,8 +52,7 @@ export const SET_RAW = 'hrmi/App/SET_RAW';
 export const TOGGLE_GROUP = 'hrmi/App/TOGGLE_GROUP';
 
 // state actions
-export const OPEN_HOW_TO = 'hrmi/App/OPEN_HOW_TO';
-export const OPEN_SETTINGS = 'hrmi/App/OPEN_SETTINGS';
+export const ASIDE_LAYER = 'hrmi/App/ASIDE_LAYER';
 export const HIGHLIGHT_COUNTRY = 'hrmi/App/HIGHLIGHT_COUNTRY';
 export const SHOW_WELCOME = 'hrmi/App/SHOW_WELCOME';
 

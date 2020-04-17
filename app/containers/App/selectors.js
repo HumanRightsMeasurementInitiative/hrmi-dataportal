@@ -1595,6 +1595,10 @@ export const getSettingsLayer = createSelector(
   getGlobal,
   global => global.settings,
 );
+export const getAsideLayer = createSelector(
+  getGlobal,
+  global => global.asideLayer,
+);
 
 export const getCookieConsent = createSelector(
   getGlobal,

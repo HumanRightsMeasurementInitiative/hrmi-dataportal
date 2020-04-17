@@ -189,6 +189,7 @@ export function ChartContainerCountryRights({
                 rootMessages.dimensions[dimensionCode],
               ),
             }}
+            includeChartName
             tools={{
               howToReadConfig: {
                 key: 'country-dimension-esr',

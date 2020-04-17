@@ -6,9 +6,19 @@
 
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
 import styled, { withTheme } from 'styled-components';
 import { Layer, Box, ResponsiveContext } from 'grommet';
 import { Close as CloseIcon } from 'grommet-icons';
+
+import { getAsideLayer } from 'containers/App/selectors';
+import { setAsideLayer } from 'containers/App/actions';
+import AboutMetricContainer from 'containers/AboutMetricContainer';
+import AboutCountryContainer from 'containers/AboutCountryContainer';
+import LayerSettings from 'containers/LayerSettings';
+import LayerHowToRead from 'containers/LayerHowToRead';
 
 import ButtonIcon from 'styled/ButtonIcon';
 
@@ -24,7 +34,7 @@ const ButtonWrap = styled.div`
   right: 1em;
 `;
 
-export function LayerInfo({ onClose, theme, content }) {
+export function LayerAside({ onClose, theme, layer }) {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions(),
   );
@@ -37,6 +47,7 @@ export function LayerInfo({ onClose, theme, content }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  if (!layer) return null;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -67,7 +78,24 @@ export function LayerInfo({ onClose, theme, content }) {
                 <CloseIcon size="xlarge" color="white" />
               </ButtonIcon>
             </ButtonWrap>
-            {content}
+            {layer.type === 'htr' && <LayerHowToRead layer={layer} />}
+            {layer.type === 'settings' && <LayerSettings layer={layer} />}
+            {layer.type === 'aboutMetric' && (
+              <AboutMetricContainer
+                metricCode={layer.code}
+                showTitle
+                showMetricLink
+                showSources
+                countryScoreMsg={layer.countryScoreMsg}
+              />
+            )}
+            {layer.type === 'aboutCountry' && (
+              <AboutCountryContainer
+                countryCode={layer.code}
+                showTitle
+                showCountryLink
+              />
+            )}
           </Box>
         </Layer>
       )}
@@ -75,14 +103,28 @@ export function LayerInfo({ onClose, theme, content }) {
   );
 }
 
-LayerInfo.propTypes = {
+LayerAside.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   onClose: PropTypes.func,
   theme: PropTypes.object,
-  content: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
+  layer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
-export default withTheme(LayerInfo);
+const mapStateToProps = createStructuredSelector({
+  layer: state => getAsideLayer(state),
+});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    onClose: () => {
+      dispatch(setAsideLayer(false));
+    },
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(withTheme(LayerAside));

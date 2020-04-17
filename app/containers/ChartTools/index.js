@@ -7,15 +7,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { ResponsiveContext, Button } from 'grommet';
 import { CircleQuestion, Performance } from 'grommet-icons';
 
-import { openHowToRead, openSettings } from 'containers/App/actions';
-import { getHowToRead, getSettingsLayer } from 'containers/App/selectors';
+import { setAsideLayer } from 'containers/App/actions';
 
 import { isMinSize } from 'utils/responsive';
 
@@ -42,10 +40,7 @@ const StyledButton = styled(Button)`
 export function ChartTools({
   howToReadConfig,
   settingsConfig,
-  layer,
-  settingsLayer,
-  onOpenHowToRead,
-  onOpenSettings,
+  onSetAsideLayer,
   intl,
 }) {
   return (
@@ -55,10 +50,10 @@ export function ChartTools({
           {howToReadConfig && (
             <StyledButton
               onClick={() => {
-                if (layer && layer.key === howToReadConfig.key) {
-                  return onOpenHowToRead(false);
-                }
-                return onOpenHowToRead(howToReadConfig);
+                onSetAsideLayer({
+                  type: 'htr',
+                  ...howToReadConfig,
+                });
               }}
               icon={<CircleQuestion color="dark" size="large" />}
               plain
@@ -74,10 +69,10 @@ export function ChartTools({
           {settingsConfig && (
             <StyledButton
               onClick={() => {
-                if (settingsLayer && settingsLayer.key === settingsConfig.key) {
-                  return onOpenSettings(false);
-                }
-                return onOpenSettings(settingsConfig);
+                onSetAsideLayer({
+                  type: 'settings',
+                  ...settingsConfig,
+                });
               }}
               icon={<Performance color="dark" size="large" />}
               plain
@@ -97,29 +92,20 @@ export function ChartTools({
 }
 
 ChartTools.propTypes = {
-  onOpenHowToRead: PropTypes.func,
-  onOpenSettings: PropTypes.func,
   howToReadConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   settingsConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  layer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  settingsLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  onSetAsideLayer: PropTypes.func,
   intl: intlShape.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  layer: state => getHowToRead(state),
-  settingsLayer: state => getSettingsLayer(state),
-});
-
 export function mapDispatchToProps(dispatch) {
   return {
-    onOpenHowToRead: args => dispatch(openHowToRead(args)),
-    onOpenSettings: args => dispatch(openSettings(args)),
+    onSetAsideLayer: args => dispatch(setAsideLayer(args)),
   };
 }
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 
