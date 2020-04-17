@@ -8,6 +8,8 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Box, Layer, Paragraph } from 'grommet';
 import { getCookieConsent } from 'containers/App/selectors';
 import { checkCookieConsent, setCookieConsent } from 'containers/App/actions';
+import saga from 'containers/App/saga';
+import { useInjectSaga } from 'utils/injectSaga';
 
 import ButtonHighlight from 'styled/ButtonHighlight';
 
@@ -51,6 +53,7 @@ const ButtonWrap = styled.div`
 `;
 
 export function CookieConsent({ init, cookieConsent, intl, consent }) {
+  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     init();
   }, []);
