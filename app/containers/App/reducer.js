@@ -19,8 +19,7 @@ import {
   LOAD_CONTENT_ERROR,
   LOAD_CONTENT_SUCCESS,
   CONTENT_REQUESTED,
-  OPEN_HOW_TO,
-  OPEN_SETTINGS,
+  ASIDE_LAYER,
   COOKIECONSENT_CHECKED,
   GA_INITIALISED,
   PATHS,
@@ -32,8 +31,7 @@ export const initialState = {
   gaInitiliased: false,
   loading: false,
   error: false,
-  howToRead: false,
-  settings: false,
+  asideLayer: false,
   /* eslint-disable no-param-reassign */
   // the data
   data: DATA_RESOURCES.reduce((memo, resource) => {
@@ -117,13 +115,8 @@ const appReducer = (state = initialState, action) =>
         draft.contentReady = initialState.contentReady;
         draft.contentRequested = initialState.contentRequested;
         break;
-      case OPEN_HOW_TO:
-        draft.settings = false;
-        draft.howToRead = action.layer;
-        break;
-      case OPEN_SETTINGS:
-        draft.howToRead = false;
-        draft.settings = action.layer;
+      case ASIDE_LAYER:
+        draft.asideLayer = action.layer;
         break;
       case COOKIECONSENT_CHECKED:
         draft.cookieConsent = action.status;

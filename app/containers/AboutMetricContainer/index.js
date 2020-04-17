@@ -26,6 +26,8 @@ import AboutMetric from 'components/AboutMetric';
 import Button from 'styled/Button';
 import ButtonHighlight from 'styled/ButtonHighlight';
 
+import getMetricDetails from 'utils/metric-details';
+
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -69,7 +71,6 @@ const Pad = styled.div`
 const DEPENDENCIES_INDICATORS = ['esrIndicators'];
 
 export function AboutMetricContainer({
-  metric,
   metricCode,
   ancestors,
   metricInfo,
@@ -89,6 +90,7 @@ export function AboutMetricContainer({
     onLoadData(metric);
   }, [metric]);
 
+  const metric = getMetricDetails(metricCode);
   const { metricType } = metric;
 
   const standard =
@@ -278,7 +280,6 @@ export function AboutMetricContainer({
 
 AboutMetricContainer.propTypes = {
   metricCode: PropTypes.string,
-  metric: PropTypes.object,
   onSelectMetric: PropTypes.func,
   onLoadData: PropTypes.func.isRequired,
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
@@ -290,17 +291,19 @@ AboutMetricContainer.propTypes = {
   showFAQs: PropTypes.bool,
   showRelated: PropTypes.bool,
   showSources: PropTypes.bool,
-  countryScoreMsg: PropTypes.node,
+  countryScoreMsg: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  metricInfo: (state, { metric }) => {
+  metricInfo: (state, { metricCode }) => {
+    const metric = getMetricDetails(metricCode);
     if (metric.metricType === 'indicators') {
-      return getIndicatorInfo(state, metric.code);
+      return getIndicatorInfo(state, metricCode);
     }
     return false;
   },
-  allIndicators: (state, { metric }) => {
+  allIndicators: (state, { metricCode }) => {
+    const metric = getMetricDetails(metricCode);
     if (metric.metricType === 'rights' && metric.type === 'esr') {
       return getESRIndicators(state);
     }

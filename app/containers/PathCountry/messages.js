@@ -50,7 +50,7 @@ export default defineMessages({
     },
     // TODO?
     noData: {
-      id: `${scope}.countryScoreExplainer.cpr`,
+      id: `${scope}.countryScoreExplainer.noData`,
       defaultMessage: 'Score not available for {countryWithArticle}',
     },
   },

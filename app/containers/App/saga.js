@@ -38,8 +38,7 @@ import {
   checkCookieConsent,
   setGAinitialised,
   trackEvent,
-  openHowToRead,
-  openSettings,
+  setAsideLayer,
 } from './actions';
 import {
   LOAD_DATA_IF_NEEDED,
@@ -65,7 +64,6 @@ import {
   COOKIECONSENT_CHECKED,
   GA_PROPERTY_ID,
   TRACK_EVENT,
-  OPEN_HOW_TO,
   TOGGLE_GROUP,
   PATHS,
 } from './constants';
@@ -230,8 +228,7 @@ export function* selectCountrySaga({ code, tab, atRisk }) {
       value: code,
     }),
   );
-  yield put(openHowToRead(null));
-  yield put(openSettings(null));
+  yield put(setAsideLayer(null));
   yield put(push(`/${requestLocale}/${PATHS.COUNTRY}/${code}${search}`));
 }
 
@@ -336,8 +333,7 @@ export function* setTabSaga({ value }) {
       value,
     }),
   );
-  yield put(openHowToRead(null));
-  yield put(openSettings(null));
+  yield put(setAsideLayer(null));
   yield put(push(`${path}?${searchParams.toString()}`));
 }
 
@@ -355,8 +351,7 @@ export function* selectMetricSaga({ code }) {
       value: code,
     }),
   );
-  yield put(openHowToRead(null));
-  yield put(openSettings(null));
+  yield put(setAsideLayer(null));
   yield put(push(`/${requestLocale}/${PATHS.METRIC}/${code}${search}`));
 }
 export function* selectGroupSaga({ code }) {
@@ -374,25 +369,6 @@ export function* selectGroupSaga({ code }) {
     }),
   );
   yield put(push(`/${requestLocale}/${PATHS.GROUP}/${code}${search}`));
-}
-export function* openHowToReadSaga({ layer }) {
-  if (layer) {
-    yield put(
-      trackEvent({
-        category: 'How To Read',
-        action: `Chart: ${layer.chart}, context: ${layer.contxt}, scale: ${
-          layer.data
-        }`,
-      }),
-    );
-  } else {
-    yield put(
-      trackEvent({
-        category: 'Close panel',
-        action: 'How To Read',
-      }),
-    );
-  }
 }
 
 // location can either be string or object { pathname, search}
@@ -489,8 +465,7 @@ export function* navigateSaga({ location, args }) {
   const newSearch = newSearchParams.toString();
   const search = newSearch.length > 0 ? `?${newSearch}` : '';
   if (newPathname !== currentLocation.pathname) {
-    yield put(openHowToRead(null));
-    yield put(openSettings(null));
+    yield put(setAsideLayer(null));
   }
   yield put(push(`${newPathname}${search}`));
 }
@@ -579,5 +554,4 @@ export default function* defaultSaga() {
   yield takeLatest(COOKIECONSENT_CHECKED, initialiseAnalyticsSaga);
   yield takeLatest(LOCATION_CHANGE, trackPageviewSaga);
   yield takeLatest(TRACK_EVENT, trackEventSaga);
-  yield takeLatest(OPEN_HOW_TO, openHowToReadSaga);
 }

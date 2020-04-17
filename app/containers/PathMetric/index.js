@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -14,14 +14,12 @@ import { Helmet } from 'react-helmet';
 import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
 import { withTheme } from 'styled-components';
 
-import { navigate, openHowToRead, openSettings } from 'containers/App/actions';
-import { getCloseTargetMetric } from 'containers/App/selectors';
+import { navigate, setAsideLayer } from 'containers/App/actions';
+import { getCloseTargetMetric, getAsideLayer } from 'containers/App/selectors';
 import { PATHS, IMAGE_PATH, PAGES } from 'containers/App/constants';
-import LayerInfo from 'containers/LayerInfo';
 import ChartContainerMetric from 'containers/ChartContainerMetric';
 import TabContainer from 'containers/TabContainer';
 import AboutMetricContainer from 'containers/AboutMetricContainer';
-import AboutCountryContainer from 'containers/AboutCountryContainer';
 
 import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
@@ -51,10 +49,10 @@ export function PathMetric({
   intl,
   onMetricClick,
   nav,
-  closeLayers,
   theme,
+  onSetAsideLayer,
+  asideLayer,
 }) {
-  const [aboutCountry, setAboutCountry] = useState(null);
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
   const metricTitle = intl.formatMessage(
@@ -91,6 +89,17 @@ export function PathMetric({
       key: metric.right,
     });
   }
+  const onCountryClick = code => {
+    if (asideLayer && asideLayer.key === code) {
+      onSetAsideLayer(false);
+    } else {
+      onSetAsideLayer({
+        type: 'aboutCountry',
+        key: code,
+        code,
+      });
+    }
+  };
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -99,18 +108,6 @@ export function PathMetric({
             <title>{metricTitle}</title>
             <meta name="description" content="Description of metric" />
           </Helmet>
-          {aboutCountry && (
-            <LayerInfo
-              content={
-                <AboutCountryContainer
-                  countryCode={aboutCountry}
-                  showTitle
-                  showCountryLink
-                />
-              }
-              onClose={() => setAboutCountry(null)}
-            />
-          )}
           <Box style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>
@@ -178,10 +175,7 @@ export function PathMetric({
                   <ChartContainerMetric
                     {...props}
                     metric={metric}
-                    onCountryClick={code => {
-                      closeLayers();
-                      setAboutCountry(aboutCountry ? null : code);
-                    }}
+                    onCountryClick={onCountryClick}
                   />
                 ),
               },
@@ -192,7 +186,6 @@ export function PathMetric({
                 content: props => (
                   <AboutMetricContainer
                     {...props}
-                    metric={metric}
                     metricCode={metricCode}
                     ancestors={ancestors}
                     showFAQs
@@ -215,18 +208,19 @@ PathMetric.propTypes = {
   nav: PropTypes.func,
   match: PropTypes.object,
   theme: PropTypes.object,
-  closeLayers: PropTypes.func,
+  onSetAsideLayer: PropTypes.func,
+  asideLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
   closeTarget: state => getCloseTargetMetric(state),
+  asideLayer: state => getAsideLayer(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    closeLayers: () => {
-      dispatch(openHowToRead(null));
-      dispatch(openSettings(null));
+    onSetAsideLayer: config => {
+      dispatch(setAsideLayer(config));
     },
     onMetricClick: code =>
       dispatch(

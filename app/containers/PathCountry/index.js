@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -28,14 +28,14 @@ import {
   getDependenciesReady,
   getESRIndicators,
   getCountryGrammar,
+  getAsideLayer,
 } from 'containers/App/selectors';
 
 import {
   loadDataIfNeeded,
   navigate,
   trackEvent,
-  openHowToRead,
-  openSettings,
+  setAsideLayer,
 } from 'containers/App/actions';
 import {
   // INCOME_GROUPS,
@@ -52,8 +52,6 @@ import { useInjectSaga } from 'utils/injectSaga';
 
 import TabContainer from 'containers/TabContainer';
 import AboutCountryContainer from 'containers/AboutCountryContainer';
-import AboutMetricContainer from 'containers/AboutMetricContainer';
-import LayerInfo from 'containers/LayerInfo';
 
 import TabCountryReport from 'components/TabCountryReport';
 import TabCountrySnapshot from 'components/TabCountrySnapshot';
@@ -114,6 +112,68 @@ const getMetricScore = (metric, dimensions, rights, indicators, benchmark) => {
   return null;
 };
 
+const getScoreMsg = (
+  code,
+  benchmark,
+  dimensions,
+  rights,
+  indicators,
+  intl,
+  messageValues,
+) => {
+  let countryScoreMsg;
+  const aboutMetricDetails = getMetricDetails(code);
+  const score = getMetricScore(
+    aboutMetricDetails,
+    dimensions,
+    rights,
+    indicators,
+    benchmark,
+  );
+  if (aboutMetricDetails.type === 'esr') {
+    // prettier-ignore
+    countryScoreMsg = score
+      ? intl.formatMessage(
+        messages.countryScoreExplainer.esr[benchmark],
+        ({
+          ...messageValues,
+          score: formatScore(score),
+          metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+        }),
+      )
+      : intl.formatMessage(
+        messages.countryScoreExplainer.noData,
+        messageValues,
+      );
+  }
+  if (aboutMetricDetails.type === 'cpr') {
+    // prettier-ignore
+    countryScoreMsg = score
+      ? intl.formatMessage(
+        messages.countryScoreExplainer.cpr,
+        ({
+          ...messageValues,
+          score: formatScore(score),
+          metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+          link: (
+            <ButtonText
+              as="a"
+              href={intl.formatMessage(messages.countryScoreExplainer.cprLink.url)}
+              target="_blank"
+            >
+              {intl.formatMessage(messages.countryScoreExplainer.cprLink.anchor)}
+            </ButtonText>
+          ),
+        }),
+      )
+      : intl.formatMessage(
+        messages.countryScoreExplainer.noData,
+        messageValues,
+      );
+  }
+  return countryScoreMsg;
+};
+
 export function PathCountry({
   intl,
   onLoadData,
@@ -128,14 +188,13 @@ export function PathCountry({
   dataReady,
   allIndicators,
   countryGrammar,
-  closeLayers,
   benchmark,
   theme,
+  onSetAsideLayer,
+  asideLayer,
 }) {
   useInjectSaga({ key: 'app', saga });
-  const [aboutMetric, setAboutMetric] = useState(null);
 
-  // const layerRef = useRef();
   useEffect(() => {
     // kick off loading of data
     onLoadData();
@@ -143,11 +202,6 @@ export function PathCountry({
 
   const countryCode = match.params.country;
 
-  // const incomeGroup =
-  //   country &&
-  //   INCOME_GROUPS.values.find(g =>
-  //     quasiEquals(g.value, country.high_income_country),
-  //   );
   if (!rootMessages.countries[countryCode]) {
     console.log('Country code not in language files:', countryCode);
   }
@@ -155,7 +209,7 @@ export function PathCountry({
     countryCode && rootMessages.countries[countryCode]
       ? intl.formatMessage(rootMessages.countries[countryCode])
       : countryCode;
-  const aboutMetricDetails = aboutMetric && getMetricDetails(aboutMetric);
+
   // prettier-ignore
   const messageValues = {
     ...getMessageGrammar(
@@ -165,57 +219,27 @@ export function PathCountry({
       countryGrammar,
     ),
   };
-  let countryScoreMsg;
-  if (aboutMetric) {
-    const score = getMetricScore(
-      aboutMetricDetails,
-      dimensions,
-      rights,
-      indicators,
-      benchmark,
-    );
-    if (aboutMetricDetails.type === 'esr') {
-      // prettier-ignore
-      countryScoreMsg = score
-        ? (<FormattedMessage
-          {...messages.countryScoreExplainer.esr[benchmark]}
-          values={{
-            ...messageValues,
-            score: formatScore(score),
-            metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
-          }}
-        />)
-        : (<FormattedMessage
-          {...messages.countryScoreExplainer.noDate}
-          values={messageValues}
-        />);
+
+  const onMetricClick = code => {
+    if (asideLayer && asideLayer.key === code) {
+      onSetAsideLayer(false);
+    } else {
+      onSetAsideLayer({
+        type: 'aboutMetric',
+        key: code,
+        code,
+        countryScoreMsg: getScoreMsg(
+          code,
+          benchmark,
+          dimensions,
+          rights,
+          indicators,
+          intl,
+          messageValues,
+        ),
+      });
     }
-    if (aboutMetricDetails.type === 'cpr') {
-      // prettier-ignore
-      countryScoreMsg = score
-        ? (<FormattedMessage
-          {...messages.countryScoreExplainer.cpr}
-          values={{
-            ...messageValues,
-            score: formatScore(score),
-            metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][aboutMetric]),
-            link: (
-              <ButtonText
-                as="a"
-                href={intl.formatMessage(messages.countryScoreExplainer.cprLink.url)}
-                target="_blank"
-              >
-                {intl.formatMessage(messages.countryScoreExplainer.cprLink.anchor)}
-              </ButtonText>
-            ),
-          }}
-        />)
-        : (<FormattedMessage
-          {...messages.countryScoreExplainer.noDate}
-          values={messageValues}
-        />);
-    }
-  }
+  };
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -224,21 +248,6 @@ export function PathCountry({
             <title>{countryTitle}</title>
             <meta name="description" content="Description of Country page" />
           </Helmet>
-          {aboutMetric && (
-            <LayerInfo
-              content={
-                <AboutMetricContainer
-                  metricCode={aboutMetric}
-                  metric={aboutMetricDetails}
-                  showTitle
-                  showMetricLink
-                  showSources
-                  countryScoreMsg={countryScoreMsg}
-                />
-              }
-              onClose={() => setAboutMetric(null)}
-            />
-          )}
           <Box
             style={{ position: 'relative' }}
             height={`${theme.sizes.top.height}px`}
@@ -298,10 +307,7 @@ export function PathCountry({
                   <TabCountrySnapshot
                     {...props}
                     countryCode={countryCode}
-                    onMetricClick={code => {
-                      closeLayers();
-                      setAboutMetric(aboutMetric ? null : code);
-                    }}
+                    onMetricClick={onMetricClick}
                     messageValues={messageValues}
                   />
                 ),
@@ -321,10 +327,7 @@ export function PathCountry({
                     standard={standard}
                     dataReady={dataReady}
                     allIndicators={allIndicators}
-                    onMetricClick={code => {
-                      closeLayers();
-                      setAboutMetric(aboutMetric ? null : code);
-                    }}
+                    onMetricClick={onMetricClick}
                     messageValues={messageValues}
                   />
                 ),
@@ -341,10 +344,7 @@ export function PathCountry({
                     hasDimensionScore={dataReady && hasCPR(dimensions)}
                     country={country}
                     dataReady={dataReady}
-                    onMetricClick={code => {
-                      closeLayers();
-                      setAboutMetric(aboutMetric ? null : code);
-                    }}
+                    onMetricClick={onMetricClick}
                     messageValues={messageValues}
                   />
                 ),
@@ -361,10 +361,7 @@ export function PathCountry({
                     hasDimensionScore={dataReady && hasCPR(dimensions)}
                     country={country}
                     dataReady={dataReady}
-                    onMetricClick={code => {
-                      closeLayers();
-                      setAboutMetric(aboutMetric ? null : code);
-                    }}
+                    onMetricClick={onMetricClick}
                     messageValues={messageValues}
                   />
                 ),
@@ -449,7 +446,8 @@ PathCountry.propTypes = {
   onRawChange: PropTypes.func,
   raw: PropTypes.bool,
   theme: PropTypes.object,
-  closeLayers: PropTypes.func,
+  onSetAsideLayer: PropTypes.func,
+  asideLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -467,13 +465,13 @@ const mapStateToProps = createStructuredSelector({
   allIndicators: state => getESRIndicators(state),
   countryGrammar: (state, { match }) =>
     getCountryGrammar(state, match.params.country),
+  asideLayer: state => getAsideLayer(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
-    closeLayers: () => {
-      dispatch(openHowToRead(null));
-      dispatch(openSettings(null));
+    onSetAsideLayer: config => {
+      dispatch(setAsideLayer(config));
     },
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));

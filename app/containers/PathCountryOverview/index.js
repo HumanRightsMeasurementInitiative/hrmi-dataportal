@@ -32,7 +32,6 @@ import saga from 'containers/App/saga';
 import { useInjectSaga } from 'utils/injectSaga';
 
 import OverviewCountries from 'containers/OverviewCountries';
-import TabContainer from 'containers/TabContainer';
 
 import Aside from 'components/Aside';
 
@@ -40,6 +39,7 @@ import Aside from 'components/Aside';
 import MainColumn from 'styled/MainColumn';
 import ContentWrap from 'styled/ContentWrap';
 import ContentContainer from 'styled/ContentContainer';
+import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
@@ -161,26 +161,18 @@ export function PathCountryOverview({
               )}
             </ContentMaxWidth>
           </ContentContainer>
-          <TabContainer
-            size={size}
-            tabs={[
-              {
-                key: 'ChartContainerMetric',
-                title: 'Overview',
-                content: props => (
-                  <OverviewCountries
-                    countries={filteredCountries}
-                    scoresAllCountries={scoresAllCountries}
-                    auxIndicators={auxIndicators}
-                    dataReady={dataReady}
-                    featuredValues={featuredValues}
-                    featuredCountries={featuredCountries}
-                    {...props}
-                  />
-                ),
-              },
-            ]}
-          />
+          <SectionContainer>
+            <ContentMaxWidth column>
+              <OverviewCountries
+                countries={filteredCountries}
+                scoresAllCountries={scoresAllCountries}
+                auxIndicators={auxIndicators}
+                dataReady={dataReady}
+                featuredValues={featuredValues}
+                featuredCountries={featuredCountries}
+              />
+            </ContentMaxWidth>
+          </SectionContainer>
         </ContentWrap>
       )}
     </ResponsiveContext.Consumer>
