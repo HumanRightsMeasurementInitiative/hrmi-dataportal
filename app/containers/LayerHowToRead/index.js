@@ -18,6 +18,8 @@ import {
   getFloatingAsideWidth,
 } from 'utils/responsive';
 
+import asArray from 'utils/as-array';
+
 import HTROverviewDimensions from './HTROverviewDimensions';
 import HTROverviewRights from './HTROverviewRights';
 import HTRBulletCPR from './HTRBulletCPR';
@@ -46,7 +48,8 @@ function LayerHowToRead({ layer, theme, onClose }) {
   }, []);
 
   if (!layer) return null;
-  const { contxt, type, dimension, charts } = layer;
+  const { contxt, type, dimension, chart, chartName } = layer;
+  const charts = chart ? asArray(chart) : [];
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -73,7 +76,13 @@ function LayerHowToRead({ layer, theme, onClose }) {
             responsive={false}
           >
             <Heading level={2}>
-              <FormattedMessage {...messages.label} />
+              {chartName && (
+                <FormattedMessage
+                  {...messages.labelWithName}
+                  values={{ name: chartName }}
+                />
+              )}
+              {!chartName && <FormattedMessage {...messages.label} />}
             </Heading>
             <ButtonWrap>
               <ButtonIcon onClick={() => onClose()} subtle>
@@ -81,20 +90,18 @@ function LayerHowToRead({ layer, theme, onClose }) {
               </ButtonIcon>
             </ButtonWrap>
             {charts &&
-              charts.map(chart => (
-                <div key={chart}>
-                  {chart === 'Diamonds' && type === 'd' && (
+              charts.map(chrt => (
+                <div key={chrt}>
+                  {chrt === 'Diamonds' && type === 'd' && (
                     <HTROverviewDimensions />
                   )}
-                  {chart === 'Diamonds' && type === 'r' && (
-                    <HTROverviewRights />
-                  )}
-                  {chart === 'Bullet' && (
+                  {chrt === 'Diamonds' && type === 'r' && <HTROverviewRights />}
+                  {chrt === 'Bullet' && (
                     <HTRBulletCPR contxt={contxt} dimension={dimension} />
                   )}
-                  {chart === 'Bar' && <HTRBarESR contxt={contxt} />}
-                  {chart === 'Trend' && type === 'esr' && <HTRTrendESR />}
-                  {chart === 'Trend' && type === 'cpr' && <HTRTrendCPR />}
+                  {chrt === 'Bar' && <HTRBarESR contxt={contxt} />}
+                  {chrt === 'Trend' && type === 'esr' && <HTRTrendESR />}
+                  {chrt === 'Trend' && type === 'cpr' && <HTRTrendCPR />}
                 </div>
               ))}
           </Box>

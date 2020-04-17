@@ -8,7 +8,6 @@ import styled, { css, withTheme } from 'styled-components';
 
 import { getTabSearch } from 'containers/App/selectors';
 import { setTab, openHowToRead, openSettings } from 'containers/App/actions';
-import ChartTools from 'containers/ChartTools';
 
 import Aside from 'components/Aside';
 import AsideBackground from 'components/AsideBackground';
@@ -17,12 +16,7 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 import ButtonNavTab from 'styled/ButtonNavTab';
 import MainColumn from 'styled/MainColumn';
 
-import {
-  isMinSize,
-  isMaxSize,
-  getHeaderHeight,
-  getAsideWidth,
-} from 'utils/responsive';
+import { isMinSize, isMaxSize, getHeaderHeight } from 'utils/responsive';
 import isNumber from 'utils/is-number';
 
 // const Tab = styled.div``;
@@ -54,14 +48,6 @@ const FixedBar = styled(Bar)`
 const TabLinks = styled(Box)`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     height: 44px;
-  }
-`;
-const ChartToolWrapper = styled(Box)`
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 0 ${({ theme }) => theme.global.edgeSize.medium};
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    padding-right: ${({ theme }) => theme.global.edgeSize.xlarge};
   }
 `;
 
@@ -149,19 +135,6 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
                   </SingleTabLabel>
                 )}
               </TabLinks>
-              {activeTab.key && activeTab.tools && (
-                <ChartToolWrapper
-                  flex={{ shrink: 0 }}
-                  width={isMinSize(size, 'large') ? getAsideWidth(size) : null}
-                  justify="center"
-                  align={activeTab.align || (asideTab ? 'start' : 'end')}
-                >
-                  <ChartTools
-                    howToReadConfig={activeTab.tools.howToReadConfig}
-                    settingsConfig={activeTab.tools.settingsConfig}
-                  />
-                </ChartToolWrapper>
-              )}
             </Box>
           </ContentMaxWidth>
         </FixedBar>

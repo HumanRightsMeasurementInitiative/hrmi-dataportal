@@ -36,7 +36,6 @@ import {
   getFloatingAsideWidth,
 } from 'utils/responsive';
 
-import rootMessages from 'messages';
 import messages from './messages';
 
 import SettingsToggle from './SettingsToggle';
@@ -78,6 +77,8 @@ export function LayerSettings({
   }, []);
 
   if (!layer) return null;
+  const { showScale, showBenchmark, showStandard, chartName } = layer;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -104,7 +105,13 @@ export function LayerSettings({
             responsive={false}
           >
             <Heading level={2}>
-              <FormattedMessage {...rootMessages.labels.chartTools.settings} />
+              {chartName && (
+                <FormattedMessage
+                  {...messages.labelWithName}
+                  values={{ name: chartName }}
+                />
+              )}
+              {!chartName && <FormattedMessage {...messages.label} />}
             </Heading>
             <Paragraph>
               <FormattedMessage {...messages.intro} />
@@ -114,7 +121,7 @@ export function LayerSettings({
                 <CloseIcon size="xlarge" color="dark" />
               </ButtonIcon>
             </ButtonWrap>
-            {layer.showScale && (
+            {showScale && (
               <SettingWrap>
                 <SettingsToggle
                   setting="scale"
@@ -129,7 +136,7 @@ export function LayerSettings({
                 <InfoScale size="xsmall" />
               </SettingWrap>
             )}
-            {layer.showBenchmark && (
+            {showBenchmark && (
               <SettingWrap>
                 <SettingsToggle
                   setting="benchmark"
@@ -141,7 +148,7 @@ export function LayerSettings({
                 <InfoBenchmark size="xsmall" hasKey />
               </SettingWrap>
             )}
-            {layer.showStandard && (
+            {showStandard && (
               <SettingWrap>
                 <SettingsToggle
                   setting="standard"

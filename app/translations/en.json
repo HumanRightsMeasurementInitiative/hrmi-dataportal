@@ -880,5 +880,8 @@
   "hrmi.components.Sections.footer.text": "Web site content © HRMI. Unless otherwise noted, all content is licensed under a Creative Commons Attribution 4.0 international licence.",
   "hrmi.containers.Search.search": "Search",
   "hrmi.containers.Search.exampleSearch": "e.g. try 'Fiji' or 'Housing'",
-  "hrmi.app.hrmi": "Human Rights Measurement Initiative"
+  "hrmi.app.hrmi": "Human Rights Measurement Initiative",
+  "hrmi.containers.LayerHowToRead.labelWithName": "How to read {name}",
+  "hrmi.containers.LayerSettings.label": "Switch view",
+  "hrmi.containers.LayerSettings.labelWithName": "Switch view for {name} chart"
 }

@@ -124,6 +124,17 @@ export function ChartContainerCountrySnapshot({
           messages.title,
           getMessageGrammar(intl, countryCode, null, countryGrammar),
         )}
+        tools={{
+          howToReadConfig: {
+            key: 'tab-snapshot',
+            chart: 'Bar',
+          },
+          settingsConfig: {
+            key: 'tab-snapshot',
+            showStandard: true,
+            showBenchmark: true,
+          },
+        }}
       />
       <NarrativeESRStandardHint
         country={country}
