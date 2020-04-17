@@ -149,9 +149,9 @@ const getScoreMsg = (
   if (aboutMetricDetails.type === 'cpr') {
     // prettier-ignore
     countryScoreMsg = score
-      ? intl.formatMessage(
-        messages.countryScoreExplainer.cpr,
-        ({
+      ? <FormattedMessage
+        {...messages.countryScoreExplainer.cpr}
+        values={{
           ...messageValues,
           score: formatScore(score),
           metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
@@ -164,8 +164,8 @@ const getScoreMsg = (
               {intl.formatMessage(messages.countryScoreExplainer.cprLink.anchor)}
             </ButtonText>
           ),
-        }),
-      )
+        }}
+      />
       : intl.formatMessage(
         messages.countryScoreExplainer.noData,
         messageValues,

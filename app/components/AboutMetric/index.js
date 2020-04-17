@@ -109,7 +109,7 @@ AboutMetric.propTypes = {
   showTitle: PropTypes.bool,
   standard: PropTypes.object,
   intl: intlShape.isRequired,
-  countryScoreMsg: PropTypes.node,
+  countryScoreMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 };
 
 export default injectIntl(AboutMetric);
