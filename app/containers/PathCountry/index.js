@@ -127,6 +127,7 @@ export function PathCountry({
   countryGrammar,
   closeLayers,
   benchmark,
+  theme,
 }) {
   const [aboutMetric, setAboutMetric] = useState(null);
 
@@ -235,12 +236,15 @@ export function PathCountry({
               onClose={() => setAboutMetric(null)}
             />
           )}
-          <Box style={{ position: 'relative' }} height="280px">
+          <Box
+            style={{ position: 'relative' }}
+            height={`${theme.sizes.top.height}px`}
+          >
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>
               <ContentMaxWidth
                 header
-                height="280px"
+                height={`${theme.sizes.top.height}px`}
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
