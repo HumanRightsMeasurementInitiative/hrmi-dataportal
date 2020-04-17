@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { groupBy, map } from 'lodash';
+import { groupBy, map } from 'lodash/collection';
 
 import {
   Heading,

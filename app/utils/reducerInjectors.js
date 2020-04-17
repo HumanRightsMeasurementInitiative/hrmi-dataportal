@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import { isEmpty, isFunction, isString } from 'lodash';
+import { isEmpty, isFunction, isString } from 'lodash/lang';
 
 import checkStore from './checkStore';
 import createReducer from '../reducers';
