@@ -1,17 +1,10 @@
-import { toLower as loCase } from 'lodash/string';
+import { toLower as loCase, deburr } from 'lodash/string';
 import { reduce } from 'lodash/collection';
 
 export const lowerCase = str => loCase(str);
 export const upperCaseFirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
-export const cleanupSearchTarget = str =>
-  loCase(str)
-    .replace(/[’]/, "'")
-    .replace(/[ā]/, 'a')
-    .replace(/[ē]/, 'e')
-    .replace(/[ī]/, 'i')
-    .replace(/[ō]/, 'o')
-    .replace(/[ū]/, 'u');
+export const cleanupSearchTarget = str => loCase(deburr(str));
 
 // match multiple words, incl substrings
 export const regExMultipleWords = str =>
