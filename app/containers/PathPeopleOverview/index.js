@@ -67,7 +67,7 @@ export function PathPeopleOverview({
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header
-              height="280px"
+              height={`${theme.sizes.top.height}px`}
               hasAside={isMinSize(size, 'large')}
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>

@@ -71,6 +71,7 @@ export function PathPeople({
   // countries,
   dataReady,
   onSelectCountry,
+  theme,
 }) {
   // const layerRef = useRef();
   useInjectSaga({ key: 'app', saga });
@@ -94,12 +95,15 @@ export function PathPeople({
             <title>{groupTitle}</title>
             <meta name="description" content="Description of Country page" />
           </Helmet>
-          <Box style={{ position: 'relative' }} height="280px">
+          <Box
+            style={{ position: 'relative' }}
+            height={`${theme.sizes.top.height}px`}
+          >
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>
               <ContentMaxWidth
                 header
-                height="280px"
+                height={`${theme.sizes.top.height}px`}
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>

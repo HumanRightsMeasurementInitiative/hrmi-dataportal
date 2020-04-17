@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 import { ResponsiveContext, Paragraph } from 'grommet';
 
@@ -41,7 +41,12 @@ const Image = styled.img`
   max-width: 200px;
 `;
 
-export function PathMetricOverview({ onSelectMetric, navMethodology, intl }) {
+export function PathMetricOverview({
+  onSelectMetric,
+  navMethodology,
+  intl,
+  theme,
+}) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -49,7 +54,7 @@ export function PathMetricOverview({ onSelectMetric, navMethodology, intl }) {
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header
-              height="280px"
+              height={`${theme.sizes.top.height}px`}
               hasAside={isMinSize(size, 'large')}
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>
@@ -143,6 +148,7 @@ PathMetricOverview.propTypes = {
   onSelectMetric: PropTypes.func,
   navMethodology: PropTypes.func,
   intl: intlShape.isRequired,
+  theme: PropTypes.object,
 };
 
 export function mapDispatchToProps(dispatch) {
@@ -168,4 +174,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(PathMetricOverview));
+export default compose(withConnect)(injectIntl(withTheme(PathMetricOverview)));
