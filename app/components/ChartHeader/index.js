@@ -62,14 +62,18 @@ export function ChartHeader({
             {tools && (
               <ChartToolWrapper>
                 <ChartTools
-                  howToReadConfig={{
-                    chartName: includeChartName && chartName,
-                    ...tools.howToReadConfig,
-                  }}
-                  settingsConfig={{
-                    chartName: includeChartName && chartName,
-                    ...tools.settingsConfig,
-                  }}
+                  howToReadConfig={
+                    tools.howToReadConfig && {
+                      chartName: includeChartName && chartName,
+                      ...tools.howToReadConfig,
+                    }
+                  }
+                  settingsConfig={
+                    tools.settingsConfig && {
+                      chartName: includeChartName && chartName,
+                      ...tools.settingsConfig,
+                    }
+                  }
                 />
               </ChartToolWrapper>
             )}

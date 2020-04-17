@@ -239,10 +239,11 @@ export function ChartContainerMetric({
             chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
             data: metric.color,
           },
-          settingsConfig: metric.type === 'esr' && {
+          settingsConfig: (metric.type === 'esr' ||
+            metric.metricType === 'indicators') && {
             key: 'metric',
-            showStandard: true,
-            showBenchmark: metric.metricType !== 'indicators',
+            showStandard: metric.metricType !== 'indicators',
+            showBenchmark: true,
           },
         }}
         messageValues={{ no: scores.length }}
