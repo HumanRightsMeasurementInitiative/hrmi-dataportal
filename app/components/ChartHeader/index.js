@@ -8,7 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Heading, ResponsiveContext, Box } from 'grommet';
 import styled from 'styled-components';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
+
+import ChartTools from 'containers/ChartTools';
+
 import ChartSettingFilters from 'components/ChartSettingFilters';
 import ChartSettingSort from 'components/ChartSettingSort';
 
@@ -20,22 +23,56 @@ const Styled = styled.div`
   margin-top: 60px;
   margin-bottom: 20px;
 `;
-const Top = styled.div``;
+const Top = styled.div`
+  position: relative;
+`;
 
-export function ChartHeader({ title, chartId, filter, sort, messageValues }) {
+const ChartToolWrapper = styled.div`
+  position: absolute;
+  top: 4px;
+  right: 0px;
+  text-align: right;
+`;
+// @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+//   /* position: absolute;
+//   right: ${({ theme }) => theme.global.edgeSize.medium};
+//   top: 0; */
+// }
+
+export function ChartHeader({
+  title,
+  chartId,
+  filter,
+  sort,
+  messageValues,
+  tools,
+  intl,
+  includeChartName,
+}) {
+  const chartName =
+    title || intl.formatMessage(messages[chartId], messageValues);
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Styled>
           <Top>
             <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
-              {title || (
-                <FormattedMessage
-                  {...messages[chartId]}
-                  values={messageValues}
-                />
-              )}
+              {chartName}
             </Heading>
+            {tools && (
+              <ChartToolWrapper>
+                <ChartTools
+                  howToReadConfig={{
+                    chartName: includeChartName && chartName,
+                    ...tools.howToReadConfig,
+                  }}
+                  settingsConfig={{
+                    chartName: includeChartName && chartName,
+                    ...tools.settingsConfig,
+                  }}
+                />
+              </ChartToolWrapper>
+            )}
           </Top>
           {(filter || sort) && (
             <Box
@@ -84,6 +121,9 @@ ChartHeader.propTypes = {
   filter: PropTypes.object,
   sort: PropTypes.object,
   messageValues: PropTypes.object,
+  tools: PropTypes.object,
+  includeChartName: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
-export default ChartHeader;
+export default injectIntl(ChartHeader);

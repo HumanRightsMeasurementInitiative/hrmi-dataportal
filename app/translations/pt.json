@@ -879,5 +879,8 @@
   "hrmi.components.Sections.about.text": "Our goal is to measure country performance of every human right in international law. We have begun with a collection of civil and political rights (Empowerment and Safety from the State rights), and a collection of economic and social rights (Quality of Life rights), each measured by a different method. ",
   "hrmi.components.Sections.footer.text": "Web site content © HRMI. Unless otherwise noted, all content is licensed under a Creative Commons Attribution 4.0 international licence.",
   "hrmi.containers.Search.search": "Encontrar",
-  "hrmi.app.hrmi": "Human Rights Measurement Initiative"
+  "hrmi.app.hrmi": "Human Rights Measurement Initiative",
+  "hrmi.containers.LayerHowToRead.labelWithName": "Como ler el gráfico {name}",
+  "hrmi.containers.LayerSettings.label": "Mudar de vista",
+  "hrmi.containers.LayerSettings.labelWithName": "Mudar de vista: {name}"
 }

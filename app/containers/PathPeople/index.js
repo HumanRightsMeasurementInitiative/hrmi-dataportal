@@ -37,6 +37,9 @@ import {
 } from 'containers/App/actions';
 import { PATHS, IMAGE_PATH, COLUMNS, REGIONS } from 'containers/App/constants';
 
+import saga from 'containers/App/saga';
+import { useInjectSaga } from 'utils/injectSaga';
+
 import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
 import Aside from 'components/Aside';
@@ -74,8 +77,7 @@ export function PathPeople({
   onSelectCountry,
   theme,
 }) {
-  // const layerRef = useRef();
-
+  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     // kick off loading of data
     onLoadData();

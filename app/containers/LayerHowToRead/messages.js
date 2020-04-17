@@ -13,6 +13,10 @@ export default defineMessages({
     id: `${scope}.label`,
     defaultMessage: 'How to read this chart',
   },
+  labelWithName: {
+    id: `${scope}.labelWithName`,
+    defaultMessage: 'How to read the {name} chart',
+  },
   labelMobile: {
     id: `${scope}.labelMobile`,
     defaultMessage: 'How to read',

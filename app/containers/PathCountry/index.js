@@ -47,6 +47,9 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 
+import saga from 'containers/App/saga';
+import { useInjectSaga } from 'utils/injectSaga';
+
 import TabContainer from 'containers/TabContainer';
 import AboutCountryContainer from 'containers/AboutCountryContainer';
 import AboutMetricContainer from 'containers/AboutMetricContainer';
@@ -129,6 +132,7 @@ export function PathCountry({
   benchmark,
   theme,
 }) {
+  useInjectSaga({ key: 'app', saga });
   const [aboutMetric, setAboutMetric] = useState(null);
 
   // const layerRef = useRef();
@@ -301,17 +305,6 @@ export function PathCountry({
                     messageValues={messageValues}
                   />
                 ),
-                tools: {
-                  howToReadConfig: {
-                    key: 'tab-snapshot',
-                    charts: ['Bar'],
-                  },
-                  settingsConfig: {
-                    key: 'tab-snapshot',
-                    showStandard: true,
-                    showBenchmark: true,
-                  },
-                },
               },
               {
                 key: 'report-esr',
@@ -335,17 +328,6 @@ export function PathCountry({
                     messageValues={messageValues}
                   />
                 ),
-                tools: {
-                  howToReadConfig: {
-                    key: 'country-dimension-esr',
-                    charts: ['Bar'],
-                  },
-                  settingsConfig: {
-                    key: 'country-dimension-esr',
-                    showStandard: true,
-                    showBenchmark: true,
-                  },
-                },
               },
               {
                 key: 'report-physint',
@@ -366,13 +348,6 @@ export function PathCountry({
                     messageValues={messageValues}
                   />
                 ),
-                tools: {
-                  howToReadConfig: {
-                    key: 'country-dimension-physint',
-                    charts: ['Bullet'],
-                    dimension: 'physint',
-                  },
-                },
               },
               {
                 key: 'report-empowerment',
@@ -393,21 +368,10 @@ export function PathCountry({
                     messageValues={messageValues}
                   />
                 ),
-                tools: {
-                  howToReadConfig: {
-                    key: 'country-dimension-empowerment',
-                    charts: ['Bullet'],
-                    dimension: 'empowerment',
-                  },
-                },
               },
               {
                 key: 'atrisk',
                 title: intl.formatMessage(rootMessages.tabs['people-at-risk']),
-                // howToRead: {
-                //   chart: 'ChartWordCloud',
-                //   data: 'atRisk',
-                // },
                 content: props =>
                   hasCPR(dimensions) && (
                     <TabCountryPeople
