@@ -11,6 +11,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { groupBy, map } from 'lodash';
 
 import {
   Heading,
@@ -34,7 +35,7 @@ import {
   navigate,
   selectCountry,
 } from 'containers/App/actions';
-import { PATHS, IMAGE_PATH } from 'containers/App/constants';
+import { PATHS, IMAGE_PATH, COLUMNS, REGIONS } from 'containers/App/constants';
 import saga from 'containers/App/saga';
 
 import Breadcrumb from 'components/Breadcrumb';
@@ -51,6 +52,8 @@ import ButtonText from 'styled/ButtonText';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { isMinSize } from 'utils/responsive';
+import quasiEquals from 'utils/quasi-equals';
+import { sortCountriesByName } from 'utils/scores';
 
 import messages from './messages';
 
@@ -67,8 +70,8 @@ export function PathPeople({
   onLoadData,
   nav,
   match,
-  atRisk,
-  // countries,
+  atRiskCountryCodes,
+  countries,
   dataReady,
   onSelectCountry,
   theme,
@@ -87,86 +90,141 @@ export function PathPeople({
   } else {
     console.log('People code not in language files:', peopleCode);
   }
+  const groupedCountries =
+    dataReady &&
+    groupBy(
+      atRiskCountryCodes
+        .map(countryCode => {
+          const country = countries.find(c =>
+            quasiEquals(c[COLUMNS.COUNTRIES.CODE], countryCode),
+          );
+          return country;
+        })
+        .sort((a, b) =>
+          REGIONS.values.indexOf(a[COLUMNS.COUNTRIES.REGION]) >
+          REGIONS.values.indexOf(b[COLUMNS.COUNTRIES.REGION])
+            ? 1
+            : -1,
+        ),
+      c => c[COLUMNS.COUNTRIES.REGION],
+    );
   return (
     <ResponsiveContext.Consumer>
-      {size => (
-        <ContentWrap>
-          <Helmet>
-            <title>{groupTitle}</title>
-            <meta name="description" content="Description of Country page" />
-          </Helmet>
-          <Box
-            style={{ position: 'relative' }}
-            height={`${theme.sizes.top.height}px`}
-          >
-            {isMinSize(size, 'large') && <AsideBackground />}
-            <ContentContainer direction="column" header>
-              <ContentMaxWidth
-                header
-                height={`${theme.sizes.top.height}px`}
-                hasAside={isMinSize(size, 'large')}
-              >
-                <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
-                  <Breadcrumb
-                    onItemClick={() => nav(PATHS.GROUPS)}
-                    breadcrumb
-                    items={[
-                      {
-                        key: 'all',
-                        label: intl.formatMessage(
-                          rootMessages.labels.allPeople,
-                        ),
-                      },
-                    ]}
-                  />
-                  <PageTitle>{groupTitle}</PageTitle>
-                  <Paragraph>
-                    <FormattedMessage {...messages.header} />
-                  </Paragraph>
-                  <Paragraph>
-                    <FormattedMessage {...messages.link} />
-                  </Paragraph>
-                </MainColumn>
-                {isMinSize(size, 'large') && (
-                  <Aside image>
-                    <GImage
-                      src={`${IMAGE_PATH}/${peopleCode}.jpg`}
-                      fit="cover"
+      {size => {
+        let basis = '1';
+        let direction = 'column';
+        if (isMinSize(size, 'medium')) {
+          basis = '1/2';
+          direction = 'row';
+        }
+        if (isMinSize(size, 'large')) {
+          basis = '1/3';
+        }
+        return (
+          <ContentWrap>
+            <Helmet>
+              <title>{groupTitle}</title>
+              <meta name="description" content="Description of Country page" />
+            </Helmet>
+            <Box
+              style={{ position: 'relative' }}
+              height={`${theme.sizes.top.height}px`}
+            >
+              {isMinSize(size, 'large') && <AsideBackground />}
+              <ContentContainer direction="column" header>
+                <ContentMaxWidth
+                  header
+                  height={`${theme.sizes.top.height}px`}
+                  hasAside={isMinSize(size, 'large')}
+                >
+                  <MainColumn
+                    hasAside={isMinSize(size, 'large')}
+                    header
+                    hasLinks
+                  >
+                    <Breadcrumb
+                      onItemClick={() => nav(PATHS.GROUPS)}
+                      breadcrumb
+                      items={[
+                        {
+                          key: 'all',
+                          label: intl.formatMessage(
+                            rootMessages.labels.allPeople,
+                          ),
+                        },
+                      ]}
                     />
-                  </Aside>
-                )}
+                    <PageTitle>{groupTitle}</PageTitle>
+                    <Paragraph>
+                      <FormattedMessage {...messages.header} />
+                    </Paragraph>
+                    <Paragraph>
+                      <FormattedMessage {...messages.link} />
+                    </Paragraph>
+                  </MainColumn>
+                  {isMinSize(size, 'large') && (
+                    <Aside image>
+                      <GImage
+                        src={`${IMAGE_PATH}/${peopleCode}.jpg`}
+                        fit="cover"
+                      />
+                    </Aside>
+                  )}
+                </ContentMaxWidth>
+              </ContentContainer>
+            </Box>
+            <SectionContainer>
+              <ContentMaxWidth column>
+                <Styled>
+                  <Top>
+                    <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
+                      <FormattedMessage
+                        {...messages.availability}
+                        values={{
+                          no: dataReady ? atRiskCountryCodes.length : 0,
+                        }}
+                      />
+                    </Heading>
+                  </Top>
+                  {dataReady && (
+                    <Box wrap direction={direction}>
+                      {map(groupedCountries, (groupCountries, regionCode) => (
+                        <Box basis={basis} margin={{ vertical: 'medium' }}>
+                          <FormattedMessage
+                            {...rootMessages.regions[regionCode]}
+                          />
+                          <Box>
+                            {groupCountries
+                              .sort((a, b) =>
+                                sortCountriesByName(a, b, 'asc', intl),
+                              )
+                              .map(c => {
+                                const code = c[COLUMNS.COUNTRIES.CODE];
+                                return (
+                                  <ButtonText
+                                    onClick={() =>
+                                      onSelectCountry(code, peopleCode)
+                                    }
+                                  >
+                                    {rootMessages.countries[code] && (
+                                      <FormattedMessage
+                                        {...rootMessages.countries[code]}
+                                      />
+                                    )}
+                                  </ButtonText>
+                                );
+                              })}
+                          </Box>
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
+                </Styled>
               </ContentMaxWidth>
-            </ContentContainer>
-          </Box>
-          <SectionContainer>
-            <ContentMaxWidth column>
-              <Styled>
-                <Top>
-                  <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
-                    <FormattedMessage
-                      {...messages.availability}
-                      values={{ no: dataReady ? atRisk.length : 0 }}
-                    />
-                  </Heading>
-                </Top>
-                {dataReady && (
-                  <Box>
-                    {atRisk.map(c => (
-                      <ButtonText
-                        onClick={() => onSelectCountry(c, peopleCode)}
-                      >
-                        {rootMessages.countries[c] && (
-                          <FormattedMessage {...rootMessages.countries[c]} />
-                        )}
-                      </ButtonText>
-                    ))}
-                  </Box>
-                )}
-              </Styled>
-            </ContentMaxWidth>
-          </SectionContainer>
-        </ContentWrap>
-      )}
+            </SectionContainer>
+          </ContentWrap>
+        );
+      }}
     </ResponsiveContext.Consumer>
   );
 }
@@ -178,7 +236,7 @@ PathPeople.propTypes = {
   nav: PropTypes.func,
   onSelectCountry: PropTypes.func,
   match: PropTypes.object,
-  atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  atRiskCountryCodes: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   dataReady: PropTypes.bool,
   theme: PropTypes.object,
@@ -186,7 +244,8 @@ PathPeople.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  atRisk: (state, { match }) => getPeopleAtRiskForGroup(state, match.params),
+  atRiskCountryCodes: (state, { match }) =>
+    getPeopleAtRiskForGroup(state, match.params),
   countries: state => getCountries(state),
 });
 
