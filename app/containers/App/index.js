@@ -34,8 +34,6 @@ import rootMessages from 'messages';
 
 import { getHeaderHeight } from 'utils/responsive';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import saga from './saga';
 import { PATHS } from './constants';
 import ScrollToTop from './ScrollToTop';
 
@@ -69,7 +67,6 @@ const Main = styled.main`
  */
 
 export function App({ match, intl }) {
-  useInjectSaga({ key: 'app', saga });
   const locale = match.params ? match.params.locale : DEFAULT_LOCALE;
   const title = intl.formatMessage(rootMessages.app.metaTitle);
   const description = intl.formatMessage(rootMessages.app.metaDescription);
