@@ -30,7 +30,7 @@ import LocaleToggle from 'containers/LocaleToggle';
 import { getRouterMatch, getRouterRoute } from 'containers/App/selectors';
 import { PAGES, PATHS } from 'containers/App/constants';
 import { navigate, loadDataIfNeeded } from 'containers/App/actions';
-import saga from 'containers/App/saga';
+
 import Search from 'containers/Search';
 import NavCountry from 'containers/Search/NavCountry';
 import NavMetric from 'containers/Search/NavMetric';
@@ -39,7 +39,6 @@ import NavGroups from 'containers/Search/NavGroups';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import {
   getHeaderHeight,
   getHeaderHeightTop,
@@ -250,8 +249,6 @@ const renderPages = (match, nav, setShowMenu) =>
 const DEPENDENCIES = ['countries'];
 
 export function Header({ nav, onLoadData, match, path, theme, intl }) {
-  useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of page content
     onLoadData();

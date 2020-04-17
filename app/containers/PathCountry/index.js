@@ -46,7 +46,7 @@ import {
   BENCHMARKS,
   COLUMNS,
 } from 'containers/App/constants';
-import saga from 'containers/App/saga';
+
 import TabContainer from 'containers/TabContainer';
 import AboutCountryContainer from 'containers/AboutCountryContainer';
 import AboutMetricContainer from 'containers/AboutMetricContainer';
@@ -69,7 +69,7 @@ import ButtonText from 'styled/ButtonText';
 import getMetricDetails from 'utils/metric-details';
 // import quasiEquals from 'utils/quasi-equals';
 import { hasCPR, formatScore } from 'utils/scores';
-import { useInjectSaga } from 'utils/injectSaga';
+
 import { isMinSize } from 'utils/responsive';
 import { getMessageGrammar } from 'utils/narrative';
 //
@@ -132,7 +132,6 @@ export function PathCountry({
   const [aboutMetric, setAboutMetric] = useState(null);
 
   // const layerRef = useRef();
-  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     // kick off loading of data
     onLoadData();

@@ -27,7 +27,6 @@ import {
   COUNTRY_FILTERS,
   AT_RISK_GROUPS,
 } from 'containers/App/constants';
-import saga from 'containers/App/saga';
 
 import SectionRights from 'components/Sections/SectionRights';
 import SectionIntro from 'components/Sections/SectionIntro';
@@ -42,8 +41,6 @@ import SectionFooter from 'components/Sections/SectionFooter';
 // styles
 import ContentWrap from 'styled/ContentWrap';
 
-import { useInjectSaga } from 'utils/injectSaga';
-
 const DEPENDENCIES = ['countries', 'featured', 'atRisk'];
 
 export function PathHome({
@@ -56,8 +53,6 @@ export function PathHome({
   onSelectCountryCategory,
   locale,
 }) {
-  useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of data
     onLoadData();

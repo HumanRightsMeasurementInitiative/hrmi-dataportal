@@ -19,7 +19,6 @@ import {
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectGroup } from 'containers/App/actions';
 import { AT_RISK_GROUPS, IMAGE_PATH } from 'containers/App/constants';
-import saga from 'containers/App/saga';
 
 import Aside from 'components/Aside';
 import Card from 'components/Sections/Card';
@@ -32,7 +31,6 @@ import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import graphic from 'images/graphics/countries_overview.svg';
@@ -54,8 +52,6 @@ export function PathPeopleOverview({
   intl,
   onSelectGroup,
 }) {
-  useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of data
     onLoadData();
