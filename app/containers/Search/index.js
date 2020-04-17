@@ -16,8 +16,6 @@ import { Close, Search as SearchIcon } from 'grommet-icons';
 
 import { navigate, trackEvent } from 'containers/App/actions';
 // import { isMinSize, isMaxSize } from 'utils/responsive';
-import { useInjectSaga } from 'utils/injectSaga';
-import saga from 'containers/App/saga';
 
 import messages from './messages';
 import SearchResults from './SearchResults';
@@ -43,7 +41,6 @@ export function Search({
   placeholder,
   example,
 }) {
-  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     if (expand && textInputRef) {
       textInputRef.current.focus();

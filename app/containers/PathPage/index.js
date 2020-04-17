@@ -24,9 +24,6 @@ import ContentContainer from 'styled/ContentContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import saga from 'containers/App/saga';
-
 import rootMessages from 'messages';
 
 const StyledContent = styled.div`
@@ -41,8 +38,6 @@ const StyledContent = styled.div`
 `;
 
 export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
-  useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of page content
     onLoadContent(match.params.page);

@@ -34,12 +34,10 @@ import {
   setRaw,
   toggleGroup,
 } from 'containers/App/actions';
-import saga from 'containers/App/saga';
 
 import ChartCountryMetricTrend from 'components/ChartCountryMetricTrend';
 
 import getMetricDetails from 'utils/metric-details';
-import { useInjectSaga } from 'utils/injectSaga';
 
 const getColour = metric => {
   if (metric.metricType === 'dimensions') {
@@ -121,7 +119,6 @@ export function ChartContainerTrend({
   activeGroups,
   metricInfo,
 }) {
-  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     onLoadData();
   }, []);

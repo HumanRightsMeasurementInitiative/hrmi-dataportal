@@ -28,7 +28,6 @@ import {
   getReferenceScores,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
-import saga from 'containers/App/saga';
 
 import ChartHeader from 'components/ChartHeader';
 import LoadingIndicator from 'components/LoadingIndicator';
@@ -42,7 +41,6 @@ import Source from 'components/Source';
 
 import ButtonText from 'styled/ButtonText';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import { getRightsScoresForDimension } from 'utils/scores';
 
 import { getMessageGrammar } from 'utils/narrative';
@@ -92,7 +90,6 @@ export function ChartContainerCountrySnapshot({
   goToTab,
   onMetricClick,
 }) {
-  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     onLoadData();
   }, []);

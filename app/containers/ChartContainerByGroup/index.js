@@ -22,12 +22,10 @@ import {
   getBenchmarkSearch,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, setRaw } from 'containers/App/actions';
-import saga from 'containers/App/saga';
 
 import ChartCountryMetricByGroup from 'components/ChartCountryMetricByGroup';
 
 import getMetricDetails from 'utils/metric-details';
-import { useInjectSaga } from 'utils/injectSaga';
 
 const getColour = metric => {
   if (metric.metricType === 'dimensions') {
@@ -58,7 +56,6 @@ export function ChartContainerByGroup({
   currentYear,
   benchmark,
 }) {
-  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     onLoadData();
   }, []);

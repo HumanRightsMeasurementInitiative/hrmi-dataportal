@@ -18,8 +18,6 @@ import { STANDARDS, INDICATORS } from 'containers/App/constants';
 
 import { getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
-import { useInjectSaga } from 'utils/injectSaga';
-import saga from 'containers/App/saga';
 
 import UL from 'styled/UL';
 import ButtonText from 'styled/ButtonText';
@@ -62,8 +60,6 @@ export function AboutMetricSources({
   // standard,
   intl,
 }) {
-  useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of data
     onLoadData(metric);

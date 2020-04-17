@@ -18,7 +18,7 @@ import { FormNext, FormPrevious } from 'grommet-icons';
 import { STANDARDS, RIGHTS, INDICATORS, FAQS } from 'containers/App/constants';
 import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
-import saga from 'containers/App/saga';
+
 import AboutMetricSources from 'containers/AboutMetricSources';
 import FAQs from 'containers/FAQs';
 
@@ -26,7 +26,6 @@ import AboutMetric from 'components/AboutMetric';
 import Button from 'styled/Button';
 import ButtonHighlight from 'styled/ButtonHighlight';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -85,8 +84,6 @@ export function AboutMetricContainer({
   showSources,
   countryScoreMsg,
 }) {
-  useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of data
     onLoadData(metric);
