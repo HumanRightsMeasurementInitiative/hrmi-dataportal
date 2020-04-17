@@ -72,7 +72,24 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => <ChartHeader chartId="indicators" {...props} />}
+              header={props => (
+                <ChartHeader
+                  chartId="indicators"
+                  includeChartName
+                  tools={{
+                    howToReadConfig: {
+                      key: 'country-dimension-esr',
+                      chart: 'Bar',
+                    },
+                    settingsConfig: {
+                      key: 'country-dimension-esr',
+                      showStandard: true,
+                      showBenchmark: true,
+                    },
+                  }}
+                  {...props}
+                />
+              )}
               countryMessageValues={messageValues}
               chartId="indicators"
             />
@@ -113,7 +130,24 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => <ChartHeader chartId="sex" {...props} />}
+              header={props => (
+                <ChartHeader
+                  chartId="sex"
+                  includeChartName
+                  tools={{
+                    howToReadConfig: {
+                      key: 'country-dimension-esr',
+                      chart: 'Bar',
+                    },
+                    settingsConfig: {
+                      key: 'country-dimension-esr',
+                      showStandard: true,
+                      showBenchmark: true,
+                    },
+                  }}
+                  {...props}
+                />
+              )}
               countryMessageValues={messageValues}
               chartId="sex"
             />
@@ -162,7 +196,20 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => <ChartHeader chartId="trend" {...props} />}
+              header={props => (
+                <ChartHeader
+                  chartId="trend"
+                  includeChartName
+                  tools={{
+                    settingsConfig: {
+                      key: 'country-dimension-esr',
+                      showStandard: true,
+                      showBenchmark: true,
+                    },
+                  }}
+                  {...props}
+                />
+              )}
               countryMessageValues={messageValues}
               chartId="trend"
             />
@@ -184,7 +231,9 @@ function TabCountryReport({
                   {...props}
                 />
               )}
-              header={props => <ChartHeader chartId="people" {...props} />}
+              header={props => (
+                <ChartHeader chartId="people" includeChartName {...props} />
+              )}
               countryMessageValues={messageValues}
               chartId="people"
             />
@@ -230,7 +279,9 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
-                  header={props => <ChartHeader chartId="trend" {...props} />}
+                  header={props => (
+                    <ChartHeader chartId="trend" includeChartName {...props} />
+                  )}
                   countryMessageValues={messageValues}
                   chartId="trend"
                 />
@@ -252,7 +303,9 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
-                  header={props => <ChartHeader chartId="people" {...props} />}
+                  header={props => (
+                    <ChartHeader chartId="people" includeChartName {...props} />
+                  )}
                   countryMessageValues={messageValues}
                   chartId="people"
                 />
@@ -300,7 +353,9 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
-                  header={props => <ChartHeader chartId="trend" {...props} />}
+                  header={props => (
+                    <ChartHeader chartId="trend" includeChartName {...props} />
+                  )}
                   countryMessageValues={messageValues}
                   chartId="trend"
                 />
@@ -322,7 +377,9 @@ function TabCountryReport({
                       {...props}
                     />
                   )}
-                  header={props => <ChartHeader chartId="people" {...props} />}
+                  header={props => (
+                    <ChartHeader chartId="people" includeChartName {...props} />
+                  )}
                   countryMessageValues={messageValues}
                   chartId="people"
                 />

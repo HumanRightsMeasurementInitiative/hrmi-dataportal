@@ -5,6 +5,14 @@ export const scope = 'hrmi.containers.LayerSettings';
 export default defineMessages({
   intro: {
     id: `${scope}.intro`,
-    defaultMessage: 'TODO: An optional introduction',
+    defaultMessage: 'Switch view',
+  },
+  label: {
+    id: `${scope}.label`,
+    defaultMessage: 'Switch view',
+  },
+  labelWithName: {
+    id: `${scope}.labelWithName`,
+    defaultMessage: 'Switch view for {name}',
   },
 });

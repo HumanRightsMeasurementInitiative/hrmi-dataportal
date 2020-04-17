@@ -68,6 +68,7 @@ export function ChartTools({
                   : null
               }
               gap="xsmall"
+              reverse
             />
           )}
           {settingsConfig && (
@@ -86,6 +87,7 @@ export function ChartTools({
                   : null
               }
               gap="xsmall"
+              reverse
             />
           )}
         </Styled>

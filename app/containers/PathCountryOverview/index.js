@@ -28,6 +28,9 @@ import {
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 
+import saga from 'containers/App/saga';
+import { useInjectSaga } from 'utils/injectSaga';
+
 import OverviewCountries from 'containers/OverviewCountries';
 import TabContainer from 'containers/TabContainer';
 
@@ -80,6 +83,7 @@ export function PathCountryOverview({
   onSelectMetric,
   theme,
 }) {
+  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     // kick off loading of data
     onLoadData();
@@ -174,20 +178,6 @@ export function PathCountryOverview({
                     {...props}
                   />
                 ),
-                tools: {
-                  align: 'end',
-                  howToReadConfig: {
-                    key: 'tab-countries',
-                    charts: ['Diamonds'],
-                    type: scale,
-                  },
-                  settingsConfig: {
-                    key: 'tab-countries',
-                    showStandard: true,
-                    showBenchmark: true,
-                    showScale: true,
-                  },
-                },
               },
             ]}
           />

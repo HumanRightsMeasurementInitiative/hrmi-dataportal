@@ -187,7 +187,7 @@ export function PathMetric({
                 tools: {
                   howToReadConfig: {
                     contxt: 'metrics',
-                    charts: [metric.type === 'cpr' ? 'Bullet' : 'Bar'],
+                    chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
                     dimension: metric.color,
                   },
                   settingsConfig: (metric.type === 'esr' ||

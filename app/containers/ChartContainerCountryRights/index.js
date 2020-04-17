@@ -313,6 +313,13 @@ export function ChartContainerCountryRights({
                     rootMessages.dimensions[dimensionCode],
                   ),
                 }}
+                tools={{
+                  howToReadConfig: {
+                    key: 'country-dimension-cpr',
+                    chart: 'Bullet',
+                    dimension: dimensionCode,
+                  },
+                }}
               />
               <Text>
                 <FormattedMessage

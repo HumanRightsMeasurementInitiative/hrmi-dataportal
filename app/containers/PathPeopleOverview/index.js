@@ -20,6 +20,9 @@ import {
 import { loadDataIfNeeded, selectGroup } from 'containers/App/actions';
 import { AT_RISK_GROUPS, IMAGE_PATH } from 'containers/App/constants';
 
+import saga from 'containers/App/saga';
+import { useInjectSaga } from 'utils/injectSaga';
+
 import Aside from 'components/Aside';
 import Card from 'components/Sections/Card';
 
@@ -52,6 +55,7 @@ export function PathPeopleOverview({
   intl,
   onSelectGroup,
 }) {
+  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     // kick off loading of data
     onLoadData();

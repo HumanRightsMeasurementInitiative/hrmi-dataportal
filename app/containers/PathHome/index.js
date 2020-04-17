@@ -28,6 +28,9 @@ import {
   AT_RISK_GROUPS,
 } from 'containers/App/constants';
 
+import saga from 'containers/App/saga';
+import { useInjectSaga } from 'utils/injectSaga';
+
 import SectionRights from 'components/Sections/SectionRights';
 import SectionIntro from 'components/Sections/SectionIntro';
 import SectionOurData from 'components/Sections/SectionOurData';
@@ -53,6 +56,7 @@ export function PathHome({
   onSelectCountryCategory,
   locale,
 }) {
+  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     // kick off loading of data
     onLoadData();
