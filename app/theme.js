@@ -24,6 +24,9 @@ export const SIZES = {
       brandWidth: 200,
     },
   },
+  top: {
+    height: 320,
+  },
   aside: {
     width: [0, 0, 360, 420, 420],
   },

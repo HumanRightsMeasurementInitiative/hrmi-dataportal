@@ -11,7 +11,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Paragraph, ResponsiveContext } from 'grommet';
-import styled from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 import { STANDARDS, RIGHTS } from 'containers/App/constants';
 
@@ -79,6 +79,7 @@ export function PathCountryOverview({
   scale,
   intl,
   onSelectMetric,
+  theme,
 }) {
   useInjectSaga({ key: 'app', saga });
 
@@ -104,7 +105,7 @@ export function PathCountryOverview({
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header
-              height="280px"
+              height={`${theme.sizes.top.height}px`}
               hasAside={isMinSize(size, 'large')}
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>
@@ -212,6 +213,7 @@ PathCountryOverview.propTypes = {
   featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   onSelectMetric: PropTypes.func,
   intl: intlShape.isRequired,
+  theme: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -239,4 +241,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(PathCountryOverview));
+export default compose(withConnect)(injectIntl(withTheme(PathCountryOverview)));

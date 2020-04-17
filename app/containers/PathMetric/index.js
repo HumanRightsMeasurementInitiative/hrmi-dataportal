@@ -12,6 +12,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
+import { withTheme } from 'styled-components';
 
 import { navigate, openHowToRead, openSettings } from 'containers/App/actions';
 import { getCloseTargetMetric } from 'containers/App/selectors';
@@ -45,7 +46,14 @@ const images = {
   esr: `${IMAGE_PATH}/Quality-of-LIfe-768x512.jpg`,
 };
 
-export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
+export function PathMetric({
+  match,
+  intl,
+  onMetricClick,
+  nav,
+  closeLayers,
+  theme,
+}) {
   const [aboutCountry, setAboutCountry] = useState(null);
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
@@ -108,7 +116,7 @@ export function PathMetric({ match, intl, onMetricClick, nav, closeLayers }) {
             <ContentContainer direction="column" header>
               <ContentMaxWidth
                 header
-                height="280px"
+                height={`${theme.sizes.top.height}px`}
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
@@ -219,6 +227,7 @@ PathMetric.propTypes = {
   onMetricClick: PropTypes.func,
   nav: PropTypes.func,
   match: PropTypes.object,
+  theme: PropTypes.object,
   closeLayers: PropTypes.func,
 };
 
@@ -268,4 +277,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(injectIntl(PathMetric));
+export default compose(withConnect)(injectIntl(withTheme(PathMetric)));
