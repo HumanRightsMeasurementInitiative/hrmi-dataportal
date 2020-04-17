@@ -122,18 +122,20 @@ export function PathMetricOverview({
                 })}`}
                 background={index % 2 === 0 ? `${d.key}Light` : 'white'}
                 description={
-                  <FormattedMessage
-                    {...messages.description[d.key]}
-                    values={{
-                      methodologyLink: (
-                        <ButtonText onClick={() => navMethodology()}>
-                          <FormattedMessage
-                            {...messages.description.methodologyLink[d.type]}
-                          />
-                        </ButtonText>
-                      ),
-                    }}
-                  />
+                  <span>
+                    <FormattedMessage
+                      {...messages.description[d.key]}
+                      values={{
+                        methodologyLink: (
+                          <ButtonText onClick={() => navMethodology()}>
+                            <FormattedMessage
+                              {...messages.description.methodologyLink[d.type]}
+                            />
+                          </ButtonText>
+                        ),
+                      }}
+                    />
+                  </span>
                 }
               />
             );

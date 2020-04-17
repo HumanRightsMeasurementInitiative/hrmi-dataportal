@@ -139,7 +139,7 @@ export function OverviewCountries({
                 key: 'tab-countries',
                 contxt: 'PathCountryOverview',
                 chart: 'Diamonds',
-                type: scale,
+                scale,
               },
               settingsConfig: {
                 key: 'tab-countries',

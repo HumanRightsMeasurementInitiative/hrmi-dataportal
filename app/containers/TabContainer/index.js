@@ -7,7 +7,7 @@ import { Box, Text } from 'grommet';
 import styled, { css, withTheme } from 'styled-components';
 
 import { getTabSearch } from 'containers/App/selectors';
-import { setTab, openHowToRead, openSettings } from 'containers/App/actions';
+import { setTab, setAsideLayer } from 'containers/App/actions';
 
 import Aside from 'components/Aside';
 import AsideBackground from 'components/AsideBackground';
@@ -178,8 +178,7 @@ const mapStateToProps = createStructuredSelector({
 export function mapDispatchToProps(dispatch) {
   return {
     onTabClick: key => {
-      dispatch(openHowToRead(null));
-      dispatch(openSettings(null));
+      dispatch(setAsideLayer(null));
       dispatch(setTab(key || '0'));
     },
   };

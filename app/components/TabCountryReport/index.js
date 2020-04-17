@@ -78,11 +78,11 @@ function TabCountryReport({
                   includeChartName
                   tools={{
                     howToReadConfig: {
-                      key: 'country-dimension-esr',
+                      key: 'country-indicators',
                       chart: 'Bar',
                     },
                     settingsConfig: {
-                      key: 'country-dimension-esr',
+                      key: 'country-indicators',
                       showStandard: true,
                       showBenchmark: true,
                     },
@@ -136,11 +136,11 @@ function TabCountryReport({
                   includeChartName
                   tools={{
                     howToReadConfig: {
-                      key: 'country-dimension-esr',
+                      key: 'country-sex',
                       chart: 'Bar',
                     },
                     settingsConfig: {
-                      key: 'country-dimension-esr',
+                      key: 'country-sex',
                       showStandard: true,
                       showBenchmark: true,
                     },
@@ -202,7 +202,7 @@ function TabCountryReport({
                   includeChartName
                   tools={{
                     settingsConfig: {
-                      key: 'country-dimension-esr',
+                      key: 'country-trend',
                       showStandard: true,
                       showBenchmark: true,
                     },

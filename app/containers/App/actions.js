@@ -23,8 +23,7 @@ import {
   SET_STANDARD,
   SET_BENCHMARK,
   SET_TAB,
-  OPEN_HOW_TO,
-  OPEN_SETTINGS,
+  ASIDE_LAYER,
   CHECK_COOKIECONSENT,
   COOKIECONSENT_CHECKED,
   SET_COOKIECONSENT,
@@ -217,15 +216,9 @@ export function navigate(location, args) {
     args,
   };
 }
-export function openHowToRead(args) {
+export function setAsideLayer(args) {
   return {
-    type: OPEN_HOW_TO,
-    layer: args,
-  };
-}
-export function openSettings(args) {
-  return {
-    type: OPEN_SETTINGS,
+    type: ASIDE_LAYER,
     layer: args,
   };
 }
