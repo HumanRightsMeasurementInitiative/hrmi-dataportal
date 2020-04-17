@@ -25,8 +25,6 @@ import {
 } from 'containers/App/selectors';
 
 import { loadContentIfNeeded, loadDataIfNeeded } from 'containers/App/actions';
-import { useInjectSaga } from 'utils/injectSaga';
-import saga from 'containers/App/saga';
 
 // const getColour = metric => {
 //   if (metric.metricType === 'dimensions') {
@@ -82,7 +80,6 @@ export function ChartContainerPeople({
   intl,
   hasAtRisk,
 }) {
-  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     onLoadData();
   }, []);

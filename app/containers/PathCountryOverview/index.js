@@ -27,7 +27,6 @@ import {
   getScaleSearch,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
-import saga from 'containers/App/saga';
 
 import OverviewCountries from 'containers/OverviewCountries';
 import TabContainer from 'containers/TabContainer';
@@ -43,7 +42,7 @@ import PageTitle from 'styled/PageTitle';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import { filterByAssessment } from 'utils/filters';
-import { useInjectSaga } from 'utils/injectSaga';
+
 import { isMinSize } from 'utils/responsive';
 
 import graphic from 'images/graphics/countries_overview.svg';
@@ -81,8 +80,6 @@ export function PathCountryOverview({
   onSelectMetric,
   theme,
 }) {
-  useInjectSaga({ key: 'app', saga });
-
   useEffect(() => {
     // kick off loading of data
     onLoadData();

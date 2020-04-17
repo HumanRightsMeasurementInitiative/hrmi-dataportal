@@ -26,11 +26,9 @@ import {
   getESRScoreForCountry,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
-import saga from 'containers/App/saga';
 
 import ChartBars from 'components/ChartBars';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import getMetricDetails from 'utils/metric-details';
 
 import rootMessages from 'messages';
@@ -101,7 +99,6 @@ export function ChartContainerCountryIndicators({
   intl,
   onMetricClick,
 }) {
-  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     onLoadData();
   }, []);

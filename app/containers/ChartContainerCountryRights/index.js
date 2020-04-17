@@ -34,7 +34,6 @@ import {
   getRightsForCountry,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
-import saga from 'containers/App/saga';
 
 import ChartHeader from 'components/ChartHeader';
 import ChartBars from 'components/ChartBars';
@@ -44,7 +43,6 @@ import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRSt
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import { getRightsScoresForDimension } from 'utils/scores';
 import getMetricDetails from 'utils/metric-details';
 import { getMessageGrammar } from 'utils/narrative';
@@ -149,7 +147,6 @@ export function ChartContainerCountryRights({
   intl,
   onMetricClick,
 }) {
-  useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     onLoadData();
   }, []);

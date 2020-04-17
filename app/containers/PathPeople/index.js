@@ -36,7 +36,6 @@ import {
   selectCountry,
 } from 'containers/App/actions';
 import { PATHS, IMAGE_PATH, COLUMNS, REGIONS } from 'containers/App/constants';
-import saga from 'containers/App/saga';
 
 import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
@@ -50,7 +49,6 @@ import ContentContainer from 'styled/ContentContainer';
 import MainColumn from 'styled/MainColumn';
 import ButtonText from 'styled/ButtonText';
 
-import { useInjectSaga } from 'utils/injectSaga';
 import { isMinSize } from 'utils/responsive';
 import quasiEquals from 'utils/quasi-equals';
 import { sortCountriesByName } from 'utils/scores';
@@ -77,7 +75,7 @@ export function PathPeople({
   theme,
 }) {
   // const layerRef = useRef();
-  useInjectSaga({ key: 'app', saga });
+
   useEffect(() => {
     // kick off loading of data
     onLoadData();
