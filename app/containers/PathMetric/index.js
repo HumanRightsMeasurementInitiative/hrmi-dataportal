@@ -184,19 +184,6 @@ export function PathMetric({
                     }}
                   />
                 ),
-                tools: {
-                  howToReadConfig: {
-                    contxt: 'metrics',
-                    chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
-                    dimension: metric.color,
-                  },
-                  settingsConfig: (metric.type === 'esr' ||
-                    metric.metricType === 'indicators') && {
-                    key: 'metric',
-                    showStandard: metric.metricType !== 'indicators',
-                    showBenchmark: true,
-                  },
-                },
               },
               {
                 aside: true,
