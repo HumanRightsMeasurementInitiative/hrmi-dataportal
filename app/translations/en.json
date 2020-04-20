@@ -211,7 +211,7 @@
   "hrmi.containers.LayerHowToRead.overview.dimensions.empowerment": "Summary score for the 3 Empowerment rights, mapped on a scale from 0 to 10. ",
   "hrmi.containers.LayerHowToRead.overview.dimensions.physint": "Summary score for the 5 Safety from the State rights, mapped on a scale from 0 to 10. ",
   "hrmi.containers.LayerHowToRead.overview.dimensions.esr": "Summary percentage score for our 5 Quality of Life rights. ",
-  "hrmi.containers.LayerHowToRead.overview.rights.intro": "Each chart shows the human rights performance of each country at a glance. Countries' scores are visualised for our 12 human rights, grouped and colour-coded in our 3 categories of rights: ",
+  "hrmi.containers.LayerHowToRead.overview.rights.intro": "Each chart shows the human rights performance of each country at a glance. Countries' scores are visualised for our 13 human rights, grouped and colour-coded in our 3 categories of rights: ",
   "hrmi.containers.LayerHowToRead.overview.rights.rightsListTitle": "Rights from top to bottom",
   "hrmi.containers.LayerHowToRead.overview.rights.empowerment": "3 Civil and Political Rights that strengthen democratic empowerment, scores mapped on a scale from 0 to 10. ",
   "hrmi.containers.LayerHowToRead.overview.rights.physint": "Scores for 5 Civil and Political Rights that foster citizens' physical integrity, mapped on a scale from 0 to 10. ",
