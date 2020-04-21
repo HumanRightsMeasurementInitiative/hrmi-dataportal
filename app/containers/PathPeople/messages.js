@@ -13,10 +13,6 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'header',
   },
-  link: {
-    id: `${scope}.link`,
-    defaultMessage: 'link',
-  },
   availability: {
     id: `${scope}.availability`,
     defaultMessage: 'availability',

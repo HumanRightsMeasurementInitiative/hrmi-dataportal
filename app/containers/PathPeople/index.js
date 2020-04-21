@@ -158,9 +158,6 @@ export function PathPeople({
                     <Paragraph>
                       <FormattedMessage {...messages.header} />
                     </Paragraph>
-                    <Paragraph>
-                      <FormattedMessage {...messages.link} />
-                    </Paragraph>
                   </MainColumn>
                   {isMinSize(size, 'large') && (
                     <Aside image>
