@@ -194,6 +194,7 @@ const theme = {
       metrics: '#7F59A6',
       people: '#BD5747',
       sectionDark: '#FFFAE8',
+      sectionCountries: '#f2fff8',
       graphicRed: '#EF4123',
       buttonPrimary: '#7F59A6',
       footer: '#423E86',

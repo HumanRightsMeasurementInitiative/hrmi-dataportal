@@ -460,7 +460,6 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                       <Search
                         expand={showSearch}
                         onToggle={() => setShowSearch(!showSearch)}
-                        dark
                       />
                     </SearchWrap>
                   )}
