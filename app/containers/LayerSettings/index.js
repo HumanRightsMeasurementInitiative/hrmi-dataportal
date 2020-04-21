@@ -26,7 +26,7 @@ import messages from './messages';
 import SettingsToggle from './SettingsToggle';
 import InfoBenchmark from './InfoBenchmark';
 import InfoStandard from './InfoStandard';
-import InfoScale from './InfoScale';
+// import InfoScale from './InfoScale';
 
 const SettingWrap = styled.div`
   margin-bottom: 30px;
@@ -69,7 +69,6 @@ export function LayerSettings({
             }))}
             horizontal
           />
-          <InfoScale size="xsmall" />
         </SettingWrap>
       )}
       {showBenchmark && (
