@@ -6,6 +6,21 @@ import {
 
 import rootMessages from 'messages';
 
+export const filterCountries = (countries, search, intl) => {
+  const regex = new RegExp(regExMultipleWords(search), 'i');
+  return (
+    countries &&
+    countries
+      .map(country => ({
+        code: country.country_code,
+        label: rootMessages.countries[country.country_code]
+          ? intl.formatMessage(rootMessages.countries[country.country_code])
+          : country.country_code,
+        ...country,
+      }))
+      .filter(country => filterCountry(country, search, regex))
+  );
+};
 export const prepCountries = (countries, search, intl) => {
   const regex = new RegExp(regExMultipleWords(search), 'i');
   return (
