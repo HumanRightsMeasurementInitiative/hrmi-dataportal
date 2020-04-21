@@ -96,7 +96,7 @@ export function AboutMetricContainer({
 
   const standard =
     metricType === 'indicators'
-      ? STANDARDS.find(s => metricInfo.standard === s.code)
+      ? STANDARDS.find(s => metric.standard === s.code)
       : null;
 
   let children = [];
