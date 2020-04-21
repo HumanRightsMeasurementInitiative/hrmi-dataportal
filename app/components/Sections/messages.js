@@ -70,6 +70,10 @@ export default defineMessages({
       id: `${scope}.people.para2`,
       defaultMessage: ' ',
     },
+    link: {
+      id: `${scope}.people.link`,
+      defaultMessage: 'Explore',
+    },
   },
   search: {
     title: {
