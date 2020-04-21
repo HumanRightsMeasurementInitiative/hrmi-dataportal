@@ -14,7 +14,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { groupBy, map } from 'lodash/collection';
 
 import {
-  Heading,
+  Text,
   Box,
   ResponsiveContext,
   Image as GImage,
@@ -25,9 +25,11 @@ import styled, { withTheme } from 'styled-components';
 import rootMessages from 'messages';
 
 import {
+  getPeopleAtRiskCountryNo,
   getPeopleAtRiskForGroup,
   getCountries,
   getDependenciesReady,
+  getMaxYearAtRisk,
 } from 'containers/App/selectors';
 
 import {
@@ -55,6 +57,7 @@ import ButtonText from 'styled/ButtonText';
 import { isMinSize } from 'utils/responsive';
 import quasiEquals from 'utils/quasi-equals';
 import { sortCountriesByName } from 'utils/scores';
+import { lowerCase } from 'utils/string';
 
 import messages from './messages';
 
@@ -76,6 +79,8 @@ export function PathPeople({
   dataReady,
   onSelectCountry,
   theme,
+  atRiskYear,
+  countryNo,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -156,7 +161,13 @@ export function PathPeople({
                     />
                     <PageTitle>{groupTitle}</PageTitle>
                     <Paragraph>
-                      <FormattedMessage {...messages.header} />
+                      <FormattedMessage
+                        {...messages.header}
+                        values={{
+                          no: dataReady ? countryNo : 0,
+                          year: dataReady ? atRiskYear : 0,
+                        }}
+                      />
                     </Paragraph>
                   </MainColumn>
                   {isMinSize(size, 'large') && (
@@ -174,14 +185,15 @@ export function PathPeople({
               <ContentMaxWidth column>
                 <Styled>
                   <Top>
-                    <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
+                    <Text margin={{ bottom: 'xsmall', top: '0' }} size="medium">
                       <FormattedMessage
-                        {...messages.availability}
+                        {...messages.text}
                         values={{
                           no: dataReady ? atRiskCountryCodes.length : 0,
+                          group: lowerCase(groupTitle),
                         }}
                       />
-                    </Heading>
+                    </Text>
                   </Top>
                   {dataReady && (
                     <Box wrap direction={direction}>
@@ -235,8 +247,10 @@ PathPeople.propTypes = {
   match: PropTypes.object,
   atRiskCountryCodes: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  countryNo: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   dataReady: PropTypes.bool,
   theme: PropTypes.object,
+  atRiskYear: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -244,6 +258,8 @@ const mapStateToProps = createStructuredSelector({
   atRiskCountryCodes: (state, { match }) =>
     getPeopleAtRiskForGroup(state, match.params),
   countries: state => getCountries(state),
+  atRiskYear: state => getMaxYearAtRisk(state),
+  countryNo: state => getPeopleAtRiskCountryNo(state),
 });
 
 export function mapDispatchToProps(dispatch) {

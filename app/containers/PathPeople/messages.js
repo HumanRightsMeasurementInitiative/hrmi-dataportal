@@ -13,8 +13,8 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'header',
   },
-  availability: {
-    id: `${scope}.availability`,
-    defaultMessage: 'availability',
+  text: {
+    id: `${scope}.text`,
+    defaultMessage: 'text',
   },
 });
