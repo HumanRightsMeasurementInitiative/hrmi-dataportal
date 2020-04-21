@@ -220,7 +220,7 @@
   "hrmi.containers.LayerHowToRead.summary.dimensions.empowerment": "Summary score for 3 Civil and Political rights that strengthen democratic empowerment, mapped on a scale from 0 to 10.",
   "hrmi.containers.LayerHowToRead.summary.dimensions.physint": "Summary score for 4 Civil and Political rights that protect people's physical integrity, mapped on a scale from 0 to 10.",
   "hrmi.containers.LayerHowToRead.summary.dimensions.esr": "Summary percentage score for our 5 Economic and Social rights, ranging from 0 to 100%.",
-  "hrmi.containers.LayerHowToRead.summary.rights.intro": "Country's scores are visualised for our 12 human rights, grouped and colour-coded in our 3 categories of rights:",
+  "hrmi.containers.LayerHowToRead.summary.rights.intro": "Country's scores are visualised for our 13 human rights, grouped and colour-coded in our 3 categories of rights:",
   "hrmi.containers.LayerHowToRead.summary.rights.rightsListTitle": "Rights from top to bottom",
   "hrmi.containers.LayerHowToRead.summary.rights.empowerment": "3 Civil and Political rights that strengthen democratic empowerment, scores mapped on a scale from 0 to 10. ",
   "hrmi.containers.LayerHowToRead.summary.rights.physint": "Scores for 5 Civil and Political rights that foster people's physical integrity, mapped on a scale from 0 to 10. ",
