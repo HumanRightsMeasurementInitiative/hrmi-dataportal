@@ -418,6 +418,14 @@ export const getMinYearCPR = createSelector(
   getCPRScores,
   scores => calcMinYear(scores),
 );
+export const getMaxYearAtRisk = createSelector(
+  getAtRiskData,
+  data => calcMaxYear(data),
+);
+export const getMinYearAtRisk = createSelector(
+  getAtRiskData,
+  data => calcMinYear(data),
+);
 export const getESRYear = createSelector(
   getYearESRSearch,
   getMaxYearESR,
@@ -1104,7 +1112,7 @@ export const getPeopleAtRisk = createSelector(
   (state, { country }) => country,
   (state, { metric }) => getMetricDetails(metric),
   getAtRiskData,
-  getCPRYear,
+  getMaxYearAtRisk,
   (country, metric, data, year) => {
     if (!data) return false;
     if (metric.metricType === 'rights') {
