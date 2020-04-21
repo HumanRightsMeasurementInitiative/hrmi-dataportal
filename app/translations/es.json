@@ -882,5 +882,7 @@
   "hrmi.app.hrmi": "Human Rights Measurement Initiative",
   "hrmi.containers.LayerHowToRead.labelWithName": "Cómo leer la tabla {name}",
   "hrmi.containers.LayerSettings.label": "Cambiar vista",
-  "hrmi.containers.LayerSettings.labelWithName": "Cambiar vista por la tabla {name}"
+  "hrmi.containers.LayerSettings.labelWithName": "Cambiar vista por la tabla {name}",
+  "hrmi.containers.AboutMetricContainer.metricLink": "Explore {metric} for all countries",
+  "hrmi.containers.AboutCountryContainer.countryLink": "Explore {country}"
 }
