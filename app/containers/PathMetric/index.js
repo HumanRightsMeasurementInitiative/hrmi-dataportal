@@ -24,6 +24,7 @@ import AboutMetricContainer from 'containers/AboutMetricContainer';
 import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
 import Aside from 'components/Aside';
+import HINote from 'components/HINote';
 
 import ContentWrap from 'styled/ContentWrap';
 import MainColumn from 'styled/MainColumn';
@@ -108,6 +109,9 @@ export function PathMetric({
             <title>{metricTitle}</title>
             <meta name="description" content="Description of metric" />
           </Helmet>
+          {metric.type === 'esr' && (
+            <HINote hasAside={isMinSize(size, 'large')} />
+          )}
           <Box style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>

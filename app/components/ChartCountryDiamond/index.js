@@ -277,11 +277,14 @@ export function ChartCountryDiamond({
                         country[COLUMNS.COUNTRIES.CODE]
                       ] && <span>{country[COLUMNS.COUNTRIES.CODE]}</span>}
                       {country && country.high_income_country === '1' && (
-                        <span>
-                          {` (${intl.formatMessage(
-                            rootMessages.labels.hiCountry,
-                          )})`}
-                        </span>
+                        <FormattedMessage
+                          {...rootMessages.labels.hiCountryWrap}
+                          values={{
+                            hiLabel: intl.formatMessage(
+                              rootMessages.labels.hiCountry,
+                            ),
+                          }}
+                        />
                       )}
                       {isMaxSize(size, 'medium') && <FormNext size="medium" />}
                     </CountryLabel>
