@@ -19,7 +19,13 @@ import {
   getScaleSearch,
 } from 'containers/App/selectors';
 import { setStandard, setBenchmark, setScale } from 'containers/App/actions';
-import { STANDARDS, BENCHMARKS, SCALES } from 'containers/App/constants';
+import {
+  STANDARDS,
+  BENCHMARKS,
+  SCALES,
+  DIMENSIONS,
+  RIGHTS,
+} from 'containers/App/constants';
 
 import messages from './messages';
 
@@ -68,6 +74,10 @@ export function LayerSettings({
               ...s,
             }))}
             horizontal
+            msgValues={{
+              noDimensions: DIMENSIONS.length,
+              noRights: RIGHTS.length,
+            }}
           />
         </SettingWrap>
       )}
