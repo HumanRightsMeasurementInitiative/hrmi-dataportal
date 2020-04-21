@@ -42,7 +42,7 @@ export default defineMessages({
     defaultMessage: 'Assessment',
   },
   featuredFilterOptionGroup: {
-    id: `${scope}.featureedFilterOptionGroup`,
+    id: `${scope}.featuredFilterOptionGroup`,
     defaultMessage: 'Featured',
   },
 });
