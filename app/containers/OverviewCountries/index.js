@@ -99,10 +99,10 @@ export function OverviewCountries({
 
   const filterValues = getFilterOptionValues(
     countries,
-    COUNTRY_FILTERS,
+    COUNTRY_FILTERS.ALL,
     // check if any filters are already set -
     // if not we can just return all specified options
-    areAnyFiltersSet(COUNTRY_FILTERS, {
+    areAnyFiltersSet(COUNTRY_FILTERS.ALL, {
       regionFilterValue,
       subregionFilterValue,
       incomeFilterValue,
