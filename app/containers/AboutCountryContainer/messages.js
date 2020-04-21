@@ -88,4 +88,8 @@ export default defineMessages({
     id: `${scope}.less`,
     defaultMessage: 'Hide country categories',
   },
+  countryLink: {
+    id: `${scope}.countryLink`,
+    defaultMessage: `${scope}.countryLink`,
+  },
 });

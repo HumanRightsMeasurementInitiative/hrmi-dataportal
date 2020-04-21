@@ -73,6 +73,7 @@ import { hasCPR, formatScore } from 'utils/scores';
 
 import { isMinSize } from 'utils/responsive';
 import { getMessageGrammar } from 'utils/narrative';
+import { lowerCase } from 'utils/string';
 //
 // const Image = styled.img`
 //   width: 100%;
@@ -138,7 +139,7 @@ const getScoreMsg = (
         ({
           ...messageValues,
           score: formatScore(score),
-          metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+          metric: lowerCase(intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code])),
         }),
       )
       : intl.formatMessage(
@@ -154,7 +155,7 @@ const getScoreMsg = (
         values={{
           ...messageValues,
           score: formatScore(score),
-          metric: intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+          metric: lowerCase(intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code])),
           link: (
             <ButtonText
               as="a"
