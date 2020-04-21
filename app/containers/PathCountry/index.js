@@ -478,7 +478,7 @@ export function mapDispatchToProps(dispatch) {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
     },
     onCategoryClick: (key, value) => {
-      const deleteParams = COUNTRY_FILTERS;
+      const deleteParams = COUNTRY_FILTERS.ALL;
       dispatch(
         navigate(
           {
