@@ -27,6 +27,7 @@ import Button from 'styled/Button';
 import ButtonHighlight from 'styled/ButtonHighlight';
 
 import getMetricDetails from 'utils/metric-details';
+import { lowerCase } from 'utils/string';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -260,9 +261,16 @@ export function AboutMetricContainer({
         {showMetricLink && (
           <Box>
             <ButtonHighlight onClick={() => onSelectMetric(metricCode)}>
-              {`Explore ${intl.formatMessage(
-                rootMessages[metric.metricType][metricCode],
-              )} for all countries`}
+              <FormattedMessage
+                {...messages.metricLink}
+                values={{
+                  metric: lowerCase(
+                    intl.formatMessage(
+                      rootMessages[metric.metricType][metricCode],
+                    ),
+                  ),
+                }}
+              />
             </ButtonHighlight>
           </Box>
         )}
