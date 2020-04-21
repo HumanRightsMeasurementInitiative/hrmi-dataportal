@@ -261,7 +261,7 @@
   "hrmi.components.CountryMetricPeople.introDimension": "Nous avons demandé à des spécialistes des droits humains de nous dire quelles sont les personnes les plus exposées au risque de violation de chaque droit dans cette catégorie. Les images ci-dessous présentent leurs réponses.",
   "hrmi.components.Close.label": "Retour",
   "hrmi.components.TabCountryPeople.title": "Quels sont les individus les plus à risque ?",
-  "hrmi.components.TabCountryPeople.intro": "Nous avons demandé à des experts des droits humains de nous indiquer quelles étaient les personnes les plus exposées à subir la violation de ce droit. L'image ci-dessous présente leurs réponses.",
+  "hrmi.components.TabCountryPeople.intro": "Nous avons demandé à des experts des droits humains de nous indiquer quelles étaient les personnes les plus exposées à subir la violation de ce droit. Les images ci-dessous présentent leurs réponses.",
   "hrmi.components.AboutMetric.title.dimensions": "Comment cette catégorie de droits est-elle définie ?",
   "hrmi.components.AboutMetric.title.rights": "Comment ce droit humain est-il défini ?",
   "hrmi.components.AboutMetric.title.indicators": "Sur quelles données l’indicateur est-il basé ?",
