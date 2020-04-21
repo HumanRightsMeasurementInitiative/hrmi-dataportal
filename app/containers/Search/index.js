@@ -71,6 +71,7 @@ export function Search({
         height={`${theme.sizes.search[size]}px`}
         pad={{ horizontal: 'ms' }}
         margin={{ left: onToggle ? 'ms' : '0' }}
+        background="white"
       >
         {onToggle && !expand && (
           <Button
@@ -87,44 +88,48 @@ export function Search({
             gap="xsmall"
           />
         )}
-        <StyledTextInput
-          plain
-          value={search}
-          onChange={evt => {
-            if (evt && evt.target) {
-              searched(evt.target.value);
-              setSearch(evt.target.value);
-              if (onSearch) onSearch(evt.target.value);
-            }
-          }}
-          placeholder={
-            placeholder ||
-            intl.formatMessage(
-              example ? messages.exampleSearch : messages.allSearch,
-            )
-          }
-          ref={textInputRef}
-        />
-        {!onToggle && search.length <= 1 && (
-          <Box pad={{ right: 'xsmall' }}>
-            <SearchIcon size={size} color="dark" />
-          </Box>
-        )}
-        {(onToggle || search.length > 1) && (
-          <Button
-            plain
-            fill="vertical"
-            onClick={() => {
-              setSearch('');
-              if (onSearch) onSearch('');
-              if (onToggle) onToggle();
-            }}
-            icon={<Close size={size} color="dark" />}
-            style={{
-              textAlign: 'center',
-              height: `${theme.sizes.search[size]}px`,
-            }}
-          />
+        {((onToggle && expand) || !onToggle) && (
+          <>
+            <StyledTextInput
+              plain
+              value={search}
+              onChange={evt => {
+                if (evt && evt.target) {
+                  searched(evt.target.value);
+                  setSearch(evt.target.value);
+                  if (onSearch) onSearch(evt.target.value);
+                }
+              }}
+              placeholder={
+                placeholder ||
+                intl.formatMessage(
+                  example ? messages.exampleSearch : messages.allSearch,
+                )
+              }
+              ref={textInputRef}
+            />
+            {!onToggle && search.length <= 1 && (
+              <Box pad={{ right: 'xsmall' }}>
+                <SearchIcon size={size} color="dark" />
+              </Box>
+            )}
+            {(onToggle || search.length > 1) && (
+              <Button
+                plain
+                fill="vertical"
+                onClick={() => {
+                  setSearch('');
+                  if (onSearch) onSearch('');
+                  if (onToggle) onToggle();
+                }}
+                icon={<Close size={size} color="dark" />}
+                style={{
+                  textAlign: 'center',
+                  height: `${theme.sizes.search[size]}px`,
+                }}
+              />
+            )}
+          </>
         )}
       </Box>
       {drop && search.length > 1 && (
