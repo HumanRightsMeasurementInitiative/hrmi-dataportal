@@ -40,6 +40,8 @@ export function Search({
   theme,
   placeholder,
   example,
+  drop = true,
+  onSearch,
 }) {
   useEffect(() => {
     if (expand && textInputRef) {
@@ -85,56 +87,60 @@ export function Search({
             gap="xsmall"
           />
         )}
-        {((onToggle && expand) || stretch) && (
-          <>
-            <StyledTextInput
-              plain
-              value={search}
-              onChange={evt => {
-                if (evt && evt.target) {
-                  searched(evt.target.value);
-                  setSearch(evt.target.value);
-                }
-              }}
-              placeholder={
-                placeholder ||
-                intl.formatMessage(
-                  example ? messages.exampleSearch : messages.allSearch,
-                )
-              }
-              ref={textInputRef}
-            />
-            {!onToggle && search.length <= 1 && (
-              <Box pad={{ right: 'xsmall' }}>
-                <SearchIcon size={size} color="dark" />
-              </Box>
-            )}
-            {(onToggle || search.length > 1) && (
-              <Button
-                plain
-                fill="vertical"
-                onClick={() => {
-                  setSearch('');
-                  onToggle();
-                }}
-                icon={<Close size={size} color="dark" />}
-                style={{
-                  textAlign: 'center',
-                  height: `${theme.sizes.search[size]}px`,
-                }}
-              />
-            )}
-          </>
+        <StyledTextInput
+          plain
+          value={search}
+          onChange={evt => {
+            if (evt && evt.target) {
+              searched(evt.target.value);
+              setSearch(evt.target.value);
+              if (onSearch) onSearch(evt.target.value);
+            }
+          }}
+          placeholder={
+            placeholder ||
+            intl.formatMessage(
+              example ? messages.exampleSearch : messages.allSearch,
+            )
+          }
+          ref={textInputRef}
+        />
+        {!onToggle && search.length <= 1 && (
+          <Box pad={{ right: 'xsmall' }}>
+            <SearchIcon size={size} color="dark" />
+          </Box>
+        )}
+        {(onToggle || search.length > 1) && (
+          <Button
+            plain
+            fill="vertical"
+            onClick={() => {
+              setSearch('');
+              if (onSearch) onSearch('');
+              if (onToggle) onToggle();
+            }}
+            icon={<Close size={size} color="dark" />}
+            style={{
+              textAlign: 'center',
+              height: `${theme.sizes.search[size]}px`,
+            }}
+          />
         )}
       </Box>
-      {search.length > 1 && (
+      {drop && search.length > 1 && (
         <Drop
           align={{ top: 'bottom', left: 'left' }}
           target={searchRef.current}
-          onClickOutside={() => setSearch('')}
+          onClickOutside={() => {
+            setSearch('');
+            if (onSearch) onSearch('');
+          }}
         >
           <SearchResults
-            onClose={() => setSearch('')}
+            onClose={() => {
+              setSearch('');
+              if (onSearch) onSearch('');
+            }}
             search={search}
             onSelect={() => onToggle && onToggle()}
           />
@@ -146,12 +152,14 @@ export function Search({
 
 Search.propTypes = {
   searched: PropTypes.func.isRequired,
+  onSearch: PropTypes.func,
   onToggle: PropTypes.func,
   intl: intlShape.isRequired,
   margin: PropTypes.bool,
   stretch: PropTypes.bool,
   expand: PropTypes.bool,
   example: PropTypes.bool,
+  drop: PropTypes.bool,
   size: PropTypes.string,
   theme: PropTypes.object,
   placeholder: PropTypes.string,

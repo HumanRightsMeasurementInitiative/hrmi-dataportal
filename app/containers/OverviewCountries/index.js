@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -29,7 +29,6 @@ import {
   getSortOrderSearch,
 } from 'containers/App/selectors';
 import { navigate, selectCountry } from 'containers/App/actions';
-
 import {
   STANDARDS,
   BENCHMARKS,
@@ -37,6 +36,10 @@ import {
   COUNTRY_FILTERS,
   COLUMNS,
 } from 'containers/App/constants';
+
+import Search from 'containers/Search';
+import { filterCountries } from 'containers/Search/search';
+import searchMessages from 'containers/Search/messages';
 
 import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
@@ -89,6 +92,7 @@ export function OverviewCountries({
   featuredCountries,
   theme,
 }) {
+  const [search, setSearch] = useState('');
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
   const standardDetails = STANDARDS.find(s => s.key === standard);
@@ -116,10 +120,13 @@ export function OverviewCountries({
     featuredValues,
     featuredCountries,
   );
+  const searched = search
+    ? filterCountries(countries, search, intl)
+    : countries;
   // sortable and non-sortable countries
   const { sorted, other } = sortCountries({
     intl,
-    countries,
+    countries: searched,
     sort: currentSort,
     order: currentSortOrder,
     scores: scoresAllCountries,
@@ -167,6 +174,11 @@ export function OverviewCountries({
               onSortSelect,
               onOrderToggle: onOrderChange,
             }}
+          />
+          <Search
+            placeholder={intl.formatMessage(searchMessages.countrySearch)}
+            onSearch={s => setSearch(s)}
+            drop={false}
           />
           {sorted && scoresAllCountries && (
             <Box
