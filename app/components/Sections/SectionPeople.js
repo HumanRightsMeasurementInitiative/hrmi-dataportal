@@ -17,7 +17,6 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import { isMinSize } from 'utils/responsive';
-import rootMessages from 'messages';
 import SectionTitle from './SectionTitle';
 import messages from './messages';
 
@@ -86,7 +85,7 @@ export function SectionPeople({ nav, intl, theme }) {
               <Box direction="row">
                 <ButtonTextIcon
                   onClick={() => nav(PATHS.GROUPS)}
-                  label={intl.formatMessage(rootMessages.labels.allPeople)}
+                  label={intl.formatMessage(messages.people.link)}
                   hasIcon
                 />
               </Box>

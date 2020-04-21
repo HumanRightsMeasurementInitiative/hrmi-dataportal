@@ -872,6 +872,7 @@
   "hrmi.containers.Search.optionGroups.people": "People at risk groups",
   "hrmi.containers.Search.peopleSearch": "Find people at risk group",
   "hrmi.components.Sections.people.para2": "",
+  "hrmi.components.Sections.people.link": "Explore",
   "hrmi.components.Sections.about.title": "About us",
   "hrmi.components.Sections.about.lead": "The Rights Tracker is created by the Human Rights Measurement Initiative, the first global project to track the human rights performance of countries systematically. ",
   "hrmi.components.Sections.about.link": "Visit our website",
