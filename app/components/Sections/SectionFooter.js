@@ -27,16 +27,22 @@ export function SectionFooter() {
       {size => (
         <SectionContainer background="footer" pad={{ top: 'medium' }}>
           <ContentMaxWidth stretch direction="column">
-            <Icon name="BRAND" />
-            <Box margin={{ top: 'xsmall', bottom: 'small' }}>
-              <Text weight={600}>
-                <FormattedMessage {...rootMessages.app.hrmi} />
-              </Text>
-            </Box>
-            <Box direction="row">
+            <Box direction={isMinSize(size, 'large') ? 'row' : 'column'}>
               <Box
                 basis={isMinSize(size, 'large') ? '1/2' : '1'}
                 pad={{ right: isMinSize(size, 'large') ? 'ms' : '0' }}
+                margin={{ bottom: 'large' }}
+              >
+                <Icon name="BRAND" />
+                <Box margin={{ top: 'xsmall', bottom: 'small' }}>
+                  <Text weight={600}>
+                    <FormattedMessage {...rootMessages.app.hrmi} />
+                  </Text>
+                </Box>
+              </Box>
+              <Box
+                basis={isMinSize(size, 'large') ? '1/2' : '1'}
+                pad={{ left: isMinSize(size, 'large') ? 'ms' : '0' }}
                 margin={{ bottom: 'large' }}
               >
                 <Text size="small">
