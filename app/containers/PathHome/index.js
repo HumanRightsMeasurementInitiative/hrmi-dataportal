@@ -128,7 +128,7 @@ export function mapDispatchToProps(dispatch) {
           },
           {
             replace: false,
-            deleteParams: COUNTRY_FILTERS,
+            deleteParams: COUNTRY_FILTERS.ALL,
             multiple: true,
             trackEvent: {
               category: 'Data',

@@ -201,10 +201,10 @@ export function ChartContainerMetric({
 
   const filterValues = getFilterOptionValues(
     countriesForScores,
-    COUNTRY_FILTERS,
+    COUNTRY_FILTERS.SINGLE_METRIC,
     // check if any filters are already set -
     // if not we can just return all specified options
-    areAnyFiltersSet(COUNTRY_FILTERS, {
+    areAnyFiltersSet(COUNTRY_FILTERS.SINGLE_METRIC, {
       regionFilterValue,
       subregionFilterValue,
       incomeFilterValue,
