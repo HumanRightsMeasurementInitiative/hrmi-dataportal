@@ -48,6 +48,9 @@ const getBasisAside = size => {
 };
 
 export function SectionOurData({ nav, intl }) {
+  const hasSecondPara =
+    intl.formatMessage(messages.ourData.para2) &&
+    intl.formatMessage(messages.ourData.para2).trim() !== '';
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -63,9 +66,11 @@ export function SectionOurData({ nav, intl }) {
               <Paragraph>
                 <FormattedMessage {...messages.ourData.para1} />
               </Paragraph>
-              <Paragraph margin={{ bottom: 'medium' }}>
-                <FormattedMessage {...messages.ourData.para2} />
-              </Paragraph>
+              {hasSecondPara && (
+                <Paragraph margin={{ bottom: 'medium' }}>
+                  <FormattedMessage {...messages.ourData.para2} />
+                </Paragraph>
+              )}
               <Box direction="row">
                 <ButtonPrimary
                   onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}

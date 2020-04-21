@@ -93,8 +93,7 @@ export default defineMessages({
     },
     para2: {
       id: `${scope}.ourData.para2`,
-      defaultMessage:
-        'Everything on the Rights Tracker is freely available for use by human rights advocates, researchers, governments, and others, under a Creative Commons licence. You are welcome to download and use the full dataset with acknowledgement.',
+      defaultMessage: ' ',
     },
     downloadLink: {
       id: `${scope}.ourData.downloadLink`,
