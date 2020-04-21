@@ -332,7 +332,7 @@
   "hrmi.components.ChartCountryDiamond.hiForCore": "UNUSED: High income country: best use the 'high income' standard",
   "hrmi.components.ChartCountryDiamond.liForHi": "UNUSED: Low and middle income country: best use the 'low and middle income' standard",
   "hrmi.labels.score": "Score",
-  "hrmi.labels.hiCountry": "HI",
+  "hrmi.labels.hiCountry": "*",
   "hrmi.labels.better": "Better",
   "hrmi.labels.worse": "Worse",
   "hrmi.labels.loading": "Loading...",
@@ -885,5 +885,7 @@
   "hrmi.containers.LayerSettings.label": "Switch view",
   "hrmi.containers.LayerSettings.labelWithName": "Switch view for {name} chart",
   "hrmi.containers.AboutMetricContainer.metricLink": "Explore {metric} for all countries",
-  "hrmi.containers.AboutCountryContainer.countryLink": "Explore {country}"
+  "hrmi.containers.AboutCountryContainer.countryLink": "Explore {country}",
+  "hrmi.components.HINote.hiNote": "{hiLabel} High income country: For these countries it is best to use the high income assessment standard",
+  "hrmi.labels.hiCountryWrap": " {hiLabel}"
 }

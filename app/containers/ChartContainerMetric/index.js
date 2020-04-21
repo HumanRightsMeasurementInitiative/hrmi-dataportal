@@ -116,11 +116,12 @@ const getCountryLabel = (score, countries, metric, intl) => {
     country &&
     country.high_income_country === '1'
   ) {
-    label = `${label} (${intl.formatMessage(rootMessages.labels.hiCountry)})`;
+    label = `${label}${intl.formatMessage(rootMessages.labels.hiCountryWrap, {
+      hiLabel: intl.formatMessage(rootMessages.labels.hiCountry),
+    })}`;
   }
   return label;
 };
-
 const prepareData = ({
   scores,
   metric,
