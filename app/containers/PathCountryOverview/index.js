@@ -163,7 +163,7 @@ export function PathCountryOverview({
               )}
             </ContentMaxWidth>
           </ContentContainer>
-          <SectionContainer>
+          <SectionContainer background="sectionCountries">
             <ContentMaxWidth column>
               <OverviewCountries
                 countries={filteredCountries}

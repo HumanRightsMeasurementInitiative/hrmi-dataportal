@@ -36,10 +36,12 @@ const Button = styled(ButtonPlain)`
   @media (min-width: 520px) {
     margin: 0;
   }
+  background: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   &:hover {
     text-decoration: underline;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    background: white;
   }
 `;
 const CountryLabel = styled.span`

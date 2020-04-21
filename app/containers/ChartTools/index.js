@@ -21,7 +21,7 @@ import rootMessages from 'messages';
 
 const Styled = styled.div``;
 const StyledButton = styled(Button)`
-  background: white;
+  background: transparent;
   padding: 3px;
   margin-right: ${({ theme }) => theme.global.edgeSize.small};
   font-weight: 600;
@@ -33,7 +33,7 @@ const StyledButton = styled(Button)`
     padding: 3px 10px;
   }
   &:hover {
-    background-color: ${({ theme }) => theme.global.colors['light-5']};
+    background-color: ${({ theme }) => theme.global.colors.white};
   }
 `;
 
