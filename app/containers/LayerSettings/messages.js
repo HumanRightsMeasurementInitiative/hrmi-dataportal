@@ -15,4 +15,12 @@ export default defineMessages({
     id: `${scope}.labelWithName`,
     defaultMessage: 'Switch view for {name}',
   },
+  labelStandard: {
+    id: `${scope}.labelStandard`,
+    defaultMessage: 'labelStandard',
+  },
+  labelBenchmark: {
+    id: `${scope}.labelBenchmark`,
+    defaultMessage: 'labelBenchmark',
+  },
 });

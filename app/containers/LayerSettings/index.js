@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { FormattedMessage } from 'react-intl';
-import styled, { withTheme } from 'styled-components';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import styled from 'styled-components';
 import { Box, Heading, Paragraph } from 'grommet';
 
 import {
@@ -46,11 +46,15 @@ export function LayerSettings({
   onSetBenchmark,
   onSetScale,
   layer,
+  intl,
 }) {
   const { showScale, showBenchmark, showStandard, chartName } = layer;
 
   return (
-    <Box>
+    <Box
+      direction="column"
+      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
+    >
       <Heading level={2}>
         {chartName && (
           <FormattedMessage
@@ -89,6 +93,7 @@ export function LayerSettings({
             onActivate={onSetBenchmark}
             options={BENCHMARKS}
             horizontal
+            name={intl.formatMessage(messages.labelBenchmark)}
           />
           <InfoBenchmark size="xsmall" hasKey />
         </SettingWrap>
@@ -101,6 +106,7 @@ export function LayerSettings({
             onActivate={onSetStandard}
             options={STANDARDS}
             horizontal
+            name={intl.formatMessage(messages.labelStandard)}
           />
           <InfoStandard size="xsmall" hasKey />
         </SettingWrap>
@@ -118,6 +124,7 @@ LayerSettings.propTypes = {
   scale: PropTypes.string,
   onSetScale: PropTypes.func,
   layer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -139,4 +146,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(withTheme(LayerSettings));
+export default compose(withConnect)(injectIntl(LayerSettings));

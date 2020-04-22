@@ -4,15 +4,19 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Heading, Box, Text } from 'grommet';
+import { FormattedMessage } from 'react-intl';
+import { Heading, Box, AccordionPanel, Accordion } from 'grommet';
+import { Down, Up } from 'grommet-icons';
 import styled from 'styled-components';
+
 import { STANDARDS } from 'containers/App/constants';
-import ReadMore from 'components/ReadMore';
+import AboutMetricSources from 'containers/AboutMetricSources';
+
 import UL from 'styled/UL';
-import WrapAsideTop from 'styled/WrapAsideTop';
+import ButtonIcon from 'styled/ButtonIcon';
+
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -23,57 +27,84 @@ function AboutMetric({
   metric,
   metricInfo,
   standard,
-  intl,
-  fullInfo,
-  showTitle,
-  countryScoreMsg,
+  showSources,
+  onSelectMetric,
 }) {
+  const [actives, setActive] = useState([]);
   const { metricType } = metric;
   return (
-    <Box
-      direction="column"
-      pad={{ left: 'medium', top: 'small', bottom: 'medium' }}
-    >
-      <WrapAsideTop>
-        {showTitle && (
-          <Heading responsive={false} level={3}>
-            <FormattedMessage {...rootMessages[metricType][metric.key]} />
-          </Heading>
-        )}
-        {countryScoreMsg && (
-          <Box>
-            <Text>{countryScoreMsg}</Text>
-          </Box>
-        )}
-        <Heading responsive={false} level={5} margin={{ vertical: 'xsmall' }}>
-          <FormattedMessage {...messages.title[metricType]} />
-        </Heading>
-        {rootMessages[`${metricType}-about`] && fullInfo && (
-          <div>
-            <FormattedMessage
-              {...rootMessages[`${metricType}-about`][metric.key]}
-            />
-          </div>
-        )}
-        {rootMessages[`${metricType}-about`] && !fullInfo && (
-          <ReadMore
-            message={intl.formatMessage(
-              rootMessages[`${metricType}-about`][metric.key],
+    <Box margin={{ top: 'medium' }}>
+      <Accordion
+        multiple
+        activeIndex={actives}
+        onActive={newActive => setActive(newActive)}
+      >
+        <AccordionPanel
+          header={
+            <Box direction="row" gap="xsmall" align="center">
+              <Box>
+                <Heading
+                  responsive={false}
+                  level={5}
+                  margin={{ vertical: 'xsmall' }}
+                >
+                  <FormattedMessage {...messages.title[metricType]} />
+                </Heading>
+              </Box>
+              <Box margin={{ left: 'auto' }}>
+                {!actives.includes(0) && (
+                  <ButtonIcon as="span" subtle small>
+                    <Down size="small" />
+                  </ButtonIcon>
+                )}
+                {actives.includes(0) && (
+                  <ButtonIcon as="span" subtle small>
+                    <Up size="small" />
+                  </ButtonIcon>
+                )}
+              </Box>
+            </Box>
+          }
+        >
+          <Box pad="small" background="light-1">
+            {rootMessages[`${metricType}-about`] && (
+              <div>
+                <FormattedMessage
+                  {...rootMessages[`${metricType}-about`][metric.key]}
+                />
+              </div>
             )}
-          />
-        )}
-      </WrapAsideTop>
-      {metricType === 'indicators' && metricInfo && (
-        <>
-          <Box>
-            <Heading
-              responsive={false}
-              level={5}
-              margin={{ vertical: 'xsmall' }}
-            >
-              <FormattedMessage {...messages.titleStandards} />
-            </Heading>
-            <Box>
+          </Box>
+        </AccordionPanel>
+        {metricType === 'indicators' && metricInfo && (
+          <AccordionPanel
+            header={
+              <Box direction="row" gap="xsmall" align="center">
+                <Box>
+                  <Heading
+                    responsive={false}
+                    level={5}
+                    margin={{ vertical: 'xsmall' }}
+                  >
+                    <FormattedMessage {...messages.titleStandards} />
+                  </Heading>
+                </Box>
+                <Box margin={{ left: 'auto' }}>
+                  {!actives.includes(1) && (
+                    <ButtonIcon as="span" subtle small>
+                      <Down size="small" />
+                    </ButtonIcon>
+                  )}
+                  {actives.includes(1) && (
+                    <ButtonIcon as="span" subtle small>
+                      <Up size="small" />
+                    </ButtonIcon>
+                  )}
+                </Box>
+              </Box>
+            }
+          >
+            <Box pad="small" background="light-1">
               {metricInfo.standard === 'Both' && (
                 <StyledUL>
                   {STANDARDS.map(s => (
@@ -95,9 +126,49 @@ function AboutMetric({
                 </StyledUL>
               )}
             </Box>
-          </Box>
-        </>
-      )}
+          </AccordionPanel>
+        )}
+        {showSources && (
+          <AccordionPanel
+            header={
+              <Box direction="row" gap="xsmall" align="center">
+                <Box>
+                  <Heading
+                    responsive={false}
+                    level={5}
+                    margin={{ vertical: 'xsmall' }}
+                  >
+                    {metricType === 'indicators' && (
+                      <FormattedMessage {...messages.titleSource} />
+                    )}
+                    {metricType !== 'indicators' && (
+                      <FormattedMessage {...messages.titleSourcesByIndicator} />
+                    )}
+                  </Heading>
+                </Box>
+                <Box margin={{ left: 'auto' }}>
+                  {!actives.includes(2) && (
+                    <ButtonIcon as="span" subtle small>
+                      <Down size="small" />
+                    </ButtonIcon>
+                  )}
+                  {actives.includes(2) && (
+                    <ButtonIcon as="span" subtle small>
+                      <Up size="small" />
+                    </ButtonIcon>
+                  )}
+                </Box>
+              </Box>
+            }
+          >
+            <AboutMetricSources
+              metric={metric}
+              indicatorInfo={metricInfo}
+              onSelectMetric={onSelectMetric}
+            />
+          </AccordionPanel>
+        )}
+      </Accordion>
     </Box>
   );
 }
@@ -105,11 +176,9 @@ function AboutMetric({
 AboutMetric.propTypes = {
   metric: PropTypes.object,
   metricInfo: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  fullInfo: PropTypes.bool,
-  showTitle: PropTypes.bool,
   standard: PropTypes.object,
-  intl: intlShape.isRequired,
-  countryScoreMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  showSources: PropTypes.bool,
+  onSelectMetric: PropTypes.func,
 };
 
-export default injectIntl(AboutMetric);
+export default AboutMetric;

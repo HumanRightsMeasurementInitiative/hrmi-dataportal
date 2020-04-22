@@ -32,4 +32,12 @@ export default defineMessages({
     id: `${scope}.titleStandards`,
     defaultMessage: 'What assessment standard is it used for?',
   },
+  titleSource: {
+    id: `${scope}.titleSource`,
+    defaultMessage: 'Data source(s)',
+  },
+  titleSourcesByIndicator: {
+    id: `${scope}.titleSourcesByIndicator`,
+    defaultMessage: 'Data sources by indicator',
+  },
 });
