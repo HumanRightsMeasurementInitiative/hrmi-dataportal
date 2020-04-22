@@ -16,7 +16,7 @@ import { withTheme } from 'styled-components';
 
 import { navigate, setAsideLayer } from 'containers/App/actions';
 import { getCloseTargetMetric, getAsideLayer } from 'containers/App/selectors';
-import { PATHS, IMAGE_PATH, PAGES } from 'containers/App/constants';
+import { PATHS, IMAGE_PATH, PAGES, RIGHTS } from 'containers/App/constants';
 import ChartContainerMetric from 'containers/ChartContainerMetric';
 import TabContainer from 'containers/TabContainer';
 import AboutMetricContainer from 'containers/AboutMetricContainer';
@@ -39,12 +39,6 @@ import { isMinSize } from 'utils/responsive';
 import rootMessages from 'messages';
 import messages from './messages';
 
-const images = {
-  empowerment: `${IMAGE_PATH}/Empowerment-768x512.jpg`,
-  physint: `${IMAGE_PATH}/Safety-from-the-State-1-768x490.jpg`,
-  esr: `${IMAGE_PATH}/Quality-of-LIfe-768x512.jpg`,
-};
-
 export function PathMetric({
   match,
   intl,
@@ -64,10 +58,11 @@ export function PathMetric({
   let imageSrc;
 
   if (metric.metricType === 'dimensions') {
-    imageSrc = images[metricCode];
+    imageSrc = `${IMAGE_PATH}/metric_${metricCode}.png`;
   }
   if (metric.metricType === 'rights') {
-    imageSrc = images[metric.dimension];
+    const right = RIGHTS.find(r => r.key === metricCode);
+    imageSrc = right.icon;
     ancestors.push({
       type: 'dimensions',
       key: metric.dimension,
@@ -80,7 +75,7 @@ export function PathMetric({
     }
   }
   if (metric.metricType === 'indicators') {
-    imageSrc = images.esr;
+    imageSrc = `${IMAGE_PATH}/metric_${metricCode}.png`;
     ancestors.push({
       type: 'dimensions',
       key: 'esr',
