@@ -19,7 +19,6 @@ import { STANDARDS, RIGHTS, INDICATORS, FAQS } from 'containers/App/constants';
 import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 
-import AboutMetricSources from 'containers/AboutMetricSources';
 import FAQs from 'containers/FAQs';
 
 import AboutMetric from 'components/AboutMetric';
@@ -65,7 +64,7 @@ const ButtonRelative = styled(Button)`
   }
 `;
 
-const Pad = styled.div`
+const Pad = styled(Box)`
   padding-bottom: 16px;
 `;
 
@@ -96,7 +95,7 @@ export function AboutMetricContainer({
 
   const standard =
     metricType === 'indicators'
-      ? STANDARDS.find(s => metric.standard === s.code)
+      ? STANDARDS.find(s => metricInfo.standard === s.code)
       : null;
 
   let children = [];
@@ -130,158 +129,155 @@ export function AboutMetricContainer({
       questions = FAQS.ESR_INDICATOR;
     }
   }
-
   return (
-    <Box direction="column">
-      <Box
-        direction="column"
-        pad={{ vertical: 'medium', horizontal: 'medium' }}
-        justify="start"
-      >
-        {showRelated && metricType !== 'dimensions' && (
-          <Pad>
-            <Heading
-              responsive={false}
-              level={5}
-              margin={{ vertical: 'xsmall' }}
-            >
-              {typeof metric.aggregate === 'undefined' && (
-                <FormattedMessage {...messages.titleParent[metricType]} />
+    <Box
+      direction="column"
+      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
+    >
+      {showRelated && (
+        <div pad={{ vertical: 'medium', horizontal: 'medium' }} justify="start">
+          {metricType !== 'dimensions' && (
+            <Pad>
+              <Heading
+                responsive={false}
+                level={5}
+                margin={{ vertical: 'xsmall' }}
+              >
+                {typeof metric.aggregate === 'undefined' && (
+                  <FormattedMessage {...messages.titleParent[metricType]} />
+                )}
+              </Heading>
+              <ButtonRelative
+                onClick={evt => {
+                  if (evt) evt.preventDefault();
+                  onSelectMetric(ancestors[ancestors.length - 1].key);
+                }}
+                previous
+              >
+                <FormPrevious size="large" />
+                <TextRelative>
+                  <FormattedMessage
+                    {...rootMessages[ancestors[ancestors.length - 1].type][
+                      ancestors[ancestors.length - 1].key
+                    ]}
+                  />
+                </TextRelative>
+              </ButtonRelative>
+            </Pad>
+          )}
+          {metricType !== 'indicators' && children.length > 0 && (
+            <Pad>
+              <Heading
+                responsive={false}
+                level={5}
+                margin={{ vertical: 'xsmall' }}
+              >
+                {metricType === 'dimensions' && (
+                  <FormattedMessage {...messages.titleChildren[metricType]} />
+                )}
+                {metricType === 'rights' && (
+                  <FormattedMessage
+                    {...messages.titleChildren[metricType][metric.type]}
+                  />
+                )}
+              </Heading>
+              {((metricType === 'rights' && metric.type === 'cpr') ||
+                metricType === 'dimensions') && (
+                <>
+                  {children.map(child => (
+                    <ButtonRelative
+                      key={child.key}
+                      onClick={evt => {
+                        if (evt) evt.preventDefault();
+                        onSelectMetric(child.key);
+                      }}
+                    >
+                      <TextRelative>
+                        <FormattedMessage {...rootMessages.rights[child.key]} />
+                      </TextRelative>
+                      <FormNext size="large" />
+                    </ButtonRelative>
+                  ))}
+                </>
               )}
-            </Heading>
-            <ButtonRelative
-              onClick={evt => {
-                if (evt) evt.preventDefault();
-                onSelectMetric(ancestors[ancestors.length - 1].key);
+              {metricType === 'rights' && metric.type === 'esr' && (
+                <>
+                  {children.map(as => (
+                    <Pad key={as.key}>
+                      <Text size="small">
+                        {`${intl.formatMessage(
+                          rootMessages.settings.standard.name,
+                        )}: '${intl.formatMessage(
+                          rootMessages.settings.standard[as.key],
+                        )}'`}
+                      </Text>
+                      <>
+                        {as.indicators.map(child => (
+                          <ButtonRelative
+                            key={child.key}
+                            onClick={evt => {
+                              if (evt) evt.preventDefault();
+                              onSelectMetric(child.key);
+                            }}
+                          >
+                            <TextRelative>
+                              <FormattedMessage
+                                {...rootMessages.indicators[child.key]}
+                              />
+                            </TextRelative>
+                            <FormNext size="large" />
+                          </ButtonRelative>
+                        ))}
+                      </>
+                    </Pad>
+                  ))}
+                </>
+              )}
+            </Pad>
+          )}
+        </div>
+      )}
+      {showTitle && (
+        <Heading responsive={false} level={3}>
+          <FormattedMessage {...rootMessages[metricType][metric.key]} />
+        </Heading>
+      )}
+      {countryScoreMsg && (
+        <div>
+          <Text>{countryScoreMsg}</Text>
+        </div>
+      )}
+      {showMetricLink && (
+        <div>
+          <ButtonHighlight onClick={() => onSelectMetric(metricCode)}>
+            <FormattedMessage
+              {...messages.metricLink}
+              values={{
+                metric: lowerCase(
+                  intl.formatMessage(
+                    rootMessages[metric.metricType][metricCode],
+                  ),
+                ),
               }}
-              previous
-            >
-              <FormPrevious size="large" />
-              <TextRelative>
-                <FormattedMessage
-                  {...rootMessages[ancestors[ancestors.length - 1].type][
-                    ancestors[ancestors.length - 1].key
-                  ]}
-                />
-              </TextRelative>
-            </ButtonRelative>
-          </Pad>
-        )}
-        {showRelated && metricType !== 'indicators' && children.length > 0 && (
-          <Pad>
-            <Heading
-              responsive={false}
-              level={5}
-              margin={{ vertical: 'xsmall' }}
-            >
-              {metricType === 'dimensions' && (
-                <FormattedMessage {...messages.titleChildren[metricType]} />
-              )}
-              {metricType === 'rights' && (
-                <FormattedMessage
-                  {...messages.titleChildren[metricType][metric.type]}
-                />
-              )}
-            </Heading>
-            {((metricType === 'rights' && metric.type === 'cpr') ||
-              metricType === 'dimensions') && (
-              <>
-                {children.map(child => (
-                  <ButtonRelative
-                    key={child.key}
-                    onClick={evt => {
-                      if (evt) evt.preventDefault();
-                      onSelectMetric(child.key);
-                    }}
-                  >
-                    <TextRelative>
-                      <FormattedMessage {...rootMessages.rights[child.key]} />
-                    </TextRelative>
-                    <FormNext size="large" />
-                  </ButtonRelative>
-                ))}
-              </>
-            )}
-            {metricType === 'rights' && metric.type === 'esr' && (
-              <>
-                {children.map(as => (
-                  <Pad key={as.key}>
-                    <Text size="small">
-                      {`${intl.formatMessage(
-                        rootMessages.settings.standard.name,
-                      )}: '${intl.formatMessage(
-                        rootMessages.settings.standard[as.key],
-                      )}'`}
-                    </Text>
-                    <>
-                      {as.indicators.map(child => (
-                        <ButtonRelative
-                          key={child.key}
-                          onClick={evt => {
-                            if (evt) evt.preventDefault();
-                            onSelectMetric(child.key);
-                          }}
-                        >
-                          <TextRelative>
-                            <FormattedMessage
-                              {...rootMessages.indicators[child.key]}
-                            />
-                          </TextRelative>
-                          <FormNext size="large" />
-                        </ButtonRelative>
-                      ))}
-                    </>
-                  </Pad>
-                ))}
-              </>
-            )}
-          </Pad>
-        )}
-      </Box>
+            />
+          </ButtonHighlight>
+        </div>
+      )}
       <AboutMetric
         metric={metric}
         metricInfo={metricInfo}
         standard={standard}
-        showTitle={showTitle}
-        countryScoreMsg={countryScoreMsg}
+        onSelectMetric={onSelectMetric}
+        showSources={showSources}
       />
-      <Box
-        direction="column"
-        pad={{ vertical: 'small', horizontal: 'medium' }}
-        justify="start"
-      >
-        {showFAQs && (
-          <FAQs
-            questions={questions}
-            metric={intl.formatMessage(
-              rootMessages[metric.metricType][metric.key],
-            )}
-          />
-        )}
-        {showMetricLink && (
-          <Box>
-            <ButtonHighlight onClick={() => onSelectMetric(metricCode)}>
-              <FormattedMessage
-                {...messages.metricLink}
-                values={{
-                  metric: lowerCase(
-                    intl.formatMessage(
-                      rootMessages[metric.metricType][metricCode],
-                    ),
-                  ),
-                }}
-              />
-            </ButtonHighlight>
-          </Box>
-        )}
-        {showSources && (
-          <AboutMetricSources
-            metric={metric}
-            indicatorInfo={metricInfo}
-            onSelectMetric={onSelectMetric}
-          />
-        )}
-      </Box>
+      {showFAQs && (
+        <FAQs
+          questions={questions}
+          metric={intl.formatMessage(
+            rootMessages[metric.metricType][metric.key],
+          )}
+        />
+      )}
     </Box>
   );
 }
@@ -306,7 +302,7 @@ const mapStateToProps = createStructuredSelector({
   metricInfo: (state, { metricCode }) => {
     const metric = getMetricDetails(metricCode);
     if (metric.metricType === 'indicators') {
-      return getIndicatorInfo(state, metricCode);
+      return getIndicatorInfo(state, metric.code);
     }
     return false;
   },

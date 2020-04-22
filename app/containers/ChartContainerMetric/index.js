@@ -238,7 +238,7 @@ export function ChartContainerMetric({
           howToReadConfig: {
             contxt: 'PathMetric',
             chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
-            dimension: metric.key,
+            dimension: metric.color,
             data: metric.color,
           },
           settingsConfig: (metric.type === 'esr' ||

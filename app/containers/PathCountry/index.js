@@ -104,7 +104,7 @@ const getMetricScore = (metric, dimensions, rights, indicators, benchmark) => {
   if (metric.metricType === 'indicators') {
     currentMetric = indicators[metric.key];
   }
-  if (currentMetric) {
+  if (currentMetric && currentMetric.score) {
     if (metric.type === 'esr') {
       return currentMetric.score[currentBenchmark.column];
     }

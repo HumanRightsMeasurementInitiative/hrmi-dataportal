@@ -67,7 +67,6 @@ export function LayerAside({ onClose, theme, layer }) {
             }
             direction="column"
             flex={{ shrink: 0 }}
-            pad={isMaxSize(size, 'medium') ? 'small' : 'medium'}
             fill="vertical"
             overflow="auto"
             style={{ position: 'relative' }}

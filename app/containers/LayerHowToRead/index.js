@@ -22,7 +22,10 @@ function LayerHowToRead({ layer }) {
   const { contxt, scale, dimension, chart, chartName } = layer;
   const charts = chart ? asArray(chart) : [];
   return (
-    <Box>
+    <Box
+      direction="column"
+      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
+    >
       <Heading level={2}>
         {chartName && (
           <FormattedMessage
