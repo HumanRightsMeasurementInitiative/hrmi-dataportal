@@ -64,7 +64,7 @@ export function SectionCountries({
                     onSelectCountry(country[COLUMNS.COUNTRIES.CODE])
                   }
                   imageSrc={
-                    `${IMAGE_PATH}/${country[COLUMNS.COUNTRIES.CODE]}.jpg`
+                    `${IMAGE_PATH}/country_${country[COLUMNS.COUNTRIES.CODE]}.png`
                   }
                   label={
                     rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]

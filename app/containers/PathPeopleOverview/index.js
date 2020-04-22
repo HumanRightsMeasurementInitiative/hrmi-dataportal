@@ -114,7 +114,7 @@ export function PathPeopleOverview({
                       onCardClick={() => {
                         onSelectGroup(g.key);
                       }}
-                      imageSrc={`${IMAGE_PATH}/${g.key}.jpg`}
+                      imageSrc={`${IMAGE_PATH}/people_${g.key}.png`}
                       label={`${intl.formatMessage(
                         rootMessages['people-at-risk'][g.key],
                       )}`}

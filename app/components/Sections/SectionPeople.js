@@ -24,7 +24,7 @@ const Image = styled.img`
   width: 100%;
 `;
 
-const imageSrc = `${IMAGE_PATH}/Quality-of-LIfe.jpg`;
+const imageSrc = `${IMAGE_PATH}/section_people.png`;
 
 export function SectionPeople({ nav, intl, theme }) {
   const hasSecondPara =
