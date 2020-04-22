@@ -194,6 +194,7 @@ export function ChartContainerCountryRights({
               howToReadConfig: {
                 key: 'country-dimension-esr',
                 chart: 'Bar',
+                dimension: 'esr',
               },
               settingsConfig: {
                 key: 'country-dimension-esr',

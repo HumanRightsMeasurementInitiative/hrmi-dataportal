@@ -80,6 +80,7 @@ function TabCountryReport({
                     howToReadConfig: {
                       key: 'country-indicators',
                       chart: 'Bar',
+                      dimension: 'esr',
                     },
                     settingsConfig: {
                       key: 'country-indicators',
@@ -138,6 +139,7 @@ function TabCountryReport({
                     howToReadConfig: {
                       key: 'country-sex',
                       chart: 'Bar',
+                      dimension: 'esr',
                     },
                     settingsConfig: {
                       key: 'country-sex',

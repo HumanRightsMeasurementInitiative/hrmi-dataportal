@@ -6,13 +6,17 @@ import { Box, Heading } from 'grommet';
 
 import asArray from 'utils/as-array';
 
+import { DIMENSIONS } from 'containers/App/constants';
+
+import rootMessages from 'messages';
+import messages from './messages';
+
 import HTROverviewDimensions from './HTROverviewDimensions';
 import HTROverviewRights from './HTROverviewRights';
 import HTRBulletCPR from './HTRBulletCPR';
-import HTRBarESR from './HTRBarESR';
+import HTRBar from './HTRBar';
 import HTRTrendESR from './HTRTrendESR';
 import HTRTrendCPR from './HTRTrendCPR';
-import messages from './messages';
 
 function LayerHowToRead({ layer }) {
   const { contxt, scale, dimension, chart, chartName } = layer;
@@ -36,7 +40,19 @@ function LayerHowToRead({ layer }) {
             {chrt === 'Bullet' && (
               <HTRBulletCPR contxt={contxt} dimension={dimension} />
             )}
-            {chrt === 'Bar' && <HTRBarESR contxt={contxt} />}
+            {chrt === 'Bar' && <HTRBar contxt={contxt} dimension={dimension} />}
+            {chrt === 'Snapshot' && (
+              <>
+                {DIMENSIONS.map(d => (
+                  <>
+                    <Heading level={4}>
+                      <FormattedMessage {...rootMessages.dimensions[d.key]} />
+                    </Heading>
+                    <HTRBar contxt={contxt} dimension={d.key} />
+                  </>
+                ))}
+              </>
+            )}
             {chrt === 'Trend' && scale === 'esr' && <HTRTrendESR />}
             {chrt === 'Trend' && scale === 'cpr' && <HTRTrendCPR />}
           </div>
