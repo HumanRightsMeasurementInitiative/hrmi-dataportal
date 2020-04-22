@@ -332,7 +332,7 @@
   "hrmi.components.ChartCountryDiamond.hiForCore": "NON UTILISÉ : Pays à revenus élevés : il est préférable d'utiliser la norme « revenus élevés »",
   "hrmi.components.ChartCountryDiamond.liForHi": "NON UTILISÉ : Pays à revenus faibles ou intermédiaires : il est préférable d'utiliser la norme « revenus faibles à intermédiaires »",
   "hrmi.labels.score": "Note",
-  "hrmi.labels.hiCountry": "RE",
+  "hrmi.labels.hiCountry": "*",
   "hrmi.labels.better": "Maximum",
   "hrmi.labels.worse": "Minimum",
   "hrmi.labels.loading": "Chargement…",

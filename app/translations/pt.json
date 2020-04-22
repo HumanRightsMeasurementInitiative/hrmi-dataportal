@@ -332,7 +332,7 @@
   "hrmi.components.ChartCountryDiamond.hiForCore": "NÃO UTILIZADO: País de rendimento alto: é preferível usar o padrão de 'rendimento alto'",
   "hrmi.components.ChartCountryDiamond.liForHi": "NÃO UTILIZADO: País de rendimento baixo e médio: é preferível usar o padrão de 'rendimento baixo e médio'",
   "hrmi.labels.score": "Pontuação",
-  "hrmi.labels.hiCountry": "Rendimento Alto",
+  "hrmi.labels.hiCountry": "*",
   "hrmi.labels.better": "Melhor",
   "hrmi.labels.worse": "Pior",
   "hrmi.labels.loading": "A carregar…",
