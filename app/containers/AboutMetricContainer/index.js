@@ -295,7 +295,7 @@ AboutMetricContainer.propTypes = {
   showFAQs: PropTypes.bool,
   showRelated: PropTypes.bool,
   showSources: PropTypes.bool,
-  countryScoreMsg: PropTypes.string,
+  countryScoreMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 const mapStateToProps = createStructuredSelector({
