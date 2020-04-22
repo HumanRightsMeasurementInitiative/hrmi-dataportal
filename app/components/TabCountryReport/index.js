@@ -42,6 +42,7 @@ function TabCountryReport({
   hasDimensionScore,
   onMetricClick,
   messageValues,
+  activeCode,
 }) {
   const currentStandard = STANDARDS.find(s => s.key === standard);
   return (
@@ -56,6 +57,7 @@ function TabCountryReport({
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
               onMetricClick={onMetricClick}
               countryMessageValues={messageValues}
+              activeCode={activeCode}
             />
           </SectionContainer>
           <SectionContainer>
@@ -69,6 +71,7 @@ function TabCountryReport({
                 <ChartContainerCountryIndicators
                   countryCode={country[COLUMNS.COUNTRIES.CODE]}
                   onMetricClick={onMetricClick}
+                  activeCode={activeCode}
                   {...props}
                 />
               )}
@@ -250,6 +253,7 @@ function TabCountryReport({
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
               onMetricClick={onMetricClick}
+              activeCode={activeCode}
               countryMessageValues={messageValues}
             />
           </SectionContainer>
@@ -324,6 +328,7 @@ function TabCountryReport({
               dimensionCode={dimension}
               countryCode={country[COLUMNS.COUNTRIES.CODE]}
               onMetricClick={onMetricClick}
+              activeCode={activeCode}
               countryMessageValues={messageValues}
             />
           </SectionContainer>
@@ -405,6 +410,7 @@ TabCountryReport.propTypes = {
   dataReady: PropTypes.bool,
   hasDimensionScore: PropTypes.bool,
   type: PropTypes.string,
+  activeCode: PropTypes.string,
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimension: PropTypes.string,
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),

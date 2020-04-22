@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -48,6 +48,8 @@ export function PathMetric({
   onSetAsideLayer,
   asideLayer,
 }) {
+  const [activeCode, setActiveCode] = useState();
+
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
   const metricTitle = intl.formatMessage(
@@ -87,8 +89,10 @@ export function PathMetric({
   }
   const onCountryClick = code => {
     if (asideLayer && asideLayer.key === code) {
+      setActiveCode(false);
       onSetAsideLayer(false);
     } else {
+      setActiveCode(code);
       onSetAsideLayer({
         type: 'aboutCountry',
         key: code,
@@ -175,6 +179,7 @@ export function PathMetric({
                     {...props}
                     metric={metric}
                     onCountryClick={onCountryClick}
+                    activeCode={activeCode}
                   />
                 ),
               },

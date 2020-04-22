@@ -3,7 +3,7 @@
  * BarWrapper
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, ResponsiveContext, Text } from 'grommet';
 import styled from 'styled-components';
@@ -14,9 +14,8 @@ import BarBullet from 'components/ChartBars/BarBullet';
 import { isMinSize } from 'utils/responsive';
 import { formatScore } from 'utils/scores';
 
-import BarLabelButton from './BarLabelButton';
-
-const BarLabel = styled(Text)``;
+import BarButton from './BarButton';
+import BarLabel from './BarLabel';
 
 const BarWrap = styled(Box)``;
 // prettier-ignore
@@ -26,82 +25,100 @@ const LabelWrap = styled(Box)`
 `;
 // prettier-ignore
 const ScoreAsideWrap = styled(Box)``;
+const Active = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -12px;
+  border-left: 5px solid;
+  border-color: ${({ color, theme }) => theme.global.colors[color]};
+`;
 
 export function BarWrapper({
   score,
   bullet,
-  allowWordBreak,
   labelColor,
   hasBackground,
   level,
   scoreOnHover = true,
   scoresAside = false,
-  // currentBenchmark,
-  // standard,
 }) {
+  const [hover, setHover] = useState(false);
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box key={score.key} direction="row" align="center">
-          <LabelWrap
-            width={isMinSize(size, 'medium') ? '180px' : '160px'}
-            align="start"
-            flex={{ shrink: 0 }}
-            pad={{ right: 'small' }}
-          >
-            {score.label && score.onClick && (
-              <BarLabelButton
-                onClick={() => score.onClick()}
-                label={score.label}
-                allowWordBreak={allowWordBreak}
-                color={labelColor}
-                level={level}
-              />
-            )}
-            {score.label && !score.onClick && (
-              <BarLabel label={score.label} color="dark" size="small">
-                {score.label}
-              </BarLabel>
-            )}
-          </LabelWrap>
-          <BarWrap flex border="right">
-            {!bullet && (
-              <Bar
-                showLabels={false}
-                level={2}
-                data={score}
-                scoreOnHover={scoreOnHover && 'top'}
-                hasBackground={hasBackground}
-              />
-            )}
-            {bullet && (
-              <BarBullet
-                color={score.color}
-                level={2}
-                showLabels={false}
-                data={score}
-                scoreOnHover={scoreOnHover && 'top'}
-                bandOnHover={scoreOnHover && 'top'}
-                showValueBar
-                hasBackground={hasBackground}
-              />
-            )}
-          </BarWrap>
-          {scoresAside && (
-            <ScoreAsideWrap
-              width={isMinSize(size, 'medium') ? '80px' : '60px'}
+        <BarButton
+          onClick={() => {
+            score.onClick();
+          }}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          {(hover || score.active) && <Active color={`${score.color}Active`} />}
+          <Box key={score.key} direction="row" align="center">
+            <LabelWrap
+              width={isMinSize(size, 'medium') ? '180px' : '160px'}
               align="start"
               flex={{ shrink: 0 }}
-              pad={{ left: 'small' }}
+              pad={{ right: 'small' }}
             >
-              <Text color={`${score.color}Dark`} size="small" weight={600}>
-                {score.value &&
-                  `${formatScore(score.value)}${score.unit || ''}`}
-                {!score.value && 'N/A'}
-              </Text>
-            </ScoreAsideWrap>
-          )}
-        </Box>
+              {score.label && (
+                <BarLabel
+                  label={score.label}
+                  color={
+                    hover || score.active ? `${score.color}Active` : labelColor
+                  }
+                  level={level}
+                >
+                  {score.label}
+                </BarLabel>
+              )}
+            </LabelWrap>
+            <BarWrap flex border="right">
+              {!bullet && (
+                <Bar
+                  showScore={scoreOnHover && hover}
+                  showLabels={false}
+                  level={2}
+                  data={score}
+                  hasBackground={hasBackground}
+                  hoverEnabled={false}
+                  scoreAbove={scoreOnHover}
+                  active={hover || score.active}
+                />
+              )}
+              {bullet && (
+                <BarBullet
+                  color={score.color}
+                  level={2}
+                  hoverEnabled={false}
+                  showLabels={false}
+                  data={score}
+                  bandOnHover={scoreOnHover && hover}
+                  showValueBar
+                  hasBackground={hasBackground}
+                  showScore={scoreOnHover && hover}
+                  scoreAbove={scoreOnHover}
+                  active={hover || score.active}
+                />
+              )}
+            </BarWrap>
+            {scoresAside && (
+              <ScoreAsideWrap
+                width={isMinSize(size, 'medium') ? '80px' : '60px'}
+                align="start"
+                flex={{ shrink: 0 }}
+                pad={{ left: 'small' }}
+              >
+                <Text color={`${score.color}Dark`} size="small" weight={600}>
+                  {score.value &&
+                    `${formatScore(score.value)}${score.unit || ''}`}
+                  {!score.value && 'N/A'}
+                </Text>
+              </ScoreAsideWrap>
+            )}
+          </Box>
+        </BarButton>
       )}
     </ResponsiveContext.Consumer>
   );
@@ -111,7 +128,6 @@ BarWrapper.propTypes = {
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   bullet: PropTypes.bool,
   hasBackground: PropTypes.bool,
-  allowWordBreak: PropTypes.bool,
   scoreOnHover: PropTypes.bool,
   scoresAside: PropTypes.bool,
   labelColor: PropTypes.string,

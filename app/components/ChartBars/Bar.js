@@ -113,6 +113,8 @@ function Bar({
   scoreOnHover = false,
   hoverEnabled = true,
   hasBackground,
+  scoreAbove,
+  active,
 }) {
   const [hover, setHover] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -136,10 +138,12 @@ function Bar({
       {showLabels && <MinLabel rotate={rotate}>0</MinLabel>}
       <BarWrapper
         onTouchStart={() => {
-          if (scoreOnHover) setTouched(true);
-          setTimeout(() => setTouched(false), 1000);
-          if (scoreOnHover) setHover(!hover);
-          setTimeout(() => setHover(false), 5000);
+          if (hoverEnabled) {
+            setTouched(true);
+            setTimeout(() => setTouched(false), 1000);
+            setHover(!hover);
+            setTimeout(() => setHover(false), 5000);
+          }
         }}
         onClick={evt => {
           if (touched) {
@@ -147,8 +151,8 @@ function Bar({
             if (evt) evt.stopPropagation();
           }
         }}
-        onMouseEnter={() => scoreOnHover && setHover(true) }
-        onMouseLeave={() => setHover(false)}
+        onMouseEnter={() => hoverEnabled && setHover(true) }
+        onMouseLeave={() => hoverEnabled && setHover(false)}
       >
         <BarReference
           height={h}
@@ -161,7 +165,7 @@ function Bar({
             <BarValue
               height={h}
               active={hover && hoverEnabled}
-              color={color}
+              color={active ? `${color}Active` : color}
               style={{ width: `${(value / maxValue) * 100}%` }}
               stripes={stripes}
             />
@@ -205,7 +209,7 @@ function Bar({
             color={color}
             unit={unit}
             level={scoreOnHover ? 1 : level}
-            direction={scoreOnHover || 'bottom'}
+            direction={scoreAbove ? 'top' : 'bottom'}
             title={title}
           />
         )}
@@ -229,6 +233,8 @@ Bar.propTypes = {
   showScore: PropTypes.bool,
   hoverEnabled: PropTypes.bool,
   showIncompleteAction: PropTypes.bool,
+  scoreAbove: PropTypes.bool,
+  active: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };

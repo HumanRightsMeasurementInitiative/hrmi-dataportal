@@ -73,6 +73,7 @@ const prepareData = ({
   standard,
   onClick,
   intl,
+  activeCode,
 }) =>
   // prettier-ignore
   indicators.map(i => ({
@@ -84,6 +85,7 @@ const prepareData = ({
     key: i.key,
     label: getIndicatorLabel(i.key, intl),
     onClick: () => onClick(i.key),
+    active: activeCode === i.key,
   }));
 
 export function ChartContainerCountryIndicators({
@@ -98,6 +100,7 @@ export function ChartContainerCountryIndicators({
   dataReady,
   intl,
   onMetricClick,
+  activeCode,
 }) {
   useEffect(() => {
     onLoadData();
@@ -122,6 +125,7 @@ export function ChartContainerCountryIndicators({
             key: metricCode,
             label: getMetricLabel(metricCode, intl),
             onClick: () => onMetricClick(metricCode),
+            active: activeCode === metricCode,
           },
         ]}
         currentBenchmark={currentBenchmark}
@@ -146,6 +150,7 @@ export function ChartContainerCountryIndicators({
           standard,
           onClick: onMetricClick,
           intl,
+          activeCode,
         })}
         currentBenchmark={currentBenchmark}
         standard={standard}
@@ -163,6 +168,7 @@ export function ChartContainerCountryIndicators({
 ChartContainerCountryIndicators.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   metricCode: PropTypes.string.isRequired,
+  activeCode: PropTypes.string,
   dataReady: PropTypes.bool,
   right: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),

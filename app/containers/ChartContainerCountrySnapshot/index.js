@@ -89,6 +89,7 @@ export function ChartContainerCountrySnapshot({
   intl,
   goToTab,
   onMetricClick,
+  activeCode,
 }) {
   useEffect(() => {
     onLoadData();
@@ -157,6 +158,7 @@ export function ChartContainerCountrySnapshot({
           maxValue={100}
           onMetricClick={onMetricClick}
           grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+          activeCode={activeCode}
         />
         <ChartCountrySnapshot
           type="cpr"
@@ -170,6 +172,7 @@ export function ChartContainerCountrySnapshot({
           maxValue={10}
           onMetricClick={onMetricClick}
           grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+          activeCode={activeCode}
         />
         <ChartCountrySnapshot
           type="cpr"
@@ -183,6 +186,7 @@ export function ChartContainerCountrySnapshot({
           maxValue={10}
           onMetricClick={onMetricClick}
           grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+          activeCode={activeCode}
         />
         <Source />
       </Box>
@@ -317,6 +321,7 @@ ChartContainerCountrySnapshot.propTypes = {
   dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   intl: intlShape.isRequired,
   onMetricClick: PropTypes.func,
+  activeCode: PropTypes.string,
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),

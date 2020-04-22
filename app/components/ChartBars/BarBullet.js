@@ -68,7 +68,11 @@ const BarBand = styled.div`
   top: ${props => props.height / 2 - props.height * 0.35}px;
   height: ${props => props.height * 0.7}px;
   background-color: ${props => props.theme.global.colors[props.color]};
-  opacity: ${({ active }) => (active ? 0.3 : 0.4)};
+  opacity: ${({ active, hover }) => {
+    if (hover) return 0.5;
+    if (active) return 0.5;
+    return 0.35;
+  }};
 `;
 
 function BarBullet({
@@ -79,10 +83,11 @@ function BarBullet({
   scoreOnHover,
   bandOnHover,
   annotate,
-  direction,
   annotateOnHover,
   hoverEnabled = true,
   hasBackground,
+  scoreAbove,
+  active,
 }) {
   const [hover, setHover] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -91,10 +96,12 @@ function BarBullet({
   return (
     <Wrapper
       onTouchStart={() => {
-        setTouched(true);
-        setTimeout(() => setTouched(false), 1000);
-        setHover(!hover);
-        setTimeout(() => setHover(false), 5000);
+        if (hoverEnabled) {
+          setTouched(true);
+          setTimeout(() => setTouched(false), 1000);
+          setHover(!hover);
+          setTimeout(() => setHover(false), 5000);
+        }
       }}
       onClick={evt => {
         if (touched) {
@@ -102,8 +109,8 @@ function BarBullet({
           if (evt) evt.stopPropagation();
         }
       }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      onMouseEnter={() => hoverEnabled && setHover(true)}
+      onMouseLeave={() => hoverEnabled && setHover(false)}
     >
       {showLabels && <MinLabel>0</MinLabel>}
       <BarWrapper>
@@ -113,13 +120,14 @@ function BarBullet({
             <BarValue
               height={HEIGHT[level]}
               style={{ width: `${(value / maxValue) * 100}%` }}
-              color={color}
+              color={active ? `${color}Active` : color}
             />
           )}
           {value && (
             <BarBand
-              color={color}
-              active={hover && hoverEnabled}
+              color={active ? `${color}Active` : color}
+              hover={hover && hoverEnabled}
+              active={active}
               height={HEIGHT[level]}
               lo={(band.lo / maxValue) * 100}
               hi={(band.hi / maxValue) * 100}
@@ -132,7 +140,7 @@ function BarBullet({
           )}
           {value && (
             <MarkValue
-              color={color}
+              color={active ? `${color}Active` : color}
               height={HEIGHT[level]}
               level={level}
               style={{ left: `${(value / maxValue) * 100}%` }}
@@ -157,7 +165,7 @@ function BarBullet({
               left={(band.lo / maxValue) * 100}
               color={color}
               level={Math.max(2, level)}
-              direction={direction || 'top'}
+              direction={scoreAbove ? 'top' : 'bottom'}
               secondary
               align="right"
               title={labels && labels.lo}
@@ -168,7 +176,7 @@ function BarBullet({
               left={(band.hi / maxValue) * 100}
               color={color}
               level={Math.max(2, level)}
-              direction={direction || 'top'}
+              direction={scoreAbove ? 'top' : 'bottom'}
               secondary
               align="left"
               title={labels && labels.hi}
@@ -179,29 +187,29 @@ function BarBullet({
               left={(value / maxValue) * 100}
               color={color}
               level={1}
-              direction={direction || 'bottom'}
+              direction={scoreAbove ? 'top' : 'bottom'}
               secondary
               title={labels && labels.value}
             />
           )}
-          {band.lo && hover && bandOnHover && (
+          {band.lo && bandOnHover && (hover || showScore) && (
             <Score
               score={band.lo}
               left={(band.lo / maxValue) * 100}
               color={color}
               level={Math.max(2, level)}
-              direction={scoreOnHover || 'bottom'}
+              direction={scoreAbove ? 'top' : 'bottom'}
               secondary
               align="right"
             />
           )}
-          {band.hi && hover && bandOnHover && (
+          {band.hi && bandOnHover && (hover || showScore) && (
             <Score
               score={band.hi}
               left={(band.hi / maxValue) * 100}
               color={color}
               level={Math.max(2, level)}
-              direction={scoreOnHover || 'bottom'}
+              direction={scoreAbove ? 'top' : 'bottom'}
               secondary
               align="left"
             />
@@ -212,7 +220,7 @@ function BarBullet({
               left={(value / maxValue) * 100}
               color={color}
               level={scoreOnHover ? 1 : level}
-              direction={scoreOnHover || 'bottom'}
+              direction={scoreAbove ? 'top' : 'bottom'}
             />
           )}
         </BarAnchor>
@@ -235,7 +243,8 @@ BarBullet.propTypes = {
   showScore: PropTypes.bool,
   hasBackground: PropTypes.bool,
   hoverEnabled: PropTypes.bool,
-  direction: PropTypes.string,
+  scoreAbove: PropTypes.bool,
+  active: PropTypes.bool,
   scoreOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   bandOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   annotateOnHover: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
