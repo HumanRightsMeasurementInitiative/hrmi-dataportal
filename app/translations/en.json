@@ -224,7 +224,7 @@
   "hrmi.containers.LayerHowToRead.summary.rights.empowerment": "3 Civil and Political rights that strengthen democratic empowerment, scores mapped on a scale from 0 to 10. ",
   "hrmi.containers.LayerHowToRead.summary.rights.physint": "Scores for 5 Civil and Political rights that foster people's physical integrity, mapped on a scale from 0 to 10. ",
   "hrmi.containers.LayerHowToRead.summary.rights.esr": "Percentage score for our 5 Economic and Social rights, ranging from 0 to 100%.",
-  "hrmi.containers.LayerHowToRead.simpleBar.intro": "Scores closer to 100% are better.",
+  "hrmi.containers.LayerHowToRead.simpleBar.intro": "Scores closer to {maxValue}{unit} are better.",
   "hrmi.containers.LayerHowToRead.simpleBar.drilldownHint": "To explore the individual rights and underlying indicators in more detail, click on the yellow down arrow. ",
   "hrmi.containers.LayerHowToRead.simpleBar.countryComparison": "Higher scores indicate greater fulfilment of a country's obligations for this human right. ",
   "hrmi.containers.LayerHowToRead.trendESR.intro": "Economic and social right scores range from 0 to 100% and are based on underlying indicators. The better the score the longer the bar. ",

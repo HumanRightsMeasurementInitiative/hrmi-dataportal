@@ -87,6 +87,7 @@ function BarBullet({
   const [hover, setHover] = useState(false);
   const [touched, setTouched] = useState(false);
   const { color, value, maxValue, unit, band, labels } = data;
+
   return (
     <Wrapper
       onTouchStart={() => {
