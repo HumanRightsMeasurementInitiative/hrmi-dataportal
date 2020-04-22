@@ -332,7 +332,7 @@
   "hrmi.components.ChartCountryDiamond.hiForCore": "SIN UTILIZAR: País de ingresos altos: mejor utilizar el estándar de \"altos ingresos\"",
   "hrmi.components.ChartCountryDiamond.liForHi": "SIN UTILIZAR: Países de ingresos bajos y medios: mejor utilizar el estándar \"ingresos medios y bajos\"",
   "hrmi.labels.score": "Puntaje",
-  "hrmi.labels.hiCountry": "HI",
+  "hrmi.labels.hiCountry": "*",
   "hrmi.labels.better": "Mejor",
   "hrmi.labels.worse": "Peor",
   "hrmi.labels.loading": "Cargando...",
