@@ -87,6 +87,7 @@ const prepareData = ({
   standard,
   onClick,
   intl,
+  activeCode,
 }) =>
   // prettier-ignore
   scores.map(s =>
@@ -104,6 +105,7 @@ const prepareData = ({
         hasScoreAlternate: s.hasScoreAlternate,
         hasScoreIndicators: s.hasScoreIndicators,
         hasScoreIndicatorsAlternate: s.hasScoreIndicatorsAlternate,
+        active: activeCode === s.key,
       }
       : {
         color: dimensionCode,
@@ -113,6 +115,7 @@ const prepareData = ({
         key: s.key,
         label: getMetricLabel(s, intl),
         onClick: () => onClick(s.key),
+        active: activeCode === s.key,
       }
   );
 
@@ -129,6 +132,7 @@ function ChartCountrySnapshot({
   intl,
   source,
   grammar,
+  activeCode,
 }) {
   const hasRights = rights.some(r => !!r.score);
   return (
@@ -177,6 +181,7 @@ function ChartCountrySnapshot({
                   standard,
                   onClick: onMetricClick,
                   intl,
+                  activeCode,
                 })}
                 currentBenchmark={type === 'esr' && currentBenchmark}
                 standard={type === 'esr' && standard}
@@ -230,6 +235,7 @@ ChartCountrySnapshot.propTypes = {
   maxValue: PropTypes.number,
   type: PropTypes.string,
   dimensionCode: PropTypes.string,
+  activeCode: PropTypes.string,
   onMetricClick: PropTypes.func,
   source: PropTypes.bool,
 };

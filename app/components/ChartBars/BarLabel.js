@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Button from 'styled/Button';
-
 // prettier-ignore
-const Styled = styled(Button)`
+const Styled = styled.span`
   text-align: left;
   padding: 2px 0 2px 0;
   line-height: 14px;
@@ -22,25 +20,19 @@ const Styled = styled(Button)`
   }
 `;
 
-function BarLabelButton({ label, onClick, allowWordBreak, color, level }) {
+function BarLabel({ label, allowWordBreak, color, level }) {
   return (
-    <Styled
-      allowWordBreak={allowWordBreak}
-      onClick={() => onClick()}
-      color={color}
-      level={level}
-    >
+    <Styled allowWordBreak={allowWordBreak} color={color} level={level}>
       {label}
     </Styled>
   );
 }
 
-BarLabelButton.propTypes = {
-  onClick: PropTypes.func,
+BarLabel.propTypes = {
   label: PropTypes.string,
   color: PropTypes.string,
   allowWordBreak: PropTypes.bool,
   level: PropTypes.number,
 };
 
-export default BarLabelButton;
+export default BarLabel;

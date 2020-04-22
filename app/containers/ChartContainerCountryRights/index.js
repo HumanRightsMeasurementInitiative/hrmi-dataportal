@@ -103,6 +103,7 @@ const prepareData = ({
   standard,
   onClick,
   intl,
+  activeCode,
 }) =>
   // prettier-ignore
   scores.map(s =>
@@ -117,6 +118,7 @@ const prepareData = ({
         key: s.key,
         label: getMetricLabel(s, intl),
         onClick: () => onClick(s.key),
+        active: activeCode === s.key,
       }
       : {
         color: dimensionCode,
@@ -127,6 +129,7 @@ const prepareData = ({
         band: getBand(s.score),
         label: getMetricLabel(s, intl),
         onClick: () => onClick(s.key),
+        active: activeCode === s.key,
       }
   );
 
@@ -146,6 +149,7 @@ export function ChartContainerCountryRights({
   dataReady,
   intl,
   onMetricClick,
+  activeCode,
 }) {
   useEffect(() => {
     onLoadData();
@@ -242,6 +246,7 @@ export function ChartContainerCountryRights({
                   key: dimension.key,
                   label: getDimensionLabel(dimension, intl),
                   onClick: () => onMetricClick(dimension.key),
+                  active: activeCode === dimension.key,
                 },
               ]}
               currentBenchmark={currentBenchmark}
@@ -261,6 +266,7 @@ export function ChartContainerCountryRights({
                 maxValue: 100,
               }}
               scoresAside
+              scoreOnHover={false}
             />
             <ChartBars
               scoresAside
@@ -271,6 +277,7 @@ export function ChartContainerCountryRights({
                 standard,
                 onClick: onMetricClick,
                 intl,
+                activeCode,
               })}
               currentBenchmark={currentBenchmark}
               standard={standard}
@@ -280,6 +287,7 @@ export function ChartContainerCountryRights({
               labelColor={`${dimensionCode}Dark`}
               grades={GRADES[type]}
               listHeader
+              scoreOnHover={false}
             />
           </Box>
           <NarrativeESR
@@ -345,6 +353,7 @@ export function ChartContainerCountryRights({
                       key: dimension.key,
                       label: getDimensionLabel(dimension, intl),
                       onClick: () => onMetricClick(dimension.key),
+                      active: activeCode === dimension.key,
                     },
                   ]}
                   labelColor={`${dimensionCode}Dark`}
@@ -361,6 +370,7 @@ export function ChartContainerCountryRights({
                     score: getCPRDimensionValue(dimension.score),
                     maxValue: 10,
                   }}
+                  scoreOnHover
                 />
                 <ChartBars
                   data={prepareData({
@@ -368,6 +378,7 @@ export function ChartContainerCountryRights({
                     dimensionCode,
                     onClick: onMetricClick,
                     intl,
+                    activeCode,
                   })}
                   commonLabel={`${intl.formatMessage(
                     rootMessages.charts.rightsColumnLabel[dimensionCode],
@@ -378,6 +389,7 @@ export function ChartContainerCountryRights({
                   bullet
                   listHeader
                   scoresAside
+                  scoreOnHover
                 />
               </Box>
             </>
@@ -423,6 +435,7 @@ ChartContainerCountryRights.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onMetricClick: PropTypes.func,
   intl: intlShape.isRequired,
+  activeCode: PropTypes.string,
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
