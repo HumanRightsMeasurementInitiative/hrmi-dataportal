@@ -64,14 +64,14 @@ const getDimensionRefs = (score, benchmark) => {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refColumn;
+    // const col = benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
-      {
-        value: score && parseFloat(score[col]),
-        style: 'dotted',
-        key: 'adjusted',
-      },
+      // {
+      //   value: score && parseFloat(score[col]),
+      //   style: 'dotted',
+      //   key: 'adjusted',
+      // },
     ];
   }
   return false;
