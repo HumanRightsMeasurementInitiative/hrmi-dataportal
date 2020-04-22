@@ -147,7 +147,7 @@ export const PATHS = {
   GROUP: 'group',
 };
 export const IMAGE_PATH =
-  '//humanrightsmeasurement.org/wp-content/uploads/2020/03';
+  '//content-store.humanrightsmeasurement.org/assets/uploads';
 
 export const XPATHS = {
   home: {

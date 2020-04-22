@@ -51,10 +51,13 @@ const Claim = styled(Heading)`
 `;
 
 const images = [
-  `${IMAGE_PATH}/Header-Ethiopian-girl-768x510.jpg`,
-  `${IMAGE_PATH}/Header-Kazakh-768x576.jpg`,
-  `${IMAGE_PATH}/Header-Cambodian-boy-768x513.jpg`,
-  `${IMAGE_PATH}/Header-boy-stripes-768x512.jpg`,
+  `${IMAGE_PATH}/intro_1.png`,
+  `${IMAGE_PATH}/intro_2.png`,
+  `${IMAGE_PATH}/intro_3.png`,
+  `${IMAGE_PATH}/intro_4.png`,
+  `${IMAGE_PATH}/intro_5.png`,
+  `${IMAGE_PATH}/intro_6.png`,
+  `${IMAGE_PATH}/intro_7.png`,
 ];
 
 export function SectionIntro({ theme }) {

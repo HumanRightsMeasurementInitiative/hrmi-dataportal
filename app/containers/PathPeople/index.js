@@ -173,7 +173,7 @@ export function PathPeople({
                   {isMinSize(size, 'large') && (
                     <Aside image>
                       <GImage
-                        src={`${IMAGE_PATH}/${peopleCode}.jpg`}
+                        src={`${IMAGE_PATH}/people_${peopleCode}.png`}
                         fit="cover"
                       />
                     </Aside>

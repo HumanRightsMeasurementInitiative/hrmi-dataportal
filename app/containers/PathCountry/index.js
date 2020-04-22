@@ -290,7 +290,7 @@ export function PathCountry({
                 {isMinSize(size, 'large') && (
                   <Aside image>
                     <GImage
-                      src={`${IMAGE_PATH}/${countryCode}.jpg`}
+                      src={`${IMAGE_PATH}/country_${countryCode}.png`}
                       fit="cover"
                     />
                   </Aside>
