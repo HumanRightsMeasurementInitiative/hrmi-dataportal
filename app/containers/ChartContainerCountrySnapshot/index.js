@@ -127,7 +127,7 @@ export function ChartContainerCountrySnapshot({
         tools={{
           howToReadConfig: {
             key: 'tab-snapshot',
-            chart: 'Bar',
+            chart: 'Snapshot',
           },
           settingsConfig: {
             key: 'tab-snapshot',
