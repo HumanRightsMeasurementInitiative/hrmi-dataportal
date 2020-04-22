@@ -313,14 +313,18 @@ function AboutCountryContainer({
       )}
       {showFAQs && <FAQs questions={showFAQs} />}
       {showCountryLink && (
-        <ButtonHighlight onClick={() => onCountryClick(countryCode)}>
-          <FormattedMessage
-            {...messages.countryLink}
-            values={{
-              country: intl.formatMessage(rootMessages.countries[countryCode]),
-            }}
-          />
-        </ButtonHighlight>
+        <div>
+          <ButtonHighlight onClick={() => onCountryClick(countryCode)}>
+            <FormattedMessage
+              {...messages.countryLink}
+              values={{
+                country: intl.formatMessage(
+                  rootMessages.countries[countryCode],
+                ),
+              }}
+            />
+          </ButtonHighlight>
+        </div>
       )}
     </Box>
   );
