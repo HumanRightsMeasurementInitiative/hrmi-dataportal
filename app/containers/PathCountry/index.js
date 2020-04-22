@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -194,6 +194,7 @@ export function PathCountry({
   onSetAsideLayer,
   asideLayer,
 }) {
+  const [activeCode, setActiveCode] = useState();
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -223,8 +224,10 @@ export function PathCountry({
 
   const onMetricClick = code => {
     if (asideLayer && asideLayer.key === code) {
+      setActiveCode(false);
       onSetAsideLayer(false);
     } else {
+      setActiveCode(code);
       onSetAsideLayer({
         type: 'aboutMetric',
         key: code,
@@ -310,6 +313,7 @@ export function PathCountry({
                     countryCode={countryCode}
                     onMetricClick={onMetricClick}
                     messageValues={messageValues}
+                    activeCode={activeCode}
                   />
                 ),
               },
@@ -329,6 +333,7 @@ export function PathCountry({
                     dataReady={dataReady}
                     allIndicators={allIndicators}
                     onMetricClick={onMetricClick}
+                    activeCode={activeCode}
                     messageValues={messageValues}
                   />
                 ),
@@ -346,6 +351,7 @@ export function PathCountry({
                     country={country}
                     dataReady={dataReady}
                     onMetricClick={onMetricClick}
+                    activeCode={activeCode}
                     messageValues={messageValues}
                   />
                 ),
@@ -363,6 +369,7 @@ export function PathCountry({
                     country={country}
                     dataReady={dataReady}
                     onMetricClick={onMetricClick}
+                    activeCode={activeCode}
                     messageValues={messageValues}
                   />
                 ),

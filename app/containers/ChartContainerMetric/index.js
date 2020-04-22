@@ -130,6 +130,7 @@ const prepareData = ({
   countries,
   intl,
   onCountryClick,
+  activeCode,
 }) =>
   // prettier-ignore
   scores.map(s =>
@@ -144,6 +145,7 @@ const prepareData = ({
         key: s.country_code,
         label: getCountryLabel(s, countries, metric, intl),
         onClick: () => onCountryClick(s.country_code),
+        active: activeCode === s.country_code,
       }
       : {
         color: metric.dimension || metric.key,
@@ -154,6 +156,7 @@ const prepareData = ({
         key: s.country_code,
         label: getCountryLabel(s, countries, metric, intl),
         onClick: () => onCountryClick(s.country_code),
+        active: activeCode === s.country_code,
       }
   );
 
@@ -182,6 +185,7 @@ export function ChartContainerMetric({
   featuredValues,
   featuredCountries,
   onCountryClick,
+  activeCode,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -284,6 +288,7 @@ export function ChartContainerMetric({
             intl,
             countries,
             onCountryClick,
+            activeCode,
           })}
           currentBenchmark={currentBenchmark}
           metric={metric}
@@ -309,6 +314,7 @@ export function ChartContainerMetric({
               intl,
               countries,
               onCountryClick,
+              activeCode,
             })}
             currentBenchmark={currentBenchmark}
             metric={metric}
@@ -332,6 +338,7 @@ ChartContainerMetric.propTypes = {
   metric: PropTypes.object.isRequired,
   standard: PropTypes.string,
   benchmark: PropTypes.string,
+  activeCode: PropTypes.string,
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
