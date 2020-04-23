@@ -170,6 +170,8 @@ function ChartCountryMetricByGroup({
         grades={GRADES.esr}
         commonLabel="By sex"
         scoresAside
+        scoreOnHover={false}
+        isStatic
       />
       {hasRawOption && (
         <Settings direction="row" justify="end" pad="small" border="top">
