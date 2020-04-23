@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Box } from 'grommet';
 import { withTheme } from 'styled-components';
 
@@ -24,7 +24,27 @@ import messages from './messages';
 
 export function NavGroups({ onSelectGroup, intl, onClose, size, nav, theme }) {
   const [search, setSearch] = useState('');
+  const [activeResult, setActiveResult] = useState(0);
+  const onKey = useCallback(
+    event => {
+      // UP
+      if (event.keyCode === 38) {
+        setActiveResult(Math.max(0, activeResult - 1));
+      }
+      // DOWN
+      if (event.keyCode === 40) {
+        setActiveResult(activeResult + 1);
+      }
+    },
+    [activeResult],
+  );
+  useEffect(() => {
+    document.addEventListener('keydown', onKey, false);
 
+    return () => {
+      document.removeEventListener('keydown', onKey, false);
+    };
+  }, [activeResult]);
   const groups = prepGroups(AT_RISK_GROUPS, search, intl);
 
   // figure out available height for IE11
@@ -51,16 +71,21 @@ export function NavGroups({ onSelectGroup, intl, onClose, size, nav, theme }) {
                   special: true,
                 },
               ]}
+              activeResult={activeResult}
               onClick={() => {
                 onClose();
                 nav(PATHS.GROUPS);
               }}
             />
           )}
+          {(!groups || groups.length === 0) && (
+            <FormattedMessage {...messages.noResults} />
+          )}
           {groups.length > 0 && (
             <NavOptionGroup
               label={intl.formatMessage(messages.optionGroups.people)}
               options={groups}
+              activeResult={search === '' ? activeResult - 1 : activeResult}
               onClick={key => {
                 onClose();
                 onSelectGroup(key);

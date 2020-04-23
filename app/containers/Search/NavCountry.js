@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -32,7 +32,27 @@ export function NavCountry({
   theme,
 }) {
   const [search, setSearch] = useState('');
+  const [activeResult, setActiveResult] = useState(0);
+  const onKey = useCallback(
+    event => {
+      // UP
+      if (event.keyCode === 38) {
+        setActiveResult(Math.max(0, activeResult - 1));
+      }
+      // DOWN
+      if (event.keyCode === 40) {
+        setActiveResult(activeResult + 1);
+      }
+    },
+    [activeResult],
+  );
+  useEffect(() => {
+    document.addEventListener('keydown', onKey, false);
 
+    return () => {
+      document.removeEventListener('keydown', onKey, false);
+    };
+  }, [activeResult]);
   const sorted = countries && prepCountries(countries, search, intl);
   // figure out available height for IE11
   const h = window.innerHeight - getHeaderHeight(size, theme);
@@ -41,7 +61,10 @@ export function NavCountry({
       <NavTop
         onClose={() => onClose()}
         search={search}
-        onSearch={s => setSearch(s)}
+        onSearch={s => {
+          setSearch(s);
+          setActiveResult(0);
+        }}
         placeholder={intl.formatMessage(messages.countrySearch)}
         size={size}
       />
@@ -58,6 +81,7 @@ export function NavCountry({
                   special: true,
                 },
               ]}
+              activeResult={activeResult}
               onClick={() => {
                 onClose();
                 nav(PATHS.COUNTRIES);
@@ -72,6 +96,7 @@ export function NavCountry({
             <NavOptionGroup
               label={intl.formatMessage(messages.optionGroups.countries)}
               options={sorted}
+              activeResult={search === '' ? activeResult - 1 : activeResult}
               onClick={key => {
                 onClose();
                 onSelectCountry(key);

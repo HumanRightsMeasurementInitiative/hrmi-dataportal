@@ -248,7 +248,6 @@ export function PathCountry({
       });
     }
   };
-  console.log(atRisk);
   return (
     <ResponsiveContext.Consumer>
       {size => (
