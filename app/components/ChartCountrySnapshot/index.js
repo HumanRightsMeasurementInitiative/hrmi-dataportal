@@ -257,7 +257,7 @@ ChartCountrySnapshot.propTypes = {
   maxValue: PropTypes.number,
   type: PropTypes.string,
   dimensionCode: PropTypes.string,
-  activeCode: PropTypes.string,
+  activeCode: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onMetricClick: PropTypes.func,
   source: PropTypes.bool,
 };

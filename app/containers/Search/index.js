@@ -13,12 +13,19 @@ import { injectIntl, intlShape } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
 import { Box, Button, Drop, TextInput, Text } from 'grommet';
 import { Close, Search as SearchIcon } from 'grommet-icons';
-
+import {
+  DIMENSIONS,
+  RIGHTS,
+  INDICATORS,
+  AT_RISK_GROUPS,
+} from 'containers/App/constants';
+import { getCountries } from 'containers/App/selectors';
 import { navigate, trackEvent } from 'containers/App/actions';
 // import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import messages from './messages';
 import SearchResults from './SearchResults';
+import { prepMetrics, prepCountries, prepGroups } from './search';
 
 const StyledTextInput = styled(TextInput)`
   font-weight: 600;
@@ -42,16 +49,33 @@ export function Search({
   example,
   drop = true,
   onSearch,
+  focus,
+  countries,
 }) {
+  const [search, setSearch] = useState('');
+  const [activeResult, setActiveResult] = useState(0);
+
   useEffect(() => {
-    if (expand && textInputRef) {
+    if ((focus || expand) && textInputRef) {
       textInputRef.current.focus();
     }
   });
 
-  const [search, setSearch] = useState('');
   const searchRef = useRef(null);
   const textInputRef = useRef(null);
+
+  let sortedCountries = [];
+  let dimensions = [];
+  let rights = [];
+  let indicators = [];
+  let groups = [];
+  if (drop && search.length > 0) {
+    sortedCountries = countries ? prepCountries(countries, search, intl) : [];
+    dimensions = prepMetrics(DIMENSIONS, 'dimensions', search, intl);
+    rights = prepMetrics(RIGHTS, 'rights', search, intl);
+    indicators = prepMetrics(INDICATORS, 'indicators', search, intl);
+    groups = prepGroups(AT_RISK_GROUPS, search, intl);
+  }
 
   return (
     <Box
@@ -78,6 +102,7 @@ export function Search({
             plain
             onClick={() => {
               onToggle();
+              setActiveResult(0);
             }}
             label={
               <Text weight={600}>{intl.formatMessage(messages.search)}</Text>
@@ -98,6 +123,7 @@ export function Search({
                   searched(evt.target.value);
                   setSearch(evt.target.value);
                   if (onSearch) onSearch(evt.target.value);
+                  setActiveResult(0);
                 }
               }}
               placeholder={
@@ -121,6 +147,7 @@ export function Search({
                   setSearch('');
                   if (onSearch) onSearch('');
                   if (onToggle) onToggle();
+                  setActiveResult(0);
                 }}
                 icon={<Close size={size} color="dark" />}
                 style={{
@@ -139,15 +166,31 @@ export function Search({
           onClickOutside={() => {
             setSearch('');
             if (onSearch) onSearch('');
+            setActiveResult(0);
           }}
         >
           <SearchResults
             onClose={() => {
               setSearch('');
               if (onSearch) onSearch('');
+              setActiveResult(0);
             }}
             search={search}
             onSelect={() => onToggle && onToggle()}
+            activeResult={activeResult}
+            setActiveResult={setActiveResult}
+            countries={sortedCountries}
+            dimensions={dimensions}
+            rights={rights}
+            indicators={indicators}
+            groups={groups}
+            maxResult={
+              sortedCountries.length +
+              groups.length +
+              rights.length +
+              indicators.length +
+              dimensions.length
+            }
           />
         </Drop>
       )}
@@ -164,10 +207,12 @@ Search.propTypes = {
   stretch: PropTypes.bool,
   expand: PropTypes.bool,
   example: PropTypes.bool,
+  focus: PropTypes.bool,
   drop: PropTypes.bool,
   size: PropTypes.string,
   theme: PropTypes.object,
   placeholder: PropTypes.string,
+  countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -193,9 +238,12 @@ const mapDispatchToProps = dispatch => ({
     );
   },
 });
+const mapStateToProps = state => ({
+  countries: getCountries(state),
+});
 
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 

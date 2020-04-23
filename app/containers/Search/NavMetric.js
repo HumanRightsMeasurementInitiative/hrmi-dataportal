@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -29,7 +29,27 @@ import messages from './messages';
 
 export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
   const [search, setSearch] = useState('');
+  const [activeResult, setActiveResult] = useState(0);
+  const onKey = useCallback(
+    event => {
+      // UP
+      if (event.keyCode === 38) {
+        setActiveResult(Math.max(0, activeResult - 1));
+      }
+      // DOWN
+      if (event.keyCode === 40) {
+        setActiveResult(activeResult + 1);
+      }
+    },
+    [activeResult],
+  );
+  useEffect(() => {
+    document.addEventListener('keydown', onKey, false);
 
+    return () => {
+      document.removeEventListener('keydown', onKey, false);
+    };
+  }, [activeResult]);
   const dimensions = prepMetrics(DIMENSIONS, 'dimensions', search, intl);
   const rights = prepMetrics(RIGHTS, 'rights', search, intl);
   const indicators = prepMetrics(INDICATORS, 'indicators', search, intl);
@@ -59,6 +79,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
                   special: true,
                 },
               ]}
+              activeResult={activeResult}
               onClick={() => {
                 onClose();
                 nav(PATHS.METRICS);
@@ -70,6 +91,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
             <NavOptionGroup
               label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
               options={dimensions}
+              activeResult={search === '' ? activeResult - 1 : activeResult}
               onClick={key => {
                 onClose();
                 onSelectMetric(key);
@@ -80,6 +102,11 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
             <NavOptionGroup
               label={intl.formatMessage(rootMessages.metricTypes.rights)}
               options={rights}
+              activeResult={
+                search === ''
+                  ? activeResult - 1 - dimensions.length
+                  : activeResult - dimensions.length
+              }
               onClick={key => {
                 onClose();
                 onSelectMetric(key);
@@ -90,6 +117,11 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
             <NavOptionGroup
               label={intl.formatMessage(rootMessages.metricTypes.indicators)}
               options={indicators}
+              activeResult={
+                search === ''
+                  ? activeResult - 1 - dimensions.length - rights.length
+                  : activeResult - dimensions.length - rights.length
+              }
               onClick={key => {
                 onClose();
                 onSelectMetric(key);
