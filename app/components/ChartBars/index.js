@@ -78,6 +78,7 @@ function ChartBars({
   scoreOnHover,
   scoresAside,
   summaryScore,
+  isStatic,
 }) {
   if (!data) return null;
   return (
@@ -121,6 +122,7 @@ function ChartBars({
                 scoreOnHover={scoreOnHover}
                 scoresAside={scoresAside}
                 summaryScore={summaryScore}
+                isStatic={isStatic}
               />
             ))}
             {summaryScore && (
@@ -181,6 +183,7 @@ ChartBars.propTypes = {
   data: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   grades: PropTypes.array,
   gradeLabels: PropTypes.bool,
+  isStatic: PropTypes.bool,
   level: PropTypes.number,
   summaryScore: PropTypes.object,
   // standard: PropTypes.string,
