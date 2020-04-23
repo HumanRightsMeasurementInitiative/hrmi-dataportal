@@ -1607,6 +1607,10 @@ export const getAsideLayer = createSelector(
   getGlobal,
   global => global.asideLayer,
 );
+export const getAsideLayerActiveCode = createSelector(
+  getAsideLayer,
+  asideLayer => asideLayer && asideLayer.code,
+);
 
 export const getCookieConsent = createSelector(
   getGlobal,

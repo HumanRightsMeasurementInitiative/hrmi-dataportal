@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -15,7 +15,11 @@ import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
 import { withTheme } from 'styled-components';
 
 import { navigate, setAsideLayer } from 'containers/App/actions';
-import { getCloseTargetMetric, getAsideLayer } from 'containers/App/selectors';
+import {
+  getCloseTargetMetric,
+  getAsideLayer,
+  getAsideLayerActiveCode,
+} from 'containers/App/selectors';
 import { PATHS, IMAGE_PATH, PAGES, RIGHTS } from 'containers/App/constants';
 import ChartContainerMetric from 'containers/ChartContainerMetric';
 import TabContainer from 'containers/TabContainer';
@@ -47,9 +51,8 @@ export function PathMetric({
   theme,
   onSetAsideLayer,
   asideLayer,
+  activeCode,
 }) {
-  const [activeCode, setActiveCode] = useState();
-
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
   const metricTitle = intl.formatMessage(
@@ -89,10 +92,8 @@ export function PathMetric({
   }
   const onCountryClick = code => {
     if (asideLayer && asideLayer.key === code) {
-      setActiveCode(false);
       onSetAsideLayer(false);
     } else {
-      setActiveCode(code);
       onSetAsideLayer({
         type: 'aboutCountry',
         key: code,
@@ -214,11 +215,13 @@ PathMetric.propTypes = {
   theme: PropTypes.object,
   onSetAsideLayer: PropTypes.func,
   asideLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  activeCode: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
   closeTarget: state => getCloseTargetMetric(state),
   asideLayer: state => getAsideLayer(state),
+  activeCode: state => getAsideLayerActiveCode(state),
 });
 
 export function mapDispatchToProps(dispatch) {
