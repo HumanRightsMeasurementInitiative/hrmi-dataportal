@@ -14,6 +14,7 @@ import BarBullet from 'components/ChartBars/BarBullet';
 import { isMinSize } from 'utils/responsive';
 import { formatScore } from 'utils/scores';
 
+import Active from './styled/Active';
 import BarButton from './BarButton';
 import BarLabel from './BarLabel';
 
@@ -25,14 +26,6 @@ const LabelWrap = styled(Box)`
 `;
 // prettier-ignore
 const ScoreAsideWrap = styled(Box)``;
-const Active = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -12px;
-  border-left: 5px solid;
-  border-color: ${({ color, theme }) => theme.global.colors[color]};
-`;
 
 export function BarWrapper({
   score,

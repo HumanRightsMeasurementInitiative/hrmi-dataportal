@@ -4,15 +4,17 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Box, Text } from 'grommet';
+import { Heading, Box, Text, Button } from 'grommet';
 
 import { COLUMNS, GRADES } from 'containers/App/constants';
 
 import ChartBars from 'components/ChartBars';
+import Active from 'components/ChartBars/styled/Active';
+
 import Source from 'components/Source';
 
 import getMetricDetails from 'utils/metric-details';
@@ -134,6 +136,7 @@ function ChartCountrySnapshot({
   grammar,
   activeCode,
 }) {
+  const [hover, setHover] = useState(false);
   const hasRights = rights.some(r => !!r.score);
   return (
     <Box
@@ -145,9 +148,28 @@ function ChartCountrySnapshot({
         <ChartArea>
           <Dimension>
             <Box direction="row" align="center">
-              <DimensionHeading color={`${dimensionCode}Dark`}>
-                <FormattedMessage {...rootMessages.dimensions[dimensionCode]} />
-              </DimensionHeading>
+              <Button
+                onClick={() => onMetricClick(dimensionCode)}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+                style={{ position: 'relative' }}
+              >
+                {(hover || activeCode === dimensionCode) && (
+                  <Active color={`${dimensionCode}Active`} />
+                )}
+
+                <DimensionHeading
+                  color={
+                    hover || activeCode === dimensionCode
+                      ? `${dimensionCode}Active`
+                      : `${dimensionCode}Dark`
+                  }
+                >
+                  <FormattedMessage
+                    {...rootMessages.dimensions[dimensionCode]}
+                  />
+                </DimensionHeading>
+              </Button>
               <Text>
                 <FormattedMessage {...rootMessages['rights-types'][type]} />
                 {` (${year})`}
