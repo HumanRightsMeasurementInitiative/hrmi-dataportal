@@ -8,10 +8,5 @@ export default styled(Button)`
     : theme.global.colors['dark-1']};
   padding: 0;
   position: relative;
-  &:hover {
-  }
-  &:focus {
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-  }
+  cursor: ${({ as }) => as === 'div' ? 'default !important' : 'pointer'}
 `;

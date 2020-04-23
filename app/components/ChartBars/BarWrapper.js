@@ -42,17 +42,17 @@ export function BarWrapper({
   level,
   scoreOnHover = true,
   scoresAside = false,
+  isStatic = false,
 }) {
   const [hover, setHover] = useState(false);
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <BarButton
-          onClick={() => {
-            score.onClick();
-          }}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
+          as={isStatic && 'div'}
+          onClick={() => (isStatic && !score.onClick) || score.onClick()}
+          onMouseEnter={() => isStatic || setHover(true)}
+          onMouseLeave={() => isStatic || setHover(false)}
         >
           {(hover || score.active) && <Active color={`${score.color}Active`} />}
           <Box key={score.key} direction="row" align="center">
@@ -130,6 +130,7 @@ BarWrapper.propTypes = {
   hasBackground: PropTypes.bool,
   scoreOnHover: PropTypes.bool,
   scoresAside: PropTypes.bool,
+  isStatic: PropTypes.bool,
   labelColor: PropTypes.string,
   level: PropTypes.number,
   // standard: PropTypes.string,
