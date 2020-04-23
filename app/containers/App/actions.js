@@ -31,6 +31,7 @@ import {
   TRACK_EVENT,
   SET_RAW,
   TOGGLE_GROUP,
+  HIGHLIGHT_GROUP,
 } from './constants';
 
 export function checkCookieConsent() {
@@ -220,5 +221,11 @@ export function setAsideLayer(args) {
   return {
     type: ASIDE_LAYER,
     layer: args,
+  };
+}
+export function setHighlightGroup(code) {
+  return {
+    type: HIGHLIGHT_GROUP,
+    code,
   };
 }

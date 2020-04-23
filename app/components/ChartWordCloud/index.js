@@ -11,6 +11,9 @@ import styled from 'styled-components';
 import { Heading, Text, Box } from 'grommet';
 import Source from 'components/Source';
 import Hint from 'styled/Hint';
+
+import quasiEquals from 'utils/quasi-equals';
+
 import rootMessages from 'messages';
 import Word from './Word';
 import messages from './messages';
@@ -49,6 +52,9 @@ export function ChartWordCloud({
   dimension,
   intl,
   border = true,
+  highlight,
+  setHighlight,
+  showIntro,
 }) {
   const [activeWord, setActiveWord] = useState(null);
 
@@ -65,20 +71,28 @@ export function ChartWordCloud({
       }
       return a.proportion > b.proportion ? -1 : 1;
     });
+  // prettier-ignore
+  const wordHighlighted = highlight && scores
+    ? scores.find(s => quasiEquals(s.people_code, highlight))
+    : activeWord;
   return (
     <Styled
       direction="column"
       pad={{ bottom: 'large', top: 'xsmall' }}
       border={border ? 'top' : false}
     >
-      <StyledRightHeadingAbove>
-        <FormattedMessage {...rootMessages.labels.atRiksFor} />
-      </StyledRightHeadingAbove>
-      <StyledRightHeading level={subright ? 5 : 4}>
-        <FormattedMessage
-          {...rootMessages.rights[data.subright || data.right]}
-        />
-      </StyledRightHeading>
+      {showIntro && (
+        <StyledRightHeadingAbove>
+          <FormattedMessage {...rootMessages.labels.atRiksFor} />
+        </StyledRightHeadingAbove>
+      )}
+      {showIntro && (
+        <StyledRightHeading level={subright ? 5 : 4}>
+          <FormattedMessage
+            {...rootMessages.rights[data.subright || data.right]}
+          />
+        </StyledRightHeading>
+      )}
       <ActiveWord>
         <Box>
           <Text size="small" style={{ fontStyle: 'italic' }}>
@@ -90,16 +104,16 @@ export function ChartWordCloud({
             <Text size="medium">&nbsp;</Text>
           </Box>
         )}
-        {activeWord && (
+        {wordHighlighted && (
           <Box>
             <Text size="medium">
               <span style={{ fontWeight: 700 }}>
-                {`${Math.round(100 * activeWord.proportion)}% `}
+                {`${Math.round(100 * wordHighlighted.proportion)}% `}
               </span>
               <FormattedMessage {...messages.highlightStart} />
               <span style={{ color: '#DB7E00', fontWeight: 600 }}>
                 {` ${intl.formatMessage(
-                  rootMessages['people-at-risk'][activeWord.people_code],
+                  rootMessages['people-at-risk'][wordHighlighted.people_code],
                 )} `}
               </span>
               <FormattedMessage {...messages.highlightEnd} />
@@ -120,8 +134,13 @@ export function ChartWordCloud({
               dimension={dimension}
               right={data.subright || data.right}
               key={s.people_code}
-              setActive={active => setActiveWord(active ? s : null)}
-              active={activeWord && activeWord.people_code === s.people_code}
+              setActive={active => {
+                setActiveWord(active ? s : null);
+                if (setHighlight) setHighlight(false);
+              }}
+              active={
+                wordHighlighted && wordHighlighted.people_code === s.people_code
+              }
             />
           ))}
       </Words>
@@ -135,6 +154,9 @@ ChartWordCloud.propTypes = {
   dimension: PropTypes.string,
   subright: PropTypes.bool,
   border: PropTypes.bool,
+  showIntro: PropTypes.bool,
+  highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  setHighlight: PropTypes.func,
   intl: intlShape.isRequired,
 };
 

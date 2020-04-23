@@ -66,6 +66,7 @@ import {
   TRACK_EVENT,
   TOGGLE_GROUP,
   PATHS,
+  HIGHLIGHT_GROUP,
 } from './constants';
 
 const MAX_LOAD_ATTEMPTS = 5;
@@ -265,6 +266,26 @@ export function* setStandardSaga({ value }) {
       category: 'Setting',
       action: 'Change standard',
       value,
+    }),
+  );
+  // navigate to country and default standard
+  const path = yield select(getRouterPath);
+  yield put(replace(`${path}?${searchParams.toString()}`));
+}
+export function* highlightGroupSaga({ code }) {
+  // get URL search params
+  const searchParams = yield select(getRouterSearchParams);
+  if (code) {
+    yield searchParams.set('atRisk', code);
+  } else {
+    searchParams.delete('atRisk');
+  }
+
+  yield put(
+    trackEvent({
+      category: 'Setting',
+      action: 'Change at risk group highlight',
+      value: code,
     }),
   );
   // navigate to country and default standard
@@ -548,6 +569,7 @@ export default function* defaultSaga() {
   yield takeLatest(SET_TAB, setTabSaga);
   yield takeLatest(SET_RAW, setRawSaga);
   yield takeLatest(TOGGLE_GROUP, toggleGroupSaga);
+  yield takeLatest(HIGHLIGHT_GROUP, highlightGroupSaga);
   yield takeLatest(NAVIGATE, navigateSaga);
   yield takeLatest(CHECK_COOKIECONSENT, checkCookieConsentSaga);
   yield takeLatest(SET_COOKIECONSENT, setCookieConsentSaga);
