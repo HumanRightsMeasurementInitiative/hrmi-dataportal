@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -29,6 +29,7 @@ import {
   getESRIndicators,
   getCountryGrammar,
   getAsideLayer,
+  getAsideLayerActiveCode,
 } from 'containers/App/selectors';
 
 import {
@@ -193,8 +194,9 @@ export function PathCountry({
   theme,
   onSetAsideLayer,
   asideLayer,
+  activeCode,
 }) {
-  const [activeCode, setActiveCode] = useState();
+  // const [activeCode, setActiveCode] = useState();
   useInjectSaga({ key: 'app', saga });
 
   useEffect(() => {
@@ -224,10 +226,8 @@ export function PathCountry({
 
   const onMetricClick = code => {
     if (asideLayer && asideLayer.key === code) {
-      setActiveCode(false);
       onSetAsideLayer(false);
     } else {
-      setActiveCode(code);
       onSetAsideLayer({
         type: 'aboutMetric',
         key: code,
@@ -436,6 +436,7 @@ PathCountry.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   onCategoryClick: PropTypes.func,
   active: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  activeCode: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   match: PropTypes.object,
   atRisk: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
@@ -474,6 +475,7 @@ const mapStateToProps = createStructuredSelector({
   countryGrammar: (state, { match }) =>
     getCountryGrammar(state, match.params.country),
   asideLayer: state => getAsideLayer(state),
+  activeCode: state => getAsideLayerActiveCode(state),
 });
 
 export function mapDispatchToProps(dispatch) {
