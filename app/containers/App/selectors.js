@@ -168,6 +168,11 @@ export const getTabSearch = createSelector(
   getRouterSearchParams,
   search => (search.has('tab') ? search.get('tab') : '0'),
 );
+export const getAtRiskSearch = createSelector(
+  getRouterSearchParams,
+  search => search.has('atRisk') && search.get('atRisk'),
+);
+
 export const getScaleSearch = createSelector(
   getRouterSearchParams,
   search =>
@@ -1086,7 +1091,7 @@ const atRiskScores = (
 export const getPeopleAtRiskForCountry = createSelector(
   (state, { country }) => country,
   getAtRiskData,
-  getCPRYear,
+  getMaxYearAtRisk,
   (country, data, year) =>
     data &&
     DIMENSIONS.map(dim => ({

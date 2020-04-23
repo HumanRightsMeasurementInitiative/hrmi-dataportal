@@ -30,6 +30,7 @@ import {
   getCountryGrammar,
   getAsideLayer,
   getAsideLayerActiveCode,
+  getAtRiskSearch,
 } from 'containers/App/selectors';
 
 import {
@@ -37,6 +38,7 @@ import {
   navigate,
   trackEvent,
   setAsideLayer,
+  setHighlightGroup,
 } from 'containers/App/actions';
 import {
   // INCOME_GROUPS,
@@ -195,6 +197,8 @@ export function PathCountry({
   onSetAsideLayer,
   asideLayer,
   activeCode,
+  highlightGroup,
+  onSetHighlightGroup,
 }) {
   // const [activeCode, setActiveCode] = useState();
   useInjectSaga({ key: 'app', saga });
@@ -244,6 +248,7 @@ export function PathCountry({
       });
     }
   };
+  console.log(atRisk);
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -385,6 +390,8 @@ export function PathCountry({
                       countryTitle={countryTitle}
                       countryCode={countryCode}
                       messageValues={messageValues}
+                      highlight={highlightGroup}
+                      setHighlight={onSetHighlightGroup}
                     />
                   ),
               },
@@ -457,6 +464,8 @@ PathCountry.propTypes = {
   theme: PropTypes.object,
   onSetAsideLayer: PropTypes.func,
   asideLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  highlightGroup: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onSetHighlightGroup: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -476,10 +485,14 @@ const mapStateToProps = createStructuredSelector({
     getCountryGrammar(state, match.params.country),
   asideLayer: state => getAsideLayer(state),
   activeCode: state => getAsideLayerActiveCode(state),
+  highlightGroup: state => getAtRiskSearch(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
+    onSetHighlightGroup: code => {
+      dispatch(setHighlightGroup(code));
+    },
     onSetAsideLayer: config => {
       dispatch(setAsideLayer(config));
     },

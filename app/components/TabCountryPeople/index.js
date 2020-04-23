@@ -43,7 +43,7 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-function TabCountryPeople({ data }) {
+function TabCountryPeople({ data, highlight, setHighlight }) {
   return (
     <>
       <StyledHeading responsive={false} level={2}>
@@ -71,6 +71,8 @@ function TabCountryPeople({ data }) {
                   {Object.values(right.atRiskData).map(
                     (d, indexInner, array) => (
                       <ChartWordCloud
+                        highlight={highlight}
+                        setHighlight={setHighlight}
                         key={d.code}
                         data={d}
                         dimension={right.dimension}
@@ -79,6 +81,7 @@ function TabCountryPeople({ data }) {
                           (array.length === 1 && index > 0) ||
                           (array.length > 1 && indexInner > 0)
                         }
+                        showIntro
                       />
                     ),
                   )}
@@ -93,6 +96,8 @@ function TabCountryPeople({ data }) {
 TabCountryPeople.propTypes = {
   hasAside: PropTypes.bool,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  setHighlight: PropTypes.func,
 };
 
 export default TabCountryPeople;

@@ -50,6 +50,7 @@ export const SET_BENCHMARK = 'hrmi/App/SET_BENCHMARK';
 export const SET_TAB = 'hrmi/App/SET_TAB';
 export const SET_RAW = 'hrmi/App/SET_RAW';
 export const TOGGLE_GROUP = 'hrmi/App/TOGGLE_GROUP';
+export const HIGHLIGHT_GROUP = 'hrmi/App/HIGHLIGHT_GROUP';
 
 // state actions
 export const ASIDE_LAYER = 'hrmi/App/ASIDE_LAYER';
