@@ -10,6 +10,7 @@ export default styled(OptionButton)`
   border-color: ${({ theme }) => theme.global.colors['light-4']};
   padding: 10px 0;
   font-weight: ${({ special }) => (special ? '600' : '400')};
+  position: relative;
   &:last-child {
     border-bottom: 1px solid;
     border-color: ${({ theme }) => theme.global.colors['light-4']};

@@ -1,17 +1,10 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Box } from 'grommet';
 
-import {
-  DIMENSIONS,
-  RIGHTS,
-  INDICATORS,
-  AT_RISK_GROUPS,
-} from 'containers/App/constants';
-import { getCountries } from 'containers/App/selectors';
 import {
   selectCountry,
   selectMetric,
@@ -22,32 +15,52 @@ import Hint from 'styled/Hint';
 import rootMessages from 'messages';
 import messages from './messages';
 
-import { prepMetrics, prepCountries, prepGroups } from './search';
-
 import NavOptionGroup from './NavOptionGroup';
 
 export function SearchResults({
   countries,
+  dimensions,
+  rights,
+  indicators,
+  groups,
   onSelectCountry,
   onSelectMetric,
   onSelectGroup,
   onSelect,
   intl,
   onClose,
-  search,
+  activeResult,
+  setActiveResult,
+  maxResult,
 }) {
-  const sortedCountries = countries && prepCountries(countries, search, intl);
-  const dimensions = prepMetrics(DIMENSIONS, 'dimensions', search, intl);
-  const rights = prepMetrics(RIGHTS, 'rights', search, intl);
-  const indicators = prepMetrics(INDICATORS, 'indicators', search, intl);
-  const groups = prepGroups(AT_RISK_GROUPS, search, intl);
+  const onKey = useCallback(
+    event => {
+      // UP
+      if (event.keyCode === 38) {
+        setActiveResult(Math.max(0, activeResult - 1));
+      }
+      // DOWN
+      if (event.keyCode === 40) {
+        setActiveResult(Math.min(activeResult + 1, maxResult - 1));
+      }
+    },
+    [activeResult, maxResult],
+  );
+  useEffect(() => {
+    document.addEventListener('keydown', onKey, false);
+
+    return () => {
+      document.removeEventListener('keydown', onKey, false);
+    };
+  }, [activeResult, maxResult]);
+
   const hasMetrics =
     dimensions.length > 0 || rights.length > 0 || indicators.length > 0;
-  const hasCountries = sortedCountries && sortedCountries.length > 0;
+  const hasCountries = countries && countries.length > 0;
   const hasGroups = groups && groups.length > 0;
   return (
     <Box direction="column" pad="medium">
-      {!hasCountries && !hasMetrics && (
+      {!hasCountries && !hasMetrics && !hasGroups && (
         <Hint italic>
           <FormattedMessage {...messages.noResults} />
         </Hint>
@@ -56,6 +69,7 @@ export function SearchResults({
         <NavOptionGroup
           label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
           options={dimensions}
+          activeResult={activeResult}
           onClick={key => {
             onClose();
             onSelect();
@@ -67,6 +81,7 @@ export function SearchResults({
         <NavOptionGroup
           label={intl.formatMessage(rootMessages.metricTypes.rights)}
           options={rights}
+          activeResult={activeResult - dimensions.length}
           onClick={key => {
             onClose();
             onSelect();
@@ -78,6 +93,7 @@ export function SearchResults({
         <NavOptionGroup
           label={intl.formatMessage(rootMessages.metricTypes.indicators)}
           options={indicators}
+          activeResult={activeResult - dimensions.length - rights.length}
           onClick={key => {
             onClose();
             onSelect();
@@ -88,7 +104,10 @@ export function SearchResults({
       {hasCountries && (
         <NavOptionGroup
           label={intl.formatMessage(rootMessages.labels.countries)}
-          options={sortedCountries}
+          options={countries}
+          activeResult={
+            activeResult - dimensions.length - rights.length - indicators.length
+          }
           onClick={key => {
             onClose();
             onSelect();
@@ -100,6 +119,13 @@ export function SearchResults({
         <NavOptionGroup
           label={intl.formatMessage(rootMessages.labels.people)}
           options={groups}
+          activeResult={
+            activeResult -
+            dimensions.length -
+            rights.length -
+            indicators.length -
+            countries.length
+          }
           onClick={key => {
             onClose();
             onSelect();
@@ -115,16 +141,19 @@ SearchResults.propTypes = {
   onSelectCountry: PropTypes.func,
   onSelectMetric: PropTypes.func,
   onSelectGroup: PropTypes.func,
-  countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  setActiveResult: PropTypes.func,
+  countries: PropTypes.array,
+  indicators: PropTypes.array,
+  rights: PropTypes.array,
+  dimensions: PropTypes.array,
+  groups: PropTypes.array,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
   search: PropTypes.string,
   intl: intlShape.isRequired,
+  activeResult: PropTypes.number,
+  maxResult: PropTypes.number,
 };
-
-const mapStateToProps = state => ({
-  countries: getCountries(state),
-});
 
 export function mapDispatchToProps(dispatch) {
   return {
@@ -135,7 +164,7 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 

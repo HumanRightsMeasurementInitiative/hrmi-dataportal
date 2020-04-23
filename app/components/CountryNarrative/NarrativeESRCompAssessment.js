@@ -131,7 +131,7 @@ NarrativeESRCompAssessment.propTypes = {
   intl: intlShape.isRequired,
   comparativeScore: PropTypes.number,
   comparativeRights: PropTypes.string,
-  groupAverageScore: PropTypes.number,
+  groupAverageScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
 };
 
 export default injectIntl(NarrativeESRCompAssessment);

@@ -410,7 +410,7 @@ TabCountryReport.propTypes = {
   dataReady: PropTypes.bool,
   hasDimensionScore: PropTypes.bool,
   type: PropTypes.string,
-  activeCode: PropTypes.string,
+  activeCode: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimension: PropTypes.string,
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),

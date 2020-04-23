@@ -214,6 +214,7 @@ export function PathPeople({
                                     onClick={() =>
                                       onSelectCountry(code, peopleCode)
                                     }
+                                    key={code}
                                   >
                                     {rootMessages.countries[code] && (
                                       <FormattedMessage
