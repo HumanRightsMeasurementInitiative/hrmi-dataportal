@@ -60,7 +60,7 @@ export function PathMetric({
   let imageSrc;
 
   if (metric.metricType === 'dimensions') {
-    imageSrc = `${IMAGE_PATH}/metric_${metricCode}.png`;
+    imageSrc = `${IMAGE_PATH}/dimension_${metricCode}.png`;
   }
   if (metric.metricType === 'rights') {
     const right = RIGHTS.find(r => r.key === metricCode);
@@ -77,7 +77,7 @@ export function PathMetric({
     }
   }
   if (metric.metricType === 'indicators') {
-    imageSrc = `${IMAGE_PATH}/metric_${metricCode}.png`;
+    imageSrc = `${IMAGE_PATH}/indicator_${metricCode}.png`;
     ancestors.push({
       type: 'dimensions',
       key: 'esr',
