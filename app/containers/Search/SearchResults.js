@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -33,15 +33,18 @@ export function SearchResults({
   setActiveResult,
   maxResult,
 }) {
+  const [focus, setFocus] = useState(false);
   const onKey = useCallback(
     event => {
       // UP
       if (event.keyCode === 38) {
         setActiveResult(Math.max(0, activeResult - 1));
+        setFocus(true);
       }
       // DOWN
       if (event.keyCode === 40) {
         setActiveResult(Math.min(activeResult + 1, maxResult - 1));
+        setFocus(true);
       }
     },
     [activeResult, maxResult],
@@ -75,6 +78,8 @@ export function SearchResults({
             onSelect();
             onSelectMetric(key);
           }}
+          focus={focus}
+          onFocus={index => setActiveResult(index)}
         />
       )}
       {rights.length > 0 && (
@@ -87,6 +92,8 @@ export function SearchResults({
             onSelect();
             onSelectMetric(key);
           }}
+          focus={focus}
+          onFocus={index => setActiveResult(index + dimensions.length)}
         />
       )}
       {indicators.length > 0 && (
@@ -99,6 +106,10 @@ export function SearchResults({
             onSelect();
             onSelectMetric(key);
           }}
+          focus={focus}
+          onFocus={index =>
+            setActiveResult(index + dimensions.length + rights.length)
+          }
         />
       )}
       {hasCountries && (
@@ -113,6 +124,12 @@ export function SearchResults({
             onSelect();
             onSelectCountry(key);
           }}
+          focus={focus}
+          onFocus={index =>
+            setActiveResult(
+              index + dimensions.length + rights.length + indicators.length,
+            )
+          }
         />
       )}
       {hasGroups && (
@@ -131,6 +148,16 @@ export function SearchResults({
             onSelect();
             onSelectGroup(key);
           }}
+          focus={focus}
+          onFocus={index =>
+            setActiveResult(
+              index +
+                dimensions.length +
+                rights.length +
+                indicators.length +
+                countries.length,
+            )
+          }
         />
       )}
     </Box>

@@ -30,18 +30,21 @@ import messages from './messages';
 export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
   const [search, setSearch] = useState('');
   const [activeResult, setActiveResult] = useState(0);
+  const [focus, setFocus] = useState(false);
   const onKey = useCallback(
     event => {
       // UP
       if (event.keyCode === 38) {
         setActiveResult(Math.max(0, activeResult - 1));
+        setFocus(true);
       }
       // DOWN
       if (event.keyCode === 40) {
         setActiveResult(activeResult + 1);
+        setFocus(true);
       }
     },
-    [activeResult],
+    [activeResult, search],
   );
   useEffect(() => {
     document.addEventListener('keydown', onKey, false);
@@ -84,6 +87,8 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
                 onClose();
                 nav(PATHS.METRICS);
               }}
+              focus={focus}
+              onFocus={index => setActiveResult(index)}
             />
           )}
           {!hasMetrics && <FormattedMessage {...messages.noResults} />}
@@ -96,6 +101,10 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
                 onClose();
                 onSelectMetric(key);
               }}
+              focus={focus}
+              onFocus={index =>
+                setActiveResult(search === '' ? index + 1 : index)
+              }
             />
           )}
           {rights.length > 0 && (
@@ -111,6 +120,14 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
                 onClose();
                 onSelectMetric(key);
               }}
+              focus={focus}
+              onFocus={index =>
+                setActiveResult(
+                  search === ''
+                    ? index + 1 + dimensions.length
+                    : index + dimensions.length,
+                )
+              }
             />
           )}
           {indicators.length > 0 && (
@@ -126,6 +143,14 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
                 onClose();
                 onSelectMetric(key);
               }}
+              focus={focus}
+              onFocus={index =>
+                setActiveResult(
+                  search === ''
+                    ? index + 1 + dimensions.length + rights.length
+                    : index + dimensions.length + rights.length,
+                )
+              }
             />
           )}
         </Box>

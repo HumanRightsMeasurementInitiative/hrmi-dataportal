@@ -54,15 +54,14 @@ export function Search({
 }) {
   const [search, setSearch] = useState('');
   const [activeResult, setActiveResult] = useState(0);
+  const searchRef = useRef(null);
+  const textInputRef = useRef(null);
 
   useEffect(() => {
     if ((focus || expand) && textInputRef) {
       textInputRef.current.focus();
     }
-  });
-
-  const searchRef = useRef(null);
-  const textInputRef = useRef(null);
+  }, [searched, focus, expand]);
 
   let sortedCountries = [];
   let dimensions = [];
