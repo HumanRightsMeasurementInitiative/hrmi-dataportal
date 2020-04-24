@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box, Text } from 'grommet';
@@ -18,7 +18,10 @@ export function NavOptionGroup({
   onClick,
   subject,
   activeResult,
+  focus,
+  onFocus,
 }) {
+  const myRefs = useRef([]);
   const onEnter = useCallback(
     event => {
       if (event.keyCode === 13) {
@@ -35,6 +38,12 @@ export function NavOptionGroup({
       document.removeEventListener('keydown', onEnter, false);
     };
   }, [options, activeResult]);
+
+  useEffect(() => {
+    if (focus && myRefs && myRefs.current && myRefs.current[activeResult]) {
+      myRefs.current[activeResult].focus();
+    }
+  }, [options, activeResult, focus]);
   return (
     <div>
       <NavOptionWrap>
@@ -48,6 +57,10 @@ export function NavOptionGroup({
             key={m.code}
             onClick={() => onClick(m.code)}
             special={m.special}
+            ref={el => {
+              myRefs.current[index] = el;
+            }}
+            onFocus={() => onFocus(index)}
           >
             {index === activeResult && <Active color="dark" />}
             <Box direction="row" align="end" fill="horizontal" width="100%">
@@ -65,7 +78,9 @@ NavOptionGroup.propTypes = {
   subject: PropTypes.string,
   options: PropTypes.array,
   onClick: PropTypes.func,
+  onFocus: PropTypes.func,
   activeResult: PropTypes.number,
+  focus: PropTypes.bool,
 };
 
 export default NavOptionGroup;
