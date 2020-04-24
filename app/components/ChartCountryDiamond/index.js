@@ -182,7 +182,7 @@ const getRightGroups = (
       .map(right => ({
         key: right.key,
         value: getDimensionValue(right, scores, standard, benchmark),
-        title: intl.formatMessage(rootMessages['rights-short'][right.key]),
+        title: intl.formatMessage(rootMessages['rights-xshort'][right.key]),
         refValues:
         right.type === 'esr' && getDimensionRefs(right, scores, standard, benchmark),
       }))
