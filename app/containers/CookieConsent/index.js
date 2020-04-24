@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -6,7 +6,10 @@ import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Box, Layer, Paragraph } from 'grommet';
-import { getCookieConsent } from 'containers/App/selectors';
+import {
+  getCookieConsent,
+  getCookieConsentChecked,
+} from 'containers/App/selectors';
 import { checkCookieConsent, setCookieConsent } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -52,19 +55,24 @@ const ButtonWrap = styled.div`
   margin: 0 auto;
 `;
 
-export function CookieConsent({ init, cookieConsent, intl, consent }) {
+export function CookieConsent({ init, cookieConsent, intl, consent, checked }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     init();
   }, []);
 
-  const [showDialogue, setShowDialogue] = useState(false);
+  // no longer used - provided an option to reconfigure your settings
+  // const [showDialogue, setShowDialogue] = useState(false);
 
   const consentUnset = cookieConsent !== 'true' && cookieConsent !== 'false';
+  console.log('Show cookie consent dialogue: ', checked && consentUnset);
+  console.log('Cookie consent status: ', cookieConsent);
+  console.log('Cookie consent checked: ', checked);
+  // console.log('showDialogue', showDialogue);
 
   return (
     <Styled>
-      {(consentUnset || showDialogue) && (
+      {checked && consentUnset && (
         <Layer
           position="bottom-right"
           plain
@@ -86,7 +94,7 @@ export function CookieConsent({ init, cookieConsent, intl, consent }) {
               <ButtonHighlightPrimary
                 onClick={() => {
                   consent('true');
-                  setShowDialogue(false);
+                  // setShowDialogue(false);
                 }}
               >
                 <FormattedMessage {...messages.buttonAccept} />
@@ -94,7 +102,7 @@ export function CookieConsent({ init, cookieConsent, intl, consent }) {
               <ButtonHighlightSecondary
                 onClick={() => {
                   consent('false');
-                  setShowDialogue(false);
+                  // setShowDialogue(false);
                 }}
               >
                 <FormattedMessage {...messages.buttonReject} />
@@ -120,11 +128,13 @@ CookieConsent.propTypes = {
   init: PropTypes.func,
   consent: PropTypes.func,
   cookieConsent: PropTypes.string,
+  checked: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   cookieConsent: state => getCookieConsent(state),
+  checked: state => getCookieConsentChecked(state),
 });
 
 export function mapDispatchToProps(dispatch) {
