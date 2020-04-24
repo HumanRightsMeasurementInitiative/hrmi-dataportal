@@ -493,6 +493,7 @@ export function* navigateSaga({ location, args }) {
 
 export function* checkCookieConsentSaga() {
   const consentStatus = Cookies.get(COOKIECONSENT_NAME);
+  console.log('Checking for cookie consent. Current status: ', consentStatus);
   yield disableAnalytics(consentStatus !== 'true');
   yield put(cookieConsentChecked(consentStatus));
 }
@@ -502,8 +503,10 @@ export function* setCookieConsentSaga({ status }) {
 }
 // status = consentStatus
 export function* initialiseAnalyticsSaga({ status }) {
-  const initialisedGA = yield select(getGAStatus);
+  console.log('Initialise Google Analytics?', status);
   if (status === 'true') {
+    const initialisedGA = yield select(getGAStatus);
+    console.log('Already initialised? ', initialisedGA);
     if (!initialisedGA) {
       ReactGA.initialize(GA_PROPERTY_ID, { debug: false, titleCase: false });
       ReactGA.set({ anonymizeIp: true });
