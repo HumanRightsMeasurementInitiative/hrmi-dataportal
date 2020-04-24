@@ -28,6 +28,7 @@ import {
 // The initial state of the App
 export const initialState = {
   cookieConsent: '',
+  cookieConsentChecked: false,
   gaInitiliased: false,
   loading: false,
   error: false,
@@ -119,9 +120,12 @@ const appReducer = (state = initialState, action) =>
         draft.asideLayer = action.layer;
         break;
       case COOKIECONSENT_CHECKED:
+        console.log('Store: storing cookie consent status: ', action.status);
         draft.cookieConsent = action.status;
+        draft.cookieConsentChecked = true;
         break;
       case GA_INITIALISED:
+        console.log('Store: storing Google Analytics status: ', action.status);
         draft.gaInitiliased = action.status;
         break;
     }
