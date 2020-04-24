@@ -33,15 +33,18 @@ export function NavCountry({
 }) {
   const [search, setSearch] = useState('');
   const [activeResult, setActiveResult] = useState(0);
+  const [focus, setFocus] = useState(false);
   const onKey = useCallback(
     event => {
       // UP
       if (event.keyCode === 38) {
         setActiveResult(Math.max(0, activeResult - 1));
+        setFocus(true);
       }
       // DOWN
       if (event.keyCode === 40) {
         setActiveResult(activeResult + 1);
+        setFocus(true);
       }
     },
     [activeResult],
@@ -87,6 +90,8 @@ export function NavCountry({
                 nav(PATHS.COUNTRIES);
               }}
               special
+              focus={focus}
+              onFocus={index => setActiveResult(index)}
             />
           )}
           {(!sorted || sorted.length === 0) && (
@@ -101,6 +106,8 @@ export function NavCountry({
                 onClose();
                 onSelectCountry(key);
               }}
+              focus={focus}
+              onFocus={index => setActiveResult(index + 1)}
             />
           )}
         </Box>

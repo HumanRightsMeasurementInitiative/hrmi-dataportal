@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Button } from 'grommet';
 
-const OptionButton = props => <Button plain {...props} />;
+const OptionButton = React.forwardRef((props, ref) => (
+  <Button plain {...props} ref={ref} />
+));
 
 export default styled(OptionButton)`
   border-top: 1px solid;
