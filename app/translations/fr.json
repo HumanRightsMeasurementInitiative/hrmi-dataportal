@@ -4,7 +4,7 @@
   "hrmi.app.metaTitle": "Rights Tracker de l'HRMI",
   "hrmi.app.metaDescription": "Rights Tracker de l'HRMI - Mesurer la performance des pays en matière de droits humains",
   "hrmi.components.Sections.intro": "Explorez les scores des droits humains à travers les pays, les droits et les personnes.",
-  "hrmi.components.Sections.dataCards.title": "Nos données",
+  "hrmi.components.Sections.dataCards.title": "Utilisez nos données",
   "hrmi.components.Sections.dataCards.countries": "Pays",
   "hrmi.components.Sections.dataCards.countriesTeaser": "Quels sont les résultats des pays ?",
   "hrmi.components.Sections.dataCards.metrics": "Droits",
@@ -425,7 +425,7 @@
   "hrmi.people-at-risk.6": "Personnes ayant des croyances ou des pratiques religieuses spécifiques",
   "hrmi.people-at-risk.7": "Personnes de certaines nationalités",
   "hrmi.people-at-risk.8": "Personnes résidant dans des zones géographiques particulières",
-  "hrmi.people-at-risk.9": "Ressortissants étrangers hors du territoire de l'État",
+  "hrmi.people-at-risk.9": "Les gens au-delà des frontières d'un pays",
   "hrmi.people-at-risk.10": "Femmes et/ou filles",
   "hrmi.people-at-risk.11": "Personnes issues des communautés LGBTQIA+",
   "hrmi.people-at-risk.12": "Enfants",
@@ -867,7 +867,7 @@
   "hrmi.containers.PathPeople.header": "We conducted our annual survey of human rights experts in {no} countries in 2019.",
   "hrmi.containers.PathPeople.text": "Human rights experts said that {group} were particularly at risk of rights violations in the following countries.",
   "hrmi.containers.PathPeopleOverview.title": "{no} at risk groups",
-  "hrmi.containers.PathPeopleOverview.header": "For {no} countries, you can find out which people human rights experts said were particularly at risk of human rights violations.",
+  "hrmi.containers.PathPeopleOverview.header": "Pour les {no} pays inclus dans notre enquête annuelle, nous avons demandé à des experts des droits humains de nous indiquer, parmi une liste d'options, quelles étaient les personnes les plus exposées à subir la violation de leurs droits.",
   "hrmi.containers.Search.optionGroups.overview": "Overview",
   "hrmi.containers.Search.optionGroups.countries": "Country profiles",
   "hrmi.containers.Search.optionGroups.people": "People at risk groups",
@@ -890,5 +890,5 @@
   "hrmi.containers.AboutCountryContainer.countryLink": "Explore {country}",
   "hrmi.components.HINote.hiNote": "{hiLabel} High income country: For these countries it is best to use the high income assessment standard",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
-  "hrmi.components.AboutMetric.titleStandards": "What assessment standard is the indicator used for?"
+  "hrmi.components.AboutMetric.titleStandards": "Pour quelle norme d'évaluation l'indicateur est-il utilisé?"
 }
