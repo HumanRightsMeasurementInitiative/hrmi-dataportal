@@ -1621,6 +1621,10 @@ export const getCookieConsent = createSelector(
   getGlobal,
   global => global.cookieConsent,
 );
+export const getCookieConsentApp = createSelector(
+  getGlobal,
+  global => global.cookieConsentApp,
+);
 export const getCookieConsentChecked = createSelector(
   getGlobal,
   global => global.cookieConsentChecked,
