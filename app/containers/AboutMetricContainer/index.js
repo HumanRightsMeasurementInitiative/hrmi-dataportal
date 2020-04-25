@@ -193,7 +193,9 @@ export function AboutMetricContainer({
                       }}
                     >
                       <TextRelative>
-                        <FormattedMessage {...rootMessages.rights[child.key]} />
+                        <FormattedMessage
+                          {...rootMessages['rights-short'][child.key]}
+                        />
                       </TextRelative>
                       <FormNext size="large" />
                     </ButtonRelative>
