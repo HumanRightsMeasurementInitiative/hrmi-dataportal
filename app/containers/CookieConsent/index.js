@@ -8,6 +8,7 @@ import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Box, Layer, Paragraph } from 'grommet';
 import {
   getCookieConsent,
+  getCookieConsentApp,
   getCookieConsentChecked,
 } from 'containers/App/selectors';
 import { checkCookieConsent, setCookieConsent } from 'containers/App/actions';
@@ -55,7 +56,14 @@ const ButtonWrap = styled.div`
   margin: 0 auto;
 `;
 
-export function CookieConsent({ init, cookieConsent, intl, consent, checked }) {
+export function CookieConsent({
+  init,
+  cookieConsent,
+  cookieConsentApp,
+  intl,
+  onConsent,
+  checked,
+}) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     init();
@@ -64,9 +72,14 @@ export function CookieConsent({ init, cookieConsent, intl, consent, checked }) {
   // no longer used - provided an option to reconfigure your settings
   // const [showDialogue, setShowDialogue] = useState(false);
 
-  const consentUnset = cookieConsent !== 'true' && cookieConsent !== 'false';
+  const consentUnset =
+    cookieConsent !== 'true' &&
+    cookieConsent !== 'false' &&
+    cookieConsentApp !== 'true' &&
+    cookieConsentApp !== 'false';
   console.log('Show cookie consent dialogue: ', checked && consentUnset);
-  console.log('Cookie consent status: ', cookieConsent);
+  console.log('Cookie consent cookie status: ', cookieConsent);
+  console.log('Cookie consent app status: ', cookieConsentApp);
   console.log('Cookie consent checked: ', checked);
   // console.log('showDialogue', showDialogue);
 
@@ -93,7 +106,7 @@ export function CookieConsent({ init, cookieConsent, intl, consent, checked }) {
             <ButtonWrap>
               <ButtonHighlightPrimary
                 onClick={() => {
-                  consent('true');
+                  onConsent('true');
                   // setShowDialogue(false);
                 }}
               >
@@ -101,7 +114,7 @@ export function CookieConsent({ init, cookieConsent, intl, consent, checked }) {
               </ButtonHighlightPrimary>
               <ButtonHighlightSecondary
                 onClick={() => {
-                  consent('false');
+                  onConsent('false');
                   // setShowDialogue(false);
                 }}
               >
@@ -126,21 +139,23 @@ export function CookieConsent({ init, cookieConsent, intl, consent, checked }) {
 
 CookieConsent.propTypes = {
   init: PropTypes.func,
-  consent: PropTypes.func,
+  onConsent: PropTypes.func,
   cookieConsent: PropTypes.string,
+  cookieConsentApp: PropTypes.string,
   checked: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   cookieConsent: state => getCookieConsent(state),
+  cookieConsentApp: state => getCookieConsentApp(state),
   checked: state => getCookieConsentChecked(state),
 });
 
 export function mapDispatchToProps(dispatch) {
   return {
     init: () => dispatch(checkCookieConsent()),
-    consent: status => dispatch(setCookieConsent(status)),
+    onConsent: status => dispatch(setCookieConsent(status)),
   };
 }
 
