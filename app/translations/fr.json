@@ -317,7 +317,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.conjunct": " et ",
   "hrmi.components.CountryNarrative.compAssessmentESR.start": "En termes de droits à la qualité de vie, {countryWithArticle} se {isPlural, select, true {situent} false {situe}} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.startSome": "En termes de {esr}, lorsque nous examinons les droits pour lesquels nous disposons de données, {countryWithArticle} {isPlural, select, true {sont} false {est}} performant ",
-  "hrmi.components.CountryNarrative.compAssessmentESR.startOne": "En termes de {esr}, {countryWithArticle} {isPlural, select, true {are} false {is}} performant ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.startOne": "En termes de {esr}, {countryWithArticle} {isPlural, select, true {performent} false {performe}} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.oneRight": " en ce qui concerne le {right}",
   "hrmi.components.CountryNarrative.compAssessment.result.a": "au-dessus de la moyenne",
   "hrmi.components.CountryNarrative.compAssessment.result.b": "plus bas que la moyenne",
