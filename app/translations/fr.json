@@ -890,5 +890,8 @@
   "hrmi.containers.AboutCountryContainer.countryLink": "Explore {country}",
   "hrmi.components.HINote.hiNote": "{hiLabel} High income country: For these countries it is best to use the high income assessment standard",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
-  "hrmi.components.AboutMetric.titleStandards": "Pour quelle norme d'évaluation l'indicateur est-il utilisé?"
+  "hrmi.components.AboutMetric.titleStandards": "Pour quelle norme d'évaluation l'indicateur est-il utilisé?",
+  "hrmi.labels.abbrev.notAvailable": "N/A",
+  "hrmi.containers.AboutCountryContainer.more": "Show country categories",
+  "hrmi.containers.AboutCountryContainer.less": "Hide country categories"
 }

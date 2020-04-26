@@ -43,12 +43,14 @@ function NarrativeESR({
       ? intl.formatMessage(rootMessages.countries[country.country_code])
       : country.country_code,
     less99adjusted: dimensionScore && parseFloat(scoreAdjusted) < 99,
-    scoreAdjusted: dimensionScore && `${formatScore(scoreAdjusted)}%`,
+    scoreAdjusted: dimensionScore && `${formatScore(scoreAdjusted, 1, intl)}%`,
     scoreAdjustedBold: dimensionScore && (
-      <strong>{formatScore(scoreAdjusted)}%</strong>
+      <strong>{formatScore(scoreAdjusted, 1, intl)}%</strong>
     ),
-    scoreBest: dimensionScore && `${formatScore(scoreBest)}%`,
-    scoreBestBold: dimensionScore && <strong>{formatScore(scoreBest)}%</strong>,
+    scoreBest: dimensionScore && `${formatScore(scoreBest, 1, intl)}%`,
+    scoreBestBold: dimensionScore && (
+      <strong>{formatScore(scoreBest, 1, intl)}%</strong>
+    ),
     benchmarkAdjusted: intl.formatMessage(
       rootMessages.settings.benchmark.adjusted,
     ),

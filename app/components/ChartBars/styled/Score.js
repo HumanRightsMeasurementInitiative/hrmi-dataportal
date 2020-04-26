@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Box, Text } from 'grommet';
 import styled from 'styled-components';
 import { formatScore } from 'utils/scores';
+import { injectIntl, intlShape } from 'react-intl';
 
 const getRotation = rotation => `rotate(${rotation}deg)`;
 
@@ -56,6 +57,7 @@ function Score({
   align,
   rotate,
   title,
+  intl,
 }) {
   return (
     <Styled
@@ -82,7 +84,7 @@ function Score({
         )}
         {score && (
           <Text color={`${color}Dark`} size={getSize(level)}>
-            {score && `${formatScore(score)}${unit}`}
+            {score && `${formatScore(score, 1, intl)}${unit}`}
           </Text>
         )}
       </Box>
@@ -101,6 +103,7 @@ Score.propTypes = {
   level: PropTypes.number,
   rotate: PropTypes.number,
   direction: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  intl: intlShape.isRequired,
 };
 
-export default Score;
+export default injectIntl(Score);

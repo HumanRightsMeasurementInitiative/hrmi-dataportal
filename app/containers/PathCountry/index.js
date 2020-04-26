@@ -141,7 +141,7 @@ const getScoreMsg = (
         messages.countryScoreExplainer.esr[benchmark],
         ({
           ...messageValues,
-          score: formatScore(score),
+          score: formatScore(score, 1, intl),
           metric: lowerCase(intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code])),
         }),
       )
@@ -157,7 +157,7 @@ const getScoreMsg = (
         {...messages.countryScoreExplainer.cpr}
         values={{
           ...messageValues,
-          score: formatScore(score),
+          score: formatScore(score, 1, intl),
           metric: lowerCase(intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code])),
           link: (
             <ButtonText

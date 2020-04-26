@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
+import { intlShape, injectIntl } from 'react-intl';
 // import { COLUMNS } from 'containers/App/constants';
 
 // import AnnotateBetter from 'components/AnnotateBetterWorse';
@@ -79,6 +80,7 @@ function ChartBars({
   scoresAside,
   summaryScore,
   isStatic,
+  intl,
 }) {
   if (!data) return null;
   return (
@@ -145,6 +147,7 @@ function ChartBars({
                           summaryScore.maxValue,
                           1,
                           false,
+                          intl,
                         )}
                       </Text>
                     </DimensionScore>
@@ -186,7 +189,7 @@ ChartBars.propTypes = {
   isStatic: PropTypes.bool,
   level: PropTypes.number,
   summaryScore: PropTypes.object,
-  // standard: PropTypes.string,
+  intl: intlShape.isRequired,
 };
 
-export default ChartBars;
+export default injectIntl(ChartBars);
