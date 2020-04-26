@@ -168,7 +168,7 @@ export function ChartContainerCountryIndicators({
 ChartContainerCountryIndicators.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   metricCode: PropTypes.string.isRequired,
-  activeCode: PropTypes.string,
+  activeCode: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   dataReady: PropTypes.bool,
   right: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
