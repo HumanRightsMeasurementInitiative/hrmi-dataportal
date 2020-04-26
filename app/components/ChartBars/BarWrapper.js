@@ -7,12 +7,15 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Box, ResponsiveContext, Text } from 'grommet';
 import styled from 'styled-components';
+import { injectIntl, intlShape } from 'react-intl';
 
 import Bar from 'components/ChartBars/Bar';
 import BarBullet from 'components/ChartBars/BarBullet';
 
 import { isMinSize } from 'utils/responsive';
 import { formatScore } from 'utils/scores';
+
+import rootMessages from 'messages';
 
 import Active from './styled/Active';
 import BarButton from './BarButton';
@@ -36,6 +39,7 @@ export function BarWrapper({
   scoreOnHover = true,
   scoresAside = false,
   isStatic = false,
+  intl,
 }) {
   const [hover, setHover] = useState(false);
   return (
@@ -105,8 +109,9 @@ export function BarWrapper({
               >
                 <Text color={`${score.color}Dark`} size="small" weight={600}>
                   {score.value &&
-                    `${formatScore(score.value)}${score.unit || ''}`}
-                  {!score.value && 'N/A'}
+                    `${formatScore(score.value, 1, intl)}${score.unit || ''}`}
+                  {!score.value &&
+                    intl.formatMessage(rootMessages.labels.abbrev.notAvailable)}
                 </Text>
               </ScoreAsideWrap>
             )}
@@ -126,8 +131,9 @@ BarWrapper.propTypes = {
   isStatic: PropTypes.bool,
   labelColor: PropTypes.string,
   level: PropTypes.number,
+  intl: intlShape,
   // standard: PropTypes.string,
   // currentBenchmark: PropTypes.object,
 };
 
-export default BarWrapper;
+export default injectIntl(BarWrapper);

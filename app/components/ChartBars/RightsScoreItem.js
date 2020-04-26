@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { Text } from 'grommet';
 
@@ -43,13 +43,14 @@ const RightLabelText = styled.span`
   font-size: 12px;
 `;
 
-function RightsScoresItem({ dimensionKey, right, maxValue }) {
+function RightsScoresItem({ dimensionKey, right, maxValue, intl }) {
   return (
     <RightsScoresWrapperRow>
       <RightsScoresWrapperCellScore>
         <RightScoreText color={`${dimensionKey}Dark`}>
-          {right.value && formatScoreMax(right.value, maxValue)}
-          {!right.value && 'N/A'}
+          {right.value && formatScoreMax(right.value, maxValue, intl)}
+          {!right.value &&
+            intl.formatMessage(rootMessages.labels.abbrev.notAvailable)}
         </RightScoreText>
       </RightsScoresWrapperCellScore>
       <RightsScoresWrapperCellLabel>
@@ -65,6 +66,7 @@ RightsScoresItem.propTypes = {
   dimensionKey: PropTypes.string,
   right: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   maxValue: PropTypes.number,
+  intl: intlShape.isRequired,
 };
 
-export default RightsScoresItem;
+export default injectIntl(RightsScoresItem);

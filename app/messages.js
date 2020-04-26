@@ -123,6 +123,12 @@ export default defineMessages({
         defaultMessage: 'Data settings',
       },
     },
+    abbrev: {
+      notAvailable: {
+        id: `${scope}.labels.abbrev.notAvailable`,
+        defaultMessage: `${scope}.labels.abbrev.notAvailable`,
+      },
+    },
   },
   assessedFilters: {
     all: {

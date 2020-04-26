@@ -259,12 +259,24 @@ export const roundScore = (value, digits = 1) => {
   const factor = 10 ** Math.min(digits, 3);
   return isNumber(value) && Math.round(value * factor) / factor;
 };
-export const formatScore = (value, digits = 1) => {
+export const formatScore = (value, digits = 1, intl) => {
   const d = Math.min(digits, 3);
-  return isNumber(value) && roundScore(value, d).toFixed(d);
+  if (isNumber(value)) {
+    const rounded = roundScore(value, d);
+    return intl
+      ? intl.formatNumber(rounded, { minimumFractionDigits: d })
+      : rounded.toFixed(d);
+  }
+  return value;
 };
-export const formatScoreMax = (value, maxValue = 100, digits = 1, showMax) => {
-  const formatted = formatScore(value, digits);
+export const formatScoreMax = (
+  value,
+  maxValue = 100,
+  digits = 1,
+  showMax,
+  intl,
+) => {
+  const formatted = formatScore(value, digits, intl);
   if (formatted && maxValue === 100) {
     return `${formatted}%`;
   }
