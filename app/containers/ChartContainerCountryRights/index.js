@@ -435,7 +435,7 @@ ChartContainerCountryRights.propTypes = {
   rights: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onMetricClick: PropTypes.func,
   intl: intlShape.isRequired,
-  activeCode: PropTypes.string,
+  activeCode: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
