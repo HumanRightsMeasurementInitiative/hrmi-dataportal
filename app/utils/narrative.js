@@ -220,7 +220,7 @@ export const isFeminineRegion = (locale, code) =>
   code && regionsAreFeminine[locale].indexOf(code) > -1;
 
 export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
-  if (regionCode) return false;
+  if (!regionCode) return false;
   if (!needsArticleRegion(locale, regionCode)) {
     return regionLabel;
   }
