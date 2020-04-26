@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
 import { Box, ResponsiveContext } from 'grommet';
 import {
@@ -135,6 +135,7 @@ function ChartCountryMetricTrend({
   onGroupToggle,
   groupsActive,
   theme,
+  intl,
 }) {
   const [highlight, setHighlight] = useState(false);
   const [highlightFemale, setHighlightFemale] = useState(false);
@@ -451,7 +452,7 @@ function ChartCountryMetricTrend({
                   }}
                 >
                   <PlotHint color={colorHint}>
-                    {`${formatScore(highlight.point.y)}${
+                    {`${formatScore(highlight.point.y, 1, intl)}${
                       percentage ? '%' : ''
                     }`}
                   </PlotHint>
@@ -466,7 +467,7 @@ function ChartCountryMetricTrend({
                   }}
                 >
                   <PlotHint color={PEOPLE_GROUPS[1].color}>
-                    {`${formatScore(highlightFemale.point.y)}${
+                    {`${formatScore(highlightFemale.point.y, 1, intl)}${
                       percentage ? '%' : ''
                     }`}
                   </PlotHint>
@@ -481,7 +482,7 @@ function ChartCountryMetricTrend({
                   }}
                 >
                   <PlotHint color={PEOPLE_GROUPS[2].color}>
-                    {`${formatScore(highlightMale.point.y)}${
+                    {`${formatScore(highlightMale.point.y, 1, intl)}${
                       percentage ? '%' : ''
                     }`}
                   </PlotHint>
@@ -564,6 +565,7 @@ ChartCountryMetricTrend.propTypes = {
   onGroupToggle: PropTypes.func,
   groupsActive: PropTypes.array,
   theme: PropTypes.object,
+  intl: intlShape.isRequired,
 };
 
-export default withTheme(ChartCountryMetricTrend);
+export default withTheme(injectIntl(ChartCountryMetricTrend));
