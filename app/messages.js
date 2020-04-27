@@ -41,6 +41,11 @@ export default defineMessages({
       id: `${scope}.hints.noSortData`,
       defaultMessage: 'Sorting information missing',
     },
+    settings: {
+      id: `${scope}.hints.settings`,
+      defaultMessage:
+        "To change the performance benchmark or assessment standard, please click on 'Switch View' above",
+    },
   },
   labels: {
     score: {

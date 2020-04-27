@@ -110,7 +110,7 @@ export function PathMetric({
             <meta name="description" content="Description of metric" />
           </Helmet>
           {metric.type === 'esr' && (
-            <HINote hasAside={isMinSize(size, 'large')} />
+            <HINote hasAside={isMinSize(size, 'large')} settingHint />
           )}
           <Box style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
