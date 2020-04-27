@@ -43,6 +43,8 @@ import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRSt
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
 
+import Hint from 'styled/Hint';
+
 import { getRightsScoresForDimension } from 'utils/scores';
 import getMetricDetails from 'utils/metric-details';
 import { getMessageGrammar } from 'utils/narrative';
@@ -309,6 +311,11 @@ export function ChartContainerCountryRights({
               }
               benchmark={currentBenchmark}
             />
+          </Paragraph>
+          <Paragraph>
+            <Hint italic>
+              <FormattedMessage {...rootMessages.hints.settings} />
+            </Hint>
           </Paragraph>
         </>
       )}
