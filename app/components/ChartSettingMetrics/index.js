@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
@@ -40,8 +40,30 @@ function ChartSettingMetrics({
   const [activeMetric, setActiveMetric] = useState(activeDefault);
   const [open, setOpen] = useState(false);
   const dropButton = useRef(null);
+
+  // fall back to activeDefault if activeMetric not included in metrics
+  useEffect(() => {
+    if (activeMetric !== activeDefault) {
+      const inMetrics = metrics.reduce((pass, m) => {
+        if (m.key === activeMetric) return true;
+        if (
+          m.children &&
+          m.children.reduce(
+            (pass2, c) => pass2 || c.key === activeMetric,
+            false,
+          )
+        ) {
+          return true;
+        }
+        return pass;
+      }, false);
+      if (!inMetrics) {
+        setActiveMetric(activeDefault);
+      }
+    }
+  }, [metrics]);
+
   const details = getMetricDetails(activeMetric);
-  // TODO fall back to activeDefault if activeMetric not included in metrics
   return (
     <Box margin={{ bottom: 'xlarge' }}>
       {header && header({ metricCode: activeMetric })}
