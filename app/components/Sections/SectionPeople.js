@@ -36,7 +36,7 @@ export function SectionPeople({ nav, intl, theme }) {
         <SectionContainer
           margin={{ top: 'small', bottom: 'large' }}
           pad="0"
-          background="sectionDark"
+          background="sectionPeople"
         >
           <Box
             align="start"

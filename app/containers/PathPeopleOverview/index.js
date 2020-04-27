@@ -91,7 +91,7 @@ export function PathPeopleOverview({
               )}
             </ContentMaxWidth>
           </ContentContainer>
-          <SectionContainer>
+          <SectionContainer background="sectionPeople">
             <ContentMaxWidth column>
               <Box
                 width="100%"
