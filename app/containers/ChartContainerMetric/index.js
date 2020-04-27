@@ -25,14 +25,11 @@ import {
   getIncomeSearch,
   getCountryGroupSearch,
   getTreatySearch,
-  getFeaturedSearch,
   getSortSearch,
   getSortOrderSearch,
   getCountries,
   getDependenciesReady,
   getAuxIndicatorsLatest,
-  getFeaturedValues,
-  getFeatured,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import {
@@ -61,7 +58,6 @@ const DEPENDENCIES = [
   'esrIndicators',
   'esrIndicatorScores',
   'auxIndicators',
-  'featured',
 ];
 
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
@@ -171,7 +167,6 @@ export function ChartContainerMetric({
   incomeFilterValue,
   countryGroupFilterValue,
   treatyFilterValue,
-  featuredFilterValue,
   onRemoveFilter,
   onAddFilter,
   sort,
@@ -182,8 +177,6 @@ export function ChartContainerMetric({
   countries,
   dataReady,
   auxIndicators,
-  featuredValues,
-  featuredCountries,
   onCountryClick,
   activeCode,
 }) {
@@ -215,12 +208,7 @@ export function ChartContainerMetric({
       incomeFilterValue,
       countryGroupFilterValue,
       treatyFilterValue,
-      featuredFilterValue,
     }),
-    null,
-    null,
-    featuredValues,
-    featuredCountries,
   );
 
   const { sorted, other } = sortScores({
@@ -261,7 +249,6 @@ export function ChartContainerMetric({
           incomeFilterValue,
           countryGroupFilterValue,
           treatyFilterValue,
-          featuredFilterValue,
           filterValues,
         }}
         sort={{
@@ -347,7 +334,6 @@ ChartContainerMetric.propTypes = {
   regionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  featuredFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countryGroupFilterValue: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,
@@ -359,8 +345,6 @@ ChartContainerMetric.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   dataReady: PropTypes.bool,
-  featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   onCountryClick: PropTypes.func,
 };
 
@@ -391,11 +375,8 @@ const mapStateToProps = createStructuredSelector({
   incomeFilterValue: state => getIncomeSearch(state),
   countryGroupFilterValue: state => getCountryGroupSearch(state),
   treatyFilterValue: state => getTreatySearch(state),
-  featuredFilterValue: state => getFeaturedSearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
-  featuredValues: state => getFeaturedValues(state),
-  featuredCountries: state => getFeatured(state),
 });
 
 export function mapDispatchToProps(dispatch) {

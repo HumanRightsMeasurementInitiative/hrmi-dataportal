@@ -1,5 +1,3 @@
-import { uniq } from 'lodash/array';
-
 import {
   COLUMNS,
   INCOME_GROUPS,
@@ -27,7 +25,6 @@ export const areAnyFiltersSet = (
     assessedFilterValue,
     countryGroupFilterValue,
     treatyFilterValue,
-    featuredFilterValue,
   },
 ) =>
   filterGroups.reduce(
@@ -39,8 +36,7 @@ export const areAnyFiltersSet = (
       (filter === 'assessed' && !!assessedFilterValue) ||
       (filter === 'cgroup' && !!countryGroupFilterValue) ||
       (filter === 'treaty' && !!treatyFilterValue) ||
-      (filter === 'featured' && !!featuredFilterValue),
-    false,
+      false,
   );
 
 const addCountryAttribute = (values, country, attribute, validValues) => {
@@ -106,27 +102,11 @@ const addCountryAssessed = (values, country, standard, scoresAllCountries) => {
   }
   return [value, ...values];
 };
-const addCountryFeatured = (values, countryCode, featuredCountries) => {
-  const featured = featuredCountries.reduce(
-    (memo, c) =>
-      c[COLUMNS.FEATURED.COUNTRIES].indexOf(countryCode) > -1
-        ? [c[COLUMNS.FEATURED.CAT], ...memo]
-        : memo,
-    [],
-  );
-  if (featured.length > 0) {
-    return uniq(['any', ...featured, ...values]);
-  }
-  return values;
-  // return [value, ...values];
-};
 const getCountryFilterValues = (
   countries,
   filter,
   standard,
   scoresAllCountries,
-  featuredValues,
-  featuredCountries,
 ) => {
   if (filter === 'region') {
     return countries
@@ -224,23 +204,9 @@ const getCountryFilterValues = (
           : -1,
       );
   }
-  if (filter === 'featured' && scoresAllCountries) {
-    return countries
-      .reduce((memo, country) => {
-        if (memo.length === featuredValues.length) return memo;
-        return addCountryFeatured(
-          memo,
-          country[COLUMNS.COUNTRIES.CODE],
-          featuredCountries,
-        );
-      }, [])
-      .sort((a, b) =>
-        featuredValues.indexOf(a) > featuredValues.indexOf(b) ? 1 : -1,
-      );
-  }
   return [];
 };
-const getAllCountryFilterValues = (filter, featuredValues) => {
+const getAllCountryFilterValues = filter => {
   if (filter === 'region') {
     return REGIONS.values;
   }
@@ -259,9 +225,6 @@ const getAllCountryFilterValues = (filter, featuredValues) => {
   if (filter === 'assessed') {
     return ASSESSED_FILTERS.values;
   }
-  if (filter === 'featured') {
-    return featuredValues;
-  }
   return [];
 };
 
@@ -271,8 +234,6 @@ export const getFilterOptionValues = (
   anyFilterSet = true,
   standard,
   scoresAllCountries,
-  featuredValues,
-  featuredCountries,
 ) =>
   filterGroups.reduce((memo, filter) => {
     // prettier-ignore
@@ -282,10 +243,8 @@ export const getFilterOptionValues = (
         filter,
         standard,
         scoresAllCountries,
-        featuredValues,
-        featuredCountries,
       )
-      : getAllCountryFilterValues(filter, featuredValues);
+      : getAllCountryFilterValues(filter);
     return {
       [filter]: values,
       ...memo,
