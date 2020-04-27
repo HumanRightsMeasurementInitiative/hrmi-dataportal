@@ -55,6 +55,7 @@ export function ChartContainerByGroup({
   metricInfo,
   currentYear,
   benchmark,
+  metricSelector,
 }) {
   useEffect(() => {
     onLoadData();
@@ -63,21 +64,24 @@ export function ChartContainerByGroup({
   const metric = getMetricDetails(metricCode);
   // prettier-ignore
   return (
-    <ChartCountryMetricByGroup
-      color="esr"
-      colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
-      scores={scores}
-      metric={metric}
-      metricInfo={metricInfo}
-      standard={standard}
-      percentage
-      maxValue={100}
-      hasRawOption={false}
-      raw={raw}
-      onRawChange={onRawChange}
-      currentYear={currentYear}
-      currentBenchmark={BENCHMARKS.find(s => s.key === benchmark)}
-    />
+    <div>
+      {metricSelector}
+      <ChartCountryMetricByGroup
+        color="esr"
+        colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
+        scores={scores}
+        metric={metric}
+        metricInfo={metricInfo}
+        standard={standard}
+        percentage
+        maxValue={100}
+        hasRawOption={false}
+        raw={raw}
+        onRawChange={onRawChange}
+        currentYear={currentYear}
+        currentBenchmark={BENCHMARKS.find(s => s.key === benchmark)}
+      />
+    </div>
   );
 }
 
@@ -92,6 +96,7 @@ ChartContainerByGroup.propTypes = {
   raw: PropTypes.bool,
   onRawChange: PropTypes.func,
   benchmark: PropTypes.string,
+  metricSelector: PropTypes.node,
 };
 
 const mapStateToProps = createStructuredSelector({

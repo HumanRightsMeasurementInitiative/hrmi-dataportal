@@ -118,6 +118,7 @@ export function ChartContainerTrend({
   onGroupToggle,
   activeGroups,
   metricInfo,
+  metricSelector,
 }) {
   useEffect(() => {
     onLoadData();
@@ -128,57 +129,60 @@ export function ChartContainerTrend({
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
   // prettier-ignore
   return (
-    <ChartCountryMetricTrend
-      color={theme.global.colors[getColour(metric)]}
-      colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
-      scores={scores}
-      percentage={isESR}
-      maxValue={isESR ? 100 : 11}
-      maxYear={isESR ? maxYearESR : maxYearCPR}
-      minYear={isESR ? minYearESR : minYearCPR}
-      column={getTrendColumn(
-        isESR,
-        currentBenchmark,
-        metric.metricType === 'indicators' && raw
-      )}
-      rangeColumns={
-        !isESR && {
-          upper: COLUMNS.CPR.HI,
-          lower: COLUMNS.CPR.LO,
-        }
-      }
-      rangeValues={
-        isESR &&
-        metric.metricType === 'indicators' &&
-        raw &&
-        {
-          lower: parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_MIN]),
-          upper: parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_BEST]),
-        }
-      }
-      benchmarkRefs={
-        isESR && getRefs(
+    <div>
+      {metricSelector}
+      <ChartCountryMetricTrend
+        color={theme.global.colors[getColour(metric)]}
+        colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
+        scores={scores}
+        percentage={isESR}
+        maxValue={isESR ? 100 : 11}
+        maxYear={isESR ? maxYearESR : maxYearCPR}
+        minYear={isESR ? minYearESR : minYearCPR}
+        column={getTrendColumn(
+          isESR,
           currentBenchmark,
-          metric.metricType === 'indicators',
-          raw,
-          metricInfo,
-        )
-      }
-      hasBenchmarkOption={isESR}
-      hasStandardOption={
-        isESR && metric.metricType !== 'indicators'
-      }
-      onSetBenchmark={onSetBenchmark}
-      onSetStandard={onSetStandard}
-      standard={standard}
-      benchmark={benchmark}
-      metric={metric}
-      hasRawOption={false}
-      raw={raw}
-      onRawChange={onRawChange}
-      groupsActive={activeGroups}
-      onGroupToggle={onGroupToggle}
-    />
+          metric.metricType === 'indicators' && raw
+        )}
+        rangeColumns={
+          !isESR && {
+            upper: COLUMNS.CPR.HI,
+            lower: COLUMNS.CPR.LO,
+          }
+        }
+        rangeValues={
+          isESR &&
+          metric.metricType === 'indicators' &&
+          raw &&
+          {
+            lower: parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_MIN]),
+            upper: parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_BEST]),
+          }
+        }
+        benchmarkRefs={
+          isESR && getRefs(
+            currentBenchmark,
+            metric.metricType === 'indicators',
+            raw,
+            metricInfo,
+          )
+        }
+        hasBenchmarkOption={isESR}
+        hasStandardOption={
+          isESR && metric.metricType !== 'indicators'
+        }
+        onSetBenchmark={onSetBenchmark}
+        onSetStandard={onSetStandard}
+        standard={standard}
+        benchmark={benchmark}
+        metric={metric}
+        hasRawOption={false}
+        raw={raw}
+        onRawChange={onRawChange}
+        groupsActive={activeGroups}
+        onGroupToggle={onGroupToggle}
+      />
+    </div>
   );
 }
 
@@ -200,6 +204,7 @@ ChartContainerTrend.propTypes = {
   onRawChange: PropTypes.func,
   onGroupToggle: PropTypes.func,
   activeGroups: PropTypes.array,
+  metricSelector: PropTypes.node,
 };
 
 const mapStateToProps = createStructuredSelector({

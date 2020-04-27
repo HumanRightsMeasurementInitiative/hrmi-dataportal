@@ -46,6 +46,11 @@ export default defineMessages({
       defaultMessage:
         "To change the performance benchmark or assessment standard, please click on 'Switch View' above",
     },
+    noAtRiskData: {
+      id: `${scope}.hints.noAtRiskData`,
+      defaultMessage:
+        'Information on which people are at extra risk of rights violations comes from our annual expert survey, and is not yet available for {country}',
+    },
   },
   labels: {
     score: {

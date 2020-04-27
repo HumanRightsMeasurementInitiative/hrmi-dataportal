@@ -57,15 +57,18 @@ function ChartCountryMetricPeople({
   intl,
   hasAnalysis,
   hasSubrightAnalysis,
+  showIntro,
 }) {
   return (
-    <Styled pad={{ vertical: 'medium' }} direction="column">
+    <Styled pad={showIntro && { vertical: 'medium' }} direction="column">
       {metric.metricType === 'rights' && (
         <Box>
-          <Paragraph>
-            <FormattedMessage {...messages.introRight} />
-          </Paragraph>
-          <Box pad={{ top: 'medium' }}>
+          {showIntro && (
+            <Paragraph>
+              <FormattedMessage {...messages.introRight} />
+            </Paragraph>
+          )}
+          <Box pad={showIntro && { top: 'medium' }}>
             {Object.values(data).map((d, index, array) => {
               const analysisSR =
                 hasSubrightAnalysis &&
@@ -76,6 +79,7 @@ function ChartCountryMetricPeople({
                     data={d}
                     dimension={metric.dimension}
                     showTitle={array.length > 1}
+                    border={showIntro}
                   />
                   {analysisSR && renderAnalysis(analysisSR, intl)}
                 </span>
@@ -118,6 +122,7 @@ function ChartCountryMetricPeople({
 }
 
 ChartCountryMetricPeople.propTypes = {
+  showIntro: PropTypes.bool,
   hasAnalysis: PropTypes.bool,
   hasSubrightAnalysis: PropTypes.bool,
   metric: PropTypes.object,

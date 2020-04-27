@@ -860,5 +860,7 @@
   "hrmi.containers.AboutCountryContainer.more": "Show country categories",
   "hrmi.containers.AboutCountryContainer.less": "Hide country categories",
   "hrmi.indicators-about.net-primary": "Número total de alunos da faixa etária oficial da escola primária que estão matriculados no ensino primário ou secundário, expresso em percentagem da população correspondente.",
-  "hrmi.hints.settings": "To change the performance benchmark or assessment standard, please click on ‘Switch View’ above."
+  "hrmi.hints.settings": "To change the performance benchmark or assessment standard, please click on ‘Switch View’ above.",
+  "hrmi.hints.noAtRiskData": "Information on which people are at extra risk of rights violations comes from our annual expert survey, and is not yet available for {countryWithArticle}. ",
+  "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Explore Details"
 }

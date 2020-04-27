@@ -101,6 +101,7 @@ export function ChartContainerCountryIndicators({
   intl,
   onMetricClick,
   activeCode,
+  metricSelector,
 }) {
   useEffect(() => {
     onLoadData();
@@ -113,6 +114,7 @@ export function ChartContainerCountryIndicators({
 
   return (
     <div>
+      {metricSelector}
       <ChartBars
         data={[
           {
@@ -176,6 +178,7 @@ ChartContainerCountryIndicators.propTypes = {
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onMetricClick: PropTypes.func,
   intl: intlShape.isRequired,
+  metricSelector: PropTypes.node,
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
