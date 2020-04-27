@@ -183,21 +183,13 @@ const regionsArePlural = {
     'east-asia-pacific',
     'europe-central-asia',
     'middle-east-north-africa',
-    'middle-east',
   ],
-  es: [
-    'americas',
-    'east-asia-pacific',
-    'europe-central-asia',
-    'middle-east-north-africa',
-    'middle-east',
-  ],
+  es: ['east-asia-pacific', 'europe-central-asia', 'middle-east-north-africa'],
   pt: [
     'americas',
     'east-asia-pacific',
     'europe-central-asia',
     'middle-east-north-africa',
-    'middle-east',
   ],
 };
 const regionsAreFeminine = {
@@ -205,12 +197,28 @@ const regionsAreFeminine = {
   fr: [
     'americas',
     'sub-saharan-africa',
-    'south-asia',
     'europe-central-asia',
     'east-asia-pacific',
+    'east-asia',
+    'south-asia',
+    'central-asia',
   ],
-  es: ['americas', 'sub-saharan-africa', 'south-asia', 'europe-central-asia'],
-  pt: ['americas', 'sub-saharan-africa', 'europe-central-asia'],
+  es: [
+    'americas',
+    'sub-saharan-africa',
+    'south-asia',
+    'europe-central-asia',
+    'central-asia',
+    'east-asia',
+  ],
+  pt: [
+    'americas',
+    'sub-saharan-africa',
+    'europe-central-asia',
+    'south-asia',
+    'central-asia',
+    'east-asia',
+  ],
 };
 const isRegionFeminine = (locale, regionCode) =>
   regionsAreFeminine[locale].indexOf(regionCode) > -1;
