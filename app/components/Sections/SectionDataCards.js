@@ -33,7 +33,7 @@ export function SectionDataCards({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer background="sectionDark">
+        <SectionContainer background="sectionDataCards">
           <ContentMaxWidth column>
             <SectionTitle
               title={intl.formatMessage(messages.dataCards.title)}
