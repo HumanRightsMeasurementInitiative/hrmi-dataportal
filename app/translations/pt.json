@@ -323,7 +323,7 @@
   "hrmi.components.CountryNarrative.compAssessment.result.c": "próximo da média",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": " quanto aos direitos de empoderamento",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " quanto ao direito de integridade física",
-  "hrmi.components.CountryNarrative.compAssessmentESR.end": ", quando em comparação com outros países em {regionWithArticle} ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.end": ", quando em comparação com outros países {regionIn} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", quando em comparação com todos os outros países de rendimentos altos ",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (esta comparação é calculada com o uso da referência '{benchmark}').",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "Para {countryWithArticle} não existem pontuações de direitos disponíveis devido à falta de dados indicadores. ",
