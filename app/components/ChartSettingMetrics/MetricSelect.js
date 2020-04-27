@@ -28,6 +28,22 @@ const StyledOption = styled(OptionButton)`
   border-bottom: 1px solid;
   border-color: ${({ theme }) => theme.global.colors['light-4']};
 `;
+const StyledOptionDisabled = styled.div`
+  color: ${({ theme }) => theme.global.colors['dark-3']};
+  padding: 5px 10px;
+  font-weight: ${({ active }) => (active ? '600' : '400')};
+  padding-left: ${({ level }) => {
+    if (level === 2) {
+      return 25;
+    }
+    if (level === 3) {
+      return 40;
+    }
+    return 10;
+  }}px;
+  border-bottom: 1px solid;
+  border-color: ${({ theme }) => theme.global.colors['light-4']};
+`;
 
 export function MetricSelect({
   setActiveMetric,
@@ -46,14 +62,25 @@ export function MetricSelect({
         const details = getMetricDetails(m.key);
         return (
           <div key={m.key}>
-            <StyledOption
-              level={1}
-              fill="horizontal"
-              active={m.key === activeMetric}
-              onClick={() => setActiveMetric(m.key)}
-            >
-              <FormattedMessage {...rootMessages[details.metricType][m.key]} />
-            </StyledOption>
+            {!m.disabled && (
+              <StyledOption
+                level={1}
+                fill="horizontal"
+                active={m.key === activeMetric}
+                onClick={() => setActiveMetric(m.key)}
+              >
+                <FormattedMessage
+                  {...rootMessages[details.metricType][m.key]}
+                />
+              </StyledOption>
+            )}
+            {m.disabled && (
+              <StyledOptionDisabled>
+                <FormattedMessage
+                  {...rootMessages[details.metricType][m.key]}
+                />
+              </StyledOptionDisabled>
+            )}
             {m.children &&
               m.children.map(m2 => {
                 const details2 = getMetricDetails(m2.key);

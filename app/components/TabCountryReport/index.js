@@ -32,6 +32,37 @@ import quasiEquals from 'utils/quasi-equals';
 
 const SectionContainer = styled.div``;
 
+const getGroupMetrics = (dimension, currentStandard, allIndicators) =>
+  RIGHTS.reduce((rights, r) => {
+    if (r.dimension !== dimension) {
+      return rights;
+    }
+    const children = INDICATORS.reduce((inds, indicator) => {
+      const info = allIndicators.find(ii =>
+        quasiEquals(ii.metric_code, indicator.code),
+      );
+      if (
+        indicator.hasGroups &&
+        indicator.right === r.key &&
+        (info.standard === 'Both' || info.standard === currentStandard.code)
+      ) {
+        return [...inds, indicator];
+      }
+      return inds;
+    }, []);
+    if (children.length > 0) {
+      return [
+        ...rights,
+        {
+          ...r,
+          disabled: !r.hasGroups,
+          children,
+        },
+      ];
+    }
+    return rights;
+  }, []);
+
 function TabCountryReport({
   type,
   dimension,
@@ -104,30 +135,11 @@ function TabCountryReport({
                 RIGHTS.filter(r => r.dimension === dimension && r.hasGroups)[0]
                   .key
               }
-              metrics={RIGHTS.reduce((rights, r) => {
-                if (r.dimension !== dimension || !r.hasGroups) {
-                  return rights;
-                }
-                return [
-                  ...rights,
-                  {
-                    ...r,
-                    children: INDICATORS.reduce((inds, i) => {
-                      const info = allIndicators.find(ii =>
-                        quasiEquals(ii.metric_code, i.code),
-                      );
-                      if (
-                        i.right === r.key &&
-                        (info.standard === 'Both' ||
-                          info.standard === currentStandard.code)
-                      ) {
-                        return [...inds, i];
-                      }
-                      return inds;
-                    }, []),
-                  },
-                ];
-              }, [])}
+              metrics={getGroupMetrics(
+                dimension,
+                currentStandard,
+                allIndicators,
+              )}
               chart={props => (
                 <ChartContainerByGroup
                   countryCode={country[COLUMNS.COUNTRIES.CODE]}
