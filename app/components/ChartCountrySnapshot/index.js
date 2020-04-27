@@ -20,7 +20,6 @@ import Source from 'components/Source';
 import getMetricDetails from 'utils/metric-details';
 
 import rootMessages from 'messages';
-import messages from './messages';
 
 const Dimension = styled(Box)`
   margin-bottom: 6px;
@@ -137,7 +136,6 @@ function ChartCountrySnapshot({
   activeCode,
 }) {
   const [hover, setHover] = useState(false);
-  const hasRights = rights.some(r => !!r.score);
   return (
     <Box
       direction="column"
@@ -191,53 +189,33 @@ function ChartCountrySnapshot({
                 />
               )}
             </Text>
-            {(hasRights || type === 'esr') && (
-              <ChartBars
-                summaryScore={
-                  dimensionScore ? { score: dimensionScore, maxValue } : null
-                }
-                data={prepareData({
-                  scores: rights,
-                  dimensionCode,
-                  currentBenchmark,
-                  standard,
-                  onClick: onMetricClick,
-                  intl,
-                  activeCode,
-                })}
-                currentBenchmark={type === 'esr' && currentBenchmark}
-                standard={type === 'esr' && standard}
-                commonLabel={`${intl.formatMessage(
-                  rootMessages.charts.rightsColumnLabel[dimensionCode],
-                )}`}
-                labelColor={`${dimensionCode}Dark`}
-                padVertical="small"
-                grades={GRADES[type]}
-                listHeader
-                metric={getMetricDetails(dimensionCode)}
-                annotateBetter={false}
-                scoreOnHover={false}
-                scoresAside
-              />
-            )}
-            {!hasRights && (
-              <Box margin={{ top: 'small' }}>
-                {type === 'esr' && (
-                  <Text>
-                    <FormattedMessage
-                      {...messages.rightsScoresUnavailable.esr}
-                    />
-                  </Text>
-                )}
-                {type === 'cpr' && (
-                  <Text>
-                    <FormattedMessage
-                      {...messages.rightsScoresUnavailable.cpr}
-                    />
-                  </Text>
-                )}
-              </Box>
-            )}
+            <ChartBars
+              summaryScore={
+                dimensionScore ? { score: dimensionScore, maxValue } : null
+              }
+              data={prepareData({
+                scores: rights,
+                dimensionCode,
+                currentBenchmark,
+                standard,
+                onClick: onMetricClick,
+                intl,
+                activeCode,
+              })}
+              currentBenchmark={type === 'esr' && currentBenchmark}
+              standard={type === 'esr' && standard}
+              commonLabel={`${intl.formatMessage(
+                rootMessages.charts.rightsColumnLabel[dimensionCode],
+              )}`}
+              labelColor={`${dimensionCode}Dark`}
+              padVertical="small"
+              grades={GRADES[type]}
+              listHeader
+              metric={getMetricDetails(dimensionCode)}
+              annotateBetter={false}
+              scoreOnHover={false}
+              scoresAside
+            />
           </Dimension>
         </ChartArea>
       </Box>
