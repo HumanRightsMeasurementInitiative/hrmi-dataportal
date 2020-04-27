@@ -95,7 +95,6 @@ export function ChartHeader({
                   incomeFilterValue={filter.incomeFilterValue}
                   countryGroupFilterValue={filter.countryGroupFilterValue}
                   treatyFilterValue={filter.treatyFilterValue}
-                  featuredFilterValue={filter.featuredFilterValue}
                   filterValues={filter.filterValues}
                 />
               )}

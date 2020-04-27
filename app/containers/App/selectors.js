@@ -15,7 +15,6 @@ import {
   hasCountryIncome,
   isCountryHighIncome,
   isCountryOECD,
-  isCountryFeatured,
 } from 'utils/countries';
 
 import { initialState } from './reducer';
@@ -252,29 +251,15 @@ export const getTreatySearch = createSelector(
     search.has('treaty') &&
     searchValues(TREATIES.values, search.getAll('treaty')),
 );
-export const getFeaturedValues = createSelector(
-  getFeatured,
-  featured =>
-    featured && ['any'].concat(featured.map(f => f[COLUMNS.FEATURED.CAT])),
-);
 
-export const getFeaturedSearch = createSelector(
-  getFeaturedValues,
-  getRouterSearchParams,
-  (featuredValues, search) =>
-    search.has('featured') &&
-    featuredValues &&
-    searchValues(featuredValues, search.getAll('featured')),
-);
 const getHasChartSettingFilters = createSelector(
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
   getCountryGroupSearch,
   getTreatySearch,
-  getFeaturedSearch,
-  (region, subregion, income, cgroup, treaty, featured) =>
-    region || subregion || income || cgroup || treaty || featured,
+  (region, subregion, income, cgroup, treaty) =>
+    region || subregion || income || cgroup || treaty,
 );
 export const getSortSearch = createSelector(
   getRouterSearchParams,
@@ -459,25 +444,13 @@ export const getCountryGrammar = createSelector(
 
 export const getCountriesFiltered = createSelector(
   getCountries,
-  getFeatured,
   getRegionSearch,
   getSubregionSearch,
   getIncomeSearch,
   getCountryGroupSearch,
   getTreatySearch,
-  getFeaturedSearch,
-  (
-    countries,
-    featuredCountries,
-    region,
-    subregion,
-    income,
-    cgroup,
-    treaty,
-    featured,
-  ) =>
+  (countries, region, subregion, income, cgroup, treaty) =>
     countries &&
-    featuredCountries &&
     countries
       .filter(c => !region || region.indexOf(c[COLUMNS.COUNTRIES.REGION]) > -1)
       .filter(
@@ -492,10 +465,7 @@ export const getCountriesFiltered = createSelector(
         c =>
           !treaty || hasCountryAttribute(c, treaty, COLUMNS.COUNTRIES.TREATIES),
       )
-      .filter(c => !income || hasCountryIncome(c, income))
-      .filter(
-        c => !featured || isCountryFeatured(c, featured, featuredCountries),
-      ),
+      .filter(c => !income || hasCountryIncome(c, income)),
 );
 
 // single metric

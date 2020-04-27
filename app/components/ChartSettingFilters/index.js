@@ -40,7 +40,7 @@ const FilterWrap = styled.div`
 `;
 
 const getFilterOptions = (
-  { region, subregion, income, assessed, cgroup, treaty, featured },
+  { region, subregion, income, assessed, cgroup, treaty },
   intl,
   filterValues,
 ) => {
@@ -125,22 +125,6 @@ const getFilterOptions = (
       },
     ];
   }
-  if (!featured && filterValues.featured) {
-    groups = [
-      ...groups,
-      {
-        group: 'featured',
-        label: intl.formatMessage(messages.featuredFilterOptionGroup),
-        options: filterValues.featured
-          .filter(value => !featured || featured.indexOf(value) === -1)
-          .map(value => ({
-            key: 'featured',
-            value,
-            label: intl.formatMessage(rootMessages.featured[value]),
-          })),
-      },
-    ];
-  }
   if ((!assessed || ASSESSED_FILTERS.multiple) && filterValues.assessed) {
     groups = [
       ...groups,
@@ -188,7 +172,6 @@ export function ChartSettingFilters({
   assessedFilterValue,
   countryGroupFilterValue,
   treatyFilterValue,
-  featuredFilterValue,
   intl,
   filterValues,
   theme,
@@ -202,7 +185,6 @@ export function ChartSettingFilters({
     assessed: filterValues.assessed && assessedFilterValue,
     cgroup: filterValues.cgroup && countryGroupFilterValue,
     treaty: filterValues.treaty && treatyFilterValue,
-    featured: filterValues.treaty && featuredFilterValue,
   };
   const setAllFilters = Object.keys(filterValues).reduce(
     (memo, key) => memo && setFilters[key],
@@ -216,7 +198,6 @@ export function ChartSettingFilters({
       assessed: assessedFilterValue,
       cgroup: countryGroupFilterValue,
       treaty: treatyFilterValue,
-      featured: featuredFilterValue,
     },
     intl,
     filterValues,
@@ -267,14 +248,6 @@ export function ChartSettingFilters({
                 key={value}
                 onRemove={() => onRemoveFilter('treaty', value)}
                 label={intl.formatMessage(rootMessages.treaties[value])}
-              />
-            ))}
-          {setFilters.featured &&
-            setFilters.featured.map(value => (
-              <ActiveFilterButton
-                key={value}
-                onRemove={() => onRemoveFilter('featured', value)}
-                label={intl.formatMessage(rootMessages.featured[value])}
               />
             ))}
           {setFilters.assessed &&
@@ -336,7 +309,6 @@ ChartSettingFilters.propTypes = {
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  featuredFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countryGroupFilterValue: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,

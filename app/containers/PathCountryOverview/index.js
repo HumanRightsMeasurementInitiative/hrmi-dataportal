@@ -22,8 +22,6 @@ import {
   getAssessedSearch,
   getDependenciesReady,
   getAuxIndicatorsLatest,
-  getFeaturedValues,
-  getFeatured,
   getScaleSearch,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
@@ -65,7 +63,6 @@ const DEPENDENCIES = [
   'cprScores',
   'esrScores',
   'auxIndicators',
-  'featured',
   // 'esrIndicatorScores', // consider removing to improve IE11/Edge performance
 ];
 
@@ -77,8 +74,6 @@ export function PathCountryOverview({
   onLoadData,
   dataReady,
   auxIndicators,
-  featuredValues,
-  featuredCountries,
   scale,
   intl,
   onSelectMetric,
@@ -170,8 +165,6 @@ export function PathCountryOverview({
                 scoresAllCountries={scoresAllCountries}
                 auxIndicators={auxIndicators}
                 dataReady={dataReady}
-                featuredValues={featuredValues}
-                featuredCountries={featuredCountries}
               />
             </ContentMaxWidth>
           </SectionContainer>
@@ -190,8 +183,6 @@ PathCountryOverview.propTypes = {
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   assessed: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scale: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   onSelectMetric: PropTypes.func,
   intl: intlShape.isRequired,
   theme: PropTypes.object,
@@ -205,8 +196,6 @@ const mapStateToProps = createStructuredSelector({
   assessed: state => getAssessedSearch(state),
   scale: state => getScaleSearch(state),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  featuredValues: state => getFeaturedValues(state),
-  featuredCountries: state => getFeatured(state),
 });
 export function mapDispatchToProps(dispatch) {
   return {

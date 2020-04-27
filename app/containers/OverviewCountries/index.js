@@ -19,7 +19,6 @@ import {
   getIncomeSearch,
   getCountryGroupSearch,
   getTreatySearch,
-  getFeaturedSearch,
   getBenchmarkSearch,
   getStandardSearch,
   getScaleSearch,
@@ -72,7 +71,6 @@ export function OverviewCountries({
   assessedFilterValue,
   countryGroupFilterValue,
   treatyFilterValue,
-  featuredFilterValue,
   onRemoveFilter,
   onAddFilter,
   onSelectCountry,
@@ -88,8 +86,6 @@ export function OverviewCountries({
   dataReady,
   hasAside,
   auxIndicators,
-  featuredValues,
-  featuredCountries,
   theme,
 }) {
   const [search, setSearch] = useState('');
@@ -113,12 +109,9 @@ export function OverviewCountries({
       assessedFilterValue,
       countryGroupFilterValue,
       treatyFilterValue,
-      featuredFilterValue,
     }),
     standardDetails,
     scoresAllCountries,
-    featuredValues,
-    featuredCountries,
   );
   const searched = search
     ? filterCountries(countries, search, intl)
@@ -163,7 +156,6 @@ export function OverviewCountries({
               incomeFilterValue,
               countryGroupFilterValue,
               treatyFilterValue,
-              featuredFilterValue,
               filterValues,
               assessedFilterValue,
             }}
@@ -301,7 +293,6 @@ OverviewCountries.propTypes = {
   subregionFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   incomeFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   assessedFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  featuredFilterValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   countryGroupFilterValue: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array,
@@ -320,8 +311,6 @@ OverviewCountries.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   hasAside: PropTypes.bool,
-  featuredValues: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
-  featuredCountries: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   theme: PropTypes.object,
 };
 
@@ -332,7 +321,6 @@ const mapStateToProps = createStructuredSelector({
   assessedFilterValue: state => getAssessedSearch(state),
   countryGroupFilterValue: state => getCountryGroupSearch(state),
   treatyFilterValue: state => getTreatySearch(state),
-  featuredFilterValue: state => getFeaturedSearch(state),
   scale: state => getScaleSearch(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
