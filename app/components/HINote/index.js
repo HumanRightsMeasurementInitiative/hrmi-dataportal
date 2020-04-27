@@ -29,7 +29,7 @@ const StyledBox = styled(Box)`
     hasAside ? theme.global.edgeSize.xlarge : 0};
 `;
 
-function HINote({ intl, hasAside }) {
+function HINote({ intl, hasAside, settingHint }) {
   return (
     <Styled hasAside={hasAside}>
       <ContentContainer direction="column">
@@ -49,6 +49,9 @@ function HINote({ intl, hasAside }) {
                     hiLabel: intl.formatMessage(rootMessages.labels.hiCountry),
                   }}
                 />
+                {settingHint && (
+                  <FormattedMessage {...rootMessages.hints.settings} />
+                )}
               </Text>
             </StyledBox>
             {hasAside && <Aside />}
@@ -62,6 +65,7 @@ function HINote({ intl, hasAside }) {
 HINote.propTypes = {
   intl: intlShape.isRequired,
   hasAside: PropTypes.bool,
+  settingHint: PropTypes.bool,
 };
 
 export default injectIntl(HINote);

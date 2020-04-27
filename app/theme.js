@@ -166,6 +166,7 @@ const theme = {
       'dark-3': '#757575', // AA
       'dark-4': '#8896A0', // AA large
       dark: '#262262', // empowerment',
+      hint: '#393393',
       brand: '#3A5161',
       highlight: '#FDB933',
       highlight2: '#DB7E00', // AA large

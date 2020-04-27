@@ -99,7 +99,7 @@ export function PathCountryOverview({
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
-          <HINote />
+          <HINote settingHint />
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header

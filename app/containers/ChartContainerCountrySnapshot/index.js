@@ -40,6 +40,7 @@ import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPR
 import Source from 'components/Source';
 
 import ButtonText from 'styled/ButtonText';
+import Hint from 'styled/Hint';
 
 import { getRightsScoresForDimension } from 'utils/scores';
 
@@ -223,6 +224,11 @@ export function ChartContainerCountrySnapshot({
             }
             benchmark={currentBenchmark}
           />
+        </Paragraph>
+        <Paragraph>
+          <Hint italic>
+            <FormattedMessage {...rootMessages.hints.settings} />
+          </Hint>
         </Paragraph>
         <Paragraph>
           <ButtonText onClick={() => goToTab('report-esr')}>

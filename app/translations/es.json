@@ -853,11 +853,12 @@
   "hrmi.containers.LayerSettings.labelWithName": "Cambiar vista por la tabla {name}",
   "hrmi.containers.AboutMetricContainer.metricLink": "Explore {metric} for all countries",
   "hrmi.containers.AboutCountryContainer.countryLink": "Explore {country}",
-  "hrmi.components.HINote.hiNote": "{hiLabel} High income country: For these countries it is best to use the high income assessment standard",
+  "hrmi.components.HINote.hiNote": "{hiLabel} High income country: For these countries it is best to use the high income assessment standard. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "¿Para qué estándar de evaluación se utiliza el indicador?",
   "hrmi.labels.abbrev.notAvailable": "N/A",
   "hrmi.containers.AboutCountryContainer.more": "Show country categories",
   "hrmi.containers.AboutCountryContainer.less": "Hide country categories",
-  "hrmi.indicators-about.net-primary": "Número total de estudiantes del grupo en edad oficial de asistir a la escuela primaria que están matriculados en la educación primaria o secundaria, expresado como porcentaje de la población correspondiente."
+  "hrmi.indicators-about.net-primary": "Número total de estudiantes del grupo en edad oficial de asistir a la escuela primaria que están matriculados en la educación primaria o secundaria, expresado como porcentaje de la población correspondiente.",
+  "hrmi.hints.settings": "To change the performance benchmark or assessment standard, please click on ‘Switch View’ above"
 }
