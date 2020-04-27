@@ -321,7 +321,7 @@ ChartContainerCountrySnapshot.propTypes = {
   dimensionAverages: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   intl: intlShape.isRequired,
   onMetricClick: PropTypes.func,
-  activeCode: PropTypes.string,
+  activeCode: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
