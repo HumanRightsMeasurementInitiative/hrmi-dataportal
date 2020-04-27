@@ -183,18 +183,21 @@ const regionsArePlural = {
     'east-asia-pacific',
     'europe-central-asia',
     'middle-east-north-africa',
+    'middle-east',
   ],
   es: [
     'americas',
     'east-asia-pacific',
     'europe-central-asia',
     'middle-east-north-africa',
+    'middle-east',
   ],
   pt: [
     'americas',
     'east-asia-pacific',
     'europe-central-asia',
     'middle-east-north-africa',
+    'middle-east',
   ],
 };
 const regionsAreFeminine = {
@@ -208,6 +211,25 @@ const regionsAreFeminine = {
   ],
   es: ['americas', 'sub-saharan-africa', 'south-asia', 'europe-central-asia'],
   pt: ['americas', 'sub-saharan-africa', 'europe-central-asia'],
+};
+const isRegionFeminine = (locale, regionCode) =>
+  regionsAreFeminine[locale].indexOf(regionCode) > -1;
+
+const isRegionPlural = (locale, regionCode) =>
+  regionsArePlural[locale].indexOf(regionCode) > -1;
+
+export const getRegionGenderNumber = (locale, regionCode) => {
+  if (!locale) return 'f';
+  if (isRegionFeminine(locale, regionCode)) {
+    if (isRegionPlural(locale, regionCode)) {
+      return 'fp';
+    }
+    return 'f';
+  }
+  if (isRegionPlural(locale, regionCode)) {
+    return 'mp';
+  }
+  return 'm';
 };
 
 export const needsArticleRegion = (locale, code) =>
@@ -357,6 +379,10 @@ export const getMessageGrammar = (
     genderNumber: genderNumber(locale, countryGrammar),
     countryOf: getCountryOf(locale, countryGrammar, countryLabel),
     region: regionLabel,
+    regionGenderNumber: getRegionGenderNumber(
+      locale,
+      useSubregion ? subregionCode : regionCode,
+    ),
     regionWithArticle: getRegionWithArticle(
       locale,
       useSubregion ? subregionCode : regionCode,
