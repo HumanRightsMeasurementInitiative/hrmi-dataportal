@@ -85,7 +85,7 @@ export function SectionIntro({ theme }) {
                   basis="1/2"
                   style={{
                     minHeight: '400px',
-                    maxHeight: '400px',
+                    maxHeight: '444px',
                     overflow: 'hidden',
                     maxWidth: `${theme.sizes.imageHomeMaxWidth}px`,
                     position: 'relative',
@@ -101,7 +101,13 @@ export function SectionIntro({ theme }) {
           <ContentMaxWidth align="start" direction="row" stretch>
             <Box
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
-              pad={{ right: isMinSize(size, 'large') ? 'xlarge' : '0' }}
+              pad={{
+                right: () => {
+                  if (isMinSize(size, 'xlarge')) return '110px';
+                  if (isMinSize(size, 'large')) return '80px';
+                  return '0';
+                },
+              }}
               style={{ position: 'relative' }}
             >
               <GraphicWrap
@@ -113,7 +119,10 @@ export function SectionIntro({ theme }) {
                 <GraphicWrap
                   style={{ top: 0, right: 0, transform: 'translate(85%, 40%)' }}
                 >
-                  <GraphicDiamond color="physint" size={200} />
+                  <GraphicDiamond
+                    color="physint"
+                    size={isMinSize(size, 'xlarge') ? 200 : 160}
+                  />
                 </GraphicWrap>
               )}
               <div style={{ position: 'relative' }}>
@@ -146,8 +155,8 @@ export function SectionIntro({ theme }) {
               <Box
                 basis="1/2"
                 style={{
-                  minHeight: '350px',
-                  maxHeight: '350px',
+                  minHeight: '400px',
+                  maxHeight: '444px',
                   overflow: 'hidden',
                   position: 'relative',
                 }}
