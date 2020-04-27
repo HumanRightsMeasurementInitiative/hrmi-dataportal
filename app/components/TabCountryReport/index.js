@@ -55,7 +55,8 @@ const getGroupMetrics = (dimension, currentStandard, allIndicators) =>
         ...rights,
         {
           ...r,
-          disabled: !r.hasGroups,
+          disabled:
+            !r.hasGroups || r.hasGroups.indexOf(currentStandard.key) < 0,
           children,
         },
       ];

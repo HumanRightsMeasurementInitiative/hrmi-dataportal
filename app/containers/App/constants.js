@@ -449,7 +449,7 @@ export const RIGHTS = [
     dimension: 'esr',
     type: 'esr',
     resource: 'esrScores',
-    hasGroups: true,
+    hasGroups: ['core', 'education'], // for standards
     icon: education,
   },
   {
@@ -458,7 +458,7 @@ export const RIGHTS = [
     dimension: 'esr',
     type: 'esr',
     resource: 'esrScores',
-    hasGroups: true,
+    hasGroups: ['core'],
     icon: food,
   },
   {
