@@ -289,7 +289,7 @@ export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
 };
 
 export const getRegionOf = (locale, regionCode, regionLabel) => {
-  if (regionCode) return false;
+  if (!regionCode) return false;
   if (locale === 'en') {
     return regionLabel;
   }
