@@ -7,34 +7,30 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
+import { Paragraph } from 'grommet';
 
 import ChartCountryMetricPeople from 'components/ChartCountryMetricPeople';
 
 import { RIGHTS } from 'containers/App/constants';
 
 import getMetricDetails from 'utils/metric-details';
+import { getMessageGrammar } from 'utils/narrative';
 
 import {
   getPeopleAtRisk,
   getContentByKey,
   getHasCountryCPR,
+  getCountryGrammar,
 } from 'containers/App/selectors';
 
 import { loadContentIfNeeded, loadDataIfNeeded } from 'containers/App/actions';
 
-// const getColour = metric => {
-//   if (metric.metricType === 'dimensions') {
-//     return metric.key;
-//   }
-//   if (metric.metricType === 'rights') {
-//     return metric.dimension;
-//   }
-//   return 'esr';
-// };
+import rootMessages from 'messages';
+
 const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
 
 const hasSubrights = metric => {
@@ -73,12 +69,14 @@ export function ChartContainerPeople({
   atRisk,
   metricCode,
   countryCode,
+  countryGrammar,
   onLoadData,
   onLoadContent,
   atRiskAnalysis,
   atRiskAnalysisSubrights,
   intl,
   hasAtRisk,
+  metricSelector,
 }) {
   useEffect(() => {
     onLoadData();
@@ -91,8 +89,9 @@ export function ChartContainerPeople({
 
   const metric = getMetricDetails(metricCode);
   // prettier-ignore
-  return hasAtRisk
-    ? (
+  return hasAtRisk ? (
+    <div>
+      {metricSelector}
       <ChartCountryMetricPeople
         data={atRisk}
         metric={metric}
@@ -101,9 +100,17 @@ export function ChartContainerPeople({
         locale={intl.locale}
         hasAnalysis={hasAnalysis(metric)}
         hasSubrightAnalysis={hasSubrightAnalysis(metric)}
+        showIntro={!metricSelector}
       />
-    )
-    : null;
+    </div>
+  ) : (
+    <Paragraph>
+      <FormattedMessage
+        {...rootMessages.hints.noAtRiskData}
+        values={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+      />
+    </Paragraph>
+  );
 }
 
 ChartContainerPeople.propTypes = {
@@ -119,6 +126,8 @@ ChartContainerPeople.propTypes = {
     PropTypes.array,
     PropTypes.bool,
   ]),
+  countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  metricSelector: PropTypes.node,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -153,6 +162,8 @@ const mapStateToProps = createStructuredSelector({
     return false;
   },
   hasAtRisk: (state, { countryCode }) => getHasCountryCPR(state, countryCode),
+  countryGrammar: (state, { countryCode }) =>
+    getCountryGrammar(state, countryCode),
 });
 
 export function mapDispatchToProps(dispatch) {
