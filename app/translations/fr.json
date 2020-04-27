@@ -323,7 +323,7 @@
   "hrmi.components.CountryNarrative.compAssessment.result.c": "proche de la moyenne",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": " en matière de droits d'autonomisation. ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " concernant les droits d'intégrité physique. ",
-  "hrmi.components.CountryNarrative.compAssessmentESR.end": ", par rapport aux autres pays en {regionWithArticle}",
+  "hrmi.components.CountryNarrative.compAssessmentESR.end": ", par rapport aux autres pays {regionIn} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", par rapport à tous les autres pays à revenus élevés ",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (cette comparaison est établie grâce au niveau de performance « {benchmark} »).",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "En ce qui concerne {countryWithArticle}, aucun score en matière de droits n'est disponible en raison de données manquantes. ",
