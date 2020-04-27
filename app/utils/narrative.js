@@ -340,6 +340,39 @@ export const getRegionOf = (locale, regionCode, regionLabel) => {
   }
   return regionLabel;
 };
+export const getRegionIn = (locale, regionCode, regionLabel) => {
+  if (!regionCode) return false;
+  if (locale === 'en') {
+    return `in ${regionLabel}`;
+  }
+  if (locale === 'fr') {
+    if (needsArticleRegion(locale, regionCode)) {
+      if (isPluralRegion(locale, regionCode)) {
+        return `aux ${regionLabel}`;
+      }
+      if (
+        regionCode === 'middle-east-north-africa' ||
+        regionCode === 'middle-east'
+      ) {
+        return `au ${regionLabel}`;
+      }
+    }
+    return `en ${regionLabel}`;
+  }
+  if (locale === 'es') {
+    return `en ${regionLabel}`;
+  }
+  if (locale === 'pt') {
+    if (regionCode === 'americas') {
+      return `nas ${regionLabel}`;
+    }
+    if (isRegionFeminine(locale, regionCode)) {
+      return `na ${regionLabel}`;
+    }
+    return `no ${regionLabel}`;
+  }
+  return regionLabel;
+};
 
 export const getMessageGrammar = (
   intl,
@@ -389,6 +422,11 @@ export const getMessageGrammar = (
       regionLabel,
     ),
     regionOf: getRegionOf(
+      locale,
+      useSubregion ? subregionCode : regionCode,
+      regionLabel,
+    ),
+    regionIn: getRegionIn(
       locale,
       useSubregion ? subregionCode : regionCode,
       regionLabel,
