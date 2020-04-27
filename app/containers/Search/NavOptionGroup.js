@@ -24,6 +24,7 @@ export function NavOptionGroup({
   const myRefs = useRef([]);
   const onEnter = useCallback(
     event => {
+      // on enter
       if (event.keyCode === 13) {
         if (options[activeResult]) onClick(options[activeResult].code);
       }

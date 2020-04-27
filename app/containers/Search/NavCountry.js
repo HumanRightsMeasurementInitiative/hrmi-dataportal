@@ -38,11 +38,13 @@ export function NavCountry({
     event => {
       // UP
       if (event.keyCode === 38) {
+        event.preventDefault();
         setActiveResult(Math.max(0, activeResult - 1));
         setFocus(true);
       }
       // DOWN
       if (event.keyCode === 40) {
+        event.preventDefault();
         setActiveResult(activeResult + 1);
         setFocus(true);
       }
