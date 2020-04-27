@@ -14,4 +14,8 @@ export default defineMessages({
     defaultMessage:
       "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} Human Rights Report",
   },
+  exploreDetails: {
+    id: `${scope}.exploreDetails`,
+    defaultMessage: 'Explore Details',
+  },
 });

@@ -64,59 +64,63 @@ function ChartSettingMetrics({
   }, [metrics]);
 
   const details = getMetricDetails(activeMetric);
+
+  const metricSelector = (
+    <Box margin={{ bottom: 'small' }}>
+      <Text size="medium">
+        <FormattedMessage
+          {...messages[chartId]}
+          values={{
+            no: noOfScores,
+            hasMany: noOfScores !== 1,
+            ...countryMessageValues,
+            dropdown: (
+              <ButtonDropdown
+                plain
+                first
+                onClick={() => setOpen(!open)}
+                label={
+                  <span>
+                    <Text style={{ whiteSpace: 'nowrap' }}>
+                      <FormattedMessage
+                        {...rootMessages[details.metricType][activeMetric]}
+                      />
+                    </Text>
+                    {open && <FormUp size="large" />}
+                    {!open && <FormDown size="large" />}
+                  </span>
+                }
+                ref={dropButton}
+              />
+            ),
+          }}
+        />
+        {open && (
+          <Drop
+            align={{ top: 'bottom', left: 'left' }}
+            target={dropButton.current}
+            onClickOutside={() => setOpen(false)}
+            overflow="hidden"
+          >
+            <MetricSelect
+              onClose={() => setOpen(false)}
+              metrics={metrics}
+              activeMetric={activeMetric}
+              setActiveMetric={code => {
+                setActiveMetric(code);
+                setOpen(false);
+              }}
+            />
+          </Drop>
+        )}
+      </Text>
+    </Box>
+  );
+
   return (
     <Box margin={{ bottom: 'xlarge' }}>
       {header && header({ metricCode: activeMetric })}
-      <Box margin={{ bottom: 'small' }}>
-        <Text size="medium">
-          <FormattedMessage
-            {...messages[chartId]}
-            values={{
-              no: noOfScores,
-              hasMany: noOfScores !== 1,
-              ...countryMessageValues,
-              dropdown: (
-                <ButtonDropdown
-                  plain
-                  first
-                  onClick={() => setOpen(!open)}
-                  label={
-                    <span>
-                      <Text style={{ whiteSpace: 'nowrap' }}>
-                        <FormattedMessage
-                          {...rootMessages[details.metricType][activeMetric]}
-                        />
-                      </Text>
-                      {open && <FormUp size="large" />}
-                      {!open && <FormDown size="large" />}
-                    </span>
-                  }
-                  ref={dropButton}
-                />
-              ),
-            }}
-          />
-          {open && (
-            <Drop
-              align={{ top: 'bottom', left: 'left' }}
-              target={dropButton.current}
-              onClickOutside={() => setOpen(false)}
-              overflow="hidden"
-            >
-              <MetricSelect
-                onClose={() => setOpen(false)}
-                metrics={metrics}
-                activeMetric={activeMetric}
-                setActiveMetric={code => {
-                  setActiveMetric(code);
-                  setOpen(false);
-                }}
-              />
-            </Drop>
-          )}
-        </Text>
-      </Box>
-      {chart && chart({ metricCode: activeMetric })}
+      {chart && chart({ metricCode: activeMetric, metricSelector })}
     </Box>
   );
 }

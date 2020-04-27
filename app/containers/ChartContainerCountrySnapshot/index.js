@@ -43,7 +43,6 @@ import ButtonText from 'styled/ButtonText';
 import Hint from 'styled/Hint';
 
 import { getRightsScoresForDimension } from 'utils/scores';
-
 import { getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
@@ -300,7 +299,7 @@ export function ChartContainerCountrySnapshot({
             </Paragraph>
             <Paragraph>
               <ButtonText onClick={() => goToTab('report-empowerment')}>
-                Explore details
+                <FormattedMessage {...messages.exploreDetails} />
               </ButtonText>
             </Paragraph>
           </>
