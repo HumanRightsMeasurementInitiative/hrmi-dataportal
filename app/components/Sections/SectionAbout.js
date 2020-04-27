@@ -26,7 +26,7 @@ export function SectionAbout({ intl, locale }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer background="sectionDark">
+        <SectionContainer background="sectionAbout">
           <ContentMaxWidth stretch direction="column">
             <SectionTitle title={intl.formatMessage(messages.about.title)} />
             <Box direction={isMinSize(size, 'large') ? 'row' : 'column'}>

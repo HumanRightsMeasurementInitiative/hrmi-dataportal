@@ -24,17 +24,15 @@ const StyledButton = styled(Button)`
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
   }
 `;
-const Banner = styled(Button)`
+const Banner = styled.div`
+  display: block;
   position: absolute;
   top: 0;
   right: 0;
-  background: ${({ theme }) => theme.global.colors.countriesLightRGBA};
-  color: ${({ theme }) => theme.global.colors.black};
+  background: ${({ theme }) => theme.global.colors.dark};
+  color: ${({ theme }) => theme.global.colors.white};
   padding: ${({ theme }) => theme.global.edgeSize.hair}
     ${({ theme }) => theme.global.edgeSize.xsmall};
-  &:hover {
-    background: ${({ theme }) => theme.global.colors.countriesLight};
-  }
 `;
 export function Card({
   imageSrc,
@@ -96,14 +94,7 @@ export function Card({
           </div>
         </Box>
       </StyledButton>
-      {banner && (
-        <Banner
-          pad="small"
-          plain
-          label={banner.label}
-          onClick={banner.onClick}
-        />
-      )}
+      {banner && <Banner>{banner.label}</Banner>}
     </Box>
   );
 }
