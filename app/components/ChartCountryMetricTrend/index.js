@@ -29,7 +29,7 @@ import { INDICATOR_LOOKBACK, PEOPLE_GROUPS } from 'containers/App/constants';
 
 import SettingsMultiToggle from 'containers/LayerSettings/SettingsMultiToggle';
 
-import ButtonToggleValueSetting from 'styled/ButtonToggleValueSetting';
+import ButtonToggleSetting from 'styled/ButtonToggleSetting';
 import WrapPlot from 'styled/WrapPlot';
 
 import rootMessages from 'messages';
@@ -517,7 +517,7 @@ function ChartCountryMetricTrend({
               )}
               {hasRawOption && (
                 <Box direction="row" justify="end" align="center">
-                  <ButtonToggleValueSetting
+                  <ButtonToggleSetting
                     active={!raw}
                     disabled={!raw}
                     onClick={() => {
@@ -525,8 +525,8 @@ function ChartCountryMetricTrend({
                     }}
                   >
                     <FormattedMessage {...rootMessages.settings.value.score} />
-                  </ButtonToggleValueSetting>
-                  <ButtonToggleValueSetting
+                  </ButtonToggleSetting>
+                  <ButtonToggleSetting
                     active={raw}
                     disabled={raw}
                     onClick={() => {
@@ -534,7 +534,7 @@ function ChartCountryMetricTrend({
                     }}
                   >
                     <FormattedMessage {...rootMessages.settings.value.raw} />
-                  </ButtonToggleValueSetting>
+                  </ButtonToggleSetting>
                 </Box>
               )}
             </Settings>

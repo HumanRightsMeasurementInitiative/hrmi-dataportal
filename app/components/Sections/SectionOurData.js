@@ -14,7 +14,6 @@ import { PATHS, PAGES } from 'containers/App/constants';
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
-import ButtonPrimary from 'styled/ButtonPrimary';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import { isMinSize } from 'utils/responsive';
@@ -72,9 +71,10 @@ export function SectionOurData({ nav, intl }) {
                 </Paragraph>
               )}
               <Box direction="row">
-                <ButtonPrimary
+                <ButtonTextIcon
                   onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}
                   label={intl.formatMessage(messages.ourData.downloadLink)}
+                  hasIcon
                 />
                 <ButtonTextIcon
                   style={{ marginLeft: 'auto' }}
