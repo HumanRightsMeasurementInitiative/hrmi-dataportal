@@ -115,16 +115,6 @@ export function SectionIntro({ theme }) {
               >
                 <GraphicCircle color="graphicRed" size="100px" />
               </GraphicWrap>
-              {isMinSize(size, 'large') && (
-                <GraphicWrap
-                  style={{ top: 0, right: 0, transform: 'translate(85%, 40%)' }}
-                >
-                  <GraphicDiamond
-                    color="physint"
-                    size={isMinSize(size, 'xlarge') ? 200 : 160}
-                  />
-                </GraphicWrap>
-              )}
               <div style={{ position: 'relative' }}>
                 <PageTitle>
                   <FormattedMessage {...rootMessages.app.title} />
@@ -161,6 +151,20 @@ export function SectionIntro({ theme }) {
                   position: 'relative',
                 }}
               />
+            )}
+            {isMinSize(size, 'large') && (
+              <GraphicWrap
+                style={{
+                  bottom: 0,
+                  right: 0,
+                  transform: 'translate(40%, 40%)',
+                }}
+              >
+                <GraphicDiamond
+                  color="physint"
+                  size={isMinSize(size, 'xlarge') ? 140 : 80}
+                />
+              </GraphicWrap>
             )}
           </ContentMaxWidth>
         </SectionContainer>
