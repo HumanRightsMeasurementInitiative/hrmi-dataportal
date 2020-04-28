@@ -119,6 +119,7 @@ export function PathMetricOverview({
                 title={`${intl.formatMessage(messages.sectionTitle, {
                   no: rights.length,
                   category: intl.formatMessage(rootMessages.dimensions[d.key]),
+                  categoryCode: d.key,
                 })}`}
                 background={index % 2 === 0 ? `${d.key}Light` : 'white'}
                 description={
