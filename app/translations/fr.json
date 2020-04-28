@@ -115,7 +115,7 @@
   "hrmi.containers.PathMetric.indicators.longterm-unemployment.header.b": "Il s'agit de scores concernant les performances des pays, et non de nombres ou de pourcentages de personnes.",
   "hrmi.containers.PathMetricOverview.title": "{no} droits humains",
   "hrmi.containers.PathMetricOverview.header": "Nous effectuons un suivi des {no} droits humains, internationalement reconnus, selon trois catégories : {esrLink}, {physintLink} et {empowerLink}. Les scores sont mis à jour chaque année. Des mesures sont prévues à l'avenir pour d’autres droits. ",
-  "hrmi.containers.PathMetricOverview.sectionTitle": "{no} droits en matière {categoryCode, select, physint {d'} empowerment {d'} esr {}}{category}",
+  "hrmi.containers.PathMetricOverview.sectionTitle": "{no} droits en matière {categoryCode, select, physint {d'} empowerment {d'} esr {de }}{category}",
   "hrmi.containers.PathMetricOverview.categoryLink": "Résumé des scores",
   "hrmi.containers.PathMetricOverview.description.esr": "Ces scores évaluent dans quelle mesure un pays utilise ses ressources afin d’assurer le respect des droits économiques et sociaux de ses populations. Notre {methodologyLink} prend en considération à la fois les revenus d’un pays et les informations issues des bases de données internationales.",
   "hrmi.containers.PathMetricOverview.description.empowerment": "Ces droits d’accès à l'autonomie sont évalués grâce à un {methodologyLink}.",
