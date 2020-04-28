@@ -317,7 +317,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.start": "En '{esr}', {countryWithArticle} se {isPlural, select, true {desempeñan} false {desempeña}} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.startSome": "En {esr}, cuando analizamos los países para los cuales sí tenemos información, {countryWithArticle} {isPlural, select, true {están} false {está}} desempeñandose ",
   "hrmi.components.CountryNarrative.compAssessmentESR.startOne": "En {esr}, {countryWithArticle} {isPlural, select, true {estan} false {está}} desempeñando ",
-  "hrmi.components.CountryNarrative.compAssessmentESR.oneRight": " a la {right}",
+  "hrmi.components.CountryNarrative.compAssessmentESR.oneRight": " sobre {right}",
   "hrmi.components.CountryNarrative.compAssessment.result.a": "mejor que la media",
   "hrmi.components.CountryNarrative.compAssessment.result.b": "peor que la media",
   "hrmi.components.CountryNarrative.compAssessment.result.c": "cercano a la media",
@@ -857,10 +857,10 @@
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "¿Para qué estándar de evaluación se utiliza el indicador?",
   "hrmi.labels.abbrev.notAvailable": "N/A",
-  "hrmi.containers.AboutCountryContainer.more": "Show country categories",
-  "hrmi.containers.AboutCountryContainer.less": "Hide country categories",
-  "hrmi.indicators-about.net-primary": "Número total de estudiantes del grupo en edad oficial de asistir a la escuela primaria que están matriculados en la educación primaria o secundaria, expresado como porcentaje de la población correspondiente.",
-  "hrmi.hints.settings": "To change the performance benchmark or assessment standard, please click on ‘Switch View’ above",
+  "hrmi.containers.AboutCountryContainer.more": "Mostrar categorías de países",
+  "hrmi.containers.AboutCountryContainer.less": "Ocultar categorías de países",
+  "hrmi.indicators-about.net-primary": "Número total de estudiantes del grupo en edad oficial de asistir a la escuela primaria que están matriculados en la educación primaria, expresado como porcentaje de la población correspondiente.",
+  "hrmi.hints.settings": "To change the performance benchmark or assessment standard, please click on ‘Switch view’ above",
   "hrmi.hints.noAtRiskData": "Information on which people are at extra risk of rights violations comes from our annual expert survey, and is not yet available for {countryWithArticle}. ",
   "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Explore Details"
 }
