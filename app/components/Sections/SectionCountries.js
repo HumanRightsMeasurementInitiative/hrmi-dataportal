@@ -75,7 +75,6 @@ export function SectionCountries({
                       )
                       : country[COLUMNS.COUNTRIES.CODE]
                   }
-                  activeColor="countries"
                   banner={{
                     label: catLabel,
                     onClick: () => onCatClick(cats[0]),

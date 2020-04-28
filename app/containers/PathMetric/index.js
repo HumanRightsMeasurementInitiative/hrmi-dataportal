@@ -58,6 +58,7 @@ export function PathMetric({
   const metricTitle = intl.formatMessage(
     rootMessages[metric.metricType][metric.key],
   );
+  let dimensionCode = metricCode;
 
   const ancestors = [{ key: 'all' }];
   let imageSrc;
@@ -78,6 +79,7 @@ export function PathMetric({
         key: metric.aggregate,
       });
     }
+    dimensionCode = metric.dimension;
   }
   if (metric.metricType === 'indicators') {
     imageSrc = `${IMAGE_PATH}/indicator_${metricCode}.png`;
@@ -89,6 +91,7 @@ export function PathMetric({
       type: 'rights-short',
       key: metric.right,
     });
+    dimensionCode = 'esr';
   }
   const onCountryClick = code => {
     if (asideLayer && asideLayer.key === code) {
@@ -96,6 +99,7 @@ export function PathMetric({
     } else {
       onSetAsideLayer({
         type: 'aboutCountry',
+        background: `${dimensionCode}Active`,
         key: code,
         code,
       });

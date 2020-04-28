@@ -1,16 +1,15 @@
 import styled from 'styled-components';
-import Button from 'styled/Button';
+import ButtonPlain from 'styled/ButtonPlain';
 
 // prettier-ignore
-export default styled(Button)`
+export default styled(ButtonPlain)`
   text-align: left;
   padding: 10px;
-  border-top: 1px solid ${({ theme }) => theme.global.colors.border.light };
-  color: ${({ theme, active }) => active ? theme.global.colors['dark-4'] : theme.global.colors['dark-1']};
   display: block;
   width: 100%;
-  font-size: 14px;
-  line-height: 18px;
+  font-weight: ${({ active }) => (active ? 600 : 400)};
+  border-top: 1px solid ${({ theme }) => theme.global.colors.border.light };
+  border-left: 4px solid transparent;
   &:last-child {
     border-bottom: 1px solid
       ${({ theme, noBorderLast }) => noBorderLast
@@ -18,10 +17,9 @@ export default styled(Button)`
     : theme.global.colors.border.light};
   }
   &:hover {
-    color: ${({ theme, active }) => (active ? theme.global.colors['dark-4'] : theme.global.colors['dark-1'])};
-    box-shadow: ${({ active }) => active || 'inset 0 0 4px 0 rgba(0, 138, 211, 0.55)'};
+    border-left: 4px solid ${({ theme }) => theme.global.colors.dark};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 4px 16px;
+    padding: 4px 16px 4px 12px;
   }
 `;

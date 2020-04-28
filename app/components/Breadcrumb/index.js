@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Button from 'styled/Button';
+import ButtonPlain from 'styled/ButtonPlain';
 import { Box } from 'grommet';
 import { FormNext } from 'grommet-icons';
 // prettier-ignore
@@ -9,13 +9,13 @@ const HeaderCategories = styled(Box)`
   margin: 0 50px 0 0;
 `;
 
-const CategoryLink = styled(Button)`
+const CategoryLink = styled(ButtonPlain)`
   padding: 0 3px;
   padding-left: ${({ firstChild }) => (firstChild ? 0 : 3)}px;
   color: ${({ theme }) => theme.global.colors.dark};
+  font-size: ${({ theme }) => theme.text.small.size};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 0 6px;
-    padding-left: ${({ firstChild }) => (firstChild ? 2 : 6)}px;
+    padding-left: ${({ firstChild }) => (firstChild ? 2 : 3)}px;
   }
 `;
 const IconWrap = styled.span`

@@ -50,7 +50,7 @@ const AnnotateBetterInner = styled.div`
       left: 0;
     `}
   width: 100%;
-  color: ${({ theme }) => theme.global.colors['dark-3']};
+  color: ${({ theme }) => theme.global.colors.secondary};
   padding: 12px;
 `;
 

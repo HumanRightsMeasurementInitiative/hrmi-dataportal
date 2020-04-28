@@ -74,6 +74,7 @@ export function Card({
         >
           {imageSrc && <Image src={imageSrc} alt={label} type={type} />}
         </Box>
+        {banner && <Banner>{banner.label}</Banner>}
         <Box
           height={{ min: `${textHeight}px` }}
           margin={{
@@ -94,7 +95,6 @@ export function Card({
           </div>
         </Box>
       </StyledButton>
-      {banner && <Banner>{banner.label}</Banner>}
     </Box>
   );
 }

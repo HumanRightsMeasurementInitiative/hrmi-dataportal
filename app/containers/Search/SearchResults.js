@@ -64,7 +64,7 @@ export function SearchResults({
   const hasCountries = countries && countries.length > 0;
   const hasGroups = groups && groups.length > 0;
   return (
-    <Box direction="column" pad="medium">
+    <Box flex overflow="auto" pad={{ top: 'medium' }}>
       {!hasCountries && !hasMetrics && !hasGroups && (
         <Hint italic>
           <FormattedMessage {...messages.noResults} />

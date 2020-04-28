@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { ResponsiveContext, Button } from 'grommet';
+import { ResponsiveContext, Button, Text } from 'grommet';
 import { CircleQuestion, Performance } from 'grommet-icons';
 
 import { setAsideLayer } from 'containers/App/actions';
@@ -20,6 +20,15 @@ import { isMinSize } from 'utils/responsive';
 import rootMessages from 'messages';
 
 const Styled = styled.div``;
+// prettier-ignore
+const StyledText = styled(Text)`
+  border-bottom: 3px solid
+    ${({ theme, onWhite = true }) =>
+    onWhite
+      ? theme.global.colors.buttonSecondaryOnWhiteHover
+      : theme.global.colors.buttonSecondaryHover
+};
+`;
 const StyledButton = styled(Button)`
   background: transparent;
   padding: 3px;
@@ -28,12 +37,8 @@ const StyledButton = styled(Button)`
   &:last-child {
     margin-right: 0;
   }
-  border-radius: 9999px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 3px 10px;
-  }
-  &:hover {
-    background-color: ${({ theme }) => theme.global.colors.white};
   }
 `;
 
@@ -42,6 +47,7 @@ export function ChartTools({
   settingsConfig,
   onSetAsideLayer,
   intl,
+  onWhite = true,
 }) {
   return (
     <ResponsiveContext.Consumer>
@@ -58,9 +64,13 @@ export function ChartTools({
               icon={<CircleQuestion color="dark" size="large" />}
               plain
               label={
-                isMinSize(size, 'large')
-                  ? intl.formatMessage(rootMessages.labels.chartTools.howToRead)
-                  : null
+                isMinSize(size, 'large') ? (
+                  <StyledText onWhite={onWhite}>
+                    {intl.formatMessage(
+                      rootMessages.labels.chartTools.howToRead,
+                    )}
+                  </StyledText>
+                ) : null
               }
               gap="xsmall"
               reverse
@@ -77,9 +87,13 @@ export function ChartTools({
               icon={<Performance color="dark" size="large" />}
               plain
               label={
-                isMinSize(size, 'large')
-                  ? intl.formatMessage(rootMessages.labels.chartTools.settings)
-                  : null
+                isMinSize(size, 'large') ? (
+                  <StyledText onWhite={onWhite}>
+                    {intl.formatMessage(
+                      rootMessages.labels.chartTools.settings,
+                    )}
+                  </StyledText>
+                ) : null
               }
               gap="xsmall"
               reverse
@@ -96,6 +110,7 @@ ChartTools.propTypes = {
   settingsConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onSetAsideLayer: PropTypes.func,
   intl: intlShape.isRequired,
+  onWhite: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {

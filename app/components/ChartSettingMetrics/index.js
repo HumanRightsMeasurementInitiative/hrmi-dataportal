@@ -12,9 +12,6 @@ import messages from './messages';
 
 import MetricSelect from './MetricSelect';
 
-// &:hover {
-//   theme.global.colors[active ? 'dark-2' : 'dark-3']};
-// }
 // prettier-ignore
 const ButtonDropdown = styled(Button)`
   display: inline;
@@ -22,6 +19,7 @@ const ButtonDropdown = styled(Button)`
   margin: 0px 3px;
   border-bottom: 1px solid;
   background-color: transparent;
+  font-weight: 600;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0 5px;
     width: auto;

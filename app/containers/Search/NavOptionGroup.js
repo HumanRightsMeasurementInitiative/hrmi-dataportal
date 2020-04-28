@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box, Text } from 'grommet';
 
-import Active from 'components/ChartBars/styled/Active';
-
 import NavOption from './NavOption';
 
 const NavOptionWrap = styled(Box)`
   padding-top: 10px;
   padding-bottom: 30px;
+`;
+const StyledText = styled(Text)`
+  padding-left: 10px;
+  padding-right: 10px;
+  bottom: 2px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
 `;
 
 export function NavOptionGroup({
@@ -49,9 +56,9 @@ export function NavOptionGroup({
     <div>
       <NavOptionWrap>
         {label && (
-          <Text color="dark-4" size="small" pad={{ bottom: '2px' }}>
+          <StyledText color="dark-4" size="small">
             {label}
-          </Text>
+          </StyledText>
         )}
         {options.map((m, index) => (
           <NavOption
@@ -62,8 +69,8 @@ export function NavOptionGroup({
               myRefs.current[index] = el;
             }}
             onFocus={() => onFocus(index)}
+            active={index === activeResult}
           >
-            {index === activeResult && <Active color="dark" />}
             <Box direction="row" align="end" fill="horizontal" width="100%">
               <Text color={subject}>{m.label}</Text>
             </Box>

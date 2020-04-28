@@ -5,16 +5,23 @@ import { Button } from 'grommet';
 const OptionButton = React.forwardRef((props, ref) => (
   <Button plain {...props} ref={ref} />
 ));
-
+// prettier-ignore
 export default styled(OptionButton)`
-  border-top: 1px solid;
-  border-bottom: ${({ special }) => (special ? '1px solid' : '0')};
-  border-color: ${({ theme }) => theme.global.colors['light-4']};
-  padding: 10px 0;
-  font-weight: ${({ special }) => (special ? '600' : '400')};
+  border-top: 1px solid ${({ theme }) => theme.global.colors.border.light};
+  border-bottom: 1px solid transparent;
+  padding: 10px;
   position: relative;
+  background: transparent;
+  border-left: 4px solid
+    ${({ theme, active }) =>
+    active ? theme.global.colors.dark : 'transparent'};
   &:last-child {
-    border-bottom: 1px solid;
-    border-color: ${({ theme }) => theme.global.colors['light-4']};
+    border-bottom: 1px solid ${({ theme }) => theme.global.colors.border.light};
+  }
+  &:hover {
+    border-left: 4px solid ${({ theme }) => theme.global.colors.dark};
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding: 10px 16px 10px 12px;
   }
 `;

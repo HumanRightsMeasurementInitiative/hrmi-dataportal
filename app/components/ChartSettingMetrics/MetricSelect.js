@@ -29,7 +29,7 @@ const StyledOption = styled(OptionButton)`
   border-color: ${({ theme }) => theme.global.colors['light-4']};
 `;
 const StyledOptionDisabled = styled.div`
-  color: ${({ theme }) => theme.global.colors['dark-3']};
+  color: ${({ theme }) => theme.global.colors.secondary};
   padding: 5px 10px;
   font-weight: ${({ active }) => (active ? '600' : '400')};
   padding-left: ${({ level }) => {

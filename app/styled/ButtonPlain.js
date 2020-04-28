@@ -11,24 +11,24 @@ export default styled.button`
   background-image: none;
   border: none;
   border-radius: 0;
-  color: ${({ theme }) => theme.global.colors['dark-1']};
+  color: ${({ theme }) => theme.global.colors.dark};
   background-color: transparent;
   text-decoration: none;
   text-align: left;
   &:hover {
-    color: ${({ theme }) => theme.global.colors['dark-1']};
+    color: ${({ theme }) => theme.global.colors.dark};
     background-color: transparent;
   }
   &:active {
-    color: ${({ theme }) => theme.global.colors['dark-1']};
+    color: ${({ theme }) => theme.global.colors.dark};
     background-color: transparent;
   }
   &:visited {
-    color: ${({ theme }) => theme.global.colors['dark-1']};
+    color: ${({ theme }) => theme.global.colors.dark};
     background-color: transparent;
   }
   &:focus {
-    color: ${({ theme }) => theme.global.colors['dark-1']};
+    color: ${({ theme }) => theme.global.colors.dark};
     background-color: transparent;
     box-shadow: none;
     border-radius: 0;
