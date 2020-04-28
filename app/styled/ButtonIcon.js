@@ -6,8 +6,8 @@ export default styled(Button)`
   background-color: ${({ theme, subtle }) =>
     subtle ? 'transparent' : theme.global.colors.dark};
   border-radius: 100%;
-  width: ${({ small }) => (small ? 30 : 50)}px;
-  height: ${({ small }) => (small ? 30 : 50)}px;
+  width: 30px;
+  height: 30px;
   text-align: center;
   padding: ${({ small }) => (small ? 2 : 0)}px;
   box-shadow: ${({ float }) => float ? '0 0 3px 1px rgba(0, 0, 0, 0.15)' : ''};

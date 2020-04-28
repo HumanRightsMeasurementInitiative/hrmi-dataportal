@@ -48,6 +48,7 @@ export function LayerAside({ onClose, theme, layer }) {
   }, []);
 
   if (!layer) return null;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -71,6 +72,8 @@ export function LayerAside({ onClose, theme, layer }) {
             overflow="auto"
             style={{ position: 'relative' }}
             responsive={false}
+            background={layer.background || 'white'}
+            pad={{ right: 'medium' }}
           >
             <ButtonWrap>
               <ButtonIcon onClick={onClose}>
@@ -86,6 +89,7 @@ export function LayerAside({ onClose, theme, layer }) {
                 showMetricLink
                 showSources
                 countryScoreMsg={layer.countryScoreMsg}
+                inverse
               />
             )}
             {layer.type === 'aboutCountry' && (
@@ -93,6 +97,7 @@ export function LayerAside({ onClose, theme, layer }) {
                 countryCode={layer.code}
                 showTitle
                 showCountryLink
+                inverse
               />
             )}
           </Box>

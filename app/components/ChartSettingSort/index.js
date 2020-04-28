@@ -12,11 +12,16 @@ import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import messages from './messages';
 import SortOptions from './SortOptions';
-
+// prettier-ignore
 const StyledDropButton = styled(DropButton)`
+  border-bottom: 2px solid transparent;
   &:hover {
-    color: ${({ theme }) => theme.global.colors.highlight3};
-  }
+    border-bottom: 2px solid
+    ${({ theme, onWhite = true }) =>
+    onWhite
+      ? theme.global.colors.buttonSecondaryOnWhiteHover
+      : theme.global.colors.buttonSecondaryHover
+}
 `;
 
 const StyledButtonIcon = styled(ButtonIcon)`
@@ -35,6 +40,7 @@ export function ChartSettingSort({
   onSortSelect,
   onOrderToggle,
   intl,
+  onWhite,
 }) {
   const [optionsOpen, setOptionsOpen] = useState(false);
 
@@ -76,11 +82,18 @@ export function ChartSettingSort({
                     ? { horizontal: 'xsmall' }
                     : { horizontal: 'hair' }
                 }
-                icon={optionsOpen ? <FormUp /> : <FormDown />}
+                icon={
+                  optionsOpen ? (
+                    <FormUp size="large" />
+                  ) : (
+                    <FormDown size="large" />
+                  )
+                }
                 label={label}
                 onClose={() => setOptionsOpen(false)}
                 onOpen={() => setOptionsOpen(true)}
                 open={optionsOpen}
+                onWhite={onWhite}
                 dropProps={{
                   align: { top: 'bottom', right: 'right' },
                   stretch: false,
@@ -124,6 +137,7 @@ ChartSettingSort.propTypes = {
   order: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSortSelect: PropTypes.func,
   onOrderToggle: PropTypes.func,
+  onWhite: PropTypes.bool,
 };
 
 export default injectIntl(ChartSettingSort);

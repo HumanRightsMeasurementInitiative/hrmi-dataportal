@@ -1,43 +1,48 @@
 import styled from 'styled-components';
-
+import ButtonPlain from './ButtonPlain';
 // prettier-ignore
-export default styled.button`
-  display: inline-block;
+export default styled(ButtonPlain)`
   padding: 4px 8px;
-  cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')} !important;
-  font-size: 13px;
-  line-height: 16px;
+  font-size: ${({ theme }) => theme.text.xsmall.size};
+  line-height: ${({ theme }) => theme.text.xsmall.height};
+  font-weight: 600;
   text-align: center;
   vertical-align: middle;
-  touch-action: manipulation;
-  user-select: none;
-  background-image: none;
-  border: none;
-  border-radius: 0;
-  color: ${({ theme }) => theme.global.colors['dark-1']};
-  background-color: transparent;
-  text-decoration: none;
+  border-radius: 99999px;
+  color: ${({ theme }) => theme.global.colors.dark};
+  background-color:
+    ${({ theme, onWhite = true }) => onWhite
+    ? theme.global.colors.buttonSecondaryOnWhite
+    : theme.global.colors.buttonSecondary
+};
   &:hover {
-    color: ${({ theme, hoverColor }) =>
-    theme.global.colors[hoverColor || 'highlight3']};
-    background-color: transparent;
+    background-color:
+    ${({ theme, onWhite = true }) => onWhite
+    ? theme.global.colors.buttonSecondaryOnWhiteHover
+    : theme.global.colors.buttonSecondaryHover
+};
   }
   &:active {
-    /* color: ${({ theme }) => theme.global.colors.highlight3}; */
-    background-color: transparent;
+    background-color:
+    ${({ theme, onWhite = true }) => onWhite
+    ? theme.global.colors.buttonSecondaryOnWhiteHover
+    : theme.global.colors.buttonSecondaryHover
+};
   }
   &:visited {
-    /* color: ${({ theme }) => theme.global.colors.highlight3}; */
-    background-color: transparent;
+    background-color:
+    ${({ theme, onWhite = true }) => onWhite
+    ? theme.global.colors.buttonSecondaryOnWhiteHover
+    : theme.global.colors.buttonSecondaryHover
+};
   }
   &:focus {
-    /* color: ${({ theme }) => theme.global.colors.highlight3}; */
     box-shadow: none;
-    border-radius: 0;
+    border-radius: 99999px;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    font-size: 16px;
-    line-height: 20px;
-    padding: 6px 12px;
+    font-size: ${({ theme }) => theme.text.medium.size};
+    line-height: ${({ theme }) => theme.text.medium.height};
+    padding: 4px 16px;
   }
 `;

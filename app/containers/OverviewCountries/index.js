@@ -132,8 +132,10 @@ export function OverviewCountries({
       {size => (
         <MainColumn hasAside={hasAside}>
           <ChartHeader
+            top
             chartId="countries-overview"
             messageValues={{ no: countries.length }}
+            onWhite={false}
             tools={{
               howToReadConfig: {
                 key: 'tab-countries',

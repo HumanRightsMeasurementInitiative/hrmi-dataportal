@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Button from './Button';
+import ButtonPlain from './ButtonPlain';
 // prettier-ignore
-export default styled(Button)`
+export default styled(ButtonPlain)`
   padding: 0;
   font-size: inherit;
   line-height: inherit;
@@ -12,20 +12,16 @@ export default styled(Button)`
   text-decoration: underline;
   text-align: left;
   &:hover{
-    color: ${({ theme }) => theme.global.colors.highlight3};
     background-color: transparent;
     text-decoration: underline;
   }
   &:active{
-    color: ${({ theme }) => theme.global.colors.highlight3};
     background-color: transparent;
   }
   &:visited{
-    color: ${({ theme }) => theme.global.colors.highlight3};
     background-color: transparent;
   }
   &:focus{
-    color: ${({ theme }) => theme.global. colors.highlight3};
     box-shadow: none;
     border-radius: 0;
   }

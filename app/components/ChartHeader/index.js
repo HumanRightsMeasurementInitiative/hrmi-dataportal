@@ -20,7 +20,7 @@ import { isMinSize } from 'utils/responsive';
 import messages from './messages';
 
 const Styled = styled.div`
-  margin-top: 60px;
+  margin-top: ${({ top }) => (top ? 20 : 60)}px;
   margin-bottom: 20px;
 `;
 const Top = styled.div`
@@ -48,13 +48,15 @@ export function ChartHeader({
   tools,
   intl,
   includeChartName,
+  onWhite,
+  top,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Styled>
+        <Styled top={top}>
           <Top>
             <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
               {chartName}
@@ -62,6 +64,7 @@ export function ChartHeader({
             {tools && (
               <ChartToolWrapper>
                 <ChartTools
+                  onWhite={onWhite}
                   howToReadConfig={
                     tools.howToReadConfig && {
                       chartName: includeChartName && chartName,
@@ -83,7 +86,10 @@ export function ChartHeader({
               direction="row"
               justify="between"
               align={isMinSize(size, 'medium') ? 'center' : 'start'}
-              margin={{ bottom: isMinSize(size, 'medium') ? '0' : 'small' }}
+              margin={{
+                bottom: isMinSize(size, 'medium') ? '0' : 'small',
+                top: isMinSize(size, 'medium') ? 'medium' : '0',
+              }}
             >
               {filter && (
                 <ChartSettingFilters
@@ -96,6 +102,7 @@ export function ChartHeader({
                   countryGroupFilterValue={filter.countryGroupFilterValue}
                   treatyFilterValue={filter.treatyFilterValue}
                   filterValues={filter.filterValues}
+                  onWhite={onWhite}
                 />
               )}
               {sort && (
@@ -105,6 +112,7 @@ export function ChartHeader({
                   order={sort.order}
                   onSortSelect={sort.onSortSelect}
                   onOrderToggle={sort.onOrderToggle}
+                  onWhite={onWhite}
                 />
               )}
             </Box>
@@ -127,6 +135,8 @@ ChartHeader.propTypes = {
   messageValues: PropTypes.object,
   tools: PropTypes.object,
   includeChartName: PropTypes.bool,
+  onWhite: PropTypes.bool,
+  top: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

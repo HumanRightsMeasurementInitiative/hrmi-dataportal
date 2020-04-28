@@ -72,7 +72,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
         size={size}
       />
       <NavScroll>
-        <Box flex overflow="auto" pad="medium">
+        <Box flex overflow="auto" pad={{ vertical: 'medium' }}>
           {search === '' && (
             <NavOptionGroup
               label={intl.formatMessage(messages.optionGroups.overview)}

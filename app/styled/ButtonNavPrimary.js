@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import Button from './Button';
+import ButtonPlain from './ButtonPlain';
 // prettier-ignore
-export default styled(Button)`
+export default styled(ButtonPlain)`
   display: block;
-  color: ${({ theme, active }) => theme.global.colors[active ? 'dark-2' : 'dark-3' ]};
+  color: ${({ theme, active }) => theme.global.colors[active ? 'dark' : 'secondary' ]};
   padding: 10px 10px;
   font-size: 1em;
   font-weight: 600;
@@ -17,18 +17,5 @@ export default styled(Button)`
     display: inline-block;
     border: none;
     width: auto;
-  }
-  &:hover {
-    color: ${({ theme, active }) => theme.global.colors[active ? 'dark-2' : 'dark-3' ]};
-  }
-  &:active {
-    color: ${({ theme, active }) => theme.global.colors[active ? 'dark-2' : 'dark-3' ]};
-  }
-  &:visited {
-    color: ${({ theme, active }) => theme.global.colors[active ? 'dark-2' : 'dark-3' ]};
-  }
-  &:focus {
-    color: ${({ theme, active }) => theme.global.colors[active ? 'dark-2' : 'dark-3' ]};
-    outline: none;
   }
 `;

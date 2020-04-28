@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Next, Previous } from 'grommet-icons';
-import Button from 'styled/Button';
+import ButtonPlain from 'styled/ButtonPlain';
 
 import styled from 'styled-components';
 
@@ -41,7 +41,7 @@ const ArrowWrapperFull = styled.div`
 `;
 
 // prettier-ignore
-const StyledButtonIcon = styled(Button)`
+const StyledButtonIcon = styled(ButtonPlain)`
   pointer-events: all;
   position: absolute;
   top: 0;

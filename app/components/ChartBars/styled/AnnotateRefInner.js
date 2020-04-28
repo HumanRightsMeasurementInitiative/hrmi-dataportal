@@ -8,5 +8,5 @@ export default styled.div`
   right: ${({ offsetTop }) => (offsetTop ? 0 : '4px')};
   font-size: 12px;
   line-height: 12px;
-  color: ${({ theme }) => theme.global.colors['dark-3']};
+  color: ${({ theme }) => theme.global.colors.secondary};
 `;
