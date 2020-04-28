@@ -98,7 +98,7 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-const getCountryLabel = (score, countries, metric, intl) => {
+const getCountryLabel = (score, countries, showHILabel, intl) => {
   const country = countries.find(c => c.country_code === score.country_code);
   let label = '';
   if (rootMessages.countries[country.country_code]) {
@@ -106,12 +106,7 @@ const getCountryLabel = (score, countries, metric, intl) => {
   } else {
     label = country.country_code;
   }
-  if (
-    metric &&
-    (metric.type === 'esr' || metric.metricType === 'indicators') &&
-    country &&
-    country.high_income_country === '1'
-  ) {
+  if (showHILabel && country && country.high_income_country === '1') {
     label = `${label}${intl.formatMessage(rootMessages.labels.hiCountryWrap, {
       hiLabel: intl.formatMessage(rootMessages.labels.hiCountry),
     })}`;
@@ -127,6 +122,7 @@ const prepareData = ({
   intl,
   onCountryClick,
   activeCode,
+  showHILabel,
 }) =>
   // prettier-ignore
   scores.map(s =>
@@ -139,7 +135,7 @@ const prepareData = ({
         unit: '%',
         stripes: standard === 'hi',
         key: s.country_code,
-        label: getCountryLabel(s, countries, metric, intl),
+        label: getCountryLabel(s, countries, showHILabel, intl),
         onClick: () => onCountryClick(s.country_code),
         active: activeCode === s.country_code,
       }
@@ -150,7 +146,7 @@ const prepareData = ({
         unit: '',
         band: getBand(s),
         key: s.country_code,
-        label: getCountryLabel(s, countries, metric, intl),
+        label: getCountryLabel(s, countries, showHILabel, intl),
         onClick: () => onCountryClick(s.country_code),
         active: activeCode === s.country_code,
       }
@@ -179,6 +175,7 @@ export function ChartContainerMetric({
   auxIndicators,
   onCountryClick,
   activeCode,
+  showHILabel,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -276,6 +273,7 @@ export function ChartContainerMetric({
             countries,
             onCountryClick,
             activeCode,
+            showHILabel,
           })}
           currentBenchmark={currentBenchmark}
           metric={metric}
@@ -302,6 +300,7 @@ export function ChartContainerMetric({
               countries,
               onCountryClick,
               activeCode,
+              showHILabel,
             })}
             currentBenchmark={currentBenchmark}
             metric={metric}
@@ -345,6 +344,7 @@ ChartContainerMetric.propTypes = {
   onSortSelect: PropTypes.func,
   onOrderChange: PropTypes.func,
   dataReady: PropTypes.bool,
+  showHILabel: PropTypes.bool,
   onCountryClick: PropTypes.func,
 };
 
