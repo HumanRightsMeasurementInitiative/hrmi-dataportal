@@ -84,7 +84,7 @@ const prepareData = ({
     stripes: standard === 'hi',
     key: i.key,
     label: getIndicatorLabel(i.key, intl),
-    onClick: () => onClick(i.key),
+    onClick: () => onClick(i.key, 'esr'),
     active: activeCode === i.key,
   }));
 
@@ -126,7 +126,7 @@ export function ChartContainerCountryIndicators({
             stripes: standard === 'hi',
             key: metricCode,
             label: getMetricLabel(metricCode, intl),
-            onClick: () => onMetricClick(metricCode),
+            onClick: () => onMetricClick(metricCode, 'esr'),
             active: activeCode === metricCode,
           },
         ]}

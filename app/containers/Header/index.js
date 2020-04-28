@@ -159,15 +159,16 @@ const ButtonNavSecondary = styled(Button)`
   font-weight: 600;
   height: ${({ theme }) => getHeaderHeightBottom('small', theme)}px;
   background: transparent;
+  border-top: 4px solid transparent;
   border-bottom: 4px solid;
-  border-color: ${({ theme, active }) => (
+  border-bottom-color: ${({ theme, active }) => (
     active ? theme.global.colors.dark : 'transparent'
   )};
   &:first-child {
     margin-left: 0;
   }
   &:hover {
-    border-color: ${({ theme }) => theme.global.colors.dark};
+    border-bottom-color: ${({ theme }) => theme.global.colors.dark};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
@@ -321,8 +322,8 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                     onClick={() => setShowMenu(!showMenu)}
                     ref={menuRef}
                   >
-                    {!showMenu && <Menu color="dark-3" />}
-                    {showMenu && <Close color="dark-3" />}
+                    {!showMenu && <Menu color="dark" />}
+                    {showMenu && <Close color="dark" />}
                   </ToggleMenu>
                 )}
                 {showMenu && size === 'small' && (

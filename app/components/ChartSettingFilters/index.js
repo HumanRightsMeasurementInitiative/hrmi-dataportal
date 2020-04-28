@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import styled, { withTheme } from 'styled-components';
+import styled from 'styled-components';
 
 import { Box, Drop, ResponsiveContext, Layer } from 'grommet';
 import { Close, Add } from 'grommet-icons';
@@ -26,18 +26,11 @@ import messages from './messages';
 
 const StyledButtonIcon = styled(ButtonIcon)`
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 40px;
-  height: 40px;
-  background: ${({ theme }) => theme.global.colors['light-1']};
+  top: 6px;
+  right: 16px;
 `;
 
-const FilterWrap = styled.div`
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding-top: ${({ theme }) => theme.global.edgeSize.small};
-  }
-`;
+const FilterWrap = styled.div``;
 
 const getFilterOptions = (
   { region, subregion, income, assessed, cgroup, treaty },
@@ -151,7 +144,7 @@ const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
     overflow="auto"
   >
     <StyledButtonIcon subtle onClick={() => setFilterOpen(false)}>
-      <Close size="large" />
+      <Close size="large" color="dark" />
     </StyledButtonIcon>
     <FilterOptions
       optionGroups={filterOptions.filter(g => g.options.length > 0)}
@@ -174,7 +167,7 @@ export function ChartSettingFilters({
   treatyFilterValue,
   intl,
   filterValues,
-  theme,
+  onWhite,
 }) {
   const [filterOpen, setFilterOpen] = useState(false);
   const countryTarget = useRef(null);
@@ -266,15 +259,12 @@ export function ChartSettingFilters({
                   setFilterOpen(!filterOpen);
                 }}
                 ref={countryTarget}
-                style={{
-                  textAlign: isMinSize(size, 'large') ? 'left' : 'center',
-                  marginBottom: theme.global.edgeSize.xxsmall,
-                }}
+                onWhite={onWhite}
               >
                 {isMinSize(size, 'large') && (
                   <Box direction="row" align="center" gap="xsmall">
-                    <Add />
                     <FormattedMessage {...messages.addFilter} />
+                    <Add color="dark" size="medium" />
                   </Box>
                 )}
                 {isMaxSize(size, 'medium') && (
@@ -317,7 +307,7 @@ ChartSettingFilters.propTypes = {
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   filterValues: PropTypes.object,
-  theme: PropTypes.object,
+  onWhite: PropTypes.func,
 };
 
-export default injectIntl(withTheme(ChartSettingFilters));
+export default injectIntl(ChartSettingFilters);

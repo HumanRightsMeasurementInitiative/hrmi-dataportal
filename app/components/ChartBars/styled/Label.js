@@ -7,7 +7,7 @@ export default styled.div`
   line-height: 12px;
   display: table;
   text-align: center;
-  color: ${({ theme }) => theme.global.colors['dark-3']};
+  color: ${({ theme }) => theme.global.colors.secondary};
   width: auto;
   white-space: nowrap;
 `;

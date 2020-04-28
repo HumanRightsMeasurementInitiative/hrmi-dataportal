@@ -27,7 +27,7 @@ import { COLUMNS } from 'containers/App/constants';
 
 import FAQs from 'containers/FAQs';
 import ButtonText from 'styled/ButtonText';
-import ButtonHighlight from 'styled/ButtonHighlight';
+import ButtonHero from 'styled/ButtonHero';
 
 import { roundScore } from 'utils/scores';
 
@@ -314,7 +314,7 @@ function AboutCountryContainer({
       {showFAQs && <FAQs questions={showFAQs} />}
       {showCountryLink && (
         <div>
-          <ButtonHighlight onClick={() => onCountryClick(countryCode)}>
+          <ButtonHero onClick={() => onCountryClick(countryCode)}>
             <FormattedMessage
               {...messages.countryLink}
               values={{
@@ -323,7 +323,7 @@ function AboutCountryContainer({
                 ),
               }}
             />
-          </ButtonHighlight>
+          </ButtonHero>
         </div>
       )}
     </Box>

@@ -102,7 +102,7 @@ const prepareData = ({
         stripes: standard === 'hi',
         key: s.key,
         label: getMetricLabel(s, intl),
-        onClick: () => onClick(s.key),
+        onClick: () => onClick(s.key, dimensionCode),
         hasScoreAlternate: s.hasScoreAlternate,
         hasScoreIndicators: s.hasScoreIndicators,
         hasScoreIndicatorsAlternate: s.hasScoreIndicatorsAlternate,
@@ -115,7 +115,7 @@ const prepareData = ({
         unit: '',
         key: s.key,
         label: getMetricLabel(s, intl),
-        onClick: () => onClick(s.key),
+        onClick: () => onClick(s.key, dimensionCode),
         active: activeCode === s.key,
       }
   );

@@ -23,7 +23,7 @@ import FAQs from 'containers/FAQs';
 
 import AboutMetric from 'components/AboutMetric';
 import Button from 'styled/Button';
-import ButtonHighlight from 'styled/ButtonHighlight';
+import ButtonHero from 'styled/ButtonHero';
 
 import getMetricDetails from 'utils/metric-details';
 import { lowerCase } from 'utils/string';
@@ -251,7 +251,7 @@ export function AboutMetricContainer({
       )}
       {showMetricLink && (
         <div>
-          <ButtonHighlight onClick={() => onSelectMetric(metricCode)}>
+          <ButtonHero onClick={() => onSelectMetric(metricCode)}>
             <FormattedMessage
               {...messages.metricLink}
               values={{
@@ -262,7 +262,7 @@ export function AboutMetricContainer({
                 ),
               }}
             />
-          </ButtonHighlight>
+          </ButtonHero>
         </div>
       )}
       <AboutMetric
@@ -297,6 +297,7 @@ AboutMetricContainer.propTypes = {
   showFAQs: PropTypes.bool,
   showRelated: PropTypes.bool,
   showSources: PropTypes.bool,
+  inverse: PropTypes.bool,
   countryScoreMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 

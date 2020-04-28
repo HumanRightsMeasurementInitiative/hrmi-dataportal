@@ -44,7 +44,8 @@ export function SectionAbout({ intl, locale }) {
                   href={XPATHS.home[locale] || XPATHS.home[DEFAULT_LOCALE]}
                   target="_blank"
                   label={intl.formatMessage(messages.about.link)}
-                  icon={<NewWindow />}
+                  icon={<NewWindow color="dark" />}
+                  gap="small"
                 />
               </Box>
               <Box

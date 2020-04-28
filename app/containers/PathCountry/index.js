@@ -228,12 +228,13 @@ export function PathCountry({
     ),
   };
 
-  const onMetricClick = code => {
+  const onMetricClick = (code, dimension) => {
     if (asideLayer && asideLayer.key === code) {
       onSetAsideLayer(false);
     } else {
       onSetAsideLayer({
         type: 'aboutMetric',
+        background: `${dimension || code}Active`,
         key: code,
         code,
         countryScoreMsg: getScoreMsg(

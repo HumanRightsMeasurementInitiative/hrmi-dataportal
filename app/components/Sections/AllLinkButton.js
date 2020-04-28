@@ -1,27 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Button } from 'grommet';
-import { FormNext } from 'grommet-icons';
+
+import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import AllLinkButtonWrap from './AllLinkButtonWrap';
-
-const StyledButton = styled(Button)`
-  font-size: ${({ theme }) => theme.text.large.size};
-  font-weight: 600;
-`;
 
 export function AllLinkButton({ label, onClick }) {
   return (
     <AllLinkButtonWrap>
-      <StyledButton
-        reverse
-        plain
-        label={label}
-        icon={<FormNext size="large" />}
-        onClick={onClick}
-        gap="xsmall"
-      />
+      <ButtonTextIcon label={label} onClick={onClick} hasIcon />
     </AllLinkButtonWrap>
   );
 }

@@ -76,7 +76,7 @@ const AnnotateBetterInner = styled.div`
   right: 0;
   display: table;
   text-align: right;
-  color: ${({ theme }) => theme.global.colors['dark-3']};
+  color: ${({ theme }) => theme.global.colors.secondary};
   padding: 10px;
   transform: rotate(45deg);
 `;

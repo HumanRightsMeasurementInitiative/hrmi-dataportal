@@ -55,6 +55,17 @@ export function SectionOurData({ nav, intl }) {
       {size => (
         <SectionContainer>
           <ContentMaxWidth>
+            {isMinSize(size, 'large') && (
+              <Box
+                pad={{
+                  left: isMinSize(size, 'large') ? 'xlarge' : 'medium',
+                  top: isMinSize(size, 'large') ? 'medium' : 'small',
+                }}
+                basis={getBasisAside(size)}
+              >
+                <Image src={graphic} />
+              </Box>
+            )}
             <Box
               basis={getBasisMain(size)}
               pad={{ right: isMinSize(size, 'large') ? 'xlarge' : '0' }}
@@ -81,20 +92,10 @@ export function SectionOurData({ nav, intl }) {
                   onClick={() => nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)}
                   label={intl.formatMessage(messages.ourData.aboutLink)}
                   hasIcon
+                  secondary
                 />
               </Box>
             </Box>
-            {isMinSize(size, 'large') && (
-              <Box
-                pad={{
-                  left: isMinSize(size, 'large') ? 'xlarge' : 'medium',
-                  top: isMinSize(size, 'large') ? 'medium' : 'small',
-                }}
-                basis={getBasisAside(size)}
-              >
-                <Image src={graphic} />
-              </Box>
-            )}
           </ContentMaxWidth>
         </SectionContainer>
       )}
