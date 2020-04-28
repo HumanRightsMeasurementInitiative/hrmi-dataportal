@@ -21,7 +21,7 @@ import {
   INDICATOR_LOOKBACK,
   GRADES,
 } from 'containers/App/constants';
-import ButtonToggleValueSetting from 'styled/ButtonToggleValueSetting';
+import ButtonToggleSetting from 'styled/ButtonToggleSetting';
 
 import rootMessages from 'messages';
 
@@ -176,7 +176,7 @@ function ChartCountryMetricByGroup({
       {hasRawOption && (
         <Settings direction="row" justify="end" pad="small" border="top">
           <Box direction="row" justify="end">
-            <ButtonToggleValueSetting
+            <ButtonToggleSetting
               active={!raw}
               disabled={!raw}
               onClick={() => {
@@ -184,8 +184,8 @@ function ChartCountryMetricByGroup({
               }}
             >
               <FormattedMessage {...rootMessages.settings.value.score} />
-            </ButtonToggleValueSetting>
-            <ButtonToggleValueSetting
+            </ButtonToggleSetting>
+            <ButtonToggleSetting
               active={raw}
               disabled={raw}
               onClick={() => {
@@ -193,7 +193,7 @@ function ChartCountryMetricByGroup({
               }}
             >
               <FormattedMessage {...rootMessages.settings.value.raw} />
-            </ButtonToggleValueSetting>
+            </ButtonToggleSetting>
           </Box>
         </Settings>
       )}
