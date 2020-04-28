@@ -109,7 +109,7 @@ export function PathMetric({
             <title>{metricTitle}</title>
             <meta name="description" content="Description of metric" />
           </Helmet>
-          {metric.type === 'esr' && (
+          {metric.type === 'esr' && metric.metricType !== 'indicators' && (
             <HINote hasAside={isMinSize(size, 'large')} settingHint />
           )}
           <Box style={{ position: 'relative' }}>
@@ -181,6 +181,10 @@ export function PathMetric({
                     metric={metric}
                     onCountryClick={onCountryClick}
                     activeCode={activeCode}
+                    showHILabel={
+                      metric.type === 'esr' &&
+                      metric.metricType !== 'indicators'
+                    }
                   />
                 ),
               },

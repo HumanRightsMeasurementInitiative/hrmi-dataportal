@@ -14,7 +14,7 @@ const Bar = styled.div`
     color ? theme.global.colors[color] : 'red'};
   width: ${({ width }) => width || '50px'};
   height: ${({ height }) => height || '50px'};
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   & :last-child {
     margin-bottom: 0;
   }
@@ -23,9 +23,9 @@ const Bar = styled.div`
 export function GraphicDiamond({ color, size }) {
   return (
     <Styled size={`${size}px`}>
-      <Bar color={color} width={`${size}px`} height={`${size / 3 - 16}px`} />
-      <Bar color={color} width={`${size}px`} height={`${size / 3 - 16}px`} />
-      <Bar color={color} width={`${size}px`} height={`${size / 3 - 16}px`} />
+      <Bar color={color} width={`${size}px`} height={`${size / 3 - 10}px`} />
+      <Bar color={color} width={`${size}px`} height={`${size / 3 - 10}px`} />
+      <Bar color={color} width={`${size}px`} height={`${size / 3 - 10}px`} />
     </Styled>
   );
 }

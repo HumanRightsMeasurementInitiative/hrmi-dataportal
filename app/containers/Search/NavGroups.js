@@ -25,20 +25,20 @@ import messages from './messages';
 export function NavGroups({ onSelectGroup, intl, onClose, size, nav, theme }) {
   const [search, setSearch] = useState('');
   const [activeResult, setActiveResult] = useState(0);
-  const [focus, setFocus] = useState(false);
+  // const [focus, setFocus] = useState(false);
   const onKey = useCallback(
     event => {
       // UP
       if (event.keyCode === 38) {
-        event.preventDefault();
         setActiveResult(Math.max(0, activeResult - 1));
-        setFocus(true);
+        // setFocus(true);
+        event.preventDefault();
       }
       // DOWN
       if (event.keyCode === 40) {
-        event.preventDefault();
         setActiveResult(activeResult + 1);
-        setFocus(true);
+        // setFocus(true);
+        event.preventDefault();
       }
     },
     [activeResult],
@@ -81,8 +81,6 @@ export function NavGroups({ onSelectGroup, intl, onClose, size, nav, theme }) {
                 onClose();
                 nav(PATHS.GROUPS);
               }}
-              focus={focus}
-              onFocus={index => setActiveResult(index)}
             />
           )}
           {(!groups || groups.length === 0) && (
@@ -97,8 +95,6 @@ export function NavGroups({ onSelectGroup, intl, onClose, size, nav, theme }) {
                 onClose();
                 onSelectGroup(key);
               }}
-              focus={focus}
-              onFocus={index => setActiveResult(index + 1)}
             />
           )}
         </Box>
