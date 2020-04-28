@@ -244,6 +244,7 @@ export function ChartContainerCountrySnapshot({
           score={dimensions.physint.score}
           country={country}
           countryGrammar={countryGrammar}
+          showNoData
         />
         {dimensions.physint.score && (
           <>
@@ -279,6 +280,7 @@ export function ChartContainerCountrySnapshot({
           score={dimensions.empowerment.score}
           country={country}
           countryGrammar={countryGrammar}
+          showNoData
         />
         {dimensions.empowerment.score && (
           <>

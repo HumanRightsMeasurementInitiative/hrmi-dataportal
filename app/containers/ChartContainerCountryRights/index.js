@@ -298,7 +298,6 @@ export function ChartContainerCountryRights({
             countryGrammar={countryGrammar}
             someData={hasSomeIndicatorScores}
             standard={standard}
-            showNoData
           />
           <Paragraph>
             <NarrativeESRCompAssessment
@@ -321,91 +320,88 @@ export function ChartContainerCountryRights({
       )}
       {type === 'cpr' && dimension && (
         <>
-          {dimension.score && (
-            <>
-              <ChartHeader
-                chartId="dimension-overview"
-                messageValues={{
-                  dimension: intl.formatMessage(
-                    rootMessages.dimensions[dimensionCode],
-                  ),
-                }}
-                tools={{
-                  howToReadConfig: {
-                    key: 'country-dimension-cpr',
-                    chart: 'Bullet',
-                    dimension: dimensionCode,
-                  },
-                }}
-              />
-              <Text>
-                <FormattedMessage
-                  {...rootMessages.charts.dimensionIntro[dimensionCode]}
-                  values={getMessageGrammar(
-                    intl,
-                    countryCode,
-                    null,
-                    countryGrammar,
-                  )}
-                />
-              </Text>
-              <Box margin={{ bottom: 'large' }}>
-                <ChartBars
-                  data={[
-                    {
-                      color: dimensionCode,
-                      value: getCPRDimensionValue(dimension.score),
-                      band: getBand(dimension.score),
-                      maxValue: 10,
-                      key: dimension.key,
-                      label: getDimensionLabel(dimension, intl),
-                      onClick: () => onMetricClick(dimension.key),
-                      active: activeCode === dimension.key,
-                    },
-                  ]}
-                  labelColor={`${dimensionCode}Dark`}
-                  padVertical="small"
-                  grades={GRADES[type]}
-                  gradeLabels={false}
-                  level={1}
-                  commonLabel="Category"
-                  bullet
-                  listHeader
-                  metric={getMetricDetails(dimensionCode)}
-                  scoresAside
-                  summaryScore={{
-                    score: getCPRDimensionValue(dimension.score),
-                    maxValue: 10,
-                  }}
-                  scoreOnHover
-                />
-                <ChartBars
-                  data={prepareData({
-                    scores: getRightsScoresForDimension(rights, dimensionCode),
-                    dimensionCode,
-                    onClick: onMetricClick,
-                    intl,
-                    activeCode,
-                  })}
-                  commonLabel={`${intl.formatMessage(
-                    rootMessages.charts.rightsColumnLabel[dimensionCode],
-                  )}`}
-                  labelColor={`${dimensionCode}Dark`}
-                  padVertical="small"
-                  grades={GRADES[type]}
-                  bullet
-                  listHeader
-                  scoresAside
-                  scoreOnHover
-                />
-              </Box>
-            </>
-          )}
+          <ChartHeader
+            chartId="dimension-overview"
+            messageValues={{
+              dimension: intl.formatMessage(
+                rootMessages.dimensions[dimensionCode],
+              ),
+            }}
+            tools={{
+              howToReadConfig: {
+                key: 'country-dimension-cpr',
+                chart: 'Bullet',
+                dimension: dimensionCode,
+              },
+            }}
+          />
+          <Text>
+            <FormattedMessage
+              {...rootMessages.charts.dimensionIntro[dimensionCode]}
+              values={getMessageGrammar(
+                intl,
+                countryCode,
+                null,
+                countryGrammar,
+              )}
+            />
+          </Text>
+          <Box margin={{ bottom: 'large' }}>
+            <ChartBars
+              data={[
+                {
+                  color: dimensionCode,
+                  value: getCPRDimensionValue(dimension.score),
+                  band: getBand(dimension.score),
+                  maxValue: 10,
+                  key: dimension.key,
+                  label: getDimensionLabel(dimension, intl),
+                  onClick: () => onMetricClick(dimension.key),
+                  active: activeCode === dimension.key,
+                },
+              ]}
+              labelColor={`${dimensionCode}Dark`}
+              padVertical="small"
+              grades={GRADES[type]}
+              gradeLabels={false}
+              level={1}
+              commonLabel="Category"
+              bullet={!!dimension.score}
+              listHeader
+              metric={getMetricDetails(dimensionCode)}
+              scoresAside
+              summaryScore={{
+                score: getCPRDimensionValue(dimension.score),
+                maxValue: 10,
+              }}
+              scoreOnHover
+            />
+            <ChartBars
+              data={prepareData({
+                scores: getRightsScoresForDimension(rights, dimensionCode),
+                dimensionCode,
+                onClick: onMetricClick,
+                intl,
+                activeCode,
+              })}
+              commonLabel={`${intl.formatMessage(
+                rootMessages.charts.rightsColumnLabel[dimensionCode],
+              )}`}
+              labelColor={`${dimensionCode}Dark`}
+              padVertical="small"
+              grades={GRADES[type]}
+              bullet={!!dimension.score}
+              listHeader
+              scoresAside
+              scoreOnHover
+            />
+          </Box>
           <NarrativeCPR
             dimensionKey={dimensionCode}
             score={dimension.score}
             country={country}
             countryGrammar={countryGrammar}
+            showNoData
           />
           {dimension.score && (
             <Paragraph>
