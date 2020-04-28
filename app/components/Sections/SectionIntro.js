@@ -51,7 +51,7 @@ const Claim = styled(Heading)`
 `;
 
 const images = [
-  `${IMAGE_PATH}/intro_1.png`,
+  // `${IMAGE_PATH}/intro_1.png`,
   `${IMAGE_PATH}/intro_2.png`,
   `${IMAGE_PATH}/intro_3.png`,
   `${IMAGE_PATH}/intro_4.png`,
