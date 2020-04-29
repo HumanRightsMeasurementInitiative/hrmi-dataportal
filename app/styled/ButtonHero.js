@@ -1,16 +1,19 @@
 import styled from 'styled-components';
 import Button from './Button';
 
+// Large prominent Button designed to work on dark background
+
 // prettier-ignore
 export default styled(Button)`
-  color: ${({ theme }) => theme.global.colors.dark};
-  background-color: ${({ theme }) => theme.global.colors.white};
+  color: ${({ theme, secondary }) => (secondary ? 'white' : theme.global.colors.dark)};
+  background-color: ${({ secondary }) => (secondary ? 'transparent': 'white')};
   border-radius: 5px;
   margin: 20px 0;
   font-size: ${({ theme }) => theme.text.small.size};
   padding: 10px 20px;
   &:hover {
-    background-color: rgba(255,255,255,0.85);
+    color: ${({ theme, secondary }) => (secondary ? 'white' : theme.global.colors.dark)};
+    background-color: ${({ theme, secondary }) => (secondary ? theme.global.colors.dark : 'rgba(255,255,255,0.9)')};
 }
 &:active {
   border-radius: 5px;
