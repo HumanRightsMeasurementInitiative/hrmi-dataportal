@@ -21,7 +21,7 @@ const ButtonDropdown = styled(Button)`
   background-color: transparent;
   font-weight: 600;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 0 5px;
+    padding: 0 3px;
     width: auto;
   }
 `;
@@ -34,6 +34,7 @@ function ChartSettingMetrics({
   chartId = 'indicators',
   countryMessageValues,
   noOfScores,
+  standard,
 }) {
   const [activeMetric, setActiveMetric] = useState(activeDefault);
   const [open, setOpen] = useState(false);
@@ -42,24 +43,23 @@ function ChartSettingMetrics({
   // fall back to activeDefault if activeMetric not included in metrics
   useEffect(() => {
     if (activeMetric !== activeDefault) {
-      const inMetrics = metrics.reduce((pass, m) => {
-        if (m.key === activeMetric) return true;
-        if (
-          m.children &&
-          m.children.reduce(
-            (pass2, c) => pass2 || c.key === activeMetric,
-            false,
-          )
-        ) {
-          return true;
+      const metricsFlat = metrics.reduce((m1, m) => {
+        if (m.children) {
+          const childrenFlat = m.children.reduce((m2, c) => {
+            if (c.children) {
+              return m2.concat(c).concat(c.children);
+            }
+            return m2.concat(c);
+          }, []);
+          return m1.concat(m).concat(childrenFlat);
         }
-        return pass;
-      }, false);
-      if (!inMetrics) {
+        return m1.concat(m);
+      }, []);
+      if (metricsFlat.map(m => m.key).indexOf(activeMetric) < 0) {
         setActiveMetric(activeDefault);
       }
     }
-  }, [metrics]);
+  }, [standard]);
 
   const details = getMetricDetails(activeMetric);
 
@@ -79,7 +79,7 @@ function ChartSettingMetrics({
                 onClick={() => setOpen(!open)}
                 label={
                   <span>
-                    <Text style={{ whiteSpace: 'nowrap' }}>
+                    <Text style={{ whiteSpace: 'nowrap', paddingRight: '5px' }}>
                       <FormattedMessage
                         {...rootMessages[details.metricType][activeMetric]}
                       />
@@ -130,6 +130,7 @@ ChartSettingMetrics.propTypes = {
   header: PropTypes.func,
   countryMessageValues: PropTypes.object,
   noOfScores: PropTypes.number,
+  standard: PropTypes.string,
 };
 
 export default ChartSettingMetrics;

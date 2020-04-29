@@ -56,7 +56,7 @@ export function NavOptionGroup({
     <div>
       <NavOptionWrap>
         {label && (
-          <StyledText color="dark-4" size="small">
+          <StyledText color="secondary" size="small">
             {label}
           </StyledText>
         )}
@@ -68,7 +68,7 @@ export function NavOptionGroup({
             ref={el => {
               myRefs.current[index] = el;
             }}
-            onFocus={() => onFocus(index)}
+            onFocus={() => onFocus && onFocus(index)}
             active={index === activeResult}
           >
             <Box direction="row" align="end" fill="horizontal" width="100%">

@@ -8,9 +8,14 @@ export default styled(Button)`
   &:hover {
     color: ${({ theme }) => theme.global.colors.white};
     background-color:
-    ${({ theme }) => theme.global.colors.buttonPrimaryHover};
+    ${({ theme, disabled }) => theme.global.colors[disabled ? 'dark' : 'buttonPrimaryHover']};
 }
   &:active {
+    color: ${({ theme }) => theme.global.colors.white};
+    background-color:
+    ${({ theme }) => theme.global.colors.buttonPrimaryHover};
+}
+  &:focus {
     color: ${({ theme }) => theme.global.colors.white};
     background-color:
     ${({ theme }) => theme.global.colors.buttonPrimaryHover};

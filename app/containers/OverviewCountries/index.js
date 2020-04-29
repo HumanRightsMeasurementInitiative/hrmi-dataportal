@@ -4,14 +4,14 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Box, InfiniteScroll, ResponsiveContext } from 'grommet';
-import { withTheme } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 import {
   getRegionSearch,
@@ -35,6 +35,7 @@ import {
   COUNTRY_FILTERS,
   COLUMNS,
 } from 'containers/App/constants';
+import { CARD_WIDTH } from 'theme';
 
 import Search from 'containers/Search';
 import { filterCountries } from 'containers/Search/search';
@@ -54,6 +55,14 @@ import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 
 import rootMessages from 'messages';
 
+// prettier-ignore
+const CardWrapper = styled(Box)`
+  max-width: calc(100% + ${({ theme }) => {
+    const value = parseInt(theme.global.edgeSize.xsmall.split('px')[0], 10);
+    return value * 2;
+  }}px);
+`;
+
 export const isDefaultStandard = (country, standardDetails) =>
   (country[COLUMNS.COUNTRIES.HIGH_INCOME] === '0' &&
     standardDetails.key === 'core') ||
@@ -61,6 +70,16 @@ export const isDefaultStandard = (country, standardDetails) =>
     standardDetails.key === 'hi');
 
 const SORT_OPTIONS = ['assessment', 'name', 'population', 'gdp'];
+
+const getCardNumber = width => {
+  const minCards = Math.floor(width / CARD_WIDTH.min);
+  const maxCards = Math.floor(width / CARD_WIDTH.max);
+  return minCards > maxCards ? minCards : maxCards;
+};
+const getCardWidth = (width, number, theme) => {
+  const edge = parseInt(theme.global.edgeSize.xsmall.split('px')[0], 10);
+  return `${width / number - edge * 2}px`;
+};
 
 export function OverviewCountries({
   countries,
@@ -88,7 +107,21 @@ export function OverviewCountries({
   auxIndicators,
   theme,
 }) {
+  const ref = useRef(null);
   const [search, setSearch] = useState('');
+  const [gridWidth, setGridWidth] = useState(0);
+
+  const handleResize = () =>
+    setGridWidth(ref.current ? ref.current.offsetWidth : 0);
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
   if (!scoresAllCountries || !countries) return null;
   const benchmarkDetails = BENCHMARKS.find(s => s.key === benchmark);
   const standardDetails = STANDARDS.find(s => s.key === standard);
@@ -127,6 +160,10 @@ export function OverviewCountries({
   });
   const hasResults =
     dataReady && ((sorted && sorted.length > 0) || (other && other.length > 0));
+  const cardNumber = gridWidth ? getCardNumber(gridWidth) : 1;
+  const cardWidth = gridWidth
+    ? getCardWidth(gridWidth, cardNumber, theme)
+    : `${CARD_WIDTH.min}px`;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -135,7 +172,7 @@ export function OverviewCountries({
             top
             chartId="countries-overview"
             messageValues={{ no: countries.length }}
-            onWhite={false}
+            hasWhiteBG={false}
             tools={{
               howToReadConfig: {
                 key: 'tab-countries',
@@ -175,12 +212,12 @@ export function OverviewCountries({
             drop={false}
           />
           {sorted && scoresAllCountries && (
-            <Box
-              width="100%"
+            <CardWrapper
               pad={{ top: size === 'small' ? 'xsmall' : '0' }}
               align="start"
               responsive={false}
-              margin={{ horizontal: `-${theme.global.edgeSize.small}` }}
+              margin={{ horizontal: `-${theme.global.edgeSize.xsmall}` }}
+              ref={ref}
             >
               {!dataReady && <LoadingIndicator />}
               {!hasResults && dataReady && (
@@ -214,6 +251,7 @@ export function OverviewCountries({
                         onSelectCountry={() => onSelectCountry(c.country_code)}
                         indicators={indicators}
                         onCountryHover={code => code || true}
+                        width={cardWidth}
                       />
                     )}
                   </InfiniteScroll>
@@ -267,7 +305,7 @@ export function OverviewCountries({
                   </Box>
                 </Box>
               )}
-            </Box>
+            </CardWrapper>
           )}
           {sorted && scoresAllCountries && hasResults && (
             <Box

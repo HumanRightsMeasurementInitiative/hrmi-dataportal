@@ -60,7 +60,7 @@ function ChartCountryMetricPeople({
   showIntro,
 }) {
   return (
-    <Styled pad={showIntro && { vertical: 'medium' }} direction="column">
+    <Styled pad={showIntro ? { vertical: 'medium' } : null} direction="column">
       {metric.metricType === 'rights' && (
         <Box>
           {showIntro && (
@@ -68,7 +68,7 @@ function ChartCountryMetricPeople({
               <FormattedMessage {...messages.introRight} />
             </Paragraph>
           )}
-          <Box pad={showIntro && { top: 'medium' }}>
+          <Box pad={showIntro ? { top: 'medium' } : null}>
             {Object.values(data).map((d, index, array) => {
               const analysisSR =
                 hasSubrightAnalysis &&

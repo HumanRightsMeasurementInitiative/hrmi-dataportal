@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
@@ -19,6 +19,7 @@ import {
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectGroup } from 'containers/App/actions';
 import { AT_RISK_GROUPS, IMAGE_PATH } from 'containers/App/constants';
+import { CARD_WIDTH } from 'theme';
 
 import saga from 'containers/App/saga';
 import { useInjectSaga } from 'utils/injectSaga';
@@ -36,7 +37,7 @@ import PageTitle from 'styled/PageTitle';
 
 import { isMinSize, isMaxSize } from 'utils/responsive';
 
-import graphic from 'images/graphics/countries_overview.svg';
+import graphic from 'images/graphics/people_overview.svg';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -45,8 +46,25 @@ const Image = styled.img`
   width: 100%;
   max-width: 200px;
 `;
+// prettier-ignore
+const CardWrapper = styled(Box)`
+  max-width: calc(100% + ${({ theme }) => {
+    const value = parseInt(theme.global.edgeSize.xsmall.split('px')[0], 10);
+    return value * 2;
+  }}px);
+`;
 
 const DEPENDENCIES = ['atRisk'];
+
+const getCardNumber = width => {
+  const minCards = Math.floor(width / CARD_WIDTH.min);
+  const maxCards = Math.floor(width / CARD_WIDTH.max);
+  return minCards > maxCards ? minCards : maxCards;
+};
+const getCardWidth = (width, number, theme) => {
+  const edge = parseInt(theme.global.edgeSize.xsmall.split('px')[0], 10);
+  return `${width / number - edge * 2}px`;
+};
 
 export function PathPeopleOverview({
   onLoadData,
@@ -56,10 +74,29 @@ export function PathPeopleOverview({
   onSelectGroup,
 }) {
   useInjectSaga({ key: 'app', saga });
+  const ref = useRef(null);
+  const [gridWidth, setGridWidth] = useState(0);
+
+  const handleResize = () =>
+    setGridWidth(ref.current ? ref.current.offsetWidth : 0);
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
+
+  const cardNumber = gridWidth ? getCardNumber(gridWidth) : 1;
+  const cardWidth = gridWidth
+    ? getCardWidth(gridWidth, cardNumber, theme)
+    : CARD_WIDTH.min;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -85,7 +122,7 @@ export function PathPeopleOverview({
                 </Paragraph>
               </MainColumn>
               {isMinSize(size, 'large') && (
-                <Aside align="start" justify="center">
+                <Aside align="center" justify="center">
                   <Image src={graphic} />
                 </Aside>
               )}
@@ -93,12 +130,12 @@ export function PathPeopleOverview({
           </ContentContainer>
           <SectionContainer background="sectionPeople">
             <ContentMaxWidth column>
-              <Box
-                width="100%"
+              <CardWrapper
                 pad={{ top: size === 'small' ? 'xsmall' : '0' }}
                 align="start"
                 responsive={false}
-                margin={{ horizontal: `-${theme.global.edgeSize.small}` }}
+                margin={{ horizontal: `-${theme.global.edgeSize.xsmall}` }}
+                ref={ref}
               >
                 <Box
                   direction="row"
@@ -107,26 +144,27 @@ export function PathPeopleOverview({
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
                   align="start"
                 >
-                  {AT_RISK_GROUPS.map(g => (
-                    <Card
-                      key={g.key}
-                      margin={{ vertical: 'medium', horizontal: 'xsmall' }}
-                      onCardClick={() => {
-                        onSelectGroup(g.key);
-                      }}
-                      imageSrc={`${IMAGE_PATH}/people_${g.key}.png`}
-                      label={`${intl.formatMessage(
-                        rootMessages['people-at-risk'][g.key],
-                      )}`}
-                      imageWhitespace
-                      activeColor="brand"
-                      type="photos"
-                      basis={isMinSize(size, 'large') ? '240px' : '280px'}
-                      minHeight
-                    />
-                  ))}
+                  {gridWidth > 100 &&
+                    AT_RISK_GROUPS.map(g => (
+                      <Card
+                        key={g.key}
+                        margin={{ vertical: 'medium', horizontal: 'xsmall' }}
+                        onCardClick={() => {
+                          onSelectGroup(g.key);
+                        }}
+                        imageSrc={`${IMAGE_PATH}/people_${g.key}.png`}
+                        label={`${intl.formatMessage(
+                          rootMessages['people-at-risk'][g.key],
+                        )}`}
+                        imageWhitespace
+                        activeColor="brand"
+                        type="photos"
+                        width={cardWidth}
+                        minHeight
+                      />
+                    ))}
                 </Box>
-              </Box>
+              </CardWrapper>
             </ContentMaxWidth>
           </SectionContainer>
         </ContentWrap>

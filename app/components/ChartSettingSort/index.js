@@ -17,8 +17,8 @@ const StyledDropButton = styled(DropButton)`
   border-bottom: 2px solid transparent;
   &:hover {
     border-bottom: 2px solid
-    ${({ theme, onWhite = true }) =>
-    onWhite
+    ${({ theme, hasWhiteBG = true }) =>
+    hasWhiteBG
       ? theme.global.colors.buttonSecondaryOnWhiteHover
       : theme.global.colors.buttonSecondaryHover
 }
@@ -40,7 +40,7 @@ export function ChartSettingSort({
   onSortSelect,
   onOrderToggle,
   intl,
-  onWhite,
+  hasWhiteBG,
 }) {
   const [optionsOpen, setOptionsOpen] = useState(false);
 
@@ -93,7 +93,7 @@ export function ChartSettingSort({
                 onClose={() => setOptionsOpen(false)}
                 onOpen={() => setOptionsOpen(true)}
                 open={optionsOpen}
-                onWhite={onWhite}
+                hasWhiteBG={hasWhiteBG}
                 dropProps={{
                   align: { top: 'bottom', right: 'right' },
                   stretch: false,
@@ -137,7 +137,7 @@ ChartSettingSort.propTypes = {
   order: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onSortSelect: PropTypes.func,
   onOrderToggle: PropTypes.func,
-  onWhite: PropTypes.bool,
+  hasWhiteBG: PropTypes.bool,
 };
 
 export default injectIntl(ChartSettingSort);

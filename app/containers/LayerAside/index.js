@@ -48,7 +48,7 @@ export function LayerAside({ onClose, theme, layer }) {
   }, []);
 
   if (!layer) return null;
-
+  const inverse = layer.type === 'aboutMetric' || layer.type === 'aboutCountry';
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -76,8 +76,8 @@ export function LayerAside({ onClose, theme, layer }) {
             pad={{ right: 'medium' }}
           >
             <ButtonWrap>
-              <ButtonIcon onClick={onClose}>
-                <CloseIcon size="xlarge" color="white" />
+              <ButtonIcon onClick={onClose} subtle inverse={inverse}>
+                <CloseIcon size="xlarge" color={inverse ? 'white' : 'dark'} />
               </ButtonIcon>
             </ButtonWrap>
             {layer.type === 'htr' && <LayerHowToRead layer={layer} />}
