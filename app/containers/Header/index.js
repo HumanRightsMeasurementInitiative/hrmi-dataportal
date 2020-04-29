@@ -29,7 +29,11 @@ import { appLocales } from 'i18n';
 import LocaleToggle from 'containers/LocaleToggle';
 import { getRouterMatch, getRouterRoute } from 'containers/App/selectors';
 import { PAGES, PATHS } from 'containers/App/constants';
-import { navigate, loadDataIfNeeded } from 'containers/App/actions';
+import {
+  navigate,
+  loadDataIfNeeded,
+  setAsideLayer,
+} from 'containers/App/actions';
 
 import Search from 'containers/Search';
 import NavCountry from 'containers/Search/NavCountry';
@@ -249,7 +253,15 @@ const renderPages = (match, nav, setShowMenu) =>
 
 const DEPENDENCIES = ['countries'];
 
-export function Header({ nav, onLoadData, match, path, theme, intl }) {
+export function Header({
+  nav,
+  onLoadData,
+  match,
+  path,
+  theme,
+  intl,
+  onHideAsideLayer,
+}) {
   useEffect(() => {
     // kick off loading of page content
     onLoadData();
@@ -365,6 +377,7 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                         active={path === PATHS.METRICS || path === PATHS.METRIC}
                         open={showMetrics}
                         onClick={() => {
+                          onHideAsideLayer();
                           setShowCountries(false);
                           setShowGroups(false);
                           setShowMetrics(!showMetrics);
@@ -397,6 +410,7 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                         }
                         open={showCountries}
                         onClick={() => {
+                          onHideAsideLayer();
                           setShowMetrics(false);
                           setShowGroups(false);
                           setShowCountries(!showCountries);
@@ -428,6 +442,7 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
                         active={path === PATHS.GROUPS || path === PATHS.GROUP}
                         open={showGroups}
                         onClick={() => {
+                          onHideAsideLayer();
                           setShowCountries(false);
                           setShowMetrics(false);
                           setShowGroups(!showGroups);
@@ -477,6 +492,7 @@ export function Header({ nav, onLoadData, match, path, theme, intl }) {
 Header.propTypes = {
   /** Navigation action */
   nav: PropTypes.func.isRequired,
+  onHideAsideLayer: PropTypes.func.isRequired,
   match: PropTypes.string,
   path: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
@@ -500,6 +516,9 @@ const mapDispatchToProps = dispatch => ({
         },
       }),
     );
+  },
+  onHideAsideLayer: () => {
+    dispatch(setAsideLayer(false));
   },
 });
 

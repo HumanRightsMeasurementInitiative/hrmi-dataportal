@@ -21,7 +21,7 @@ const ButtonDropdown = styled(Button)`
   background-color: transparent;
   font-weight: 600;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 0 5px;
+    padding: 0 3px;
     width: auto;
   }
 `;
@@ -79,7 +79,7 @@ function ChartSettingMetrics({
                 onClick={() => setOpen(!open)}
                 label={
                   <span>
-                    <Text style={{ whiteSpace: 'nowrap' }}>
+                    <Text style={{ whiteSpace: 'nowrap', paddingRight: '5px' }}>
                       <FormattedMessage
                         {...rootMessages[details.metricType][activeMetric]}
                       />

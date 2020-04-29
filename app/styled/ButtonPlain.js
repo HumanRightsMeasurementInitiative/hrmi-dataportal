@@ -11,12 +11,12 @@ export default styled.button`
   background-image: none;
   border: none;
   border-radius: 0;
-  color: ${({ theme }) => theme.global.colors.dark};
+  color: ${({ theme, disabled }) => theme.global.colors[disabled ? 'secondary' : 'dark']};
   background-color: transparent;
   text-decoration: none;
   text-align: left;
   &:hover {
-    color: ${({ theme }) => theme.global.colors.dark};
+    color: ${({ theme, disabled }) => theme.global.colors[disabled ? 'secondary' : 'dark']};
     background-color: transparent;
   }
   &:active {

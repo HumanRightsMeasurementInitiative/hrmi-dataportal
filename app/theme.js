@@ -169,7 +169,7 @@ const theme = {
       'dark-4': '#8896A0', // AA large
       dark: '#262262', // empowerment',
       darker: '#110d50', // empowerment',
-      secondary: '#757575',
+      secondary: '#8896A0',
       hint: '#393393',
       brand: '#3A5161',
       highlight: '#FDB933',
@@ -219,7 +219,7 @@ const theme = {
       maleActive: '#0D6D64',
       femaleTrans: 'rgba(238, 90, 69, 0.3)',
       maleTrans: 'rgba(13, 109, 100, 0.3)',
-      buttonPrimaryHover: '#494492',
+      buttonPrimaryHover: '#626096',
       buttonSecondary: '#deddec',
       buttonSecondaryOnWhite: '#ededf5',
       buttonSecondaryHover: '#c8c6e0',
@@ -324,6 +324,9 @@ const theme = {
     fontWeight: 600,
   },
   layer: {
+    container: {
+      zIndex: 21,
+    },
     border: {
       radius: 0,
     },
