@@ -48,7 +48,7 @@ export function ChartHeader({
   tools,
   intl,
   includeChartName,
-  onWhite,
+  hasWhiteBG,
   top,
 }) {
   const chartName =
@@ -64,7 +64,7 @@ export function ChartHeader({
             {tools && (
               <ChartToolWrapper>
                 <ChartTools
-                  onWhite={onWhite}
+                  hasWhiteBG={hasWhiteBG}
                   howToReadConfig={
                     tools.howToReadConfig && {
                       chartName: includeChartName && chartName,
@@ -102,7 +102,7 @@ export function ChartHeader({
                   countryGroupFilterValue={filter.countryGroupFilterValue}
                   treatyFilterValue={filter.treatyFilterValue}
                   filterValues={filter.filterValues}
-                  onWhite={onWhite}
+                  hasWhiteBG={hasWhiteBG}
                 />
               )}
               {sort && (
@@ -112,7 +112,7 @@ export function ChartHeader({
                   order={sort.order}
                   onSortSelect={sort.onSortSelect}
                   onOrderToggle={sort.onOrderToggle}
-                  onWhite={onWhite}
+                  hasWhiteBG={hasWhiteBG}
                 />
               )}
             </Box>
@@ -135,7 +135,7 @@ ChartHeader.propTypes = {
   messageValues: PropTypes.object,
   tools: PropTypes.object,
   includeChartName: PropTypes.bool,
-  onWhite: PropTypes.bool,
+  hasWhiteBG: PropTypes.bool,
   top: PropTypes.bool,
   intl: intlShape.isRequired,
 };

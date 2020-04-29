@@ -324,7 +324,7 @@ ChartContainerMetric.propTypes = {
   metric: PropTypes.object.isRequired,
   standard: PropTypes.string,
   benchmark: PropTypes.string,
-  activeCode: PropTypes.string,
+  activeCode: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),

@@ -135,7 +135,7 @@ export function OverviewCountries({
             top
             chartId="countries-overview"
             messageValues={{ no: countries.length }}
-            onWhite={false}
+            hasWhiteBG={false}
             tools={{
               howToReadConfig: {
                 key: 'tab-countries',
