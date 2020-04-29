@@ -12,7 +12,7 @@ import { compose } from 'redux';
 
 import {
   getCountries,
-  getCountriesFeaturedOnly,
+  getFeaturedCountries,
   getLocale,
 } from 'containers/App/selectors';
 import {
@@ -61,7 +61,6 @@ export function PathHome({
     // kick off loading of data
     onLoadData();
   }, []);
-
   return (
     <ContentWrap>
       <SectionIntro />
@@ -107,7 +106,7 @@ PathHome.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  countriesFeatured: state => getCountriesFeaturedOnly(state),
+  countriesFeatured: state => getFeaturedCountries(state),
   countries: state => getCountries(state),
   locale: state => getLocale(state),
 });
