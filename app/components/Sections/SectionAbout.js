@@ -35,7 +35,7 @@ export function SectionAbout({ intl, locale }) {
                 pad={{ right: isMinSize(size, 'large') ? 'ms' : '0' }}
                 margin={{ bottom: 'small' }}
               >
-                <Paragraph>
+                <Paragraph margin={{ bottom: 'medium' }}>
                   <Text weight={600}>
                     <FormattedMessage {...messages.about.lead} />
                   </Text>
