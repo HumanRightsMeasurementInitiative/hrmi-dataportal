@@ -23,8 +23,8 @@ const Styled = styled.div``;
 // prettier-ignore
 const StyledText = styled(Text)`
   border-bottom: 3px solid
-    ${({ theme, onWhite = true }) =>
-    onWhite
+    ${({ theme, hasWhiteBG = true }) =>
+    hasWhiteBG
       ? theme.global.colors.buttonSecondaryOnWhiteHover
       : theme.global.colors.buttonSecondaryHover
 };
@@ -47,7 +47,7 @@ export function ChartTools({
   settingsConfig,
   onSetAsideLayer,
   intl,
-  onWhite = true,
+  hasWhiteBG = true,
 }) {
   return (
     <ResponsiveContext.Consumer>
@@ -65,7 +65,7 @@ export function ChartTools({
               plain
               label={
                 isMinSize(size, 'large') ? (
-                  <StyledText onWhite={onWhite}>
+                  <StyledText hasWhiteBG={hasWhiteBG}>
                     {intl.formatMessage(
                       rootMessages.labels.chartTools.howToRead,
                     )}
@@ -88,7 +88,7 @@ export function ChartTools({
               plain
               label={
                 isMinSize(size, 'large') ? (
-                  <StyledText onWhite={onWhite}>
+                  <StyledText hasWhiteBG={hasWhiteBG}>
                     {intl.formatMessage(
                       rootMessages.labels.chartTools.settings,
                     )}
@@ -110,7 +110,7 @@ ChartTools.propTypes = {
   settingsConfig: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onSetAsideLayer: PropTypes.func,
   intl: intlShape.isRequired,
-  onWhite: PropTypes.bool,
+  hasWhiteBG: PropTypes.bool,
 };
 
 export function mapDispatchToProps(dispatch) {

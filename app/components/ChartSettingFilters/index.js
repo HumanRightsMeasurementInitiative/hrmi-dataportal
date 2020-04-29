@@ -167,7 +167,7 @@ export function ChartSettingFilters({
   treatyFilterValue,
   intl,
   filterValues,
-  onWhite,
+  hasWhiteBG,
 }) {
   const [filterOpen, setFilterOpen] = useState(false);
   const countryTarget = useRef(null);
@@ -259,7 +259,7 @@ export function ChartSettingFilters({
                   setFilterOpen(!filterOpen);
                 }}
                 ref={countryTarget}
-                onWhite={onWhite}
+                hasWhiteBG={hasWhiteBG}
               >
                 {isMinSize(size, 'large') && (
                   <Box direction="row" align="center" gap="xsmall">
@@ -307,7 +307,7 @@ ChartSettingFilters.propTypes = {
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   filterValues: PropTypes.object,
-  onWhite: PropTypes.func,
+  hasWhiteBG: PropTypes.func,
 };
 
 export default injectIntl(ChartSettingFilters);
