@@ -11,27 +11,27 @@ export default styled(ButtonPlain)`
   border-radius: 99999px;
   color: ${({ theme }) => theme.global.colors.dark};
   background-color:
-    ${({ theme, onWhite = true }) => onWhite
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
     ? theme.global.colors.buttonSecondaryOnWhite
     : theme.global.colors.buttonSecondary
 };
   &:hover {
     background-color:
-    ${({ theme, onWhite = true }) => onWhite
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
     ? theme.global.colors.buttonSecondaryOnWhiteHover
     : theme.global.colors.buttonSecondaryHover
 };
   }
   &:active {
     background-color:
-    ${({ theme, onWhite = true }) => onWhite
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
     ? theme.global.colors.buttonSecondaryOnWhiteHover
     : theme.global.colors.buttonSecondaryHover
 };
   }
   &:visited {
     background-color:
-    ${({ theme, onWhite = true }) => onWhite
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
     ? theme.global.colors.buttonSecondaryOnWhiteHover
     : theme.global.colors.buttonSecondaryHover
 };
