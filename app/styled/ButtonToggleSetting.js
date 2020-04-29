@@ -9,9 +9,28 @@ const StyledPrimary = styled(ButtonPrimary)`
   border-radius: 3px !important;
   padding: 3px 6px;
   margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
+  background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
   &:last-child {
     margin-right: 0;
   }
+  &:hover {
+    background-color:
+    ${({ theme, multi }) => theme.global.colors[multi ? 'buttonSecondaryOnWhite' : 'buttonPrimaryHover']};
+    color:
+    ${({ theme, multi }) => theme.global.colors[multi ? 'dark' : 'white']};
+}
+  &:active {
+    color: ${({ theme }) => theme.global.colors.white};
+    background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
+}
+  &:focus {
+    color: ${({ theme }) => theme.global.colors.white};
+    background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
+}
+  &:visited {
+    color: ${({ theme }) => theme.global.colors.white};
+    background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
+}
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 3px 10px;
   }
