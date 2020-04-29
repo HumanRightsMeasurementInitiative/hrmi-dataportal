@@ -144,8 +144,9 @@ export function ChartContainerTrend({
     <div>
       {metricSelector}
       <ChartCountryMetricTrend
-        color={theme.global.colors[getColour(metric)]}
-        colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
+        color={getColour(metric)}
+        colorCode={theme.global.colors[getColour(metric)]}
+        colorHint={`${getColour(metric)}Dark`}
         scores={scores}
         percentage={isESR}
         maxValue={isESR ? 100 : 11}

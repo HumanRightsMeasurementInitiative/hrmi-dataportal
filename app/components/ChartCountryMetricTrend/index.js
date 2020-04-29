@@ -126,6 +126,7 @@ function ChartCountryMetricTrend({
   rangeColumns,
   rangeValues,
   color,
+  colorCode,
   colorHint,
   // benchmarkRefs,
   hasRawOption,
@@ -257,7 +258,11 @@ function ChartCountryMetricTrend({
               {hasScores && rangeUpper && (
                 <AreaSeries
                   data={rangeUpper}
-                  style={{ fill: color, stroke: 'transparent', opacity: 0.2 }}
+                  style={{
+                    fill: colorCode,
+                    stroke: 'transparent',
+                    opacity: 0.2,
+                  }}
                 />
               )}
               {hasScores && rangeLower && (
@@ -301,13 +306,13 @@ function ChartCountryMetricTrend({
               {hasScores && rangeUpper && (
                 <LineSeries
                   data={rangeUpper}
-                  style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
+                  style={{ stroke: colorCode, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
               {hasScores && rangeLower && (
                 <LineSeries
                   data={rangeLower}
-                  style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
+                  style={{ stroke: colorCode, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
               {groupsAll && scoresAll && (
@@ -315,10 +320,12 @@ function ChartCountryMetricTrend({
                   data={scoresAll}
                   size={2.5}
                   style={{
-                    stroke: color,
+                    stroke: colorCode,
                     strokeWidth: 1,
                   }}
-                  fill={metric.metricType === 'indicators' ? 'white' : color}
+                  fill={
+                    metric.metricType === 'indicators' ? 'white' : colorCode
+                  }
                   onNearestX={(point, { index }) =>
                     setHighlight({ point, index })
                   }
@@ -366,10 +373,10 @@ function ChartCountryMetricTrend({
                   data={scoresAllRawAvailable}
                   size={3}
                   style={{
-                    stroke: color,
+                    stroke: colorCode,
                     strokeWidth: 1,
                   }}
-                  fill={color}
+                  fill={colorCode}
                 />
               )}
               {groupsFemale && scoresFemaleRawAvailable && (
@@ -561,6 +568,7 @@ ChartCountryMetricTrend.propTypes = {
   maxYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   minYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   color: PropTypes.string,
+  colorCode: PropTypes.string,
   colorHint: PropTypes.string,
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
