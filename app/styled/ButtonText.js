@@ -14,6 +14,7 @@ export default styled(ButtonPlain)`
   &:hover{
     background-color: transparent;
     text-decoration: underline;
+    opacity: 0.8;
   }
   &:active{
     background-color: transparent;

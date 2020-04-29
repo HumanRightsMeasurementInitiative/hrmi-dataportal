@@ -12,7 +12,7 @@ export function SectionTitle({ title, level = 1 }) {
   return (
     <Heading
       level={level}
-      margin={{ bottom: 'small', top: 'medium' }}
+      margin={{ vertical: 'small' }}
       style={{ fontWeight: 600 }}
     >
       {title}

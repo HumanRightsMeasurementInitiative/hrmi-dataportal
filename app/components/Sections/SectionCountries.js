@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-
+import { Box } from 'grommet';
 import { COLUMNS, IMAGE_PATH } from 'containers/App/constants';
 
 // styles
@@ -35,13 +35,20 @@ export function SectionCountries({
   return (
     <SectionContainer>
       <ContentMaxWidth column>
-        <SectionTitle
-          title={title || intl.formatMessage(messages.countries.title)}
-        />
-        <AllLinkButton
-          onClick={() => navAllCountries()}
-          label={allLink || intl.formatMessage(rootMessages.labels.allCountries)}
-        />
+        <Box
+          direction="row"
+          align="center"
+          margin={{ top: 'small' }}
+          justify="between"
+        >
+          <SectionTitle
+            title={title || intl.formatMessage(messages.countries.title)}
+          />
+          <AllLinkButton
+            onClick={() => navAllCountries()}
+            label={allLink || intl.formatMessage(rootMessages.labels.allCountries)}
+          />
+        </Box>
         {countries && (
           <Slider cardMargin="xsmall">
             {countries.map(country => {
