@@ -48,7 +48,7 @@ const getBasisAside = size => {
 
 export function SectionOurData({ nav, intl }) {
   const hasSecondPara =
-    intl.formatMessage(messages.ourData.para2) &&
+    intl.messages[messages.ourData.para2] &&
     intl.formatMessage(messages.ourData.para2).trim() !== '';
   return (
     <ResponsiveContext.Consumer>

@@ -50,6 +50,12 @@ const Claim = styled(Heading)`
   margin-bottom: ${({ theme }) => theme.global.edgeSize.medium};
 `;
 
+const getRightPad = size => {
+  if (isMinSize(size, 'xlarge')) return { right: '110px' };
+  if (isMinSize(size, 'large')) return { right: '80px' };
+  return { right: '0' };
+};
+
 export function SectionIntro({ theme }) {
   const [index, setIndex] = useState(0);
   useEffect(() => {
@@ -91,13 +97,7 @@ export function SectionIntro({ theme }) {
           <ContentMaxWidth align="start" direction="row" stretch>
             <Box
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
-              pad={{
-                right: () => {
-                  if (isMinSize(size, 'xlarge')) return '110px';
-                  if (isMinSize(size, 'large')) return '80px';
-                  return '0';
-                },
-              }}
+              pad={getRightPad(size)}
               style={{ position: 'relative' }}
             >
               <GraphicWrap
