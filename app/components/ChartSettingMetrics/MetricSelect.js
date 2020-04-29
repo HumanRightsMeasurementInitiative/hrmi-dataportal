@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
 // import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Box } from 'grommet';
 import styled from 'styled-components';
 import DropOption from 'styled/DropOption';
 
@@ -10,7 +9,7 @@ import getMetricDetails from 'utils/metric-details';
 
 import rootMessages from 'messages';
 
-const Styled = styled(Box)``;
+const Styled = styled.div``;
 
 // const OptionButton = props => <Button plain {...props} />;
 // prettier-ignore

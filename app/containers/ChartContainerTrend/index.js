@@ -127,6 +127,18 @@ export function ChartContainerTrend({
   const metric = getMetricDetails(metricCode);
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
+
+  let groupsActive = null;
+  if (
+    metric.metricType === 'rights' &&
+    metric.hasGroups &&
+    metric.hasGroups.indexOf(standard) > -1
+  ) {
+    groupsActive = activeGroups;
+  }
+  if (metric.metricType === 'indicators' && metric.hasGroups) {
+    groupsActive = activeGroups;
+  }
   // prettier-ignore
   return (
     <div>
@@ -179,7 +191,7 @@ export function ChartContainerTrend({
         hasRawOption={false}
         raw={raw}
         onRawChange={onRawChange}
-        groupsActive={activeGroups}
+        groupsActive={groupsActive}
         onGroupToggle={onGroupToggle}
       />
     </div>

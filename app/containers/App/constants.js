@@ -348,7 +348,7 @@ export const PEOPLE_GROUPS = [
   {
     key: 'all',
     code: 'All',
-    color: 'esrDark',
+    color: 'allPeople',
   },
   {
     key: 'female',

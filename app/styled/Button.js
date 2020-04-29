@@ -46,6 +46,11 @@ export default styled(ButtonPlain)`
   &:focus {
     box-shadow: none;
     border-radius: 99999px;
+    background-color:
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
+    ? theme.global.colors.buttonSecondaryOnWhiteHover
+    : theme.global.colors.buttonSecondaryHover
+};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     font-size: ${({ theme }) => theme.text.medium.size};

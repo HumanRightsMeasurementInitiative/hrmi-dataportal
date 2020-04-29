@@ -127,7 +127,7 @@ function ChartCountryMetricTrend({
   rangeValues,
   color,
   colorHint,
-  benchmarkRefs,
+  // benchmarkRefs,
   hasRawOption,
   raw,
   onRawChange,
@@ -149,9 +149,36 @@ function ChartCountryMetricTrend({
   ];
   const hasScores = scores && scores.length > 0;
 
-  const groupsAll = groupsActive.indexOf(PEOPLE_GROUPS[0].key) > -1;
-  const groupsFemale = groupsActive.indexOf(PEOPLE_GROUPS[1].key) > -1;
-  const groupsMale = groupsActive.indexOf(PEOPLE_GROUPS[2].key) > -1;
+  let groupsFemale = false;
+  let groupsMale = false;
+  let groupsAll = true;
+  let scoresFemale;
+  let scoresMale;
+  if (groupsActive) {
+    groupsFemale = groupsActive.indexOf(PEOPLE_GROUPS[1].key) > -1;
+    groupsMale = groupsActive.indexOf(PEOPLE_GROUPS[2].key) > -1;
+    groupsAll = groupsActive.indexOf(PEOPLE_GROUPS[0].key) > -1;
+    scoresFemale =
+      hasScores &&
+      getDataForGroup(
+        scores,
+        minYear,
+        maxYear,
+        column,
+        PEOPLE_GROUPS[1].code, // female
+        metric.metricType === 'indicators' && !raw,
+      );
+    scoresMale =
+      hasScores &&
+      getDataForGroup(
+        scores,
+        minYear,
+        maxYear,
+        column,
+        PEOPLE_GROUPS[2].code, // male
+        metric.metricType === 'indicators' && !raw,
+      );
+  }
 
   const scoresAll =
     hasScores &&
@@ -161,26 +188,6 @@ function ChartCountryMetricTrend({
       maxYear,
       column,
       rangeColumns ? false : PEOPLE_GROUPS[0].code,
-      metric.metricType === 'indicators' && !raw,
-    );
-  const scoresFemale =
-    hasScores &&
-    getDataForGroup(
-      scores,
-      minYear,
-      maxYear,
-      column,
-      PEOPLE_GROUPS[1].code, // female
-      metric.metricType === 'indicators' && !raw,
-    );
-  const scoresMale =
-    hasScores &&
-    getDataForGroup(
-      scores,
-      minYear,
-      maxYear,
-      column,
-      PEOPLE_GROUPS[2].code, // male
       metric.metricType === 'indicators' && !raw,
     );
   const scoresAllRawAvailable =
@@ -216,32 +223,6 @@ function ChartCountryMetricTrend({
       PEOPLE_GROUPS[2].code,
       false,
     );
-  // benchmark references
-  const xyDataRefs =
-    benchmarkRefs &&
-    benchmarkRefs.map(ref => {
-      if (typeof ref.value !== 'undefined') {
-        return {
-          xy: getDataForValue(ref.value, minYear, maxYear),
-          ...ref,
-        };
-      }
-      if (ref.refColumn) {
-        return {
-          xy: getDataForGroup(
-            scores,
-            minYear,
-            maxYear,
-            ref.refColumn,
-            PEOPLE_GROUPS[0].code,
-            metric.metricType === 'indicators' && !raw,
-          ),
-          ...ref,
-        };
-      }
-      return null;
-    });
-  // cpr ranges
   let rangeUpper;
   let rangeLower;
   if (rangeColumns && hasScores) {
@@ -257,9 +238,6 @@ function ChartCountryMetricTrend({
     ? [0, 20, 40, 60, 80, 100]
     : [0, 2, 4, 6, 8, 10];
 
-  const hasGroupOption =
-    (scoresFemale && scoresFemale.length > 1) ||
-    (scoresMale && scoresMale.length > 1);
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -332,31 +310,6 @@ function ChartCountryMetricTrend({
                   style={{ stroke: color, opacity: 0.8, strokeWidth: 1 }}
                 />
               )}
-              {xyDataRefs &&
-                xyDataRefs.map(
-                  ref =>
-                    ref && (
-                      <LineMarkSeries
-                        key={ref.key}
-                        data={ref.xy}
-                        size={1.5}
-                        style={{
-                          stroke: 'black',
-                          line: {
-                            strokeWidth: ref.style === 'dotted' ? 2 : 1,
-                          },
-                          mark: {
-                            strokeWidth: 1,
-                          },
-                          opacity: ref.style === 'dotted' ? 0.4 : 0.2,
-                        }}
-                        markStyle={{
-                          fill: 'black',
-                        }}
-                        strokeDasharray={ref.style === 'dotted' && [1, 2]}
-                      />
-                    ),
-                )}
               {groupsAll && scoresAll && (
                 <LineMarkSeries
                   data={scoresAll}
@@ -490,14 +443,15 @@ function ChartCountryMetricTrend({
               )}
             </FlexibleWidthXYPlot>
           </WrapPlot>
-          {(hasRawOption || hasGroupOption) && (
+          <Source center />
+          {(hasRawOption || groupsActive) && (
             <Settings
               direction="row"
               justify="end"
               pad="xsmall"
               margin={{ bottom: 'small' }}
             >
-              {hasGroupOption && (
+              {groupsActive && (
                 <Box
                   direction={size !== 'small' ? 'row' : 'column'}
                   pad={size !== 'small' && { horizontal: 'medium' }}
@@ -539,13 +493,65 @@ function ChartCountryMetricTrend({
               )}
             </Settings>
           )}
-          <Source center />
         </Box>
       )}
     </ResponsiveContext.Consumer>
   );
 }
 
+// Benchmark information currently disabled
+// {xyDataRefs &&
+//   xyDataRefs.map(
+//     ref =>
+//       ref && (
+//         <LineMarkSeries
+//           key={ref.key}
+//           data={ref.xy}
+//           size={1.5}
+//           style={{
+//             stroke: 'black',
+//             line: {
+//               strokeWidth: ref.style === 'dotted' ? 2 : 1,
+//             },
+//             mark: {
+//               strokeWidth: 1,
+//             },
+//             opacity: ref.style === 'dotted' ? 0.4 : 0.2,
+//           }}
+//           markStyle={{
+//             fill: 'black',
+//           }}
+//           strokeDasharray={ref.style === 'dotted' && [1, 2]}
+//         />
+//       ),
+//   )}
+
+// benchmark references
+// const xyDataRefs =
+//   benchmarkRefs &&
+//   benchmarkRefs.map(ref => {
+//     if (typeof ref.value !== 'undefined') {
+//       return {
+//         xy: getDataForValue(ref.value, minYear, maxYear),
+//         ...ref,
+//       };
+//     }
+//     if (ref.refColumn) {
+//       return {
+//         xy: getDataForGroup(
+//           scores,
+//           minYear,
+//           maxYear,
+//           ref.refColumn,
+//           PEOPLE_GROUPS[0].code,
+//           metric.metricType === 'indicators' && !raw,
+//         ),
+//         ...ref,
+//       };
+//     }
+//     return null;
+//   });
+// cpr ranges
 ChartCountryMetricTrend.propTypes = {
   scores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   rangeColumns: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),

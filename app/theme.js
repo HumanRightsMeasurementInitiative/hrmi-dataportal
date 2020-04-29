@@ -215,6 +215,7 @@ const theme = {
       footer: '#423E86',
       female: '#EE5A45',
       male: '#0D6D64',
+      allPeople: '#027AC0',
       femaleActive: '#EE5A45',
       maleActive: '#0D6D64',
       femaleTrans: 'rgba(238, 90, 69, 0.3)',
