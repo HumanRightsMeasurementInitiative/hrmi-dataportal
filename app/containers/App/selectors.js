@@ -276,35 +276,36 @@ export const getSortOrderSearch = createSelector(
     search.get('dir'),
 );
 
-export const getCountriesFeatured = createSelector(
+// return featured countries in order as determined in "featured" data table
+export const getFeaturedCountries = createSelector(
   getFeatured,
   getCountries,
   (featured, countries) => {
     if (!featured || !countries) {
       return null;
     }
-    return countries.map(country => ({
-      ...country,
-      featured: featured.reduce((memo2, cat) => {
-        if (
-          cat[COLUMNS.FEATURED.COUNTRIES].indexOf(
-            country[COLUMNS.COUNTRIES.CODE],
-          ) > -1
-        ) {
-          return `${memo2}${memo2 === '' ? '' : ','}${
-            cat[COLUMNS.FEATURED.CAT]
-          }`;
-        }
-        return memo2;
-      }, ''),
-    }));
+    return featured.reduce((featuredFountries, featuredCat) => {
+      if (featuredCat[COLUMNS.FEATURED.COUNTRIES]) {
+        return featuredFountries.concat(
+          featuredCat[COLUMNS.FEATURED.COUNTRIES]
+            .split(',')
+            .reduce((catCountries, countryCode) => {
+              const country = countries.find(
+                c => c[COLUMNS.COUNTRIES.CODE] === countryCode,
+              );
+              return [
+                ...catCountries,
+                {
+                  ...country,
+                  featured: featuredCat[COLUMNS.FEATURED.CAT],
+                },
+              ];
+            }, []),
+        );
+      }
+      return countries;
+    }, []);
   },
-);
-export const getCountriesFeaturedOnly = createSelector(
-  getCountriesFeatured,
-  countries =>
-    countries &&
-    countries.filter(country => country.featured && country.featured !== ''),
 );
 
 // data / content
