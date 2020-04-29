@@ -3,6 +3,7 @@
     "default": "hrmi-dataportal",
     "dev": "hrmi-dataportal-dev",
     "v3": "hrmi-dataportal-v3",
+    "v3.1": "rightstracker-v3-1",
     "stage": "hrmi-dataportal-stage",
     "summary1": "hrmi-dataportal-summary1",
     "summary1b": "hrmi-dataportal-summary1b",
