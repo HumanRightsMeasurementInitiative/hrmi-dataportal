@@ -96,6 +96,15 @@ const text = {
   xsmall: { size: '13px', height: '16px', maxWidth: '400px' },
   xxsmall: { size: '12px', height: '14px', maxWidth: '400px' },
 };
+const icon = {
+  size: {
+    small: '14px',
+    medium: '17px',
+    large: '20px',
+    xlarge: '24px',
+    xxlarge: '32px',
+  },
+};
 const edgeSize = {
   hair: '1px',
   xxsmall: '3px',
@@ -128,14 +137,7 @@ const theme = {
     xlarge: `${BREAKPOINTS.xlarge.min + 1}px`, // min
     xxlarge: `${BREAKPOINTS.xxlarge.min + 1}px`, // min
   },
-  icon: {
-    size: {
-      small: '12px',
-      medium: '16px',
-      large: '20px',
-      xlarge: '32px',
-    },
-  },
+  icon,
   navTop: '60px',
   global: {
     input: {

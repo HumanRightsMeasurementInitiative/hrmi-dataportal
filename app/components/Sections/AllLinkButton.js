@@ -8,7 +8,7 @@ import AllLinkButtonWrap from './AllLinkButtonWrap';
 export function AllLinkButton({ label, onClick }) {
   return (
     <AllLinkButtonWrap>
-      <ButtonTextIcon label={label} onClick={onClick} hasIcon />
+      <ButtonTextIcon label={label} onClick={onClick} hasIcon size="large" />
     </AllLinkButtonWrap>
   );
 }
