@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, FormattedMessage } from 'react-intl';
 // import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Button, Box } from 'grommet';
+import { Box } from 'grommet';
 import styled from 'styled-components';
+import DropOption from 'styled/DropOption';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -11,38 +12,29 @@ import rootMessages from 'messages';
 
 const Styled = styled(Box)``;
 
-const OptionButton = props => <Button plain {...props} />;
-
-const StyledOption = styled(OptionButton)`
-  padding: 5px 10px;
-  font-weight: ${({ active }) => (active ? '600' : '400')};
+// const OptionButton = props => <Button plain {...props} />;
+// prettier-ignore
+const StyledOption = styled(DropOption)`
   padding-left: ${({ level }) => {
     if (level === 2) {
-      return 25;
+      return 15;
     }
     if (level === 3) {
-      return 40;
+      return 20;
     }
     return 10;
   }}px;
-  border-bottom: 1px solid;
-  border-color: ${({ theme }) => theme.global.colors['light-4']};
-`;
-const StyledOptionDisabled = styled.div`
-  color: ${({ theme }) => theme.global.colors.secondary};
-  padding: 5px 10px;
-  font-weight: ${({ active }) => (active ? '600' : '400')};
-  padding-left: ${({ level }) => {
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding-left: ${({ level }) => {
     if (level === 2) {
-      return 25;
+      return 22;
     }
     if (level === 3) {
-      return 40;
+      return 32;
     }
-    return 10;
+    return 12;
   }}px;
-  border-bottom: 1px solid;
-  border-color: ${({ theme }) => theme.global.colors['light-4']};
+  }
 `;
 
 export function MetricSelect({
@@ -68,6 +60,7 @@ export function MetricSelect({
                 fill="horizontal"
                 active={m.key === activeMetric}
                 onClick={() => setActiveMetric(m.key)}
+                noBorderLast
               >
                 <FormattedMessage
                   {...rootMessages[details.metricType][m.key]}
@@ -75,11 +68,11 @@ export function MetricSelect({
               </StyledOption>
             )}
             {m.disabled && (
-              <StyledOptionDisabled>
+              <StyledOption disabled noBorderLast>
                 <FormattedMessage
                   {...rootMessages[details.metricType][m.key]}
                 />
-              </StyledOptionDisabled>
+              </StyledOption>
             )}
             {m.children &&
               m.children.map(m2 => {
@@ -91,6 +84,7 @@ export function MetricSelect({
                       fill="horizontal"
                       active={m2.key === activeMetric}
                       onClick={() => setActiveMetric(m2.key)}
+                      noBorderLast
                     >
                       <FormattedMessage
                         {...rootMessages[details2.metricType][m2.key]}
@@ -106,6 +100,7 @@ export function MetricSelect({
                               fill="horizontal"
                               active={m3.key === activeMetric}
                               onClick={() => setActiveMetric(m3.key)}
+                              noBorderLast
                             >
                               <FormattedMessage
                                 {...rootMessages[details3.metricType][m3.key]}
