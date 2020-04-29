@@ -28,7 +28,7 @@ const imageSrc = `${IMAGE_PATH}/section_people.png`;
 
 export function SectionPeople({ nav, intl, theme }) {
   const hasSecondPara =
-    intl.formatMessage(messages.people.para2) &&
+    intl.messages[messages.people.para2] &&
     intl.formatMessage(messages.people.para2).trim() !== '';
   return (
     <ResponsiveContext.Consumer>
