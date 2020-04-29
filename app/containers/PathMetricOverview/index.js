@@ -72,6 +72,8 @@ export function PathMetricOverview({
                       esrLink: (
                         <ButtonTextIcon
                           color="esrDark"
+                          size="large"
+                          weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.esr,
                           )}
@@ -81,6 +83,8 @@ export function PathMetricOverview({
                       physintLink: (
                         <ButtonTextIcon
                           color="physintDark"
+                          size="large"
+                          weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.physint,
                           )}
@@ -90,6 +94,8 @@ export function PathMetricOverview({
                       empowerLink: (
                         <ButtonTextIcon
                           color="empowermentDark"
+                          size="large"
+                          weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.empowerment,
                           )}
@@ -101,7 +107,7 @@ export function PathMetricOverview({
                 </Paragraph>
               </MainColumn>
               {isMinSize(size, 'large') && (
-                <Aside align="start" justify="center">
+                <Aside align="center" justify="center">
                   <Image src={graphic} />
                 </Aside>
               )}
@@ -122,6 +128,8 @@ export function PathMetricOverview({
                   categoryCode: d.key,
                 })}`}
                 background={index % 2 === 0 ? `${d.key}Light` : 'white'}
+                minHeight={d.type === 'cpr'}
+                stretchAllLink={false}
                 description={
                   <span>
                     <FormattedMessage

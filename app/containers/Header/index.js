@@ -205,13 +205,13 @@ const ButtonSecondary = React.forwardRef(
           </Text>
           {open && (
             <FormUp
-              size={size === 'small' ? 'large' : 'xlarge'}
+              size={size === 'small' ? 'xlarge' : 'xxlarge'}
               style={{ stroke: 'currentColor', marginRight: '-3px' }}
             />
           )}
           {!open && (
             <FormDown
-              size={size === 'small' ? 'large' : 'xlarge'}
+              size={size === 'small' ? 'xlarge' : 'xxlarge'}
               style={{ stroke: 'currentColor', marginRight: '-3px' }}
             />
           )}

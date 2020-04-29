@@ -6,8 +6,8 @@ import { FormNext } from 'grommet-icons';
 
 // prettier-ignore
 const Styled = styled(Button)`
-  font-weight: 600;
-  color: ${({ theme, secondary }) => theme.global.colors[secondary ? 'secondary' : 'dark']};
+  font-weight: ${({ weight }) => weight || 600};
+  color: ${({ theme, secondary, color }) => theme.global.colors[color || (secondary ? 'secondary' : 'dark')]};
   font-size: ${({ theme, size }) => theme.text[size].size};
   &:hover {
     text-decoration: underline;

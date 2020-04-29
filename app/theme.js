@@ -87,14 +87,14 @@ export const BREAKPOINTS = {
 };
 
 const text = {
-  xxxlarge: { size: '60px', height: '75px', maxWidth: '700px' },
-  xxlarge: { size: '30px', height: '36px', maxWidth: '700px' },
-  xlarge: { size: '22px', height: '30px', maxWidth: '700px' },
-  large: { size: '18px', height: '24px', maxWidth: '700px' },
-  medium: { size: '16px', height: '21px', maxWidth: '700px' },
-  small: { size: '14px', height: '18px', maxWidth: '600px' },
-  xsmall: { size: '13px', height: '16px', maxWidth: '400px' },
-  xxsmall: { size: '12px', height: '14px', maxWidth: '400px' },
+  xxxlarge: { size: '60px', height: '75px', maxWidth: '800px' },
+  xxlarge: { size: '30px', height: '36px', maxWidth: '800px' },
+  xlarge: { size: '22px', height: '30px', maxWidth: '800px' },
+  large: { size: '18px', height: '24px', maxWidth: '800px' },
+  medium: { size: '16px', height: '21px', maxWidth: '800px' },
+  small: { size: '14px', height: '18px', maxWidth: '700px' },
+  xsmall: { size: '13px', height: '16px', maxWidth: '600px' },
+  xxsmall: { size: '12px', height: '14px', maxWidth: '500px' },
 };
 const icon = {
   size: {
