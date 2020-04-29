@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Box } from 'grommet';
 
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
-import AllLinkButtonWrap from './AllLinkButtonWrap';
-
-export function AllLinkButton({ label, onClick }) {
+export function AllLinkButton({ label, onClick, size = 'large', ...rest }) {
   return (
-    <AllLinkButtonWrap>
-      <ButtonTextIcon label={label} onClick={onClick} hasIcon />
-    </AllLinkButtonWrap>
+    <Box {...rest}>
+      <ButtonTextIcon label={label} onClick={onClick} hasIcon size={size} />
+    </Box>
   );
 }
 
 AllLinkButton.propTypes = {
   label: PropTypes.string,
+  size: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
 

@@ -15,7 +15,7 @@ import { checkCookieConsent, setCookieConsent } from 'containers/App/actions';
 import saga from 'containers/App/saga';
 import { useInjectSaga } from 'utils/injectSaga';
 
-import ButtonHighlight from 'styled/ButtonHighlight';
+import ButtonHero from 'styled/ButtonHero';
 
 import messages from './messages';
 
@@ -24,30 +24,14 @@ const Styled = styled.div``;
 const LinkInText = styled.a`
   color: ${props => props.theme.global.colors.white};
   &:hover {
-    color: ${({ theme }) => theme.global.colors.highlight};
+    color: rgba(255, 255, 255, 0.85);
   }
 `;
 
-const ButtonHighlightPrimary = styled(ButtonHighlight)`
+const StyledButtonHero = styled(ButtonHero)`
   margin: 0 ${({ theme }) => theme.global.edgeSize.xsmall};
-  border: 1px solid ${({ theme }) => theme.global.colors.highlight};
-  &:hover {
-    border-color: ${({ theme }) => theme.global.colors.highlight2};
-  }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 5px 10px;
-  }
-`;
-// color: ${({ theme }) => theme.global.colors.dark};
-// background-color: ${({ theme }) => theme.global.colors.white};
-const ButtonHighlightSecondary = styled(ButtonHighlightPrimary)`
-  background-color: transparent;
-  border: 1px solid ${({ theme }) => theme.global.colors.highlight};
-  color: ${({ theme }) => theme.global.colors.highlight};
-  &:hover {
-    background-color: transparent;
-    color: ${({ theme }) => theme.global.colors.white};
-    border-color: ${({ theme }) => theme.global.colors.white};
   }
 `;
 
@@ -96,32 +80,36 @@ export function CookieConsent({
         >
           <Box
             pad={{ vertical: 'small', horizontal: 'medium' }}
-            background="dark-1"
+            background="darker"
             style={{ maxWidth: '100%', width: '360px' }}
             elevation="large"
           >
-            <Paragraph margin={{ vertical: 'small' }} size="small">
+            <Paragraph
+              margin={{ top: 'small', bottom: 'medium' }}
+              size="medium"
+            >
               <FormattedMessage {...messages.nonEssentialConsentInfo} />
             </Paragraph>
             <ButtonWrap>
-              <ButtonHighlightPrimary
+              <StyledButtonHero
                 onClick={() => {
                   onConsent('true');
                   // setShowDialogue(false);
                 }}
               >
                 <FormattedMessage {...messages.buttonAccept} />
-              </ButtonHighlightPrimary>
-              <ButtonHighlightSecondary
+              </StyledButtonHero>
+              <StyledButtonHero
+                secondary
                 onClick={() => {
                   onConsent('false');
                   // setShowDialogue(false);
                 }}
               >
                 <FormattedMessage {...messages.buttonReject} />
-              </ButtonHighlightSecondary>
+              </StyledButtonHero>
             </ButtonWrap>
-            <Paragraph margin={{ vertical: 'small' }} size="small">
+            <Paragraph margin={{ top: 'medium', bottom: 'small' }} size="small">
               <FormattedMessage {...messages.additionalInfo} />
               <LinkInText
                 href={intl.formatMessage(messages.urlPrivacyPolicy)}

@@ -42,6 +42,7 @@ const Button = styled(ButtonPlain)`
     text-decoration: underline;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
     background: white;
+    z-index: 8;
   }
 `;
 const CountryLabel = styled.span`
@@ -200,6 +201,7 @@ export function ChartCountryDiamond({
   intl,
   showAnnotation,
   onCountryHover,
+  width,
 }) {
   if (!country) return null;
   if (!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]) {
@@ -211,11 +213,7 @@ export function ChartCountryDiamond({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box
-          pad="small"
-          basis={isMinSize(size, 'large') ? '240px' : '280px'}
-          alignContent="center"
-        >
+        <Box margin="xsmall" width={width} alignContent="center">
           {country && (
             <Button
               onClick={() => onSelectCountry(country[COLUMNS.COUNTRIES.CODE])}
@@ -309,6 +307,7 @@ ChartCountryDiamond.propTypes = {
   indicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   scores: PropTypes.object,
   scale: PropTypes.string,
+  width: PropTypes.string,
   isActive: PropTypes.bool,
   standard: PropTypes.object,
   otherStandard: PropTypes.object,

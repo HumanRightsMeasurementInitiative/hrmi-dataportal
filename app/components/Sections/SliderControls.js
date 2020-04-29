@@ -88,7 +88,7 @@ const SliderControls = ({ next, previous, carouselState }) => {
         <ArrowWrapper left>
           <ArrowWrapperFull left />
           <StyledButtonIcon left onClick={previous} subtle>
-            <Previous size="xlarge" color="black" />
+            <Previous size="xxlarge" color="dark" />
           </StyledButtonIcon>
         </ArrowWrapper>
       )}
@@ -96,7 +96,7 @@ const SliderControls = ({ next, previous, carouselState }) => {
         <ArrowWrapper right>
           <ArrowWrapperFull right />
           <StyledButtonIcon right onClick={next} subtle>
-            <Next size="xlarge" color="black" />
+            <Next size="xxlarge" color="dark" />
           </StyledButtonIcon>
         </ArrowWrapper>
       )}

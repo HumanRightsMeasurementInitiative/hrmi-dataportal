@@ -17,7 +17,7 @@ export default styled(ButtonPlain)`
     : theme.global.colors.border.light};
   }
   &:hover {
-    border-left: 4px solid ${({ theme }) => theme.global.colors.dark};
+    border-left: 4px solid ${({ theme, disabled }) => (disabled ? 'transparent' : theme.global.colors.dark)};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 4px 16px 4px 12px;

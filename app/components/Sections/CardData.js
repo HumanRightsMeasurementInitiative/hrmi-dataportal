@@ -47,7 +47,7 @@ export function CardData({ onClick, no = 0, title, teaser, anchor }) {
           <Teaser size={isMinSize(size, 'large') ? 'large' : 'medium'}>
             {teaser}
           </Teaser>
-          <ButtonTextIcon onClick={() => onClick()} hasIcon label={anchor} />
+          <ButtonTextIcon onClick={() => onClick()} hasIcon label={anchor} size="large" />
         </Box>
       )}
     </ResponsiveContext.Consumer>

@@ -37,6 +37,7 @@ export function SectionDataCards({
           <ContentMaxWidth column>
             <SectionTitle
               title={intl.formatMessage(messages.dataCards.title)}
+              marginTop
             />
             <Slider
               stretch

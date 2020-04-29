@@ -11,27 +11,34 @@ export default styled(ButtonPlain)`
   border-radius: 99999px;
   color: ${({ theme }) => theme.global.colors.dark};
   background-color:
-    ${({ theme, onWhite = true }) => onWhite
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
     ? theme.global.colors.buttonSecondaryOnWhite
     : theme.global.colors.buttonSecondary
 };
   &:hover {
     background-color:
-    ${({ theme, onWhite = true }) => onWhite
-    ? theme.global.colors.buttonSecondaryOnWhiteHover
-    : theme.global.colors.buttonSecondaryHover
+    ${({ theme, hasWhiteBG = true, disabled }) => {
+    if (disabled) {
+      return hasWhiteBG
+        ? theme.global.colors.buttonSecondaryOnWhite
+        : theme.global.colors.buttonSecondary;
+    }
+    return hasWhiteBG
+      ? theme.global.colors.buttonSecondaryOnWhiteHover
+      : theme.global.colors.buttonSecondaryHover;
+  }
 };
   }
   &:active {
     background-color:
-    ${({ theme, onWhite = true }) => onWhite
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
     ? theme.global.colors.buttonSecondaryOnWhiteHover
     : theme.global.colors.buttonSecondaryHover
 };
   }
   &:visited {
     background-color:
-    ${({ theme, onWhite = true }) => onWhite
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
     ? theme.global.colors.buttonSecondaryOnWhiteHover
     : theme.global.colors.buttonSecondaryHover
 };
@@ -39,6 +46,11 @@ export default styled(ButtonPlain)`
   &:focus {
     box-shadow: none;
     border-radius: 99999px;
+    background-color:
+    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
+    ? theme.global.colors.buttonSecondaryOnWhiteHover
+    : theme.global.colors.buttonSecondaryHover
+};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     font-size: ${({ theme }) => theme.text.medium.size};
