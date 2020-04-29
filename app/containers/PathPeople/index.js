@@ -198,7 +198,11 @@ export function PathPeople({
                   {dataReady && (
                     <Box wrap direction={direction}>
                       {map(groupedCountries, (groupCountries, regionCode) => (
-                        <Box basis={basis} margin={{ vertical: 'medium' }}>
+                        <Box
+                          basis={basis}
+                          margin={{ vertical: 'medium' }}
+                          key={regionCode}
+                        >
                           <FormattedMessage
                             {...rootMessages.regions[regionCode]}
                           />
