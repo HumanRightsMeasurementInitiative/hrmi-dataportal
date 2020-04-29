@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Box } from 'grommet';
-import { Checkmark } from 'grommet-icons';
 import DropOption from 'styled/DropOption';
 
 import messages from './messages';
@@ -17,14 +16,7 @@ const SortOptions = ({ options, onSelect, active }) => (
           active={active === option}
           disabled={active === option}
         >
-          <Box align="center" direction="row">
-            <FormattedMessage {...messages.sortOptions[option]} />
-            {active === option && (
-              <Box margin={{ left: 'xsmall' }}>
-                <Checkmark color="dark-4" />
-              </Box>
-            )}
-          </Box>
+          <FormattedMessage {...messages.sortOptions[option]} />
         </DropOption>
       ))}
   </Box>

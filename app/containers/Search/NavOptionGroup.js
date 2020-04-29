@@ -56,7 +56,7 @@ export function NavOptionGroup({
     <div>
       <NavOptionWrap>
         {label && (
-          <StyledText color="dark-4" size="small">
+          <StyledText color="secondary" size="small">
             {label}
           </StyledText>
         )}

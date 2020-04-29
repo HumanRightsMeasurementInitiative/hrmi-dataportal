@@ -6,14 +6,14 @@ export default styled(Button)`
   background-color: ${({ theme, subtle }) =>
     subtle ? 'transparent' : theme.global.colors.dark};
   border-radius: 100%;
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   text-align: center;
   padding: ${({ small }) => (small ? 2 : 0)}px;
   box-shadow: ${({ float }) => float ? '0 0 3px 1px rgba(0, 0, 0, 0.15)' : ''};
   &:hover{
     color: ${({ theme }) => theme.global.colors.white};
-    background-color: ${({ theme, subtle }) => subtle ? 'transparent' : theme.global.colors['dark-1']};
+    background-color: ${({ theme, subtle, inverse }) => theme.global.colors[(subtle && !inverse) ? 'buttonSecondary' : 'dark']};
   }
   &:active{
     color: ${({ theme }) => theme.global.colors.white};

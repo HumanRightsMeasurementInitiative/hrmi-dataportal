@@ -17,9 +17,16 @@ export default styled(ButtonPlain)`
 };
   &:hover {
     background-color:
-    ${({ theme, hasWhiteBG = true }) => hasWhiteBG
-    ? theme.global.colors.buttonSecondaryOnWhiteHover
-    : theme.global.colors.buttonSecondaryHover
+    ${({ theme, hasWhiteBG = true, disabled }) => {
+    if (disabled) {
+      return hasWhiteBG
+        ? theme.global.colors.buttonSecondaryOnWhite
+        : theme.global.colors.buttonSecondary;
+    }
+    return hasWhiteBG
+      ? theme.global.colors.buttonSecondaryOnWhiteHover
+      : theme.global.colors.buttonSecondaryHover;
+  }
 };
   }
   &:active {

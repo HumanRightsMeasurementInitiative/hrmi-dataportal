@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { DropButton, Box, ResponsiveContext } from 'grommet';
-import { FormDown, FormUp, Checkmark } from 'grommet-icons';
+import { FormDown, FormUp } from 'grommet-icons';
 import DropOption from 'styled/DropOption';
 
 import { appLocales } from 'i18n';
@@ -55,14 +55,7 @@ const DropContent = ({ active, options, onSelect }) => (
           active={active === option}
           disabled={active === option}
         >
-          <Box align="center" direction="row">
-            {LANGUAGES.long[option]}
-            {active === option && (
-              <Box margin={{ left: 'auto' }}>
-                <Checkmark color="dark-4" />
-              </Box>
-            )}
-          </Box>
+          {LANGUAGES.long[option]}
         </DropOption>
       ))}
   </Box>
