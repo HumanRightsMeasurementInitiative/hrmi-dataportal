@@ -94,6 +94,7 @@ function TabCountryReport({
           </SectionContainer>
           <SectionContainer>
             <ChartSettingMetrics
+              standard={standard}
               activeDefault={
                 RIGHTS.filter(r => r.dimension === dimension && r.hasGroups)[0]
                   .key
@@ -132,6 +133,7 @@ function TabCountryReport({
           </SectionContainer>
           <SectionContainer>
             <ChartSettingMetrics
+              standard={standard}
               activeDefault={
                 RIGHTS.filter(r => r.dimension === dimension && r.hasGroups)[0]
                   .key
@@ -172,6 +174,7 @@ function TabCountryReport({
           </SectionContainer>
           <SectionContainer>
             <ChartSettingMetrics
+              standard={standard}
               activeDefault="esr"
               metrics={DIMENSIONS.reduce((dims, d) => {
                 if (d.key !== dimension) {
@@ -234,6 +237,7 @@ function TabCountryReport({
           </SectionContainer>
           <SectionContainer>
             <ChartSettingMetrics
+              standard={standard}
               activeDefault={
                 RIGHTS.filter(r => r.dimension === dimension)[0].key
               }

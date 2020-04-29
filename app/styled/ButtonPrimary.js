@@ -15,6 +15,11 @@ export default styled(Button)`
     background-color:
     ${({ theme }) => theme.global.colors.buttonPrimaryHover};
 }
+  &:focus {
+    color: ${({ theme }) => theme.global.colors.white};
+    background-color:
+    ${({ theme }) => theme.global.colors.buttonPrimaryHover};
+}
   &:visited {
     color: ${({ theme }) => theme.global.colors.white};
     background-color:
