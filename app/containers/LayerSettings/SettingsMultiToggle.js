@@ -29,6 +29,7 @@ function SettingsMultiToggle({
       <Box direction="row" align="center">
         {options.map(option => (
           <ButtonToggleSetting
+            multi
             key={option.key}
             active={active.indexOf(option.key) > -1}
             color={option.color || defaultColor}

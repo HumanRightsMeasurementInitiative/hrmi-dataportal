@@ -102,7 +102,7 @@ export function Card({
 Card.propTypes = {
   banner: PropTypes.object,
   onCardClick: PropTypes.func,
-  margin: PropTypes.string,
+  margin: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   imageSrc: PropTypes.string,
   label: PropTypes.string,
   superLabel: PropTypes.string,

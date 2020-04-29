@@ -66,11 +66,14 @@ export function SectionPeople({ nav, intl, theme }) {
           <ContentMaxWidth align="start" direction="row" stretch>
             <Box
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
-              pad={{ right: 'xlarge' }}
+              pad={{ right: 'xlarge', top: 'small' }}
               style={{ position: 'relative' }}
               justify="start"
             >
-              <SectionTitle title={intl.formatMessage(messages.people.title)} />
+              <SectionTitle
+                title={intl.formatMessage(messages.people.title)}
+                marginTop
+              />
               <Paragraph
                 size="large"
                 margin={{ bottom: hasSecondPara ? 'small' : 'medium' }}

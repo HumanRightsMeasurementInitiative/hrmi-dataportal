@@ -77,6 +77,7 @@ export function PathHome({
         onSelectRight={onSelectMetric}
         navAllRights={() => nav(PATHS.METRICS)}
         allCats
+        marginTop
       />
       <SectionCountries
         countries={countriesFeatured}

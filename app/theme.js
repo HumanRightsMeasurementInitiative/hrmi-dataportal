@@ -87,14 +87,23 @@ export const BREAKPOINTS = {
 };
 
 const text = {
-  xxxlarge: { size: '60px', height: '75px', maxWidth: '700px' },
-  xxlarge: { size: '30px', height: '36px', maxWidth: '700px' },
-  xlarge: { size: '22px', height: '30px', maxWidth: '700px' },
-  large: { size: '18px', height: '24px', maxWidth: '700px' },
-  medium: { size: '16px', height: '21px', maxWidth: '700px' },
-  small: { size: '14px', height: '18px', maxWidth: '600px' },
-  xsmall: { size: '13px', height: '16px', maxWidth: '400px' },
-  xxsmall: { size: '12px', height: '14px', maxWidth: '400px' },
+  xxxlarge: { size: '60px', height: '75px', maxWidth: '800px' },
+  xxlarge: { size: '30px', height: '36px', maxWidth: '800px' },
+  xlarge: { size: '22px', height: '30px', maxWidth: '800px' },
+  large: { size: '18px', height: '24px', maxWidth: '800px' },
+  medium: { size: '16px', height: '21px', maxWidth: '800px' },
+  small: { size: '14px', height: '18px', maxWidth: '700px' },
+  xsmall: { size: '13px', height: '16px', maxWidth: '600px' },
+  xxsmall: { size: '12px', height: '14px', maxWidth: '500px' },
+};
+const icon = {
+  size: {
+    small: '14px',
+    medium: '17px',
+    large: '20px',
+    xlarge: '24px',
+    xxlarge: '32px',
+  },
 };
 const edgeSize = {
   hair: '1px',
@@ -128,14 +137,7 @@ const theme = {
     xlarge: `${BREAKPOINTS.xlarge.min + 1}px`, // min
     xxlarge: `${BREAKPOINTS.xxlarge.min + 1}px`, // min
   },
-  icon: {
-    size: {
-      small: '12px',
-      medium: '16px',
-      large: '20px',
-      xlarge: '32px',
-    },
-  },
+  icon,
   navTop: '60px',
   global: {
     input: {
@@ -166,7 +168,8 @@ const theme = {
       'dark-3': '#757575', // AA
       'dark-4': '#8896A0', // AA large
       dark: '#262262', // empowerment',
-      secondary: '#757575',
+      darker: '#110d50', // empowerment',
+      secondary: '#8896A0',
       hint: '#393393',
       brand: '#3A5161',
       highlight: '#FDB933',
@@ -212,11 +215,12 @@ const theme = {
       footer: '#423E86',
       female: '#EE5A45',
       male: '#0D6D64',
+      allPeople: '#027AC0',
       femaleActive: '#EE5A45',
       maleActive: '#0D6D64',
       femaleTrans: 'rgba(238, 90, 69, 0.3)',
       maleTrans: 'rgba(13, 109, 100, 0.3)',
-      buttonPrimaryHover: '#494492',
+      buttonPrimaryHover: '#626096',
       buttonSecondary: '#deddec',
       buttonSecondaryOnWhite: '#ededf5',
       buttonSecondaryHover: '#c8c6e0',
@@ -321,6 +325,9 @@ const theme = {
     fontWeight: 600,
   },
   layer: {
+    container: {
+      zIndex: 21,
+    },
     border: {
       radius: 0,
     },

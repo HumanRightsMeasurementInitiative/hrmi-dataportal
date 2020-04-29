@@ -6,25 +6,45 @@ import { FormNext } from 'grommet-icons';
 
 // prettier-ignore
 const Styled = styled(Button)`
-  font-weight: 600;
-  color: ${({ theme, secondary }) => theme.global.colors[secondary ? 'secondary' : 'dark']};
+  font-weight: ${({ weight }) => weight || 600};
+  color: ${({ theme, secondary, color }) => theme.global.colors[color || (secondary ? 'secondary' : 'dark')]};
+  font-size: ${({ theme, size }) => theme.text[size].size};
   &:hover {
     text-decoration: underline;
   }
 `;
 
-export function ButtonTextIcon({ icon, hasIcon, label, secondary, ...props }) {
+export function ButtonTextIcon({
+  icon,
+  hasIcon,
+  label,
+  secondary,
+  size = 'medium',
+  iconSize,
+  ...rest
+}) {
+  let iSize = iconSize;
+  if (!iSize) {
+    if (size === 'medium') iSize = 'large';
+    if (size === 'large') iSize = 'xlarge';
+  }
   return (
     <Styled
       secondary={secondary}
       label={label}
       a11Title={label}
-      icon={icon || (hasIcon && <FormNext color="dark" size="large" />)}
+      icon={
+        icon ||
+        (hasIcon && (
+          <FormNext color={secondary ? 'secondary' : 'dark'} size={iSize} />
+        ))
+      }
       plain
       reverse
-      gap="hair"
+      gap={size !== 'medium' ? 'hair' : '0'}
       alignSelf="start"
-      {...props}
+      size={size}
+      {...rest}
     />
   );
 }
@@ -35,6 +55,8 @@ ButtonTextIcon.propTypes = {
   hasIcon: PropTypes.bool,
   secondary: PropTypes.bool,
   label: PropTypes.string,
+  size: PropTypes.string,
+  iconSize: PropTypes.string,
 };
 
 export default ButtonTextIcon;

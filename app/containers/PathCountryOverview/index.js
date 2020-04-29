@@ -122,6 +122,8 @@ export function PathCountryOverview({
                         esrLink: (
                           <ButtonTextIcon
                             color="esrDark"
+                            size="large"
+                            weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.esr,
                             )}
@@ -131,6 +133,8 @@ export function PathCountryOverview({
                         physintLink: (
                           <ButtonTextIcon
                             color="physintDark"
+                            size="large"
+                            weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.physint,
                             )}
@@ -140,6 +144,8 @@ export function PathCountryOverview({
                         empowerLink: (
                           <ButtonTextIcon
                             color="empowermentDark"
+                            size="large"
+                            weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.empowerment,
                             )}
@@ -152,7 +158,7 @@ export function PathCountryOverview({
                 )}
               </MainColumn>
               {isMinSize(size, 'large') && (
-                <Aside align="start" justify="center">
+                <Aside align="center" justify="center">
                   <Image src={graphic} />
                 </Aside>
               )}

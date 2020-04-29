@@ -1,39 +1,61 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Button from './Button';
+import ButtonPrimary from './ButtonPrimary';
 
 // prettier-ignore
-export default styled(Button)`
-  border-radius: 3px;
-  color: ${({ theme, active }) =>
-    active ? theme.global.colors.white : theme.global.colors.text.light};
-  background-color: ${({ theme, active, color }) => {
-    if (active) {
-      return theme.global.colors[color] || theme.global.colors.dark;
-    }
-    return theme.global.colors['light-3'];
-  }};
+const StyledPrimary = styled(ButtonPrimary)`
+  border-radius: 3px !important;
+  padding: 3px 6px;
+  margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
+  background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
+  &:last-child {
+    margin-right: 0;
+  }
+  &:hover {
+    background-color:
+    ${({ theme, multi }) => theme.global.colors[multi ? 'buttonSecondaryOnWhite' : 'buttonPrimaryHover']};
+    color:
+    ${({ theme, multi }) => theme.global.colors[multi ? 'dark' : 'white']};
+}
+  &:active {
+    color: ${({ theme }) => theme.global.colors.white};
+    background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
+}
+  &:focus {
+    color: ${({ theme }) => theme.global.colors.white};
+    background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
+}
+  &:visited {
+    color: ${({ theme }) => theme.global.colors.white};
+    background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
+}
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    padding: 3px 10px;
+  }
+`;
+const StyledButton = styled(Button)`
+  border-radius: 3px !important;
   padding: 3px 6px;
   margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
   &:last-child {
     margin-right: 0;
   }
-  &:hover {
-    color: ${({ theme, active }) =>
-    active ? theme.global.colors.white : theme.global.colors.text.light};
-    background-color: ${({ theme, active }) =>
-    active ? theme.global.colors['dark-3'] : theme.global.colors['light-5']};
-  }
-  &:focus {
-    background-color: ${({ theme, active, color }) => {
-    if (active) {
-      return color || theme.global.colors['dark-2'];
-    }
-    return theme.global.colors['light-5'];
-  }};
-    outline-color: transparent;
-    border-radius: 3px;
-  }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 3px 10px;
   }
 `;
+
+function ButtonToggleSetting(props) {
+  if (props.active) {
+    return <StyledPrimary {...props} />;
+  }
+  return <StyledButton {...props} />;
+}
+
+ButtonToggleSetting.propTypes = {
+  active: PropTypes.bool,
+};
+
+export default ButtonToggleSetting;
