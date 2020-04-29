@@ -853,7 +853,7 @@
   "hrmi.containers.LayerSettings.labelWithName": "Mudar de vista: {name}",
   "hrmi.containers.AboutMetricContainer.metricLink": "Explorar (metric) para todos os países",
   "hrmi.containers.AboutCountryContainer.countryLink": "Explorar {country}",
-  "hrmi.components.HINote.hiNote": "{hiLabel} Países com rendimentos elevados: Para estes países, é melhor usar o padrão de avaliação de rendimentos elevados",
+  "hrmi.components.HINote.hiNote": "{hiLabel} Países com rendimentos elevados: Para estes países, é melhor usar o padrão de avaliação de rendimentos elevados. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "Para que padrão de avaliação é usado o indicador?",
   "hrmi.labels.abbrev.notAvailable": "N/A",
