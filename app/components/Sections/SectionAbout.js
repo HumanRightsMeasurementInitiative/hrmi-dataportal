@@ -28,7 +28,10 @@ export function SectionAbout({ intl, locale }) {
       {size => (
         <SectionContainer background="sectionAbout">
           <ContentMaxWidth stretch direction="column">
-            <SectionTitle title={intl.formatMessage(messages.about.title)} />
+            <SectionTitle
+              title={intl.formatMessage(messages.about.title)}
+              marginTop
+            />
             <Box direction={isMinSize(size, 'large') ? 'row' : 'column'}>
               <Box
                 basis={isMinSize(size, 'large') ? '1/2' : '1'}

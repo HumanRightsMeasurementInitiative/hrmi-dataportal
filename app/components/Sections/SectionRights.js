@@ -33,6 +33,7 @@ export function SectionRights({
   allCats,
   minHeight,
   stretchAllLink = true,
+  marginTop,
 }) {
   return (
     <SectionContainer background={background}>
@@ -46,6 +47,7 @@ export function SectionRights({
         >
           <SectionTitle
             title={title || intl.formatMessage(messages.metrics.title)}
+            marginTop={marginTop}
           />
           <AllLinkButton
             margin={{ top: 'xsmall' }}
@@ -95,6 +97,7 @@ SectionRights.propTypes = {
   allCats: PropTypes.bool,
   minHeight: PropTypes.bool,
   stretchAllLink: PropTypes.bool,
+  marginTop: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

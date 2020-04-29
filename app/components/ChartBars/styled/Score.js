@@ -9,10 +9,13 @@ const getRotation = rotation => `rotate(${rotation}deg)`;
 
 const Styled = styled.div`
   position: absolute;
-  top: ${({ direction }) => (direction === 'top' ? 'auto' : '100%')};
+  top: ${({ direction, rotate }) => {
+    if (rotate) return 'auto';
+    return direction === 'top' ? 'auto' : '100%';
+  }};
   bottom: ${({ direction, rotate }) => {
-    if (direction !== 'top') return 'auto';
     if (rotate) return '100%';
+    if (direction !== 'top') return 'auto';
     return '100%';
   }};
   font-weight: ${({ secondary }) => (secondary ? 400 : 700)};
@@ -22,7 +25,10 @@ const Styled = styled.div`
     if (align === 'right') return 'translateX(-100%)';
     return 'translateX(-50%)';
   }};
-  margin-top: ${({ direction }) => (direction === 'top' ? 'auto' : '2px')};
+  margin-top: ${({ direction, rotate }) => {
+    if (rotate) return '15px';
+    return direction === 'top' ? 'auto' : '2px';
+  }};
   margin-bottom: ${({ direction, level, rotate }) => {
     if (direction !== 'top') {
       return 'auto';
@@ -37,7 +43,7 @@ const Styled = styled.div`
   z-index: ${({ rotate }) => (rotate ? 10 : 0)};
   transform-origin: bottom left;
   width: auto;
-  white-space: nowrap;
+  white-space: ${({ rotate }) => (rotate ? 'normal' : 'nowrap')};
 `;
 
 const getSize = level => {
