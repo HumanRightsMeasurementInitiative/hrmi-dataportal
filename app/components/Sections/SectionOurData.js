@@ -73,7 +73,9 @@ export function SectionOurData({ nav, intl }) {
               <SectionTitle
                 title={intl.formatMessage(messages.ourData.title)}
               />
-              <Paragraph>
+              <Paragraph
+                margin={{ bottom: hasSecondPara ? 'small' : 'medium' }}
+              >
                 <FormattedMessage {...messages.ourData.para1} />
               </Paragraph>
               {hasSecondPara && (
