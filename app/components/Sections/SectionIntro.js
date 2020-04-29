@@ -11,7 +11,7 @@ import styled, { withTheme } from 'styled-components';
 
 import { Box, Paragraph, Heading, ResponsiveContext } from 'grommet';
 
-import { IMAGE_PATH } from 'containers/App/constants';
+import { INTRO_IMAGES } from 'containers/App/constants';
 import Search from 'containers/Search';
 // styles
 import SectionContainer from 'styled/SectionContainer';
@@ -50,21 +50,11 @@ const Claim = styled(Heading)`
   margin-bottom: ${({ theme }) => theme.global.edgeSize.medium};
 `;
 
-const images = [
-  // `${IMAGE_PATH}/intro_1.png`,
-  `${IMAGE_PATH}/intro_2.png`,
-  `${IMAGE_PATH}/intro_3.png`,
-  `${IMAGE_PATH}/intro_4.png`,
-  `${IMAGE_PATH}/intro_5.png`,
-  `${IMAGE_PATH}/intro_6.png`,
-  `${IMAGE_PATH}/intro_7.png`,
-];
-
 export function SectionIntro({ theme }) {
   const [index, setIndex] = useState(0);
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIndex((index + 1) % images.length);
+      setIndex((index + 1) % INTRO_IMAGES.length);
     }, 5000);
     return () => clearTimeout(timer);
   });
@@ -93,7 +83,7 @@ export function SectionIntro({ theme }) {
                   justify="start"
                   align="start"
                 >
-                  <Image alt="intro" src={images[index]} />
+                  <Image alt="intro" src={INTRO_IMAGES[index]} />
                 </Box>
               </>
             )}

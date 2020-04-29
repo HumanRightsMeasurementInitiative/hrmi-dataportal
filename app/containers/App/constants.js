@@ -792,3 +792,14 @@ export const AT_RISK_GROUPS = [
 
 export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';
 export const GA_PROPERTY_ID = 'UA-103815452-2';
+
+export const INTRO_IMAGES = [
+  // `${IMAGE_PATH}/intro_1.png`,
+  `${IMAGE_PATH}/intro_2.png`,
+  `${IMAGE_PATH}/intro_3.png`,
+  `${IMAGE_PATH}/intro_4.png`,
+  `${IMAGE_PATH}/intro_5.png`,
+  `${IMAGE_PATH}/intro_6.png`,
+  `${IMAGE_PATH}/intro_7.png`,
+  `${IMAGE_PATH}/intro_8.png`,
+];
