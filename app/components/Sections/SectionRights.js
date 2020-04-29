@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-import { Paragraph } from 'grommet';
+import { Paragraph, Box } from 'grommet';
 
 // styles
 import SectionContainer from 'styled/SectionContainer';
@@ -31,17 +31,30 @@ export function SectionRights({
   background,
   description,
   allCats,
+  minHeight,
+  stretchAllLink = true,
 }) {
   return (
     <SectionContainer background={background}>
       <ContentMaxWidth column>
-        <SectionTitle
-          title={title || intl.formatMessage(messages.metrics.title)}
-        />
-        <AllLinkButton
-          onClick={() => navAllRights()}
-          label={allLink || intl.formatMessage(rootMessages.labels.allMetrics)}
-        />
+        <Box
+          direction="row"
+          align="center"
+          margin={{ top: 'small' }}
+          justify={stretchAllLink ? 'between' : 'stretch'}
+          gap={stretchAllLink ? 'none' : 'large'}
+        >
+          <SectionTitle
+            title={title || intl.formatMessage(messages.metrics.title)}
+          />
+          <AllLinkButton
+            margin={{ top: 'xsmall' }}
+            onClick={() => navAllRights()}
+            label={
+              allLink || intl.formatMessage(rootMessages.labels.allMetrics)
+            }
+          />
+        </Box>
         <Slider cardMargin="xsmall">
           {rights.map(r => (
             <Card
@@ -58,12 +71,14 @@ export function SectionRights({
               }
               imageWhitespace
               activeColor={`${r.dimension}Dark`}
-              minHeight={allCats}
+              minHeight={allCats || minHeight}
               type="icon"
             />
           ))}
         </Slider>
-        {description && <Paragraph>{description}</Paragraph>}
+        {description && (
+          <Paragraph margin={{ top: 'ms' }}>{description}</Paragraph>
+        )}
       </ContentMaxWidth>
     </SectionContainer>
   );
@@ -78,6 +93,8 @@ SectionRights.propTypes = {
   background: PropTypes.string,
   description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   allCats: PropTypes.bool,
+  minHeight: PropTypes.bool,
+  stretchAllLink: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
