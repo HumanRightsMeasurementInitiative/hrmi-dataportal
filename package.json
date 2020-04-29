@@ -88,7 +88,7 @@
     "ip": "1.1.5",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.14",
-    "minimist": "1.2.0",
+    "minimist": "^1.2.5",
     "polished": "^3.4.2",
     "prop-types": "15.7.2",
     "react": "16.8.6",
@@ -177,7 +177,7 @@
     "webpack-cli": "3.3.0",
     "webpack-dev-middleware": "3.6.2",
     "webpack-hot-middleware": "2.24.3",
-    "webpack-pwa-manifest": "4.0.0",
+    "webpack-pwa-manifest": "^4.2.0",
     "whatwg-fetch": "3.0.0"
   }
 }
