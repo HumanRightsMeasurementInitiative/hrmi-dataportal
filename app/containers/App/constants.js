@@ -212,7 +212,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrScores',
-    file: 'esr-scores.csv',
+    file: 'esr-scores_v3-1.csv',
   },
   {
     key: 'esrIndicatorScores',
