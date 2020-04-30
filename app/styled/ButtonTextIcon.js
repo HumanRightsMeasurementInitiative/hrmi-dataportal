@@ -21,6 +21,8 @@ export function ButtonTextIcon({
   secondary,
   size = 'medium',
   iconSize,
+  reverse = true,
+  gap,
   ...rest
 }) {
   let iSize = iconSize;
@@ -40,8 +42,8 @@ export function ButtonTextIcon({
         ))
       }
       plain
-      reverse
-      gap={size !== 'medium' ? 'hair' : '0'}
+      reverse={reverse}
+      gap={gap || size !== 'medium' ? 'hair' : '0'}
       alignSelf="start"
       size={size}
       {...rest}
@@ -54,9 +56,11 @@ ButtonTextIcon.propTypes = {
   icon: PropTypes.node,
   hasIcon: PropTypes.bool,
   secondary: PropTypes.bool,
-  label: PropTypes.string,
+  reverse: PropTypes.bool,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   size: PropTypes.string,
   iconSize: PropTypes.string,
+  gap: PropTypes.string,
 };
 
 export default ButtonTextIcon;

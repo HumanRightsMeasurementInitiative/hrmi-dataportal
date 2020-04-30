@@ -58,6 +58,7 @@ export function MetricSelect({
                 level={1}
                 fill="horizontal"
                 active={m.key === activeMetric}
+                disabled={m.key === activeMetric}
                 onClick={() => setActiveMetric(m.key)}
                 noBorderLast
               >
@@ -82,6 +83,7 @@ export function MetricSelect({
                       level={2}
                       fill="horizontal"
                       active={m2.key === activeMetric}
+                      disabled={m2.key === activeMetric}
                       onClick={() => setActiveMetric(m2.key)}
                       noBorderLast
                     >
@@ -98,6 +100,7 @@ export function MetricSelect({
                               level={3}
                               fill="horizontal"
                               active={m3.key === activeMetric}
+                              disabled={m3.key === activeMetric}
                               onClick={() => setActiveMetric(m3.key)}
                               noBorderLast
                             >

@@ -13,16 +13,14 @@ import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
 import { Box, Heading, Text } from 'grommet';
-import { FormNext, FormPrevious } from 'grommet-icons';
 
 import { STANDARDS, RIGHTS, INDICATORS, FAQS } from 'containers/App/constants';
 import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
-
 import FAQs from 'containers/FAQs';
 
 import AboutMetric from 'components/AboutMetric';
-import Button from 'styled/Button';
+
 import ButtonHero from 'styled/ButtonHero';
 
 import getMetricDetails from 'utils/metric-details';
@@ -30,39 +28,7 @@ import { lowerCase } from 'utils/string';
 
 import rootMessages from 'messages';
 import messages from './messages';
-
-const TextRelative = styled.span`
-  vertical-align: middle;
-`;
-// prettier-ignore
-const ButtonRelative = styled(Button)`
-  display: block;
-  border-radius: 3px;
-  color: ${({ theme }) => theme.global.colors.text.light};
-  background-color: ${({ theme }) => theme.global.colors['light-3']};
-  padding: 2px 6px;
-  padding-left: ${({ previous }) => previous ? 2 : 6}px;
-  padding-right: ${({ previous }) => previous ? 6 : 2}px;
-  margin: 0.5em 0;
-  font-weight: 600;
-  font-size: ${({ theme }) => theme.text.small.size};
-  text-align: left;
-  &:hover {
-    color: ${({ theme }) => theme.global.colors.text.light};
-    background-color: ${({ theme }) => theme.global.colors.highlight};
-  }
-  &:focus {
-    background-color: ${({ theme }) => theme.global.colors.highlight};
-    outline-color: transparent;
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 2px 10px;
-    padding-left: ${({ previous }) => previous ? 3 : 10}px;
-    padding-right: ${({ previous }) => previous ? 10 : 3}px;
-    font-size: ${({ theme }) => theme.text.small.size};
-    font-weight: 600;
-  }
-`;
+import ButtonRelative from './ButtonRelative';
 
 const Pad = styled(Box)`
   padding-bottom: 16px;
@@ -153,16 +119,14 @@ export function AboutMetricContainer({
                   onSelectMetric(ancestors[ancestors.length - 1].key);
                 }}
                 previous
-              >
-                <FormPrevious size="large" />
-                <TextRelative>
+                text={
                   <FormattedMessage
                     {...rootMessages[ancestors[ancestors.length - 1].type][
                       ancestors[ancestors.length - 1].key
                     ]}
                   />
-                </TextRelative>
-              </ButtonRelative>
+                }
+              />
             </Pad>
           )}
           {metricType !== 'indicators' && children.length > 0 && (
@@ -191,14 +155,12 @@ export function AboutMetricContainer({
                         if (evt) evt.preventDefault();
                         onSelectMetric(child.key);
                       }}
-                    >
-                      <TextRelative>
+                      text={
                         <FormattedMessage
                           {...rootMessages['rights-short'][child.key]}
                         />
-                      </TextRelative>
-                      <FormNext size="large" />
-                    </ButtonRelative>
+                      }
+                    />
                   ))}
                 </>
               )}
@@ -206,7 +168,11 @@ export function AboutMetricContainer({
                 <>
                   {children.map(as => (
                     <Pad key={as.key}>
-                      <Text size="small">
+                      <Text
+                        size="xsmall"
+                        color="secondary"
+                        margin={{ bottom: 'xxsmall' }}
+                      >
                         {`${intl.formatMessage(
                           rootMessages.settings.standard.name,
                         )}: '${intl.formatMessage(
@@ -221,14 +187,12 @@ export function AboutMetricContainer({
                               if (evt) evt.preventDefault();
                               onSelectMetric(child.key);
                             }}
-                          >
-                            <TextRelative>
+                            text={
                               <FormattedMessage
                                 {...rootMessages.indicators[child.key]}
                               />
-                            </TextRelative>
-                            <FormNext size="large" />
-                          </ButtonRelative>
+                            }
+                          />
                         ))}
                       </>
                     </Pad>

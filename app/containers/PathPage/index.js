@@ -29,11 +29,12 @@ import rootMessages from 'messages';
 const StyledContent = styled.div`
   width: 100%;
   margin-top: 30px;
+  margin-bottom: 60px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    margin-top: 20px;
+    margin-top: 40px;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    margin-top: 15px;
+    margin-top: 60px;
   }
 `;
 
@@ -52,8 +53,8 @@ export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
         <meta name="description" content="Description of Page" />
       </Helmet>
       <ContentContainer direction="column" header>
-        <Close closeTarget={closeTarget} keepTab topRight float />
         <ContentMaxWidth>
+          <Close closeTarget={closeTarget} />
           <StyledContent>
             <PageTitle level={1}>{pageTitle}</PageTitle>
             {content && <HTMLWrapper innerhtml={content.content} />}

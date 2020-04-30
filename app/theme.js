@@ -156,7 +156,7 @@ const theme = {
         dark: '#FFFFFF', //  on dark background
         light: '#262262', // on light background (empowerment)
       },
-      border: { light: '#E8EAE9' },
+      border: { light: '#ceced2', dark: '#ffffff' },
       'light-0': '#F8F8F8', // <<< lightest      empowerment: '#262064', // AA large
       'light-1': '#F0EFF5', // <<< lightest      empowerment: '#262064', // AA large
       'light-2': '#EFEFEF',
@@ -169,7 +169,8 @@ const theme = {
       'dark-4': '#8896A0', // AA large
       dark: '#262262', // empowerment',
       darker: '#110d50', // empowerment',
-      secondary: '#8896A0',
+      secondary: '#757575',
+      disabled: '#8896A0',
       hint: '#393393',
       brand: '#3A5161',
       highlight: '#FDB933',
@@ -314,7 +315,7 @@ const theme = {
           height: '16px',
         },
         medium: {
-          size: '14px',
+          size: '15px',
           height: '20px',
         },
       },

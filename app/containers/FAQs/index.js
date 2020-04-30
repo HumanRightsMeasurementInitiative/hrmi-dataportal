@@ -3,79 +3,68 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import {
-  Accordion,
-  AccordionPanel,
-  Box,
-  Text,
-  Heading,
-  Paragraph,
-} from 'grommet';
+import styled from 'styled-components';
+import { Accordion, AccordionPanel, Box, Heading, Paragraph } from 'grommet';
 import { Down, Up } from 'grommet-icons';
 
 import { navigate } from 'containers/App/actions';
 import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
 import InfoStandard from 'containers/LayerSettings/InfoStandard';
 
-import ButtonText from 'styled/ButtonText';
-import ButtonIcon from 'styled/ButtonIcon';
 import MethodologyLink from './MethodologyLink';
 
 import messages from './messages';
+
+const OL = styled.ol`
+  padding-left: 20px;
+  margin: 0;
+`;
+const LI = styled.li`
+  margin-bottom: 8px;
+`;
 
 const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'measureRightESR') {
     return (
       <>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small">
-            <FormattedMessage
-              {...messages.answers.measureRightESR}
-              values={{ metric }}
-            />
-          </Text>
+        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
+          <FormattedMessage
+            {...messages.answers.measureRightESR}
+            values={{ metric }}
+          />
         </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small">
-            <FormattedMessage
-              {...messages.answers.measureRightESRNotesIntro}
-              values={{ metric }}
-            />
-          </Text>
+        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
+          <FormattedMessage
+            {...messages.answers.measureRightESRNotesIntro}
+            values={{ metric }}
+          />
         </Paragraph>
-        <Box margin={{ vertical: 'xsmall' }}>
-          <ol>
-            <li>
-              <Text size="small">
-                <FormattedMessage
-                  {...messages.answers.measureRightESRNotesOne}
-                  values={{ metric }}
-                />
-              </Text>
-            </li>
-            <li>
-              <Text size="small">
-                <FormattedMessage
-                  {...messages.answers.measureRightESRNotesTwo}
-                  values={{ metric }}
-                />
-              </Text>
-            </li>
-            <li>
-              <Text size="small">
-                <FormattedMessage
-                  {...messages.answers.measureRightESRNotesThree}
-                  values={{ metric }}
-                />
-              </Text>
-            </li>
-          </ol>
-        </Box>
-        <MethodologyLink>
-          <ButtonText onClick={() => navMethodology()}>
-            <FormattedMessage {...messages.methodology} />
-          </ButtonText>
-        </MethodologyLink>
+        <Paragraph size="small">
+          <OL>
+            <LI>
+              <FormattedMessage
+                {...messages.answers.measureRightESRNotesOne}
+                values={{ metric }}
+              />
+            </LI>
+            <LI>
+              <FormattedMessage
+                {...messages.answers.measureRightESRNotesTwo}
+                values={{ metric }}
+              />
+            </LI>
+            <LI>
+              <FormattedMessage
+                {...messages.answers.measureRightESRNotesThree}
+                values={{ metric }}
+              />
+            </LI>
+          </OL>
+        </Paragraph>
+        <MethodologyLink
+          onClick={() => navMethodology()}
+          text={<FormattedMessage {...messages.methodology} />}
+        />
       </>
     );
   }
@@ -83,11 +72,10 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
     return (
       <>
         <InfoStandard />
-        <MethodologyLink>
-          <ButtonText onClick={() => navMethodology()}>
-            <FormattedMessage {...messages.methodology} />
-          </ButtonText>
-        </MethodologyLink>
+        <MethodologyLink
+          onClick={() => navMethodology()}
+          text={<FormattedMessage {...messages.methodology} />}
+        />
       </>
     );
   }
@@ -95,59 +83,45 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
     return (
       <>
         <InfoBenchmark />
-        <MethodologyLink>
-          <ButtonText onClick={() => navMethodology()}>
-            <FormattedMessage {...messages.methodology} />
-          </ButtonText>
-        </MethodologyLink>
+        <MethodologyLink
+          onClick={() => navMethodology()}
+          text={<FormattedMessage {...messages.methodology} />}
+        />
       </>
     );
   }
   if (question === 'uncertainty') {
     return (
       <>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small">
-            <FormattedMessage {...messages.answers.uncertainty} />
-          </Text>
+        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
+          <FormattedMessage {...messages.answers.uncertainty} />
         </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }}>
-          <Text size="small">
-            <FormattedMessage {...messages.answers.uncertaintyLong} />
-          </Text>
+        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
+          <FormattedMessage {...messages.answers.uncertaintyLong} />
         </Paragraph>
-        <MethodologyLink>
-          <ButtonText
-            as="a"
-            href={intl.formatMessage(messages.methodologyUncertaintyURL)}
-            target="_blank"
-          >
-            <FormattedMessage {...messages.methodologyUncertainty} />
-          </ButtonText>
-        </MethodologyLink>
+        <MethodologyLink
+          href={intl.formatMessage(messages.methodologyUncertaintyURL)}
+          target="_blank"
+          text={<FormattedMessage {...messages.methodologyUncertainty} />}
+        />
       </>
     );
   }
   return (
     <>
-      <Paragraph margin={{ vertical: 'xsmall' }}>
-        <Text size="small">
-          <FormattedMessage
-            {...messages.answers[question]}
-            values={{ metric }}
-          />
-        </Text>
+      <Paragraph margin={{ vertical: 'xsmall' }} size="small">
+        <FormattedMessage {...messages.answers[question]} values={{ metric }} />
       </Paragraph>
-      <MethodologyLink>
-        <ButtonText onClick={() => navMethodology()}>
-          {question !== 'grades' && (
-            <FormattedMessage {...messages.methodology} />
-          )}
-          {question === 'grades' && (
+      <MethodologyLink
+        onClick={() => navMethodology()}
+        text={
+          question === 'grades' ? (
             <FormattedMessage {...messages.methodologyGrades} />
-          )}
-        </ButtonText>
-      </MethodologyLink>
+          ) : (
+            <FormattedMessage {...messages.methodology} />
+          )
+        }
+      />
     </>
   );
 };
@@ -171,7 +145,7 @@ function FAQs({ questions, intl, metric, navMethodology }) {
                     responsive={false}
                     level={6}
                     margin={{ vertical: 'xsmall' }}
-                    style={{ fontWeight: 'normal' }}
+                    style={{ fontWeight: 400 }}
                   >
                     <FormattedMessage
                       {...messages.questions[q]}
@@ -180,21 +154,13 @@ function FAQs({ questions, intl, metric, navMethodology }) {
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(index) && (
-                    <ButtonIcon as="span" subtle small>
-                      <Down size="small" />
-                    </ButtonIcon>
-                  )}
-                  {actives.includes(index) && (
-                    <ButtonIcon as="span" subtle small>
-                      <Up size="small" />
-                    </ButtonIcon>
-                  )}
+                  {!actives.includes(index) && <Down size="small" />}
+                  {actives.includes(index) && <Up size="small" />}
                 </Box>
               </Box>
             }
           >
-            <Box pad="small" background="light-1">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
               {renderAnswer(q, intl, metric, navMethodology)}
             </Box>
           </AccordionPanel>
