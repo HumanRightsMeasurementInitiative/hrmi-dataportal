@@ -30,7 +30,9 @@ import ChartSettingMetrics from 'components/ChartSettingMetrics';
 
 import quasiEquals from 'utils/quasi-equals';
 
-const SectionContainer = styled.div``;
+const SectionContainer = styled.div`
+  margin-bottom: 40px;
+`;
 
 const getGroupMetrics = (dimension, currentStandard, allIndicators) =>
   RIGHTS.reduce((rights, r) => {

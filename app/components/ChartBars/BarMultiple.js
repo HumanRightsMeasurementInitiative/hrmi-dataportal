@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Bar from './Bar';
-import BarWrapper from './styled/BarWrapper';
+import BarWrapper from './styled/BarWrap';
 import MinLabel from './styled/MinLabel';
 import MaxLabel from './styled/MaxLabel';
 import WrapTooltip from './styled/WrapTooltip';

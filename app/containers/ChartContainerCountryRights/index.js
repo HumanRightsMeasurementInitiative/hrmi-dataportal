@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
-import { Paragraph, Box, Text } from 'grommet';
+import { Paragraph, Box, Text, ResponsiveContext } from 'grommet';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 // import getMetricDetails from 'utils/metric-details';
@@ -49,6 +49,7 @@ import Hint from 'styled/Hint';
 import { getRightsScoresForDimension } from 'utils/scores';
 import getMetricDetails from 'utils/metric-details';
 import { getMessageGrammar } from 'utils/narrative';
+import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 
@@ -186,246 +187,274 @@ export function ChartContainerCountryRights({
     comparativeRightsESR = dimension.scoreSome.metric;
   }
   return (
-    <div>
-      {type === 'esr' && dimension && (
-        <>
-          <ChartHeader
-            chartId="dimension-overview"
-            messageValues={{
-              dimension: intl.formatMessage(
-                rootMessages.dimensions[dimensionCode],
-              ),
-            }}
-            includeChartName
-            tools={{
-              howToReadConfig: {
-                key: 'country-dimension-esr',
-                chart: 'Bar',
-                dimension: 'esr',
-              },
-              settingsConfig: {
-                key: 'country-dimension-esr',
-                showStandard: true,
-                showBenchmark: true,
-              },
-            }}
-          />
-          <Text>
-            {currentBenchmark && (
-              <FormattedMessage
-                {...rootMessages.charts.dimensionIntro.esr[
-                  currentBenchmark.key
-                ]}
-                values={getMessageGrammar(
-                  intl,
-                  countryCode,
-                  null,
-                  countryGrammar,
-                )}
+    <ResponsiveContext.Consumer>
+      {size => (
+        <div>
+          {type === 'esr' && dimension && (
+            <>
+              <ChartHeader
+                chartId="dimension-overview"
+                messageValues={{
+                  dimension: intl.formatMessage(
+                    rootMessages.dimensions[dimensionCode],
+                  ),
+                }}
+                includeChartName
+                tools={{
+                  howToReadConfig: {
+                    key: 'country-dimension-esr',
+                    chart: 'Bar',
+                    dimension: 'esr',
+                  },
+                  settingsConfig: {
+                    key: 'country-dimension-esr',
+                    showStandard: true,
+                    showBenchmark: true,
+                  },
+                }}
               />
-            )}
-          </Text>
-          <NarrativeESRStandardHint
-            country={country}
-            standard={standard}
-            countryGrammar={countryGrammar}
-          />
-          <Box margin={{ bottom: 'small' }}>
-            <ChartBars
-              data={[
-                {
-                  color: dimensionCode,
-                  refValues: getDimensionRefs(
-                    dimension.score,
+              <Box
+                margin={{ top: 'small', bottom: 'xsmall' }}
+                responsive={false}
+              >
+                <Text size={isMinSize(size, 'large') ? 'medium' : 'small'}>
+                  {currentBenchmark && (
+                    <FormattedMessage
+                      {...rootMessages.charts.dimensionIntro.esr[
+                        currentBenchmark.key
+                      ]}
+                      values={getMessageGrammar(
+                        intl,
+                        countryCode,
+                        null,
+                        countryGrammar,
+                      )}
+                    />
+                  )}
+                </Text>
+                <NarrativeESRStandardHint
+                  country={country}
+                  standard={standard}
+                  countryGrammar={countryGrammar}
+                />
+              </Box>
+              <Box margin={{ bottom: 'small' }} responsive={false}>
+                <ChartBars
+                  data={[
+                    {
+                      color: dimensionCode,
+                      refValues: getDimensionRefs(
+                        dimension.score,
+                        currentBenchmark,
+                      ),
+                      value: getESRDimensionValue(
+                        dimension.score,
+                        currentBenchmark,
+                      ),
+                      maxValue: 100,
+                      unit: '%',
+                      stripes: standard === 'hi',
+                      key: dimension.key,
+                      label: getDimensionLabel(dimension, intl),
+                      onClick: () => onMetricClick(dimension.key),
+                      active: activeCode === dimension.key,
+                    },
+                  ]}
+                  currentBenchmark={currentBenchmark}
+                  standard={standard}
+                  labelColor={`${dimensionCode}Dark`}
+                  padVertical="xsmall"
+                  grades={GRADES[type]}
+                  gradeLabels={false}
+                  level={1}
+                  commonLabel={intl.formatMessage(
+                    rootMessages.charts.dimensionSummaryLabel,
+                  )}
+                  listHeader
+                  metric={getMetricDetails(dimensionCode)}
+                  summaryScore={{
+                    score: getESRDimensionValue(
+                      dimension.score,
+                      currentBenchmark,
+                    ),
+                    maxValue: 100,
+                  }}
+                  scoresAside
+                  scoreOnHover={false}
+                  benchmarkIconOnly
+                  hasLabelsSmall={size !== 'small'}
+                />
+                <ChartBars
+                  scoresAside
+                  data={prepareData({
+                    scores: getRightsScoresForDimension(rights, 'esr'),
+                    dimensionCode,
                     currentBenchmark,
+                    standard,
+                    onClick: onMetricClick,
+                    intl,
+                    activeCode,
+                  })}
+                  currentBenchmark={currentBenchmark}
+                  standard={standard}
+                  commonLabel={intl.formatMessage(
+                    rootMessages.charts.rightsColumnLabel[dimensionCode],
+                  )}
+                  labelColor={`${dimensionCode}Dark`}
+                  grades={GRADES[type]}
+                  listHeader
+                  scoreOnHover={false}
+                  metric={getMetricDetails(dimensionCode)}
+                  hasLabelsSmall={size !== 'small'}
+                  annotateBenchmark={false}
+                  annotateMinMax={false}
+                />
+              </Box>
+              <Box margin={{ bottom: 'large' }}>
+                <Source />
+              </Box>
+              <NarrativeESR
+                dimensionScore={dimension.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                someData={hasSomeIndicatorScores}
+                standard={standard}
+              />
+              <Paragraph>
+                <NarrativeESRCompAssessment
+                  country={country}
+                  countryGrammar={countryGrammar}
+                  comparativeScore={parseFloat(comparativeScoreESR)}
+                  comparativeRights={comparativeRightsESR}
+                  groupAverageScore={
+                    reference &&
+                    reference.average &&
+                    reference.average[benchmark]
+                  }
+                  benchmark={currentBenchmark}
+                />
+              </Paragraph>
+              <Paragraph>
+                <Hint italic>
+                  <FormattedMessage {...rootMessages.hints.settings} />
+                </Hint>
+              </Paragraph>
+            </>
+          )}
+          {type === 'cpr' && dimension && (
+            <>
+              <ChartHeader
+                chartId="dimension-overview"
+                messageValues={{
+                  dimension: intl.formatMessage(
+                    rootMessages.dimensions[dimensionCode],
                   ),
-                  value: getESRDimensionValue(
-                    dimension.score,
-                    currentBenchmark,
-                  ),
-                  maxValue: 100,
-                  unit: '%',
-                  stripes: standard === 'hi',
-                  key: dimension.key,
-                  label: getDimensionLabel(dimension, intl),
-                  onClick: () => onMetricClick(dimension.key),
-                  active: activeCode === dimension.key,
-                },
-              ]}
-              currentBenchmark={currentBenchmark}
-              standard={standard}
-              labelColor={`${dimensionCode}Dark`}
-              padVertical="xsmall"
-              grades={GRADES[type]}
-              gradeLabels={false}
-              level={1}
-              commonLabel={intl.formatMessage(
-                rootMessages.charts.dimensionSummaryLabel,
-              )}
-              listHeader
-              metric={getMetricDetails(dimensionCode)}
-              summaryScore={{
-                score: getESRDimensionValue(dimension.score, currentBenchmark),
-                maxValue: 100,
-              }}
-              scoresAside
-              scoreOnHover={false}
-            />
-            <ChartBars
-              scoresAside
-              data={prepareData({
-                scores: getRightsScoresForDimension(rights, 'esr'),
-                dimensionCode,
-                currentBenchmark,
-                standard,
-                onClick: onMetricClick,
-                intl,
-                activeCode,
-              })}
-              currentBenchmark={currentBenchmark}
-              standard={standard}
-              commonLabel={intl.formatMessage(
-                rootMessages.charts.rightsColumnLabel[dimensionCode],
-              )}
-              labelColor={`${dimensionCode}Dark`}
-              grades={GRADES[type]}
-              listHeader
-              scoreOnHover={false}
-            />
-          </Box>
-          <Box margin={{ bottom: 'large' }}>
-            <Source />
-          </Box>
-          <NarrativeESR
-            dimensionScore={dimension.score}
-            country={country}
-            countryGrammar={countryGrammar}
-            someData={hasSomeIndicatorScores}
-            standard={standard}
-          />
-          <Paragraph>
-            <NarrativeESRCompAssessment
-              country={country}
-              countryGrammar={countryGrammar}
-              comparativeScore={parseFloat(comparativeScoreESR)}
-              comparativeRights={comparativeRightsESR}
-              groupAverageScore={
-                reference && reference.average && reference.average[benchmark]
-              }
-              benchmark={currentBenchmark}
-            />
-          </Paragraph>
-          <Paragraph>
-            <Hint italic>
-              <FormattedMessage {...rootMessages.hints.settings} />
-            </Hint>
-          </Paragraph>
-        </>
-      )}
-      {type === 'cpr' && dimension && (
-        <>
-          <ChartHeader
-            chartId="dimension-overview"
-            messageValues={{
-              dimension: intl.formatMessage(
-                rootMessages.dimensions[dimensionCode],
-              ),
-            }}
-            tools={{
-              howToReadConfig: {
-                key: 'country-dimension-cpr',
-                chart: 'Bullet',
-                dimension: dimensionCode,
-              },
-            }}
-          />
-          <Text>
-            <FormattedMessage
-              {...rootMessages.charts.dimensionIntro[dimensionCode]}
-              values={getMessageGrammar(
-                intl,
-                countryCode,
-                null,
-                countryGrammar,
-              )}
-            />
-          </Text>
-          <Box margin={{ bottom: 'medium' }}>
-            <ChartBars
-              data={[
-                {
-                  color: dimensionCode,
-                  value: getCPRDimensionValue(dimension.score),
-                  band: getBand(dimension.score),
-                  maxValue: 10,
-                  key: dimension.key,
-                  label: getDimensionLabel(dimension, intl),
-                  onClick: () => onMetricClick(dimension.key),
-                  active: activeCode === dimension.key,
-                },
-              ]}
-              labelColor={`${dimensionCode}Dark`}
-              padVertical="small"
-              grades={GRADES[type]}
-              gradeLabels={false}
-              level={1}
-              commonLabel="Category"
-              bullet={!!dimension.score}
-              listHeader
-              metric={getMetricDetails(dimensionCode)}
-              scoresAside
-              summaryScore={{
-                score: getCPRDimensionValue(dimension.score),
-                maxValue: 10,
-              }}
-              scoreOnHover
-            />
-            <ChartBars
-              data={prepareData({
-                scores: getRightsScoresForDimension(rights, dimensionCode),
-                dimensionCode,
-                onClick: onMetricClick,
-                intl,
-                activeCode,
-              })}
-              commonLabel={`${intl.formatMessage(
-                rootMessages.charts.rightsColumnLabel[dimensionCode],
-              )}`}
-              labelColor={`${dimensionCode}Dark`}
-              padVertical="small"
-              grades={GRADES[type]}
-              bullet={!!dimension.score}
-              listHeader
-              scoresAside
-              scoreOnHover
-            />
-          </Box>
-          <Box margin={{ bottom: 'large' }}>
-            <Source />
-          </Box>
-          <NarrativeCPR
-            dimensionKey={dimensionCode}
-            score={dimension.score}
-            country={country}
-            countryGrammar={countryGrammar}
-            showNoData
-          />
-          {dimension.score && (
-            <Paragraph>
-              <NarrativeCPRCompAssessment
+                }}
+                tools={{
+                  howToReadConfig: {
+                    key: 'country-dimension-cpr',
+                    chart: 'Bullet',
+                    dimension: dimensionCode,
+                  },
+                }}
+              />
+              <Box
+                margin={{ top: 'small', bottom: 'xsmall' }}
+                responsive={false}
+              >
+                <Text size={isMinSize(size, 'large') ? 'medium' : 'small'}>
+                  <FormattedMessage
+                    {...rootMessages.charts.dimensionIntro[dimensionCode]}
+                    values={getMessageGrammar(
+                      intl,
+                      countryCode,
+                      null,
+                      countryGrammar,
+                    )}
+                  />
+                </Text>
+              </Box>
+              <Box margin={{ bottom: 'small' }} responsive={false}>
+                <ChartBars
+                  data={[
+                    {
+                      color: dimensionCode,
+                      value: getCPRDimensionValue(dimension.score),
+                      band: getBand(dimension.score),
+                      maxValue: 10,
+                      key: dimension.key,
+                      label: getDimensionLabel(dimension, intl),
+                      onClick: () => onMetricClick(dimension.key),
+                      active: activeCode === dimension.key,
+                    },
+                  ]}
+                  labelColor={`${dimensionCode}Dark`}
+                  padVertical="small"
+                  grades={GRADES[type]}
+                  gradeLabels={false}
+                  level={1}
+                  commonLabel="Category"
+                  bullet={!!dimension.score}
+                  listHeader
+                  metric={getMetricDetails(dimensionCode)}
+                  scoresAside
+                  summaryScore={{
+                    score: getCPRDimensionValue(dimension.score),
+                    maxValue: 10,
+                  }}
+                  scoreOnHover
+                  hasLabelsSmall={size !== 'small'}
+                />
+                <ChartBars
+                  data={prepareData({
+                    scores: getRightsScoresForDimension(rights, dimensionCode),
+                    dimensionCode,
+                    onClick: onMetricClick,
+                    intl,
+                    activeCode,
+                  })}
+                  commonLabel={`${intl.formatMessage(
+                    rootMessages.charts.rightsColumnLabel[dimensionCode],
+                  )}`}
+                  labelColor={`${dimensionCode}Dark`}
+                  padVertical="small"
+                  grades={GRADES[type]}
+                  bullet={!!dimension.score}
+                  listHeader
+                  scoresAside
+                  scoreOnHover
+                  hasLabelsSmall={size !== 'small'}
+                  annotateMinMax={false}
+                />
+              </Box>
+              <Box margin={{ bottom: 'large' }}>
+                <Source />
+              </Box>
+              <NarrativeCPR
                 dimensionKey={dimensionCode}
                 score={dimension.score}
                 country={country}
                 countryGrammar={countryGrammar}
-                referenceScore={reference.average}
-                referenceCount={reference.count}
-                start
+                showNoData
               />
-            </Paragraph>
+              {dimension.score && (
+                <Paragraph>
+                  <NarrativeCPRCompAssessment
+                    dimensionKey={dimensionCode}
+                    score={dimension.score}
+                    country={country}
+                    countryGrammar={countryGrammar}
+                    referenceScore={reference.average}
+                    referenceCount={reference.count}
+                    start
+                  />
+                </Paragraph>
+              )}
+            </>
           )}
-        </>
+        </div>
       )}
-    </div>
+    </ResponsiveContext.Consumer>
   );
 }
 

@@ -5,6 +5,6 @@ export default styled.div`
   position: absolute;
   right: 0;
   bottom: 100%;
-  transform: ${({ type }) => (type === 'diamond' ? 'rotate(45deg)' : '')};
-  margin: ${({ type }) => (type === 'diamond' ? '-22px -9px 0 0' : 0)};
+  transform: ${({ isRotated }) => (isRotated ? 'rotate(45deg)' : '')};
+  margin: ${({ type }) => (type === 'icon' ? '-22px -9px 0 0' : 0)};
 `;
