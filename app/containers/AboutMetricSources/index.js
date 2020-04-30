@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Box, Text } from 'grommet';
+import { Box, Text, Button } from 'grommet';
 
 import { STANDARDS, INDICATORS } from 'containers/App/constants';
 
@@ -20,7 +20,6 @@ import { getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
 
 import UL from 'styled/UL';
-import ButtonText from 'styled/ButtonText';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -28,9 +27,11 @@ import messages from './messages';
 const StyledUL = styled(UL)`
   margin-top: 0;
 `;
-const Button = styled(ButtonText)`
-  font-weight: 400;
+
+const StyledButton = styled(Button)`
+  text-decoration: underline;
 `;
+
 const DEPENDENCIES = ['esrIndicators'];
 
 const expandSource = (source, intl) => {
@@ -106,32 +107,39 @@ export function AboutMetricSources({
       });
     }
   }
-  const rord = metricType === 'rights' || metricType === 'dimensions';
+  const isAggregateMetric =
+    metricType === 'rights' || metricType === 'dimensions';
+  const sources =
+    indicatorInfo &&
+    indicatorInfo.source_codes &&
+    indicatorInfo.source_codes.split(',');
   return (
-    <Box pad="small" background="light-1">
-      {metricType === 'indicators' && indicatorInfo && (
+    <Box>
+      {metricType === 'indicators' && indicatorInfo && sources.length === 1 && (
+        <FormattedMessage {...rootMessages.sources[sources[0]]} />
+      )}
+      {metricType === 'indicators' && indicatorInfo && sources.length > 1 && (
         <StyledUL>
-          {indicatorInfo.source_codes &&
-            indicatorInfo.source_codes.split(',').map(source => (
-              <li key={source}>
-                <FormattedMessage {...rootMessages.sources[source]} />
-              </li>
-            ))}
+          {sources.map(source => (
+            <li key={source}>
+              <FormattedMessage {...rootMessages.sources[source]} />
+            </li>
+          ))}
         </StyledUL>
       )}
-      {rord && indicators && (
+      {isAggregateMetric && indicators && (
         <div>
           {indicators.map(i =>
             i.source_codes ? (
               <Box margin={{ bottom: 'small' }} key={i.key}>
                 <div>
-                  <Button onClick={() => onSelectMetric(i.key)}>
+                  <StyledButton onClick={() => onSelectMetric(i.key)}>
                     <Text size="small">
                       <FormattedMessage
                         {...rootMessages['indicators-raw'][i.key]}
                       />
                     </Text>
-                  </Button>
+                  </StyledButton>
                 </div>
                 <div>
                   <Text size="xsmall">

@@ -15,7 +15,6 @@ import { STANDARDS } from 'containers/App/constants';
 import AboutMetricSources from 'containers/AboutMetricSources';
 
 import UL from 'styled/UL';
-import ButtonIcon from 'styled/ButtonIcon';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -32,6 +31,12 @@ function AboutMetric({
 }) {
   const [actives, setActive] = useState([]);
   const { metricType } = metric;
+  const hasAbout = rootMessages[`${metricType}-about`];
+  const hasIndicator = metricType === 'indicators' && metricInfo;
+  const aboutIndex = 0;
+  const indicatorIndex = hasIndicator && hasAbout ? 1 : 0;
+  const sourceIndex = aboutIndex + indicatorIndex + 1;
+
   return (
     <Box margin={{ top: 'medium' }}>
       <Accordion
@@ -39,47 +44,47 @@ function AboutMetric({
         activeIndex={actives}
         onActive={newActive => setActive(newActive)}
       >
-        <AccordionPanel
-          header={
-            <Box direction="row" gap="xsmall" align="center">
-              <Box>
-                <Heading
-                  responsive={false}
-                  level={5}
-                  margin={{ vertical: 'xsmall' }}
-                >
-                  <FormattedMessage {...messages.title[metricType]} />
-                </Heading>
-              </Box>
-              <Box margin={{ left: 'auto' }}>
-                {!actives.includes(0) && (
-                  <ButtonIcon as="span" subtle small>
-                    <Down size="small" />
-                  </ButtonIcon>
-                )}
-                {actives.includes(0) && (
-                  <ButtonIcon as="span" subtle small>
-                    <Up size="small" />
-                  </ButtonIcon>
-                )}
-              </Box>
-            </Box>
-          }
-        >
-          <Box pad="small" background="light-1">
-            {rootMessages[`${metricType}-about`] && (
-              <div>
-                <FormattedMessage
-                  {...rootMessages[`${metricType}-about`][metric.key]}
-                />
-              </div>
-            )}
-          </Box>
-        </AccordionPanel>
-        {metricType === 'indicators' && metricInfo && (
+        {hasAbout && (
           <AccordionPanel
             header={
-              <Box direction="row" gap="xsmall" align="center">
+              <Box
+                direction="row"
+                gap="xsmall"
+                align="center"
+                justify="between"
+              >
+                <Box>
+                  <Heading
+                    responsive={false}
+                    level={5}
+                    margin={{ vertical: 'xsmall' }}
+                  >
+                    <FormattedMessage {...messages.title[metricType]} />
+                  </Heading>
+                </Box>
+                <Box margin={{ left: 'auto' }}>
+                  {!actives.includes(aboutIndex) && <Down size="small" />}
+                  {actives.includes(aboutIndex) && <Up size="small" />}
+                </Box>
+              </Box>
+            }
+          >
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+              <FormattedMessage
+                {...rootMessages[`${metricType}-about`][metric.key]}
+              />
+            </Box>
+          </AccordionPanel>
+        )}
+        {hasIndicator && (
+          <AccordionPanel
+            header={
+              <Box
+                direction="row"
+                gap="xsmall"
+                align="center"
+                justify="between"
+              >
                 <Box>
                   <Heading
                     responsive={false}
@@ -90,21 +95,13 @@ function AboutMetric({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(1) && (
-                    <ButtonIcon as="span" subtle small>
-                      <Down size="small" />
-                    </ButtonIcon>
-                  )}
-                  {actives.includes(1) && (
-                    <ButtonIcon as="span" subtle small>
-                      <Up size="small" />
-                    </ButtonIcon>
-                  )}
+                  {!actives.includes(indicatorIndex) && <Down size="small" />}
+                  {actives.includes(indicatorIndex) && <Up size="small" />}
                 </Box>
               </Box>
             }
           >
-            <Box pad="small" background="light-1">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
               {metricInfo.standard === 'Both' && (
                 <StyledUL>
                   {STANDARDS.map(s => (
@@ -117,13 +114,9 @@ function AboutMetric({
                 </StyledUL>
               )}
               {metricInfo.standard !== 'Both' && standard && (
-                <StyledUL>
-                  <li>
-                    <FormattedMessage
-                      {...rootMessages.settings.standard[standard.key]}
-                    />
-                  </li>
-                </StyledUL>
+                <FormattedMessage
+                  {...rootMessages.settings.standard[standard.key]}
+                />
               )}
             </Box>
           </AccordionPanel>
@@ -131,7 +124,12 @@ function AboutMetric({
         {showSources && (
           <AccordionPanel
             header={
-              <Box direction="row" gap="xsmall" align="center">
+              <Box
+                direction="row"
+                gap="xsmall"
+                align="center"
+                justify="between"
+              >
                 <Box>
                   <Heading
                     responsive={false}
@@ -147,25 +145,19 @@ function AboutMetric({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(2) && (
-                    <ButtonIcon as="span" subtle small>
-                      <Down size="small" />
-                    </ButtonIcon>
-                  )}
-                  {actives.includes(2) && (
-                    <ButtonIcon as="span" subtle small>
-                      <Up size="small" />
-                    </ButtonIcon>
-                  )}
+                  {!actives.includes(sourceIndex) && <Down size="small" />}
+                  {actives.includes(sourceIndex) && <Up size="small" />}
                 </Box>
               </Box>
             }
           >
-            <AboutMetricSources
-              metric={metric}
-              indicatorInfo={metricInfo}
-              onSelectMetric={onSelectMetric}
-            />
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+              <AboutMetricSources
+                metric={metric}
+                indicatorInfo={metricInfo}
+                onSelectMetric={onSelectMetric}
+              />
+            </Box>
           </AccordionPanel>
         )}
       </Accordion>
