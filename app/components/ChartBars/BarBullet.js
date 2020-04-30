@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Text } from 'grommet';
 
-import Wrapper from './styled/BarWrapper';
+import Wrapper from './styled/BarWrap';
 import MinLabel from './styled/MinLabel';
 import MaxLabel from './styled/MaxLabel';
 import Score from './styled/Score';

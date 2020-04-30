@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
-import { Box } from 'grommet';
+import { Box, ResponsiveContext } from 'grommet';
 
 import quasiEquals from 'utils/quasi-equals';
 
@@ -151,53 +151,60 @@ function ChartCountryMetricByGroup({
   intl,
 }) {
   return (
-    <Styled direction="column">
-      <ChartBars
-        data={prepareData({
-          scores,
-          metric,
-          currentBenchmark,
-          standard,
-          raw,
-          metricInfo,
-          intl,
-          currentYear,
-        })}
-        currentBenchmark={currentBenchmark}
-        standard={standard}
-        labelColor="esrDark"
-        padVertical="small"
-        grades={GRADES.esr}
-        commonLabel="By sex"
-        scoresAside
-        scoreOnHover={false}
-        isStatic
-      />
-      {hasRawOption && (
-        <Settings direction="row" justify="end" pad="small" border="top">
-          <Box direction="row" justify="end">
-            <ButtonToggleSetting
-              active={!raw}
-              disabled={!raw}
-              onClick={() => {
-                onRawChange(false);
-              }}
-            >
-              <FormattedMessage {...rootMessages.settings.value.score} />
-            </ButtonToggleSetting>
-            <ButtonToggleSetting
-              active={raw}
-              disabled={raw}
-              onClick={() => {
-                onRawChange(true);
-              }}
-            >
-              <FormattedMessage {...rootMessages.settings.value.raw} />
-            </ButtonToggleSetting>
-          </Box>
-        </Settings>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Styled direction="column">
+          <ChartBars
+            data={prepareData({
+              scores,
+              metric,
+              currentBenchmark,
+              standard,
+              raw,
+              metricInfo,
+              intl,
+              currentYear,
+            })}
+            currentBenchmark={currentBenchmark}
+            standard={standard}
+            labelColor="esrDark"
+            padVertical="small"
+            grades={GRADES.esr}
+            commonLabel="By sex"
+            scoresAside={size !== 'small'}
+            scoreOnHover={size === 'small'}
+            isStatic={size !== 'small'}
+            metric={{ type: 'esr' }}
+            benchmarkIconOnly
+            labelsMinimal={size === 'small'}
+          />
+          {hasRawOption && (
+            <Settings direction="row" justify="end" pad="small" border="top">
+              <Box direction="row" justify="end">
+                <ButtonToggleSetting
+                  active={!raw}
+                  disabled={!raw}
+                  onClick={() => {
+                    onRawChange(false);
+                  }}
+                >
+                  <FormattedMessage {...rootMessages.settings.value.score} />
+                </ButtonToggleSetting>
+                <ButtonToggleSetting
+                  active={raw}
+                  disabled={raw}
+                  onClick={() => {
+                    onRawChange(true);
+                  }}
+                >
+                  <FormattedMessage {...rootMessages.settings.value.raw} />
+                </ButtonToggleSetting>
+              </Box>
+            </Settings>
+          )}
+        </Styled>
       )}
-    </Styled>
+    </ResponsiveContext.Consumer>
   );
 }
 // <Source center />
