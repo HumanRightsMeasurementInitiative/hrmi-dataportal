@@ -9,7 +9,7 @@ const OptionButton = React.forwardRef((props, ref) => (
 export default styled(OptionButton)`
   border-top: 1px solid ${({ theme }) => theme.global.colors.border.light};
   border-bottom: 1px solid transparent;
-  padding: 10px;
+  padding: 8px 12px;
   position: relative;
   background: transparent;
   border-left: 4px solid

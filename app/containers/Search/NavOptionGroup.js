@@ -10,13 +10,8 @@ const NavOptionWrap = styled(Box)`
   padding-bottom: 30px;
 `;
 const StyledText = styled(Text)`
-  padding-left: 10px;
-  padding-right: 10px;
-  bottom: 2px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+  padding: 0 10px 0 16px;
+  margin-bottom: 2px;
 `;
 
 export function NavOptionGroup({
