@@ -45,7 +45,7 @@ const StyledDrop = styled(Box)`
     top: 100%;
     width: 0;
     height: 0;
-    border-top: 8px solid ${props => props.theme.global.colors['dark-1']};
+    border-top: 8px solid ${props => props.theme.global.colors.dark};
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     margin: 0 auto;
@@ -121,7 +121,7 @@ export function Word({ score, dimension, intl, active, setActive }) {
                 <StyledDrop elevation="small" fixed={size === 'small'}>
                   <Box
                     pad={{ vertical: 'small', horizontal: 'small' }}
-                    background="dark-1"
+                    background="dark"
                     align="start"
                     responsive={false}
                   >
