@@ -49,7 +49,7 @@ export function BarWrapper({
       {size => (
         <BarButton
           as={isStatic && 'div'}
-          onClick={() => (isStatic && !score.onClick) || score.onClick()}
+          onClick={() => !isStatic && score.onClick && score.onClick()}
           onMouseEnter={() => isStatic || setHover(true)}
           onMouseLeave={() => isStatic || setHover(false)}
         >
