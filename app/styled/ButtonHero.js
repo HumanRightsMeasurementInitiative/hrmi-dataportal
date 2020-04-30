@@ -25,6 +25,7 @@ export default styled(Button)`
   border-radius: 5px;
 }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    margin: 40px 0;
     font-size: ${({ theme }) => theme.text.medium.size};
     padding: 10px 20px;
   }

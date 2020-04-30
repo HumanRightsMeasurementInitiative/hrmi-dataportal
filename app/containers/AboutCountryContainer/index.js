@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Heading, Box, Text } from 'grommet';
+import { FormAdd, FormSubtract } from 'grommet-icons';
 
 import { selectCountry } from 'containers/App/actions';
 
@@ -27,6 +28,7 @@ import { COLUMNS } from 'containers/App/constants';
 
 import FAQs from 'containers/FAQs';
 import ButtonText from 'styled/ButtonText';
+import ButtonTextIcon from 'styled/ButtonTextIcon';
 import ButtonHero from 'styled/ButtonHero';
 
 import { roundScore } from 'utils/scores';
@@ -46,13 +48,8 @@ const MoreWrap = styled.div`
   text-align: left;
   margin-top: 10px;
 `;
-const StyledButtonText = styled(ButtonText)`
-  font-size: 14px;
-  line-height: 18px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    font-size: 16px;
-    line-height: 21px;
-  }
+const StyledButtonText = styled(ButtonTextIcon)`
+  font-weight: 400;
 `;
 
 const prepPopulationValue = (value, intl, year) => {
@@ -92,6 +89,7 @@ function AboutCountryContainer({
   countryCode,
   showCountryLink,
   collapsible = true,
+  inverse,
 }) {
   const [more, setMore] = useState(false);
   if (!country) return null;
@@ -306,9 +304,15 @@ function AboutCountryContainer({
       )}
       {collapsible && (
         <MoreWrap>
-          <StyledButtonText onClick={() => setMore(!more)}>
-            <FormattedMessage {...messages[more ? 'less' : 'more']} />
-          </StyledButtonText>
+          <StyledButtonText
+            onClick={() => setMore(!more)}
+            icon={
+              more ? <FormSubtract size="large" /> : <FormAdd size="large" />
+            }
+            color={inverse ? 'white' : 'dark'}
+            size="small"
+            label={<FormattedMessage {...messages[more ? 'less' : 'more']} />}
+          />
         </MoreWrap>
       )}
       {showFAQs && <FAQs questions={showFAQs} />}
@@ -337,6 +341,7 @@ AboutCountryContainer.propTypes = {
   showTitle: PropTypes.bool,
   showCountryLink: PropTypes.bool,
   collapsible: PropTypes.bool,
+  inverse: PropTypes.bool,
   countryCode: PropTypes.string,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
