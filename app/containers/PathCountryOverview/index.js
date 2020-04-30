@@ -103,7 +103,11 @@ export function PathCountryOverview({
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header
-              height={`${theme.sizes.top.height}px`}
+              height={
+                isMinSize(size, 'large')
+                  ? `${theme.sizes.top.height}px`
+                  : 'auto'
+              }
               hasAside={isMinSize(size, 'large')}
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>
@@ -114,7 +118,7 @@ export function PathCountryOverview({
                   />
                 </PageTitle>
                 {scale && (
-                  <Paragraph size="large">
+                  <Paragraph size={size === 'small' ? 'medium' : 'large'}>
                     <FormattedMessage
                       {...messages.header[scale]}
                       values={{
@@ -122,7 +126,7 @@ export function PathCountryOverview({
                         esrLink: (
                           <ButtonTextIcon
                             color="esrDark"
-                            size="large"
+                            size={size === 'small' ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.esr,
@@ -133,7 +137,7 @@ export function PathCountryOverview({
                         physintLink: (
                           <ButtonTextIcon
                             color="physintDark"
-                            size="large"
+                            size={size === 'small' ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.physint,
@@ -144,7 +148,7 @@ export function PathCountryOverview({
                         empowerLink: (
                           <ButtonTextIcon
                             color="empowermentDark"
-                            size="large"
+                            size={size === 'small' ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.empowerment,

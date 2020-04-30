@@ -32,12 +32,16 @@ const StyledText = styled(Text)`
 const StyledButton = styled(Button)`
   background: transparent;
   padding: 3px;
-  margin-right: ${({ theme }) => theme.global.edgeSize.small};
+  margin-right: ${({ theme }) => theme.global.edgeSize.xxsmall};
   font-weight: 600;
   &:last-child {
     margin-right: 0;
   }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
+  }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    margin-right: ${({ theme }) => theme.global.edgeSize.small};
     padding: 3px 10px;
   }
 `;
@@ -64,7 +68,7 @@ export function ChartTools({
               icon={<CircleQuestion color="dark" size="large" />}
               plain
               label={
-                isMinSize(size, 'large') ? (
+                isMinSize(size, 'medium') ? (
                   <StyledText hasWhiteBG={hasWhiteBG}>
                     {intl.formatMessage(
                       rootMessages.labels.chartTools.howToRead,
@@ -87,7 +91,7 @@ export function ChartTools({
               icon={<Performance color="dark" size="large" />}
               plain
               label={
-                isMinSize(size, 'large') ? (
+                isMinSize(size, 'medium') ? (
                   <StyledText hasWhiteBG={hasWhiteBG}>
                     {intl.formatMessage(
                       rootMessages.labels.chartTools.settings,

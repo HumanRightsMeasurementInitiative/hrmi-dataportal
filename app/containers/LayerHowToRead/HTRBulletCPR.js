@@ -36,6 +36,7 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
           responsive={false}
         >
           <BarBullet
+            scoreAbove
             showLabels
             annotate
             hoverEnabled={false}
@@ -45,8 +46,8 @@ function HTRBulletCPR({ contxt, dimension, intl }) {
               maxValue: 10,
               unit: '',
               band: {
-                lo: 3.5,
-                hi: 6.5,
+                lo: 2.5,
+                hi: 7.5,
               },
               labels: {
                 value: intl.formatMessage(messages.bullet.scoreAverage),

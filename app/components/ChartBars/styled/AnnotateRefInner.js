@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export default styled.div`
   position: relative;
   text-align: right;
-  top: ${({ offsetTop }) => (offsetTop ? '-16px' : 0)};
+  top: ${({ offsetTop }) => (offsetTop ? '-7px' : 0)};
   right: ${({ offsetTop }) => (offsetTop ? 0 : '4px')};
   font-size: 12px;
   line-height: 12px;

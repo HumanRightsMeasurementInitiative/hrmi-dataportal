@@ -7,6 +7,7 @@ export default styled(ButtonPlain)`
   color: ${({ theme }) => theme.global.colors.white};
   margin: 0px 24px;
   font-size: 1em;
+  border-top: 5px solid transparent;
   border-bottom: 5px solid ${({ active }) => (active ? 'white' : 'transparent')};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     display: inline-block;

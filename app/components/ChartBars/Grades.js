@@ -49,7 +49,7 @@ export function Grades({ grades, labels = true, hasAside }) {
     <ResponsiveContext.Consumer>
       {size => (
         <BGScale
-          left={isMinSize(size, 'medium') ? '180px' : '160px'}
+          left={isMinSize(size, 'medium') ? '180px' : '100px'}
           right={getScoreAsideWidth(size, hasAside)}
         >
           {grades.map(grade => (

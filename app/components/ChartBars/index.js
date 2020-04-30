@@ -130,7 +130,7 @@ function ChartBars({
             {summaryScore && (
               <SummaryWrap direction="row">
                 <Box
-                  width={isMinSize(size, 'medium') ? '180px' : '160px'}
+                  width={isMinSize(size, 'medium') ? '180px' : '100px'}
                   flex={{ shrink: 0 }}
                 />
                 <Box
