@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Box } from 'grommet';
 import { withTheme } from 'styled-components';
 
 import { BENCHMARKS } from 'containers/App/constants';
@@ -24,6 +25,7 @@ import {
 import { loadDataIfNeeded, setRaw } from 'containers/App/actions';
 
 import ChartCountryMetricByGroup from 'components/ChartCountryMetricByGroup';
+import Source from 'components/Source';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -65,22 +67,27 @@ export function ChartContainerByGroup({
   // prettier-ignore
   return (
     <div>
-      {metricSelector}
-      <ChartCountryMetricByGroup
-        color="esr"
-        colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
-        scores={scores}
-        metric={metric}
-        metricInfo={metricInfo}
-        standard={standard}
-        percentage
-        maxValue={100}
-        hasRawOption={false}
-        raw={raw}
-        onRawChange={onRawChange}
-        currentYear={currentYear}
-        currentBenchmark={BENCHMARKS.find(s => s.key === benchmark)}
-      />
+      <Box margin={{ bottom: 'medium' }}>
+        {metricSelector}
+        <ChartCountryMetricByGroup
+          color="esr"
+          colorHint={theme.global.colors[`${getColour(metric)}Dark`]}
+          scores={scores}
+          metric={metric}
+          metricInfo={metricInfo}
+          standard={standard}
+          percentage
+          maxValue={100}
+          hasRawOption={false}
+          raw={raw}
+          onRawChange={onRawChange}
+          currentYear={currentYear}
+          currentBenchmark={BENCHMARKS.find(s => s.key === benchmark)}
+        />
+      </Box>
+      <Box margin={{ bottom: 'large' }}>
+        <Source />
+      </Box>
     </div>
   );
 }

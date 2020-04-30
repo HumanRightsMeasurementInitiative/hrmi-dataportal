@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { withTheme } from 'styled-components';
-// import { Paragraph, Box } from 'grommet';
+import { Box } from 'grommet';
 import { injectIntl, intlShape } from 'react-intl';
 
 import { BENCHMARKS, GRADES, COLUMNS } from 'containers/App/constants';
@@ -28,6 +28,7 @@ import {
 import { loadDataIfNeeded } from 'containers/App/actions';
 
 import ChartBars from 'components/ChartBars';
+import Source from 'components/Source';
 
 import getMetricDetails from 'utils/metric-details';
 
@@ -114,55 +115,60 @@ export function ChartContainerCountryIndicators({
 
   return (
     <div>
-      {metricSelector}
-      <ChartBars
-        data={[
-          {
-            color: 'esr',
-            refValues: getRightRefs(right, currentBenchmark),
-            value: getRightValue(right, currentBenchmark),
-            maxValue: 100,
-            unit: '%',
-            stripes: standard === 'hi',
-            key: metricCode,
-            label: getMetricLabel(metricCode, intl),
-            onClick: () => onMetricClick(metricCode, 'esr'),
-            active: activeCode === metricCode,
-          },
-        ]}
-        currentBenchmark={currentBenchmark}
-        standard={standard}
-        labelColor="esrDark"
-        padVertical="xsmall"
-        grades={GRADES.esr}
-        gradeLabels={false}
-        level={1}
-        commonLabel={intl.formatMessage(
-          rootMessages.charts.rightsColumnLabel.esr,
-        )}
-        listHeader
-        metric={getMetricDetails(metricCode)}
-        scoresAside
-      />
-      <ChartBars
-        scoresAside
-        data={prepareData({
-          indicators,
-          currentBenchmark,
-          standard,
-          onClick: onMetricClick,
-          intl,
-          activeCode,
-        })}
-        currentBenchmark={currentBenchmark}
-        standard={standard}
-        commonLabel={intl.formatMessage(
-          rootMessages.charts.indicatorsColumnLabel,
-        )}
-        labelColor="esrDark"
-        grades={GRADES.esr}
-        listHeader
-      />
+      <Box margin={{ bottom: 'small' }}>
+        {metricSelector}
+        <ChartBars
+          data={[
+            {
+              color: 'esr',
+              refValues: getRightRefs(right, currentBenchmark),
+              value: getRightValue(right, currentBenchmark),
+              maxValue: 100,
+              unit: '%',
+              stripes: standard === 'hi',
+              key: metricCode,
+              label: getMetricLabel(metricCode, intl),
+              onClick: () => onMetricClick(metricCode, 'esr'),
+              active: activeCode === metricCode,
+            },
+          ]}
+          currentBenchmark={currentBenchmark}
+          standard={standard}
+          labelColor="esrDark"
+          padVertical="xsmall"
+          grades={GRADES.esr}
+          gradeLabels={false}
+          level={1}
+          commonLabel={intl.formatMessage(
+            rootMessages.charts.rightsColumnLabel.esr,
+          )}
+          listHeader
+          metric={getMetricDetails(metricCode)}
+          scoresAside
+        />
+        <ChartBars
+          scoresAside
+          data={prepareData({
+            indicators,
+            currentBenchmark,
+            standard,
+            onClick: onMetricClick,
+            intl,
+            activeCode,
+          })}
+          currentBenchmark={currentBenchmark}
+          standard={standard}
+          commonLabel={intl.formatMessage(
+            rootMessages.charts.indicatorsColumnLabel,
+          )}
+          labelColor="esrDark"
+          grades={GRADES.esr}
+          listHeader
+        />
+      </Box>
+      <Box margin={{ bottom: 'large' }}>
+        <Source />
+      </Box>
     </div>
   );
 }

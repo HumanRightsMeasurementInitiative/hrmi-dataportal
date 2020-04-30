@@ -34,12 +34,12 @@ const GlobalStyle = createGlobalStyle`
   p {
     margin: 0.5em 0;
   }
-
   .hrmi-html p {
     margin: 1em 0;
     &:first-child {
       font-size: 1.1em;
       line-height: 1.3;
+      margin: 2em 0;
       @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
         font-size: 1.2em;
         line-height: 1.4;
@@ -47,15 +47,37 @@ const GlobalStyle = createGlobalStyle`
     }
   }
   .hrmi-html a {
-    background: #F2F3F4;
-    padding: 2px 6px;
-    color: #3A5161;
-    text-decoration: none;
+    color: #262262;
+    text-decoration: underline;
     font-weight: 600;
-    border-radius: 3px;
     &:hover {
-      background: #FDB933;
+      opacity: 0.8;
     }
+  }
+  .hrmi-html a.hero {
+    color: #ffffff;
+    background-color: #262262;
+    padding: 5px 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    &:hover {
+      opacity: 0.8;
+      background-color: #626096;
+    }
+  }
+  .hrmi-html h3 {
+    font-size: 20px;
+  }
+  .hrmi-html h4 {
+    font-size: 18px;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+  }
+  .hrmi-html hr {
+    margin: 4em 0;
   }
 
   .react-multi-carousel-list__custom {
