@@ -13,6 +13,8 @@ import { Paragraph, Box, ResponsiveContext } from 'grommet';
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
+import { isMinSize, isMaxSize } from 'utils/responsive';
+
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -34,6 +36,7 @@ export function SectionRights({
   minHeight,
   stretchAllLink = true,
   marginTop,
+  hasLongTitle,
 }) {
   return (
     <ResponsiveContext.Consumer>
@@ -51,7 +54,8 @@ export function SectionRights({
                 title={title || intl.formatMessage(messages.metrics.title)}
                 marginTop={marginTop}
               />
-              {size !== 'small' && (
+              {(isMinSize(size, 'large') ||
+                (isMinSize(size, 'medium') && !hasLongTitle)) && (
                 <AllLinkButton
                   margin={{ top: 'xsmall' }}
                   onClick={() => navAllRights()}
@@ -86,7 +90,8 @@ export function SectionRights({
             {description && (
               <Paragraph margin={{ top: 'ms' }}>{description}</Paragraph>
             )}
-            {size === 'small' && (
+            {(size === 'small' ||
+              (isMaxSize(size, 'medium') && hasLongTitle)) && (
               <Box margin={{ top: 'medium' }}>
                 <AllLinkButton
                   margin={{ top: 'xsmall' }}
@@ -117,6 +122,7 @@ SectionRights.propTypes = {
   minHeight: PropTypes.bool,
   stretchAllLink: PropTypes.bool,
   marginTop: PropTypes.bool,
+  hasLongTitle: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

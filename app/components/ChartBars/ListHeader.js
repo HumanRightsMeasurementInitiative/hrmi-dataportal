@@ -21,8 +21,11 @@ import rootMessages from 'messages';
 const WrapAnnotateBetter = styled.div`
   position: absolute;
   left: ${({ theme }) => theme.global.edgeSize.small};
-  right: ${({ theme }) => theme.global.edgeSize.small};
+  right: ${({ theme }) => theme.global.edgeSize.medium};
   top: -2px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    right: ${({ theme }) => theme.global.edgeSize.small};
+  }
 `;
 
 // prettier-ignore
@@ -59,7 +62,7 @@ export function ListHeader({
       {size => (
         <Box direction="row" align="end" pad={{ bottom: 'xxsmall' }}>
           <CountryWrap
-            width={isMinSize(size, 'medium') ? '180px' : '160px'}
+            width={isMinSize(size, 'medium') ? '180px' : '100px'}
             noBorder
             align="start"
             flex={{ shrink: 0 }}
@@ -91,8 +94,8 @@ export function ListHeader({
                   pad={annotateBenchmark ? { left: 'xsmall' } : null}
                   style={{
                     transform:
-                      metric.type === 'esr'
-                        ? 'translateX(100%)'
+                      size === 'small' && metric.type === 'esr'
+                        ? 'translateX(30%)'
                         : 'translateX(50%)',
                   }}
                 >

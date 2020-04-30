@@ -14,6 +14,7 @@ const MARGINS = 4;
 const heightRotated = w => w * 2 ** (1 / 2); // height * sqrt(2)
 const Styled = styled.div`
   height: ${({ w }) => heightRotated(w)}px;
+  margin-top: 10px;
   padding-top: ${({ w }) => (heightRotated(w) - w) / 2}px;
 `;
 const BarWrapRotated = styled.div`

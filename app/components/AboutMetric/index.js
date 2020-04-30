@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Heading, Box, AccordionPanel, Accordion } from 'grommet';
+import { Heading, Box, AccordionPanel, Accordion, Text } from 'grommet';
 import { Down, Up } from 'grommet-icons';
 import styled from 'styled-components';
 
@@ -70,9 +70,11 @@ function AboutMetric({
             }
           >
             <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
-              <FormattedMessage
-                {...rootMessages[`${metricType}-about`][metric.key]}
-              />
+              <Text>
+                <FormattedMessage
+                  {...rootMessages[`${metricType}-about`][metric.key]}
+                />
+              </Text>
             </Box>
           </AccordionPanel>
         )}

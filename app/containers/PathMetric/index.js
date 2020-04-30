@@ -58,6 +58,7 @@ export function PathMetric({
   const metricTitle = intl.formatMessage(
     rootMessages[metric.metricType][metric.key],
   );
+  let metricTitleShort;
   let dimensionCode = metricCode;
 
   const ancestors = [{ key: 'all' }];
@@ -67,6 +68,9 @@ export function PathMetric({
     imageSrc = `${IMAGE_PATH}/dimension_${metricCode}.png`;
   }
   if (metric.metricType === 'rights') {
+    metricTitleShort = intl.formatMessage(
+      rootMessages[`${metric.metricType}-xshort`][metric.key],
+    );
     const right = RIGHTS.find(r => r.key === metricCode);
     imageSrc = right.icon;
     ancestors.push({
@@ -121,39 +125,47 @@ export function PathMetric({
             <ContentContainer direction="column" header>
               <ContentMaxWidth
                 header
-                height={`${theme.sizes.top.height}px`}
+                height={
+                  isMinSize(size, 'large')
+                    ? `${theme.sizes.top.height}px`
+                    : 'auto'
+                }
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
-                  <Breadcrumb
-                    onItemClick={key => onMetricClick(key)}
-                    breadcrumb
-                    items={ancestors.map(ancestor => ({
-                      key: ancestor.key,
-                      label: intl.formatMessage(
-                        ancestor.key === 'all'
-                          ? rootMessages.labels.allMetrics
-                          : rootMessages[ancestor.type][ancestor.key],
-                      ),
-                    }))}
-                  />
-                  <PageTitle>{metricTitle}</PageTitle>
+                  <div>
+                    <Breadcrumb
+                      onItemClick={key => onMetricClick(key)}
+                      breadcrumb
+                      items={ancestors.map(ancestor => ({
+                        key: ancestor.key,
+                        label: intl.formatMessage(
+                          ancestor.key === 'all'
+                            ? rootMessages.labels.allMetrics
+                            : rootMessages[ancestor.type][ancestor.key],
+                        ),
+                      }))}
+                    />
+                  </div>
+                  <div>
+                    <PageTitle>{metricTitle}</PageTitle>
+                  </div>
                   {messages[metric.metricType][metricCode].header.a && (
-                    <Paragraph>
+                    <Paragraph size={size === 'small' ? 'small' : 'medium'}>
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.a}
                       />
                     </Paragraph>
                   )}
                   {messages[metric.metricType][metricCode].header.b && (
-                    <Paragraph>
+                    <Paragraph size={size === 'small' ? 'small' : 'medium'}>
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.b}
                       />
                     </Paragraph>
                   )}
                   {messages[metric.metricType][metricCode].link && (
-                    <Paragraph>
+                    <Paragraph size={size === 'small' ? 'small' : 'medium'}>
                       <ButtonTextIcon
                         label={intl.formatMessage(
                           messages[metric.metricType][metricCode].link,
@@ -181,6 +193,7 @@ export function PathMetric({
               {
                 key: 'ChartContainerMetric',
                 title: metricTitle,
+                titleMobile: metricTitleShort,
                 content: props => (
                   <ChartContainerMetric
                     {...props}
@@ -205,7 +218,10 @@ export function PathMetric({
                     ancestors={ancestors}
                     showFAQs
                     showRelated
-                    showSources
+                    showSources={
+                      metric.type === 'esr' &&
+                      metric.metricType !== 'indicators'
+                    }
                   />
                 ),
               },

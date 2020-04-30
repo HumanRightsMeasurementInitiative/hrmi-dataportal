@@ -38,6 +38,14 @@ const Button = styled(ButtonPlain)`
   }
   background: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  &:active {
+    background: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  &:focus {
+    background: white;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  }
   &:hover {
     text-decoration: underline;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
