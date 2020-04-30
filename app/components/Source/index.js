@@ -8,7 +8,7 @@ import Hint from 'styled/Hint';
 import messages from './messages';
 
 const Styled = styled(Hint)`
-  font-size: 13px;
+  font-size: 12px;
   line-height: 16px;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {

@@ -20,19 +20,23 @@ import AnnotateRefInner from './styled/AnnotateRefInner';
 
 function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
   const tooltip = type !== 'htr';
-  const labelOrIcon = type === 'diamond' ? 'icon' : 'label';
+  const iconOnly = type === 'diamond' || type === 'icon';
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <AnnotateRef type={type} offsetTop={hasBetter}>
-          {type !== 'diamond' && (
+        <AnnotateRef
+          type={iconOnly ? 'icon' : type}
+          isRotated={type==='diamond'}
+          offsetTop={hasBetter}
+        >
+          {!iconOnly && (
             <AnnotateRefLine type={type} offsetTop={hasBetter} />
           )}
           <AnnotateRefInner type={type} offsetTop={hasBetter}>
             {tooltip && (
               <Tooltip
-                textAnchor={labelOrIcon === 'label' && (
+                textAnchor={!iconOnly && (
                   <Text
                     size="xsmall"
                     color="highlight2"
@@ -58,7 +62,7 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
                 component={
                   <InfoBenchmark
                     size="xsmall"
-                    singleBenchmark={type === 'diamond'}
+                    singleBenchmark={iconOnly}
                     benchmarkKey={benchmarkKey}
                   />
                 }

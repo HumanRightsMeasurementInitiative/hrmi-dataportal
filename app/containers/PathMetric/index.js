@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
+import { ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
 import { withTheme } from 'styled-components';
 
 import { navigate, setAsideLayer } from 'containers/App/actions';
@@ -120,7 +120,7 @@ export function PathMetric({
           {metric.type === 'esr' && metric.metricType !== 'indicators' && (
             <HINote hasAside={isMinSize(size, 'large')} settingHint />
           )}
-          <Box style={{ position: 'relative' }}>
+          <div style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>
               <ContentMaxWidth
@@ -186,7 +186,7 @@ export function PathMetric({
                 )}
               </ContentMaxWidth>
             </ContentContainer>
-          </Box>
+          </div>
           <TabContainer
             size={size}
             tabs={[
