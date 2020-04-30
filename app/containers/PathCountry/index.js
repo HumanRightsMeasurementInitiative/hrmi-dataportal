@@ -236,6 +236,7 @@ export function PathCountry({
       onSetAsideLayer({
         type: 'aboutMetric',
         background: `${dimension || code}Active`,
+        showSources: dimension === 'esr',
         key: code,
         code,
         countryScoreMsg: getScoreMsg(
