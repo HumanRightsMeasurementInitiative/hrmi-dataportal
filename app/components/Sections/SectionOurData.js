@@ -83,14 +83,18 @@ export function SectionOurData({ nav, intl }) {
                   <FormattedMessage {...messages.ourData.para2} />
                 </Paragraph>
               )}
-              <Box direction="row">
+              <Box direction={size === 'small' ? 'column' : 'row'}>
                 <ButtonTextIcon
                   onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}
                   label={intl.formatMessage(messages.ourData.downloadLink)}
                   hasIcon
                 />
                 <ButtonTextIcon
-                  style={{ marginLeft: 'auto' }}
+                  style={
+                    size === 'small'
+                      ? { marginTop: '5px' }
+                      : { marginLeft: 'auto' }
+                  }
                   onClick={() => nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)}
                   label={intl.formatMessage(messages.ourData.aboutLink)}
                   hasIcon

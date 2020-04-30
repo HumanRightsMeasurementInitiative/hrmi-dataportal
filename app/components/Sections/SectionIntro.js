@@ -36,18 +36,26 @@ const Image = styled.img`
 
 const PageTitle = styled(Heading)`
   font-weight: normal;
-  font-size: ${({ theme }) => theme.text.xxxlarge.size};
-  line-height: ${({ theme }) => theme.text.xxxlarge.height};
+  font-size: 40px;
+  line-height: 60px;
   margin-top: 0;
   margin-bottom: 0;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    font-size: ${({ theme }) => theme.text.xxxlarge.size};
+    line-height: ${({ theme }) => theme.text.xxxlarge.height};
+  }
 `;
 
 const Claim = styled(Heading)`
   font-weight: bold;
-  font-size: ${({ theme }) => theme.text.xxlarge.size};
-  line-height: ${({ theme }) => theme.text.xxlarge.height};
+  font-size: ${({ theme }) => theme.text.xlarge.size};
+  line-height: ${({ theme }) => theme.text.xlarge.height};
   margin-top: 0;
   margin-bottom: ${({ theme }) => theme.global.edgeSize.medium};
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    font-size: ${({ theme }) => theme.text.xxlarge.size};
+    line-height: ${({ theme }) => theme.text.xxlarge.height};
+  }
 `;
 
 const getRightPad = size => {
@@ -67,7 +75,12 @@ export function SectionIntro({ theme }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer pad={{ top: 'xxlarge', bottom: 'xxlarge' }}>
+        <SectionContainer
+          pad={{
+            top: 'xxlarge',
+            bottom: size === 'small' ? 'large' : 'xxlarge',
+          }}
+        >
           <Box
             align="start"
             direction="row"
@@ -103,7 +116,10 @@ export function SectionIntro({ theme }) {
               <GraphicWrap
                 style={{ top: 0, left: 0, transform: 'translate(-55%, -45%)' }}
               >
-                <GraphicCircle color="graphicRed" size="100px" />
+                <GraphicCircle
+                  color="graphicRed"
+                  size={size === 'small' ? '75px' : '100px'}
+                />
               </GraphicWrap>
               <div style={{ position: 'relative' }}>
                 <PageTitle>
@@ -112,11 +128,19 @@ export function SectionIntro({ theme }) {
                 <Claim>
                   <FormattedMessage {...rootMessages.app.claim} />
                 </Claim>
-                <Paragraph size="xlarge" margin={{ bottom: 'xlarge' }}>
+                <Paragraph
+                  size={size === 'small' ? 'large' : 'xlarge'}
+                  margin={{ bottom: size === 'small' ? 'medium' : 'xlarge' }}
+                >
                   <FormattedMessage {...messages.intro} />
                 </Paragraph>
                 <SearchWrapper>
-                  <Search stretch size="large" example focus />
+                  <Search
+                    stretch
+                    size={size === 'small' ? 'medium' : 'large'}
+                    example
+                    focus
+                  />
                 </SearchWrapper>
               </div>
             </Box>

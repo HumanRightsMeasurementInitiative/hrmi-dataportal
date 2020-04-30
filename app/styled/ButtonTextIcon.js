@@ -43,7 +43,7 @@ export function ButtonTextIcon({
       }
       plain
       reverse={reverse}
-      gap={gap || size !== 'medium' ? 'hair' : '0'}
+      gap={gap || (size !== 'medium' ? 'hair' : '0')}
       alignSelf="start"
       size={size}
       {...rest}
