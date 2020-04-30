@@ -89,7 +89,7 @@ export function LayerAside({ onClose, theme, layer }) {
                 metricCode={layer.code}
                 showTitle
                 showMetricLink
-                showSources
+                showSources={layer.showSources}
                 countryScoreMsg={layer.countryScoreMsg}
                 inverse
               />
