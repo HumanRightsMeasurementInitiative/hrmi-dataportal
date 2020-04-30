@@ -39,7 +39,7 @@ import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
 import Source from 'components/Source';
 
-import ButtonText from 'styled/ButtonText';
+import ButtonTextIcon from 'styled/ButtonTextIcon';
 import Hint from 'styled/Hint';
 
 import { getRightsScoresForDimension } from 'utils/scores';
@@ -230,9 +230,11 @@ export function ChartContainerCountrySnapshot({
           </Hint>
         </Paragraph>
         <Paragraph>
-          <ButtonText onClick={() => goToTab('report-esr')}>
-            Explore details
-          </ButtonText>
+          <ButtonTextIcon
+            onClick={() => goToTab('report-esr')}
+            label={<FormattedMessage {...messages.exploreDetails} />}
+            hasIcon
+          />
         </Paragraph>
       </Box>
       <Box margin={{ bottom: 'medium' }}>
@@ -264,9 +266,11 @@ export function ChartContainerCountrySnapshot({
               />
             </Paragraph>
             <Paragraph>
-              <ButtonText onClick={() => goToTab('report-physint')}>
-                Explore details
-              </ButtonText>
+              <ButtonTextIcon
+                onClick={() => goToTab('report-physint')}
+                label={<FormattedMessage {...messages.exploreDetails} />}
+                hasIcon
+              />
             </Paragraph>
           </>
         )}
@@ -300,9 +304,11 @@ export function ChartContainerCountrySnapshot({
               />
             </Paragraph>
             <Paragraph>
-              <ButtonText onClick={() => goToTab('report-empowerment')}>
-                <FormattedMessage {...messages.exploreDetails} />
-              </ButtonText>
+              <ButtonTextIcon
+                onClick={() => goToTab('report-empowerment')}
+                label={<FormattedMessage {...messages.exploreDetails} />}
+                hasIcon
+              />
             </Paragraph>
           </>
         )}

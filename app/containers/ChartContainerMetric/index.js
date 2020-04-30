@@ -220,7 +220,7 @@ export function ChartContainerMetric({
   const hasResults =
     dataReady && ((sorted && sorted.length > 0) || (other && other.length > 0));
   return (
-    <>
+    <Box margin={{ bottom: 'xlarge' }}>
       <ChartHeader
         chartId="single-metric"
         tools={{
@@ -311,7 +311,7 @@ export function ChartContainerMetric({
         </Box>
       )}
       {hasResults && <Source />}
-    </>
+    </Box>
   );
 }
 // metric={metric}

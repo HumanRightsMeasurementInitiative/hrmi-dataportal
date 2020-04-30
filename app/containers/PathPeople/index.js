@@ -135,7 +135,7 @@ export function PathPeople({
               style={{ position: 'relative' }}
               height={`${theme.sizes.top.height}px`}
             >
-              {isMinSize(size, 'large') && <AsideBackground />}
+              {isMinSize(size, 'large') && <AsideBackground color="white" />}
               <ContentContainer direction="column" header>
                 <ContentMaxWidth
                   header
@@ -181,7 +181,7 @@ export function PathPeople({
                 </ContentMaxWidth>
               </ContentContainer>
             </Box>
-            <SectionContainer>
+            <SectionContainer background="sectionPeople">
               <ContentMaxWidth column>
                 <Styled>
                   <Top>

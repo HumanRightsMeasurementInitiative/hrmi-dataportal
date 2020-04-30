@@ -35,6 +35,7 @@ import {
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
 
+import Source from 'components/Source';
 import ChartHeader from 'components/ChartHeader';
 import ChartBars from 'components/ChartBars';
 import NarrativeESR from 'components/CountryNarrative/NarrativeESR';
@@ -229,7 +230,7 @@ export function ChartContainerCountryRights({
             standard={standard}
             countryGrammar={countryGrammar}
           />
-          <Box margin={{ bottom: 'large' }}>
+          <Box margin={{ bottom: 'small' }}>
             <ChartBars
               data={[
                 {
@@ -292,6 +293,9 @@ export function ChartContainerCountryRights({
               scoreOnHover={false}
             />
           </Box>
+          <Box margin={{ bottom: 'large' }}>
+            <Source />
+          </Box>
           <NarrativeESR
             dimensionScore={dimension.score}
             country={country}
@@ -346,7 +350,7 @@ export function ChartContainerCountryRights({
               )}
             />
           </Text>
-          <Box margin={{ bottom: 'large' }}>
+          <Box margin={{ bottom: 'medium' }}>
             <ChartBars
               data={[
                 {
@@ -395,6 +399,9 @@ export function ChartContainerCountryRights({
               scoresAside
               scoreOnHover
             />
+          </Box>
+          <Box margin={{ bottom: 'large' }}>
+            <Source />
           </Box>
           <NarrativeCPR
             dimensionKey={dimensionCode}
