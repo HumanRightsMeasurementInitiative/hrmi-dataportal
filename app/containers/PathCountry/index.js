@@ -164,6 +164,7 @@ const getScoreMsg = (
               as="a"
               href={intl.formatMessage(messages.countryScoreExplainer.cprLink.url)}
               target="_blank"
+              inverse
             >
               {intl.formatMessage(messages.countryScoreExplainer.cprLink.anchor)}
             </ButtonText>

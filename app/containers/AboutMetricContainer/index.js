@@ -50,6 +50,7 @@ export function AboutMetricContainer({
   showTitle,
   showSources,
   countryScoreMsg,
+  inverse,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -210,7 +211,7 @@ export function AboutMetricContainer({
       )}
       {countryScoreMsg && (
         <div>
-          <Text>{countryScoreMsg}</Text>
+          <Text color={inverse ? 'white' : 'dark'}>{countryScoreMsg}</Text>
         </div>
       )}
       {showMetricLink && (
