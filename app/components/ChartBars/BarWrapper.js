@@ -54,7 +54,7 @@ export function BarWrapper({
           {(hover || score.active) && <Active color={`${score.color}Active`} />}
           <Box key={score.key} direction="row" align="center">
             <LabelWrap
-              width={isMinSize(size, 'medium') ? '180px' : '160px'}
+              width={isMinSize(size, 'medium') ? '180px' : '100px'}
               align="start"
               flex={{ shrink: 0 }}
               pad={{ right: 'small' }}

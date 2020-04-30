@@ -259,13 +259,19 @@ export function PathCountry({
           </Helmet>
           <Box
             style={{ position: 'relative' }}
-            height={`${theme.sizes.top.height}px`}
+            height={
+              isMinSize(size, 'large') ? `${theme.sizes.top.height}px` : 'auto'
+            }
           >
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>
               <ContentMaxWidth
                 header
-                height={`${theme.sizes.top.height}px`}
+                height={
+                  isMinSize(size, 'large')
+                    ? `${theme.sizes.top.height}px`
+                    : 'auto'
+                }
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
@@ -282,13 +288,13 @@ export function PathCountry({
                     ]}
                   />
                   <PageTitle>{countryTitle}</PageTitle>
-                  <Paragraph>
+                  <Paragraph size={size === 'small' ? 'small' : 'medium'}>
                     <FormattedMessage
                       {...messages.header.a}
                       values={messageValues}
                     />
                   </Paragraph>
-                  <Paragraph>
+                  <Paragraph size={size === 'small' ? 'small' : 'medium'}>
                     <FormattedMessage
                       {...messages.header.b}
                       values={messageValues}

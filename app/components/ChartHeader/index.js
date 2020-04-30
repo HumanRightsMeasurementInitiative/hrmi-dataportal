@@ -20,10 +20,17 @@ import { isMinSize } from 'utils/responsive';
 import messages from './messages';
 
 const Styled = styled.div`
-  margin-top: ${({ top }) => (top ? 20 : 60)}px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    margin-top: ${({ top }) => (top ? 20 : 30)}px;
+    margin-bottom: 20px;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    margin-top: ${({ top }) => (top ? 20 : 60)}px;
+  }
 `;
-const Top = styled.div`
+const Top = styled(Box)`
   position: relative;
 `;
 
@@ -57,8 +64,12 @@ export function ChartHeader({
     <ResponsiveContext.Consumer>
       {size => (
         <Styled top={top}>
-          <Top>
-            <Heading level={2} margin={{ bottom: 'xsmall', top: '0' }}>
+          <Top direction="row" align="center">
+            <Heading
+              level={size === 'small' ? 5 : 2}
+              responsive={false}
+              margin={{ vertical: 'xsmall' }}
+            >
               {chartName}
             </Heading>
             {tools && (
@@ -83,14 +94,24 @@ export function ChartHeader({
           </Top>
           {(filter || sort) && (
             <Box
-              direction="row"
+              direction={size === 'small' ? 'column' : 'row'}
               justify="between"
               align={isMinSize(size, 'medium') ? 'center' : 'start'}
               margin={{
                 bottom: isMinSize(size, 'medium') ? '0' : 'small',
-                top: isMinSize(size, 'medium') ? 'medium' : '0',
+                top: isMinSize(size, 'medium') ? 'small' : '0',
               }}
             >
+              {sort && size === 'small' && (
+                <ChartSettingSort
+                  sort={sort.sort}
+                  options={sort.options}
+                  order={sort.order}
+                  onSortSelect={sort.onSortSelect}
+                  onOrderToggle={sort.onOrderToggle}
+                  hasWhiteBG={hasWhiteBG}
+                />
+              )}
               {filter && (
                 <ChartSettingFilters
                   regionFilterValue={filter.regionFilterValue}
@@ -105,7 +126,7 @@ export function ChartHeader({
                   hasWhiteBG={hasWhiteBG}
                 />
               )}
-              {sort && (
+              {sort && size !== 'small' && (
                 <ChartSettingSort
                   sort={sort.sort}
                   options={sort.options}

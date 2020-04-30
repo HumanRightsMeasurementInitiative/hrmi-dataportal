@@ -8,10 +8,10 @@ import { truncateText } from 'utils/string';
 import ButtonPrimary from 'styled/ButtonPrimary';
 
 const StyledButton = styled(ButtonPrimary)`
-  display: block;
+  display: inline-block;
   margin-bottom: ${({ theme }) => theme.global.edgeSize.xxsmall};
+  margin-right: ${({ theme }) => theme.global.edgeSize.xxsmall};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    display: inline-block;
     margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
   }
 `;

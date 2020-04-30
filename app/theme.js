@@ -249,8 +249,8 @@ const theme = {
     level: {
       1: {
         small: {
-          size: '24px',
-          height: '28px',
+          size: '26px',
+          height: '30px',
         },
         medium: {
           size: '30px',

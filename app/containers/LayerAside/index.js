@@ -24,6 +24,7 @@ import ButtonIcon from 'styled/ButtonIcon';
 
 import {
   isMaxSize,
+  isMinSize,
   getWindowDimensions,
   getFloatingAsideWidth,
 } from 'utils/responsive';
@@ -56,8 +57,9 @@ export function LayerAside({ onClose, theme, layer }) {
           onEsc={() => onClose()}
           onClickOutside={() => onClose()}
           modal={isMaxSize(size, 'medium')}
+          animation={isMinSize(size, 'large')}
           position="right"
-          full="vertical"
+          full={isMaxSize(size, 'medium') || 'vertical'}
         >
           <Box
             elevation="large"
