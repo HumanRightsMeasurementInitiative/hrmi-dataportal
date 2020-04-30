@@ -479,7 +479,7 @@ export function Header({
                         size={size}
                       />
                       {showGroups && size === 'small' && (
-                        <NavMetric
+                        <NavGroups
                           onClose={() => setShowGroups(false)}
                           size={size}
                         />
