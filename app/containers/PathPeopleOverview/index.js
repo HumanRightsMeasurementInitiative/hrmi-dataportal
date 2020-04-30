@@ -104,7 +104,11 @@ export function PathPeopleOverview({
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header
-              height={`${theme.sizes.top.height}px`}
+              height={
+                isMinSize(size, 'large')
+                  ? `${theme.sizes.top.height}px`
+                  : 'auto'
+              }
               hasAside={isMinSize(size, 'large')}
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>
@@ -114,7 +118,7 @@ export function PathPeopleOverview({
                     values={{ no: AT_RISK_GROUPS.length }}
                   />
                 </PageTitle>
-                <Paragraph size="large">
+                <Paragraph size={size === 'small' ? 'medium' : 'large'}>
                   <FormattedMessage
                     {...messages.header}
                     values={{ no: countryNo }}
