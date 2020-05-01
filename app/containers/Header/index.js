@@ -135,7 +135,8 @@ const TitleWrap = styled(Box)`
 `;
 
 const MenuList = styled(Box)`
-  padding: ${({ theme }) => theme.global.edgeSize.medium} 0;
+  padding: ${({ theme }) => theme.global.edgeSize.small} 0;
+  min-width: 280px;
 `;
 
 const MenuGroup = styled(Box)`
@@ -176,8 +177,8 @@ const ButtonNavSecondary = styled(Button)`
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 6px;
+    margin-right: 6px;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     margin-left: 20px;
@@ -186,43 +187,46 @@ const ButtonNavSecondary = styled(Button)`
 `;
 
 const ButtonSecondary = React.forwardRef(
-  ({ active, open, onClick, label, size }, ref) => (
-    <ButtonNavSecondary
-      size={size}
-      plain
-      active={active}
-      open={open}
-      onClick={onClick}
-      justify="between"
-      align="center"
-      ref={ref}
-      label={
-        <Box
-          direction="row"
-          align="center"
-          justify="between"
-          fill
-          gap={size === 'small' ? 'xxsmall' : 'xsmall'}
-        >
-          <Text size={size === 'small' ? 'medium' : 'large'}>
-            <FormattedMessage {...rootMessages.labels[label]} />
-          </Text>
-          {open && (
-            <FormUp
-              size={size === 'small' ? 'xlarge' : 'xxlarge'}
-              style={{ stroke: 'currentColor', marginRight: '-3px' }}
-            />
-          )}
-          {!open && (
-            <FormDown
-              size={size === 'small' ? 'xlarge' : 'xxlarge'}
-              style={{ stroke: 'currentColor', marginRight: '-3px' }}
-            />
-          )}
-        </Box>
-      }
-    />
-  ),
+  ({ active, open, onClick, label, size }, ref) => {
+    let gap = 'hair';
+    if (size === 'medium') {
+      gap = 'xxsmall';
+    }
+    if (isMinSize(size, 'large')) {
+      gap = 'small';
+    }
+    return (
+      <ButtonNavSecondary
+        size={size}
+        plain
+        active={active}
+        open={open}
+        onClick={onClick}
+        justify="between"
+        align="center"
+        ref={ref}
+        label={
+          <Box direction="row" align="center" justify="between" fill gap={gap}>
+            <Text size={size === 'small' ? 'medium' : 'large'}>
+              <FormattedMessage {...rootMessages.labels[label]} />
+            </Text>
+            {open && (
+              <FormUp
+                size={size === 'small' ? 'xlarge' : 'xxlarge'}
+                style={{ stroke: 'currentColor', marginRight: '-3px' }}
+              />
+            )}
+            {!open && (
+              <FormDown
+                size={size === 'small' ? 'xlarge' : 'xxlarge'}
+                style={{ stroke: 'currentColor', marginRight: '-3px' }}
+              />
+            )}
+          </Box>
+        }
+      />
+    );
+  },
 );
 
 ButtonSecondary.propTypes = {
@@ -233,7 +237,7 @@ ButtonSecondary.propTypes = {
   size: PropTypes.string,
 };
 
-const renderPages = (match, nav, setShowMenu) =>
+const renderPages = (match, nav, setShowMenu, align) =>
   PAGES &&
   Object.values(PAGES)
     .filter(page => page.primary)
@@ -242,6 +246,7 @@ const renderPages = (match, nav, setShowMenu) =>
         key={page.key}
         active={page.key === match}
         disabled={page.key === match}
+        align={align}
         onClick={() => {
           if (setShowMenu) setShowMenu(false);
           nav(`${PATHS.PAGE}/${page.key}`);
@@ -338,26 +343,26 @@ export function Header({
                     {showMenu && <Close color="dark" />}
                   </ToggleMenu>
                 )}
-                {showMenu && size === 'small' && (
+                {showMenu && isMaxSize(size, 'medium') && (
                   <Layer
-                    full="horizontal"
+                    full={size === 'small' ? 'horizontal' : false}
                     margin={{ top: '50px' }}
                     onClickOutside={() => setShowMenu(false)}
                     responsive={false}
-                    position="top"
+                    position={size === 'small' ? 'top' : 'top-right'}
                     modal={false}
                     animate={false}
                   >
                     <MenuList elevation="large">
                       <MenuGroup>
-                        {renderPages(match, nav, setShowMenu)}
+                        {renderPages(match, nav, setShowMenu, 'left')}
                       </MenuGroup>
                     </MenuList>
                   </Layer>
                 )}
               </Box>
               <Box fill>
-                {isMinSize(size, 'medium') && (
+                {isMinSize(size, 'large') && (
                   <NavBarTop
                     theme={theme}
                     direction="row"
@@ -368,6 +373,28 @@ export function Header({
                     {appLocales.length > 1 && isMinSize(size, 'medium') && (
                       <LocaleToggle />
                     )}
+                  </NavBarTop>
+                )}
+                {size === 'medium' && (
+                  <NavBarTop
+                    theme={theme}
+                    direction="row"
+                    justify="end"
+                    size={size}
+                  >
+                    {appLocales.length > 1 && (
+                      <Box margin={{ left: 'auto' }}>
+                        <LocaleToggle />
+                      </Box>
+                    )}
+                    <ToggleMenu
+                      plain
+                      onClick={() => setShowMenu(!showMenu)}
+                      ref={menuRef}
+                    >
+                      {!showMenu && <Menu color="dark" />}
+                      {showMenu && <Close color="dark" />}
+                    </ToggleMenu>
                   </NavBarTop>
                 )}
                 <NavBarBottom theme={theme} size={size}>
@@ -452,7 +479,7 @@ export function Header({
                         size={size}
                       />
                       {showGroups && size === 'small' && (
-                        <NavMetric
+                        <NavGroups
                           onClose={() => setShowGroups(false)}
                           size={size}
                         />
@@ -471,7 +498,7 @@ export function Header({
                       )}
                     </>
                   )}
-                  {isMinSize(size, 'medium') && (
+                  {isMinSize(size, 'large') && (
                     <SearchWrap justify="center">
                       <Search
                         expand={showSearch}

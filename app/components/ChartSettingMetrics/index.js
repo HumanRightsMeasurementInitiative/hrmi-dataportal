@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { Box, Button, Drop, Text } from 'grommet';
+import { Box, Button, Drop, Text, ResponsiveContext } from 'grommet';
 import { FormDown, FormUp } from 'grommet-icons';
 
 import getMetricDetails from 'utils/metric-details';
+import { isMinSize } from 'utils/responsive';
+import { truncateText } from 'utils/string';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -35,6 +37,7 @@ function ChartSettingMetrics({
   countryMessageValues,
   noOfScores,
   standard,
+  intl,
 }) {
   const [activeMetric, setActiveMetric] = useState(activeDefault);
   const [open, setOpen] = useState(false);
@@ -64,62 +67,72 @@ function ChartSettingMetrics({
   const details = getMetricDetails(activeMetric);
 
   const metricSelector = (
-    <Box margin={{ bottom: 'small' }}>
-      <Text size="medium">
-        <FormattedMessage
-          {...messages[chartId]}
-          values={{
-            no: noOfScores,
-            hasMany: noOfScores !== 1,
-            ...countryMessageValues,
-            dropdown: (
-              <ButtonDropdown
-                plain
-                first
-                onClick={() => setOpen(!open)}
-                label={
-                  <span>
-                    <Text style={{ whiteSpace: 'nowrap', paddingRight: '5px' }}>
-                      <FormattedMessage
-                        {...rootMessages[details.metricType][activeMetric]}
-                      />
-                    </Text>
-                    {open && <FormUp size="large" />}
-                    {!open && <FormDown size="large" />}
-                  </span>
-                }
-                ref={dropButton}
-              />
-            ),
-          }}
-        />
-        {open && (
-          <Drop
-            align={{ top: 'bottom', left: 'left' }}
-            target={dropButton.current}
-            onClickOutside={() => setOpen(false)}
-            overflow="hidden"
-          >
-            <MetricSelect
-              onClose={() => setOpen(false)}
-              metrics={metrics}
-              activeMetric={activeMetric}
-              setActiveMetric={code => {
-                setActiveMetric(code);
-                setOpen(false);
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box>
+          <Text size={isMinSize(size, 'large') ? 'medium' : 'small'}>
+            <FormattedMessage
+              {...messages[chartId]}
+              values={{
+                no: noOfScores,
+                hasMany: noOfScores !== 1,
+                ...countryMessageValues,
+                dropdown: (
+                  <ButtonDropdown
+                    plain
+                    first
+                    onClick={() => setOpen(!open)}
+                    label={
+                      <span>
+                        <Text
+                          style={{ whiteSpace: 'nowrap', paddingRight: '5px' }}
+                          size={isMinSize(size, 'large') ? 'medium' : 'small'}
+                        >
+                          {truncateText(
+                            intl.formatMessage(
+                              rootMessages[details.metricType][activeMetric],
+                            ),
+                            size === 'small' ? 30 : 60,
+                          )}
+                        </Text>
+                        {open && <FormUp size="large" />}
+                        {!open && <FormDown size="large" />}
+                      </span>
+                    }
+                    ref={dropButton}
+                  />
+                ),
               }}
             />
-          </Drop>
-        )}
-      </Text>
-    </Box>
+            {open && (
+              <Drop
+                align={{ top: 'bottom', left: 'left' }}
+                target={dropButton.current}
+                onClickOutside={() => setOpen(false)}
+                overflow="hidden"
+              >
+                <MetricSelect
+                  onClose={() => setOpen(false)}
+                  metrics={metrics}
+                  activeMetric={activeMetric}
+                  setActiveMetric={code => {
+                    setActiveMetric(code);
+                    setOpen(false);
+                  }}
+                />
+              </Drop>
+            )}
+          </Text>
+        </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 
   return (
-    <Box margin={{ bottom: 'xlarge' }}>
+    <div>
       {header && header({ metricCode: activeMetric })}
       {chart && chart({ metricCode: activeMetric, metricSelector })}
-    </Box>
+    </div>
   );
 }
 ChartSettingMetrics.propTypes = {
@@ -131,6 +144,7 @@ ChartSettingMetrics.propTypes = {
   countryMessageValues: PropTypes.object,
   noOfScores: PropTypes.number,
   standard: PropTypes.string,
+  intl: intlShape.isRequired,
 };
 
-export default ChartSettingMetrics;
+export default injectIntl(ChartSettingMetrics);

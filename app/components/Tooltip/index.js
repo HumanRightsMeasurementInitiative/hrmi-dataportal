@@ -19,17 +19,18 @@ const StyledDrop = styled(Drop)`
     top: 100%;
     width: 0;
     height: 0;
-    border-top: 8px solid ${props => props.theme.global.colors['dark-1']};
+    border-top: 8px solid
+      ${({ theme, inverse }) => theme.global.colors[inverse ? 'white' : 'dark']};
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     margin: 0 auto;
   }
 `;
 
-const renderContent = (maxWidth, component, text, onClose, inModal) => (
+const Content = ({ maxWidth, component, text, onClose, inModal, inverse }) => (
   <Box
     pad={{ vertical: 'small', horizontal: 'small' }}
-    background="dark-1"
+    background={inverse ? 'white' : 'dark'}
     style={{ maxWidth }}
     onClick={evt => {
       if (evt) evt.preventDefault();
@@ -56,6 +57,15 @@ const renderContent = (maxWidth, component, text, onClose, inModal) => (
   </Box>
 );
 
+Content.propTypes = {
+  maxWidth: PropTypes.string,
+  component: PropTypes.node,
+  text: PropTypes.string,
+  onClose: PropTypes.func,
+  inModal: PropTypes.bool,
+  inverse: PropTypes.bool,
+};
+
 function Tooltip({
   text = 'I am a tooltip',
   iconSize = 'large',
@@ -66,6 +76,7 @@ function Tooltip({
   margin,
   large,
   textAnchor,
+  inverse,
 }) {
   const [over, setOver] = useState(false);
   const [open, setOpen] = useState(false);
@@ -86,7 +97,7 @@ function Tooltip({
                 textAnchor
                   ? null
                   : icon || (
-                    <CircleInformation size={iconSize} color="highlight2" />
+                    <CircleInformation size={iconSize} color={inverse ? 'white' : 'dark'} />
                   )
               }
               ref={button}
@@ -113,8 +124,14 @@ function Tooltip({
                 elevation="small"
                 target={button.current}
                 onClickOutside={() => setOpen(false)}
+                inverse={inverse}
               >
-                {renderContent(mWidth, component, text)}
+                <Content
+                  maxWidth={mWidth}
+                  component={component}
+                  text={text}
+                  inverse={inverse}
+                />
               </StyledDrop>
             )}
             {(over || open) && openModal && (
@@ -126,13 +143,14 @@ function Tooltip({
                 full="horizontal"
                 animate={false}
               >
-                {renderContent(
-                  '100%',
-                  component,
-                  text,
-                  () => setOpen(false),
-                  true,
-                )}
+                <Content
+                  maxWidth="100%"
+                  component={component}
+                  text={text}
+                  onClose={() => setOpen(false)}
+                  inverse={inverse}
+                  inModal
+                />
               </Layer>
             )}
           </>
@@ -151,6 +169,7 @@ Tooltip.propTypes = {
   maxWidth: PropTypes.string,
   insideButton: PropTypes.bool,
   large: PropTypes.bool,
+  inverse: PropTypes.bool,
   margin: PropTypes.object,
 };
 

@@ -54,7 +54,11 @@ export function PathMetricOverview({
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header
-              height={`${theme.sizes.top.height}px`}
+              height={
+                isMinSize(size, 'large')
+                  ? `${theme.sizes.top.height}px`
+                  : 'auto'
+              }
               hasAside={isMinSize(size, 'large')}
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>
@@ -64,7 +68,7 @@ export function PathMetricOverview({
                     values={{ no: RIGHTS.length }}
                   />
                 </PageTitle>
-                <Paragraph size="large">
+                <Paragraph size={size === 'small' ? 'medium' : 'large'}>
                   <FormattedMessage
                     {...messages.header}
                     values={{
@@ -72,7 +76,7 @@ export function PathMetricOverview({
                       esrLink: (
                         <ButtonTextIcon
                           color="esrDark"
-                          size="large"
+                          size={size === 'small' ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.esr,
@@ -83,7 +87,7 @@ export function PathMetricOverview({
                       physintLink: (
                         <ButtonTextIcon
                           color="physintDark"
-                          size="large"
+                          size={size === 'small' ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.physint,
@@ -94,7 +98,7 @@ export function PathMetricOverview({
                       empowerLink: (
                         <ButtonTextIcon
                           color="empowermentDark"
-                          size="large"
+                          size={size === 'small' ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.empowerment,
@@ -117,6 +121,7 @@ export function PathMetricOverview({
             const rights = RIGHTS.filter(r => r.dimension === d.key);
             return (
               <SectionRights
+                hasLongTitle
                 key={d.key}
                 rights={rights}
                 onSelectRight={onSelectMetric}

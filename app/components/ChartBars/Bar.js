@@ -11,7 +11,7 @@ import styled, { css } from 'styled-components';
 import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
 
 import NoDataHint from './NoDataHint';
-import Wrapper from './styled/BarWrapper';
+import Wrapper from './styled/BarWrap';
 import MinLabel from './styled/MinLabel';
 import MaxLabelOriginal from './styled/MaxLabel';
 import WrapTooltip from './styled/WrapTooltip';

@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, Button, TextInput } from 'grommet';
-import { Close, Search, FormClose } from 'grommet-icons';
+import { Box, Button } from 'grommet';
+import { Close, Search } from 'grommet-icons';
 import { isMinSize } from 'utils/responsive';
 
 import ButtonIcon from 'styled/ButtonIcon';
+
+import TextInput from './TextInput';
+
 const StyledButtonIcon = styled(ButtonIcon)`
   background: transparent;
   &:hover {
@@ -22,15 +25,6 @@ const Top = styled.div`
   background-color: ${({ theme }) => theme.global.colors.dark};
   width: 100%;
   height: ${({ theme }) => theme.navTop};
-`;
-
-const StyledTextInput = styled(TextInput)`
-  font-weight: 600;
-  &::placeholder {
-    color: ${({ theme }) => theme.global.colors.dark};
-    font-weight: 400;
-    opacity: 0.8;
-  }
 `;
 
 class NavTop extends React.Component {
@@ -70,11 +64,11 @@ class NavTop extends React.Component {
             direction="row"
             align="center"
             round="xlarge"
-            height="32px"
+            height={size === 'small' ? '26px' : '32px'}
             pad={{ horizontal: 'ms', vertical: 'xsmall' }}
             fill="horizontal"
           >
-            <StyledTextInput
+            <TextInput
               plain
               value={search}
               onChange={evt => evt && evt.target && onSearch(evt.target.value)}
@@ -82,14 +76,25 @@ class NavTop extends React.Component {
               ref={isMinSize(size, 'medium') && this.textInput}
             />
             {search && search.length > 0 && (
-              <Button onClick={() => onSearch('')} pad="xsmall">
-                <FormClose color="dark" />
-              </Button>
+              <Button
+                onClick={() => onSearch('')}
+                icon={
+                  <Close
+                    color="dark"
+                    size={size === 'small' ? 'small' : 'medium'}
+                  />
+                }
+                style={{ padding: '0' }}
+              />
             )}
             {(!search || search.length === 0) && <Search color="dark" />}
           </Box>
           {size === 'small' && (
-            <Box pad={{ vertical: 'xsmall' }} flex={{ shrink: 0 }}>
+            <Box
+              pad={{ vertical: 'xsmall' }}
+              flex={{ shrink: 0 }}
+              margin={{ left: 'medium' }}
+            >
               <StyledButtonIcon onClick={() => onClose()}>
                 <Close color="white" size="large" />
               </StyledButtonIcon>

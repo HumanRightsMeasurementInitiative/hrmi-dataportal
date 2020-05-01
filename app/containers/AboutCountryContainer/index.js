@@ -166,6 +166,7 @@ function AboutCountryContainer({
                   <Tooltip
                     iconSize="medium"
                     text={intl.formatMessage(messages.gdpTooltip)}
+                    inverse={inverse}
                   />
                 </div>
               </Box>
@@ -188,6 +189,7 @@ function AboutCountryContainer({
                   <Tooltip
                     iconSize="medium"
                     text={intl.formatMessage(messages.gdpTooltipPPP)}
+                    inverse={inverse}
                   />
                 </div>
               </Box>
