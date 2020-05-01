@@ -389,7 +389,7 @@
   "hrmi.settings.standard.hi": "Revenus élevés",
   "hrmi.settings.standard.hiInfo": "Utilise des indicateurs qui sont disponibles pour un nombre plus restreint de pays et/ou qui reflètent mieux les problématiques relatives aux droits humains dans les pays à revenus élevés.",
   "hrmi.settings.benchmark.name": "Niveau de performance",
-  "hrmi.settings.benchmark.nameShort": "Niveau",
+  "hrmi.settings.benchmark.nameShort": " ",
   "hrmi.settings.benchmark.intro": "Concernant le droit à une vie de qualité, l'HRMI évalue les pays selon deux niveaux différents.",
   "hrmi.settings.benchmark.introSingle": "Concernant le droit à une vie de qualité, l'HRMI évalue les pays selon deux niveaux différents. Le niveau sélectionné est :",
   "hrmi.settings.benchmark.adjusted": "Adapté en fonction des revenus ",
