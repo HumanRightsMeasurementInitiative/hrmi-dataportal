@@ -389,7 +389,7 @@
   "hrmi.settings.standard.hi": "Ingresos altos",
   "hrmi.settings.standard.hiInfo": "Utiliza indicadores que están disponibles para menos países, y/o mejor reflejan los desafíos en cuanto a derechos humanos que enfrentan los países de ingresos altos.",
   "hrmi.settings.benchmark.name": "Indicador de desempeño",
-  "hrmi.settings.benchmark.nameShort": "Indicador",
+  "hrmi.settings.benchmark.nameShort": " ",
   "hrmi.settings.benchmark.intro": "En cuanto a los derechos para la calidad de vida, la HRMI mide a los países según dos indicadores diferentes.",
   "hrmi.settings.benchmark.introSingle": "En cuanto a los derechos para la calidad de vida, la HRMI mide a los países según dos indicadores diferentes. El indicador actual es:",
   "hrmi.settings.benchmark.adjusted": "Ajustado según indicador de ingresos",
