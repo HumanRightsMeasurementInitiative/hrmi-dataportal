@@ -219,8 +219,8 @@ export function PathMetric({
                     showFAQs
                     showRelated
                     showSources={
-                      metric.type === 'esr' &&
-                      metric.metricType !== 'indicators'
+                      metric.type === 'esr' ||
+                      metric.metricType === 'indicators'
                     }
                   />
                 ),
