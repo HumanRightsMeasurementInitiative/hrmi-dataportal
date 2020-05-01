@@ -19,12 +19,18 @@ const ArrowWrapper = styled.div`
   transition: all 0.5s;
   z-index: 8;
   opacity: 1;
-  left: ${({ right }) => (right ? '100%' : 'auto')};
-  right: ${({ left }) => (left ? '100%' : 'auto')};
-  width: 9999px;
+  left: ${({ right }) => (right ? 'auto' : '0')};
+  right: ${({ left }) => (left ? 'auto' : '0')};
   pointer-events: all;
+  width: 0px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    width: 9999px;
+    left: ${({ right }) => (right ? '100%' : 'auto')};
+    right: ${({ left }) => (left ? '100%' : 'auto')};
+  }
 `;
 
+// prettier-ignore
 const ArrowWrapperFull = styled.div`
   position: absolute;
   top: 0;
@@ -33,9 +39,11 @@ const ArrowWrapperFull = styled.div`
   left: 0;
   z-index: 8;
   opacity: 1;
-  left: ${({ right, theme }) => (right ? theme.global.edgeSize.xxlarge : '0')};
-  right: ${({ left, theme }) => (left ? theme.global.edgeSize.xxlarge : '0')};
+  display: none;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    display: block;
+    left: ${({ right, theme }) => (right ? theme.global.edgeSize.xxlarge : '0')};
+    right: ${({ left, theme }) => (left ? theme.global.edgeSize.xxlarge : '0')};
     background: rgb(255, 255, 255);
   }
 `;
@@ -46,11 +54,14 @@ const StyledButtonIcon = styled(ButtonPlain)`
   position: absolute;
   top: 0;
   bottom: 0;
-  left: ${({ right }) => (right ? 0 : 'auto')};
-  right: ${({ left }) => (left ? 0 : 'auto')};
-  width: ${({ theme }) => theme.global.edgeSize.xxlarge};
+  left: ${({ right }) => (right ? '-30px' : 'auto')};
+  right: ${({ left }) => (left ? '-30px' : 'auto')};
+  width: 30px;
   text-align: ${({ left }) => (left ? 'right' : 'left')};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    left: ${({ right }) => (right ? 0 : 'auto')};
+    right: ${({ left }) => (left ? 0 : 'auto')};
+    width: ${({ theme }) => theme.global.edgeSize.xxlarge};
     background: rgb(255, 255, 255);
     background: linear-gradient(
       90deg,

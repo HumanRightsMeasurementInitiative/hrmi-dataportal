@@ -112,7 +112,7 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
         <FixedBar fixed={fixedTop} ref={fixedRef} top={hh}>
           <ContentMaxWidth hasAside>
             <Box direction="row" fill="horizontal">
-              <TabLinks direction="row" flex align="center">
+              <TabLinks direction="row" flex align="center" wrap>
                 {mainTabs &&
                   mainTabs.length > 1 &&
                   mainTabs.map(tab => (

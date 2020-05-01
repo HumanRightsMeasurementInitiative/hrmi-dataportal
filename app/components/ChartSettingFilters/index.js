@@ -138,11 +138,7 @@ const getFilterOptions = (
 };
 
 const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
-  <Box
-    pad={{ horizontal: 'none', top: '0', bottom: 'none' }}
-    width={{ min: '280px' }}
-    overflow="auto"
-  >
+  <Box width={{ min: '280px' }} overflow="auto">
     <StyledButtonIcon subtle onClick={() => setFilterOpen(false)}>
       <Close size="large" color="dark" />
     </StyledButtonIcon>

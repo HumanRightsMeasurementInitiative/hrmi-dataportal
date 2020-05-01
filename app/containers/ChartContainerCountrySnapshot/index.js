@@ -191,7 +191,7 @@ export function ChartContainerCountrySnapshot({
         <Source />
       </Box>
       <Box margin={{ bottom: 'medium' }}>
-        <Heading level={4}>
+        <Heading level={4} margin={{ bottom: 'small' }}>
           <FormattedMessage {...rootMessages.dimensions.esr} />
         </Heading>
         <NarrativeESRStandardHint
@@ -238,7 +238,7 @@ export function ChartContainerCountrySnapshot({
         </Paragraph>
       </Box>
       <Box margin={{ bottom: 'medium' }}>
-        <Heading level={4}>
+        <Heading level={4} margin={{ bottom: 'small' }}>
           <FormattedMessage {...rootMessages.dimensions.physint} />
         </Heading>
         <NarrativeCPR
@@ -276,7 +276,7 @@ export function ChartContainerCountrySnapshot({
         )}
       </Box>
       <Box margin={{ bottom: 'medium' }}>
-        <Heading level={4}>
+        <Heading level={4} margin={{ bottom: 'small' }}>
           <FormattedMessage {...rootMessages.dimensions.empowerment} />
         </Heading>
         <NarrativeCPR

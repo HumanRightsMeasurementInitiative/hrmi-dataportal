@@ -66,7 +66,7 @@ export function SectionPeople({ nav, intl, theme }) {
           <ContentMaxWidth align="start" direction="row" stretch>
             <Box
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
-              pad={{ right: 'xlarge', top: 'small' }}
+              pad={{ right: 'xlarge', top: 'small', bottom: 'medium' }}
               style={{ position: 'relative' }}
               justify="start"
             >

@@ -5,19 +5,22 @@ import { Box } from 'grommet';
 
 // prettier-ignore
 const Styled = styled(Box)`
-  position: relative;
   min-height: ${({ header }) => (header ? 0 : '100vh')};
+  position: relative;
   padding-right: ${({ hasAside, theme }) =>
     hasAside ? theme.global.edgeSize.xlarge : 0};
-  padding-bottom: ${props => (props.header ? '40px' : 0)};
-  padding-top: ${({ header }) => {
-    if (header) {
-      return '10px';
+  padding-bottom: ${props => (props.header ? '15px' : 0)};
+  padding-top: ${({ header, hasLinks }) => {
+    if (header && hasLinks) {
+      return '20px';
+    }
+    if (header && !hasLinks) {
+      return '30px';
     }
     return 0;
   }};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding-top: ${props => (props.header ? '25px' : 0)};
+    padding-bottom: ${props => (props.header ? '40px' : 0)};
     padding-top: ${({ header, hasLinks }) => {
     if (header && hasLinks) {
       return '25px';

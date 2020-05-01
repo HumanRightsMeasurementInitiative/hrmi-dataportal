@@ -7,11 +7,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
-import { Paragraph, Box } from 'grommet';
+import { Paragraph, Box, ResponsiveContext } from 'grommet';
 
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
+
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -34,55 +36,77 @@ export function SectionRights({
   minHeight,
   stretchAllLink = true,
   marginTop,
+  hasLongTitle,
 }) {
   return (
-    <SectionContainer background={background}>
-      <ContentMaxWidth column>
-        <Box
-          direction="row"
-          align="center"
-          margin={{ top: 'small' }}
-          justify={stretchAllLink ? 'between' : 'stretch'}
-          gap={stretchAllLink ? 'none' : 'large'}
-        >
-          <SectionTitle
-            title={title || intl.formatMessage(messages.metrics.title)}
-            marginTop={marginTop}
-          />
-          <AllLinkButton
-            margin={{ top: 'xsmall' }}
-            onClick={() => navAllRights()}
-            label={
-              allLink || intl.formatMessage(rootMessages.labels.allMetrics)
-            }
-          />
-        </Box>
-        <Slider cardMargin="xsmall">
-          {rights.map(r => (
-            <Card
-              key={r.key}
-              margin="xsmall"
-              onCardClick={() => {
-                onSelectRight(r.key);
-              }}
-              imageSrc={r.icon}
-              label={`${intl.formatMessage(rootMessages.rights[r.key])}`}
-              superLabel={
-                allCats &&
-                intl.formatMessage(rootMessages.dimensions[r.dimension])
-              }
-              imageWhitespace
-              activeColor={`${r.dimension}Dark`}
-              minHeight={allCats || minHeight}
-              type="icon"
-            />
-          ))}
-        </Slider>
-        {description && (
-          <Paragraph margin={{ top: 'ms' }}>{description}</Paragraph>
-        )}
-      </ContentMaxWidth>
-    </SectionContainer>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <SectionContainer background={background}>
+          <ContentMaxWidth column>
+            <Box
+              direction="row"
+              align="center"
+              margin={{ top: 'small' }}
+              justify={stretchAllLink ? 'between' : 'stretch'}
+              gap={stretchAllLink ? 'none' : 'large'}
+            >
+              <SectionTitle
+                title={title || intl.formatMessage(messages.metrics.title)}
+                marginTop={marginTop}
+              />
+              {(isMinSize(size, 'large') ||
+                (isMinSize(size, 'medium') && !hasLongTitle)) && (
+                <AllLinkButton
+                  margin={{ top: 'xsmall' }}
+                  onClick={() => navAllRights()}
+                  label={
+                    allLink ||
+                    intl.formatMessage(rootMessages.labels.allMetrics)
+                  }
+                />
+              )}
+            </Box>
+            <Slider cardMargin="xsmall">
+              {rights.map(r => (
+                <Card
+                  key={r.key}
+                  margin="xsmall"
+                  onCardClick={() => {
+                    onSelectRight(r.key);
+                  }}
+                  imageSrc={r.icon}
+                  label={`${intl.formatMessage(rootMessages.rights[r.key])}`}
+                  superLabel={
+                    allCats &&
+                    intl.formatMessage(rootMessages.dimensions[r.dimension])
+                  }
+                  imageWhitespace
+                  activeColor={`${r.dimension}Dark`}
+                  minHeight={allCats || minHeight}
+                  type="icon"
+                />
+              ))}
+            </Slider>
+            {description && (
+              <Paragraph margin={{ top: 'ms' }}>{description}</Paragraph>
+            )}
+            {(size === 'small' ||
+              (isMaxSize(size, 'medium') && hasLongTitle)) && (
+              <Box margin={{ top: 'medium' }}>
+                <AllLinkButton
+                  margin={{ top: 'xsmall' }}
+                  onClick={() => navAllRights()}
+                  label={
+                    allLink ||
+                    intl.formatMessage(rootMessages.labels.allMetrics)
+                  }
+                />
+              </Box>
+            )}
+          </ContentMaxWidth>
+        </SectionContainer>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 
@@ -98,6 +122,7 @@ SectionRights.propTypes = {
   minHeight: PropTypes.bool,
   stretchAllLink: PropTypes.bool,
   marginTop: PropTypes.bool,
+  hasLongTitle: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

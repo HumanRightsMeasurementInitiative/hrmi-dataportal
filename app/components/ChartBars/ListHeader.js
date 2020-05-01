@@ -13,16 +13,18 @@ import styled from 'styled-components';
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 
-import { isMinSize } from 'utils/responsive';
-
 import rootMessages from 'messages';
 // import messages from './messages';
+import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
 
 const WrapAnnotateBetter = styled.div`
   position: absolute;
   left: ${({ theme }) => theme.global.edgeSize.small};
-  right: ${({ theme }) => theme.global.edgeSize.small};
+  right: ${({ theme }) => theme.global.edgeSize.medium};
   top: -2px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    right: ${({ theme }) => theme.global.edgeSize.small};
+  }
 `;
 
 // prettier-ignore
@@ -41,7 +43,7 @@ const CountryWrap = styled(Box)`
 `;
 const getScoreAsideWidth = (size, hasAside = false) => {
   if (hasAside) {
-    return isMinSize(size, 'medium') ? '80px' : '60px';
+    return scoreAsideWidth(size);
   }
   return 0;
 };
@@ -52,47 +54,54 @@ export function ListHeader({
   labelColor = 'dark',
   annotateBetter = true,
   hasAside = false,
+  benchmarkIconOnly,
+  hasLabelsSmall = true,
+  annotateBenchmark = true,
+  annotateMinMax = true,
+  labelsMinimal = false,
 }) {
-  const annotateBenchmark = metric && metric.type === 'esr';
+  const annotateBk = annotateBenchmark && metric && metric.type === 'esr';
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box direction="row" align="end" pad={{ bottom: 'xxsmall' }}>
-          <CountryWrap
-            width={isMinSize(size, 'medium') ? '180px' : '160px'}
-            noBorder
-            align="start"
-            flex={{ shrink: 0 }}
-            pad={{ right: 'small' }}
-          >
-            <StyledScoreText
-              size="small"
-              style={{ fontWeight: 600 }}
-              color={labelColor}
+          {(size !== 'small' || hasLabelsSmall) && (
+            <CountryWrap
+              width={chartLabelWidth(size, hasLabelsSmall, labelsMinimal)}
+              noBorder
+              align="start"
+              flex={{ shrink: 0 }}
+              pad={{ right: 'small' }}
             >
-              {commonLabel || (
-                <FormattedMessage {...rootMessages.labels.score} />
-              )}
-            </StyledScoreText>
-          </CountryWrap>
+              <StyledScoreText
+                size="small"
+                style={{ fontWeight: 600 }}
+                color={labelColor}
+              >
+                {commonLabel || (
+                  <FormattedMessage {...rootMessages.labels.score} />
+                )}
+              </StyledScoreText>
+            </CountryWrap>
+          )}
           <BarWrap
             flex
             direction="row"
             style={{ position: 'relative' }}
             align="center"
           >
-            {metric && (
+            {annotateMinMax && metric && (
               <>
                 <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
                   0
                 </Text>
                 <Box
                   margin={{ left: 'auto' }}
-                  pad={annotateBenchmark ? { left: 'xsmall' } : null}
+                  pad={annotateBk ? { left: 'xsmall' } : null}
                   style={{
                     transform:
-                      metric.type === 'esr'
-                        ? 'translateX(100%)'
+                      size === 'small' && metric.type === 'esr'
+                        ? 'translateX(30%)'
                         : 'translateX(50%)',
                   }}
                 >
@@ -109,11 +118,11 @@ export function ListHeader({
                 <AnnotateBetter />
               </WrapAnnotateBetter>
             )}
-            {annotateBenchmark && (
+            {annotateBk && (
               <AnnotateBenchmark
                 benchmarkKey={benchmark}
                 hasBetter={annotateBetter}
-                type="header"
+                type={benchmarkIconOnly ? 'icon' : 'header'}
               />
             )}
           </BarWrap>
@@ -133,6 +142,11 @@ ListHeader.propTypes = {
   labelColor: PropTypes.string,
   annotateBetter: PropTypes.bool,
   hasAside: PropTypes.bool,
+  benchmarkIconOnly: PropTypes.bool,
+  hasLabelsSmall: PropTypes.bool,
+  annotateBenchmark: PropTypes.bool,
+  annotateMinMax: PropTypes.bool,
+  labelsMinimal: PropTypes.bool,
 };
 
 export default ListHeader;

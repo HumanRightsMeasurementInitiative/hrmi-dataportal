@@ -7,10 +7,6 @@ import { Box } from 'grommet';
 const Styled = styled(Box)`
   width: 100%;
   position: relative;
-  min-height: ${props => (props.header ? '120px' : 'auto')};
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    min-height: ${props => (props.header ? '140px' : 'auto')};
-  }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     min-height: ${props => (props.header ? '160px' : 'auto')};
   }

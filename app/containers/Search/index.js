@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 
-import styled, { withTheme } from 'styled-components';
-import { Box, Button, Drop, TextInput, Text } from 'grommet';
+import { withTheme } from 'styled-components';
+import { Box, Button, Drop, Text } from 'grommet';
 import { Close, Search as SearchIcon } from 'grommet-icons';
 import {
   DIMENSIONS,
@@ -25,16 +25,8 @@ import { navigate, trackEvent } from 'containers/App/actions';
 
 import messages from './messages';
 import SearchResults from './SearchResults';
+import TextInput from './TextInput';
 import { prepMetrics, prepCountries, prepGroups } from './search';
-
-const StyledTextInput = styled(TextInput)`
-  font-weight: 600;
-  &::placeholder {
-    color: ${({ theme }) => theme.global.colors.dark};
-    font-weight: 400;
-    opacity: 0.8;
-  }
-`;
 
 export function Search({
   intl,
@@ -114,7 +106,7 @@ export function Search({
         )}
         {((onToggle && expand) || !onToggle) && (
           <>
-            <StyledTextInput
+            <TextInput
               plain
               value={search}
               onChange={evt => {
@@ -133,12 +125,12 @@ export function Search({
               }
               ref={textInputRef}
             />
-            {!onToggle && search.length <= 1 && (
+            {!onToggle && search.length === 0 && (
               <Box pad={{ right: 'xsmall' }}>
                 <SearchIcon size={size} color="dark" />
               </Box>
             )}
-            {(onToggle || search.length > 1) && (
+            {(onToggle || search.length > 0) && (
               <Button
                 plain
                 fill="vertical"
