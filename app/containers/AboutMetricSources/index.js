@@ -113,6 +113,7 @@ export function AboutMetricSources({
     indicatorInfo &&
     indicatorInfo.source_codes &&
     indicatorInfo.source_codes.split(',');
+  console.log(sources);
   return (
     <Box>
       {metricType === 'indicators' && indicatorInfo && sources.length === 1 && (

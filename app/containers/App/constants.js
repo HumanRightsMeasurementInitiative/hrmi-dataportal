@@ -196,7 +196,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrIndicators',
-    file: 'esr-indicators_v3.csv',
+    file: 'esr-indicators_v3-1.csv',
   },
   {
     key: 'atRisk',
@@ -216,7 +216,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrIndicatorScores',
-    file: 'esr-indicator-scores.csv',
+    file: 'esr-indicator-scores_v3-1.csv',
   },
   {
     key: 'featured',
@@ -637,7 +637,7 @@ export const INDICATOR_LOOKBACK = 10;
 export const INDICATORS = [
   {
     key: 'net-primary',
-    code: 'AdjNetPrim',
+    code: 'NetPrimEnrol',
     right: 'education',
     resource: 'esrIndicatorScores',
     hasGroups: true,
@@ -685,8 +685,8 @@ export const INDICATORS = [
     hasGroups: false,
   },
   {
-    key: 'survival-65',
-    code: 'SurvivalTo65',
+    key: 'adult-survival',
+    code: 'AdultSurvival',
     right: 'health',
     resource: 'esrIndicatorScores',
     hasGroups: true,
@@ -749,7 +749,7 @@ export const INDICATORS = [
   },
   {
     key: 'longterm-unemployment',
-    code: 'NotLTUnemployed',
+    code: 'NotLTUnemploy',
     right: 'work',
     resource: 'esrIndicatorScores',
     hasGroups: false,

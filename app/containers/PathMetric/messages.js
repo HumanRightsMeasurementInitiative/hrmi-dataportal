@@ -358,15 +358,15 @@ export default defineMessages({
         },
       },
     },
-    'survival-65': {
+    'adult-survival': {
       header: {
         a: {
-          id: `${scope}.indicators.survival-65.header.a`,
-          defaultMessage: 'indicators.survival-65.header.a',
+          id: `${scope}.indicators.adult-survival.header.a`,
+          defaultMessage: 'indicators.adult-survival.header.a',
         },
         b: {
-          id: `${scope}.indicators.survival-65.header.b`,
-          defaultMessage: 'indicators.survival-65.header.b',
+          id: `${scope}.indicators.adult-survival.header.b`,
+          defaultMessage: 'indicators.adult-survival.header.b',
         },
       },
     },
