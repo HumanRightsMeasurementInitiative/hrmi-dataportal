@@ -1075,9 +1075,9 @@ export default defineMessages({
       id: `${scope}.indicators.food-security`,
       defaultMessage: 'food-security',
     },
-    'survival-65': {
-      id: `${scope}.indicators.survival-65`,
-      defaultMessage: 'survival-65',
+    'adult-survival': {
+      id: `${scope}.indicators.adult-survival`,
+      defaultMessage: 'adult-survival',
     },
     'under-5-survival': {
       id: `${scope}.indicators.under-5-survival`,
@@ -1145,9 +1145,9 @@ export default defineMessages({
       id: `${scope}.indicators-raw.food-security`,
       defaultMessage: 'food-security',
     },
-    'survival-65': {
-      id: `${scope}.indicators-raw.survival-65`,
-      defaultMessage: 'survival-65',
+    'adult-survival': {
+      id: `${scope}.indicators-raw.adult-survival`,
+      defaultMessage: 'adult-survival',
     },
     'under-5-survival': {
       id: `${scope}.indicators-raw.under-5-survival`,
@@ -1215,9 +1215,9 @@ export default defineMessages({
       id: `${scope}.indicators-about.food-security`,
       defaultMessage: 'food-security-about',
     },
-    'survival-65': {
-      id: `${scope}.indicators-about.survival-65`,
-      defaultMessage: 'survival-65-about',
+    'adult-survival': {
+      id: `${scope}.indicators-about.adult-survival`,
+      defaultMessage: 'adult-survival-about',
     },
     'under-5-survival': {
       id: `${scope}.indicators-about.under-5-survival`,
@@ -1257,33 +1257,49 @@ export default defineMessages({
     },
   },
   sources: {
-    fao: {
-      id: `${scope}.sources.fao`,
-      defaultMessage: 'fao',
+    WB_WDI: {
+      id: `${scope}.sources.WB_WDI`,
+      defaultMessage: 'WB_WDI',
     },
-    oecd: {
-      id: `${scope}.sources.oecd`,
-      defaultMessage: 'oecd',
+    WHO_UNICEF_JMP: {
+      id: `${scope}.sources.WHO_UNICEF_JMP`,
+      defaultMessage: 'WHO_UNICEF_JMP',
     },
-    wb_edstats: {
-      id: `${scope}.sources.wb_edstats`,
-      defaultMessage: 'wb_edstats',
+    LIS: {
+      id: `${scope}.sources.LIS`,
+      defaultMessage: 'LIS',
     },
-    wb_hnp: {
-      id: `${scope}.sources.wb_hnp`,
-      defaultMessage: 'wb_hnp',
+    JME: {
+      id: `${scope}.sources.JME`,
+      defaultMessage: 'JME',
     },
-    wb_wdi: {
-      id: `${scope}.sources.wb_wdi`,
-      defaultMessage: 'wb_wdi',
+    FAOSTAT: {
+      id: `${scope}.sources.FAOSTAT`,
+      defaultMessage: 'FAOSTAT',
     },
-    who_unicef: {
-      id: `${scope}.sources.who_unicef`,
-      defaultMessage: 'who_unicef',
+    OECD: {
+      id: `${scope}.sources.OECD`,
+      defaultMessage: 'OECD',
     },
-    lis: {
-      id: `${scope}.sources.lis`,
-      defaultMessage: 'lis',
+    OECD_ed: {
+      id: `${scope}.sources.OECD_ed`,
+      defaultMessage: 'OECD_ed',
+    },
+    OECD_unempl: {
+      id: `${scope}.sources.OECD_unempl`,
+      defaultMessage: 'OECD_unempl',
+    },
+    OECD_housing: {
+      id: `${scope}.sources.OECD_housing`,
+      defaultMessage: 'OECD_housing',
+    },
+    UNESCO: {
+      id: `${scope}.sources.UNESCO`,
+      defaultMessage: 'UNESCO',
+    },
+    UN_IGME: {
+      id: `${scope}.sources.UN_IGME`,
+      defaultMessage: 'UN_IGME',
     },
   },
   regions: {
