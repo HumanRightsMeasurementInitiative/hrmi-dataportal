@@ -392,7 +392,7 @@
   "hrmi.settings.benchmark.nameShort": "Indicador",
   "hrmi.settings.benchmark.intro": "En cuanto a los derechos para la calidad de vida, la HRMI mide a los países según dos indicadores diferentes.",
   "hrmi.settings.benchmark.introSingle": "En cuanto a los derechos para la calidad de vida, la HRMI mide a los países según dos indicadores diferentes. El indicador actual es:",
-  "hrmi.settings.benchmark.adjusted": "Ajustado según los ingresos",
+  "hrmi.settings.benchmark.adjusted": "Ajustado según indicador de ingresos",
   "hrmi.settings.benchmark.adjustedInfo": "¿Qué tan bien se desempeña el país en comparación con lo que sabemos que es posible según el nivel de ingresos de ese país? Todos los países pueden alcanzar el 100 % de este indicador si utilizan los recursos disponibles de manera efectiva, de manera que cualquier puntaje más bajo nos indica que se necesita mejorar.",
   "hrmi.settings.benchmark.best": "Mejor del mundo",
   "hrmi.settings.benchmark.bestInfo": "¿Cómo es el desempeño de ese país comparado con el resto del mundo, incluidos los países más ricos?",
