@@ -36,7 +36,7 @@ export function SectionAbout({ intl, locale }) {
               <Box
                 basis={isMinSize(size, 'large') ? '1/2' : '1'}
                 pad={{ right: isMinSize(size, 'large') ? 'ms' : '0' }}
-                margin={{ bottom: 'small' }}
+                margin={{ bottom: 'large' }}
               >
                 <Paragraph margin={{ bottom: 'medium' }}>
                   <Text weight={600}>
@@ -48,7 +48,7 @@ export function SectionAbout({ intl, locale }) {
                   target="_blank"
                   label={intl.formatMessage(messages.about.link)}
                   icon={<NewWindow color="dark" />}
-                  gap="small"
+                  gap="xsmall"
                 />
               </Box>
               <Box

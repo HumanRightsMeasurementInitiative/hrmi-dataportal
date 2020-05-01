@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
-import { Box, ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
+import { ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
 import { withTheme } from 'styled-components';
 
 import rootMessages from 'messages';
@@ -164,6 +164,7 @@ const getScoreMsg = (
               as="a"
               href={intl.formatMessage(messages.countryScoreExplainer.cprLink.url)}
               target="_blank"
+              inverse
             >
               {intl.formatMessage(messages.countryScoreExplainer.cprLink.anchor)}
             </ButtonText>
@@ -235,6 +236,7 @@ export function PathCountry({
       onSetAsideLayer({
         type: 'aboutMetric',
         background: `${dimension || code}Active`,
+        showSources: dimension === 'esr',
         key: code,
         code,
         countryScoreMsg: getScoreMsg(
@@ -257,38 +259,43 @@ export function PathCountry({
             <title>{countryTitle}</title>
             <meta name="description" content="Description of Country page" />
           </Helmet>
-          <Box
-            style={{ position: 'relative' }}
-            height={`${theme.sizes.top.height}px`}
-          >
+          <div style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>
               <ContentMaxWidth
                 header
-                height={`${theme.sizes.top.height}px`}
+                height={
+                  isMinSize(size, 'large')
+                    ? `${theme.sizes.top.height}px`
+                    : 'auto'
+                }
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
-                  <Breadcrumb
-                    onItemClick={(key, value) => onCategoryClick(key, value)}
-                    breadcrumb
-                    items={[
-                      {
-                        key: 'all',
-                        label: intl.formatMessage(
-                          rootMessages.labels.allCountries,
-                        ),
-                      },
-                    ]}
-                  />
-                  <PageTitle>{countryTitle}</PageTitle>
-                  <Paragraph>
+                  <div>
+                    <Breadcrumb
+                      onItemClick={(key, value) => onCategoryClick(key, value)}
+                      breadcrumb
+                      items={[
+                        {
+                          key: 'all',
+                          label: intl.formatMessage(
+                            rootMessages.labels.allCountries,
+                          ),
+                        },
+                      ]}
+                    />
+                  </div>
+                  <div>
+                    <PageTitle>{countryTitle}</PageTitle>
+                  </div>
+                  <Paragraph size={size === 'small' ? 'small' : 'medium'}>
                     <FormattedMessage
                       {...messages.header.a}
                       values={messageValues}
                     />
                   </Paragraph>
-                  <Paragraph>
+                  <Paragraph size={size === 'small' ? 'small' : 'medium'}>
                     <FormattedMessage
                       {...messages.header.b}
                       values={messageValues}
@@ -305,7 +312,7 @@ export function PathCountry({
                 )}
               </ContentMaxWidth>
             </ContentContainer>
-          </Box>
+          </div>
           <TabContainer
             size={size}
             tabs={[

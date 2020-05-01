@@ -47,12 +47,12 @@ function LayerHowToRead({ layer }) {
             {chrt === 'Snapshot' && (
               <>
                 {DIMENSIONS.map(d => (
-                  <>
+                  <span key={d.key}>
                     <Heading level={4}>
                       <FormattedMessage {...rootMessages.dimensions[d.key]} />
                     </Heading>
                     <HTRBar contxt={contxt} dimension={d.key} />
-                  </>
+                  </span>
                 ))}
               </>
             )}

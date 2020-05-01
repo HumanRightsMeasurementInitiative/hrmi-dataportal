@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
-import { Heading, Box, Text, Button } from 'grommet';
+import { Heading, Box, Text, Button, ResponsiveContext } from 'grommet';
 
 import { COLUMNS, GRADES } from 'containers/App/constants';
 
@@ -18,6 +18,7 @@ import Active from 'components/ChartBars/styled/Active';
 import Source from 'components/Source';
 
 import getMetricDetails from 'utils/metric-details';
+import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 
@@ -137,90 +138,105 @@ function ChartCountrySnapshot({
 }) {
   const [hover, setHover] = useState(false);
   return (
-    <Box
-      direction="column"
-      pad={{ bottom: 'small' }}
-      margin={{ bottom: 'small' }}
-    >
-      <Box direction="row">
-        <ChartArea>
-          <Dimension>
-            <Box direction="row" align="center">
-              <Button
-                onClick={() => onMetricClick(dimensionCode)}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}
-                style={{ position: 'relative' }}
-              >
-                {(hover || activeCode === dimensionCode) && (
-                  <Active color={`${dimensionCode}Active`} />
-                )}
-
-                <DimensionHeading
-                  color={
-                    hover || activeCode === dimensionCode
-                      ? `${dimensionCode}Active`
-                      : `${dimensionCode}Dark`
-                  }
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box
+          direction="column"
+          pad={{ bottom: 'small' }}
+          margin={{ bottom: 'small' }}
+        >
+          <Box direction="row">
+            <ChartArea>
+              <Dimension>
+                <Box
+                  direction={size === 'small' ? 'column' : 'row'}
+                  align={size === 'small' ? 'start' : 'center'}
                 >
-                  <FormattedMessage
-                    {...rootMessages.dimensions[dimensionCode]}
-                  />
-                </DimensionHeading>
-              </Button>
-              <Text>
-                <FormattedMessage {...rootMessages['rights-types'][type]} />
-                {` (${year})`}
-              </Text>
-            </Box>
-            <Text>
-              {type === 'esr' && currentBenchmark && (
-                <FormattedMessage
-                  {...rootMessages.charts.dimensionIntro.esr[
-                    currentBenchmark.key
-                  ]}
-                  values={grammar}
+                  <Button
+                    onClick={() => onMetricClick(dimensionCode)}
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                    style={{ position: 'relative' }}
+                    margin={{ right: 'ms' }}
+                  >
+                    {(hover || activeCode === dimensionCode) && (
+                      <Active color={`${dimensionCode}Active`} />
+                    )}
+
+                    <DimensionHeading
+                      color={
+                        hover || activeCode === dimensionCode
+                          ? `${dimensionCode}Active`
+                          : `${dimensionCode}Dark`
+                      }
+                    >
+                      <FormattedMessage
+                        {...rootMessages.dimensions[dimensionCode]}
+                      />
+                    </DimensionHeading>
+                  </Button>
+                  <Text size={isMinSize(size, 'large') ? 'small' : 'xsmall'}>
+                    <FormattedMessage {...rootMessages['rights-types'][type]} />
+                    {` (${year})`}
+                  </Text>
+                </Box>
+                <Box
+                  margin={{ top: 'small', bottom: 'xsmall' }}
+                  responsive={false}
+                >
+                  <Text size={isMinSize(size, 'large') ? 'medium' : 'small'}>
+                    {type === 'esr' && currentBenchmark && (
+                      <FormattedMessage
+                        {...rootMessages.charts.dimensionIntro.esr[
+                          currentBenchmark.key
+                        ]}
+                        values={grammar}
+                      />
+                    )}
+                    {type === 'cpr' && (
+                      <FormattedMessage
+                        {...rootMessages.charts.dimensionIntro[dimensionCode]}
+                        values={grammar}
+                      />
+                    )}
+                  </Text>
+                </Box>
+                <ChartBars
+                  summaryScore={
+                    dimensionScore ? { score: dimensionScore, maxValue } : null
+                  }
+                  data={prepareData({
+                    scores: rights,
+                    dimensionCode,
+                    currentBenchmark,
+                    standard,
+                    onClick: onMetricClick,
+                    intl,
+                    activeCode,
+                  })}
+                  currentBenchmark={type === 'esr' && currentBenchmark}
+                  standard={type === 'esr' && standard}
+                  commonLabel={`${intl.formatMessage(
+                    rootMessages.charts.rightsColumnLabel[dimensionCode],
+                  )}`}
+                  labelColor={`${dimensionCode}Dark`}
+                  padVertical="small"
+                  grades={GRADES[type]}
+                  listHeader
+                  metric={getMetricDetails(dimensionCode)}
+                  annotateBetter={false}
+                  scoreOnHover={false}
+                  scoresAside
+                  benchmarkIconOnly
+                  hasLabelsSmall={size !== 'small'}
                 />
-              )}
-              {type === 'cpr' && (
-                <FormattedMessage
-                  {...rootMessages.charts.dimensionIntro[dimensionCode]}
-                  values={grammar}
-                />
-              )}
-            </Text>
-            <ChartBars
-              summaryScore={
-                dimensionScore ? { score: dimensionScore, maxValue } : null
-              }
-              data={prepareData({
-                scores: rights,
-                dimensionCode,
-                currentBenchmark,
-                standard,
-                onClick: onMetricClick,
-                intl,
-                activeCode,
-              })}
-              currentBenchmark={type === 'esr' && currentBenchmark}
-              standard={type === 'esr' && standard}
-              commonLabel={`${intl.formatMessage(
-                rootMessages.charts.rightsColumnLabel[dimensionCode],
-              )}`}
-              labelColor={`${dimensionCode}Dark`}
-              padVertical="small"
-              grades={GRADES[type]}
-              listHeader
-              metric={getMetricDetails(dimensionCode)}
-              annotateBetter={false}
-              scoreOnHover={false}
-              scoresAside
-            />
-          </Dimension>
-        </ChartArea>
-      </Box>
-      {source && <Source />}
-    </Box>
+              </Dimension>
+            </ChartArea>
+          </Box>
+          {source && <Source />}
+        </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

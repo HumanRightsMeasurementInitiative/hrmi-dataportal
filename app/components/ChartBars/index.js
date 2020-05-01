@@ -7,11 +7,12 @@ import { intlShape, injectIntl } from 'react-intl';
 
 // import AnnotateBetter from 'components/AnnotateBetterWorse';
 import { formatScoreMax } from 'utils/scores';
-import { isMinSize } from 'utils/responsive';
 
 import BarWrapper from './BarWrapper';
 import Grades from './Grades';
 import ListHeader from './ListHeader';
+
+import { chartLabelWidth, scoreAsideWidth } from './chart-utils';
 
 const Styled = styled(Box)`
   margin: 0 auto;
@@ -23,7 +24,7 @@ const WrapInnerChart = styled(Box)`
 const SummaryWrap = styled(Box)`
   position: absolute;
   left: 0;
-  top: -18px;
+  top: -10px;
   bottom: -3px;
   right: 0;
   pointer-events: none;
@@ -57,7 +58,7 @@ const DimensionScore = styled.div`
 
 const getScoreAsideWidth = (size, hasAside = false) => {
   if (hasAside) {
-    return isMinSize(size, 'medium') ? '80px' : '60px';
+    return scoreAsideWidth(size);
   }
   return 0;
 };
@@ -81,6 +82,11 @@ function ChartBars({
   summaryScore,
   isStatic,
   intl,
+  benchmarkIconOnly,
+  hasLabelsSmall = true,
+  annotateBenchmark = true,
+  annotateMinMax = true,
+  labelsMinimal = false,
 }) {
   if (!data) return null;
   return (
@@ -102,6 +108,11 @@ function ChartBars({
               labelColor={labelColor}
               annotateBetter={!grades && annotateBetter}
               hasAside={scoresAside}
+              benchmarkIconOnly={benchmarkIconOnly}
+              hasLabelsSmall={hasLabelsSmall}
+              labelsMinimal={labelsMinimal}
+              annotateBenchmark={annotateBenchmark}
+              annotateMinMax={annotateMinMax}
             />
           )}
           <WrapInnerChart>
@@ -110,6 +121,9 @@ function ChartBars({
                 grades={grades}
                 labels={gradeLabels}
                 hasAside={scoresAside}
+                hasLabelsSmall={hasLabelsSmall}
+                labelsMinimal={labelsMinimal}
+                offset={size === 'small' && metric && metric.type === 'esr'}
               />
             )}
             {data.map(d => (
@@ -125,12 +139,14 @@ function ChartBars({
                 scoresAside={scoresAside}
                 summaryScore={summaryScore}
                 isStatic={isStatic}
+                hasLabelsSmall={hasLabelsSmall}
+                labelsMinimal={labelsMinimal}
               />
             ))}
             {summaryScore && (
               <SummaryWrap direction="row">
                 <Box
-                  width={isMinSize(size, 'medium') ? '180px' : '160px'}
+                  width={chartLabelWidth(size, false, labelsMinimal)}
                   flex={{ shrink: 0 }}
                 />
                 <Box
@@ -187,6 +203,11 @@ ChartBars.propTypes = {
   grades: PropTypes.array,
   gradeLabels: PropTypes.bool,
   isStatic: PropTypes.bool,
+  benchmarkIconOnly: PropTypes.bool,
+  hasLabelsSmall: PropTypes.bool,
+  annotateBenchmark: PropTypes.bool,
+  annotateMinMax: PropTypes.bool,
+  labelsMinimal: PropTypes.bool,
   level: PropTypes.number,
   summaryScore: PropTypes.object,
   intl: intlShape.isRequired,

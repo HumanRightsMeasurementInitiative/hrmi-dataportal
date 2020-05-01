@@ -8,6 +8,7 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
+import { ResponsiveContext } from 'grommet';
 
 import Search from 'containers/Search';
 // styles
@@ -25,17 +26,25 @@ const SearchWrapper = styled.div`
 
 export function SectionSearch({ intl }) {
   return (
-    <SectionContainer pad={{ top: 'medium', bottom: 'large' }}>
-      <ContentMaxWidth align="start" column>
-        <SectionTitle
-          title={intl.formatMessage(messages.search.title)}
-          level={1}
-        />
-        <SearchWrapper>
-          <Search stretch size="large" example />
-        </SearchWrapper>
-      </ContentMaxWidth>
-    </SectionContainer>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <SectionContainer pad={{ top: 'medium', bottom: 'large' }}>
+          <ContentMaxWidth align="start" column>
+            <SectionTitle
+              title={intl.formatMessage(messages.search.title)}
+              level={1}
+            />
+            <SearchWrapper>
+              <Search
+                stretch
+                example
+                size={size === 'small' ? 'medium' : 'large'}
+              />
+            </SearchWrapper>
+          </ContentMaxWidth>
+        </SectionContainer>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

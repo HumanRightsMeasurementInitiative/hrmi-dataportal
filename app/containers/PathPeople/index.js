@@ -131,15 +131,16 @@ export function PathPeople({
               <title>{groupTitle}</title>
               <meta name="description" content="Description of Country page" />
             </Helmet>
-            <Box
-              style={{ position: 'relative' }}
-              height={`${theme.sizes.top.height}px`}
-            >
+            <Box style={{ position: 'relative' }}>
               {isMinSize(size, 'large') && <AsideBackground color="white" />}
               <ContentContainer direction="column" header>
                 <ContentMaxWidth
                   header
-                  height={`${theme.sizes.top.height}px`}
+                  height={
+                    isMinSize(size, 'large')
+                      ? `${theme.sizes.top.height}px`
+                      : 'auto'
+                  }
                   hasAside={isMinSize(size, 'large')}
                 >
                   <MainColumn
@@ -160,7 +161,7 @@ export function PathPeople({
                       ]}
                     />
                     <PageTitle>{groupTitle}</PageTitle>
-                    <Paragraph>
+                    <Paragraph size={size === 'small' ? 'medium' : 'large'}>
                       <FormattedMessage
                         {...messages.header}
                         values={{

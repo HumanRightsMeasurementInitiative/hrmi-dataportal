@@ -9,8 +9,9 @@ import { ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 
-import { isMinSize } from 'utils/responsive';
 import rootMessages from 'messages';
+
+import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
 
 // prettier-ignore
 const BGScale = styled.div`
@@ -34,28 +35,48 @@ const BGScaleX = styled.div`
 const BGScaleLabel = styled.span`
   position: absolute;
   top: 100%;
-  font-size: 0.8em;
-  left: 3px;
-  opacity: 0.6;
+  left: 0;
+  opacity: 0.8;
+  font-size: ${({ theme }) => theme.text.xxsmall.size};
+  line-height: ${({ theme }) => theme.text.xxsmall.size};
+  color: ${({ theme }) => theme.global.colors.secondary};
+  padding-top: ${({ offsetLabel }) => (offsetLabel ? '1em' : 0)};
+  padding-left: ${({ offsetLabel }) => (offsetLabel ? '2px' : 0)};
+  border-left: 1px solid;
+  border-color: ${({ offsetLabel, theme }) =>
+    offsetLabel ? theme.global.colors.secondary : 'transparent'};
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    font-size: ${({ theme }) => theme.text.xsmall.size};
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    font-size: ${({ theme }) => theme.text.small.size};
+  }
 `;
 const getScoreAsideWidth = (size, hasAside = false) => {
   if (hasAside) {
-    return isMinSize(size, 'medium') ? '80px' : '60px';
+    return scoreAsideWidth(size);
   }
   return 0;
 };
-export function Grades({ grades, labels = true, hasAside }) {
+export function Grades({
+  grades,
+  labels = true,
+  hasAside,
+  hasLabelsSmall = true,
+  offset = false,
+  labelsMinimal = false,
+}) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <BGScale
-          left={isMinSize(size, 'medium') ? '180px' : '160px'}
+          left={chartLabelWidth(size, hasLabelsSmall, labelsMinimal)}
           right={getScoreAsideWidth(size, hasAside)}
         >
-          {grades.map(grade => (
+          {grades.map((grade, index) => (
             <BGScaleX min={grade.min} key={grade.class}>
               {labels && (
-                <BGScaleLabel>
+                <BGScaleLabel offsetLabel={offset && index % 2 === 1}>
                   <FormattedMessage
                     {...rootMessages.labels.grades[grade.class]}
                   />
@@ -73,6 +94,9 @@ Grades.propTypes = {
   grades: PropTypes.array,
   labels: PropTypes.bool,
   hasAside: PropTypes.bool,
+  hasLabelsSmall: PropTypes.bool,
+  offset: PropTypes.bool,
+  labelsMinimal: PropTypes.bool,
 };
 
 export default Grades;

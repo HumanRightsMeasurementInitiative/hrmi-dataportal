@@ -6,7 +6,7 @@ export default styled.div`
   width: 1px;
   border-right: 1px solid;
   border-color: ${({ theme }) => theme.global.colors['dark-4']};
-  top: ${({ offsetTop }) => (offsetTop ? 0 : '5px')};
+  top: ${({ offsetTop }) => (offsetTop ? 7 : 5)}px;
   }};;
   bottom: 0;
   right: -1px;
