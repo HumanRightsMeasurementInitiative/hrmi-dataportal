@@ -18,7 +18,7 @@ import { selectCountry } from 'containers/App/actions';
 
 import {
   getCountry,
-  getAuxIndicatorsForCountry,
+  getLatestCountryPopulation,
   getLatestCountryCurrentGDP,
   getLatestCountry2011PPPGDP,
 } from 'containers/App/selectors';
@@ -79,9 +79,9 @@ const renderCategory = (label, onClick, cat, value) =>
 function AboutCountryContainer({
   intl,
   country,
-  auxIndicators,
   currentGDP,
   pppGDP,
+  population,
   onCategoryClick,
   onCountryClick,
   showFAQs,
@@ -99,9 +99,8 @@ function AboutCountryContainer({
     currentGDP && currentGDP.value && currentGDP.value !== '';
   const hasPPPGDP = pppGDP && pppGDP.value && pppGDP.value !== '';
   const hasPopulation =
-    auxIndicators &&
-    auxIndicators[COLUMNS.AUX.POPULATION] &&
-    auxIndicators[COLUMNS.AUX.POPULATION] !== '';
+    population && population.value && population.value !== '';
+
   const countryGroups =
     country[COLUMNS.COUNTRIES.GROUPS] &&
     country[COLUMNS.COUNTRIES.GROUPS].split(',');
@@ -131,9 +130,9 @@ function AboutCountryContainer({
               <FormattedMessage
                 {...messages.populationValue}
                 values={prepPopulationValue(
-                  auxIndicators[COLUMNS.AUX.POPULATION],
+                  population.value,
                   intl,
-                  auxIndicators.year,
+                  population.year,
                 )}
               />
             </Text>
@@ -346,9 +345,9 @@ AboutCountryContainer.propTypes = {
   inverse: PropTypes.bool,
   countryCode: PropTypes.string,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  population: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,
 };
 
@@ -358,8 +357,8 @@ const mapStateToProps = createStructuredSelector({
     getLatestCountryCurrentGDP(state, countryCode),
   pppGDP: (state, { countryCode }) =>
     getLatestCountry2011PPPGDP(state, countryCode),
-  auxIndicators: (state, { countryCode }) =>
-    getAuxIndicatorsForCountry(state, countryCode),
+  population: (state, { countryCode }) =>
+    getLatestCountryPopulation(state, countryCode),
 });
 
 export function mapDispatchToProps(dispatch) {
