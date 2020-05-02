@@ -224,7 +224,6 @@ export const DATA_RESOURCES = [
   },
 ];
 
-// export const COUNTRY_SORTS = ['name', 'score', 'assessment'];
 export const COUNTRY_SORTS = {
   name: {
     order: 'asc',
