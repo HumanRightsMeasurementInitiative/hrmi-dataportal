@@ -753,6 +753,13 @@ export const INDICATORS = [
     resource: 'esrIndicatorScores',
     hasGroups: false,
   },
+  {
+    key: 'affordable-housing',
+    code: 'AffordHouse',
+    right: 'housing',
+    resource: 'esrIndicatorScores',
+    hasGroups: false,
+  },
 ];
 
 export const AT_RISK_GROUPS = [
