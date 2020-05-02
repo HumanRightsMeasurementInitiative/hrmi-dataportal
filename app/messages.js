@@ -1297,6 +1297,10 @@ export default defineMessages({
       id: `${scope}.sources.UNESCO`,
       defaultMessage: 'UNESCO',
     },
+    UNICEF: {
+      id: `${scope}.sources.UNICEF`,
+      defaultMessage: 'UNICEF',
+    },
     UN_IGME: {
       id: `${scope}.sources.UN_IGME`,
       defaultMessage: 'UN_IGME',

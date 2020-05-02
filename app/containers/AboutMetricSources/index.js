@@ -37,7 +37,9 @@ const DEPENDENCIES = ['esrIndicators'];
 const expandSource = (source, intl) => {
   const sourcesAsArray = source.split(',');
   return sourcesAsArray.reduce((memo, s) => {
-    const formatted = intl.formatMessage(rootMessages.sources[s]);
+    const formatted = rootMessages.sources[s]
+      ? intl.formatMessage(rootMessages.sources[s])
+      : s;
     return memo === '' ? formatted : `${memo}, ${formatted}`;
   }, '');
 };
@@ -113,7 +115,6 @@ export function AboutMetricSources({
     indicatorInfo &&
     indicatorInfo.source_codes &&
     indicatorInfo.source_codes.split(',');
-  console.log(sources);
   return (
     <Box>
       {metricType === 'indicators' && indicatorInfo && sources.length === 1 && (
