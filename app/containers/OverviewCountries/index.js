@@ -127,7 +127,7 @@ export function OverviewCountries({
   const standardDetails = STANDARDS.find(s => s.key === standard);
   const otherStandardDetails = STANDARDS.find(s => s.key !== standard);
 
-  const currentSort = sort || 'assessment';
+  const currentSort = (sort && SORT_OPTIONS.indexOf(sort) > -1) || 'assessment';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
 
   const filterValues = getFilterOptionValues(
