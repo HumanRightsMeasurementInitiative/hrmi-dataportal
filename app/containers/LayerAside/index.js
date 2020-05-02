@@ -92,6 +92,7 @@ export function LayerAside({ onClose, theme, layer }) {
                 showSources={layer.showSources}
                 countryScoreMsg={layer.countryScoreMsg}
                 inverse
+                inAside
               />
             )}
             {layer.type === 'aboutCountry' && (
@@ -100,6 +101,7 @@ export function LayerAside({ onClose, theme, layer }) {
                 showTitle
                 showCountryLink
                 inverse
+                inAside
               />
             )}
           </Box>
