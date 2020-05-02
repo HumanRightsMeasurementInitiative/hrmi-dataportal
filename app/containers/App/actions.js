@@ -35,27 +35,27 @@ import {
 } from './constants';
 
 export function checkCookieConsent() {
-  console.log('Action: check cookie consent');
+  // console.log('Action: check cookie consent');
   return {
     type: CHECK_COOKIECONSENT,
   };
 }
 export function setCookieConsent(status) {
-  console.log('Action: set cookie consent. Status: ', status);
+  // console.log('Action: set cookie consent. Status: ', status);
   return {
     type: SET_COOKIECONSENT,
     status,
   };
 }
 export function cookieConsentChecked(status) {
-  console.log('Action: cookie consent checked. Status: ', status);
+  // console.log('Action: cookie consent checked. Status: ', status);
   return {
     type: COOKIECONSENT_CHECKED,
     status,
   };
 }
 export function setGAinitialised(status) {
-  console.log('Action: set Google Analytics status. Status: ', status);
+  // console.log('Action: set Google Analytics status. Status: ', status);
   return {
     type: GA_INITIALISED,
     status,
