@@ -184,7 +184,7 @@ export function ChartContainerMetric({
 
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
-  const currentSort = sort || 'score';
+  const currentSort = (sort && SORT_OPTIONS.indexOf(sort) > -1) || 'score';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
 
   // prettier-ignore
