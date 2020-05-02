@@ -1,16 +1,17 @@
 import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Box, Drop, Button, ResponsiveContext, Layer } from 'grommet';
-import { CircleInformation, Close } from 'grommet-icons';
+import { Drop, Button, ResponsiveContext, Layer } from 'grommet';
+import { CircleInformation } from 'grommet-icons';
 import styled from 'styled-components';
 
-import ContentWrap from './ContentWrap';
+import Content from './Content';
 
 const StyledDrop = styled(Drop)`
   margin: 0 0 13px;
   overflow: visible;
   font-size: ${({ theme }) => theme.text.xsmall.size};
   line-height: ${({ theme }) => theme.text.xsmall.height};
+  z-index: ${({ inAside }) => (inAside ? 22 : 20)};
   &:after {
     content: '';
     position: absolute;
@@ -27,45 +28,6 @@ const StyledDrop = styled(Drop)`
   }
 `;
 
-const Content = ({ maxWidth, component, text, onClose, inModal, inverse }) => (
-  <Box
-    pad={{ vertical: 'small', horizontal: 'small' }}
-    background={inverse ? 'white' : 'dark'}
-    style={{ maxWidth }}
-    onClick={evt => {
-      if (evt) evt.preventDefault();
-      if (evt) evt.stopPropagation();
-    }}
-    align={inModal ? 'center' : 'start'}
-  >
-    {onClose && (
-      <Button
-        onClick={evt => {
-          if (evt) evt.preventDefault();
-          if (evt) evt.stopPropagation();
-          onClose();
-        }}
-        margin={{ left: 'auto' }}
-      >
-        <Close color="white" size="large" />
-      </Button>
-    )}
-    <ContentWrap>
-      {component}
-      {!component && <span>{text}</span>}
-    </ContentWrap>
-  </Box>
-);
-
-Content.propTypes = {
-  maxWidth: PropTypes.string,
-  component: PropTypes.node,
-  text: PropTypes.string,
-  onClose: PropTypes.func,
-  inModal: PropTypes.bool,
-  inverse: PropTypes.bool,
-};
-
 function Tooltip({
   text = 'I am a tooltip',
   iconSize = 'large',
@@ -77,12 +39,14 @@ function Tooltip({
   large,
   textAnchor,
   inverse,
+  inAside,
 }) {
   const [over, setOver] = useState(false);
   const [open, setOpen] = useState(false);
   const button = useRef(null);
 
   const mWidth = maxWidth || large ? '320px' : '200px';
+
   return (
     <ResponsiveContext.Consumer>
       {size => {
@@ -124,13 +88,12 @@ function Tooltip({
                 elevation="small"
                 target={button.current}
                 onClickOutside={() => setOpen(false)}
-                inverse={inverse}
+                inAside={inAside}
               >
                 <Content
                   maxWidth={mWidth}
                   component={component}
                   text={text}
-                  inverse={inverse}
                 />
               </StyledDrop>
             )}
@@ -170,6 +133,7 @@ Tooltip.propTypes = {
   insideButton: PropTypes.bool,
   large: PropTypes.bool,
   inverse: PropTypes.bool,
+  inAside: PropTypes.bool,
   margin: PropTypes.object,
 };
 

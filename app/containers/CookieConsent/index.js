@@ -61,10 +61,10 @@ export function CookieConsent({
     cookieConsent !== 'false' &&
     cookieConsentApp !== 'true' &&
     cookieConsentApp !== 'false';
-  console.log('Show cookie consent dialogue: ', checked && consentUnset);
-  console.log('Cookie consent cookie status: ', cookieConsent);
-  console.log('Cookie consent app status: ', cookieConsentApp);
-  console.log('Cookie consent checked: ', checked);
+  // console.log('Show cookie consent dialogue: ', checked && consentUnset);
+  // console.log('Cookie consent cookie status: ', cookieConsent);
+  // console.log('Cookie consent app status: ', cookieConsentApp);
+  // console.log('Cookie consent checked: ', checked);
   // console.log('showDialogue', showDialogue);
 
   return (

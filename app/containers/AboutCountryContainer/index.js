@@ -90,6 +90,7 @@ function AboutCountryContainer({
   showCountryLink,
   collapsible = true,
   inverse,
+  inAside,
 }) {
   const [more, setMore] = useState(false);
   if (!country) return null;
@@ -166,6 +167,7 @@ function AboutCountryContainer({
                     iconSize="medium"
                     text={intl.formatMessage(messages.gdpTooltip)}
                     inverse={inverse}
+                    inAside={inAside}
                   />
                 </div>
               </Box>
@@ -189,6 +191,7 @@ function AboutCountryContainer({
                     iconSize="medium"
                     text={intl.formatMessage(messages.gdpTooltipPPP)}
                     inverse={inverse}
+                    inAside={inAside}
                   />
                 </div>
               </Box>
@@ -343,6 +346,7 @@ AboutCountryContainer.propTypes = {
   showCountryLink: PropTypes.bool,
   collapsible: PropTypes.bool,
   inverse: PropTypes.bool,
+  inAside: PropTypes.bool,
   countryCode: PropTypes.string,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
