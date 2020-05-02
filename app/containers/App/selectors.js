@@ -4,6 +4,7 @@
 
 import { createSelector } from 'reselect';
 import { uniq } from 'lodash/array';
+import { map } from 'lodash/collection';
 import { DEFAULT_LOCALE, appLocales } from 'i18n';
 import isInteger from 'utils/is-integer';
 import quasiEquals from 'utils/quasi-equals';
@@ -1522,11 +1523,44 @@ export const getScoresByCountry = createSelector(
 );
 
 // aux indicators
-// all countries
+// all countries data for latest year any data is available
+// could introduce lookback period to include data from previous year if current not available
 export const getAuxIndicatorsLatest = createSelector(
-  getMaxYearESR,
   getAuxIndicators,
-  (year, scores) => filterScoresByYear(year, scores),
+  getCountries,
+  (values, countries) => {
+    if (!values) return null;
+    const latestYearsPerAttribute = map(COLUMNS.AUX, column => {
+      const attrValues = values.filter(
+        val => val[column] && val[column] !== '',
+      );
+      return {
+        col: column,
+        year: calcMaxYear(attrValues),
+      };
+    });
+    return countries.map(c =>
+      latestYearsPerAttribute.reduce(
+        (countryData, attribute) => {
+          const value = values.find(
+            val =>
+              val.country_code === countryData.country_code &&
+              val.year === attribute.year,
+          );
+          // prettier-ignore
+          return value
+            ? {
+              ...countryData,
+              [attribute.col]: value[attribute.col],
+              [`${attribute.col}-year`]: attribute.year,
+            } : countryData;
+        },
+        { country_code: c.country_code },
+      ),
+    );
+    // console.log(countries)
+    // return filterScoresByYear(2016, values);
+  },
 );
 // single country, single year
 export const getAuxIndicatorsForCountry = createSelector(
