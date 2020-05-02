@@ -442,6 +442,18 @@ export default defineMessages({
         },
       },
     },
+    'affordable-housing': {
+      header: {
+        a: {
+          id: `${scope}.indicators.affordable-housing.header.a`,
+          defaultMessage: 'indicators.affordable-housing.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.affordable-housing.header.b`,
+          defaultMessage: 'indicators.affordable-housing.header.b',
+        },
+      },
+    },
     'relative-poverty': {
       header: {
         a: {
