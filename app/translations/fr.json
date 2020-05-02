@@ -873,5 +873,10 @@
   "hrmi.sources.OECD_unempl": "OCDE Unemployment",
   "hrmi.sources.OECD_housing": "OCDE Housing",
   "hrmi.sources.UNESCO": "UNESCO",
-  "hrmi.sources.UN_IGME": "UN_IGME"
+  "hrmi.sources.UN_IGME": "UN_IGME",
+  "hrmi.containers.PathMetric.indicators.affordable-housing.header.a": "NOT USED affordable-housing?",
+  "hrmi.containers.PathMetric.indicators.affordable-housing.header.b": "NOT USED affordable-housing",
+  "hrmi.indicators.affordable-housing": "Affordable Housing",
+  "hrmi.indicators-raw.affordable-housing": "Affordable Housing Raw",
+  "hrmi.indicators-about.affordable-housing": "TODO Affordable housing"
 }

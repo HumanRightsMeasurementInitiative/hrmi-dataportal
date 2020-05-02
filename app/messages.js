@@ -1115,6 +1115,10 @@ export default defineMessages({
       id: `${scope}.indicators.longterm-unemployment`,
       defaultMessage: 'longterm-unemployment',
     },
+    'affordable-housing': {
+      id: `${scope}.indicators.affordable-housing`,
+      defaultMessage: 'affordable-housing',
+    },
   },
   'indicators-raw': {
     'net-primary': {
@@ -1185,6 +1189,10 @@ export default defineMessages({
       id: `${scope}.indicators-raw.longterm-unemployment`,
       defaultMessage: 'longterm-unemployment',
     },
+    'affordable-housing': {
+      id: `${scope}.indicators-raw.affordable-housing`,
+      defaultMessage: 'affordable-housing',
+    },
   },
   'indicators-about': {
     'net-primary': {
@@ -1254,6 +1262,10 @@ export default defineMessages({
     'longterm-unemployment': {
       id: `${scope}.indicators-about.longterm-unemployment`,
       defaultMessage: 'longterm-unemployment-about',
+    },
+    'affordable-housing': {
+      id: `${scope}.indicators-about.affordable-housing`,
+      defaultMessage: 'affordable-housing-about',
     },
   },
   sources: {
