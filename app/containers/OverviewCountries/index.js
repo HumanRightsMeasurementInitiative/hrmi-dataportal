@@ -298,7 +298,6 @@ export function OverviewCountries({
                             onSelectCountry(c.country_code)
                           }
                           indicators={indicators}
-                          onCountryHover={code => console.log(code)}
                         />
                       )}
                     </InfiniteScroll>
