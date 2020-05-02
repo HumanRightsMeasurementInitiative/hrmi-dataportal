@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "rightstracker-dev",
+    "default": "hrmi-dataportal",
     "dev": "hrmi-dataportal-dev",
     "stage": "hrmi-dataportal-stage",
     "v2": "rightstracker-v2",
