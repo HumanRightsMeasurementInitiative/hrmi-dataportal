@@ -303,7 +303,7 @@ ChartSettingFilters.propTypes = {
   onRemoveFilter: PropTypes.func,
   onAddFilter: PropTypes.func,
   filterValues: PropTypes.object,
-  hasWhiteBG: PropTypes.func,
+  hasWhiteBG: PropTypes.bool,
 };
 
 export default injectIntl(ChartSettingFilters);

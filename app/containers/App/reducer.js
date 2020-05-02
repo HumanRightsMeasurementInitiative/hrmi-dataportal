@@ -122,22 +122,22 @@ const appReducer = (state = initialState, action) =>
         draft.asideLayer = action.layer;
         break;
       case COOKIECONSENT_CHECKED:
-        console.log(
-          'Store: storing cookie consent status from cookie: ',
-          action.status,
-        );
+        // console.log(
+        //   'Store: storing cookie consent status from cookie: ',
+        //   action.status,
+        // );
         draft.cookieConsent = action.status;
         draft.cookieConsentChecked = true;
         break;
       case SET_COOKIECONSENT:
-        console.log(
-          'Store: storing cookie consent status from dialogue ',
-          action.status,
-        );
+        // console.log(
+        //   'Store: storing cookie consent status from dialogue ',
+        //   action.status,
+        // );
         draft.cookieConsentApp = action.status;
         break;
       case GA_INITIALISED:
-        console.log('Store: storing Google Analytics status: ', action.status);
+        // console.log('Store: storing Google Analytics status: ', action.status);
         draft.gaInitiliased = action.status;
         break;
     }
