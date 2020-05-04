@@ -9,6 +9,7 @@ import { getCPRScoreRange, getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
+import NarrativeCPRNoData from './NarrativeCPRNoData';
 
 function NarrativeCPR({
   dimensionKey,
@@ -34,11 +35,7 @@ function NarrativeCPR({
     return null;
   }
   if (!score && showNoData) {
-    return (
-      <Paragraph>
-        <FormattedMessage {...messages.cpr.noData} values={messageValues} />
-      </Paragraph>
-    );
+    return <NarrativeCPRNoData messageValues={messageValues} />;
   }
   if (dimensionKey === 'empowerment') {
     const range = score && getCPRScoreRange(score.mean);

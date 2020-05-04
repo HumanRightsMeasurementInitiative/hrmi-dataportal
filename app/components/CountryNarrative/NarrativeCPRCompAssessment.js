@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Paragraph } from 'grommet';
 
 import { compareRange, getMessageGrammar } from 'utils/narrative';
 import { isCountryHighIncome, isCountryOECD } from 'utils/countries';
 
 import { COLUMNS } from 'containers/App/constants';
 
+import rootMessages from 'messages';
 import messages from './messages';
+
+import NarrativeCPRNoData from './NarrativeCPRNoData';
 
 function NarrativeCPRCompAssessment({
   dimensionKey,
@@ -26,14 +30,20 @@ function NarrativeCPRCompAssessment({
       country.region_code,
       countryGrammar,
     ),
+    physint: intl.formatMessage(rootMessages.dimensions.physint),
+    empowerment: intl.formatMessage(rootMessages.dimensions.empowerment),
     referenceCount,
     referenceCountLessOne: referenceCount - 1,
   };
 
   const isHiOECD = isCountryHighIncome(country) && isCountryOECD(country);
-
+  if (!score) {
+    return (
+      <NarrativeCPRNoData messageValues={messageValues} isCompAssessment />
+    );
+  }
   return (
-    <>
+    <Paragraph>
       {!conjunct && isHiOECD && (
         <FormattedMessage
           {...messages.compAssessmentCPR.hiOECD}
@@ -69,7 +79,7 @@ function NarrativeCPRCompAssessment({
         values={messageValues}
       />
       {conjunct && <span>.</span>}
-    </>
+    </Paragraph>
   );
 }
 NarrativeCPRCompAssessment.propTypes = {
