@@ -277,66 +277,64 @@ function TabCountryReport({
             />
           </SectionContainer>
           {hasDimensionScore && (
-            <>
-              <SectionContainer>
-                <ChartSettingMetrics
-                  activeDefault={dimension}
-                  metrics={DIMENSIONS.reduce((dims, d) => {
-                    if (d.key !== dimension) {
-                      return dims;
-                    }
-                    return [
-                      ...dims,
-                      {
-                        ...d,
-                        children: RIGHTS.reduce((rights, r) => {
-                          if (r.dimension !== d.key) {
-                            return rights;
-                          }
-                          return [...rights, r];
-                        }, []),
-                      },
-                    ];
-                  }, [])}
-                  chart={props => (
-                    <ChartContainerTrend
-                      countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                      {...props}
-                    />
-                  )}
-                  header={props => (
-                    <ChartHeader chartId="trend" includeChartName {...props} />
-                  )}
-                  countryMessageValues={messageValues}
-                  chartId="trend"
-                />
-              </SectionContainer>
-              <SectionContainer>
-                <ChartSettingMetrics
-                  activeDefault={
-                    RIGHTS.filter(r => r.dimension === dimension)[0].key
+            <SectionContainer>
+              <ChartSettingMetrics
+                activeDefault={dimension}
+                metrics={DIMENSIONS.reduce((dims, d) => {
+                  if (d.key !== dimension) {
+                    return dims;
                   }
-                  metrics={RIGHTS.reduce((rights, r) => {
-                    if (r.dimension !== dimension) {
-                      return rights;
-                    }
-                    return [...rights, r];
-                  }, [])}
-                  chart={props => (
-                    <ChartContainerPeople
-                      countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                      {...props}
-                    />
-                  )}
-                  header={props => (
-                    <ChartHeader chartId="people" includeChartName {...props} />
-                  )}
-                  countryMessageValues={messageValues}
-                  chartId="people"
-                />
-              </SectionContainer>
-            </>
+                  return [
+                    ...dims,
+                    {
+                      ...d,
+                      children: RIGHTS.reduce((rights, r) => {
+                        if (r.dimension !== d.key) {
+                          return rights;
+                        }
+                        return [...rights, r];
+                      }, []),
+                    },
+                  ];
+                }, [])}
+                chart={props => (
+                  <ChartContainerTrend
+                    countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                    {...props}
+                  />
+                )}
+                header={props => (
+                  <ChartHeader chartId="trend" includeChartName {...props} />
+                )}
+                countryMessageValues={messageValues}
+                chartId="trend"
+              />
+            </SectionContainer>
           )}
+          <SectionContainer>
+            <ChartSettingMetrics
+              activeDefault={
+                RIGHTS.filter(r => r.dimension === dimension)[0].key
+              }
+              metrics={RIGHTS.reduce((rights, r) => {
+                if (r.dimension !== dimension) {
+                  return rights;
+                }
+                return [...rights, r];
+              }, [])}
+              chart={props => (
+                <ChartContainerPeople
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  {...props}
+                />
+              )}
+              header={props => (
+                <ChartHeader chartId="people" includeChartName {...props} />
+              )}
+              countryMessageValues={messageValues}
+              chartId="people"
+            />
+          </SectionContainer>
         </>
       )}
       {dataReady && type === 'cpr' && dimension === 'empowerment' && (
@@ -352,66 +350,64 @@ function TabCountryReport({
             />
           </SectionContainer>
           {hasDimensionScore && (
-            <>
-              <SectionContainer>
-                <ChartSettingMetrics
-                  activeDefault={dimension}
-                  metrics={DIMENSIONS.reduce((dims, d) => {
-                    if (d.key !== dimension) {
-                      return dims;
-                    }
-                    return [
-                      ...dims,
-                      {
-                        ...d,
-                        children: RIGHTS.reduce((rights, r) => {
-                          if (r.dimension !== d.key) {
-                            return rights;
-                          }
-                          return [...rights, r];
-                        }, []),
-                      },
-                    ];
-                  }, [])}
-                  chart={props => (
-                    <ChartContainerTrend
-                      countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                      {...props}
-                    />
-                  )}
-                  header={props => (
-                    <ChartHeader chartId="trend" includeChartName {...props} />
-                  )}
-                  countryMessageValues={messageValues}
-                  chartId="trend"
-                />
-              </SectionContainer>
-              <SectionContainer>
-                <ChartSettingMetrics
-                  activeDefault={
-                    RIGHTS.filter(r => r.dimension === dimension)[0].key
+            <SectionContainer>
+              <ChartSettingMetrics
+                activeDefault={dimension}
+                metrics={DIMENSIONS.reduce((dims, d) => {
+                  if (d.key !== dimension) {
+                    return dims;
                   }
-                  metrics={RIGHTS.reduce((rights, r) => {
-                    if (r.dimension !== dimension) {
-                      return rights;
-                    }
-                    return [...rights, r];
-                  }, [])}
-                  chart={props => (
-                    <ChartContainerPeople
-                      countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                      {...props}
-                    />
-                  )}
-                  header={props => (
-                    <ChartHeader chartId="people" includeChartName {...props} />
-                  )}
-                  countryMessageValues={messageValues}
-                  chartId="people"
-                />
-              </SectionContainer>
-            </>
+                  return [
+                    ...dims,
+                    {
+                      ...d,
+                      children: RIGHTS.reduce((rights, r) => {
+                        if (r.dimension !== d.key) {
+                          return rights;
+                        }
+                        return [...rights, r];
+                      }, []),
+                    },
+                  ];
+                }, [])}
+                chart={props => (
+                  <ChartContainerTrend
+                    countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                    {...props}
+                  />
+                )}
+                header={props => (
+                  <ChartHeader chartId="trend" includeChartName {...props} />
+                )}
+                countryMessageValues={messageValues}
+                chartId="trend"
+              />
+            </SectionContainer>
           )}
+          <SectionContainer>
+            <ChartSettingMetrics
+              activeDefault={
+                RIGHTS.filter(r => r.dimension === dimension)[0].key
+              }
+              metrics={RIGHTS.reduce((rights, r) => {
+                if (r.dimension !== dimension) {
+                  return rights;
+                }
+                return [...rights, r];
+              }, [])}
+              chart={props => (
+                <ChartContainerPeople
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  {...props}
+                />
+              )}
+              header={props => (
+                <ChartHeader chartId="people" includeChartName {...props} />
+              )}
+              countryMessageValues={messageValues}
+              chartId="people"
+            />
+          </SectionContainer>
         </>
       )}
     </>

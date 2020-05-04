@@ -103,8 +103,11 @@ export function PathPeople({
           const country = countries.find(c =>
             quasiEquals(c[COLUMNS.COUNTRIES.CODE], countryCode),
           );
+          if (!country)
+            console.log('Country code not in country list', countryCode);
           return country;
         })
+        .filter(c => !!c)
         .sort((a, b) =>
           REGIONS.values.indexOf(a[COLUMNS.COUNTRIES.REGION]) >
           REGIONS.values.indexOf(b[COLUMNS.COUNTRIES.REGION])
@@ -256,7 +259,7 @@ PathPeople.propTypes = {
   countryNo: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   dataReady: PropTypes.bool,
   theme: PropTypes.object,
-  atRiskYear: PropTypes.string,
+  atRiskYear: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({

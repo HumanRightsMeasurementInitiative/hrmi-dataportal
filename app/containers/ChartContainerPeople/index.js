@@ -23,8 +23,8 @@ import { getMessageGrammar } from 'utils/narrative';
 import {
   getPeopleAtRisk,
   getContentByKey,
-  getHasCountryCPR,
   getCountryGrammar,
+  getDependenciesReady,
 } from 'containers/App/selectors';
 
 import { loadContentIfNeeded, loadDataIfNeeded } from 'containers/App/actions';
@@ -41,8 +41,6 @@ const hasSubrights = metric => {
 const hasAnalysis = metric =>
   metric.metricType === 'rights' ||
   (metric.metricType === 'dimensions' && metric.key === 'esr');
-const hasSubrightAnalysis = metric =>
-  metric.metricType === 'rights' && hasSubrights(metric);
 
 const generateKey = (metricCode, countryCode) => {
   const metric = getMetricDetails(metricCode);
@@ -75,21 +73,22 @@ export function ChartContainerPeople({
   atRiskAnalysis,
   atRiskAnalysisSubrights,
   intl,
-  hasAtRisk,
   metricSelector,
+  dataReady,
 }) {
   useEffect(() => {
     onLoadData();
   }, []);
   useEffect(() => {
     const key = generateKey(metricCode, countryCode);
-    if (key && hasAtRisk) onLoadContent(key);
+    if (key && atRisk) onLoadContent(key);
     onLoadData();
-  }, [metricCode, countryCode, hasAtRisk]);
+  }, [metricCode, countryCode, dataReady]);
 
   const metric = getMetricDetails(metricCode);
+
   // prettier-ignore
-  return hasAtRisk ? (
+  return atRisk ? (
     <div>
       {metricSelector}
       <ChartCountryMetricPeople
@@ -98,8 +97,8 @@ export function ChartContainerPeople({
         atRiskAnalysis={atRiskAnalysis}
         atRiskAnalysisSubrights={atRiskAnalysisSubrights}
         locale={intl.locale}
-        hasAnalysis={hasAnalysis(metric)}
-        hasSubrightAnalysis={hasSubrightAnalysis(metric)}
+        hasAnalysis={!!atRiskAnalysis}
+        hasSubrightAnalysis={!!atRiskAnalysisSubrights}
         showIntro={!metricSelector}
       />
     </div>
@@ -119,7 +118,6 @@ ChartContainerPeople.propTypes = {
   onLoadContent: PropTypes.func,
   metricCode: PropTypes.string.isRequired,
   countryCode: PropTypes.string.isRequired,
-  hasAtRisk: PropTypes.bool,
   atRisk: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysis: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   atRiskAnalysisSubrights: PropTypes.oneOfType([
@@ -128,9 +126,11 @@ ChartContainerPeople.propTypes = {
   ]),
   countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   metricSelector: PropTypes.node,
+  dataReady: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
+  dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   atRisk: (state, { countryCode, metricCode }) =>
     getPeopleAtRisk(state, {
       country: countryCode,
@@ -161,7 +161,6 @@ const mapStateToProps = createStructuredSelector({
     }
     return false;
   },
-  hasAtRisk: (state, { countryCode }) => getHasCountryCPR(state, countryCode),
   countryGrammar: (state, { countryCode }) =>
     getCountryGrammar(state, countryCode),
 });
