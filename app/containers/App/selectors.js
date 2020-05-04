@@ -666,6 +666,7 @@ export const getESRScoresForCountry = createSelector(
     );
   },
 );
+
 export const getESRScoreForCountry = createSelector(
   (state, { countryCode }) => countryCode,
   (state, { metricCode }) => metricCode,
@@ -1609,4 +1610,61 @@ export const getDependenciesReady = createSelector(
   (state, dependencies) => dependencies,
   getDataReady,
   (dependencies, data) => dependencies.reduce((m, d) => !!data[d] && m, true),
+);
+
+export const getHasCountryESRIndicatorScores = createSelector(
+  getIndicatorScoresForCountry,
+  getESRIndicators,
+  getStandardSearch,
+  (countryScores, indicators, standardSearch) => {
+    const standard = STANDARDS.find(as => as.key === standardSearch);
+    const otherStandard = STANDARDS.find(as => as.key !== standardSearch);
+    return {
+      some: countryScores && countryScores.length > 0,
+      standard:
+        countryScores &&
+        indicators &&
+        countryScores.filter(s => {
+          const details = indicators.find(i => i.metric_code === s.metric_code);
+          return (
+            details.standard === 'Both' || details.standard === standard.code
+          );
+        }).length > 0,
+      otherStandard:
+        countryScores &&
+        indicators &&
+        countryScores.filter(s => {
+          const details = indicators.find(i => i.metric_code === s.metric_code);
+          return (
+            details.standard === 'Both' ||
+            details.standard === otherStandard.code
+          );
+        }).length > 0,
+    };
+  },
+);
+
+export const getHasCountryESRScores = createSelector(
+  (state, countryCode) => countryCode,
+  getESRScores,
+  getESRYear,
+  getStandardSearch,
+  (countryCode, scores, year, standardSearch) => {
+    const standard = STANDARDS.find(as => as.key === standardSearch);
+    const otherStandard = STANDARDS.find(as => as.key !== standardSearch);
+    const countryScores =
+      scores &&
+      scores.filter(
+        s => s.country_code === countryCode && quasiEquals(s.year, year),
+      );
+    return {
+      some: countryScores && countryScores.length > 0,
+      standard:
+        countryScores &&
+        countryScores.filter(s => s.standard === standard.code).length > 0,
+      otherStandard:
+        countryScores &&
+        countryScores.filter(s => s.standard === otherStandard.code).length > 0,
+    };
+  },
 );
