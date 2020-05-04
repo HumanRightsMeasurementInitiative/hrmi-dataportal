@@ -81,7 +81,7 @@ function TabCountryPeople({ data, highlight, setHighlight }) {
                           (array.length === 1 && index > 0) ||
                           (array.length > 1 && indexInner > 0)
                         }
-                        showIntro
+                        showTitle
                       />
                     ),
                   )}

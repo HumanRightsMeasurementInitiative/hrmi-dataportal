@@ -28,7 +28,7 @@ const Words = styled(Box)`
   padding-bottom: 1em;
 `;
 
-const ActiveWord = styled.div`
+const TextWrap = styled.div`
   margin-top: 20px;
   margin-bottom: 20px;
 `;
@@ -54,7 +54,7 @@ export function ChartWordCloud({
   border = true,
   highlight,
   setHighlight,
-  showIntro,
+  showTitle,
 }) {
   const [activeWord, setActiveWord] = useState(null);
 
@@ -81,50 +81,54 @@ export function ChartWordCloud({
       pad={{ bottom: 'large', top: 'xsmall' }}
       border={border ? 'top' : false}
     >
-      {showIntro && (
+      {showTitle && (
         <StyledRightHeadingAbove>
           <FormattedMessage {...rootMessages.labels.atRiksFor} />
         </StyledRightHeadingAbove>
       )}
-      {showIntro && (
+      {showTitle && (
         <StyledRightHeading level={subright ? 5 : 4}>
           <FormattedMessage
             {...rootMessages.rights[data.subright || data.right]}
           />
         </StyledRightHeading>
       )}
-      <ActiveWord>
-        <Box>
-          <Text size="small" style={{ fontStyle: 'italic' }}>
-            <FormattedMessage {...messages.interpretation} />
-          </Text>
-        </Box>
-        {!activeWord && (
+      {scores && (
+        <TextWrap>
           <Box>
-            <Text size="medium">&nbsp;</Text>
-          </Box>
-        )}
-        {wordHighlighted && (
-          <Box>
-            <Text size="medium">
-              <span style={{ fontWeight: 700 }}>
-                {`${Math.round(100 * wordHighlighted.proportion)}% `}
-              </span>
-              <FormattedMessage {...messages.highlightStart} />
-              <span style={{ color: '#DB7E00', fontWeight: 600 }}>
-                {` ${intl.formatMessage(
-                  rootMessages['people-at-risk'][wordHighlighted.people_code],
-                )} `}
-              </span>
-              <FormattedMessage {...messages.highlightEnd} />
+            <Text size="small" style={{ fontStyle: 'italic' }}>
+              <FormattedMessage {...messages.interpretation} />
             </Text>
           </Box>
-        )}
-      </ActiveWord>
+          {!activeWord && (
+            <Box>
+              <Text size="medium">&nbsp;</Text>
+            </Box>
+          )}
+          {wordHighlighted && (
+            <Box>
+              <Text size="medium">
+                <span style={{ fontWeight: 700 }}>
+                  {`${Math.round(100 * wordHighlighted.proportion)}% `}
+                </span>
+                <FormattedMessage {...messages.highlightStart} />
+                <span style={{ color: '#DB7E00', fontWeight: 600 }}>
+                  {` ${intl.formatMessage(
+                    rootMessages['people-at-risk'][wordHighlighted.people_code],
+                  )} `}
+                </span>
+                <FormattedMessage {...messages.highlightEnd} />
+              </Text>
+            </Box>
+          )}
+        </TextWrap>
+      )}
       {!scores && (
-        <Hint italic>
-          <FormattedMessage {...messages.noGroupData} />
-        </Hint>
+        <TextWrap>
+          <Hint italic>
+            <FormattedMessage {...messages.noGroupData} />
+          </Hint>
+        </TextWrap>
       )}
       <Words direction="column" align="center">
         {scores &&
@@ -154,7 +158,7 @@ ChartWordCloud.propTypes = {
   dimension: PropTypes.string,
   subright: PropTypes.bool,
   border: PropTypes.bool,
-  showIntro: PropTypes.bool,
+  showTitle: PropTypes.bool,
   highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   setHighlight: PropTypes.func,
   intl: intlShape.isRequired,
