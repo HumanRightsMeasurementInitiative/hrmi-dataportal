@@ -38,7 +38,6 @@ function NarrativeESRCompAssessment({
       <NarrativeESRNoData
         messageValues={messageValues}
         showFundingNote={country.subregion_code !== 'pacific'}
-        isCompAssessment
       />
     );
   }
