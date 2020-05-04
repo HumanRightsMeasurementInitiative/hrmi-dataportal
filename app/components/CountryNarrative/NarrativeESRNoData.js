@@ -5,17 +5,13 @@ import { Paragraph } from 'grommet';
 
 import messages from './messages';
 
-function NarrativeESRNoData({
-  messageValues,
-  showFundingNote,
-  isCompAssessment,
-}) {
+function NarrativeESRNoData({ messageValues, showFundingNote, short }) {
   return (
     <Paragraph>
-      {!isCompAssessment && (
+      {short && (
         <FormattedMessage {...messages.esr.noData} values={messageValues} />
       )}
-      {isCompAssessment && (
+      {!short && (
         <>
           <FormattedMessage
             {...messages.compAssessmentESR.noData}
@@ -40,7 +36,7 @@ function NarrativeESRNoData({
 NarrativeESRNoData.propTypes = {
   messageValues: PropTypes.object,
   showFundingNote: PropTypes.bool,
-  isCompAssessment: PropTypes.bool,
+  short: PropTypes.bool,
 };
 
 export default NarrativeESRNoData;

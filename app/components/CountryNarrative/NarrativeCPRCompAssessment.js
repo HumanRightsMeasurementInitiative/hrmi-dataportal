@@ -38,9 +38,7 @@ function NarrativeCPRCompAssessment({
 
   const isHiOECD = isCountryHighIncome(country) && isCountryOECD(country);
   if (!score) {
-    return (
-      <NarrativeCPRNoData messageValues={messageValues} isCompAssessment />
-    );
+    return <NarrativeCPRNoData messageValues={messageValues} />;
   }
   return (
     <Paragraph>

@@ -13,8 +13,6 @@ import { BENCHMARKS } from 'containers/App/constants';
 import rootMessages from 'messages';
 import messages from './messages';
 
-import NarrativeESRNoData from './NarrativeESRNoData';
-
 function NarrativeESR({
   country,
   dimensionScore,
@@ -23,7 +21,6 @@ function NarrativeESR({
   countryGrammar,
   short = false,
   benchmark,
-  showNoData,
 }) {
   // console.log(score);
   const scoreAdjusted =
@@ -58,15 +55,6 @@ function NarrativeESR({
     ),
     benchmarkBest: intl.formatMessage(rootMessages.settings.benchmark.best),
   };
-  if (!dimensionScore && showNoData) {
-    return (
-      <NarrativeESRNoData
-        messageValues={messageValues}
-        showFundingNote={country.subregion_code !== 'pacific'}
-        isCompAssessment={false}
-      />
-    );
-  }
   if (dimensionScore) {
     const rangeAdjusted = getESRScoreRange(scoreAdjusted);
     const rangeBest = getESRScoreRange(scoreBest);
@@ -149,8 +137,7 @@ function NarrativeESR({
 
 NarrativeESR.propTypes = {
   dimensionScore: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  someData: PropTypes.bool,
-  showNoData: PropTypes.bool,
+  // someData: PropTypes.bool,
   short: PropTypes.bool,
   country: PropTypes.object,
   countryGrammar: PropTypes.object,
