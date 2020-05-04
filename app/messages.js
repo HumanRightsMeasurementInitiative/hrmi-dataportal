@@ -613,6 +613,14 @@ export default defineMessages({
       id: `${scope}.people-at-risk.31`,
       defaultMessage: 'People 31',
     },
+    32: {
+      id: `${scope}.people-at-risk.32`,
+      defaultMessage: 'People 32',
+    },
+    33: {
+      id: `${scope}.people-at-risk.33`,
+      defaultMessage: 'People 33',
+    },
   },
   'people-at-risk-intro': {
     0: {

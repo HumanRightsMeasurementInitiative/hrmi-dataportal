@@ -200,11 +200,11 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'atRisk',
-    file: 'people-at-risk.csv',
+    file: 'people-at-risk_v3-1.csv',
   },
   {
     key: 'auxIndicators',
-    file: 'auxiliary-indicators_v3.csv',
+    file: 'auxiliary-indicators_v3-1a.csv',
   },
   {
     key: 'cprScores',
@@ -793,7 +793,9 @@ export const AT_RISK_GROUPS = [
   { key: '28', code: '28' },
   { key: '29', code: '29' },
   { key: '30', code: '30' },
-  { key: '31', code: '31' },
+  { key: '32', code: '32' },
+  { key: '33', code: '33' },
+  { key: '31', code: '31' }, // other
 ];
 
 export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';
