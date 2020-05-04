@@ -1028,13 +1028,7 @@ export const getRightsForCountry = createSelector(
 );
 
 // at risk
-const atRiskScores = (
-  data,
-  rightKey,
-  countryCode,
-  year,
-  includeSubright = false,
-) => {
+const atRiskScores = (data, rightKey, includeSubright = false) => {
   const indicators = AT_RISK_INDICATORS.filter(
     i => i.right === rightKey || (includeSubright && i.subright === rightKey),
   );
@@ -1046,8 +1040,6 @@ const atRiskScores = (
         ...i,
         scores: data.filter(
           d =>
-            quasiEquals(d.year, year) &&
-            d.country_code === countryCode &&
             d.metric_code === i.code &&
             atRiskCodes.indexOf(d.people_code) > -1 &&
             parseInt(d.count, 10) > 0,
@@ -1059,11 +1051,21 @@ const atRiskScores = (
 };
 
 // single country, multiple rights, single year
-export const getPeopleAtRiskForCountry = createSelector(
+export const getPeopleAtRiskForCountryYear = createSelector(
   (state, { country }) => country,
   getAtRiskData,
   getMaxYearAtRisk,
-  (country, data, year) =>
+  (countryCode, data, year) => {
+    if (!data) return null;
+    const countryData = data.filter(
+      d => d.country_code === countryCode && quasiEquals(d.year, year),
+    );
+    return countryData && countryData.length > 0 && countryData;
+  },
+);
+export const getPeopleAtRiskForCountry = createSelector(
+  getPeopleAtRiskForCountryYear,
+  data =>
     data &&
     DIMENSIONS.map(dim => ({
       // prettier-ignore
@@ -1075,7 +1077,7 @@ export const getPeopleAtRiskForCountry = createSelector(
               ...memo,
               [r.key]: {
                 ...r,
-                atRiskData: atRiskScores(data, r.key, country, year),
+                atRiskData: atRiskScores(data, r.key),
               },
             },
         {},
@@ -1085,14 +1087,12 @@ export const getPeopleAtRiskForCountry = createSelector(
 );
 
 export const getPeopleAtRisk = createSelector(
-  (state, { country }) => country,
   (state, { metric }) => getMetricDetails(metric),
-  getAtRiskData,
-  getMaxYearAtRisk,
-  (country, metric, data, year) => {
+  getPeopleAtRiskForCountryYear,
+  (metric, data) => {
     if (!data) return false;
     if (metric.metricType === 'rights') {
-      return atRiskScores(data, metric.key, country, year, true);
+      return atRiskScores(data, metric.key, true);
     }
     if (metric.metricType === 'dimensions') {
       // prettier-ignore
@@ -1104,7 +1104,7 @@ export const getPeopleAtRisk = createSelector(
               ...memo,
               [r.key]: {
                 ...r,
-                atRiskData: atRiskScores(data, r.key, country, year),
+                atRiskData: atRiskScores(data, r.key),
               },
             },
         {},
