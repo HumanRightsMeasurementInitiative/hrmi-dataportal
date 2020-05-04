@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import { Paragraph } from 'grommet';
+import { NewWindow } from 'grommet-icons';
 
-import ButtonText from 'styled/ButtonText';
+import ButtonTextIcon from 'styled/ButtonTextIcon';
 import messages from './messages';
 
 function NarrativeCPRNoData({ messageValues, intl, short }) {
@@ -18,14 +19,15 @@ function NarrativeCPRNoData({ messageValues, intl, short }) {
             {...messages.compAssessmentCPR.noData}
             values={messageValues}
           />
-          <ButtonText
-            target="_blank"
+          <ButtonTextIcon
             href={intl.formatMessage(messages.compAssessmentCPR.noDataLinkURL)}
-          >
-            <FormattedMessage
-              {...messages.compAssessmentCPR.noDataLinkAnchor}
-            />
-          </ButtonText>
+            target="_blank"
+            label={intl.formatMessage(
+              messages.compAssessmentCPR.noDataLinkAnchor,
+            )}
+            icon={<NewWindow color="dark" />}
+            gap="xsmall"
+          />
         </>
       )}
     </Paragraph>
