@@ -202,7 +202,6 @@ export function ChartContainerCountrySnapshot({
           dimensionScore={dimensions.esr.score}
           country={country}
           countryGrammar={countryGrammar}
-          someData={hasSomeIndicatorScores}
           standard={standard}
           short
           benchmark={benchmark}
