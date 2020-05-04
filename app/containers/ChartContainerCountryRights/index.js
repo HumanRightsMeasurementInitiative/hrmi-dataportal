@@ -320,20 +320,16 @@ export function ChartContainerCountryRights({
                 someData={hasSomeIndicatorScores}
                 standard={standard}
               />
-              <Paragraph>
-                <NarrativeESRCompAssessment
-                  country={country}
-                  countryGrammar={countryGrammar}
-                  comparativeScore={parseFloat(comparativeScoreESR)}
-                  comparativeRights={comparativeRightsESR}
-                  groupAverageScore={
-                    reference &&
-                    reference.average &&
-                    reference.average[benchmark]
-                  }
-                  benchmark={currentBenchmark}
-                />
-              </Paragraph>
+              <NarrativeESRCompAssessment
+                country={country}
+                countryGrammar={countryGrammar}
+                comparativeScore={parseFloat(comparativeScoreESR)}
+                comparativeRights={comparativeRightsESR}
+                groupAverageScore={
+                  reference && reference.average && reference.average[benchmark]
+                }
+                benchmark={currentBenchmark}
+              />
               <Paragraph>
                 <Hint italic>
                   <FormattedMessage {...rootMessages.hints.settings} />
@@ -435,21 +431,16 @@ export function ChartContainerCountryRights({
                 score={dimension.score}
                 country={country}
                 countryGrammar={countryGrammar}
-                showNoData
               />
-              {dimension.score && (
-                <Paragraph>
-                  <NarrativeCPRCompAssessment
-                    dimensionKey={dimensionCode}
-                    score={dimension.score}
-                    country={country}
-                    countryGrammar={countryGrammar}
-                    referenceScore={reference.average}
-                    referenceCount={reference.count}
-                    start
-                  />
-                </Paragraph>
-              )}
+              <NarrativeCPRCompAssessment
+                dimensionKey={dimensionCode}
+                score={dimension.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={reference.average}
+                referenceCount={reference.count}
+                start
+              />
             </>
           )}
         </div>

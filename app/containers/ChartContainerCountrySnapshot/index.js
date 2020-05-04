@@ -105,7 +105,7 @@ export function ChartContainerCountrySnapshot({
         s.details.standard === currentStandard.code
       );
     })
-    .reduce((m, s) => m || !!s.score, false);
+    .some(s => !!s.score);
 
   let comparativeScoreESR;
   let comparativeRightsESR;
@@ -117,7 +117,6 @@ export function ChartContainerCountrySnapshot({
     comparativeScoreESR = dimensions.esr.scoreSome[currentBenchmark.column];
     comparativeRightsESR = dimensions.esr.scoreSome.metric;
   }
-
   return (
     <Styled>
       <ChartHeader
@@ -209,33 +208,35 @@ export function ChartContainerCountrySnapshot({
           benchmark={benchmark}
           showNoData={false}
         />
-        <Paragraph>
-          <NarrativeESRCompAssessment
-            country={country}
-            countryGrammar={countryGrammar}
-            comparativeScore={parseFloat(comparativeScoreESR)}
-            comparativeRights={comparativeRightsESR}
-            groupAverageScore={
-              dimensionAverages &&
-              dimensionAverages.esr &&
-              dimensionAverages.esr.average &&
-              dimensionAverages.esr.average[benchmark]
-            }
-            benchmark={currentBenchmark}
-          />
-        </Paragraph>
-        <Paragraph>
-          <Hint italic>
-            <FormattedMessage {...rootMessages.hints.settings} />
-          </Hint>
-        </Paragraph>
-        <Paragraph>
-          <ButtonTextIcon
-            onClick={() => goToTab('report-esr')}
-            label={<FormattedMessage {...messages.exploreDetails} />}
-            hasIcon
-          />
-        </Paragraph>
+        <NarrativeESRCompAssessment
+          country={country}
+          countryGrammar={countryGrammar}
+          comparativeScore={parseFloat(comparativeScoreESR)}
+          comparativeRights={comparativeRightsESR}
+          groupAverageScore={
+            dimensionAverages &&
+            dimensionAverages.esr &&
+            dimensionAverages.esr.average &&
+            dimensionAverages.esr.average[benchmark]
+          }
+          benchmark={currentBenchmark}
+        />
+        {comparativeScoreESR && (
+          <Paragraph>
+            <Hint italic>
+              <FormattedMessage {...rootMessages.hints.settings} />
+            </Hint>
+          </Paragraph>
+        )}
+        {hasSomeIndicatorScores && (
+          <Paragraph>
+            <ButtonTextIcon
+              onClick={() => goToTab('report-esr')}
+              label={<FormattedMessage {...messages.exploreDetails} />}
+              hasIcon
+            />
+          </Paragraph>
+        )}
       </Box>
       <Box margin={{ bottom: 'medium' }}>
         <Heading level={4} margin={{ bottom: 'small' }}>
@@ -246,33 +247,27 @@ export function ChartContainerCountrySnapshot({
           score={dimensions.physint.score}
           country={country}
           countryGrammar={countryGrammar}
-          showNoData
+          showNoData={false}
+        />
+        <NarrativeCPRCompAssessment
+          dimensionKey="physint"
+          score={dimensions.physint.score}
+          country={country}
+          countryGrammar={countryGrammar}
+          referenceScore={
+            dimensionAverages && dimensionAverages.physint.average
+          }
+          referenceCount={dimensionAverages && dimensionAverages.physint.count}
+          start
         />
         {dimensions.physint.score && (
-          <>
-            <Paragraph>
-              <NarrativeCPRCompAssessment
-                dimensionKey="physint"
-                score={dimensions.physint.score}
-                country={country}
-                countryGrammar={countryGrammar}
-                referenceScore={
-                  dimensionAverages && dimensionAverages.physint.average
-                }
-                referenceCount={
-                  dimensionAverages && dimensionAverages.physint.count
-                }
-                start
-              />
-            </Paragraph>
-            <Paragraph>
-              <ButtonTextIcon
-                onClick={() => goToTab('report-physint')}
-                label={<FormattedMessage {...messages.exploreDetails} />}
-                hasIcon
-              />
-            </Paragraph>
-          </>
+          <Paragraph>
+            <ButtonTextIcon
+              onClick={() => goToTab('report-physint')}
+              label={<FormattedMessage {...messages.exploreDetails} />}
+              hasIcon
+            />
+          </Paragraph>
         )}
       </Box>
       <Box margin={{ bottom: 'medium' }}>
@@ -284,33 +279,29 @@ export function ChartContainerCountrySnapshot({
           score={dimensions.empowerment.score}
           country={country}
           countryGrammar={countryGrammar}
-          showNoData
+          showNoData={false}
+        />
+        <NarrativeCPRCompAssessment
+          dimensionKey="empowerment"
+          score={dimensions.empowerment.score}
+          country={country}
+          countryGrammar={countryGrammar}
+          referenceScore={
+            dimensionAverages && dimensionAverages.empowerment.average
+          }
+          referenceCount={
+            dimensionAverages && dimensionAverages.empowerment.count
+          }
+          start
         />
         {dimensions.empowerment.score && (
-          <>
-            <Paragraph>
-              <NarrativeCPRCompAssessment
-                dimensionKey="empowerment"
-                score={dimensions.empowerment.score}
-                country={country}
-                countryGrammar={countryGrammar}
-                referenceScore={
-                  dimensionAverages && dimensionAverages.empowerment.average
-                }
-                referenceCount={
-                  dimensionAverages && dimensionAverages.empowerment.count
-                }
-                start
-              />
-            </Paragraph>
-            <Paragraph>
-              <ButtonTextIcon
-                onClick={() => goToTab('report-empowerment')}
-                label={<FormattedMessage {...messages.exploreDetails} />}
-                hasIcon
-              />
-            </Paragraph>
-          </>
+          <Paragraph>
+            <ButtonTextIcon
+              onClick={() => goToTab('report-empowerment')}
+              label={<FormattedMessage {...messages.exploreDetails} />}
+              hasIcon
+            />
+          </Paragraph>
         )}
       </Box>
     </Styled>

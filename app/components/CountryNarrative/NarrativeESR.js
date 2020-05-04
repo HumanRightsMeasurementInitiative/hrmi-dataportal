@@ -13,6 +13,8 @@ import { BENCHMARKS } from 'containers/App/constants';
 import rootMessages from 'messages';
 import messages from './messages';
 
+import NarrativeESRNoData from './NarrativeESRNoData';
+
 function NarrativeESR({
   country,
   dimensionScore,
@@ -58,13 +60,11 @@ function NarrativeESR({
   };
   if (!dimensionScore && showNoData) {
     return (
-      <Paragraph>
-        <FormattedMessage {...messages.esr.noData} values={messageValues} />
-        <FormattedMessage
-          {...messages.esr.noDataFunding}
-          values={messageValues}
-        />
-      </Paragraph>
+      <NarrativeESRNoData
+        messageValues={messageValues}
+        showFundingNote={country.subregion_code !== 'pacific'}
+        isCompAssessment={false}
+      />
     );
   }
   if (dimensionScore) {

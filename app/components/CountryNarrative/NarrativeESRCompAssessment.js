@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { Paragraph } from 'grommet';
 
 import { compareRange, getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
+import NarrativeESRNoData from './NarrativeESRNoData';
 
 const RANGE = 5;
 
@@ -31,19 +33,13 @@ function NarrativeESRCompAssessment({
     esr: intl.formatMessage(rootMessages.dimensions.esr),
     dimension: intl.formatMessage(rootMessages.dimensions.esr),
   };
-
   if (!comparativeScore) {
     return (
-      <>
-        <FormattedMessage
-          {...messages.compAssessmentESR.noData}
-          values={messageValues}
-        />
-        <FormattedMessage
-          {...messages.esr.noDataFunding}
-          values={messageValues}
-        />
-      </>
+      <NarrativeESRNoData
+        messageValues={messageValues}
+        showFundingNote={country.subregion_code !== 'pacific'}
+        isCompAssessment
+      />
     );
   }
   // all, some or one right
@@ -51,7 +47,7 @@ function NarrativeESRCompAssessment({
     const rangeLo = comparativeScore - RANGE;
     const rangeHi = comparativeScore + RANGE;
     return (
-      <>
+      <Paragraph>
         {comparativeRights === 'all' && (
           <FormattedMessage
             {...messages.compAssessmentESR.start}
@@ -114,7 +110,7 @@ function NarrativeESRCompAssessment({
             ),
           }}
         />
-      </>
+      </Paragraph>
     );
   }
   return null;
