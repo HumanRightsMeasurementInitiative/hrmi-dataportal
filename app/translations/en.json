@@ -864,7 +864,7 @@
   "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Explore Details",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataMissingData": "Missing data tells us that {needsArticle, select, true {the } false { }}{country} {isPlural, select, true {have} false {has}} not submitted some information to the relevant international databases. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "{physint} and {empowerment} data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We plan to expand our data collection for these rights to the whole world as soon as we have enough funding.",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "{physint} and {empowerment} data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We would like to expand our data collection to the whole world as soon as possible. To learn more about how you can help, please visit ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country"
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "this page on the HRMI website."
 }
