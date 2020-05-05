@@ -613,20 +613,7 @@ export const AT_RISK_INDICATORS = [
   },
   {
     right: 'work',
-    subright: 'job',
     code: 'job_atrisk',
-    resource: 'atRisk',
-  },
-  {
-    right: 'work',
-    subright: 'jobcond',
-    code: 'jobcond_atrisk',
-    resource: 'atRisk',
-  },
-  {
-    right: 'work',
-    subright: 'union',
-    code: 'union_atrisk',
     resource: 'atRisk',
   },
 ];
