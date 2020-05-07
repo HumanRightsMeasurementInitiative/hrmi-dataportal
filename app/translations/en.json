@@ -293,7 +293,6 @@
   "hrmi.components.CountryNarrative.esr.changeStandardNote": "Please note: Quality of Life data and commentary are shown for the '{otherStandard}' assessment standard. For {incomeCategory} countries like {countryWithArticle} it is best to use the '{defaultStandard}' standard instead (click on the 'Switch view' button to change the standard)",
   "hrmi.components.CountryNarrative.esr.noData": "For {needsArticle, select, true {the } false { }}{country} a {dimension} score is not available due to missing data for at least one component of the rights to food, health, education, housing and work. ",
   "hrmi.components.CountryNarrative.esr.someData": "Please explore the detail below (using the down arrow to the right) to see which rights have data available and which are missing. ",
-  "hrmi.components.CountryNarrative.esr.noDataFunding": "Missing data tells us that {needsArticle, select, true {the } false { }}{country} {isPlural, select, true {have} false {has}} not submitted some information to the relevant international databases. With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
   "hrmi.components.CountryNarrative.esr.start": "{dimension} rights (or 'economic and social rights') include the rights to food, health, education, housing, and work. HRMI gives two scores, measuring against two different benchmarks. ",
   "hrmi.components.CountryNarrative.esr.scoreAdjusted": "{countryWithArticleCap} {isPlural, select, true {score} false {scores}} {scoreAdjustedBold} on {dimension} when scored against the '{benchmarkAdjusted}' benchmark. ",
   "hrmi.components.CountryNarrative.esr.scoreBestSimple": "{countryWithArticleCap} {isPlural, select, true {score} false {scores}} {scoreBestBold} on {dimension} when scored against the '{benchmarkBest}' benchmark. ",
@@ -862,5 +861,10 @@
   "hrmi.indicators-about.net-primary": "Number of students of the official primary school age group who are enrolled in primary school, expressed as a percentage of the total population of that age group.",
   "hrmi.hints.settings": "To change the performance benchmark or assessment standard, please click on ‘Switch view’ above",
   "hrmi.hints.noAtRiskData": "Information on which people are at extra risk of rights violations comes from our annual expert survey, and is not yet available for {countryWithArticle}. ",
-  "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Explore Details"
+  "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Explore Details",
+  "hrmi.components.CountryNarrative.compAssessmentESR.noDataMissingData": "Missing data tells us that {needsArticle, select, true {the } false { }}{country} {isPlural, select, true {have} false {has}} not submitted some information to the relevant international databases. ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "{physint} and {empowerment} data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We would like to expand our data collection to the whole world as soon as possible. To learn more about how you can help, please visit ",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "this page on the HRMI website."
 }

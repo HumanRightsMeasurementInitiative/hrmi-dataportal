@@ -187,17 +187,17 @@ const ButtonNavSecondary = styled(Button)`
 `;
 
 const ButtonSecondary = React.forwardRef(
-  ({ active, open, onClick, label, size }, ref) => {
+  ({ active, open, onClick, label, windowSize }, ref) => {
     let gap = 'hair';
-    if (size === 'medium') {
+    if (windowSize === 'medium') {
       gap = 'xxsmall';
     }
-    if (isMinSize(size, 'large')) {
+    if (isMinSize(windowSize, 'large')) {
       gap = 'small';
     }
     return (
       <ButtonNavSecondary
-        size={size}
+        windowSize={windowSize}
         plain
         active={active}
         open={open}
@@ -207,18 +207,18 @@ const ButtonSecondary = React.forwardRef(
         ref={ref}
         label={
           <Box direction="row" align="center" justify="between" fill gap={gap}>
-            <Text size={size === 'small' ? 'medium' : 'large'}>
+            <Text size={windowSize === 'small' ? 'medium' : 'large'}>
               <FormattedMessage {...rootMessages.labels[label]} />
             </Text>
             {open && (
               <FormUp
-                size={size === 'small' ? 'xlarge' : 'xxlarge'}
+                size={windowSize === 'small' ? 'xlarge' : 'xxlarge'}
                 style={{ stroke: 'currentColor', marginRight: '-3px' }}
               />
             )}
             {!open && (
               <FormDown
-                size={size === 'small' ? 'xlarge' : 'xxlarge'}
+                size={windowSize === 'small' ? 'xlarge' : 'xxlarge'}
                 style={{ stroke: 'currentColor', marginRight: '-3px' }}
               />
             )}
@@ -234,7 +234,7 @@ ButtonSecondary.propTypes = {
   open: PropTypes.bool,
   onClick: PropTypes.func,
   label: PropTypes.string,
-  size: PropTypes.string,
+  windowSize: PropTypes.string,
 };
 
 const renderPages = (match, nav, setShowMenu, align) =>
@@ -411,7 +411,7 @@ export function Header({
                         }}
                         label="metrics"
                         ref={metricTarget}
-                        size={size}
+                        windowSize={size}
                       />
                       {showMetrics && size === 'small' && (
                         <NavMetric
@@ -444,7 +444,7 @@ export function Header({
                         }}
                         label="countries"
                         ref={countryTarget}
-                        size={size}
+                        windowSize={size}
                       />
                       {showCountries && size === 'small' && (
                         <NavCountry
@@ -476,7 +476,7 @@ export function Header({
                         }}
                         label="people"
                         ref={groupTarget}
-                        size={size}
+                        windowSize={size}
                       />
                       {showGroups && size === 'small' && (
                         <NavGroups
