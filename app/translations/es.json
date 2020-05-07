@@ -866,5 +866,5 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "Con una mayor financiación, HRMI podría investigar la razón de cada uno de estos vacíos de información y buscar maneras para poder cubrirlos. ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "Aún no se han producido los datos de '{physint}' y '{empowerment}' para {countryWithArticle}. Nos gustaría ampliar nuestra recopilación de datos a todo el mundo lo antes posible. Para obtener más información sobre cómo puede ayudar, visite ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country"
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "esta página en el sitio web de HRMI."
 }
