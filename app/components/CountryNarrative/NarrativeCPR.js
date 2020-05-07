@@ -10,14 +10,7 @@ import { getCPRScoreRange, getMessageGrammar } from 'utils/narrative';
 import rootMessages from 'messages';
 import messages from './messages';
 
-function NarrativeCPR({
-  dimensionKey,
-  country,
-  score,
-  intl,
-  countryGrammar,
-  showNoData,
-}) {
+function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
   const messageValues = {
     ...getMessageGrammar(
       intl,
@@ -30,15 +23,8 @@ function NarrativeCPR({
     scoreBold: score && <strong>{formatScore(score.mean, 1, intl)}</strong>,
     score: score && formatScore(score.mean, 1, intl),
   };
-  if (!score && !showNoData) {
+  if (!score) {
     return null;
-  }
-  if (!score && showNoData) {
-    return (
-      <Paragraph>
-        <FormattedMessage {...messages.cpr.noData} values={messageValues} />
-      </Paragraph>
-    );
   }
   if (dimensionKey === 'empowerment') {
     const range = score && getCPRScoreRange(score.mean);
@@ -98,7 +84,6 @@ NarrativeCPR.propTypes = {
   dimensionKey: PropTypes.string,
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   intl: intlShape.isRequired,
-  showNoData: PropTypes.bool,
 };
 
 export default injectIntl(NarrativeCPR);
