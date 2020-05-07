@@ -7,9 +7,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Heading, Paragraph, Box } from 'grommet';
+import { Paragraph, Box } from 'grommet';
 
-import rootMessages from 'messages';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import HTMLWrapper from 'components/HTMLWrapper';
@@ -20,16 +19,6 @@ import Hint from 'styled/Hint';
 import messages from './messages';
 
 const Styled = styled(Box)``;
-
-const RightHeading = props => (
-  <Heading
-    responsive={false}
-    level={4}
-    margin={{ vertical: '15px' }}
-    {...props}
-  />
-);
-const StyledRightHeading = styled(RightHeading)``;
 
 const renderAnalysis = (atRiskAnalysis, intl) => (
   <Box>
@@ -59,8 +48,12 @@ function ChartCountryMetricPeople({
   hasSubrightAnalysis,
   showIntro,
 }) {
+  const hasSubrights = data && Object.keys(data).length > 1;
   return (
-    <Styled pad={showIntro ? { vertical: 'medium' } : null} direction="column">
+    <Styled
+      pad={showIntro || hasSubrights ? { vertical: 'medium' } : null}
+      direction="column"
+    >
       {metric.metricType === 'rights' && (
         <Box>
           {showIntro && (
@@ -69,7 +62,7 @@ function ChartCountryMetricPeople({
             </Paragraph>
           )}
           <Box pad={showIntro ? { top: 'medium' } : null}>
-            {Object.values(data).map((d, index, array) => {
+            {Object.values(data).map((d, index) => {
               const analysisSR =
                 hasSubrightAnalysis &&
                 atRiskAnalysisSubrights.find(sra => sra.key === d.subright);
@@ -78,39 +71,13 @@ function ChartCountryMetricPeople({
                   <ChartWordCloud
                     data={d}
                     dimension={metric.dimension}
-                    showTitle={array.length > 1}
-                    border={showIntro}
+                    showTitle={hasSubrights}
+                    border={showIntro || (hasSubrights && index > 0)}
                   />
                   {analysisSR && renderAnalysis(analysisSR, intl)}
                 </span>
               );
             })}
-          </Box>
-        </Box>
-      )}
-      {metric.metricType === 'dimensions' && (
-        <Box>
-          <Paragraph>
-            <FormattedMessage {...messages.introDimension} />
-          </Paragraph>
-          <Box pad={{ top: 'medium' }}>
-            {Object.values(data).map(i => (
-              <div key={i.key}>
-                {Object.values(i.atRiskData).length > 1 && (
-                  <StyledRightHeading>
-                    <FormattedMessage {...rootMessages.rights[i.key]} />
-                  </StyledRightHeading>
-                )}
-                {Object.values(i.atRiskData).map((d, index, array) => (
-                  <ChartWordCloud
-                    key={d.code}
-                    data={d}
-                    dimension={i.dimension}
-                    subright={array.length > 1}
-                  />
-                ))}
-              </div>
-            ))}
           </Box>
         </Box>
       )}
