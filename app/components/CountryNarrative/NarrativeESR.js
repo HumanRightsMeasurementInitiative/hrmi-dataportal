@@ -21,7 +21,6 @@ function NarrativeESR({
   countryGrammar,
   short = false,
   benchmark,
-  showNoData,
 }) {
   // console.log(score);
   const scoreAdjusted =
@@ -56,17 +55,6 @@ function NarrativeESR({
     ),
     benchmarkBest: intl.formatMessage(rootMessages.settings.benchmark.best),
   };
-  if (!dimensionScore && showNoData) {
-    return (
-      <Paragraph>
-        <FormattedMessage {...messages.esr.noData} values={messageValues} />
-        <FormattedMessage
-          {...messages.esr.noDataFunding}
-          values={messageValues}
-        />
-      </Paragraph>
-    );
-  }
   if (dimensionScore) {
     const rangeAdjusted = getESRScoreRange(scoreAdjusted);
     const rangeBest = getESRScoreRange(scoreBest);
@@ -149,8 +137,7 @@ function NarrativeESR({
 
 NarrativeESR.propTypes = {
   dimensionScore: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  someData: PropTypes.bool,
-  showNoData: PropTypes.bool,
+  // someData: PropTypes.bool,
   short: PropTypes.bool,
   country: PropTypes.object,
   countryGrammar: PropTypes.object,
