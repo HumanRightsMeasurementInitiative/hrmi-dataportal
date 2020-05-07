@@ -50,6 +50,18 @@ export default defineMessages({
         defaultMessage: ' on the right to be safe from the state. ',
       },
     },
+    noData: {
+      id: `${scope}.compAssessmentCPR.noData`,
+      defaultMessage: 'compAssessmentCPR.noData',
+    },
+    noDataLinkURL: {
+      id: `${scope}.compAssessmentCPR.noDataLinkURL`,
+      defaultMessage: 'compAssessmentCPR.noDataLinkURL',
+    },
+    noDataLinkAnchor: {
+      id: `${scope}.compAssessmentCPR.noDataLinkAnchor`,
+      defaultMessage: 'compAssessmentCPR.noDataLinkAnchor',
+    },
   },
   compAssessmentESR: {
     start: {
@@ -90,6 +102,15 @@ export default defineMessages({
       id: `${scope}.compAssessmentESR.noData`,
       defaultMessage: 'compAssessmentESR.noData',
     },
+    noDataFunding: {
+      id: `${scope}.compAssessmentESR.noDataFunding`,
+      defaultMessage:
+        'With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it.',
+    },
+    noDataMissingData: {
+      id: `${scope}.compAssessmentESR.noDataMissingData`,
+      defaultMessage: 'noDataMissingData',
+    },
   },
   esr: {
     changeStandardNote: {
@@ -101,11 +122,6 @@ export default defineMessages({
       id: `${scope}.esr.noData`,
       defaultMessage:
         'For {needsArticle, select, true {the } false { }}{country} a {dimension} score is not available due to missing data for at least one component of the rights to food, health, education, housing and work. Missing data tells us that {needsArticle, select, true {the } false { }}{country} has not submitted some information to the relevant international databases.',
-    },
-    noDataFunding: {
-      id: `${scope}.esr.noDataFunding`,
-      defaultMessage:
-        'With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it.',
     },
     someData: {
       id: `${scope}.esr.someData`,

@@ -4,7 +4,14 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import { Accordion, AccordionPanel, Box, Heading, Paragraph } from 'grommet';
+import {
+  Accordion,
+  AccordionPanel,
+  Box,
+  Heading,
+  Paragraph,
+  Text,
+} from 'grommet';
 import { Down, Up } from 'grommet-icons';
 
 import { navigate } from 'containers/App/actions';
@@ -39,7 +46,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
             values={{ metric }}
           />
         </Paragraph>
-        <Paragraph size="small">
+        <Text size="small">
           <OL>
             <LI>
               <FormattedMessage
@@ -60,7 +67,7 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
               />
             </LI>
           </OL>
-        </Paragraph>
+        </Text>
         <MethodologyLink
           onClick={() => navMethodology()}
           text={<FormattedMessage {...messages.methodology} />}

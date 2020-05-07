@@ -15,16 +15,10 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 // import getMetricDetails from 'utils/metric-details';
 
-import {
-  STANDARDS,
-  BENCHMARKS,
-  GRADES,
-  COLUMNS,
-} from 'containers/App/constants';
+import { BENCHMARKS, GRADES, COLUMNS } from 'containers/App/constants';
 
 import {
   getDimensionsForCountry,
-  getIndicatorsForCountry,
   getCountry,
   getCountryGrammar,
   getStandardSearch,
@@ -147,7 +141,6 @@ export function ChartContainerCountryRights({
   dimensionAverages,
   countryGrammar,
   rights,
-  indicators,
   standard,
   benchmark,
   dataReady,
@@ -162,16 +155,6 @@ export function ChartContainerCountryRights({
   if (!dataReady) return null;
 
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
-  const currentStandard = STANDARDS.find(s => s.key === standard);
-  const hasSomeIndicatorScores = Object.values(indicators)
-    .filter(s => {
-      if (!s.details) return false;
-      return (
-        s.details.standard === 'Both' ||
-        s.details.standard === currentStandard.code
-      );
-    })
-    .reduce((m, s) => m || !!s.score, false);
 
   const dimension = dimensions[dimensionCode];
   const reference = dimensionAverages[dimensionCode];
@@ -317,23 +300,18 @@ export function ChartContainerCountryRights({
                 dimensionScore={dimension.score}
                 country={country}
                 countryGrammar={countryGrammar}
-                someData={hasSomeIndicatorScores}
                 standard={standard}
               />
-              <Paragraph>
-                <NarrativeESRCompAssessment
-                  country={country}
-                  countryGrammar={countryGrammar}
-                  comparativeScore={parseFloat(comparativeScoreESR)}
-                  comparativeRights={comparativeRightsESR}
-                  groupAverageScore={
-                    reference &&
-                    reference.average &&
-                    reference.average[benchmark]
-                  }
-                  benchmark={currentBenchmark}
-                />
-              </Paragraph>
+              <NarrativeESRCompAssessment
+                country={country}
+                countryGrammar={countryGrammar}
+                comparativeScore={parseFloat(comparativeScoreESR)}
+                comparativeRights={comparativeRightsESR}
+                groupAverageScore={
+                  reference && reference.average && reference.average[benchmark]
+                }
+                benchmark={currentBenchmark}
+              />
               <Paragraph>
                 <Hint italic>
                   <FormattedMessage {...rootMessages.hints.settings} />
@@ -435,21 +413,16 @@ export function ChartContainerCountryRights({
                 score={dimension.score}
                 country={country}
                 countryGrammar={countryGrammar}
-                showNoData
               />
-              {dimension.score && (
-                <Paragraph>
-                  <NarrativeCPRCompAssessment
-                    dimensionKey={dimensionCode}
-                    score={dimension.score}
-                    country={country}
-                    countryGrammar={countryGrammar}
-                    referenceScore={reference.average}
-                    referenceCount={reference.count}
-                    start
-                  />
-                </Paragraph>
-              )}
+              <NarrativeCPRCompAssessment
+                dimensionKey={dimensionCode}
+                score={dimension.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={reference.average}
+                referenceCount={reference.count}
+                start
+              />
             </>
           )}
         </div>
@@ -465,7 +438,6 @@ ChartContainerCountryRights.propTypes = {
   country: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   countryGrammar: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   onLoadData: PropTypes.func.isRequired,
-  indicators: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dimensions: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
@@ -481,8 +453,6 @@ const mapStateToProps = createStructuredSelector({
   countryGrammar: (state, { countryCode }) =>
     getCountryGrammar(state, countryCode),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  indicators: (state, { countryCode }) =>
-    getIndicatorsForCountry(state, countryCode),
   dimensions: (state, { countryCode }) =>
     getDimensionsForCountry(state, countryCode),
   standard: state => getStandardSearch(state),
