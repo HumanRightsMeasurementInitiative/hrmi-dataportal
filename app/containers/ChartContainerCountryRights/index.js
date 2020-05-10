@@ -169,6 +169,11 @@ export function ChartContainerCountryRights({
     comparativeScoreESR = dimension.scoreSome[currentBenchmark.column];
     comparativeRightsESR = dimension.scoreSome.metric;
   }
+
+  const dimRights = getRightsScoresForDimension(rights, dimensionCode);
+  const hasSomeRights =
+    dimRights && Object.values(dimRights).some(s => !!s.score);
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -270,7 +275,7 @@ export function ChartContainerCountryRights({
                 <ChartBars
                   scoresAside
                   data={prepareData({
-                    scores: getRightsScoresForDimension(rights, 'esr'),
+                    scores: dimRights,
                     dimensionCode,
                     currentBenchmark,
                     standard,
@@ -385,7 +390,7 @@ export function ChartContainerCountryRights({
                 />
                 <ChartBars
                   data={prepareData({
-                    scores: getRightsScoresForDimension(rights, dimensionCode),
+                    scores: dimRights,
                     dimensionCode,
                     onClick: onMetricClick,
                     intl,
@@ -397,7 +402,7 @@ export function ChartContainerCountryRights({
                   labelColor={`${dimensionCode}Dark`}
                   padVertical="small"
                   grades={GRADES[type]}
-                  bullet={!!dimension.score}
+                  bullet={hasSomeRights}
                   listHeader
                   scoresAside
                   scoreOnHover
