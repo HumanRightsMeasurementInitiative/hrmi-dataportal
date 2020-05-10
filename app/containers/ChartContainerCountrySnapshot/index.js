@@ -117,6 +117,13 @@ export function ChartContainerCountrySnapshot({
     comparativeScoreESR = dimensions.esr.scoreSome[currentBenchmark.column];
     comparativeRightsESR = dimensions.esr.scoreSome.metric;
   }
+  const hasSomePhysintScore = Object.values(rights).some(
+    s => s.dimension === 'physint' && !!s.score,
+  );
+  const hasSomeEmpowermentScore = Object.values(rights).some(
+    s => s.dimension === 'physint' && !!s.score,
+  );
+
   return (
     <Styled>
       <ChartHeader
@@ -259,7 +266,7 @@ export function ChartContainerCountrySnapshot({
           referenceCount={dimensionAverages && dimensionAverages.physint.count}
           start
         />
-        {dimensions.physint.score && (
+        {hasSomePhysintScore && (
           <Paragraph>
             <ButtonTextIcon
               onClick={() => goToTab('report-physint')}
@@ -293,7 +300,7 @@ export function ChartContainerCountrySnapshot({
           }
           start
         />
-        {dimensions.empowerment.score && (
+        {hasSomeEmpowermentScore && (
           <Paragraph>
             <ButtonTextIcon
               onClick={() => goToTab('report-empowerment')}
