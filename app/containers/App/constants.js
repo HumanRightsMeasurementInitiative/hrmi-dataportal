@@ -419,6 +419,7 @@ export const GRADES = {
 };
 
 export const SUBREGIONS_FOR_COMPARISON = ['pacific'];
+export const SUBREGIONS_FOR_COMPARISON_CPR = ['pacific'];
 
 export const DIMENSIONS = [
   {

@@ -39,6 +39,7 @@ import {
   COLUMNS,
   ASSESSED_FILTERS,
   SUBREGIONS_FOR_COMPARISON,
+  SUBREGIONS_FOR_COMPARISON_CPR,
 } from './constants';
 
 // global sub-state
@@ -1164,41 +1165,41 @@ export const getCPRScoresForYear = createSelector(
   (year, scores) => filterScoresByYear(year, scores),
 );
 
-export const getESRDimensionScoresForYear = createSelector(
-  getESRYear,
-  getESRScores,
-  (year, scores) => {
-    const dimension = DIMENSIONS.find(d => d.key === 'esr');
-    return (
-      dimension &&
-      scores &&
-      scores.filter(
-        s => s.metric_code === dimension.code && quasiEquals(s.year, year),
-      )
-    );
-  },
-);
+// export const getESRDimensionScoresForYear = createSelector(
+//   getESRYear,
+//   getESRScores,
+//   (year, scores) => {
+//     const dimension = DIMENSIONS.find(d => d.key === 'esr');
+//     return (
+//       dimension &&
+//       scores &&
+//       scores.filter(
+//         s => s.metric_code === dimension.code && quasiEquals(s.year, year),
+//       )
+//     );
+//   },
+// );
 
-export const getCPRDimensionScoresForYear = createSelector(
-  getCPRYear,
-  getCPRScores,
-  (year, scores) => {
-    const dimensions = DIMENSIONS.filter(d => d.type === 'cpr');
-    return (
-      dimensions &&
-      scores &&
-      dimensions.reduce(
-        (m, d) => ({
-          ...m,
-          [d.key]: scores.filter(
-            s => s.metric_code === d.code && quasiEquals(s.year, year),
-          ),
-        }),
-        {},
-      )
-    );
-  },
-);
+// export const getCPRDimensionScoresForYear = createSelector(
+//   getCPRYear,
+//   getCPRScores,
+//   (year, scores) => {
+//     const dimensions = DIMENSIONS.filter(d => d.type === 'cpr');
+//     return (
+//       dimensions &&
+//       scores &&
+//       dimensions.reduce(
+//         (m, d) => ({
+//           ...m,
+//           [d.key]: scores.filter(
+//             s => s.metric_code === d.code && quasiEquals(s.year, year),
+//           ),
+//         }),
+//         {},
+//       )
+//     );
+//   },
+// );
 
 // esr: average of countries in same region, if high income country use ALL high income average best calculate for both standards and benchmarks
 // cpr: average mean score of other countries worldwide, if high income oecd country only use HI OECD average
@@ -1247,28 +1248,55 @@ const esrScoreAdder = (sum, referenceCountry, scores, metrics) => {
     count: sum.count + 1,
   };
 };
-
-const cprScoreAdder = (sum, referenceCountry, scores) => {
-  const score = scores.find(
-    s => s.country_code === referenceCountry.country_code,
+const cprScoreAdder = (sum, referenceCountry, scores, metrics) => {
+  // look up country score
+  const referenceScores = scores.filter(
+    s =>
+      s.country_code === referenceCountry.country_code &&
+      metrics.map(m => m.code).indexOf(s.metric_code) > -1,
   );
-  // prettier-ignore
-  return score
-    ? {
-      sum: sum.sum + parseFloat(score[COLUMNS.CPR.MEAN]),
-      count: sum.count + 1,
-    }
-    : sum;
+  if (!referenceScores || referenceScores.length === 0) {
+    return sum;
+  }
+  let referenceAverage;
+  if (referenceScores.length === 1) {
+    [referenceAverage] = referenceScores;
+  } else {
+    // rights averages
+    const rightsSum = referenceScores.reduce(
+      (sumR, s) => sumR + parseFloat(s[COLUMNS.CPR.MEAN]),
+      0,
+    );
+    referenceAverage = rightsSum / referenceScores.length;
+  }
+  // sums by benchmark & count
+  return {
+    sum: sum.sum + parseFloat(referenceAverage[COLUMNS.CPR.MEAN]),
+    count: sum.count + 1,
+  };
 };
+
+// const cprScoreAdder = (sum, referenceCountry, scores) => {
+//   const score = scores.find(
+//     s => s.country_code === referenceCountry.country_code,
+//   );
+//   // prettier-ignore
+//   return score
+//     ? {
+//       sum: sum.sum + parseFloat(score[COLUMNS.CPR.MEAN]),
+//       count: sum.count + 1,
+//     }
+//     : sum;
+// };
 
 export const getReferenceScores = createSelector(
   getCountryFromRouter,
   getCountries,
   getStandardSearch,
   getESRScoresForYear,
-  getCPRDimensionScoresForYear,
-  (country, countries, standard, esrScores, cprDimScores) => {
-    if (!country || !countries || !esrScores || !cprDimScores) return false;
+  getCPRScoresForYear,
+  (country, countries, standard, esrScores, cprScores) => {
+    if (!country || !countries || !esrScores || !cprScores) return false;
 
     // esr data
     // 1. check if our country even has any dim or rights scores
@@ -1356,42 +1384,122 @@ export const getReferenceScores = createSelector(
           : null;
       }
     }
-    let referenceCountriesCPR;
-    if (isCountryHighIncome(country) && isCountryOECD(country)) {
-      referenceCountriesCPR = countries.filter(
-        c => isCountryHighIncome(c) && isCountryOECD(country),
-      );
-    } else {
-      referenceCountriesCPR = countries.filter(
-        c => c.country_code !== country.country_code,
-      );
-    }
-    const cprDimensions = DIMENSIONS.filter(d => d.type === 'cpr');
-    const cprSums = cprDimensions.reduce(
-      (dimSums, d) => ({
-        ...dimSums,
-        [d.key]: referenceCountriesCPR.reduce(
-          (sum, referenceCountry) =>
-            cprScoreAdder(sum, referenceCountry, cprDimScores[d.key]),
-          {
-            sum: 0,
-            count: 0,
-          },
-        ),
-      }),
-      {},
-    );
-    const cprAverages = cprDimensions.reduce(
-      (m, d) => ({
-        ...m,
-        [d.key]: {
-          ...cprSums[d.key],
-          average: cprSums[d.key].sum / cprSums[d.key].count,
-        },
-      }),
-      {},
-    );
+    // let referenceCountriesCPR;
+    // if (isCountryHighIncome(country) && isCountryOECD(country)) {
+    //   referenceCountriesCPR = countries.filter(
+    //     c => isCountryHighIncome(c) && isCountryOECD(country),
+    //   );
+    // } else {
+    //   referenceCountriesCPR = countries.filter(
+    //     c => c.country_code !== country.country_code,
+    //   );
+    // }
+    // const cprDimensions = DIMENSIONS.filter(d => d.type === 'cpr');
+    // const cprSums = cprDimensions.reduce(
+    //   (dimSums, d) => ({
+    //     ...dimSums,
+    //     [d.key]: referenceCountriesCPR.reduce(
+    //       (sum, referenceCountry) =>
+    //         cprScoreAdder(sum, referenceCountry, cprDimScores[d.key]),
+    //       {
+    //         sum: 0,
+    //         count: 0,
+    //       },
+    //     ),
+    //   }),
+    //   {},
+    // );
+    // const cprAverages_ = cprDimensions.reduce(
+    //   (m, d) => ({
+    //     ...m,
+    //     [d.key]: {
+    //       ...cprSums[d.key],
+    //       average: cprSums[d.key].sum / cprSums[d.key].count,
+    //     },
+    //   }),
+    //   {},
+    // );
 
+    // CPR
+    let cprAverages;
+    const countryScoresCPR = cprScores.filter(
+      s => s.country_code === country.country_code,
+    );
+    if (countryScoresCPR && countryScoresCPR.length > 0) {
+      const cprDimensions = DIMENSIONS.filter(d => d.type === 'cpr');
+      cprAverages = cprDimensions.reduce((averages, dimension) => {
+        const countryDimScore = countryScores.find(
+          s => s.metric_code === dimension.code,
+        );
+        const hasCountryDimScore = !!countryDimScore;
+        // check rights scores if no dim score present
+        let countryRightsScores;
+        let hasCountryRightsScores;
+        let countryMetrics;
+        if (hasCountryDimScore) {
+          countryMetrics = [dimension];
+        } else {
+          countryRightsScores = countryScores.filter(
+            s => s.metric_code !== dimension.code,
+          );
+          countryMetrics = countryRightsScores
+            .map(s => RIGHTS.find(r => r.code === s.metric_code))
+            .filter(s => !!s);
+          hasCountryRightsScores =
+            countryRightsScores && countryRightsScores.length > 0;
+        }
+        // 2. get reference countries if scores present
+        if (hasCountryDimScore || hasCountryRightsScores) {
+          // these are the countries that we are comparing our country to
+          // if country high income country then compare with all other HI
+          // if not, compare with region/subregion
+          let referenceCountries;
+          // if (isCountryHighIncome(country)) {
+          //   // use high income countries for comparison
+          //   referenceCountries = countries.filter(
+          //     c =>
+          //       isCountryHighIncome(c) &&
+          //       c.country_code !== country.country_code,
+          //   );
+          if (isCountryHighIncome(country) && isCountryOECD(country)) {
+            referenceCountries = countries.filter(
+              c => isCountryHighIncome(c) && isCountryOECD(country),
+            );
+          } else if (
+            SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) > -1
+          ) {
+            // use countries from same subregion
+            referenceCountries = countries.filter(
+              c =>
+                c.subregion_code === country.subregion_code &&
+                c.country_code !== country.country_code,
+            );
+          } else {
+            // use other countries
+            referenceCountries = countries.filter(
+              c => c.country_code !== country.country_code,
+            );
+          }
+          // 3. calculate average score of reference countries
+          const dimSums = referenceCountries.reduce(
+            (sum, referenceCountry) =>
+              cprScoreAdder(sum, referenceCountry, cprScores, countryMetrics),
+            {
+              sum: 0,
+              count: 0,
+            },
+          );
+          return {
+            ...averages,
+            [dimension.key]: {
+              ...dimSums,
+              average: dimSums.sum / dimSums.count,
+            },
+          };
+        }
+        return averages;
+      }, {});
+    }
     return {
       esr: esrAverages,
       ...cprAverages,
