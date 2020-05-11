@@ -49,19 +49,19 @@ function NarrativeESRCompAssessment({
       <Paragraph>
         {comparativeRights === 'all' && (
           <FormattedMessage
-            {...messages.compAssessmentESR.start}
+            {...messages.compAssessment.start}
             values={messageValues}
           />
         )}
         {comparativeRights === 'some' && (
           <FormattedMessage
-            {...messages.compAssessmentESR.startSome}
+            {...messages.compAssessment.startSome}
             values={messageValues}
           />
         )}
         {comparativeRights !== 'all' && comparativeRights !== 'some' && (
           <FormattedMessage
-            {...messages.compAssessmentESR.startOne}
+            {...messages.compAssessment.startOne}
             values={{
               ...messageValues,
               right: intl.formatMessage(rootMessages.rights[comparativeRights]),
@@ -82,7 +82,7 @@ function NarrativeESRCompAssessment({
         </strong>
         {comparativeRights !== 'all' && comparativeRights !== 'some' && (
           <FormattedMessage
-            {...messages.compAssessmentESR.oneRight}
+            {...messages.compAssessment.oneRight}
             values={{
               ...messageValues,
               right: intl.formatMessage(rootMessages.rights[comparativeRights]),
