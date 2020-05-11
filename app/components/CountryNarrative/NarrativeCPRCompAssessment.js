@@ -17,11 +17,12 @@ function NarrativeCPRCompAssessment({
   dimensionKey,
   country,
   countryGrammar,
-  score,
+  comparativeScoreRange,
   referenceScore,
   referenceCount,
   intl,
-  conjunct = false,
+  comparativeRights,
+  comparativeGroup,
 }) {
   const messageValues = {
     ...getMessageGrammar(
@@ -37,57 +38,120 @@ function NarrativeCPRCompAssessment({
   };
 
   const isHiOECD = isCountryHighIncome(country) && isCountryOECD(country);
-  if (!score) {
+  if (!comparativeScoreRange) {
     return <NarrativeCPRNoData messageValues={messageValues} />;
+  }
+  if (comparativeRights === 'all' && comparativeGroup === 'region') {
+    return (
+      <Paragraph>
+        {isHiOECD && (
+          <FormattedMessage
+            {...messages.compAssessmentCPR.hiOECD}
+            values={messageValues}
+          />
+        )}
+        {!isHiOECD && (
+          <FormattedMessage
+            {...messages.compAssessmentCPR.notHiOECD}
+            values={messageValues}
+          />
+        )}
+        <strong>
+          <FormattedMessage
+            {...messages.compAssessment.result[
+              compareRange({
+                lo: comparativeScoreRange[COLUMNS.CPR.LO],
+                hi: comparativeScoreRange[COLUMNS.CPR.HI],
+                reference: referenceScore,
+              })
+            ]}
+            values={messageValues}
+          />
+        </strong>
+        <FormattedMessage
+          {...messages.compAssessmentCPR.end[dimensionKey]}
+          values={messageValues}
+        />
+      </Paragraph>
+    );
   }
   return (
     <Paragraph>
-      {!conjunct && isHiOECD && (
+      {comparativeRights === 'all' && (
         <FormattedMessage
-          {...messages.compAssessmentCPR.hiOECD}
+          {...messages.compAssessment.start}
           values={messageValues}
         />
       )}
-      {!conjunct && !isHiOECD && (
+      {comparativeRights === 'some' && (
         <FormattedMessage
-          {...messages.compAssessmentCPR.notHiOECD}
+          {...messages.compAssessment.startSome}
           values={messageValues}
         />
       )}
-      {conjunct && (
+      {comparativeRights !== 'all' && comparativeRights !== 'some' && (
         <FormattedMessage
-          {...messages.compAssessmentCPR.conjunct}
-          values={messageValues}
+          {...messages.compAssessment.startOne}
+          values={{
+            ...messageValues,
+            right: intl.formatMessage(rootMessages.rights[comparativeRights]),
+          }}
         />
       )}
       <strong>
         <FormattedMessage
           {...messages.compAssessment.result[
             compareRange({
-              lo: score[COLUMNS.CPR.LO],
-              hi: score[COLUMNS.CPR.HI],
+              lo: comparativeScoreRange[COLUMNS.CPR.LO],
+              hi: comparativeScoreRange[COLUMNS.CPR.HI],
               reference: referenceScore,
             })
           ]}
           values={messageValues}
         />
       </strong>
-      <FormattedMessage
-        {...messages.compAssessmentCPR.end[dimensionKey]}
-        values={messageValues}
-      />
-      {conjunct && <span>.</span>}
+      {comparativeRights !== 'all' && comparativeRights !== 'some' && (
+        <FormattedMessage
+          {...messages.compAssessment.oneRight}
+          values={{
+            ...messageValues,
+            right: intl.formatMessage(rootMessages.rights[comparativeRights]),
+          }}
+        />
+      )}
+      {isHiOECD && (
+        <FormattedMessage
+          {...messages.compAssessmentCPR.endHiOECD}
+          values={messageValues}
+        />
+      )}
+      {!isHiOECD && comparativeGroup === 'region' && (
+        <FormattedMessage
+          {...messages.compAssessmentCPR.endRegion}
+          values={messageValues}
+        />
+      )}
+      {!isHiOECD && comparativeGroup !== 'region' && (
+        <FormattedMessage
+          {...messages.compAssessmentCPR.endOther}
+          values={messageValues}
+        />
+      )}
     </Paragraph>
   );
 }
 NarrativeCPRCompAssessment.propTypes = {
-  conjunct: PropTypes.bool,
+  comparativeRights: PropTypes.string,
+  comparativeGroup: PropTypes.string,
   country: PropTypes.object,
   countryGrammar: PropTypes.object,
   referenceCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   referenceScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   dimensionKey: PropTypes.string,
-  score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  comparativeScoreRange: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
   intl: intlShape.isRequired,
 };
 

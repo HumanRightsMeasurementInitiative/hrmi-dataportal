@@ -117,11 +117,25 @@ export function ChartContainerCountrySnapshot({
     comparativeScoreESR = dimensions.esr.scoreSome[currentBenchmark.column];
     comparativeRightsESR = dimensions.esr.scoreSome.metric;
   }
+  let comparativeRightsPhysint;
+  if (dimensions.physint && dimensions.physint.score) {
+    comparativeRightsPhysint = 'all';
+  }
+  if (dimensions.physint && dimensions.physint.scoreSome) {
+    comparativeRightsPhysint = dimensions.physint.scoreSome.metric;
+  }
   const hasSomePhysintScore = Object.values(rights).some(
     s => s.dimension === 'physint' && !!s.score,
   );
+  let comparativeRightsEmpowerment;
+  if (dimensions.physint && dimensions.physint.score) {
+    comparativeRightsEmpowerment = 'all';
+  }
+  if (dimensions.physint && dimensions.empowerment.scoreSome) {
+    comparativeRightsEmpowerment = dimensions.empowerment.scoreSome.metric;
+  }
   const hasSomeEmpowermentScore = Object.values(rights).some(
-    s => s.dimension === 'physint' && !!s.score,
+    s => s.dimension === 'empowerment' && !!s.score,
   );
 
   return (
@@ -257,13 +271,20 @@ export function ChartContainerCountrySnapshot({
         />
         <NarrativeCPRCompAssessment
           dimensionKey="physint"
-          score={dimensions.physint.score}
+          comparativeScoreRange={dimensions.physint.score}
+          comparativeRights={comparativeRightsPhysint}
           country={country}
           countryGrammar={countryGrammar}
           referenceScore={
-            dimensionAverages && dimensionAverages.physint.average
+            dimensionAverages &&
+            dimensionAverages.physint &&
+            dimensionAverages.physint.average
           }
-          referenceCount={dimensionAverages && dimensionAverages.physint.count}
+          referenceCount={
+            dimensionAverages &&
+            dimensionAverages.physint &&
+            dimensionAverages.physint.count
+          }
           start
         />
         {hasSomePhysintScore && (
@@ -289,16 +310,20 @@ export function ChartContainerCountrySnapshot({
         />
         <NarrativeCPRCompAssessment
           dimensionKey="empowerment"
-          score={dimensions.empowerment.score}
+          comparativeScoreRange={dimensions.empowerment.score}
+          comparativeRights={comparativeRightsEmpowerment}
           country={country}
           countryGrammar={countryGrammar}
           referenceScore={
-            dimensionAverages && dimensionAverages.empowerment.average
+            dimensionAverages &&
+            dimensionAverages.empowerment &&
+            dimensionAverages.empowerment.average
           }
           referenceCount={
-            dimensionAverages && dimensionAverages.empowerment.count
+            dimensionAverages &&
+            dimensionAverages.empowerment &&
+            dimensionAverages.empowerment.count
           }
-          start
         />
         {hasSomeEmpowermentScore && (
           <Paragraph>
