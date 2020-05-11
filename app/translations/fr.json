@@ -268,7 +268,7 @@
   "hrmi.components.AboutMetric.title.indicators": "Sur quelles données l’indicateur est-il basé ?",
   "hrmi.components.AboutMetric.title.indicatorsRaw": "Comment cet indicateur est-il défini ?",
   "hrmi.components.AboutMetric.titleSource": "Source(s) de données",
-  "hrmi.components.ChartSettingFilters.addFilter": "Ajoutez un filtre par pays",
+  "hrmi.components.ChartSettingFilters.addFilter": "Ajouter un filtre par pays",
   "hrmi.components.ChartSettingFilters.addFilterMobile": "Ajouter un filtre",
   "hrmi.components.ChartSettingFilters.regionsFilterOptionGroup": "Par région",
   "hrmi.components.ChartSettingFilters.subregionsFilterOptionGroup": "Résultats par sous-région",
