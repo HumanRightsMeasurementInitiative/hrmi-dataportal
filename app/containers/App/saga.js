@@ -5,6 +5,7 @@ import extend from 'lodash/extend';
 import Cookies from 'js-cookie';
 import ReactGA from 'react-ga';
 import 'whatwg-fetch';
+import 'url-search-params-polyfill';
 
 import quasiEquals from 'utils/quasi-equals';
 import { disableAnalytics } from 'utils/analytics';
