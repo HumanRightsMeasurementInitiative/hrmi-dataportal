@@ -1325,6 +1325,10 @@ export default defineMessages({
       id: `${scope}.sources.UN_IGME`,
       defaultMessage: 'UN_IGME',
     },
+    UNDP: {
+      id: `${scope}.sources.UNDP`,
+      defaultMessage: 'UNDP',
+    },
   },
   regions: {
     americas: {
