@@ -861,6 +861,7 @@
   "hrmi.sources.OECD_housing": "OECD Housing",
   "hrmi.sources.UNESCO": "UNESCO",
   "hrmi.sources.UN_IGME": "UN_IGME",
+  "hrmi.sources.UNDP": "UNDP",
   "hrmi.containers.PathMetric.indicators.affordable-housing.header.a": "TODO affordable-housing?",
   "hrmi.containers.PathMetric.indicators.affordable-housing.header.b": "These are scores for how well the countries are doing, not numbers or percentages of people.",
   "hrmi.indicators.affordable-housing": "Affordable Housing",
