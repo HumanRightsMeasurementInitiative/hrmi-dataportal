@@ -14,6 +14,8 @@ import {
 } from 'grommet';
 import { Down, Up } from 'grommet-icons';
 
+import FormattedMarkdown from 'components/FormattedMarkdown';
+
 import { navigate } from 'containers/App/actions';
 import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
 import InfoStandard from 'containers/LayerSettings/InfoStandard';
@@ -34,12 +36,12 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'measureRightESR') {
     return (
       <>
-        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-          <FormattedMessage
+        <Text margin={{ vertical: 'xsmall' }} size="small">
+          <FormattedMarkdown
             {...messages.answers.measureRightESR}
             values={{ metric }}
           />
-        </Paragraph>
+        </Text>
         <Paragraph margin={{ vertical: 'xsmall' }} size="small">
           <FormattedMessage
             {...messages.answers.measureRightESRNotesIntro}
