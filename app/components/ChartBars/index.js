@@ -78,15 +78,13 @@ function ChartBars({
   level = 2,
   annotateBetter = true,
   scoreOnHover,
-  scoresAside,
+  scoresAside = true,
   summaryScore,
   isStatic,
   intl,
   benchmarkIconOnly,
-  hasLabelsSmall = true,
   annotateBenchmark = true,
   annotateMinMax = true,
-  labelsMinimal = false,
 }) {
   if (!data) return null;
   return (
@@ -109,8 +107,6 @@ function ChartBars({
               annotateBetter={!grades && annotateBetter}
               hasAside={scoresAside}
               benchmarkIconOnly={benchmarkIconOnly}
-              hasLabelsSmall={hasLabelsSmall}
-              labelsMinimal={labelsMinimal}
               annotateBenchmark={annotateBenchmark}
               annotateMinMax={annotateMinMax}
             />
@@ -121,9 +117,6 @@ function ChartBars({
                 grades={grades}
                 labels={gradeLabels}
                 hasAside={scoresAside}
-                hasLabelsSmall={hasLabelsSmall}
-                labelsMinimal={labelsMinimal}
-                offset={size === 'small' && metric && metric.type === 'esr'}
               />
             )}
             {data.map(d => (
@@ -135,20 +128,15 @@ function ChartBars({
                 labelColor={labelColor}
                 hasBackground={!grades}
                 level={level}
-                scoreOnHover={scoreOnHover}
+                scoreOnHover={!scoresAside || scoreOnHover}
                 scoresAside={scoresAside}
                 summaryScore={summaryScore}
                 isStatic={isStatic}
-                hasLabelsSmall={hasLabelsSmall}
-                labelsMinimal={labelsMinimal}
               />
             ))}
             {summaryScore && (
               <SummaryWrap direction="row">
-                <Box
-                  width={chartLabelWidth(size, false, labelsMinimal)}
-                  flex={{ shrink: 0 }}
-                />
+                <Box width={chartLabelWidth(size)} flex={{ shrink: 0 }} />
                 <Box
                   flex
                   direction="row"
@@ -204,10 +192,8 @@ ChartBars.propTypes = {
   gradeLabels: PropTypes.bool,
   isStatic: PropTypes.bool,
   benchmarkIconOnly: PropTypes.bool,
-  hasLabelsSmall: PropTypes.bool,
   annotateBenchmark: PropTypes.bool,
   annotateMinMax: PropTypes.bool,
-  labelsMinimal: PropTypes.bool,
   level: PropTypes.number,
   summaryScore: PropTypes.object,
   intl: intlShape.isRequired,

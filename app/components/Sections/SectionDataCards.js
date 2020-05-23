@@ -41,7 +41,7 @@ export function SectionDataCards({
             />
             <Slider
               stretch
-              cardMargin={isMaxSize(size, 'small') ? 'xsmall' : 'small'}
+              cardMargin={isMaxSize(size, 'sm') ? 'xsmall' : 'small'}
             >
               <CardData
                 onClick={navRights}

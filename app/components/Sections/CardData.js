@@ -25,7 +25,7 @@ export function CardData({ onClick, no = 0, title, teaser, anchor }) {
           elevation="medium"
           responsive={false}
           margin={{
-            horizontal: isMaxSize(size, 'small') ? 'xsmall' : 'small',
+            horizontal: isMaxSize(size, 'sm') ? 'xsmall' : 'small',
           }}
           height={{ min: '200px' }}
           pad={{ horizontal: 'medium', top: 'ms', bottom: 'medium' }}
