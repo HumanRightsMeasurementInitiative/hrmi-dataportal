@@ -14,6 +14,8 @@ import { COLUMNS, IMAGE_PATH } from 'containers/App/constants';
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
+import { isMaxSize, isMinSize } from 'utils/responsive';
+
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -46,7 +48,7 @@ export function SectionCountries({
               <SectionTitle
                 title={title || intl.formatMessage(messages.countries.title)}
               />
-              {size !== 'small' && (
+              {isMinSize(size, 'medium') && (
                 <AllLinkButton
                   onClick={() => navAllCountries()}
                   label={allLink || intl.formatMessage(rootMessages.labels.allCountries)}
@@ -96,7 +98,7 @@ export function SectionCountries({
                 })}
               </Slider>
             )}
-            {size === 'small' && (
+            {isMaxSize(size, 'sm') && (
               <Box margin={{ top: 'medium' }}>
                 <AllLinkButton
                   onClick={() => navAllCountries()}

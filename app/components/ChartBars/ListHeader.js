@@ -13,6 +13,8 @@ import styled from 'styled-components';
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 
+import { isMaxSize } from 'utils/responsive';
+
 import rootMessages from 'messages';
 // import messages from './messages';
 import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
@@ -55,35 +57,31 @@ export function ListHeader({
   annotateBetter = true,
   hasAside = false,
   benchmarkIconOnly,
-  hasLabelsSmall = true,
   annotateBenchmark = true,
   annotateMinMax = true,
-  labelsMinimal = false,
 }) {
   const annotateBk = annotateBenchmark && metric && metric.type === 'esr';
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box direction="row" align="end" pad={{ bottom: 'xxsmall' }}>
-          {(size !== 'small' || hasLabelsSmall) && (
-            <CountryWrap
-              width={chartLabelWidth(size, hasLabelsSmall, labelsMinimal)}
-              noBorder
-              align="start"
-              flex={{ shrink: 0 }}
-              pad={{ right: 'small' }}
+          <CountryWrap
+            width={chartLabelWidth(size)}
+            noBorder
+            align="start"
+            flex={{ shrink: 0 }}
+            pad={{ right: 'small' }}
+          >
+            <StyledScoreText
+              size="small"
+              style={{ fontWeight: 600 }}
+              color={labelColor}
             >
-              <StyledScoreText
-                size="small"
-                style={{ fontWeight: 600 }}
-                color={labelColor}
-              >
-                {commonLabel || (
-                  <FormattedMessage {...rootMessages.labels.score} />
-                )}
-              </StyledScoreText>
-            </CountryWrap>
-          )}
+              {commonLabel || (
+                <FormattedMessage {...rootMessages.labels.score} />
+              )}
+            </StyledScoreText>
+          </CountryWrap>
           <BarWrap
             flex
             direction="row"
@@ -100,7 +98,7 @@ export function ListHeader({
                   pad={annotateBk ? { left: 'xsmall' } : null}
                   style={{
                     transform:
-                      size === 'small' && metric.type === 'esr'
+                      isMaxSize(size, 'sm') && metric.type === 'esr'
                         ? 'translateX(30%)'
                         : 'translateX(50%)',
                   }}
@@ -143,10 +141,8 @@ ListHeader.propTypes = {
   annotateBetter: PropTypes.bool,
   hasAside: PropTypes.bool,
   benchmarkIconOnly: PropTypes.bool,
-  hasLabelsSmall: PropTypes.bool,
   annotateBenchmark: PropTypes.bool,
   annotateMinMax: PropTypes.bool,
-  labelsMinimal: PropTypes.bool,
 };
 
 export default ListHeader;

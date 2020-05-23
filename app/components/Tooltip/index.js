@@ -4,6 +4,8 @@ import { Drop, Button, ResponsiveContext, Layer } from 'grommet';
 import { CircleInformation } from 'grommet-icons';
 import styled from 'styled-components';
 
+import { isMaxSize } from 'utils/responsive';
+
 import Content from './Content';
 
 const StyledDrop = styled(Drop)`
@@ -50,7 +52,7 @@ function Tooltip({
   return (
     <ResponsiveContext.Consumer>
       {size => {
-        const openModal = large && size === 'small';
+        const openModal = large && isMaxSize(size, 'sm');
         // prettier-ignore
         return (
           <>
