@@ -34,12 +34,7 @@ const Top = styled(Box)`
   position: relative;
 `;
 
-const ChartToolWrapper = styled.div`
-  position: absolute;
-  top: 4px;
-  right: 0px;
-  text-align: right;
-`;
+const ChartToolWrapper = styled(Box)``;
 // @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
 //   /* position: absolute;
 //   right: ${({ theme }) => theme.global.edgeSize.medium};
@@ -64,7 +59,7 @@ export function ChartHeader({
     <ResponsiveContext.Consumer>
       {size => (
         <Styled top={top}>
-          <Top direction="row" align="center">
+          <Top direction="row" align="center" justify="between">
             <Heading
               level={isMaxSize(size, 'sm') ? 5 : 2}
               responsive={false}
@@ -73,7 +68,7 @@ export function ChartHeader({
               {chartName}
             </Heading>
             {tools && (
-              <ChartToolWrapper>
+              <ChartToolWrapper flex={{ shrink: 0 }}>
                 <ChartTools
                   hasWhiteBG={hasWhiteBG}
                   howToReadConfig={
