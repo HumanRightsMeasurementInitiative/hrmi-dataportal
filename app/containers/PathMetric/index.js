@@ -38,7 +38,7 @@ import PageTitle from 'styled/PageTitle';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import getMetricDetails from 'utils/metric-details';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -151,21 +151,27 @@ export function PathMetric({
                     <PageTitle>{metricTitle}</PageTitle>
                   </div>
                   {messages[metric.metricType][metricCode].header.a && (
-                    <Paragraph size={size === 'small' ? 'small' : 'medium'}>
+                    <Paragraph
+                      size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
+                    >
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.a}
                       />
                     </Paragraph>
                   )}
                   {messages[metric.metricType][metricCode].header.b && (
-                    <Paragraph size={size === 'small' ? 'small' : 'medium'}>
+                    <Paragraph
+                      size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
+                    >
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.b}
                       />
                     </Paragraph>
                   )}
                   {messages[metric.metricType][metricCode].link && (
-                    <Paragraph size={size === 'small' ? 'small' : 'medium'}>
+                    <Paragraph
+                      size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
+                    >
                       <ButtonTextIcon
                         label={intl.formatMessage(
                           messages[metric.metricType][metricCode].link,

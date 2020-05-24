@@ -16,7 +16,7 @@ import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import graphic from 'images/graphics/people_overview.svg';
 
@@ -83,7 +83,7 @@ export function SectionOurData({ nav, intl }) {
                   <FormattedMessage {...messages.ourData.para2} />
                 </Paragraph>
               )}
-              <Box direction={size === 'small' ? 'column' : 'row'}>
+              <Box direction={isMaxSize(size, 'sm') ? 'column' : 'row'}>
                 <ButtonTextIcon
                   onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}
                   label={intl.formatMessage(messages.ourData.downloadLink)}
@@ -91,7 +91,7 @@ export function SectionOurData({ nav, intl }) {
                 />
                 <ButtonTextIcon
                   style={
-                    size === 'small'
+                    isMaxSize(size, 'sm')
                       ? { marginTop: '5px' }
                       : { marginLeft: 'auto' }
                   }

@@ -29,7 +29,8 @@ import ContentMaxWidth from 'styled/ContentMaxWidth';
 import PageTitle from 'styled/PageTitle';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 import ButtonText from 'styled/ButtonText';
-import { isMinSize } from 'utils/responsive';
+
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import graphic from 'images/graphics/rights_overview.svg';
 
@@ -68,7 +69,7 @@ export function PathMetricOverview({
                     values={{ no: RIGHTS.length }}
                   />
                 </PageTitle>
-                <Paragraph size={size === 'small' ? 'medium' : 'large'}>
+                <Paragraph size={isMaxSize(size, 'sm') ? 'medium' : 'large'}>
                   <FormattedMessage
                     {...messages.header}
                     values={{
@@ -76,7 +77,7 @@ export function PathMetricOverview({
                       esrLink: (
                         <ButtonTextIcon
                           color="esrDark"
-                          size={size === 'small' ? 'medium' : 'large'}
+                          size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.esr,
@@ -87,7 +88,7 @@ export function PathMetricOverview({
                       physintLink: (
                         <ButtonTextIcon
                           color="physintDark"
-                          size={size === 'small' ? 'medium' : 'large'}
+                          size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.physint,
@@ -98,7 +99,7 @@ export function PathMetricOverview({
                       empowerLink: (
                         <ButtonTextIcon
                           color="empowermentDark"
-                          size={size === 'small' ? 'medium' : 'large'}
+                          size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
                             rootMessages.dimensions.empowerment,

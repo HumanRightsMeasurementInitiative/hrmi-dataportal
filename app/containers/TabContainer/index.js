@@ -46,7 +46,12 @@ const FixedBar = styled(Bar)`
 `;
 
 const TabLinks = styled(Box)`
+  margin-left: -6px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    margin-left: -10px;
+  }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    margin-left: -20px;
     height: 44px;
   }
 `;
