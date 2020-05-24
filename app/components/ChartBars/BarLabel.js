@@ -8,7 +8,7 @@ const Styled = styled.span`
   padding: 2px 0 2px 0;
   line-height: 14px;
   min-height: 20px;
-  font-size: ${({ level }) => (level > 1 ? '12px' : '14px' )};
+  font-size: 12px;
   color: ${({ color, theme }) => color
     ? theme.global.colors[color]
     : theme.global.colors['dark-1']};

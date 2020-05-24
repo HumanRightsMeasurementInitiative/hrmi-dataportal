@@ -22,6 +22,7 @@ import {
 } from 'react-vis';
 import { utcFormat as timeFormat } from 'd3-time-format';
 import { formatScore } from 'utils/scores';
+import { isMaxSize, isMinSize } from 'utils/responsive';
 
 import Source from 'components/Source';
 
@@ -56,7 +57,7 @@ const getTickValuesX = (size, minYear, maxYear) => {
   const noYears = maxYear + 1 - minYear;
   /* eslint-disable no-plusplus */
   for (let y = minYear; y <= maxYear; y++) {
-    if (size === 'small' && noYears > 8) {
+    if (isMaxSize(size, 'sm') && noYears > 8) {
       if (isEven(noYears) && isOdd(y)) {
         tickValuesX.push(new Date(`${y}`).getTime());
       }
@@ -245,7 +246,7 @@ function ChartCountryMetricTrend({
         <Box direction="column" pad={{ vertical: 'medium' }}>
           <WrapPlot>
             <FlexibleWidthXYPlot
-              height={size !== 'small' ? 240 : 200}
+              height={isMinSize(size, 'medium') ? 240 : 200}
               xType="time"
               margin={{ bottom: 30, right: 10, left: percentage ? 30 : 25 }}
               onMouseLeave={() => {
@@ -460,8 +461,8 @@ function ChartCountryMetricTrend({
             >
               {groupsActive && (
                 <Box
-                  direction={size !== 'small' ? 'row' : 'column'}
-                  pad={size !== 'small' && { horizontal: 'medium' }}
+                  direction={isMinSize(size, 'medium') ? 'row' : 'column'}
+                  pad={isMinSize(size, 'medium') && { horizontal: 'medium' }}
                   justify="start"
                   fill="horizontal"
                 >
