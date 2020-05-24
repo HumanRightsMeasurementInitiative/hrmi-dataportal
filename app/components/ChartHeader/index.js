@@ -15,7 +15,7 @@ import ChartTools from 'containers/ChartTools';
 import ChartSettingFilters from 'components/ChartSettingFilters';
 import ChartSettingSort from 'components/ChartSettingSort';
 
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import messages from './messages';
 
@@ -34,12 +34,7 @@ const Top = styled(Box)`
   position: relative;
 `;
 
-const ChartToolWrapper = styled.div`
-  position: absolute;
-  top: 4px;
-  right: 0px;
-  text-align: right;
-`;
+const ChartToolWrapper = styled(Box)``;
 // @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
 //   /* position: absolute;
 //   right: ${({ theme }) => theme.global.edgeSize.medium};
@@ -64,16 +59,16 @@ export function ChartHeader({
     <ResponsiveContext.Consumer>
       {size => (
         <Styled top={top}>
-          <Top direction="row" align="center">
+          <Top direction="row" align="center" justify="between">
             <Heading
-              level={size === 'small' ? 5 : 2}
+              level={isMaxSize(size, 'sm') ? 5 : 2}
               responsive={false}
               margin={{ vertical: 'xsmall' }}
             >
               {chartName}
             </Heading>
             {tools && (
-              <ChartToolWrapper>
+              <ChartToolWrapper flex={{ shrink: 0 }}>
                 <ChartTools
                   hasWhiteBG={hasWhiteBG}
                   howToReadConfig={
@@ -94,7 +89,7 @@ export function ChartHeader({
           </Top>
           {(filter || sort) && (
             <Box
-              direction={size === 'small' ? 'column' : 'row'}
+              direction={isMaxSize(size, 'sm') ? 'column' : 'row'}
               justify="between"
               align={isMinSize(size, 'medium') ? 'center' : 'start'}
               margin={{
@@ -102,7 +97,7 @@ export function ChartHeader({
                 top: isMinSize(size, 'medium') ? 'small' : '0',
               }}
             >
-              {sort && size === 'small' && (
+              {sort && isMaxSize(size, 'sm') && (
                 <ChartSettingSort
                   sort={sort.sort}
                   options={sort.options}
@@ -126,7 +121,7 @@ export function ChartHeader({
                   hasWhiteBG={hasWhiteBG}
                 />
               )}
-              {sort && size !== 'small' && (
+              {sort && isMinSize(size, 'medium') && (
                 <ChartSettingSort
                   sort={sort.sort}
                   options={sort.options}

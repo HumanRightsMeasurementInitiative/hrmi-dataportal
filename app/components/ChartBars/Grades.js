@@ -5,11 +5,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ResponsiveContext } from 'grommet';
+import { ResponsiveContext, Box } from 'grommet';
 import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 
 import rootMessages from 'messages';
+
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
 
@@ -32,58 +34,88 @@ const BGScaleX = styled.div`
   bottom: 0;
   left: ${({ min }) => min}%;
 `;
-const BGScaleLabel = styled.span`
+const BGScaleLabelWrap = styled.span`
   position: absolute;
   top: 100%;
   left: 0;
+  left: ${({ single }) => (single ? '-30px' : '0')};
+  right: ${({ single }) => (single ? '-30px' : 'auto')};
   opacity: 0.8;
+  border-left: ${({ single }) => (single ? 0 : 1)}px solid;
+  border-color: ${({ theme }) => theme.global.colors['light-4']};
+  margin-top: 2px;
+`;
+const BGScaleLabel = styled.span`
+  padding-left: ${({ single }) => (single ? 0 : 1)}px;
   font-size: ${({ theme }) => theme.text.xxsmall.size};
   line-height: ${({ theme }) => theme.text.xxsmall.size};
   color: ${({ theme }) => theme.global.colors.secondary};
-  padding-top: ${({ offsetLabel }) => (offsetLabel ? '1em' : 0)};
-  padding-left: ${({ offsetLabel }) => (offsetLabel ? '2px' : 0)};
-  border-left: 1px solid;
-  border-color: ${({ offsetLabel, theme }) =>
-    offsetLabel ? theme.global.colors.secondary : 'transparent'};
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+  vertical-align: bottom;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.xlarge}) {
+    line-height: ${({ theme }) => theme.text.xsmall.size};
     font-size: ${({ theme }) => theme.text.xsmall.size};
   }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    font-size: ${({ theme }) => theme.text.small.size};
-  }
 `;
-const getScoreAsideWidth = (size, hasAside = false) => {
-  if (hasAside) {
-    return scoreAsideWidth(size);
-  }
-  return 0;
-};
-export function Grades({
-  grades,
-  labels = true,
-  hasAside,
-  hasLabelsSmall = true,
-  offset = false,
-  labelsMinimal = false,
-}) {
+
+const Key = styled.span`
+  display: inline-block;
+  border: 1px solid;
+  border-color: ${({ theme }) => theme.global.colors['light-4']};
+  background: rgba(0, 0, 0, ${({ index }) => 0.06 * index});
+  height: 8px;
+  width: 8px;
+`;
+const KeyWrap = styled(props => (
+  <Box direction="row" {...props} gap="hair" align="center" />
+))`
+  margin-top: 4px;
+`;
+
+export function Grades({ grades, labels = true, hasAside }) {
+  // const minGap = grades.reduce((memo, grade, index, list) => {
+  //   // console.log(memo, grade, index, list.length, list[index + 1])
+  //   const gap =
+  //     index + 1 > list.length - 1
+  //       ? 100 - grade.min
+  //       : list[index + 1].min - grade.min;
+  //   return Math.min(memo, gap);
+  // }, 1000);
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <BGScale
-          left={chartLabelWidth(size, hasLabelsSmall, labelsMinimal)}
-          right={getScoreAsideWidth(size, hasAside)}
+          left={chartLabelWidth(size)}
+          right={hasAside ? scoreAsideWidth(size) : '0px'}
         >
-          {grades.map((grade, index) => (
+          {grades.map(grade => (
             <BGScaleX min={grade.min} key={grade.class}>
-              {labels && (
-                <BGScaleLabel offsetLabel={offset && index % 2 === 1}>
-                  <FormattedMessage
-                    {...rootMessages.labels.grades[grade.class]}
-                  />
-                </BGScaleLabel>
+              {isMinSize(size, 'medium') && labels && (
+                <BGScaleLabelWrap>
+                  <BGScaleLabel>
+                    <FormattedMessage
+                      {...rootMessages.labels.grades[grade.class]}
+                    />
+                  </BGScaleLabel>
+                </BGScaleLabelWrap>
               )}
             </BGScaleX>
           ))}
+          {isMaxSize(size, 'sm') && labels && (
+            <BGScaleLabelWrap single>
+              <Box direction="row" align="center" justify="center" gap="xsmall">
+                {grades.map((grade, index) => (
+                  <KeyWrap key={grade.min}>
+                    <Key index={index} />
+                    <BGScaleLabel single>
+                      <FormattedMessage
+                        {...rootMessages.labels.grades[grade.class]}
+                      />
+                    </BGScaleLabel>
+                  </KeyWrap>
+                ))}
+              </Box>
+            </BGScaleLabelWrap>
+          )}
         </BGScale>
       )}
     </ResponsiveContext.Consumer>
@@ -94,9 +126,6 @@ Grades.propTypes = {
   grades: PropTypes.array,
   labels: PropTypes.bool,
   hasAside: PropTypes.bool,
-  hasLabelsSmall: PropTypes.bool,
-  offset: PropTypes.bool,
-  labelsMinimal: PropTypes.bool,
 };
 
 export default Grades;

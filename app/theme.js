@@ -28,7 +28,8 @@ export const SIZES = {
     height: 320,
   },
   aside: {
-    width: [0, 0, 360, 420, 420],
+    // small, sm, medium, large, xlarge, xxlarge
+    width: [0, 0, 0, 360, 420, 420],
   },
   settings: {
     height: 90,
@@ -38,6 +39,11 @@ export const SIZES = {
     medium: 32,
     large: 44,
     xlarge: 56,
+  },
+  charts: {
+    // small, sm, medium, large, xlarge, xxlarge
+    labels: [90, 100, 120, 90, 140, 180],
+    scoresAside: [30, 60, 60, 40, 60, 80],
   },
 };
 
@@ -56,33 +62,39 @@ export const CARD_WIDTH = {
 export const BREAKPOINTS = {
   small: {
     min: 0,
-    max: 720, // inclusive
+    max: 420, // inclusive
     name: 'mobile',
     index: 0,
+  },
+  sm: {
+    min: 420, // exclusive
+    max: 720,
+    name: 'mobile (landscape)',
+    index: 1,
   },
   medium: {
     min: 720, // exclusive
     max: 992,
     name: 'tablet (portrait)',
-    index: 1,
+    index: 2,
   },
   large: {
     min: 992, // exclusive
     max: 1152,
     name: 'laptop/tablet (landscape)',
-    index: 2,
+    index: 3,
   },
   xlarge: {
     min: 1152, // exclusive
     max: 1728,
     name: 'desktop',
-    index: 3,
+    index: 4,
   },
   xxlarge: {
     min: 1728, // exclusive
     max: 99999999,
     name: 'large desktop',
-    index: 4,
+    index: 5,
   },
 };
 
@@ -124,14 +136,16 @@ const theme = {
   text,
   paragraph: text,
   breakpoints: {
-    small: `${BREAKPOINTS.small.max}px`, // max
+    small: `${BREAKPOINTS.small.min}px`, // max
+    sm: `${BREAKPOINTS.sm.min}px`, // max
     medium: `${BREAKPOINTS.medium.min}px`, // min
     large: `${BREAKPOINTS.large.min}px`, // min
     xlarge: `${BREAKPOINTS.xlarge.min}px`, // min
     xxlarge: `${BREAKPOINTS.xxlarge.min}px`, // min
   },
   breakpointsMin: {
-    small: `${BREAKPOINTS.small.max + 1}px`, // max
+    small: `${BREAKPOINTS.small.min + 1}px`, // min
+    sm: `${BREAKPOINTS.sm.min + 1}px`, // min
     medium: `${BREAKPOINTS.medium.min + 1}px`, // min
     large: `${BREAKPOINTS.large.min + 1}px`, // min
     xlarge: `${BREAKPOINTS.xlarge.min + 1}px`, // min
@@ -140,6 +154,12 @@ const theme = {
   icon,
   navTop: '60px',
   global: {
+    active: {
+      color: {
+        dark: 'white',
+        light: '#262262',
+      },
+    },
     input: {
       padding: '2px',
       weight: 400,
@@ -232,6 +252,9 @@ const theme = {
     breakpoints: {
       small: {
         value: BREAKPOINTS.small.max,
+      },
+      sm: {
+        value: BREAKPOINTS.sm.max,
       },
       medium: {
         value: BREAKPOINTS.medium.max,
