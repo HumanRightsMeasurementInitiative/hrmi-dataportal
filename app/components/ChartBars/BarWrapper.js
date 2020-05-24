@@ -12,8 +12,8 @@ import { injectIntl, intlShape } from 'react-intl';
 import Bar from 'components/ChartBars/Bar';
 import BarBullet from 'components/ChartBars/BarBullet';
 
-import { isMinSize } from 'utils/responsive';
 import { formatScore } from 'utils/scores';
+import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 import { chartLabelWidth, scoreAsideWidth } from './chart-utils';
@@ -40,8 +40,6 @@ export function BarWrapper({
   scoresAside = false,
   isStatic = false,
   intl,
-  hasLabelsSmall = true,
-  labelsMinimal = true,
 }) {
   const [hover, setHover] = useState(false);
   return (
@@ -55,28 +53,24 @@ export function BarWrapper({
         >
           {(hover || score.active) && <Active color={`${score.color}Active`} />}
           <Box key={score.key} direction="row" align="center">
-            {(hasLabelsSmall || isMinSize(size, 'medium')) && (
-              <LabelWrap
-                width={chartLabelWidth(size, hasLabelsSmall, labelsMinimal)}
-                align="start"
-                flex={{ shrink: 0 }}
-                pad={{ right: 'small' }}
-              >
-                {score.label && (
-                  <BarLabel
-                    label={score.label}
-                    color={
-                      hover || score.active
-                        ? `${score.color}Active`
-                        : labelColor
-                    }
-                    level={level}
-                  >
-                    {score.label}
-                  </BarLabel>
-                )}
-              </LabelWrap>
-            )}
+            <LabelWrap
+              width={chartLabelWidth(size)}
+              align="start"
+              flex={{ shrink: 0 }}
+              pad={{ right: 'small' }}
+            >
+              {score.label && (
+                <BarLabel
+                  label={score.label}
+                  color={
+                    hover || score.active ? `${score.color}Active` : labelColor
+                  }
+                  level={level}
+                >
+                  {score.label}
+                </BarLabel>
+              )}
+            </LabelWrap>
             <BarWrap flex border="right">
               {!bullet && (
                 <Bar
@@ -113,7 +107,11 @@ export function BarWrapper({
                 flex={{ shrink: 0 }}
                 pad={{ left: 'small' }}
               >
-                <Text color={`${score.color}Dark`} size="small" weight={600}>
+                <Text
+                  color={`${score.color}Dark`}
+                  size={isMinSize(size, 'medium') ? 'small' : 'xxsmall'}
+                  weight={600}
+                >
                   {score.value &&
                     `${formatScore(score.value, 1, intl)}${score.unit || ''}`}
                   {!score.value &&
@@ -138,8 +136,6 @@ BarWrapper.propTypes = {
   labelColor: PropTypes.string,
   level: PropTypes.number,
   intl: intlShape,
-  hasLabelsSmall: PropTypes.bool,
-  labelsMinimal: PropTypes.bool,
   // standard: PropTypes.string,
   // currentBenchmark: PropTypes.object,
 };

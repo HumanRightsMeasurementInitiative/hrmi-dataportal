@@ -18,7 +18,7 @@ import Active from 'components/ChartBars/styled/Active';
 import Source from 'components/Source';
 
 import getMetricDetails from 'utils/metric-details';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 
@@ -149,8 +149,8 @@ function ChartCountrySnapshot({
             <ChartArea>
               <Dimension>
                 <Box
-                  direction={size === 'small' ? 'column' : 'row'}
-                  align={size === 'small' ? 'start' : 'center'}
+                  direction={isMaxSize(size, 'sm') ? 'column' : 'row'}
+                  align={isMaxSize(size, 'sm') ? 'start' : 'center'}
                 >
                   <Button
                     onClick={() => onMetricClick(dimensionCode)}
@@ -225,10 +225,7 @@ function ChartCountrySnapshot({
                   listHeader
                   metric={getMetricDetails(dimensionCode)}
                   annotateBetter={false}
-                  scoreOnHover={false}
-                  scoresAside
                   benchmarkIconOnly
-                  hasLabelsSmall={size !== 'small'}
                 />
               </Dimension>
             </ChartArea>

@@ -10,7 +10,7 @@ import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { Box, Button, ResponsiveContext, Text } from 'grommet';
 import { scaleLinear } from 'd3-scale';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -86,7 +86,7 @@ export function Word({ score, dimension, intl, active, setActive }) {
             weight={scaleFontWeight(score.proportion)}
             opacity={over || active ? 1 : scaleOpacity(score.proportion)}
             size={
-              size === 'small'
+              isMaxSize(size, 'sm')
                 ? scaleFontMobile(score.proportion) * MAX_SIZE_MOBILE
                 : scaleFont(score.proportion) * MAX_SIZE
             }
@@ -99,14 +99,14 @@ export function Word({ score, dimension, intl, active, setActive }) {
                 if (evt) evt.preventDefault();
                 if (evt) evt.stopPropagation();
                 if (isMinSize(size, 'medium')) setActive(!active);
-                if (size === 'small') setOver(!over);
+                if (isMaxSize(size, 'sm')) setOver(!over);
               }}
               onMouseEnter={() => {
-                if (size !== 'small') setOver(true);
+                if (isMinSize(size, 'medium')) setOver(true);
               }}
               onMouseOut={() => setOver(false)}
               onFocus={() => {
-                if (size !== 'small') setOver(true);
+                if (isMinSize(size, 'medium')) setOver(true);
               }}
               onBlur={() => setOver(false)}
               style={{
@@ -118,7 +118,7 @@ export function Word({ score, dimension, intl, active, setActive }) {
                 {...rootMessages['people-at-risk'][score.people_code]}
               />
               {over && !active && (
-                <StyledDrop elevation="small" fixed={size === 'small'}>
+                <StyledDrop elevation="small" fixed={isMaxSize(size, 'sm')}>
                   <Box
                     pad={{ vertical: 'small', horizontal: 'small' }}
                     background="dark"

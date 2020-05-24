@@ -214,7 +214,7 @@ export function OverviewCountries({
           />
           {sorted && scoresAllCountries && (
             <CardWrapper
-              pad={{ top: size === 'small' ? 'xsmall' : '0' }}
+              pad={{ top: isMaxSize(size, 'sm') ? 'xsmall' : '0' }}
               align="start"
               responsive={false}
               margin={{ horizontal: `-${theme.global.edgeSize.xsmall}` }}
