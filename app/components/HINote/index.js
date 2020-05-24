@@ -8,6 +8,8 @@ import ContentContainer from 'styled/ContentContainer';
 import Aside from 'components/Aside';
 import { Box, Text, ResponsiveContext } from 'grommet';
 
+import { isMinSize } from 'utils/responsive';
+
 import rootMessages from 'messages';
 import messages from './messages';
 
@@ -19,12 +21,12 @@ const Styled = styled.div`
   z-index: 9;
   background: ${({ hasAside }) => (hasAside ? 'transparent' : 'white')};
   box-shadow: ${({ hasAside }) =>
-    hasAside ? '0' : '-5px -10px 5px -5px rgba(255, 255, 255, 1)'};
+    hasAside ? 'none' : '0px -10px 5px 5px rgba(255,255,255,1)'};
 `;
 const StyledBox = styled(Box)`
   background: ${({ hasAside }) => (!hasAside ? 'transparent' : 'white')};
   box-shadow: ${({ hasAside }) =>
-    !hasAside ? '0' : '-5px -10px 5px -5px rgba(255, 255, 255, 1)'};
+    !hasAside ? 'none' : '-5px -10px 5px -5px rgba(255, 255, 255, 1)'};
   padding-right: ${({ hasAside, theme }) =>
     hasAside ? theme.global.edgeSize.xlarge : 0};
 `;
@@ -53,7 +55,7 @@ function HINote({ intl, hasAside, settingHint }) {
                         ),
                       }}
                     />
-                    {settingHint && size !== 'small' && (
+                    {settingHint && isMinSize(size, 'medium') && (
                       <FormattedMessage {...rootMessages.hints.settings} />
                     )}
                   </Text>
