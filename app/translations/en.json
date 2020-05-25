@@ -392,7 +392,7 @@
   "hrmi.settings.benchmark.intro": "For the quality of life rights, HRMI measures countries against 2 different benchmarks.",
   "hrmi.settings.benchmark.introSingle": "For the quality of life rights, HRMI measures countries against 2 different benchmarks. The current benchmark is:",
   "hrmi.settings.benchmark.adjusted": "Income adjusted",
-  "hrmi.settings.benchmark.adjustedInfo": "How well is the country doing compared to what we know is possible at that country's income level? Every country can achieve 100% against this benchmark if they use their available resources effectively, so any lower score tells us that improvement is needed.",
+  "hrmi.settings.benchmark.adjustedInfo": "How well is the country doing compared to what we know is possible at that country's income level? Every country can achieve 100% against this benchmark if they use their available resources effectively, so any lower score tells us that improvement is needed and is possible.",
   "hrmi.settings.benchmark.best": "Global best",
   "hrmi.settings.benchmark.bestInfo": "How well is the country doing compared to the rest of the world, including the wealthiest countries?",
   "hrmi.settings.benchmark.min": "Natural minimum",
