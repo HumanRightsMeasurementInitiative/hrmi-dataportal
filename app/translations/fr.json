@@ -392,7 +392,7 @@
   "hrmi.settings.benchmark.intro": "Concernant le droit à une vie de qualité, l'HRMI évalue les pays selon deux niveaux différents.",
   "hrmi.settings.benchmark.introSingle": "Concernant le droit à une vie de qualité, l'HRMI évalue les pays selon deux niveaux différents. Le niveau sélectionné est :",
   "hrmi.settings.benchmark.adjusted": "Adapté en fonction des revenus ",
-  "hrmi.settings.benchmark.adjustedInfo": "Comment le pays se comporte-t-il par rapport aux résultats connus d'autres pays à niveau de revenus équivalent ? Tous les pays peuvent atteindre 100 % pour ce niveau de performance s'ils utilisent efficacement leurs ressources disponibles. Tout score inférieur à 100 % signifie que des améliorations sont nécessaires.",
+  "hrmi.settings.benchmark.adjustedInfo": "Comment le pays se comporte-t-il par rapport aux résultats connus d'autres pays à niveau de revenus équivalent ? Tous les pays peuvent atteindre 100 % pour ce niveau de performance s'ils utilisent efficacement leurs ressources disponibles. Tout score inférieur à 100 % signifie que des améliorations sont nécessaires et qu'elles sont possibles.",
   "hrmi.settings.benchmark.best": "Comparatif au niveau mondial",
   "hrmi.settings.benchmark.bestInfo": "Comment le pays se comporte-t-il par rapport au reste du monde, y compris les pays aux revenus les plus élevés ?",
   "hrmi.settings.benchmark.min": "Minimum naturel",
