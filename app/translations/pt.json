@@ -871,7 +871,7 @@
   "hrmi.containers.PathMetric.indicators.adult-survival.header.b": "Estes valores medem o desempenho dos países, não números nem percentagens de pessoas.",
   "hrmi.indicators.adult-survival": "Adult Survival",
   "hrmi.indicators-raw.adult-survival": "Adult Survival",
-  "hrmi.indicators-about.adult-survival": "TODO Percentage of people (gender) expected to survive to age 65.  GENDER SPECIFIC RATES: Survival to age 65 refers to the percentage of a cohort of newborn (gender) infants that would survive to age 65, if subject to cohort specific mortality rates for the gender of the specified year. TOTAL RATE estimated by weighting gender specific rates by the gender's fraction of newborns for that year.",
+  "hrmi.indicators-about.adult-survival": "Probabilidade de porcentagem que uma pessoa de 15 anos de idade sobreviverá para atingir seu 60º aniversário.",
   "hrmi.people-at-risk.32": "Men and/or boys",
   "hrmi.people-at-risk.33": "Street children or homeless youth",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataMissingData": "Os dados em falta dizem-nos que {countryWithArticle} não {isPlural, select, true {submeteram} false {submeteu}} nenhuma informação às bases de dados internacionais relevantes. ",
