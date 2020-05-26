@@ -4,14 +4,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import {
-  Accordion,
-  AccordionPanel,
-  Box,
-  Heading,
-  Paragraph,
-  Text,
-} from 'grommet';
+import { Accordion, AccordionPanel, Box, Heading, Text } from 'grommet';
 import { Down, Up } from 'grommet-icons';
 
 import FormattedMarkdown from 'components/FormattedMarkdown';
@@ -36,34 +29,34 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'measureRightESR') {
     return (
       <>
-        <Text margin={{ vertical: 'xsmall' }} size="small">
+        <Text size="small">
           <FormattedMarkdown
             {...messages.answers.measureRightESR}
             values={{ metric }}
           />
         </Text>
-        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-          <FormattedMessage
+        <Text size="small">
+          <FormattedMarkdown
             {...messages.answers.measureRightESRNotesIntro}
             values={{ metric }}
           />
-        </Paragraph>
+        </Text>
         <Text size="small">
           <OL>
             <LI>
-              <FormattedMessage
+              <FormattedMarkdown
                 {...messages.answers.measureRightESRNotesOne}
                 values={{ metric }}
               />
             </LI>
             <LI>
-              <FormattedMessage
+              <FormattedMarkdown
                 {...messages.answers.measureRightESRNotesTwo}
                 values={{ metric }}
               />
             </LI>
             <LI>
-              <FormattedMessage
+              <FormattedMarkdown
                 {...messages.answers.measureRightESRNotesThree}
                 values={{ metric }}
               />
@@ -102,12 +95,12 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'uncertainty') {
     return (
       <>
-        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-          <FormattedMessage {...messages.answers.uncertainty} />
-        </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-          <FormattedMessage {...messages.answers.uncertaintyLong} />
-        </Paragraph>
+        <Text size="small">
+          <FormattedMarkdown {...messages.answers.uncertainty} />
+        </Text>
+        <Text size="small">
+          <FormattedMarkdown {...messages.answers.uncertaintyLong} />
+        </Text>
         <MethodologyLink
           href={intl.formatMessage(messages.methodologyUncertaintyURL)}
           target="_blank"
@@ -118,9 +111,12 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   }
   return (
     <>
-      <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-        <FormattedMessage {...messages.answers[question]} values={{ metric }} />
-      </Paragraph>
+      <Text size="small">
+        <FormattedMarkdown
+          {...messages.answers[question]}
+          values={{ metric }}
+        />
+      </Text>
       <MethodologyLink
         onClick={() => navMethodology()}
         text={
