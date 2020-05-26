@@ -846,7 +846,7 @@
   "hrmi.labels.abbrev.notAvailable": "N/A",
   "hrmi.containers.AboutCountryContainer.more": "Show country categories",
   "hrmi.containers.AboutCountryContainer.less": "Hide country categories",
-  "hrmi.indicators-about.net-primary": "Number of students of the official primary school age group who are enrolled in primary school, expressed as a percentage of the total population of that age group.",
+  "hrmi.indicators-about.net-primary": "Net primary school enrolment rate: Number of students of the official primary school age group who are enrolled in all types of primary schools, expressed as a percentage of the total population of that age group.",
   "hrmi.hints.settings": "To change the performance benchmark or assessment standard, please click on ‘Switch view’ above",
   "hrmi.hints.noAtRiskData": "Information on which people are at extra risk of rights violations comes from our annual expert survey, and is not yet available for {countryWithArticle}. ",
   "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Explore Details",
