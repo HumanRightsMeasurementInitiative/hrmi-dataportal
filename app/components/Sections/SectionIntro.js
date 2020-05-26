@@ -20,7 +20,7 @@ import GraphicWrap from 'styled/GraphicWrap';
 import GraphicCircle from 'styled/GraphicCircle';
 import GraphicDiamond from 'styled/GraphicDiamond';
 
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -78,7 +78,7 @@ export function SectionIntro({ theme }) {
         <SectionContainer
           pad={{
             top: 'xxlarge',
-            bottom: size === 'small' ? 'large' : 'xxlarge',
+            bottom: isMaxSize(size, 'sm') ? 'large' : 'xxlarge',
           }}
         >
           <Box
@@ -118,7 +118,7 @@ export function SectionIntro({ theme }) {
               >
                 <GraphicCircle
                   color="graphicRed"
-                  size={size === 'small' ? '75px' : '100px'}
+                  size={isMaxSize(size, 'sm') ? '75px' : '100px'}
                 />
               </GraphicWrap>
               <div style={{ position: 'relative' }}>
@@ -129,15 +129,17 @@ export function SectionIntro({ theme }) {
                   <FormattedMessage {...rootMessages.app.claim} />
                 </Claim>
                 <Paragraph
-                  size={size === 'small' ? 'large' : 'xlarge'}
-                  margin={{ bottom: size === 'small' ? 'medium' : 'xlarge' }}
+                  size={isMaxSize(size, 'sm') ? 'large' : 'xlarge'}
+                  margin={{
+                    bottom: isMaxSize(size, 'sm') ? 'medium' : 'xlarge',
+                  }}
                 >
                   <FormattedMessage {...messages.intro} />
                 </Paragraph>
                 <SearchWrapper>
                   <Search
                     stretch
-                    size={size === 'small' ? 'medium' : 'large'}
+                    size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                     example
                     focus
                   />
