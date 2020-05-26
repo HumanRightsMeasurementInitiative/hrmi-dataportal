@@ -846,7 +846,7 @@
   "hrmi.labels.abbrev.notAvailable": "N/A",
   "hrmi.containers.AboutCountryContainer.more": "Mostrar categorias de países",
   "hrmi.containers.AboutCountryContainer.less": "Ocultar categorias de países",
-  "hrmi.indicators-about.net-primary": "Número total de alunos da faixa etária oficial da escola primária que estão matriculados no ensino primário, expresso em percentagem da população correspondente.",
+  "hrmi.indicators-about.net-primary": "Taxa líquida de matrículas na escola primária: Número de alunos da faixa etária oficial da escola primária que estão matriculados em todos os tipos de escolas primárias, expressos como porcentagem da população total dessa faixa etária.",
   "hrmi.hints.settings": "Para alterar a referência de desempenho ou o padrão de avaliação, clique em 'Mudar de vista' acima ",
   "hrmi.hints.noAtRiskData": "As informações sobre as quais as pessoas correm um risco extra de violação dos direitos provêm de nossa pesquisa anual especializada e ainda não estão disponíveis para {countryWithArticle}. ",
   "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Explorar detalhes",
