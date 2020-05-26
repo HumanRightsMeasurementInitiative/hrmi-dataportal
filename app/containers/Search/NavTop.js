@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box, Button } from 'grommet';
 import { Close, Search } from 'grommet-icons';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import ButtonIcon from 'styled/ButtonIcon';
 
@@ -50,9 +50,9 @@ class NavTop extends React.Component {
       <Top>
         <Box
           pad={{
-            left: size === 'small' ? 'small' : 'medium',
+            left: isMaxSize(size, 'sm') ? 'small' : 'medium',
             vertical: 'small',
-            right: size === 'small' ? 'none' : 'medium',
+            right: isMaxSize(size, 'sm') ? 'small' : 'medium',
           }}
           direction="row"
           fill="vertical"
@@ -64,7 +64,7 @@ class NavTop extends React.Component {
             direction="row"
             align="center"
             round="xlarge"
-            height={size === 'small' ? '26px' : '32px'}
+            height={isMaxSize(size, 'sm') ? '26px' : '32px'}
             pad={{ horizontal: 'ms', vertical: 'xsmall' }}
             fill="horizontal"
           >
@@ -81,7 +81,7 @@ class NavTop extends React.Component {
                 icon={
                   <Close
                     color="dark"
-                    size={size === 'small' ? 'small' : 'medium'}
+                    size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
                   />
                 }
                 style={{ padding: '0' }}
@@ -89,11 +89,11 @@ class NavTop extends React.Component {
             )}
             {(!search || search.length === 0) && <Search color="dark" />}
           </Box>
-          {size === 'small' && (
+          {isMaxSize(size, 'sm') && (
             <Box
               pad={{ vertical: 'xsmall' }}
               flex={{ shrink: 0 }}
-              margin={{ left: 'medium' }}
+              margin={{ left: 'small' }}
             >
               <StyledButtonIcon onClick={() => onClose()}>
                 <Close color="white" size="large" />

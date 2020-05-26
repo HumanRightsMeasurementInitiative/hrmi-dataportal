@@ -118,7 +118,7 @@ export function PathPeopleOverview({
                     values={{ no: AT_RISK_GROUPS.length }}
                   />
                 </PageTitle>
-                <Paragraph size={size === 'small' ? 'medium' : 'large'}>
+                <Paragraph size={isMaxSize(size, 'sm') ? 'medium' : 'large'}>
                   <FormattedMessage
                     {...messages.header}
                     values={{ no: countryNo }}
@@ -135,7 +135,7 @@ export function PathPeopleOverview({
           <SectionContainer background="sectionPeople">
             <ContentMaxWidth column>
               <CardWrapper
-                pad={{ top: size === 'small' ? 'xsmall' : '0' }}
+                pad={{ top: isMaxSize(size, 'sm') ? 'xsmall' : '0' }}
                 align="start"
                 responsive={false}
                 margin={{ horizontal: `-${theme.global.edgeSize.xsmall}` }}

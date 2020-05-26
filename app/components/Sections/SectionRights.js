@@ -90,7 +90,7 @@ export function SectionRights({
             {description && (
               <Paragraph margin={{ top: 'ms' }}>{description}</Paragraph>
             )}
-            {(size === 'small' ||
+            {(isMaxSize(size, 'sm') ||
               (isMaxSize(size, 'medium') && hasLongTitle)) && (
               <Box margin={{ top: 'medium' }}>
                 <AllLinkButton

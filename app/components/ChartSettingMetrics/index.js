@@ -6,7 +6,7 @@ import { Box, Button, Drop, Text, ResponsiveContext } from 'grommet';
 import { FormDown, FormUp } from 'grommet-icons';
 
 import getMetricDetails from 'utils/metric-details';
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 import { truncateText } from 'utils/string';
 
 import rootMessages from 'messages';
@@ -92,7 +92,7 @@ function ChartSettingMetrics({
                             intl.formatMessage(
                               rootMessages[details.metricType][activeMetric],
                             ),
-                            size === 'small' ? 30 : 60,
+                            isMaxSize(size, 'sm') ? 30 : 60,
                           )}
                         </Text>
                         {open && <FormUp size="large" />}

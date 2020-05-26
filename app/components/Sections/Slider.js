@@ -78,9 +78,9 @@ export function Slider({ stretch, children, cardMargin, ...rest }) {
               customButtonGroup={
                 isMinSize(size, 'medium') && <SliderControls />
               }
-              removeArrowOnDeviceType={['small']}
+              removeArrowOnDeviceType={['small', 'sm']}
               renderButtonGroupOutside
-              partialVisible={isMaxSize(size, 'small')}
+              partialVisible={isMaxSize(size, 'sm')}
               {...rest}
             >
               {children}
