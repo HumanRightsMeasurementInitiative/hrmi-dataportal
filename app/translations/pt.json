@@ -324,7 +324,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", quando em comparação com todos os outros países de rendimentos altos ",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (esta comparação é calculada com o uso da referência '{benchmark}').",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "Para {countryWithArticle} não existem pontuações de direitos disponíveis devido à falta de dados indicadores. ",
-  "hrmi.components.Source.source": "Fonte: conjunto de dados da Iniciativa de Medição dos Direitos Humanos de 2019, www.rightstracker.org/pt",
+  "hrmi.components.Source.source": "Fonte: conjunto de dados da Iniciativa de Medição dos Direitos Humanos de 2020, www.rightstracker.org/pt",
   "hrmi.components.ReadMore.more": "Ler mais",
   "hrmi.components.ReadMore.less": "Mostrar menos",
   "hrmi.components.ChartCountryDiamond.hiForCore": "NÃO UTILIZADO: País de rendimento alto: é preferível usar o padrão de 'rendimento alto'",
