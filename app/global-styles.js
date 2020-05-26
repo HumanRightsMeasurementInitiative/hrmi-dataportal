@@ -34,6 +34,8 @@ const GlobalStyle = createGlobalStyle`
   p {
     margin: 0.5em 0;
   }
+
+  /* component /components/HTMLWrapper */
   .hrmi-html p {
     margin: 1em 0;
     &:first-child {
@@ -78,6 +80,11 @@ const GlobalStyle = createGlobalStyle`
   }
   .hrmi-html hr {
     margin: 4em 0;
+  }
+
+  /* component /components/FormattedMarkdown */
+  .hrmi-formatted-markdown p {
+    line-height: 1.28;
   }
 
   .react-multi-carousel-list__custom {
