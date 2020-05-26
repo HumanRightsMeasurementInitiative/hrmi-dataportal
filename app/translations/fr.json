@@ -846,7 +846,7 @@
   "hrmi.labels.abbrev.notAvailable": "S.O",
   "hrmi.containers.AboutCountryContainer.more": "Afficher les catégories de pays",
   "hrmi.containers.AboutCountryContainer.less": "Cacher les catégories de pays",
-  "hrmi.indicators-about.net-primary": "Nombre total d’élèves de la classe d’âge officielle pour l’école primaire inscrits en cycle d’enseignement primaire, exprimé en pourcentage de la population correspondante.",
+  "hrmi.indicators-about.net-primary": "Taux net de scolarisation dans le primaire: nombre d'élèves du groupe d'âge officiel du primaire inscrits dans tous les types d'écoles primaires, exprimé en pourcentage de la population totale de ce groupe d'âge.",
   "hrmi.hints.settings": "Pour modifier le critère de performance ou la norme d'évaluation, veuillez cliquer sur sur « Changer de vue » ci-dessus",
   "hrmi.hints.noAtRiskData": "Les informations sur les personnes qui courent un risque supplémentaire de violation des droits proviennent de notre enquête annuelle d'experts et ne sont pas encore disponibles pour {countryWithArticle}. ",
   "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Afficher les détails ",
