@@ -54,7 +54,7 @@ import ContentContainer from 'styled/ContentContainer';
 import MainColumn from 'styled/MainColumn';
 import ButtonText from 'styled/ButtonText';
 
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 import quasiEquals from 'utils/quasi-equals';
 import { sortCountriesByName } from 'utils/scores';
 import { lowerCase } from 'utils/string';
@@ -164,7 +164,9 @@ export function PathPeople({
                       ]}
                     />
                     <PageTitle>{groupTitle}</PageTitle>
-                    <Paragraph size={size === 'small' ? 'medium' : 'large'}>
+                    <Paragraph
+                      size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
+                    >
                       <FormattedMessage
                         {...messages.header}
                         values={{

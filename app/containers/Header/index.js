@@ -83,7 +83,7 @@ const NavBarBottom = props => (
   <Box
     direction="row"
     align="end"
-    justify={props.size === 'small' ? 'start' : 'end'}
+    justify={isMinSize(props.size, 'medium') ? 'end' : 'start'}
     height={`${getHeaderHeightBottom(props.size, props.theme)}px`}
     {...props}
   />
@@ -207,18 +207,18 @@ const ButtonSecondary = React.forwardRef(
         ref={ref}
         label={
           <Box direction="row" align="center" justify="between" fill gap={gap}>
-            <Text size={windowSize === 'small' ? 'medium' : 'large'}>
+            <Text size={isMinSize(windowSize, 'medium') ? 'large' : 'medium'}>
               <FormattedMessage {...rootMessages.labels[label]} />
             </Text>
             {open && (
               <FormUp
-                size={windowSize === 'small' ? 'xlarge' : 'xxlarge'}
+                size={isMinSize(windowSize, 'medium') ? 'xxlarge' : 'xlarge'}
                 style={{ stroke: 'currentColor', marginRight: '-3px' }}
               />
             )}
             {!open && (
               <FormDown
-                size={windowSize === 'small' ? 'xlarge' : 'xxlarge'}
+                size={isMinSize(windowSize, 'medium') ? 'xxlarge' : 'xlarge'}
                 style={{ stroke: 'currentColor', marginRight: '-3px' }}
               />
             )}
@@ -291,12 +291,12 @@ export function Header({
       {size => (
         <Styled role="banner" size={size}>
           <Box elevation="medium" background="white">
-            <ContentMaxWidth column={size === 'small'}>
+            <ContentMaxWidth column={isMaxSize(size, 'sm')}>
               <Box
                 direction="row"
                 align="center"
                 justify="stretch"
-                fill={isMaxSize(size, 'small') ? 'horizontal' : false}
+                fill={isMaxSize(size, 'sm') ? 'horizontal' : false}
               >
                 <BrandButton plain onClick={onHome}>
                   <BrandInner
@@ -308,14 +308,14 @@ export function Header({
                     <LogoWrap
                       justify="start"
                       width={`${
-                        size === 'small'
+                        isMaxSize(size, 'sm')
                           ? theme.sizes.header.small.logoWidth
                           : theme.sizes.header.logoWidth
                       }px`}
                       flex={{ shrink: 0 }}
                     >
                       <Logo
-                        src={size === 'small' ? logoS : logo}
+                        src={isMaxSize(size, 'sm') ? logoS : logo}
                         alt={`${intl.formatMessage(rootMessages.app.title)}`}
                         a11yTitle={`${intl.formatMessage(
                           rootMessages.app.title,
@@ -328,12 +328,12 @@ export function Header({
                     </TitleWrap>
                   </BrandInner>
                 </BrandButton>
-                {size === 'small' && appLocales.length > 1 && (
+                {isMaxSize(size, 'sm') && appLocales.length > 1 && (
                   <Box margin={{ left: 'auto' }}>
                     <LocaleToggle />
                   </Box>
                 )}
-                {size === 'small' && (
+                {isMaxSize(size, 'sm') && (
                   <ToggleMenu
                     plain
                     onClick={() => setShowMenu(!showMenu)}
@@ -345,11 +345,11 @@ export function Header({
                 )}
                 {showMenu && isMaxSize(size, 'medium') && (
                   <Layer
-                    full={size === 'small' ? 'horizontal' : false}
+                    full={isMaxSize(size, 'sm') ? 'horizontal' : false}
                     margin={{ top: '50px' }}
                     onClickOutside={() => setShowMenu(false)}
                     responsive={false}
-                    position={size === 'small' ? 'top' : 'top-right'}
+                    position={isMaxSize(size, 'sm') ? 'top' : 'top-right'}
                     modal={false}
                     animate={false}
                   >
@@ -398,7 +398,7 @@ export function Header({
                   </NavBarTop>
                 )}
                 <NavBarBottom theme={theme} size={size}>
-                  {(!showSearch || isMaxSize(size, 'small')) && (
+                  {(!showSearch || isMaxSize(size, 'sm')) && (
                     <>
                       <ButtonSecondary
                         active={path === PATHS.METRICS || path === PATHS.METRIC}
@@ -413,7 +413,7 @@ export function Header({
                         ref={metricTarget}
                         windowSize={size}
                       />
-                      {showMetrics && size === 'small' && (
+                      {showMetrics && isMaxSize(size, 'sm') && (
                         <NavMetric
                           onClose={() => setShowMetrics(false)}
                           size={size}
@@ -446,7 +446,7 @@ export function Header({
                         ref={countryTarget}
                         windowSize={size}
                       />
-                      {showCountries && size === 'small' && (
+                      {showCountries && isMaxSize(size, 'sm') && (
                         <NavCountry
                           onClose={() => setShowCountries(false)}
                           size={size}
@@ -478,7 +478,7 @@ export function Header({
                         ref={groupTarget}
                         windowSize={size}
                       />
-                      {showGroups && size === 'small' && (
+                      {showGroups && isMaxSize(size, 'sm') && (
                         <NavGroups
                           onClose={() => setShowGroups(false)}
                           size={size}

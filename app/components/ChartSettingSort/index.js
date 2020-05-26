@@ -48,7 +48,7 @@ export function ChartSettingSort({
     <ResponsiveContext.Consumer>
       {size => {
         // prettier-ignore
-        const label = size !== 'small'
+        const label = isMinSize(size, 'medium')
           ? (
             <Text style={{ whiteSpace: 'nowrap' }}>
               {`${intl.formatMessage(messages.sortBy)} ${intl.formatMessage(messages.sortOptions[sort])}`}
@@ -116,10 +116,10 @@ export function ChartSettingSort({
                 onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
               >
                 {order === 'asc' && (
-                  <Ascend size={size === 'small' ? 'small' : 'large'} />
+                  <Ascend size={isMaxSize(size, 'sm') ? 'small' : 'large'} />
                 )}
                 {order === 'desc' && (
-                  <Descend size={size === 'small' ? 'small' : 'large'} />
+                  <Descend size={isMaxSize(size, 'sm') ? 'small' : 'large'} />
                 )}
               </StyledButtonIcon>
             </Box>

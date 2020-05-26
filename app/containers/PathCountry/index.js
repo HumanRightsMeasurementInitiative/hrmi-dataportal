@@ -74,7 +74,7 @@ import getMetricDetails from 'utils/metric-details';
 // import quasiEquals from 'utils/quasi-equals';
 import { hasCPR, formatScore } from 'utils/scores';
 
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 import { getMessageGrammar } from 'utils/narrative';
 import { lowerCase } from 'utils/string';
 //
@@ -289,13 +289,13 @@ export function PathCountry({
                   <div>
                     <PageTitle>{countryTitle}</PageTitle>
                   </div>
-                  <Paragraph size={size === 'small' ? 'small' : 'medium'}>
+                  <Paragraph size={isMaxSize(size, 'sm') ? 'small' : 'medium'}>
                     <FormattedMessage
                       {...messages.header.a}
                       values={messageValues}
                     />
                   </Paragraph>
-                  <Paragraph size={size === 'small' ? 'small' : 'medium'}>
+                  <Paragraph size={isMaxSize(size, 'sm') ? 'small' : 'medium'}>
                     <FormattedMessage
                       {...messages.header.b}
                       values={messageValues}

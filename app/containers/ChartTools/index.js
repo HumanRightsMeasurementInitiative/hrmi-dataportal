@@ -37,11 +37,7 @@ const StyledButton = styled(Button)`
   &:last-child {
     margin-right: 0;
   }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
-  }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    margin-right: ${({ theme }) => theme.global.edgeSize.small};
     padding: 3px 10px;
   }
 `;
