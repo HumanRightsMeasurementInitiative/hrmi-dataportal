@@ -5,12 +5,14 @@ import Markdown from 'react-remarkable';
 
 function FormattedMarkdown({ id, defaultMessage, values, intl }) {
   return (
-    <Markdown
-      options={{
-        breaks: true,
-      }}
-      source={intl.formatMessage({ id, defaultMessage }, values)}
-    />
+    <span className="hrmi-formatted-markdown">
+      <Markdown
+        options={{
+          breaks: true,
+        }}
+        source={intl.formatMessage({ id, defaultMessage }, values)}
+      />
+    </span>
   );
 }
 
