@@ -846,7 +846,7 @@
   "hrmi.labels.abbrev.notAvailable": "N/A",
   "hrmi.containers.AboutCountryContainer.more": "Mostrar categorías de países",
   "hrmi.containers.AboutCountryContainer.less": "Ocultar categorías de países",
-  "hrmi.indicators-about.net-primary": "Número total de estudiantes del grupo en edad oficial de asistir a la escuela primaria que están matriculados en la educación primaria, expresado como porcentaje de la población correspondiente.",
+  "hrmi.indicators-about.net-primary": "Tasa neta de matriculación en la escuela primaria: Número de estudiantes del grupo oficial de edad de la escuela primaria que están matriculados en todo tipo de escuelas primarias, expresado como un porcentaje de la población total de ese grupo de edad.",
   "hrmi.hints.settings": "Para cambiar el indicador de desempeño o el estándar de evaluación, haga clic en \"Cambiar de vista\" arriba",
   "hrmi.hints.noAtRiskData": "La información sobre qué personas tienen un riesgo adicional de violación de derechos proviene de nuestra encuesta anual de expertos, y aún no está disponible para {countryWithArticle}. ",
   "hrmi.containers.ChartContainerCountrySnapshot.exploreDetails": "Explorar los detalles",
