@@ -15,6 +15,8 @@ import Search from 'containers/Search';
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 
+import { isMaxSize } from 'utils/responsive';
+
 import SectionTitle from './SectionTitle';
 
 import messages from './messages';
@@ -38,7 +40,7 @@ export function SectionSearch({ intl }) {
               <Search
                 stretch
                 example
-                size={size === 'small' ? 'medium' : 'large'}
+                size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
               />
             </SearchWrapper>
           </ContentMaxWidth>

@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #262064;
-    @media (min-width: ${({ theme }) => theme.breakpointsMin.small}) {
+    @media (min-width: ${({ theme }) => theme.breakpointsMin.sm}) {
       overflow-y: scroll;
     }
   }

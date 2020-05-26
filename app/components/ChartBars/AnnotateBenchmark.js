@@ -14,6 +14,8 @@ import rootMessages from 'messages';
 import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
 import Tooltip from 'components/Tooltip';
 
+import { isMaxSize } from 'utils/responsive';
+
 import AnnotateRef from './styled/AnnotateRef';
 import AnnotateRefLine from './styled/AnnotateRefLine';
 import AnnotateRefInner from './styled/AnnotateRefInner';
@@ -49,7 +51,7 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
                   >
                     {label || `${intl.formatMessage(
                       rootMessages.settings.benchmark[benchmarkKey]
-                    )} ${size === 'small' ? '' : lowerCase(intl.formatMessage(
+                    )} ${isMaxSize(size, 'sm') ? '' : lowerCase(intl.formatMessage(
                       rootMessages.settings.benchmark.nameShort
                     ))}`}
                   </Text>
@@ -80,7 +82,7 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
               >
                 {label || `${intl.formatMessage(
                   rootMessages.settings.benchmark[benchmarkKey]
-                )} ${size === 'small' ? '' : lowerCase(intl.formatMessage(
+                )} ${isMaxSize(size, 'sm') ? '' : lowerCase(intl.formatMessage(
                   rootMessages.settings.benchmark.nameShort
                 ))}`}
               </Text>

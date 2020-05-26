@@ -12,7 +12,8 @@ import messages from './messages';
 import HTRParagraph from './HTRParagraph';
 const Styled = styled.div``;
 
-const stackContent = size => size === 'large' || size === 'small';
+const stackContent = size =>
+  size === 'large' || size === 'small' || size === 'sm';
 
 function HTRBar({ contxt, intl, dimension }) {
   return (
