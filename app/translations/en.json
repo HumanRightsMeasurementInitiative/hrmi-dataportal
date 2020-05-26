@@ -326,7 +326,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", compared with all other high income countries ",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (this comparison is calculated using the '{benchmark}' benchmark).",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "For {countryWithArticle} no rights scores are available due to missing indicator data. ",
-  "hrmi.components.Source.source": "Source: 2020 Human Rights Measurement Initiative (HRMI) dataset, www.rightstracker.org",
+  "hrmi.components.Source.source": "Source: 2019 Human Rights Measurement Initiative (HRMI) dataset, www.rightstracker.org",
   "hrmi.components.ReadMore.more": "Read more",
   "hrmi.components.ReadMore.less": "Show less",
   "hrmi.components.ChartCountryDiamond.hiForCore": "UNUSED: High income country: best use the 'high income' standard",

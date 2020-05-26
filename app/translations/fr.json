@@ -326,7 +326,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.endHi": ", par rapport à tous les autres pays à revenus élevés ",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (cette comparaison est établie grâce au niveau de performance « {benchmark} »).",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "En ce qui concerne {countryWithArticle}, aucun score en matière de droits n'est disponible en raison de données manquantes. ",
-  "hrmi.components.Source.source": "Source : Données de l'Initiative de mesure des droits humains (HRMI), 2020, www.rightstracker.org/fr",
+  "hrmi.components.Source.source": "Source : Données de l'Initiative de mesure des droits humains (HRMI), 2019, www.rightstracker.org/fr",
   "hrmi.components.ReadMore.more": "Lire la suite",
   "hrmi.components.ReadMore.less": "Afficher moins",
   "hrmi.components.ChartCountryDiamond.hiForCore": "NON UTILISÉ : Pays à revenus élevés : il est préférable d'utiliser la norme « revenus élevés »",
