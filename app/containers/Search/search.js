@@ -76,9 +76,10 @@ export const filterMetric = (m, search) => {
     return true;
   }
 };
-export const filterGroup = (g, search, regex) => {
+export const filterGroup = (g, search) => {
   if (!search || search.length < 2) return true;
   try {
+    const regex = new RegExp(regExMultipleWords(search), 'i');
     return regex.test(cleanupSearchTarget(g.label));
   } catch (e) {
     return true;
