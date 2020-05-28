@@ -1,6 +1,10 @@
 import { toLower as loCase, deburr } from 'lodash/string';
 import { reduce } from 'lodash/collection';
 
+/* eslint-disable no-useless-escape */
+const invalid = /[°"§%()\[\]{}=\\?´`'#<>|,;.:+_-]+/g;
+const sanitise = str => str.replace(invalid, '');
+
 export const lowerCase = str => loCase(str);
 export const upperCaseFirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
@@ -8,11 +12,11 @@ export const cleanupSearchTarget = str => loCase(deburr(str));
 
 // match multiple words, incl substrings
 export const regExMultipleWords = str =>
-  reduce(str.split(' '), (words, s) => `${words}(?=.*${s})`, '');
+  reduce(sanitise(str).split(' '), (words, s) => `${words}(?=.*${s})`, '');
 
 // match multiple words
 export const regExMultipleWordsMatchStart = str =>
-  reduce(str.split(' '), (words, s) => `${words}(?=.*\\b${s})`, '');
+  reduce(sanitise(str).split(' '), (words, s) => `${words}(?=.*\\b${s})`, '');
 
 export const truncateText = (text, limit = 6, keepWords = true) => {
   if (text.length > limit) {
