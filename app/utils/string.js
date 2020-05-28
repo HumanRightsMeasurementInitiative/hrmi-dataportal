@@ -3,7 +3,7 @@ import { reduce } from 'lodash/collection';
 
 /* eslint-disable no-useless-escape */
 const invalid = /[°"§%()\[\]{}=\\?´`'#<>|,;.:+_-]+/g;
-const sanitise = str => str.replace(invalid, '');
+const sanitise = str => loCase(deburr(str)).replace(invalid, '');
 
 export const lowerCase = str => loCase(str);
 export const upperCaseFirst = str => str.charAt(0).toUpperCase() + str.slice(1);
@@ -14,7 +14,7 @@ export const cleanupSearchTarget = str => loCase(deburr(str));
 export const regExMultipleWords = str =>
   reduce(sanitise(str).split(' '), (words, s) => `${words}(?=.*${s})`, '');
 
-// match multiple words
+// match multiple words, requires starting
 export const regExMultipleWordsMatchStart = str =>
   reduce(sanitise(str).split(' '), (words, s) => `${words}(?=.*\\b${s})`, '');
 
