@@ -24,7 +24,7 @@
   "hrmi.containers.PathCountry.header.a": "¿En qué medida {isPlural, select, true {están} false {está}} {countryWithArticle} respeta los derechos humanos de las personas?",
   "hrmi.containers.PathCountry.header.b": "Utilizar las pestañas que aparecen abajo para analizar las puntuaciones.",
   "hrmi.containers.PathCountry.countryScoreExplainer.esr.adjusted": "Respecto a {metric}, {countryWithArticle} {isPlural, select, true {registran} false {registra}} un {score}% de lo que sería posible según su nivel de ingresos (contrastado con el punto de referencia establecido según los ingresos).",
-  "hrmi.containers.PathCountry.countryScoreExplainer.esr.best": "Respecto a {metric}, {countryWithArticle} {isPlural, select, true {registran} false {registra}} un {score}% de lo que los países de altos ingresos han demostrado que es posible (contrastado con el mejor punto de referencia del mundo) ",
+  "hrmi.containers.PathCountry.countryScoreExplainer.esr.best": "Respecto a {metric}, {countryWithArticle} {isPlural, select, true {registran} false {registra}} un {score}% de lo que los países de altos ingresos han demostrado que es posible (contrastado con el mejor punto de referencia del mundo).",
   "hrmi.containers.PathCountry.countryScoreExplainer.cpr": "Según {metric}, {countryWithArticle} {isPlural, select, true {marca} false {marcan}} {score} sobre 10, con base en la información recogida de {link}.",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.url": "https://humanrightsmeasurement.org/human-rights-practitioners/",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.anchor": "profesionales de derechos humanos",
