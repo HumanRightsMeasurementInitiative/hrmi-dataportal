@@ -137,7 +137,7 @@
   "hrmi.components.ChartHeader.people": "Personnes à risque",
   "hrmi.components.ChartSettingMetrics.indicators": "Quel est le score {countryOf} pour {hasMany, select, true {les indicateurs} false {l'indicateur}} que nous utilisons pour {dropdown} ?",
   "hrmi.components.ChartSettingMetrics.sex": "Quel est le score {countryOf} par sexe pour {dropdown} ?",
-  "hrmi.components.ChartSettingMetrics.trend": "Quel est le score {countryOf} au fil du temps pour {dropdown}",
+  "hrmi.components.ChartSettingMetrics.trend": "Quel est le score {countryOf} au fil du temps pour {dropdown}?",
   "hrmi.components.ChartSettingMetrics.people": "Quelles personnes {countryOf} ont été identifiées par des experts des droits humains comme risquant particulièrement de subir une atteinte à leur {dropdown} ?",
   "hrmi.containers.Search.allSearch": "Trouver un pays, un droit humain ou une population",
   "hrmi.containers.Search.countrySearch": "Trouver un pays",
