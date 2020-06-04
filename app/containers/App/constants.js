@@ -90,7 +90,7 @@ export const COLUMNS = {
     GROUPS: 'group_codes',
     TREATIES: 'treaty_codes',
     STATUS: 'country_status',
-    RELATED: 'related_country_code',
+    SOUVEREIGN: 'souvereign_country_code',
   },
   FEATURED: {
     CAT: 'featured_category',
