@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
 import {
-  getCountries,
+  getNumberCountriesWithScores,
   getFeaturedCountries,
   getLocale,
 } from 'containers/App/selectors';
@@ -44,12 +44,18 @@ import SectionFooter from 'components/Sections/SectionFooter';
 // styles
 import ContentWrap from 'styled/ContentWrap';
 
-const DEPENDENCIES = ['countries', 'featured', 'atRisk'];
+const DEPENDENCIES = [
+  'countries',
+  'featured',
+  'atRisk',
+  'esrScores',
+  'cprScores',
+];
 
 export function PathHome({
   onLoadData,
   nav,
-  countries,
+  countryCount,
   countriesFeatured,
   onSelectMetric,
   onSelectCountry,
@@ -65,7 +71,7 @@ export function PathHome({
     <ContentWrap>
       <SectionIntro />
       <SectionDataCards
-        noCountries={countries ? countries.length : 0}
+        noCountries={countryCount}
         noRights={RIGHTS.length}
         noGroups={AT_RISK_GROUPS.length}
         navCountries={() => nav(PATHS.COUNTRIES)}
@@ -98,7 +104,7 @@ PathHome.propTypes = {
   nav: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired,
   // dataReady: PropTypes.bool,
-  countries: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  countryCount: PropTypes.number,
   countriesFeatured: PropTypes.array,
   onSelectMetric: PropTypes.func,
   onSelectCountry: PropTypes.func,
@@ -108,7 +114,7 @@ PathHome.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   countriesFeatured: state => getFeaturedCountries(state),
-  countries: state => getCountries(state),
+  countryCount: state => getNumberCountriesWithScores(state),
   locale: state => getLocale(state),
 });
 
