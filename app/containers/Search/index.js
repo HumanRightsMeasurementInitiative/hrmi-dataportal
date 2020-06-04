@@ -44,16 +44,45 @@ export function Search({
   focus,
   countries,
 }) {
+  const hasToggle = typeof onToggle !== 'undefined';
   const [search, setSearch] = useState('');
   const [activeResult, setActiveResult] = useState(0);
   const searchRef = useRef(null);
   const textInputRef = useRef(null);
+  const dropRef = useRef(null);
+
+  const outsideSearchClick = e => {
+    // console.log(searchRef.current && searchRef.current.contains(e.target))
+    // console.log(dropRef.current && dropRef.current.contains(e.target))
+    // inside search click
+    if (searchRef.current && searchRef.current.contains(e.target)) {
+      return;
+    }
+    // inside drop click
+    if (dropRef.current && dropRef.current.contains(e.target)) {
+      return;
+    }
+    // outside click
+    if (hasToggle) {
+      onToggle(false);
+    }
+  };
 
   useEffect(() => {
     if ((focus || expand) && textInputRef) {
       textInputRef.current.focus();
     }
   }, [searched, focus, expand]);
+
+  useEffect(() => {
+    if (hasToggle) {
+      document.addEventListener('mousedown', outsideSearchClick);
+      return () => {
+        document.removeEventListener('mousedown', outsideSearchClick);
+      };
+    }
+    return () => {};
+  }, [expand]);
 
   let sortedCountries = [];
   let dimensions = [];
@@ -85,14 +114,14 @@ export function Search({
         style={stretch ? null : { maxWidth: '500px' }}
         height={`${theme.sizes.search[size]}px`}
         pad={{ horizontal: 'ms' }}
-        margin={{ left: onToggle ? 'ms' : '0' }}
+        margin={{ left: hasToggle ? 'ms' : '0' }}
         background="white"
       >
-        {onToggle && !expand && (
+        {hasToggle && !expand && (
           <Button
             plain
             onClick={() => {
-              onToggle();
+              onToggle(true);
               setActiveResult(0);
             }}
             label={
@@ -104,7 +133,7 @@ export function Search({
             gap="xsmall"
           />
         )}
-        {((onToggle && expand) || !onToggle) && (
+        {((hasToggle && expand) || !hasToggle) && (
           <>
             <TextInput
               plain
@@ -125,19 +154,19 @@ export function Search({
               }
               ref={textInputRef}
             />
-            {!onToggle && search.length === 0 && (
+            {!hasToggle && search.length === 0 && (
               <Box pad={{ right: 'xsmall' }}>
                 <SearchIcon size={size} color="dark" />
               </Box>
             )}
-            {(onToggle || search.length > 0) && (
+            {(hasToggle || search.length > 0) && (
               <Button
                 plain
                 fill="vertical"
                 onClick={() => {
                   setSearch('');
                   if (onSearch) onSearch('');
-                  if (onToggle) onToggle();
+                  if (hasToggle) onToggle(false);
                   setActiveResult(0);
                 }}
                 icon={<Close size={size} color="dark" />}
@@ -150,7 +179,7 @@ export function Search({
           </>
         )}
       </Box>
-      {drop && search.length > 1 && (
+      {((hasToggle && expand) || !hasToggle) && drop && search.length > 1 && (
         <Drop
           align={{ top: 'bottom', left: 'left' }}
           target={searchRef.current}
@@ -159,6 +188,7 @@ export function Search({
             if (onSearch) onSearch('');
             setActiveResult(0);
           }}
+          ref={dropRef}
         >
           <SearchResults
             onClose={() => {
@@ -167,7 +197,7 @@ export function Search({
               setActiveResult(0);
             }}
             search={search}
-            onSelect={() => onToggle && onToggle()}
+            onSelect={() => hasToggle && onToggle(false)}
             activeResult={activeResult}
             setActiveResult={setActiveResult}
             countries={sortedCountries}
