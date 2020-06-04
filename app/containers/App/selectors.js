@@ -1524,6 +1524,21 @@ export const getScoresByCountry = createSelector(
   }),
 );
 
+export const getNumberCountriesWithScores = createSelector(
+  getCountries,
+  getESRScoresByCountry,
+  getCPRScoresByCountry,
+  (countries, esr, cpr) => {
+    if (!countries || !esr || !cpr) return 0;
+    const countriesWithRightsScores = countries.filter(
+      c =>
+        Object.keys(cpr).indexOf(c[COLUMNS.COUNTRIES.CODE]) > -1 ||
+        Object.keys(esr).indexOf(c[COLUMNS.COUNTRIES.CODE]) > -1,
+    );
+    return countriesWithRightsScores.length;
+  },
+);
+
 // aux indicators
 // all countries
 export const getAuxIndicatorsLatest = createSelector(

@@ -35,8 +35,8 @@ export const areAnyFiltersSet = (
       (filter === 'subregion' && !!subregionFilterValue) ||
       (filter === 'assessed' && !!assessedFilterValue) ||
       (filter === 'cgroup' && !!countryGroupFilterValue) ||
-      (filter === 'treaty' && !!treatyFilterValue) ||
-      false,
+      (filter === 'treaty' && !!treatyFilterValue),
+    false,
   );
 
 const addCountryAttribute = (values, country, attribute, validValues) => {

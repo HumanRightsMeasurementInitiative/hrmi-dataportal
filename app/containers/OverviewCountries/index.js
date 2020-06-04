@@ -130,26 +130,43 @@ export function OverviewCountries({
   const currentSort =
     sort && SORT_OPTIONS.indexOf(sort) > -1 ? sort : 'assessment';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
-
+  const filtersSet = areAnyFiltersSet(COUNTRY_FILTERS.ALL, {
+    regionFilterValue,
+    subregionFilterValue,
+    incomeFilterValue,
+    assessedFilterValue,
+    countryGroupFilterValue,
+    treatyFilterValue,
+  });
   const filterValues = getFilterOptionValues(
     countries,
     COUNTRY_FILTERS.ALL,
     // check if any filters are already set -
     // if not we can just return all specified options
-    areAnyFiltersSet(COUNTRY_FILTERS.ALL, {
-      regionFilterValue,
-      subregionFilterValue,
-      incomeFilterValue,
-      assessedFilterValue,
-      countryGroupFilterValue,
-      treatyFilterValue,
-    }),
+    filtersSet,
     standardDetails,
     scoresAllCountries,
   );
-  const searched = search
-    ? filterCountries(countries, search, intl)
-    : countries;
+  // filter by search
+  const searched =
+    search.length > 0 ? filterCountries(countries, search, intl) : countries;
+  const searchEffective =
+    countries && searched && searched.length !== countries.length;
+
+  console.log(searchEffective, filtersSet);
+  // filter again to figure out number of countries with scores
+  // (remember list also shows countries without scores)
+  const countriesWithScores =
+    searched &&
+    searched.filter(
+      c =>
+        Object.keys(scoresAllCountries.cpr).indexOf(c[COLUMNS.COUNTRIES.CODE]) >
+          -1 ||
+        Object.keys(scoresAllCountries.esr).indexOf(c[COLUMNS.COUNTRIES.CODE]) >
+          -1,
+    );
+  const countryCount = countriesWithScores ? countriesWithScores.length : 0;
+
   // sortable and non-sortable countries
   const { sorted, other } = sortCountries({
     intl,
@@ -172,7 +189,10 @@ export function OverviewCountries({
           <ChartHeader
             top
             chartId="countries-overview"
-            messageValues={{ no: countries.length }}
+            messageValues={{
+              no: countryCount,
+              filtered: filtersSet || searchEffective,
+            }}
             hasWhiteBG={false}
             tools={{
               howToReadConfig: {
