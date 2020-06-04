@@ -127,7 +127,7 @@
   "hrmi.charts.dimensionIntro.esr.adjusted": "¿Qué tal le va a {countryWithArticle} en comparación con lo que es posible a su nivel de ingresos?",
   "hrmi.charts.dimensionIntro.esr.best": "¿Qué tal le va a {countryWithArticle} en comparación con los mejores del mundo?",
   "hrmi.charts.dimensionIntro.physint": "¿Hasta qué nivel el gobierno {countryOf} está respetando cada derecho?",
-  "hrmi.charts.dimensionIntro.empowerment": "¿Hasta qué nivel el gobierno de {countryOf} está respetando cada derecho?",
+  "hrmi.charts.dimensionIntro.empowerment": "¿Hasta qué nivel el gobierno {countryOf} está respetando cada derecho?",
   "hrmi.components.ChartHeader.single-metric": "Calificaciones disponibles para {no} países",
   "hrmi.components.ChartHeader.countries-overview": "{no} países",
   "hrmi.components.ChartHeader.dimension-overview": "{dimension} resumen",
@@ -137,7 +137,7 @@
   "hrmi.components.ChartHeader.people": "Personas en situación de riesgo",
   "hrmi.components.ChartSettingMetrics.indicators": "¿Cómo es el desempeño {countryOf} en cuanto {hasMany, select, true {a los indicadores} false {al indicador}} que utilizamos para {dropdown}?",
   "hrmi.components.ChartSettingMetrics.sex": "¿Cómo es el desempeño {countryOf} en cuanto al género {dropdown}?",
-  "hrmi.components.ChartSettingMetrics.trend": "¿Cómo es el desempeño de {countryOf} con el paso del tiempo {dropdown}?",
+  "hrmi.components.ChartSettingMetrics.trend": "¿Cómo es el desempeño {countryOf} con el paso del tiempo {dropdown}?",
   "hrmi.components.ChartSettingMetrics.people": "¿Qué personas {countryOf} han considerado los expertos en derechos humanos que están en alto riesgo de que se violen sus derechos {dropdown}?",
   "hrmi.containers.Search.allSearch": "Buscar país, derecho humano o personas",
   "hrmi.containers.Search.countrySearch": "Encontrar país",
@@ -866,5 +866,13 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "Con una mayor financiación, HRMI podría investigar la razón de cada uno de estos vacíos de información y buscar maneras para poder cubrirlos. ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "Aún no se han producido los datos de '{physint}' y '{empowerment}' para {countryWithArticle}. Nos gustaría ampliar nuestra recopilación de datos a todo el mundo lo antes posible. Para obtener más información sobre cómo puede ayudar, visite ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "esta página en el sitio web de HRMI."
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "esta página en el sitio web de HRMI.",
+  "hrmi.status.unincorporated": "Unincorporated territory",
+  "hrmi.status.associated": "Associated state",
+  "hrmi.status.collectivity_overseas": "Overseas collectivity",
+  "hrmi.status.collectivity_special": "Special collectivity",
+  "hrmi.status.selfgoverning": "Self-governing in free association",
+  "hrmi.status.nonselfgoverning": "Non-self-governing territory",
+  "hrmi.status.commonwealth_politicalunion": "Commonwealth in political union",
+  "hrmi.containers.AboutCountryContainer.countryStatus": "Country status"
 }
