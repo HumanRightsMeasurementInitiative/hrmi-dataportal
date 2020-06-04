@@ -137,9 +137,9 @@ function AboutCountryContainer({
             <Text>
               {getTerritoryStatus(
                 countryStatus,
-                country[COLUMNS.COUNTRIES.SOUVEREIGN],
+                country[COLUMNS.COUNTRIES.RELATED],
                 countriesGrammar.find(
-                  c => c.country_code === country[COLUMNS.COUNTRIES.SOUVEREIGN],
+                  c => c.country_code === country[COLUMNS.COUNTRIES.RELATED],
                 ),
                 intl,
               )}
