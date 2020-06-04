@@ -866,5 +866,13 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "{physint} and {empowerment} data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We would like to expand our data collection to the whole world as soon as possible. To learn more about how you can help, please visit ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "this page on the HRMI website."
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "this page on the HRMI website.",
+  "hrmi.status.unincorporated": "Unincorporated territory",
+  "hrmi.status.associated": "Associated state",
+  "hrmi.status.collectivity_overseas": "Overseas collectivity",
+  "hrmi.status.collectivity_special": "Special collectivity",
+  "hrmi.status.selfgoverning": "Self-governing in free association",
+  "hrmi.status.nonselfgoverning": "Non-self-governing territory",
+  "hrmi.status.commonwealth_politicalunion": "Commonwealth in political union",
+  "hrmi.containers.AboutCountryContainer.countryStatus": "Country status"
 }
