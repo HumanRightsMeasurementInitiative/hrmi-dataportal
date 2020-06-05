@@ -40,7 +40,6 @@ import {
   AT_RISK_GROUPS,
   COLUMNS,
   ASSESSED_FILTERS,
-  SUBREGIONS_FOR_COMPARISON,
 } from './constants';
 
 // global sub-state
@@ -1318,9 +1317,7 @@ export const getReferenceScores = createSelector(
             c =>
               isCountryHighIncome(c) && c.country_code !== country.country_code,
           );
-        } else if (
-          SUBREGIONS_FOR_COMPARISON.indexOf(country.subregion_code) > -1
-        ) {
+        } else if (country.subregion_code.trim() !== '') {
           // use countries from same subregion
           referenceCountriesESR = countries.filter(
             c =>
@@ -1523,6 +1520,21 @@ export const getScoresByCountry = createSelector(
     cpr,
     // indicators,
   }),
+);
+
+export const getNumberCountriesWithScores = createSelector(
+  getCountries,
+  getESRScoresByCountry,
+  getCPRScoresByCountry,
+  (countries, esr, cpr) => {
+    if (!countries || !esr || !cpr) return 0;
+    const countriesWithRightsScores = countries.filter(
+      c =>
+        Object.keys(cpr).indexOf(c[COLUMNS.COUNTRIES.CODE]) > -1 ||
+        Object.keys(esr).indexOf(c[COLUMNS.COUNTRIES.CODE]) > -1,
+    );
+    return countriesWithRightsScores.length;
+  },
 );
 
 // aux indicators
