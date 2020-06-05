@@ -237,7 +237,7 @@ ButtonSecondary.propTypes = {
   windowSize: PropTypes.string,
 };
 
-const renderPages = (match, nav, setShowMenu, align) =>
+const renderPages = ({ match, onClick, align }) =>
   PAGES &&
   Object.values(PAGES)
     .filter(page => page.primary)
@@ -247,10 +247,7 @@ const renderPages = (match, nav, setShowMenu, align) =>
         active={page.key === match}
         disabled={page.key === match}
         align={align}
-        onClick={() => {
-          if (setShowMenu) setShowMenu(false);
-          nav(`${PATHS.PAGE}/${page.key}`);
-        }}
+        onClick={() => onClick(page.key)}
       >
         <FormattedMessage {...rootMessages.page[page.key]} />
       </ButtonNavPrimary>
@@ -355,7 +352,14 @@ export function Header({
                   >
                     <MenuList elevation="large">
                       <MenuGroup>
-                        {renderPages(match, nav, setShowMenu, 'left')}
+                        {renderPages({
+                          match,
+                          onClick: key => {
+                            setShowMenu(false);
+                            nav(`${PATHS.PAGE}/${key}`);
+                          },
+                          align: 'left',
+                        })}
                       </MenuGroup>
                     </MenuList>
                   </Layer>
@@ -369,7 +373,13 @@ export function Header({
                     justify="end"
                     size={size}
                   >
-                    {renderPages(match, nav)}
+                    {renderPages({
+                      match,
+                      onClick: key => {
+                        setShowSearch(false);
+                        nav(`${PATHS.PAGE}/${key}`);
+                      },
+                    })}
                     {appLocales.length > 1 && isMinSize(size, 'medium') && (
                       <LocaleToggle />
                     )}
@@ -502,7 +512,7 @@ export function Header({
                     <SearchWrap justify="center">
                       <Search
                         expand={showSearch}
-                        onToggle={() => setShowSearch(!showSearch)}
+                        onToggle={show => setShowSearch(show)}
                       />
                     </SearchWrap>
                   )}
