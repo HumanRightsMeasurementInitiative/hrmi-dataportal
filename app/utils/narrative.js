@@ -113,9 +113,9 @@ export const getCountryPossessive = (locale, countryGrammar, countryLabel) => {
 export const getCountryOf = (locale, countryGrammar, countryLabel) => {
   if (locale === 'en') {
     if (needsArticle(locale, countryGrammar)) {
-      return `for the ${countryLabel}`;
+      return `of the ${countryLabel}`;
     }
-    return `for ${countryLabel}`;
+    return `of ${countryLabel}`;
   }
   if (locale === 'fr') {
     if (needsArticle(locale, countryGrammar)) {
@@ -161,6 +161,27 @@ export const getCountryOf = (locale, countryGrammar, countryLabel) => {
       return `do ${countryLabel}`;
     }
     return `de ${countryLabel}`;
+  }
+  return countryLabel;
+};
+
+export const getWithCountry = (locale, countryGrammar, countryLabel) => {
+  const countryWithArticle = getCountryWithArticle(
+    locale,
+    countryGrammar,
+    countryLabel,
+  );
+  if (locale === 'en') {
+    return `with ${countryWithArticle}`;
+  }
+  if (locale === 'fr') {
+    return `avec ${countryWithArticle}`;
+  }
+  if (locale === 'es') {
+    return `con ${countryWithArticle}`;
+  }
+  if (locale === 'pt') {
+    return `com ${countryWithArticle}`;
   }
   return countryLabel;
 };
@@ -501,4 +522,45 @@ export const compareRange = ({ lo, hi, reference }) => {
   if (lo > reference) return 'a'; // better than average
   if (hi < reference) return 'b'; // worse than average
   return 'c'; // close to average
+};
+
+const TERRITORY_GRAMMAR = {
+  conjunction: {
+    of: [
+      'collectivity_overseas',
+      'unincorporated',
+      'collectivity_special',
+      'associated',
+      'nonselfgoverning',
+      'collectivity_overseas',
+    ],
+    with: ['commonwealth_politicalunion', 'selfgoverning'],
+  },
+};
+
+export const getTerritoryStatus = (
+  statusCode,
+  countryCode,
+  countryGrammar,
+  intl,
+) => {
+  const countryLabel = rootMessages.countries[countryCode]
+    ? intl.formatMessage(rootMessages.countries[countryCode])
+    : countryCode;
+  const statusLabel = rootMessages.status[statusCode]
+    ? intl.formatMessage(rootMessages.status[statusCode])
+    : statusCode;
+  if (countryGrammar && intl) {
+    if (TERRITORY_GRAMMAR.conjunction.with.indexOf(statusCode) > -1) {
+      const countryOf = getWithCountry(
+        intl.locale,
+        countryGrammar,
+        countryLabel,
+      );
+      return `${statusLabel} ${countryOf}`;
+    }
+    const countryOf = getCountryOf(intl.locale, countryGrammar, countryLabel);
+    return `${statusLabel} ${countryOf}`;
+  }
+  return `${statusCode} (${countryCode})`;
 };
