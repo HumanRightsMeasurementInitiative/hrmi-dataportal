@@ -867,5 +867,13 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "{physint} e {empowerment} dados ainda não foram produzidos para {countryWithArticle}. Gostaríamos de expandir nossa coleta de dados para o mundo inteiro o mais rápido possível. Para saber mais sobre como você pode ajudar, visite ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "nesta página no site da HRMI.",
+  "hrmi.status.unincorporated": "Unincorporated territory",
+  "hrmi.status.associated": "Associated state",
+  "hrmi.status.collectivity_overseas": "Overseas collectivity",
+  "hrmi.status.collectivity_special": "Special collectivity",
+  "hrmi.status.selfgoverning": "Self-governing in free association",
+  "hrmi.status.nonselfgoverning": "Non-self-governing territory",
+  "hrmi.status.commonwealth_politicalunion": "Commonwealth in political union",
+  "hrmi.containers.AboutCountryContainer.countryStatus": "Country status",
   "hrmi.components.ChartHeader.countries-overview-sub": "TODO: Also showing {noWithout} {noWithout, select, 1 {country} other {countries}} without any scores"
 }
