@@ -6,16 +6,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Heading, ResponsiveContext, Box } from 'grommet';
+import { Heading, ResponsiveContext, Box, Text } from 'grommet';
 import styled from 'styled-components';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import ChartTools from 'containers/ChartTools';
 
 import ChartSettingFilters from 'components/ChartSettingFilters';
 import ChartSettingSort from 'components/ChartSettingSort';
 
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import messages from './messages';
 
@@ -33,18 +33,19 @@ const Styled = styled.div`
 const Top = styled(Box)`
   position: relative;
 `;
-
-const ChartToolWrapper = styled.div`
-  position: absolute;
-  top: 4px;
-  right: 0px;
-  text-align: right;
+const SubHeading = styled(Text)`
+  margin-top: -5px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    position: absolute;
+    top: 100%;
+    margin-top: -8px;
+  }
 `;
-// @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-//   /* position: absolute;
-//   right: ${({ theme }) => theme.global.edgeSize.medium};
-//   top: 0; */
-// }
+const HeadingWrap = styled(Box)`
+  position: relative;
+`;
+
+const ChartToolWrapper = styled(Box)``;
 
 export function ChartHeader({
   title,
@@ -57,6 +58,7 @@ export function ChartHeader({
   includeChartName,
   hasWhiteBG,
   top,
+  hasSubHeading,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
@@ -64,16 +66,28 @@ export function ChartHeader({
     <ResponsiveContext.Consumer>
       {size => (
         <Styled top={top}>
-          <Top direction="row" align="center">
-            <Heading
-              level={size === 'small' ? 5 : 2}
-              responsive={false}
-              margin={{ vertical: 'xsmall' }}
-            >
-              {chartName}
-            </Heading>
+          <Top direction="row" align="center" justify="between">
+            <HeadingWrap>
+              <Heading
+                level={isMaxSize(size, 'sm') ? 5 : 2}
+                responsive={false}
+                margin={{ vertical: 'xsmall' }}
+              >
+                {chartName}
+              </Heading>
+              {hasSubHeading && messages[`${chartId}-sub`] && (
+                <SubHeading
+                  size={isMinSize(size, 'medium') ? 'xsmall' : 'xxsmall'}
+                >
+                  <FormattedMessage
+                    {...messages[`${chartId}-sub`]}
+                    values={messageValues}
+                  />
+                </SubHeading>
+              )}
+            </HeadingWrap>
             {tools && (
-              <ChartToolWrapper>
+              <ChartToolWrapper flex={{ shrink: 0 }}>
                 <ChartTools
                   hasWhiteBG={hasWhiteBG}
                   howToReadConfig={
@@ -94,7 +108,7 @@ export function ChartHeader({
           </Top>
           {(filter || sort) && (
             <Box
-              direction={size === 'small' ? 'column' : 'row'}
+              direction={isMaxSize(size, 'sm') ? 'column' : 'row'}
               justify="between"
               align={isMinSize(size, 'medium') ? 'center' : 'start'}
               margin={{
@@ -102,7 +116,7 @@ export function ChartHeader({
                 top: isMinSize(size, 'medium') ? 'small' : '0',
               }}
             >
-              {sort && size === 'small' && (
+              {sort && isMaxSize(size, 'sm') && (
                 <ChartSettingSort
                   sort={sort.sort}
                   options={sort.options}
@@ -126,7 +140,7 @@ export function ChartHeader({
                   hasWhiteBG={hasWhiteBG}
                 />
               )}
-              {sort && size !== 'small' && (
+              {sort && isMinSize(size, 'medium') && (
                 <ChartSettingSort
                   sort={sort.sort}
                   options={sort.options}
@@ -158,6 +172,7 @@ ChartHeader.propTypes = {
   includeChartName: PropTypes.bool,
   hasWhiteBG: PropTypes.bool,
   top: PropTypes.bool,
+  hasSubHeading: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

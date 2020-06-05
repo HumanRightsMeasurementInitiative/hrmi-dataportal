@@ -4,19 +4,16 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
-import {
-  Accordion,
-  AccordionPanel,
-  Box,
-  Heading,
-  Paragraph,
-  Text,
-} from 'grommet';
+import { Accordion, AccordionPanel, Box, Heading, Text } from 'grommet';
 import { Down, Up } from 'grommet-icons';
+
+import FormattedMarkdown from 'components/FormattedMarkdown';
 
 import { navigate } from 'containers/App/actions';
 import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
 import InfoStandard from 'containers/LayerSettings/InfoStandard';
+
+import { lowerCase } from 'utils/string';
 
 import MethodologyLink from './MethodologyLink';
 
@@ -30,40 +27,40 @@ const LI = styled.li`
   margin-bottom: 8px;
 `;
 
-const renderAnswer = (question, intl, metric, navMethodology) => {
+const renderAnswer = (question, intl, msgValues, navMethodology) => {
   if (question === 'measureRightESR') {
     return (
       <>
-        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-          <FormattedMessage
+        <Text size="small">
+          <FormattedMarkdown
             {...messages.answers.measureRightESR}
-            values={{ metric }}
+            values={msgValues}
           />
-        </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-          <FormattedMessage
+        </Text>
+        <Text size="small">
+          <FormattedMarkdown
             {...messages.answers.measureRightESRNotesIntro}
-            values={{ metric }}
+            values={msgValues}
           />
-        </Paragraph>
+        </Text>
         <Text size="small">
           <OL>
             <LI>
-              <FormattedMessage
+              <FormattedMarkdown
                 {...messages.answers.measureRightESRNotesOne}
-                values={{ metric }}
+                values={msgValues}
               />
             </LI>
             <LI>
-              <FormattedMessage
+              <FormattedMarkdown
                 {...messages.answers.measureRightESRNotesTwo}
-                values={{ metric }}
+                values={msgValues}
               />
             </LI>
             <LI>
-              <FormattedMessage
+              <FormattedMarkdown
                 {...messages.answers.measureRightESRNotesThree}
-                values={{ metric }}
+                values={msgValues}
               />
             </LI>
           </OL>
@@ -100,12 +97,12 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   if (question === 'uncertainty') {
     return (
       <>
-        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-          <FormattedMessage {...messages.answers.uncertainty} />
-        </Paragraph>
-        <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-          <FormattedMessage {...messages.answers.uncertaintyLong} />
-        </Paragraph>
+        <Text size="small">
+          <FormattedMarkdown {...messages.answers.uncertainty} />
+        </Text>
+        <Text size="small">
+          <FormattedMarkdown {...messages.answers.uncertaintyLong} />
+        </Text>
         <MethodologyLink
           href={intl.formatMessage(messages.methodologyUncertaintyURL)}
           target="_blank"
@@ -116,9 +113,9 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
   }
   return (
     <>
-      <Paragraph margin={{ vertical: 'xsmall' }} size="small">
-        <FormattedMessage {...messages.answers[question]} values={{ metric }} />
-      </Paragraph>
+      <Text size="small">
+        <FormattedMarkdown {...messages.answers[question]} values={msgValues} />
+      </Text>
       <MethodologyLink
         onClick={() => navMethodology()}
         text={
@@ -135,6 +132,10 @@ const renderAnswer = (question, intl, metric, navMethodology) => {
 
 function FAQs({ questions, intl, metric, navMethodology }) {
   const [actives, setActive] = useState([]);
+  const msgValues = {
+    metric,
+    metricLower: lowerCase(metric),
+  };
   return (
     <Box pad={{ vertical: 'large' }}>
       <Accordion
@@ -156,7 +157,7 @@ function FAQs({ questions, intl, metric, navMethodology }) {
                   >
                     <FormattedMessage
                       {...messages.questions[q]}
-                      values={{ metric }}
+                      values={msgValues}
                     />
                   </Heading>
                 </Box>
@@ -168,7 +169,7 @@ function FAQs({ questions, intl, metric, navMethodology }) {
             }
           >
             <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
-              {renderAnswer(q, intl, metric, navMethodology)}
+              {renderAnswer(q, intl, msgValues, navMethodology)}
             </Box>
           </AccordionPanel>
         ))}

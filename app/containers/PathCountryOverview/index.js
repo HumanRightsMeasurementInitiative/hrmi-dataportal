@@ -45,7 +45,7 @@ import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import { filterByAssessment } from 'utils/filters';
 
-import { isMinSize } from 'utils/responsive';
+import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import graphic from 'images/graphics/countries_overview.svg';
 
@@ -85,7 +85,7 @@ export function PathCountryOverview({
     onLoadData();
   }, []);
   // prettier-ignore
-  const filteredCountries = assessed
+  const filteredCountries = assessed && countries
     ? countries && countries.filter(c =>
       filterByAssessment(
         c,
@@ -95,6 +95,7 @@ export function PathCountryOverview({
       ),
     )
     : countries;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -112,13 +113,10 @@ export function PathCountryOverview({
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>
                 <PageTitle>
-                  <FormattedMessage
-                    {...messages.title}
-                    values={{ no: filteredCountries.length }}
-                  />
+                  <FormattedMessage {...messages.title} />
                 </PageTitle>
                 {scale && (
-                  <Paragraph size={size === 'small' ? 'medium' : 'large'}>
+                  <Paragraph size={isMaxSize(size, 'sm') ? 'medium' : 'large'}>
                     <FormattedMessage
                       {...messages.header[scale]}
                       values={{
@@ -126,7 +124,7 @@ export function PathCountryOverview({
                         esrLink: (
                           <ButtonTextIcon
                             color="esrDark"
-                            size={size === 'small' ? 'medium' : 'large'}
+                            size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.esr,
@@ -137,7 +135,7 @@ export function PathCountryOverview({
                         physintLink: (
                           <ButtonTextIcon
                             color="physintDark"
-                            size={size === 'small' ? 'medium' : 'large'}
+                            size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.physint,
@@ -148,7 +146,7 @@ export function PathCountryOverview({
                         empowerLink: (
                           <ButtonTextIcon
                             color="empowermentDark"
-                            size={size === 'small' ? 'medium' : 'large'}
+                            size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
                               rootMessages.dimensions.empowerment,

@@ -6,6 +6,8 @@ import { createSelector } from 'reselect';
 import { uniq } from 'lodash/array';
 import { map } from 'lodash/collection';
 import { DEFAULT_LOCALE, appLocales } from 'i18n';
+import 'url-search-params-polyfill';
+
 import isInteger from 'utils/is-integer';
 import quasiEquals from 'utils/quasi-equals';
 
@@ -38,7 +40,6 @@ import {
   AT_RISK_GROUPS,
   COLUMNS,
   ASSESSED_FILTERS,
-  SUBREGIONS_FOR_COMPARISON,
   SUBREGIONS_FOR_COMPARISON_CPR,
 } from './constants';
 
@@ -1344,9 +1345,7 @@ export const getReferenceScores = createSelector(
             c =>
               isCountryHighIncome(c) && c.country_code !== country.country_code,
           );
-        } else if (
-          SUBREGIONS_FOR_COMPARISON.indexOf(country.subregion_code) > -1
-        ) {
+        } else if (country.subregion_code.trim() !== '') {
           // use countries from same subregion
           referenceCountriesESR = countries.filter(
             c =>
@@ -1629,6 +1628,21 @@ export const getScoresByCountry = createSelector(
     cpr,
     // indicators,
   }),
+);
+
+export const getNumberCountriesWithScores = createSelector(
+  getCountries,
+  getESRScoresByCountry,
+  getCPRScoresByCountry,
+  (countries, esr, cpr) => {
+    if (!countries || !esr || !cpr) return 0;
+    const countriesWithRightsScores = countries.filter(
+      c =>
+        Object.keys(cpr).indexOf(c[COLUMNS.COUNTRIES.CODE]) > -1 ||
+        Object.keys(esr).indexOf(c[COLUMNS.COUNTRIES.CODE]) > -1,
+    );
+    return countriesWithRightsScores.length;
+  },
 );
 
 // aux indicators

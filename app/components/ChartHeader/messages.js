@@ -17,6 +17,10 @@ export default defineMessages({
     id: `${scope}.countries-overview`,
     defaultMessage: '{no} countries',
   },
+  'countries-overview-sub': {
+    id: `${scope}.countries-overview-sub`,
+    defaultMessage: '{noWithout} countries without scores',
+  },
   'dimension-overview': {
     id: `${scope}.dimension-overview`,
     defaultMessage: '{dimension} overview',

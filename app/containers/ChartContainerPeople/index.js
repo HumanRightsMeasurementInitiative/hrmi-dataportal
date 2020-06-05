@@ -46,9 +46,6 @@ const generateKey = (metricCode, countryCode) => {
   const metric = getMetricDetails(metricCode);
   if (hasAnalysis(metric)) {
     if (metric.metricType === 'rights') {
-      if (metric.type === 'esr') {
-        return `esr/${countryCode}`;
-      }
       if (hasSubrights(metric)) {
         return getSubrights(metric).map(sr => `${sr.key}/${countryCode}`);
       }

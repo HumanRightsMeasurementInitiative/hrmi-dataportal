@@ -19,6 +19,8 @@ import { getLocale } from 'containers/App/selectors';
 import { LANGUAGES } from 'containers/App/constants';
 import { changeLocale } from 'containers/LanguageProvider/actions';
 
+import { isMaxSize } from 'utils/responsive';
+
 import messages from './messages';
 
 const Styled = styled.span``;
@@ -78,7 +80,7 @@ export function LocaleToggle({ intl, locale, onLocaleToggle, light }) {
             dropProps={{ align: { top: 'bottom', right: 'right' } }}
             icon={open ? <FormUp /> : <FormDown />}
             label={
-              size === 'small'
+              isMaxSize(size, 'sm')
                 ? `${LANGUAGES.short[locale]}`
                 : `${intl.formatMessage(messages.language)}
               ${LANGUAGES.short[locale]}`
