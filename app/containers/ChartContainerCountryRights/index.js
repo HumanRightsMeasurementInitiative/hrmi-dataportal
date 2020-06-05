@@ -15,7 +15,12 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 // import getMetricDetails from 'utils/metric-details';
 
-import { BENCHMARKS, GRADES, COLUMNS } from 'containers/App/constants';
+import {
+  BENCHMARKS,
+  GRADES,
+  COLUMNS,
+  SUBREGIONS_FOR_COMPARISON_CPR,
+} from 'containers/App/constants';
 
 import {
   getDimensionsForCountry,
@@ -158,7 +163,7 @@ export function ChartContainerCountryRights({
 
   const dimension = dimensions[dimensionCode];
   const reference = dimensionAverages[dimensionCode];
-
+  console.log(dimensionAverages, dimensionCode);
   let comparativeScoreESR;
   let comparativeRightsESR;
   if (dimensionCode === 'esr' && dimension && dimension.score) {
@@ -412,9 +417,15 @@ export function ChartContainerCountryRights({
                 score={dimension.score}
                 country={country}
                 countryGrammar={countryGrammar}
-                referenceScore={reference.average}
-                referenceCount={reference.count}
-                start
+                referenceScore={reference && reference.average}
+                referenceCount={reference && reference.count}
+                comparativeGroup={
+                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
+                    country.subregion_code,
+                  ) > -1
+                    ? 'subregion'
+                    : 'all'
+                }
               />
             </>
           )}
