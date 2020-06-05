@@ -13,7 +13,12 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph, Box, Heading } from 'grommet';
 import styled from 'styled-components';
 
-import { COLUMNS, BENCHMARKS, STANDARDS } from 'containers/App/constants';
+import {
+  COLUMNS,
+  BENCHMARKS,
+  STANDARDS,
+  SUBREGIONS_FOR_COMPARISON_CPR,
+} from 'containers/App/constants';
 import {
   getStandardSearch,
   getBenchmarkSearch,
@@ -106,7 +111,6 @@ export function ChartContainerCountrySnapshot({
       );
     })
     .some(s => !!s.score);
-
   let comparativeScoreESR;
   let comparativeRightsESR;
   if (dimensions.esr && dimensions.esr.score) {
@@ -117,23 +121,9 @@ export function ChartContainerCountrySnapshot({
     comparativeScoreESR = dimensions.esr.scoreSome[currentBenchmark.column];
     comparativeRightsESR = dimensions.esr.scoreSome.metric;
   }
-  let comparativeRightsPhysint;
-  if (dimensions.physint && dimensions.physint.score) {
-    comparativeRightsPhysint = 'all';
-  }
-  if (dimensions.physint && dimensions.physint.scoreSome) {
-    comparativeRightsPhysint = dimensions.physint.scoreSome.metric;
-  }
   const hasSomePhysintScore = Object.values(rights).some(
     s => s.dimension === 'physint' && !!s.score,
   );
-  let comparativeRightsEmpowerment;
-  if (dimensions.physint && dimensions.physint.score) {
-    comparativeRightsEmpowerment = 'all';
-  }
-  if (dimensions.physint && dimensions.empowerment.scoreSome) {
-    comparativeRightsEmpowerment = dimensions.empowerment.scoreSome.metric;
-  }
   const hasSomeEmpowermentScore = Object.values(rights).some(
     s => s.dimension === 'empowerment' && !!s.score,
   );
@@ -271,8 +261,7 @@ export function ChartContainerCountrySnapshot({
         />
         <NarrativeCPRCompAssessment
           dimensionKey="physint"
-          comparativeScoreRange={dimensions.physint.score}
-          comparativeRights={comparativeRightsPhysint}
+          score={dimensions.physint.score}
           country={country}
           countryGrammar={countryGrammar}
           referenceScore={
@@ -285,7 +274,11 @@ export function ChartContainerCountrySnapshot({
             dimensionAverages.physint &&
             dimensionAverages.physint.count
           }
-          start
+          comparativeGroup={
+            SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) > -1
+              ? 'subregion'
+              : 'all'
+          }
         />
         {hasSomePhysintScore && (
           <Paragraph>
@@ -310,8 +303,7 @@ export function ChartContainerCountrySnapshot({
         />
         <NarrativeCPRCompAssessment
           dimensionKey="empowerment"
-          comparativeScoreRange={dimensions.empowerment.score}
-          comparativeRights={comparativeRightsEmpowerment}
+          score={dimensions.empowerment.score}
           country={country}
           countryGrammar={countryGrammar}
           referenceScore={
@@ -323,6 +315,11 @@ export function ChartContainerCountrySnapshot({
             dimensionAverages &&
             dimensionAverages.empowerment &&
             dimensionAverages.empowerment.count
+          }
+          comparativeGroup={
+            SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) > -1
+              ? 'subregion'
+              : 'all'
           }
         />
         {hasSomeEmpowermentScore && (

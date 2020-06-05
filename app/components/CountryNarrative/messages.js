@@ -10,6 +10,11 @@ export const scope = 'hrmi.components.CountryNarrative';
 
 export default defineMessages({
   compAssessment: {
+    start: {
+      id: `${scope}.compAssessment.start`,
+      defaultMessage:
+        'On {esr}, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
+    },
     result: {
       a: {
         id: `${scope}.compAssessment.result.a`,
@@ -24,40 +29,17 @@ export default defineMessages({
         defaultMessage: 'close to average',
       },
     },
-    start: {
-      id: `${scope}.compAssessment.start`,
-      defaultMessage:
-        'On {esr}, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
-    },
-    startSome: {
-      id: `${scope}.compAssessment.startSome`,
-      defaultMessage:
-        'On {esr} rights, when we look across the rights for which we have data, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
-    },
-    startOne: {
-      id: `${scope}.compAssessment.start`,
-      defaultMessage:
-        'On {esr} rights, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
-    },
-    oneRight: {
-      id: `${scope}.compAssessment.oneRight`,
-      defaultMessage: 'on the {right} ',
-    },
   },
   compAssessmentCPR: {
-    hiOECD: {
-      id: `${scope}.compAssessmentCPR.hiOECD`,
+    startHiOECD: {
+      id: `${scope}.compAssessmentCPR.startHiOECD`,
       defaultMessage:
         'Compared with the {referenceCount} other high-income OECD countries we have civil and political rights data for, {needsArticle, select, true {the } false {}}{country} is performing ',
     },
-    notHiOECD: {
-      id: `${scope}.compAssessmentCPR.notHiOECD`,
+    startNotHiOECD: {
+      id: `${scope}.compAssessmentCPR.startNotHiOECD`,
       defaultMessage:
         'For the civil and political rights we do not have data for enough countries in {needsArticleRegion, select, true {the } false {}}{region} to do a regional comparison. However, compared to the other countries in our sample, {needsArticle, select, true {the } false {}}{country} is performing ',
-    },
-    conjunct: {
-      id: `${scope}.compAssessmentCPR.conjunct`,
-      defaultMessage: 'and is performing ',
     },
     end: {
       empowerment: {
@@ -73,58 +55,23 @@ export default defineMessages({
       id: `${scope}.compAssessmentCPR.noData`,
       defaultMessage: 'compAssessmentCPR.noData',
     },
-    noDataLinkURL: {
-      id: `${scope}.compAssessmentCPR.noDataLinkURL`,
-      defaultMessage: 'compAssessmentCPR.noDataLinkURL',
-    },
-    noDataLinkAnchor: {
-      id: `${scope}.compAssessmentCPR.noDataLinkAnchor`,
-      defaultMessage: 'compAssessmentCPR.noDataLinkAnchor',
-    },
-    endRegion: {
-      id: `${scope}.compAssessmentCPR.endRegion`,
-      defaultMessage:
-        ', compared with the other countries in {needsArticleRegion, select, true {the } false {}}{region} we have data for.',
-    },
-    endHiOECD: {
-      id: `${scope}.compAssessmentCPR.endHiOECD`,
-      defaultMessage:
-        ', compared with the small group of five high-income OECD countries we have data for.',
-    },
-    endOther: {
-      id: `${scope}.compAssessmentCPR.endOther`,
-      defaultMessage: ', compared with the other countries we have data for.',
-    },
   },
   compAssessmentESR: {
-    start: {
-      id: `${scope}.compAssessmentESR.start`,
-      defaultMessage:
-        'On {esr}, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
+    startHi: {
+      id: `${scope}.compAssessmentESR.startHi`,
+      defaultMessage: 'startHi',
     },
-    startSome: {
-      id: `${scope}.compAssessmentESR.startSome`,
-      defaultMessage:
-        'On {esr} rights, when we look across the rights for which we have data, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
+    endAll: {
+      id: `${scope}.compAssessmentESR.endAll`,
+      defaultMessage: 'end',
     },
-    startOne: {
-      id: `${scope}.compAssessmentESR.start`,
-      defaultMessage:
-        'On {esr} rights, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ',
+    endOne: {
+      id: `${scope}.compAssessmentESR.endOne`,
+      defaultMessage: 'endOne',
     },
-    oneRight: {
-      id: `${scope}.compAssessmentESR.oneRight`,
-      defaultMessage: 'on the {right} ',
-    },
-    end: {
-      id: `${scope}.compAssessmentESR.end`,
-      defaultMessage:
-        ', compared with the other countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
-    },
-    endHi: {
-      id: `${scope}.compAssessmentESR.endHi`,
-      defaultMessage:
-        ', compared with the other HI countries in {needsArticleRegion, select, true {the } false {}}{region}. ',
+    endSome: {
+      id: `${scope}.compAssessmentESR.endSome`,
+      defaultMessage: ' endSome',
     },
     benchmarkNote: {
       id: `${scope}.compAssessmentESR.benchmarkNote`,

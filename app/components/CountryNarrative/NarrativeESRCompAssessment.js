@@ -47,25 +47,16 @@ function NarrativeESRCompAssessment({
     const rangeHi = comparativeScore + RANGE;
     return (
       <Paragraph>
-        {comparativeRights === 'all' && (
+        {isCountryHighIncome(country) && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.startHi}
+            values={messageValues}
+          />
+        )}
+        {!isCountryHighIncome(country) && (
           <FormattedMessage
             {...messages.compAssessment.start}
             values={messageValues}
-          />
-        )}
-        {comparativeRights === 'some' && (
-          <FormattedMessage
-            {...messages.compAssessment.startSome}
-            values={messageValues}
-          />
-        )}
-        {comparativeRights !== 'all' && comparativeRights !== 'some' && (
-          <FormattedMessage
-            {...messages.compAssessment.startOne}
-            values={{
-              ...messageValues,
-              right: intl.formatMessage(rootMessages.rights[comparativeRights]),
-            }}
           />
         )}
         <strong>
@@ -80,27 +71,28 @@ function NarrativeESRCompAssessment({
             values={messageValues}
           />
         </strong>
+        {comparativeRights === 'all' && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.endAll}
+            values={messageValues}
+          />
+        )}
+        {comparativeRights === 'some' && (
+          <FormattedMessage
+            {...messages.compAssessmentESR.endSome}
+            values={messageValues}
+          />
+        )}
         {comparativeRights !== 'all' && comparativeRights !== 'some' && (
           <FormattedMessage
-            {...messages.compAssessment.oneRight}
+            {...messages.compAssessmentESR.endOne}
             values={{
               ...messageValues,
               right: intl.formatMessage(rootMessages.rights[comparativeRights]),
             }}
           />
         )}
-        {isCountryHighIncome(country) && (
-          <FormattedMessage
-            {...messages.compAssessmentESR.endHi}
-            values={messageValues}
-          />
-        )}
-        {!isCountryHighIncome(country) && (
-          <FormattedMessage
-            {...messages.compAssessmentESR.end}
-            values={messageValues}
-          />
-        )}
+
         <FormattedMessage
           {...messages.compAssessmentESR.benchmarkNote}
           values={{

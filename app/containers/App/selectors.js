@@ -1205,7 +1205,7 @@ export const getCPRScoresForYear = createSelector(
 // esr: average of countries in same region, if high income country use ALL high income average best calculate for both standards and benchmarks
 // cpr: average mean score of other countries worldwide, if high income oecd country only use HI OECD average
 
-const esrScoreAdder = (sum, referenceCountry, scores, metrics) => {
+const esrScoreAdder = (stats, referenceCountry, scores, metrics) => {
   // look up country score
   const referenceScores = scores.filter(
     s =>
@@ -1213,7 +1213,7 @@ const esrScoreAdder = (sum, referenceCountry, scores, metrics) => {
       metrics.map(m => m.code).indexOf(s.metric_code) > -1,
   );
   if (!referenceScores || referenceScores.length === 0) {
-    return sum;
+    return stats;
   }
   let referenceAverage;
   if (referenceScores.length === 1) {
@@ -1243,52 +1243,29 @@ const esrScoreAdder = (sum, referenceCountry, scores, metrics) => {
   // sums by benchmark & count
   return {
     sumAdjusted:
-      sum.sumAdjusted +
+      stats.sumAdjusted +
       parseFloat(referenceAverage[COLUMNS.ESR.SCORE_ADJUSTED]),
-    sumBest: sum.sumBest + parseFloat(referenceAverage[COLUMNS.ESR.SCORE_BEST]),
-    count: sum.count + 1,
+    sumBest:
+      stats.sumBest + parseFloat(referenceAverage[COLUMNS.ESR.SCORE_BEST]),
+    count: stats.count + 1,
   };
 };
-const cprScoreAdder = (sum, referenceCountry, scores, metrics) => {
+const cprScoreAdder = (stats, referenceCountry, scores, dimension) => {
   // look up country score
-  const referenceScores = scores.filter(
+  const referenceScore = scores.find(
     s =>
       s.country_code === referenceCountry.country_code &&
-      metrics.map(m => m.code).indexOf(s.metric_code) > -1,
+      dimension === s.metric_code,
   );
-  if (!referenceScores || referenceScores.length === 0) {
-    return sum;
-  }
-  let referenceAverage;
-  if (referenceScores.length === 1) {
-    [referenceAverage] = referenceScores;
-  } else {
-    // rights averages
-    const rightsSum = referenceScores.reduce(
-      (sumR, s) => sumR + parseFloat(s[COLUMNS.CPR.MEAN]),
-      0,
-    );
-    referenceAverage = rightsSum / referenceScores.length;
+  if (!referenceScore) {
+    return stats;
   }
   // sums by benchmark & count
   return {
-    sum: sum.sum + parseFloat(referenceAverage[COLUMNS.CPR.MEAN]),
-    count: sum.count + 1,
+    sum: stats.sum + parseFloat(referenceScore[COLUMNS.CPR.MEAN]),
+    count: stats.count + 1,
   };
 };
-
-// const cprScoreAdder = (sum, referenceCountry, scores) => {
-//   const score = scores.find(
-//     s => s.country_code === referenceCountry.country_code,
-//   );
-//   // prettier-ignore
-//   return score
-//     ? {
-//       sum: sum.sum + parseFloat(score[COLUMNS.CPR.MEAN]),
-//       count: sum.count + 1,
-//     }
-//     : sum;
-// };
 
 export const getReferenceScores = createSelector(
   getCountryFromRouter,
@@ -1383,41 +1360,6 @@ export const getReferenceScores = createSelector(
           : null;
       }
     }
-    // let referenceCountriesCPR;
-    // if (isCountryHighIncome(country) && isCountryOECD(country)) {
-    //   referenceCountriesCPR = countries.filter(
-    //     c => isCountryHighIncome(c) && isCountryOECD(country),
-    //   );
-    // } else {
-    //   referenceCountriesCPR = countries.filter(
-    //     c => c.country_code !== country.country_code,
-    //   );
-    // }
-    // const cprDimensions = DIMENSIONS.filter(d => d.type === 'cpr');
-    // const cprSums = cprDimensions.reduce(
-    //   (dimSums, d) => ({
-    //     ...dimSums,
-    //     [d.key]: referenceCountriesCPR.reduce(
-    //       (sum, referenceCountry) =>
-    //         cprScoreAdder(sum, referenceCountry, cprDimScores[d.key]),
-    //       {
-    //         sum: 0,
-    //         count: 0,
-    //       },
-    //     ),
-    //   }),
-    //   {},
-    // );
-    // const cprAverages_ = cprDimensions.reduce(
-    //   (m, d) => ({
-    //     ...m,
-    //     [d.key]: {
-    //       ...cprSums[d.key],
-    //       average: cprSums[d.key].sum / cprSums[d.key].count,
-    //     },
-    //   }),
-    //   {},
-    // );
 
     // CPR
     let cprAverages;
@@ -1427,39 +1369,16 @@ export const getReferenceScores = createSelector(
     if (countryScoresCPR && countryScoresCPR.length > 0) {
       const cprDimensions = DIMENSIONS.filter(d => d.type === 'cpr');
       cprAverages = cprDimensions.reduce((averages, dimension) => {
-        const countryDimScore = countryScores.find(
+        const countryDimScore = countryScoresCPR.find(
           s => s.metric_code === dimension.code,
         );
         const hasCountryDimScore = !!countryDimScore;
-        // check rights scores if no dim score present
-        let countryRightsScores;
-        let hasCountryRightsScores;
-        let countryMetrics;
-        if (hasCountryDimScore) {
-          countryMetrics = [dimension];
-        } else {
-          countryRightsScores = countryScores.filter(
-            s => s.metric_code !== dimension.code,
-          );
-          countryMetrics = countryRightsScores
-            .map(s => RIGHTS.find(r => r.code === s.metric_code))
-            .filter(s => !!s);
-          hasCountryRightsScores =
-            countryRightsScores && countryRightsScores.length > 0;
-        }
         // 2. get reference countries if scores present
-        if (hasCountryDimScore || hasCountryRightsScores) {
+        if (hasCountryDimScore) {
           // these are the countries that we are comparing our country to
           // if country high income country then compare with all other HI
           // if not, compare with region/subregion
           let referenceCountries;
-          // if (isCountryHighIncome(country)) {
-          //   // use high income countries for comparison
-          //   referenceCountries = countries.filter(
-          //     c =>
-          //       isCountryHighIncome(c) &&
-          //       c.country_code !== country.country_code,
-          //   );
           if (isCountryHighIncome(country) && isCountryOECD(country)) {
             referenceCountries = countries.filter(
               c => isCountryHighIncome(c) && isCountryOECD(country),
@@ -1482,7 +1401,7 @@ export const getReferenceScores = createSelector(
           // 3. calculate average score of reference countries
           const dimSums = referenceCountries.reduce(
             (sum, referenceCountry) =>
-              cprScoreAdder(sum, referenceCountry, cprScores, countryMetrics),
+              cprScoreAdder(sum, referenceCountry, cprScores, dimension.code),
             {
               sum: 0,
               count: 0,
