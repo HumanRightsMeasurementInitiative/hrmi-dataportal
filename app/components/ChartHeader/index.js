@@ -6,9 +6,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Heading, ResponsiveContext, Box } from 'grommet';
+import { Heading, ResponsiveContext, Box, Text } from 'grommet';
 import styled from 'styled-components';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import ChartTools from 'containers/ChartTools';
 
@@ -33,13 +33,19 @@ const Styled = styled.div`
 const Top = styled(Box)`
   position: relative;
 `;
+const SubHeading = styled(Text)`
+  margin-top: -5px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    position: absolute;
+    top: 100%;
+    margin-top: -8px;
+  }
+`;
+const HeadingWrap = styled(Box)`
+  position: relative;
+`;
 
 const ChartToolWrapper = styled(Box)``;
-// @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-//   /* position: absolute;
-//   right: ${({ theme }) => theme.global.edgeSize.medium};
-//   top: 0; */
-// }
 
 export function ChartHeader({
   title,
@@ -52,6 +58,7 @@ export function ChartHeader({
   includeChartName,
   hasWhiteBG,
   top,
+  hasSubHeading,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
@@ -60,13 +67,25 @@ export function ChartHeader({
       {size => (
         <Styled top={top}>
           <Top direction="row" align="center" justify="between">
-            <Heading
-              level={isMaxSize(size, 'sm') ? 5 : 2}
-              responsive={false}
-              margin={{ vertical: 'xsmall' }}
-            >
-              {chartName}
-            </Heading>
+            <HeadingWrap>
+              <Heading
+                level={isMaxSize(size, 'sm') ? 5 : 2}
+                responsive={false}
+                margin={{ vertical: 'xsmall' }}
+              >
+                {chartName}
+              </Heading>
+              {hasSubHeading && messages[`${chartId}-sub`] && (
+                <SubHeading
+                  size={isMinSize(size, 'medium') ? 'xsmall' : 'xxsmall'}
+                >
+                  <FormattedMessage
+                    {...messages[`${chartId}-sub`]}
+                    values={messageValues}
+                  />
+                </SubHeading>
+              )}
+            </HeadingWrap>
             {tools && (
               <ChartToolWrapper flex={{ shrink: 0 }}>
                 <ChartTools
@@ -153,6 +172,7 @@ ChartHeader.propTypes = {
   includeChartName: PropTypes.bool,
   hasWhiteBG: PropTypes.bool,
   top: PropTypes.bool,
+  hasSubHeading: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 
