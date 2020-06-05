@@ -147,13 +147,13 @@ export function OverviewCountries({
     standardDetails,
     scoresAllCountries,
   );
-  // filter by search
+  // filter by text search
   const searched =
     search.length > 0 ? filterCountries(countries, search, intl) : countries;
+  // check if the text search has had an impact
   const searchEffective =
     countries && searched && searched.length !== countries.length;
 
-  console.log(searchEffective, filtersSet);
   // filter again to figure out number of countries with scores
   // (remember list also shows countries without scores)
   const countriesWithScores =
@@ -166,6 +166,10 @@ export function OverviewCountries({
           -1,
     );
   const countryCount = countriesWithScores ? countriesWithScores.length : 0;
+  const countryWithoutCount =
+    countriesWithScores && searched
+      ? searched.length - countriesWithScores.length
+      : 0;
 
   // sortable and non-sortable countries
   const { sorted, other } = sortCountries({
@@ -189,8 +193,10 @@ export function OverviewCountries({
           <ChartHeader
             top
             chartId="countries-overview"
+            hasSubHeading={countryWithoutCount > 0}
             messageValues={{
               no: countryCount,
+              noWithout: countryWithoutCount,
               filtered: filtersSet || searchEffective,
             }}
             hasWhiteBG={false}
