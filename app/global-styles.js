@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     color: #262064;
-    @media (min-width: ${({ theme }) => theme.breakpointsMin.small}) {
+    @media (min-width: ${({ theme }) => theme.breakpointsMin.sm}) {
       overflow-y: scroll;
     }
   }
@@ -34,8 +34,12 @@ const GlobalStyle = createGlobalStyle`
   p {
     margin: 0.5em 0;
   }
+
+  /* component /components/HTMLWrapper */
   .hrmi-html p {
     margin: 1em 0;
+  }
+  .hrmi-html-full-page p {
     &:first-child {
       font-size: 1.1em;
       line-height: 1.3;
@@ -78,6 +82,11 @@ const GlobalStyle = createGlobalStyle`
   }
   .hrmi-html hr {
     margin: 4em 0;
+  }
+
+  /* component /components/FormattedMarkdown */
+  .hrmi-formatted-markdown p {
+    line-height: 1.28;
   }
 
   .react-multi-carousel-list__custom {

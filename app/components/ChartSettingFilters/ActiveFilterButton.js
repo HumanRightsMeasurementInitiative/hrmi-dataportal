@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Box, ResponsiveContext } from 'grommet';
 import { Close } from 'grommet-icons';
 
+import { isMaxSize } from 'utils/responsive';
 import { truncateText } from 'utils/string';
 import ButtonPrimary from 'styled/ButtonPrimary';
 
@@ -23,9 +24,12 @@ const ActiveFilterButton = ({ label, onRemove }) => (
       <StyledButton onClick={() => onRemove()} title={label}>
         <Box direction="row" align="center" gap="xsmall">
           <StyledText>
-            {truncateText(label, size === 'small' ? 6 : 10)}
+            {truncateText(label, isMaxSize(size, 'sm') ? 6 : 10)}
           </StyledText>
-          <Close color="white" size={size === 'small' ? 'small' : 'medium'} />
+          <Close
+            color="white"
+            size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
+          />
         </Box>
       </StyledButton>
     )}

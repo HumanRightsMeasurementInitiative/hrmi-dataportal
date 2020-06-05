@@ -66,9 +66,11 @@ export function SearchResults({
   return (
     <Box flex overflow="auto" pad={{ top: 'medium' }}>
       {!hasCountries && !hasMetrics && !hasGroups && (
-        <Hint italic>
-          <FormattedMessage {...messages.noResults} />
-        </Hint>
+        <Box pad="small">
+          <Hint italic>
+            <FormattedMessage {...messages.noResults} />
+          </Hint>
+        </Box>
       )}
       {dimensions.length > 0 && (
         <NavOptionGroup
