@@ -92,4 +92,8 @@ export default defineMessages({
     id: `${scope}.countryLink`,
     defaultMessage: `${scope}.countryLink`,
   },
+  countryStatus: {
+    id: `${scope}.countryStatus`,
+    defaultMessage: `${scope}.countryStatus`,
+  },
 });
