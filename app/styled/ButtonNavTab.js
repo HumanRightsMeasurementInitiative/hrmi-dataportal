@@ -14,10 +14,9 @@ export default styled(ButtonPlain)`
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     font-size: ${({ theme }) => theme.text.medium.size};
-    margin: 0px 24px;
     display: inline-block;
     height: 44px;
-    margin: 0px 10px;
+    margin: 0px 20px;
     width: auto;
   }
   &:hover {
@@ -33,11 +32,5 @@ export default styled(ButtonPlain)`
   &:focus {
     color: ${({ theme }) => theme.global.colors.white};
     outline: none;
-  }
-  &:first-child {
-    margin-left: 0;
-  }
-  &:last-child {
-    margin-right: 0;
   }
 `;

@@ -118,13 +118,21 @@ export function AboutMetricSources({
   return (
     <Box>
       {metricType === 'indicators' && indicatorInfo && sources.length === 1 && (
-        <FormattedMessage {...rootMessages.sources[sources[0]]} />
+        <>
+          {rootMessages.sources[sources[0]] && (
+            <FormattedMessage {...rootMessages.sources[sources[0]]} />
+          )}
+          {!rootMessages.sources[sources[0]] && sources[0]}
+        </>
       )}
       {metricType === 'indicators' && indicatorInfo && sources.length > 1 && (
         <StyledUL>
           {sources.map(source => (
             <li key={source}>
-              <FormattedMessage {...rootMessages.sources[source]} />
+              {rootMessages.sources[source] && (
+                <FormattedMessage {...rootMessages.sources[source]} />
+              )}
+              {!rootMessages.sources[source] && source}
             </li>
           ))}
         </StyledUL>

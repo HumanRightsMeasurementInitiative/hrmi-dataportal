@@ -267,13 +267,9 @@ export function ChartContainerCountryRights({
                     ),
                     maxValue: 100,
                   }}
-                  scoresAside
-                  scoreOnHover={false}
                   benchmarkIconOnly
-                  hasLabelsSmall={size !== 'small'}
                 />
                 <ChartBars
-                  scoresAside
                   data={prepareData({
                     scores: dimRights,
                     dimensionCode,
@@ -291,9 +287,7 @@ export function ChartContainerCountryRights({
                   labelColor={`${dimensionCode}Dark`}
                   grades={GRADES[type]}
                   listHeader
-                  scoreOnHover={false}
                   metric={getMetricDetails(dimensionCode)}
-                  hasLabelsSmall={size !== 'small'}
                   annotateBenchmark={false}
                   annotateMinMax={false}
                 />
@@ -380,13 +374,10 @@ export function ChartContainerCountryRights({
                   bullet={!!dimension.score}
                   listHeader
                   metric={getMetricDetails(dimensionCode)}
-                  scoresAside
                   summaryScore={{
                     score: getCPRDimensionValue(dimension.score),
                     maxValue: 10,
                   }}
-                  scoreOnHover
-                  hasLabelsSmall={size !== 'small'}
                 />
                 <ChartBars
                   data={prepareData({
@@ -404,9 +395,6 @@ export function ChartContainerCountryRights({
                   grades={GRADES[type]}
                   bullet={hasSomeRights}
                   listHeader
-                  scoresAside
-                  scoreOnHover
-                  hasLabelsSmall={size !== 'small'}
                   annotateMinMax={false}
                 />
               </Box>
