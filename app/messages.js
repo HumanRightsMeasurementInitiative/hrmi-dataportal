@@ -2350,4 +2350,34 @@ export default defineMessages({
       defaultMessage: 'Featured',
     },
   },
+  status: {
+    unincorporated: {
+      id: `${scope}.status.unincorporated`,
+      defaultMessage: 'Unincorporated territory',
+    },
+    associated: {
+      id: `${scope}.status.associated`,
+      defaultMessage: 'Associated state',
+    },
+    collectivity_overseas: {
+      id: `${scope}.status.collectivity_overseas`,
+      defaultMessage: 'Overseas collectivity',
+    },
+    collectivity_special: {
+      id: `${scope}.status.collectivity_special`,
+      defaultMessage: 'Special collectivity',
+    },
+    selfgoverning: {
+      id: `${scope}.status.selfgoverning`,
+      defaultMessage: 'Self-governing in free association',
+    },
+    nonselfgoverning: {
+      id: `${scope}.status.nonselfgoverning`,
+      defaultMessage: 'Non-self-governing territory',
+    },
+    commonwealth_politicalunion: {
+      id: `${scope}.status.commonwealth_politicalunion`,
+      defaultMessage: 'Commonwealth in political union',
+    },
+  },
 });
