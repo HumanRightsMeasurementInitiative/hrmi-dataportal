@@ -9,11 +9,11 @@ import setLinkTarget from 'utils/set-link-target';
  * @return {Component} HTMLWrapper
  */
 
-const HTMLWrapper = ({ innerhtml }) => (
+const HTMLWrapper = ({ innerhtml, fullPage }) => (
   // required for setting inner HTML (from markdown content)
   /* eslint-disable react/no-danger */
   <div
-    className="hrmi-html"
+    className={`hrmi-html${fullPage ? ' hrmi-html-full-page' : ''}`}
     dangerouslySetInnerHTML={{ __html: setLinkTarget(innerhtml) }}
   />
   /* eslint-enable react/no-danger */
@@ -22,6 +22,7 @@ const HTMLWrapper = ({ innerhtml }) => (
 HTMLWrapper.propTypes = {
   /* the inner HTML text */
   innerhtml: PropTypes.string.isRequired,
+  fullPage: PropTypes.bool,
 };
 
 export default HTMLWrapper;

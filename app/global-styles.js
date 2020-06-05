@@ -38,6 +38,8 @@ const GlobalStyle = createGlobalStyle`
   /* component /components/HTMLWrapper */
   .hrmi-html p {
     margin: 1em 0;
+  }
+  .hrmi-html-full-page p {
     &:first-child {
       font-size: 1.1em;
       line-height: 1.3;
