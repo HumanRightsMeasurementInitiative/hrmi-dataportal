@@ -411,7 +411,7 @@ export const getMessageGrammar = (
   subregionCode,
 ) => {
   const { locale } = intl;
-  const useSubregion = subregionCode && subregionCode === 'pacific';
+  const useSubregion = subregionCode && subregionCode.trim() !== '';
   const countryLabel = rootMessages.countries[countryCode]
     ? intl.formatMessage(rootMessages.countries[countryCode])
     : countryCode;
