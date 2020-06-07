@@ -18,6 +18,7 @@ import {
   BENCHMARKS,
   STANDARDS,
   SUBREGIONS_FOR_COMPARISON_CPR,
+  SUBREGIONS_CPR_COMPLETE,
 } from 'containers/App/constants';
 import {
   getStandardSearch,
@@ -262,6 +263,13 @@ export function ChartContainerCountrySnapshot({
         <NarrativeCPRCompAssessment
           dimensionKey="physint"
           score={dimensions.physint.score}
+          hadSurvey={
+            hasSomePhysintScore ||
+            hasSomeEmpowermentScore ||
+            SUBREGIONS_CPR_COMPLETE.indexOf(
+              country[COLUMNS.COUNTRIES.SUBREGION],
+            ) > -1
+          }
           country={country}
           countryGrammar={countryGrammar}
           referenceScore={
@@ -304,6 +312,13 @@ export function ChartContainerCountrySnapshot({
         <NarrativeCPRCompAssessment
           dimensionKey="empowerment"
           score={dimensions.empowerment.score}
+          hadSurvey={
+            hasSomePhysintScore ||
+            hasSomeEmpowermentScore ||
+            SUBREGIONS_CPR_COMPLETE.indexOf(
+              country[COLUMNS.COUNTRIES.SUBREGION],
+            ) > -1
+          }
           country={country}
           countryGrammar={countryGrammar}
           referenceScore={
