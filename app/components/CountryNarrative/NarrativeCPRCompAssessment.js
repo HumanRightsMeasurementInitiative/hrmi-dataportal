@@ -22,6 +22,7 @@ function NarrativeCPRCompAssessment({
   referenceCount,
   intl,
   comparativeGroup,
+  hadSurvey,
 }) {
   const messageValues = {
     ...getMessageGrammar(
@@ -36,7 +37,9 @@ function NarrativeCPRCompAssessment({
   };
   const isHiOECD = isCountryHighIncome(country) && isCountryOECD(country);
   if (!score) {
-    return <NarrativeCPRNoData messageValues={messageValues} />;
+    return (
+      <NarrativeCPRNoData messageValues={messageValues} hadSurvey={hadSurvey} />
+    );
   }
   return (
     <Paragraph>
@@ -85,6 +88,7 @@ NarrativeCPRCompAssessment.propTypes = {
   referenceScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   referenceCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   comparativeGroup: PropTypes.string,
+  hadSurvey: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

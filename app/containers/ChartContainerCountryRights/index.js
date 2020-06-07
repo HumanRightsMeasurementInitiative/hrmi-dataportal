@@ -19,7 +19,9 @@ import {
   BENCHMARKS,
   GRADES,
   COLUMNS,
+  DIMENSIONS,
   SUBREGIONS_FOR_COMPARISON_CPR,
+  SUBREGIONS_CPR_COMPLETE,
 } from 'containers/App/constants';
 
 import {
@@ -163,7 +165,7 @@ export function ChartContainerCountryRights({
 
   const dimension = dimensions[dimensionCode];
   const reference = dimensionAverages[dimensionCode];
-  console.log(dimensionAverages, dimensionCode);
+
   let comparativeScoreESR;
   let comparativeRightsESR;
   if (dimensionCode === 'esr' && dimension && dimension.score) {
@@ -178,6 +180,17 @@ export function ChartContainerCountryRights({
   const dimRights = getRightsScoresForDimension(rights, dimensionCode);
   const hasSomeRights =
     dimRights && Object.values(dimRights).some(s => !!s.score);
+
+  let hasSomeOtherCPRScore = false;
+
+  if (type === 'cpr') {
+    const otherCPRdimension = DIMENSIONS.find(
+      d => d.type !== 'esr' && d.key !== dimensionCode,
+    );
+    hasSomeOtherCPRScore = Object.values(rights).some(
+      s => s.dimension === otherCPRdimension.key && !!s.score,
+    );
+  }
 
   return (
     <ResponsiveContext.Consumer>
@@ -415,6 +428,12 @@ export function ChartContainerCountryRights({
               <NarrativeCPRCompAssessment
                 dimensionKey={dimensionCode}
                 score={dimension.score}
+                hadSurvey={
+                  hasSomeOtherCPRScore ||
+                  SUBREGIONS_CPR_COMPLETE.indexOf(
+                    country[COLUMNS.COUNTRIES.SUBREGION],
+                  ) > -1
+                }
                 country={country}
                 countryGrammar={countryGrammar}
                 referenceScore={reference && reference.average}
