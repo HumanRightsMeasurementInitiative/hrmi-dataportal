@@ -55,6 +55,10 @@ export default defineMessages({
       id: `${scope}.compAssessmentCPR.noDataButSurvey`,
       defaultMessage: 'compAssessmentCPR.noDataButSurvey',
     },
+    noDataButRights: {
+      id: `${scope}.compAssessmentCPR.noDataButRights`,
+      defaultMessage: 'compAssessmentCPR.noDataButRights',
+    },
   },
   compAssessmentESR: {
     startHi: {
