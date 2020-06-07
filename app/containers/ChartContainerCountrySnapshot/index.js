@@ -263,6 +263,7 @@ export function ChartContainerCountrySnapshot({
         <NarrativeCPRCompAssessment
           dimensionKey="physint"
           score={dimensions.physint.score}
+          someRights={hasSomePhysintScore}
           hadSurvey={
             hasSomePhysintScore ||
             hasSomeEmpowermentScore ||
@@ -312,6 +313,7 @@ export function ChartContainerCountrySnapshot({
         <NarrativeCPRCompAssessment
           dimensionKey="empowerment"
           score={dimensions.empowerment.score}
+          someRights={hasSomeEmpowermentScore}
           hadSurvey={
             hasSomePhysintScore ||
             hasSomeEmpowermentScore ||

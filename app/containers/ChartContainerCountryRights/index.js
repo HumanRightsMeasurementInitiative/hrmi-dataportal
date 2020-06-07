@@ -428,6 +428,7 @@ export function ChartContainerCountryRights({
               <NarrativeCPRCompAssessment
                 dimensionKey={dimensionCode}
                 score={dimension.score}
+                someRights={hasSomeRights}
                 hadSurvey={
                   hasSomeOtherCPRScore ||
                   SUBREGIONS_CPR_COMPLETE.indexOf(
