@@ -317,6 +317,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": " en matière de droits d'autonomisation. ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " concernant les droits d'intégrité physique. ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButSurvey": "TODO: Les données pour l'intégrité physique et l'autonomisation n'ont pas encore été recueillies pour {countryWithArticle}. Nous souhaitons étendre notre recueillement de données au monde entier dès que possible. Pour en savoir plus sur la façon dont vous pouvez aider, veuillez visiter ",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButRights": "TODO: Les données pour l'intégrité physique et l'autonomisation n'ont pas encore été recueillies pour {countryWithArticle}. Nous souhaitons étendre notre recueillement de données au monde entier dès que possible. Pour en savoir plus sur la façon dont vous pouvez aider, veuillez visiter ",
   "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Par rapport aux {referenceCount} autres pays avec un revenu élevé, {countryWithArticle} se {isPlural, select, true {situent} false {situe}} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": "TODO: en termes de droits à la qualité de vie ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": "TODO: en ce qui concerne le {right} ",

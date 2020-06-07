@@ -317,6 +317,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": " en derechos de empoderamiento.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " en cuanto al derecho a tener Integridad Física.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButSurvey": "TODO: Aún no se han producido los datos de {countryWithArticle}. Nos gustaría ampliar nuestra recopilación de datos a todo el mundo lo antes posible. Para obtener más información sobre cómo puede ayudar, visite ",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButRights": "TODO: Aún no se han producido los datos de {countryWithArticle}. Nos gustaría ampliar nuestra recopilación de datos a todo el mundo lo antes posible. Para obtener más información sobre cómo puede ayudar, visite ",
   "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Comparado con todos los demás países de altos ingresos, {countryWithArticle} se {isPlural, select, true {están} false {está}} desempeñando ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": "TODO: en '{esr}' ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": "TODO: en {right} ",
