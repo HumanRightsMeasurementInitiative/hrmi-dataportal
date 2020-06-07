@@ -5,19 +5,17 @@ import { Paragraph } from 'grommet';
 
 import messages from './messages';
 
-function NarrativeCPRNoData({ messageValues, short }) {
+function NarrativeCPRNoData({ messageValues, hadSurvey }) {
   return (
     <Paragraph>
-      {short && (
+      {!hadSurvey && (
         <FormattedMessage {...messages.cpr.noData} values={messageValues} />
       )}
-      {!short && (
-        <>
-          <FormattedMessage
-            {...messages.compAssessmentCPR.noData}
-            values={messageValues}
-          />
-        </>
+      {hadSurvey && (
+        <FormattedMessage
+          {...messages.compAssessmentCPR.noDataButSurvey}
+          values={messageValues}
+        />
       )}
     </Paragraph>
   );
@@ -25,7 +23,7 @@ function NarrativeCPRNoData({ messageValues, short }) {
 
 NarrativeCPRNoData.propTypes = {
   messageValues: PropTypes.object,
-  short: PropTypes.bool,
+  hadSurvey: PropTypes.bool,
 };
 
 export default NarrativeCPRNoData;

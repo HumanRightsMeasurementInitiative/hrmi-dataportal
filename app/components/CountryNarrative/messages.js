@@ -51,9 +51,9 @@ export default defineMessages({
         defaultMessage: ' on the right to be safe from the state. ',
       },
     },
-    noData: {
-      id: `${scope}.compAssessmentCPR.noData`,
-      defaultMessage: 'compAssessmentCPR.noData',
+    noDataButSurvey: {
+      id: `${scope}.compAssessmentCPR.noDataButSurvey`,
+      defaultMessage: 'compAssessmentCPR.noDataButSurvey',
     },
   },
   compAssessmentESR: {
