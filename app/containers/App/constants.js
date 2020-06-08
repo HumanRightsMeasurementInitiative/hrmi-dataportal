@@ -721,6 +721,13 @@ export const INDICATORS = [
     hasGroups: false,
   },
   {
+    key: 'affordable-housing',
+    code: 'AffordHouse',
+    right: 'housing',
+    resource: 'esrIndicatorScores',
+    hasGroups: false,
+  },
+  {
     key: 'relative-poverty',
     code: 'NotRelPoor',
     right: 'work',
@@ -738,13 +745,6 @@ export const INDICATORS = [
     key: 'longterm-unemployment',
     code: 'NotLTUnemploy',
     right: 'work',
-    resource: 'esrIndicatorScores',
-    hasGroups: false,
-  },
-  {
-    key: 'affordable-housing',
-    code: 'AffordHouse',
-    right: 'housing',
     resource: 'esrIndicatorScores',
     hasGroups: false,
   },
