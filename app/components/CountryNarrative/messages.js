@@ -51,6 +51,19 @@ export default defineMessages({
         defaultMessage: ' on the right to be safe from the state. ',
       },
     },
+    noData: {
+      id: `${scope}.compAssessmentCPR.noData`,
+      defaultMessage:
+        '{physint} and {empowerment} data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We plan to expand our data collection for these rights to the whole world as soon as increased funding becomes available.',
+    },
+    noDataLinkURL: {
+      id: `${scope}.compAssessmentCPR.noDataLinkURL`,
+      defaultMessage: 'compAssessmentCPR.noDataLinkURL',
+    },
+    noDataLinkAnchor: {
+      id: `${scope}.compAssessmentCPR.noDataLinkAnchor`,
+      defaultMessage: 'compAssessmentCPR.noDataLinkAnchor',
+    },
     noDataButSurvey: {
       id: `${scope}.compAssessmentCPR.noDataButSurvey`,
       defaultMessage: 'compAssessmentCPR.noDataButSurvey',
@@ -189,11 +202,6 @@ export default defineMessages({
     },
   },
   cpr: {
-    noData: {
-      id: `${scope}.cpr.noData`,
-      defaultMessage:
-        '{physint} and {empowerment} data have not yet been produced for {needsArticle, select, true {the} false {}} {country}. We plan to expand our data collection for these rights to the whole world as soon as increased funding becomes available.',
-    },
     start: {
       id: `${scope}.cpr.start`,
       defaultMessage:
