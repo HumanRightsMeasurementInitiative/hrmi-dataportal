@@ -13,7 +13,13 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph, Box, Heading } from 'grommet';
 import styled from 'styled-components';
 
-import { COLUMNS, BENCHMARKS, STANDARDS } from 'containers/App/constants';
+import {
+  COLUMNS,
+  BENCHMARKS,
+  STANDARDS,
+  SUBREGIONS_FOR_COMPARISON_CPR,
+  SUBREGIONS_CPR_COMPLETE,
+} from 'containers/App/constants';
 import {
   getStandardSearch,
   getBenchmarkSearch,
@@ -106,7 +112,6 @@ export function ChartContainerCountrySnapshot({
       );
     })
     .some(s => !!s.score);
-
   let comparativeScoreESR;
   let comparativeRightsESR;
   if (dimensions.esr && dimensions.esr.score) {
@@ -121,7 +126,7 @@ export function ChartContainerCountrySnapshot({
     s => s.dimension === 'physint' && !!s.score,
   );
   const hasSomeEmpowermentScore = Object.values(rights).some(
-    s => s.dimension === 'physint' && !!s.score,
+    s => s.dimension === 'empowerment' && !!s.score,
   );
 
   return (
@@ -258,13 +263,31 @@ export function ChartContainerCountrySnapshot({
         <NarrativeCPRCompAssessment
           dimensionKey="physint"
           score={dimensions.physint.score}
+          someRights={hasSomePhysintScore}
+          hadSurvey={
+            hasSomePhysintScore ||
+            hasSomeEmpowermentScore ||
+            SUBREGIONS_CPR_COMPLETE.indexOf(
+              country[COLUMNS.COUNTRIES.SUBREGION],
+            ) > -1
+          }
           country={country}
           countryGrammar={countryGrammar}
           referenceScore={
-            dimensionAverages && dimensionAverages.physint.average
+            dimensionAverages &&
+            dimensionAverages.physint &&
+            dimensionAverages.physint.average
           }
-          referenceCount={dimensionAverages && dimensionAverages.physint.count}
-          start
+          referenceCount={
+            dimensionAverages &&
+            dimensionAverages.physint &&
+            dimensionAverages.physint.count
+          }
+          comparativeGroup={
+            SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) > -1
+              ? 'subregion'
+              : 'all'
+          }
         />
         {hasSomePhysintScore && (
           <Paragraph>
@@ -290,15 +313,31 @@ export function ChartContainerCountrySnapshot({
         <NarrativeCPRCompAssessment
           dimensionKey="empowerment"
           score={dimensions.empowerment.score}
+          someRights={hasSomeEmpowermentScore}
+          hadSurvey={
+            hasSomePhysintScore ||
+            hasSomeEmpowermentScore ||
+            SUBREGIONS_CPR_COMPLETE.indexOf(
+              country[COLUMNS.COUNTRIES.SUBREGION],
+            ) > -1
+          }
           country={country}
           countryGrammar={countryGrammar}
           referenceScore={
-            dimensionAverages && dimensionAverages.empowerment.average
+            dimensionAverages &&
+            dimensionAverages.empowerment &&
+            dimensionAverages.empowerment.average
           }
           referenceCount={
-            dimensionAverages && dimensionAverages.empowerment.count
+            dimensionAverages &&
+            dimensionAverages.empowerment &&
+            dimensionAverages.empowerment.count
           }
-          start
+          comparativeGroup={
+            SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) > -1
+              ? 'subregion'
+              : 'all'
+          }
         />
         {hasSomeEmpowermentScore && (
           <Paragraph>

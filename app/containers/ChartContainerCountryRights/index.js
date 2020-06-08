@@ -15,7 +15,14 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 // import getMetricDetails from 'utils/metric-details';
 
-import { BENCHMARKS, GRADES, COLUMNS } from 'containers/App/constants';
+import {
+  BENCHMARKS,
+  GRADES,
+  COLUMNS,
+  DIMENSIONS,
+  SUBREGIONS_FOR_COMPARISON_CPR,
+  SUBREGIONS_CPR_COMPLETE,
+} from 'containers/App/constants';
 
 import {
   getDimensionsForCountry,
@@ -173,6 +180,17 @@ export function ChartContainerCountryRights({
   const dimRights = getRightsScoresForDimension(rights, dimensionCode);
   const hasSomeRights =
     dimRights && Object.values(dimRights).some(s => !!s.score);
+
+  let hasSomeOtherCPRScore = false;
+
+  if (type === 'cpr') {
+    const otherCPRdimension = DIMENSIONS.find(
+      d => d.type !== 'esr' && d.key !== dimensionCode,
+    );
+    hasSomeOtherCPRScore = Object.values(rights).some(
+      s => s.dimension === otherCPRdimension.key && !!s.score,
+    );
+  }
 
   return (
     <ResponsiveContext.Consumer>
@@ -410,11 +428,24 @@ export function ChartContainerCountryRights({
               <NarrativeCPRCompAssessment
                 dimensionKey={dimensionCode}
                 score={dimension.score}
+                someRights={hasSomeRights}
+                hadSurvey={
+                  hasSomeOtherCPRScore ||
+                  SUBREGIONS_CPR_COMPLETE.indexOf(
+                    country[COLUMNS.COUNTRIES.SUBREGION],
+                  ) > -1
+                }
                 country={country}
                 countryGrammar={countryGrammar}
-                referenceScore={reference.average}
-                referenceCount={reference.count}
-                start
+                referenceScore={reference && reference.average}
+                referenceCount={reference && reference.count}
+                comparativeGroup={
+                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
+                    country.subregion_code,
+                  ) > -1
+                    ? 'subregion'
+                    : 'all'
+                }
               />
             </>
           )}
