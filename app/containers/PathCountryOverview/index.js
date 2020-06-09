@@ -85,7 +85,7 @@ export function PathCountryOverview({
     onLoadData();
   }, []);
   // prettier-ignore
-  const filteredCountries = assessed
+  const filteredCountries = assessed && countries
     ? countries && countries.filter(c =>
       filterByAssessment(
         c,
@@ -95,6 +95,7 @@ export function PathCountryOverview({
       ),
     )
     : countries;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -112,10 +113,7 @@ export function PathCountryOverview({
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>
                 <PageTitle>
-                  <FormattedMessage
-                    {...messages.title}
-                    values={{ no: filteredCountries.length }}
-                  />
+                  <FormattedMessage {...messages.title} />
                 </PageTitle>
                 {scale && (
                   <Paragraph size={isMaxSize(size, 'sm') ? 'medium' : 'large'}>
