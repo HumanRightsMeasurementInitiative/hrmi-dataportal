@@ -867,5 +867,5 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "Les données pour l'intégrité physique et l'autonomisation n'ont pas encore été recueillies pour {countryWithArticle}. Nous souhaitons étendre notre recueillement de données au monde entier dès que possible. Pour en savoir plus sur la façon dont vous pouvez aider, veuillez visiter ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "cette page sur le site du HRMI.",
-  "hrmi.components.ChartHeader.countries-overview-sub": "TODO: Also showing {noWithout} {noWithout, select, 1 {country} other {countries}} without any scores"
+  "hrmi.components.ChartHeader.countries-overview-sub": "Affiche également {noWithout} {noWithout, select, 1 {country} other {countries}} sans aucun score"
 }
