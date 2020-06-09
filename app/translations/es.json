@@ -867,5 +867,5 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "Aún no se han producido los datos de '{physint}' y '{empowerment}' para {countryWithArticle}. Nos gustaría ampliar nuestra recopilación de datos a todo el mundo lo antes posible. Para obtener más información sobre cómo puede ayudar, visite ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "esta página en el sitio web de HRMI.",
-  "hrmi.components.ChartHeader.countries-overview-sub": "TODO: Also showing {noWithout} {noWithout, select, 1 {country} other {countries}} without any scores"
+  "hrmi.components.ChartHeader.countries-overview-sub": "También se muestra {noWithout} {noWithout, select, 1 {country} other {countries}} sin ningún puntaje"
 }
