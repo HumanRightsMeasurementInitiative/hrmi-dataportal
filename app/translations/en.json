@@ -320,7 +320,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "this page on the HRMI website.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButRights": "A full set of {dimension} data has not yet been produced for {countryWithArticle}. We hope to collect more complete data in future years.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButSurvey": "{dimension} data have not yet been produced for {countryWithArticle}. We hope to be able to fill this gap in future years.",
-  "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Compared with all others high-income countries, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Compared with all other high-income countries, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": " on Quality of Life rights",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " on the {right}",
   "hrmi.components.CountryNarrative.compAssessmentESR.endSome": " when we look across the rights for which we have data",
