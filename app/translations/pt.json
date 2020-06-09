@@ -28,7 +28,7 @@
   "hrmi.containers.PathCountry.countryScoreExplainer.cpr": "No {metric}, {countryWithArticle} {isPlural, select, true {pontuam} false {pontua}} {score} de 10, baseado na informação obtida em {link}.",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.url": "https://humanrightsmeasurement.org/human-rights-practitioners/",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.anchor": "profissionais de direitos humanos",
-  "hrmi.containers.PathCountryOverview.title": "{no} países",
+  "hrmi.containers.PathCountryOverview.title": "TODO: All countries (and territories)",
   "hrmi.containers.PathCountryOverview.header.d": "Pesquisar por país ou comparar uma seleção de países em 13 direitos humanos, agrupados em três categorias de direitos humanos: {esrLink}, {physintLink} e {empowerLink}",
   "hrmi.containers.PathCountryOverview.header.r": "Pesquisar por país ou comparar uma seleção de países em 13 direitos humanos, agrupados em três categorias de direitos humanos: {esrLink}, {physintLink} e {empowerLink}",
   "hrmi.containers.PathMetric.dimensions.esr.header.a": "Estão os direitos económicos e sociais da população a ser cumpridos?",
@@ -129,7 +129,7 @@
   "hrmi.charts.dimensionIntro.physint": "Em que medida está o governo {countryOf} a respeitar cada direito?",
   "hrmi.charts.dimensionIntro.empowerment": "Em que medida está o governo {countryOf} a respeitar cada direito?",
   "hrmi.components.ChartHeader.single-metric": "Resultados disponíveis para {no} países",
-  "hrmi.components.ChartHeader.countries-overview": "{no} países",
+  "hrmi.components.ChartHeader.countries-overview": "TODO: Showing scores for {no} {no, select, 1 {country} other {countries}} {filtered, select, true {(filtered)} false {}}",
   "hrmi.components.ChartHeader.dimension-overview": "resumo {dimension}",
   "hrmi.components.ChartHeader.indicators": "Dados indicadores",
   "hrmi.components.ChartHeader.sex": "Por sexo",
@@ -866,5 +866,6 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "Com mais recursos financeiros, a HRMI poderia investigar a razão de cada lacuna de dados e explorar formas para ajudar a preenchê-la. ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "{physint} e {empowerment} dados ainda não foram produzidos para {countryWithArticle}. Gostaríamos de expandir nossa coleta de dados para o mundo inteiro o mais rápido possível. Para saber mais sobre como você pode ajudar, visite ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "nesta página no site da HRMI."
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "nesta página no site da HRMI.",
+  "hrmi.components.ChartHeader.countries-overview-sub": "Também mostrando {noWithout} {noWithout, select, 1 {country} other {countries}} sem pontuações"
 }
