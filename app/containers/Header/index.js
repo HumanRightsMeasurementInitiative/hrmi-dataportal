@@ -11,16 +11,8 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
-import {
-  Box,
-  Button,
-  Drop,
-  ResponsiveContext,
-  Image,
-  Text,
-  Layer,
-} from 'grommet';
-import { Menu, Close, FormDown, FormUp } from 'grommet-icons';
+import { Box, Button, ResponsiveContext, Image, Layer } from 'grommet';
+import { Menu, Close } from 'grommet-icons';
 
 import logo from 'images/HRMI-Logo-HOR-RGB-x2.png';
 import logoS from 'images/HRMI-Logo-HOR-RGB-small-x2.png';
@@ -36,9 +28,6 @@ import {
 } from 'containers/App/actions';
 
 import Search from 'containers/Search';
-import NavCountry from 'containers/Search/NavCountry';
-import NavMetric from 'containers/Search/NavMetric';
-import NavGroups from 'containers/Search/NavGroups';
 
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
@@ -52,6 +41,8 @@ import {
 } from 'utils/responsive';
 
 import rootMessages from 'messages';
+
+import NavBottom from './NavBottom';
 
 const Styled = styled.header`
   position: fixed;
@@ -157,85 +148,6 @@ const SearchWrap = styled(Box)`
     height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
   }
 `;
-// prettier-ignore
-const ButtonNavSecondary = styled(Button)`
-  margin: 0 5px;
-  padding-left: 1px;
-  font-weight: 600;
-  height: ${({ theme }) => getHeaderHeightBottom('small', theme)}px;
-  background: transparent;
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid;
-  border-bottom-color: ${({ theme, active }) => (
-    active ? theme.global.colors.dark : 'transparent'
-  )};
-  &:first-child {
-    margin-left: 0;
-  }
-  &:hover {
-    border-bottom-color: ${({ theme }) => theme.global.colors.dark};
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
-    margin-left: 6px;
-    margin-right: 6px;
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-`;
-
-const ButtonSecondary = React.forwardRef(
-  ({ active, open, onClick, label, windowSize }, ref) => {
-    let gap = 'hair';
-    if (windowSize === 'medium') {
-      gap = 'xxsmall';
-    }
-    if (isMinSize(windowSize, 'large')) {
-      gap = 'small';
-    }
-    return (
-      <ButtonNavSecondary
-        windowSize={windowSize}
-        plain
-        active={active}
-        open={open}
-        onClick={onClick}
-        justify="between"
-        align="center"
-        ref={ref}
-        label={
-          <Box direction="row" align="center" justify="between" fill gap={gap}>
-            <Text size={isMinSize(windowSize, 'medium') ? 'large' : 'medium'}>
-              <FormattedMessage {...rootMessages.labels[label]} />
-            </Text>
-            {open && (
-              <FormUp
-                size={isMinSize(windowSize, 'medium') ? 'xxlarge' : 'xlarge'}
-                style={{ stroke: 'currentColor', marginRight: '-3px' }}
-              />
-            )}
-            {!open && (
-              <FormDown
-                size={isMinSize(windowSize, 'medium') ? 'xxlarge' : 'xlarge'}
-                style={{ stroke: 'currentColor', marginRight: '-3px' }}
-              />
-            )}
-          </Box>
-        }
-      />
-    );
-  },
-);
-
-ButtonSecondary.propTypes = {
-  active: PropTypes.bool,
-  open: PropTypes.bool,
-  onClick: PropTypes.func,
-  label: PropTypes.string,
-  windowSize: PropTypes.string,
-};
 
 const renderPages = ({ match, onClick, align }) =>
   PAGES &&
@@ -271,12 +183,6 @@ export function Header({
 
   const [showMenu, setShowMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [showCountries, setShowCountries] = useState(false);
-  const [showMetrics, setShowMetrics] = useState(false);
-  const [showGroups, setShowGroups] = useState(false);
-  const countryTarget = useRef(null);
-  const metricTarget = useRef(null);
-  const groupTarget = useRef(null);
   const menuRef = useRef(null);
 
   const onHome = () => {
@@ -410,102 +316,29 @@ export function Header({
                 <NavBarBottom theme={theme} size={size}>
                   {(!showSearch || isMaxSize(size, 'sm')) && (
                     <>
-                      <ButtonSecondary
+                      <NavBottom
+                        type="metrics"
                         active={path === PATHS.METRICS || path === PATHS.METRIC}
-                        open={showMetrics}
                         onClick={() => {
                           onHideAsideLayer();
-                          setShowCountries(false);
-                          setShowGroups(false);
-                          setShowMetrics(!showMetrics);
                         }}
-                        label="metrics"
-                        ref={metricTarget}
-                        windowSize={size}
                       />
-                      {showMetrics && isMaxSize(size, 'sm') && (
-                        <NavMetric
-                          onClose={() => setShowMetrics(false)}
-                          size={size}
-                        />
-                      )}
-                      {showMetrics && isMinSize(size, 'medium') && (
-                        <Drop
-                          align={{ top: 'bottom', right: 'right' }}
-                          target={metricTarget.current}
-                          onClickOutside={() => setShowMetrics(false)}
-                        >
-                          <NavMetric
-                            onClose={() => setShowMetrics(false)}
-                            size={size}
-                          />
-                        </Drop>
-                      )}
-                      <ButtonSecondary
+                      <NavBottom
+                        type="countries"
                         active={
                           path === PATHS.COUNTRIES || path === PATHS.COUNTRY
                         }
-                        open={showCountries}
                         onClick={() => {
                           onHideAsideLayer();
-                          setShowMetrics(false);
-                          setShowGroups(false);
-                          setShowCountries(!showCountries);
                         }}
-                        label="countries"
-                        ref={countryTarget}
-                        windowSize={size}
                       />
-                      {showCountries && isMaxSize(size, 'sm') && (
-                        <NavCountry
-                          onClose={() => setShowCountries(false)}
-                          size={size}
-                        />
-                      )}
-                      {showCountries && isMinSize(size, 'medium') && (
-                        <Drop
-                          align={{ top: 'bottom', right: 'right' }}
-                          target={countryTarget.current}
-                          onClickOutside={() => setShowCountries(false)}
-                          overflow="hidden"
-                        >
-                          <NavCountry
-                            onClose={() => setShowCountries(false)}
-                            size={size}
-                          />
-                        </Drop>
-                      )}
-                      <ButtonSecondary
+                      <NavBottom
+                        type="people"
                         active={path === PATHS.GROUPS || path === PATHS.GROUP}
-                        open={showGroups}
                         onClick={() => {
                           onHideAsideLayer();
-                          setShowCountries(false);
-                          setShowMetrics(false);
-                          setShowGroups(!showGroups);
                         }}
-                        label="people"
-                        ref={groupTarget}
-                        windowSize={size}
                       />
-                      {showGroups && isMaxSize(size, 'sm') && (
-                        <NavGroups
-                          onClose={() => setShowGroups(false)}
-                          size={size}
-                        />
-                      )}
-                      {showGroups && isMinSize(size, 'medium') && (
-                        <Drop
-                          align={{ top: 'bottom', right: 'right' }}
-                          target={groupTarget.current}
-                          onClickOutside={() => setShowGroups(false)}
-                        >
-                          <NavGroups
-                            onClose={() => setShowGroups(false)}
-                            size={size}
-                          />
-                        </Drop>
-                      )}
                     </>
                   )}
                   {isMinSize(size, 'large') && (
