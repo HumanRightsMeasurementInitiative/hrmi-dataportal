@@ -866,6 +866,7 @@
   "hrmi.sources.UNESCO": "UNESCO",
   "hrmi.sources.UN_IGME": "UN_IGME",
   "hrmi.sources.UNDP": "UNDP",
+  "hrmi.sources.UNDP_MPI": "UNPD and Max Planck Institute Human Mortality Database",
   "hrmi.containers.PathMetric.indicators.affordable-housing.header.a": "¿Qué tan bien están haciendo los países para garantizar que las personas puedan acceder a viviendas asequibles?",
   "hrmi.containers.PathMetric.indicators.affordable-housing.header.b": "These are scores for how well the countries are doing, not numbers or percentages of people.",
   "hrmi.indicators.affordable-housing": "Affordable Housing",

@@ -1329,6 +1329,10 @@ export default defineMessages({
       id: `${scope}.sources.UNDP`,
       defaultMessage: 'UNDP',
     },
+    UNDP_MPI: {
+      id: `${scope}.sources.UNDP_MPI`,
+      defaultMessage: 'UNDP_MPI',
+    },
   },
   regions: {
     americas: {
