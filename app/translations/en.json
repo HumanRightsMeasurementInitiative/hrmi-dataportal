@@ -325,7 +325,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " on the {right}",
   "hrmi.components.CountryNarrative.compAssessmentESR.endSome": " when we look across the rights for which we have data",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (this comparison is calculated using the '{benchmark}' benchmark).",
-  "hrmi.components.CountryNarrative.compAssessmentESR.noData": "For {countryWithArticle} no rights scores are available due to missing indicator data. ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.noData": "For {countryWithArticle} no rights scores are available due to missing data in the relevant international databases.",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataMissingData": "Missing data tells us that {needsArticle, select, true {the } false { }}{country} {isPlural, select, true {have} false {has}} not submitted some information to the relevant international databases. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
   "hrmi.components.Source.source": "Source: 2020 Human Rights Measurement Initiative (HRMI) dataset, www.rightstracker.org",
