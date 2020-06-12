@@ -298,23 +298,8 @@ export const INCOME_GROUPS = {
 };
 
 export const COUNTRY_FILTERS = {
-  ALL: [
-    'income',
-    'region',
-    'assessed',
-    'subregion',
-    'treaty',
-    'cgroup',
-    'featured',
-  ],
-  SINGLE_METRIC: [
-    'income',
-    'region',
-    'subregion',
-    'treaty',
-    'cgroup',
-    'featured',
-  ],
+  ALL: ['income', 'region', 'assessed', 'subregion', 'treaty', 'cgroup'],
+  SINGLE_METRIC: ['income', 'region', 'subregion', 'treaty', 'cgroup'],
 };
 
 export const STANDARDS = [
