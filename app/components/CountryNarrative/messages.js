@@ -104,10 +104,6 @@ export default defineMessages({
       defaultMessage:
         'With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it.',
     },
-    noDataMissingData: {
-      id: `${scope}.compAssessmentESR.noDataMissingData`,
-      defaultMessage: 'noDataMissingData',
-    },
   },
   esr: {
     changeStandardNote: {
