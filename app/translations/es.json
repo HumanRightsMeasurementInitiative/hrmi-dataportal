@@ -307,7 +307,7 @@
   "hrmi.components.CountryNarrative.esr.scoreBestRange.d": "{isPlural, select, true {están} false {está}} cerca ",
   "hrmi.components.CountryNarrative.esr.scoreBestEnd": "para cumplir con los \"{benchmarkBest}\" estándares mundiales de la actualidad que aseguran que todas las personas tienen la alimentación, educación, salud, vivienda y trabajo adecuados. ",
   "hrmi.components.CountryNarrative.compAssessmentSectionTitle": "Evaluación comparativa",
-  "hrmi.components.CountryNarrative.compAssessment.start": "Comparado con los otros {referenceCount} países {regionIn}, {countryWithArticle} se {isPlural, select, true {están} false {está}} desempeñando ",
+  "hrmi.components.CountryNarrative.compAssessment.start": "Comparado con los otros países {regionIn}, {countryWithArticle} se {isPlural, select, true {están} false {está}} desempeñando ",
   "hrmi.components.CountryNarrative.compAssessment.result.a": "mejor que la media",
   "hrmi.components.CountryNarrative.compAssessment.result.b": "peor que la media",
   "hrmi.components.CountryNarrative.compAssessment.result.c": "cercano a la media",
