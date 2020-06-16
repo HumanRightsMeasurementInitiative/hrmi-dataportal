@@ -552,12 +552,12 @@ export const getTerritoryStatus = (
     : statusCode;
   if (countryGrammar && intl) {
     if (TERRITORY_GRAMMAR.conjunction.with.indexOf(statusCode) > -1) {
-      const countryOf = getWithCountry(
+      const countryWith = getWithCountry(
         intl.locale,
         countryGrammar,
         countryLabel,
       );
-      return `${statusLabel} ${countryOf}`;
+      return `${statusLabel} ${countryWith}`;
     }
     const countryOf = getCountryOf(intl.locale, countryGrammar, countryLabel);
     return `${statusLabel} ${countryOf}`;
