@@ -323,7 +323,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Par rapport aux {referenceCount} autres pays avec un revenu élevé, {countryWithArticle} se {isPlural, select, true {situent} false {situe}} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": " en termes de droits à la qualité de vie ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " en ce qui concerne le {right} ",
-  "hrmi.components.CountryNarrative.compAssessmentESR.endSome": "TODO",
+  "hrmi.components.CountryNarrative.compAssessmentESR.endSome": "lorsque nous examinons les droits pour lesquels nous avons des données ",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (cette comparaison est établie grâce au niveau de performance « {benchmark} »).",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "En ce qui concerne {countryWithArticle}, aucun score en matière de droits n'est disponible en raison de données manquantes. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "Avec des financements supplémentaires, HRMI pourrait enquêter sur la raison de chaque manque de données et trouver un moyen de les combler. ",
