@@ -251,7 +251,7 @@ function ChartCountryMetricTrend({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box direction="column" pad={{ vertical: 'medium' }}>
+        <Box direction="column" align="start" pad={{ vertical: 'medium' }}>
           <WrapPlot>
             <FlexibleWidthXYPlot
               height={isMinSize(size, 'medium') ? 240 : 200}
