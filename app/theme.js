@@ -1,7 +1,7 @@
 export const SIZES = {
   containerMaxWidth: 1328,
   // containerMaxWidth / 2 + edgesize.xxlarge
-  imageHomeMaxWidth: 700,
+  imageHomeMaxWidth: 1440,
   header: {
     height: 65,
     padTop: 30,

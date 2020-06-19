@@ -47,7 +47,7 @@ const PageTitle = styled(Heading)`
 `;
 
 const Claim = styled(Heading)`
-  font-weight: bold;
+  font-weight: 600;
   font-size: ${({ theme }) => theme.text.xlarge.size};
   line-height: ${({ theme }) => theme.text.xlarge.height};
   margin-top: 0;
@@ -133,6 +133,7 @@ export function SectionIntro({ theme }) {
                   margin={{
                     bottom: isMaxSize(size, 'sm') ? 'medium' : 'xlarge',
                   }}
+                  style={{ maxWidth: '380px' }}
                 >
                   <FormattedMessage {...messages.intro} />
                 </Paragraph>

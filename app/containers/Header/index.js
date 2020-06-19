@@ -285,6 +285,7 @@ export function Header({
                     direction="row"
                     justify="end"
                     size={size}
+                    style={{ paddingTop: '25px' }}
                   >
                     {navButtonOnClick({
                       match,
