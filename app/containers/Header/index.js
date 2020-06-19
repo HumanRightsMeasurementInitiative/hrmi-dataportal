@@ -14,8 +14,7 @@ import styled, { withTheme } from 'styled-components';
 import { Box, Button, ResponsiveContext, Image, Layer } from 'grommet';
 import { Menu, Close, Share } from 'grommet-icons';
 
-import logo from 'images/HRMI-Logo-HOR-RGB-x2.png';
-import logoS from 'images/HRMI-Logo-HOR-RGB-small-x2.png';
+import logo from 'images/HRMI-Logo.svg';
 
 import { appLocales } from 'i18n';
 import LocaleToggle from 'containers/LocaleToggle';
@@ -98,32 +97,19 @@ const BrandButton = styled(Button)`
 // color: ${({ theme }) => theme.global.colors.hover};
 const BrandInner = styled(Box)`
   padding-top: ${({ theme }) => theme.sizes.header.small.padTop}px;
-  padding-bottom: ${({ theme }) => theme.sizes.header.small.padBottom - 2}px;
+  padding-bottom: ${({ theme }) => theme.sizes.header.small.padBottom}px;
   padding-right: ${({ theme }) => theme.sizes.header.small.padRight}px;
   height: ${({ theme }) => theme.sizes.header.small.heightTop}px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     height: ${({ theme }) => theme.sizes.header.height}px;
     padding-top: ${({ theme }) => theme.sizes.header.padTop}px;
-    padding-bottom: ${({ theme }) => theme.sizes.header.padBottom - 2}px;
+    padding-bottom: ${({ theme }) => theme.sizes.header.padBottom}px;
     padding-right: ${({ theme }) => theme.sizes.header.padRight}px;
   }
 `;
 
 const LogoWrap = styled(Box)``;
 const Logo = styled(Image)``;
-
-const TitleWrap = styled(Box)`
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-top: -1px;
-  font-size: 15px;
-  line-height: 18px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    margin-top: -8px;
-    font-size: 22px;
-    line-height: 31px;
-  }
-`;
 
 const MenuList = styled(Box)`
   padding: ${({ theme }) => theme.global.edgeSize.small} 0;
@@ -242,7 +228,7 @@ export function Header({
                       flex={{ shrink: 0 }}
                     >
                       <Logo
-                        src={isMaxSize(size, 'sm') ? logoS : logo}
+                        src={logo}
                         alt={`${intl.formatMessage(rootMessages.app.title)}`}
                         a11yTitle={`${intl.formatMessage(
                           rootMessages.app.title,
@@ -250,9 +236,6 @@ export function Header({
                         fit="contain"
                       />
                     </LogoWrap>
-                    <TitleWrap>
-                      <FormattedMessage {...rootMessages.app.title} />
-                    </TitleWrap>
                   </BrandInner>
                 </BrandButton>
                 {isMaxSize(size, 'sm') && appLocales.length > 1 && (
@@ -370,6 +353,7 @@ export function Header({
                       <Search
                         expand={showSearch}
                         onToggle={show => setShowSearch(show)}
+                        borderSize="none"
                       />
                     </SearchWrap>
                   )}
