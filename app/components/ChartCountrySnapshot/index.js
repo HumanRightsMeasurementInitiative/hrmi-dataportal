@@ -19,6 +19,7 @@ import Source from 'components/Source';
 
 import getMetricDetails from 'utils/metric-details';
 import { isMinSize } from 'utils/responsive';
+import { formatScoreMax } from 'utils/scores';
 
 import rootMessages from 'messages';
 
@@ -137,6 +138,11 @@ function ChartCountrySnapshot({
   activeCode,
 }) {
   const [hover, setHover] = useState(false);
+  const summaryScore = dimensionScore
+    ? { score: dimensionScore, maxValue }
+    : null;
+
+  // TODO: "Summary Score" should be a formatted message, also perhaps "N/A"?
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -148,37 +154,73 @@ function ChartCountrySnapshot({
           <Box direction="row">
             <ChartArea>
               <Dimension>
-                <Box direction="column" align="start">
-                  <Button
-                    onClick={() => onMetricClick(dimensionCode)}
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
-                    style={{ position: 'relative' }}
-                    margin={{ right: 'ms' }}
-                  >
-                    {(hover || activeCode === dimensionCode) && (
-                      <Active color={`${dimensionCode}Active`} />
-                    )}
+                <Box direction="row" justify="between" align="end">
+                  <Box direction="column" align="start">
+                    <Button
+                      onClick={() => onMetricClick(dimensionCode)}
+                      onMouseEnter={() => setHover(true)}
+                      onMouseLeave={() => setHover(false)}
+                      style={{ position: 'relative' }}
+                      margin={{ right: 'ms' }}
+                    >
+                      {(hover || activeCode === dimensionCode) && (
+                        <Active color={`${dimensionCode}Active`} />
+                      )}
 
-                    <DimensionHeading
-                      color={
-                        hover || activeCode === dimensionCode
-                          ? `${dimensionCode}Active`
-                          : `${dimensionCode}Dark`
-                      }
+                      <DimensionHeading
+                        color={
+                          hover || activeCode === dimensionCode
+                            ? `${dimensionCode}Active`
+                            : `${dimensionCode}Dark`
+                        }
+                      >
+                        <FormattedMessage
+                          {...rootMessages.dimensions[dimensionCode]}
+                        />
+                      </DimensionHeading>
+                    </Button>
+                    <Text
+                      size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                      color={`${dimensionCode}Dark`}
                     >
                       <FormattedMessage
-                        {...rootMessages.dimensions[dimensionCode]}
+                        {...rootMessages['rights-types'][type]}
                       />
-                    </DimensionHeading>
-                  </Button>
-                  <Text
-                    size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
-                    color={`${dimensionCode}Dark`}
+                      {` (${year})`}
+                    </Text>
+                  </Box>
+                  <Box
+                    direction={isMinSize(size, 'sm') ? 'row' : 'column'}
+                    align="center"
                   >
-                    <FormattedMessage {...rootMessages['rights-types'][type]} />
-                    {` (${year})`}
-                  </Text>
+                    <Text
+                      size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                      color={`${dimensionCode}Dark`}
+                    >
+                      Summary Score
+                    </Text>
+                    <Box
+                      background={`${dimensionCode}Dark`}
+                      pad={{ vertical: '4px', horizontal: '12px' }}
+                      margin={{ left: isMinSize(size, 'sm') ? '10px' : '0px' }}
+                    >
+                      {/* prettier-ignore */}
+                      <Text
+                        size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                        color="white"
+                      >
+                        {summaryScore
+                          ? formatScoreMax(
+                            summaryScore.score,
+                            summaryScore.maxValue,
+                            1,
+                            false,
+                            intl,
+                          )
+                          : 'N/A'}
+                      </Text>
+                    </Box>
+                  </Box>
                 </Box>
                 <Box
                   margin={{ top: 'small', bottom: 'xsmall' }}
@@ -202,9 +244,7 @@ function ChartCountrySnapshot({
                   </Text>
                 </Box>
                 <ChartBars
-                  summaryScore={
-                    dimensionScore ? { score: dimensionScore, maxValue } : null
-                  }
+                  summaryScore={summaryScore}
                   data={prepareData({
                     scores: rights,
                     dimensionCode,
