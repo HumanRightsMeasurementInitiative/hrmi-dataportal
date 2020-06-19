@@ -40,13 +40,7 @@ const ButtonNavSecondary = styled(Button)`
 
 const NavBottomButton = React.forwardRef(
   ({ active, open, onClick, label, windowSize }, ref) => {
-    let gap = 'hair';
-    if (windowSize === 'medium') {
-      gap = 'xxsmall';
-    }
-    if (isMinSize(windowSize, 'large')) {
-      gap = 'small';
-    }
+    const gap = '3px';
     return (
       <ButtonNavSecondary
         plain
@@ -69,7 +63,7 @@ const NavBottomButton = React.forwardRef(
             )}
             {!open && (
               <FormDown
-                size={isMinSize(windowSize, 'medium') ? 'xxlarge' : 'xlarge'}
+                size={isMinSize(windowSize, 'medium') ? 'xlarge' : 'large'}
                 style={{ stroke: 'currentColor', marginRight: '-3px' }}
               />
             )}
