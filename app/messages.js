@@ -477,7 +477,7 @@ export default defineMessages({
     },
     download: {
       id: `${scope}.page.download`,
-      defaultMessage: 'Download data',
+      defaultMessage: 'Download Data',
     },
     'at-risk': {
       id: `${scope}.page.at-risk`,

@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
 import { Box, Button, ResponsiveContext, Image, Layer } from 'grommet';
-import { Menu, Close } from 'grommet-icons';
+import { Menu, Close, Share } from 'grommet-icons';
 
 import logo from 'images/HRMI-Logo-HOR-RGB-x2.png';
 import logoS from 'images/HRMI-Logo-HOR-RGB-small-x2.png';
@@ -149,21 +149,45 @@ const SearchWrap = styled(Box)`
   }
 `;
 
-const renderPages = ({ match, onClick, align }) =>
+const navButtonOnClick = ({ match, onClick, align }) =>
   PAGES &&
   Object.values(PAGES)
     .filter(page => page.primary)
-    .map(page => (
-      <ButtonNavPrimary
-        key={page.key}
-        active={page.key === match}
-        disabled={page.key === match}
-        align={align}
-        onClick={() => onClick(page.key)}
-      >
-        <FormattedMessage {...rootMessages.page[page.key]} />
-      </ButtonNavPrimary>
-    ));
+    .map(page =>
+      page.key === 'download' ? (
+        <a
+          href={page.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          key={page.key}
+        >
+          <ButtonNavPrimary>
+            <FormattedMessage {...rootMessages.page[page.key]} />
+            {/* prettier-ignore */}
+            <Share
+              color={
+                window.innerWidth > 991
+                  ? ({ theme, active }) =>
+                    theme.global.colors[active ? 'dark' : 'secondary']
+                  : ({ theme }) => theme.global.colors.dark
+              }
+              size="small"
+              style={{ margin: '0 0 5px 7px' }}
+            />
+          </ButtonNavPrimary>
+        </a>
+      ) : (
+        <ButtonNavPrimary
+          key={page.key}
+          active={page.key === match}
+          disabled={page.key === match}
+          align={align}
+          onClick={() => onClick(page.key)}
+        >
+          <FormattedMessage {...rootMessages.page[page.key]} />
+        </ButtonNavPrimary>
+      ),
+    );
 
 const DEPENDENCIES = ['countries'];
 
@@ -258,7 +282,7 @@ export function Header({
                   >
                     <MenuList elevation="large">
                       <MenuGroup>
-                        {renderPages({
+                        {navButtonOnClick({
                           match,
                           onClick: key => {
                             setShowMenu(false);
@@ -279,7 +303,7 @@ export function Header({
                     justify="end"
                     size={size}
                   >
-                    {renderPages({
+                    {navButtonOnClick({
                       match,
                       onClick: key => {
                         setShowSearch(false);

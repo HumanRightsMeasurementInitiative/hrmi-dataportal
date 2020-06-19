@@ -134,6 +134,7 @@ export const PAGES = {
   download: {
     key: 'download',
     primary: true,
+    url: 'https://humanrightsmeasurement.org/download-the-dataset/',
   },
 };
 
