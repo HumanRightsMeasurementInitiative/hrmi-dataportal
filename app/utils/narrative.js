@@ -526,14 +526,7 @@ export const compareRange = ({ lo, hi, reference }) => {
 
 const TERRITORY_GRAMMAR = {
   conjunction: {
-    of: [
-      'collectivity_overseas',
-      'unincorporated',
-      'collectivity_special',
-      'associated',
-      'nonselfgoverning',
-      'collectivity_overseas',
-    ],
+    of: ['unincorporated', 'associated', 'nonselfgoverning'],
     with: ['commonwealth_politicalunion', 'selfgoverning'],
   },
 };
@@ -559,8 +552,11 @@ export const getTerritoryStatus = (
       );
       return `${statusLabel} ${countryWith}`;
     }
-    const countryOf = getCountryOf(intl.locale, countryGrammar, countryLabel);
-    return `${statusLabel} ${countryOf}`;
+    if (TERRITORY_GRAMMAR.conjunction.of.indexOf(statusCode) > -1) {
+      const countryOf = getCountryOf(intl.locale, countryGrammar, countryLabel);
+      return `${statusLabel} ${countryOf}`;
+    }
+    return statusLabel;
   }
   return `${statusCode} (${countryCode})`;
 };
