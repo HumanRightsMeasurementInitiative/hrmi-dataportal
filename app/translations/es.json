@@ -876,8 +876,8 @@
   "hrmi.indicators.adult-survival": "TODO Adult Survival",
   "hrmi.indicators-raw.adult-survival": "Adult Survival",
   "hrmi.indicators-about.adult-survival": "Porcentaje de probabilidad de que una persona de 15 años sobreviva para cumplir 60 años.",
-  "hrmi.people-at-risk.32": "Men and/or boys",
-  "hrmi.people-at-risk.33": "Street children or homeless youth",
+  "hrmi.people-at-risk.32": "Hombres y / o niños",
+  "hrmi.people-at-risk.33": "Niños de la calle o jóvenes sin hogar",
   "hrmi.status.unincorporated": "Territorio no incorporado",
   "hrmi.status.associated": "Estado asociado",
   "hrmi.status.collectivity_overseas": "Colectividad de ultramar de Francia",
@@ -885,6 +885,6 @@
   "hrmi.status.selfgoverning": "Territorio autónomo en libre asociación",
   "hrmi.status.nonselfgoverning": "Territorio no autónomo",
   "hrmi.status.commonwealth_politicalunion": "Mancomunidad en unión política",
-  "hrmi.containers.AboutCountryContainer.countryStatus": "Country status",
+  "hrmi.containers.AboutCountryContainer.countryStatus": "Estado del país",
   "hrmi.components.ChartHeader.countries-overview-sub": "También se muestra {noWithout} {noWithout, select, 1 {country} other {countries}} sin ningún puntaje"
 }
