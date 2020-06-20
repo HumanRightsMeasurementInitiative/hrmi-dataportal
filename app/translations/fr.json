@@ -320,7 +320,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "cette page sur le site du HRMI.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButRights": "Un ensemble complet de données {dimension} n'a pas encore été recueillies pour {countryWithArticle}. Nous souhaitons collecter des données plus complètes dans les années à venir.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButSurvey": "Les données {dimension} n'ont pas encore été recueillies pour {countryWithArticle}. Nous souhaitons étendre notre recueillement de données dans les années à venir. ",
-  "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Par rapport aux {referenceCount} autres pays avec un revenu élevé, {countryWithArticle} se {isPlural, select, true {situent} false {situe}} ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Par rapport aux autres pays avec un revenu élevé, {countryWithArticle} se {isPlural, select, true {situent} false {situe}} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": " en termes de droits à la qualité de vie ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " en ce qui concerne le {right} ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endSome": "lorsque nous examinons les droits pour lesquels nous avons des données ",
