@@ -1,6 +1,6 @@
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.HINote';
+export const scope = 'hrmi.components.CountryNotes';
 
 export default defineMessages({
   hiNote: {
