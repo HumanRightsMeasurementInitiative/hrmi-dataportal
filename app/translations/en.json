@@ -300,7 +300,7 @@
   "hrmi.components.CountryNarrative.esr.scoreAdjustedRange.c": "{isPlural, select, true {have} false {has}} some way to go ",
   "hrmi.components.CountryNarrative.esr.scoreAdjustedRange.d": "{isPlural, select, true {are} false {is}} close ",
   "hrmi.components.CountryNarrative.esr.scoreAdjustedEnd": "to meet {isPlural, select, true {their} false {its}} immediate economic and social rights duty. ",
-  "hrmi.components.CountryNarrative.esr.scoreBestAnalysis": "When measured against the '{benchmarkBest}' benchmark, comparing {needsArticle, select, true {the } false { }}{country} to the best performance of any country in the world, {needsArticle, select, true {The } false { }}{countryPossessive} score is {scoreBestBold}, indicating that {isPlural, select, true {they} false {it}}  ",
+  "hrmi.components.CountryNarrative.esr.scoreBestAnalysis": "When measured against the '{benchmarkBest}' benchmark, comparing {needsArticle, select, true {the } false { }}{country} to the best performing countries in the world, {needsArticle, select, true {The } false { }}{countryPossessive} score is {scoreBestBold}, indicating that {isPlural, select, true {they} false {it}}  ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.a": "{isPlural, select, true {have} false {has}} a very long way to go ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.b": "{isPlural, select, true {have} false {has}} a long way to go ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.c": "{isPlural, select, true {have} false {has}} some way to go ",
