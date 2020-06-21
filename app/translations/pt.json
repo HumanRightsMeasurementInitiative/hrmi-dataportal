@@ -846,7 +846,7 @@
   "hrmi.components.HINote.hiNote": "{hiLabel} Países com rendimentos elevados: Para estes países, é melhor usar o padrão de avaliação de rendimentos elevados. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "Para que padrão de avaliação é usado o indicador?",
-  "hrmi.labels.abbrev.notAvailable": "N/A",
+  "hrmi.labels.abbrev.notAvailable": "–",
   "hrmi.containers.AboutCountryContainer.more": "Mostrar categorias de países",
   "hrmi.containers.AboutCountryContainer.less": "Ocultar categorias de países",
   "hrmi.indicators-about.net-primary": "Taxa líquida de matrículas na escola primária: Número de alunos da faixa etária oficial da escola primária que estão matriculados em todos os tipos de escolas primárias, expressos como porcentagem da população total dessa faixa etária.",
