@@ -50,7 +50,11 @@ import Hint from 'styled/Hint';
 import { sortScores } from 'utils/scores';
 import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 import { isMinSize } from 'utils/responsive';
-import { isCountryHighIncome, hasCountryGovRespondents } from 'utils/countries';
+import {
+  isCountryHighIncome,
+  hasCountryGovRespondents,
+  getCountryLabel,
+} from 'utils/countries';
 
 import rootMessages from 'messages';
 
@@ -101,32 +105,6 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-const getCountryLabel = (
-  score,
-  countries,
-  showHILabel,
-  showGovRespondentsLabel,
-  intl,
-) => {
-  const country = countries.find(c => c.country_code === score.country_code);
-  let label = '';
-  if (rootMessages.countries[country.country_code]) {
-    label = intl.formatMessage(rootMessages.countries[country.country_code]);
-  } else {
-    label = country.country_code;
-  }
-  if (showHILabel && country && isCountryHighIncome(country)) {
-    label = `${label}${intl.formatMessage(rootMessages.labels.hiCountryWrap, {
-      hiLabel: intl.formatMessage(rootMessages.labels.hiCountry),
-    })}`;
-  }
-  if (showGovRespondentsLabel && country && hasCountryGovRespondents(country)) {
-    label = `${label} <sup>${intl.formatMessage(
-      rootMessages.labels.govResponseCountry,
-    )}</sup>`;
-  }
-  return label;
-};
 const prepareData = ({
   scores,
   metric,
@@ -151,11 +129,10 @@ const prepareData = ({
         stripes: standard === 'hi',
         key: s.country_code,
         label: getCountryLabel(
-          s,
-          countries,
-          showHILabel,
-          showGovRespondentsLabel,
           intl,
+          countries.find(c => c.country_code === s.country_code),
+          showGovRespondentsLabel,
+          showHILabel,
         ),
         onClick: () => onCountryClick(s.country_code),
         active: activeCode === s.country_code,
@@ -168,11 +145,10 @@ const prepareData = ({
         band: getBand(s),
         key: s.country_code,
         label: getCountryLabel(
-          s,
-          countries,
+          intl,
+          countries.find(c => c.country_code === s.country_code),
           showHILabel,
           showGovRespondentsLabel,
-          intl,
         ),
         onClick: () => onCountryClick(s.country_code),
         active: activeCode === s.country_code,

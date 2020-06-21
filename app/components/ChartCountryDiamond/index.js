@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import { Box, Text, ResponsiveContext } from 'grommet';
 import { FormNext } from 'grommet-icons';
 import styled from 'styled-components';
@@ -210,14 +210,10 @@ export function ChartCountryDiamond({
   showAnnotation,
   onCountryHover,
   width,
+  label,
 }) {
-  if (!country) return null;
-  if (!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]) {
-    console.log(
-      'Country code not in language files:',
-      country[COLUMNS.COUNTRIES.CODE],
-    );
-  }
+  // required for setting inner HTML (from markdown content)
+  /* eslint-disable react/no-danger */
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -272,28 +268,7 @@ export function ChartCountryDiamond({
                 <Box pad={{ top: 'small' }}>
                   <Text textAlign="center" alignSelf="center">
                     <CountryLabel>
-                      {rootMessages.countries[
-                        country[COLUMNS.COUNTRIES.CODE]
-                      ] && (
-                        <FormattedMessage
-                          {...rootMessages.countries[
-                            country[COLUMNS.COUNTRIES.CODE]
-                          ]}
-                        />
-                      )}
-                      {!rootMessages.countries[
-                        country[COLUMNS.COUNTRIES.CODE]
-                      ] && <span>{country[COLUMNS.COUNTRIES.CODE]}</span>}
-                      {country && country.high_income_country === '1' && (
-                        <FormattedMessage
-                          {...rootMessages.labels.hiCountryWrap}
-                          values={{
-                            hiLabel: intl.formatMessage(
-                              rootMessages.labels.hiCountry,
-                            ),
-                          }}
-                        />
-                      )}
+                      <span dangerouslySetInnerHTML={{ __html: label }} />
                       {isMaxSize(size, 'medium') && <FormNext size="medium" />}
                     </CountryLabel>
                   </Text>
@@ -305,6 +280,7 @@ export function ChartCountryDiamond({
       )}
     </ResponsiveContext.Consumer>
   );
+  /* eslint-enable react/no-danger */
 }
 
 ChartCountryDiamond.propTypes = {
@@ -316,13 +292,12 @@ ChartCountryDiamond.propTypes = {
   scores: PropTypes.object,
   scale: PropTypes.string,
   width: PropTypes.string,
-  isActive: PropTypes.bool,
   standard: PropTypes.object,
   otherStandard: PropTypes.object,
-  isDefaultStandard: PropTypes.bool,
   showAnnotation: PropTypes.bool,
   benchmark: PropTypes.object,
   intl: intlShape.isRequired,
+  label: PropTypes.string,
 };
 
 export default injectIntl(ChartCountryDiamond);
