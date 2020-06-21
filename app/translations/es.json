@@ -846,7 +846,7 @@
   "hrmi.components.HINote.hiNote": "{hiLabel}  País de ingresos altos: para estos países es mejor utilizar el estándar de evaluación de ingresos altos. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "¿Para qué estándar de evaluación se utiliza el indicador?",
-  "hrmi.labels.abbrev.notAvailable": "N/A",
+  "hrmi.labels.abbrev.notAvailable": "–",
   "hrmi.containers.AboutCountryContainer.more": "Mostrar categorías de países",
   "hrmi.containers.AboutCountryContainer.less": "Ocultar categorías de países",
   "hrmi.indicators-about.net-primary": "Tasa neta de matriculación en la escuela primaria: Número de estudiantes del grupo oficial de edad de la escuela primaria que están matriculados en todo tipo de escuelas primarias, expresado como un porcentaje de la población total de ese grupo de edad.",
