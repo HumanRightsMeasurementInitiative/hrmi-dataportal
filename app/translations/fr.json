@@ -843,7 +843,7 @@
   "hrmi.containers.LayerSettings.labelWithName": "Changer de vue pour le tableau {name}",
   "hrmi.containers.AboutMetricContainer.metricLink": "Explorer {metric} pour chaque pays",
   "hrmi.containers.AboutCountryContainer.countryLink": "Explorer {country}",
-  "hrmi.components.HINote.hiNote": "{hiLabel} Pays à revenus élevés : pour ces pays, il est préférable de se référer à la norme d’évaluation des revenus élevés. ",
+  "hrmi.components.CountryNotes.hiNote": "{hiLabel} Pays à revenus élevés : pour ces pays, il est préférable de se référer à la norme d’évaluation des revenus élevés. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "Pour quelle norme d'évaluation l'indicateur est-il utilisé ?",
   "hrmi.labels.abbrev.notAvailable": "S.O",
