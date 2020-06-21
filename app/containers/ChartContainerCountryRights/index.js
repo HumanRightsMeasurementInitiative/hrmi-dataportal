@@ -44,6 +44,7 @@ import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
 import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRStandardHint';
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
+import NarrativeCPRGovRespondents from 'components/CountryNarrative/NarrativeCPRGovRespondents';
 
 import Hint from 'styled/Hint';
 
@@ -51,6 +52,7 @@ import { getRightsScoresForDimension } from 'utils/scores';
 import getMetricDetails from 'utils/metric-details';
 import { getMessageGrammar } from 'utils/narrative';
 import { isMinSize } from 'utils/responsive';
+import { hasCountryGovRespondents } from 'utils/countries';
 
 import rootMessages from 'messages';
 
@@ -447,6 +449,12 @@ export function ChartContainerCountryRights({
                     : 'all'
                 }
               />
+              {hasCountryGovRespondents(country) && (
+                <NarrativeCPRGovRespondents
+                  country={country}
+                  countryGrammar={countryGrammar}
+                />
+              )}
             </>
           )}
         </div>
