@@ -31,7 +31,7 @@ const StyledBox = styled(Box)`
     hasAside ? theme.global.edgeSize.xlarge : 0};
 `;
 
-function HINote({ intl, hasAside, settingHint }) {
+function CountryNotes({ intl, hasAside, settingHint }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -70,10 +70,10 @@ function HINote({ intl, hasAside, settingHint }) {
   );
 }
 
-HINote.propTypes = {
+CountryNotes.propTypes = {
   intl: intlShape.isRequired,
   hasAside: PropTypes.bool,
   settingHint: PropTypes.bool,
 };
 
-export default injectIntl(HINote);
+export default injectIntl(CountryNotes);

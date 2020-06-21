@@ -843,7 +843,7 @@
   "hrmi.containers.LayerSettings.labelWithName": "Cambiar vista por la tabla {name}",
   "hrmi.containers.AboutMetricContainer.metricLink": "Explorar {metric} para todos los países",
   "hrmi.containers.AboutCountryContainer.countryLink": "Explorar {country}",
-  "hrmi.components.HINote.hiNote": "{hiLabel}  País de ingresos altos: para estos países es mejor utilizar el estándar de evaluación de ingresos altos. ",
+  "hrmi.components.CountryNotes.hiNote": "{hiLabel}  País de ingresos altos: para estos países es mejor utilizar el estándar de evaluación de ingresos altos. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "¿Para qué estándar de evaluación se utiliza el indicador?",
   "hrmi.labels.abbrev.notAvailable": "N/A",
