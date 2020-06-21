@@ -91,6 +91,7 @@ export const COLUMNS = {
     TREATIES: 'treaty_codes',
     STATUS: 'country_status',
     RELATED: 'related_country_code',
+    GOV_RESPONDENTS: 'gov_respondents',
   },
   FEATURED: {
     CAT: 'featured_category',
