@@ -846,7 +846,6 @@
   "hrmi.containers.AboutCountryContainer.countryLink": "Explorar {country}",
   "hrmi.components.CountryNotes.hiNote": "{hiLabel}  País de ingresos altos: para estos países es mejor utilizar el estándar de evaluación de ingresos altos. ",
   "hrmi.components.CountryNotes.govResponseNote": "{labelSuperscript} Some survey respondents in the smallest countries worked for or with the government (only allowed for countries with a population of fewer than 120,000 people)",
-  "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "¿Para qué estándar de evaluación se utiliza el indicador?",
   "hrmi.labels.abbrev.notAvailable": "N/A",
   "hrmi.containers.AboutCountryContainer.more": "Mostrar categorías de países",

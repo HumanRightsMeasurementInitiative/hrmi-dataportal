@@ -44,17 +44,14 @@ import ChartBars from 'components/ChartBars';
 import ChartHeader from 'components/ChartHeader';
 import Source from 'components/Source';
 import CountryNotes from 'components/CountryNotes';
+import CountryLabel from 'components/CountryLabel';
 
 import Hint from 'styled/Hint';
 
 import { sortScores } from 'utils/scores';
 import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
 import { isMinSize } from 'utils/responsive';
-import {
-  isCountryHighIncome,
-  hasCountryGovRespondents,
-  getCountryLabel,
-} from 'utils/countries';
+import { isCountryHighIncome, hasCountryGovRespondents } from 'utils/countries';
 
 import rootMessages from 'messages';
 
@@ -111,7 +108,6 @@ const prepareData = ({
   currentBenchmark,
   standard,
   countries,
-  intl,
   onCountryClick,
   activeCode,
   showHILabel,
@@ -128,11 +124,12 @@ const prepareData = ({
         unit: '%',
         stripes: standard === 'hi',
         key: s.country_code,
-        label: getCountryLabel(
-          intl,
-          countries.find(c => c.country_code === s.country_code),
-          showGovRespondentsLabel,
-          showHILabel,
+        label: (
+          <CountryLabel
+            country={countries.find(c => c.country_code === s.country_code)}
+            showGovRespondentsLabel={showGovRespondentsLabel}
+            showHILabel={showHILabel}
+          />
         ),
         onClick: () => onCountryClick(s.country_code),
         active: activeCode === s.country_code,
@@ -144,11 +141,12 @@ const prepareData = ({
         unit: '',
         band: getBand(s),
         key: s.country_code,
-        label: getCountryLabel(
-          intl,
-          countries.find(c => c.country_code === s.country_code),
-          showHILabel,
-          showGovRespondentsLabel,
+        label: (
+          <CountryLabel
+            country={countries.find(c => c.country_code === s.country_code)}
+            showGovRespondentsLabel={showGovRespondentsLabel}
+            showHILabel={showHILabel}
+          />
         ),
         onClick: () => onCountryClick(s.country_code),
         active: activeCode === s.country_code,
@@ -282,7 +280,6 @@ export function ChartContainerMetric({
                 metric,
                 currentBenchmark,
                 standard,
-                intl,
                 countries,
                 onCountryClick,
                 activeCode,
@@ -310,7 +307,6 @@ export function ChartContainerMetric({
                   metric,
                   currentBenchmark,
                   standard,
-                  intl,
                   countries,
                   onCountryClick,
                   activeCode,
