@@ -846,7 +846,7 @@
   "hrmi.components.HINote.hiNote": "{hiLabel} Pays à revenus élevés : pour ces pays, il est préférable de se référer à la norme d’évaluation des revenus élevés. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "Pour quelle norme d'évaluation l'indicateur est-il utilisé ?",
-  "hrmi.labels.abbrev.notAvailable": "S.O",
+  "hrmi.labels.abbrev.notAvailable": "–",
   "hrmi.containers.AboutCountryContainer.more": "Afficher les catégories de pays",
   "hrmi.containers.AboutCountryContainer.less": "Cacher les catégories de pays",
   "hrmi.indicators-about.net-primary": "Taux net de scolarisation dans le primaire: nombre d'élèves du groupe d'âge officiel du primaire inscrits dans tous les types d'écoles primaires, exprimé en pourcentage de la population totale de ce groupe d'âge.",
