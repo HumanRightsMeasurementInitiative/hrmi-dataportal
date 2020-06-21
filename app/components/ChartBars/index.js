@@ -1,18 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, Text, ResponsiveContext } from 'grommet';
-import { intlShape, injectIntl } from 'react-intl';
-// import { COLUMNS } from 'containers/App/constants';
-
-// import AnnotateBetter from 'components/AnnotateBetterWorse';
-import { formatScoreMax } from 'utils/scores';
+import { Box, ResponsiveContext } from 'grommet';
+import { injectIntl } from 'react-intl'; // not used now?
 
 import BarWrapper from './BarWrapper';
 import Grades from './Grades';
 import ListHeader from './ListHeader';
-
-import { chartLabelWidth, scoreAsideWidth } from './chart-utils';
 
 const Styled = styled(Box)`
   margin: 0 auto;
@@ -21,47 +15,6 @@ const Styled = styled(Box)`
 const WrapInnerChart = styled(Box)`
   position: relative;
 `;
-const SummaryWrap = styled(Box)`
-  position: absolute;
-  left: 0;
-  top: -10px;
-  bottom: -3px;
-  right: 0;
-  pointer-events: none;
-`;
-const DimensionScoreWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  height: 100%;
-  border-left: 1px solid black;
-  left: ${({ score }) => {
-    if (score) {
-      if (score.maxValue === 100) {
-        return score.score;
-      }
-      return (score.score / score.maxValue) * 100;
-    }
-    return 0;
-  }}%;
-`;
-const DimensionScore = styled.div`
-  position: absolute;
-  bottom: 100%;
-  transform: translateX(-50%);
-  padding: 0px 8px;
-  text-align: center;
-  background-color: ${({ color, theme }) => theme.global.colors[color]};
-  border-radius: 99999px;
-`;
-
-const getScoreAsideWidth = (size, hasAside = false) => {
-  if (hasAside) {
-    return scoreAsideWidth(size);
-  }
-  return 0;
-};
 
 function ChartBars({
   data,
@@ -81,7 +34,6 @@ function ChartBars({
   scoresAside = true,
   summaryScore,
   isStatic,
-  intl,
   benchmarkIconOnly,
   annotateBenchmark = true,
   annotateMinMax = true,
@@ -89,7 +41,7 @@ function ChartBars({
   if (!data) return null;
   return (
     <ResponsiveContext.Consumer>
-      {size => (
+      {() => (
         <Styled
           pad={{
             top: 'ms',
@@ -134,37 +86,6 @@ function ChartBars({
                 isStatic={isStatic}
               />
             ))}
-            {summaryScore && (
-              <SummaryWrap direction="row">
-                <Box width={chartLabelWidth(size)} flex={{ shrink: 0 }} />
-                <Box
-                  flex
-                  direction="row"
-                  style={{ position: 'relative' }}
-                  align="center"
-                >
-                  <DimensionScoreWrapper score={summaryScore}>
-                    <DimensionScore color={labelColor}>
-                      <Text weight={600} size="small" color="white">
-                        {formatScoreMax(
-                          summaryScore.score,
-                          summaryScore.maxValue,
-                          1,
-                          false,
-                          intl,
-                        )}
-                      </Text>
-                    </DimensionScore>
-                  </DimensionScoreWrapper>
-                </Box>
-                {scoresAside && (
-                  <Box
-                    width={getScoreAsideWidth(size, true)}
-                    flex={{ shrink: 0 }}
-                  />
-                )}
-              </SummaryWrap>
-            )}
           </WrapInnerChart>
         </Styled>
       )}
@@ -196,7 +117,6 @@ ChartBars.propTypes = {
   annotateMinMax: PropTypes.bool,
   level: PropTypes.number,
   summaryScore: PropTypes.object,
-  intl: intlShape.isRequired,
 };
 
 export default injectIntl(ChartBars);
