@@ -300,7 +300,7 @@
   "hrmi.components.CountryNarrative.esr.scoreAdjustedRange.c": "{isPlural, select, true {têm} false {tem}} um caminho a percorrer para",
   "hrmi.components.CountryNarrative.esr.scoreAdjustedRange.d": "{isPlural, select, true {estáo} false {está}} próximo de",
   "hrmi.components.CountryNarrative.esr.scoreAdjustedEnd": "cumprir o seu dever quanto aos direitos econômicos e sociais. ",
-  "hrmi.components.CountryNarrative.esr.scoreBestAnalysis": "Quando avaliado em comparação com a referência '{benchmarkBest}', comparando {countryWithArticle} ao melhor desempenho de qualquer país no mundo, a pontuação {countryOf} é de {scoreBestBold}, o que indica que ",
+  "hrmi.components.CountryNarrative.esr.scoreBestAnalysis": "Quando avaliado em comparação com a referência '{benchmarkBest}', comparando {countryWithArticle} e os países com melhor desempenho do mundo, a pontuação {countryOf} é de {scoreBestBold}, o que indica que ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.a": "{isPlural, select, true {têm} false {tem}} um caminho bastante longo a percorrer para ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.b": "{isPlural, select, true {têm} false {tem}} um longo caminho a percorrer para ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.c": "{isPlural, select, true {têm} false {tem}} um caminho a percorrer para ",
