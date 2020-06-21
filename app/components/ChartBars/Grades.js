@@ -42,11 +42,11 @@ const BGScaleLabelWrap = styled.span`
   right: ${({ single }) => (single ? '-30px' : 'auto')};
   opacity: 0.8;
   border-left: ${({ single }) => (single ? 0 : 1)}px solid;
-  border-color: ${({ theme }) => theme.global.colors['light-4']};
+  border-color: ${({ theme }) => theme.global.colors['dark-3']};
   margin-top: 2px;
 `;
 const BGScaleLabel = styled.span`
-  padding-left: ${({ single }) => (single ? 0 : 1)}px;
+  padding-left: ${({ single }) => (single ? 0 : 5)}px;
   font-size: ${({ theme }) => theme.text.xxsmall.size};
   line-height: ${({ theme }) => theme.text.xxsmall.size};
   color: ${({ theme }) => theme.global.colors.secondary};
