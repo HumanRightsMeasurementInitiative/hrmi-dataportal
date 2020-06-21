@@ -198,6 +198,11 @@ export default defineMessages({
     },
   },
   cpr: {
+    govRespondents: {
+      id: `${scope}.cpr.govRespondents`,
+      defaultMessage:
+        'Note: For {countryWithArticle}, because it has a very small population, we allowed some survey respondents to work for or with the government. This was only allowed for countries with a population of fewer than 120,000 people, and excluded politicians, police, and members of the military. For more information, please see the Methodology Handbook.',
+    },
     start: {
       id: `${scope}.cpr.start`,
       defaultMessage:
