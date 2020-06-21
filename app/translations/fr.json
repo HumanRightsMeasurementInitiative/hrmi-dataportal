@@ -300,7 +300,7 @@
   "hrmi.components.CountryNarrative.esr.scoreAdjustedRange.c": "{isPlural, select, true {ont} false {a}} encore du chemin à faire pour remplir ",
   "hrmi.components.CountryNarrative.esr.scoreAdjustedRange.d": "{isPlural, select, true {vont} false {va}} bientôt remplir ",
   "hrmi.components.CountryNarrative.esr.scoreAdjustedEnd": "ses obligations en matière de droits sociaux et économiques de revenu ajusté. ",
-  "hrmi.components.CountryNarrative.esr.scoreBestAnalysis": "En utilisant la critère de performance « {benchmarkBest} » , la comparaison entre {countryWithArticle} et la meilleure performance de n'importe quel pays au monde, la note {countryOf} est {scoreBestBold}, ce qui indique qu'{genderNumber, select, m {il} f {elle} mp {ils} fp {elles}} ",
+  "hrmi.components.CountryNarrative.esr.scoreBestAnalysis": "En utilisant la critère de performance « {benchmarkBest} » , la comparaison entre {countryWithArticle} et les pays les plus performants du monde, la note {countryOf} est {scoreBestBold}, ce qui indique qu'{genderNumber, select, m {il} f {elle} mp {ils} fp {elles}} ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.a": "{isPlural, select, true {ont} false {a}} un très long chemin à faire pour atteindre ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.b": "{isPlural, select, true {ont} false {a}} un long chemin à faire pour atteindre ",
   "hrmi.components.CountryNarrative.esr.scoreBestRange.c": "{isPlural, select, true {ont} false {a}} encore du chemin à faire pour atteindre ",
