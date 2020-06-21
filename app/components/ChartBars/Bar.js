@@ -27,8 +27,7 @@ const BarReference = styled.div`
   display: block;
   height: ${props => props.height}px;
   width: 100%;
-  background-color: ${({ noData, hasBackground, theme }) => {
-    if (noData) return 'white';
+  background-color: ${({ hasBackground, theme }) => {
     if (hasBackground) return theme.global.colors['light-2'];
     return 'transparent';
   }};
@@ -43,8 +42,6 @@ const BarNoValue = styled.div`
   top: 0;
   height: ${props => props.height}px;
   width: 100%;
-  border: 1px solid;
-  border-color: ${props => props.theme.global.colors['light-4']};
 `;
 
 // prettier-ignore
@@ -156,7 +153,6 @@ function Bar({
       >
         <BarReference
           height={h}
-          noData={!hasValue}
           level={level}
           hasBackground={hasBackground}
         >
@@ -198,6 +194,7 @@ function Bar({
                   ? getIncompleteDataActionMessage(data)
                   : null,
               ]}
+              color={color}
             />
           )}
         </BarReference>
