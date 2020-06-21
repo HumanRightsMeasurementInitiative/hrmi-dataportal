@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { compose } from 'redux';
-import { Box } from 'grommet';
+import { Box, ResponsiveContext } from 'grommet';
 
 import {
   getESRDimensionScores,
@@ -43,11 +43,14 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import ChartBars from 'components/ChartBars';
 import ChartHeader from 'components/ChartHeader';
 import Source from 'components/Source';
+import CountryNotes from 'components/CountryNotes';
 
 import Hint from 'styled/Hint';
 
 import { sortScores } from 'utils/scores';
 import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
+import { isMinSize } from 'utils/responsive';
+import { isCountryHighIncome, hasCountryGovRespondents } from 'utils/countries';
 
 import rootMessages from 'messages';
 
@@ -98,7 +101,13 @@ const getBand = score => ({
   hi: score && parseFloat(score[COLUMNS.CPR.HI]),
 });
 
-const getCountryLabel = (score, countries, showHILabel, intl) => {
+const getCountryLabel = (
+  score,
+  countries,
+  showHILabel,
+  showGovRespondentsLabel,
+  intl,
+) => {
   const country = countries.find(c => c.country_code === score.country_code);
   let label = '';
   if (rootMessages.countries[country.country_code]) {
@@ -106,10 +115,15 @@ const getCountryLabel = (score, countries, showHILabel, intl) => {
   } else {
     label = country.country_code;
   }
-  if (showHILabel && country && country.high_income_country === '1') {
+  if (showHILabel && country && isCountryHighIncome(country)) {
     label = `${label}${intl.formatMessage(rootMessages.labels.hiCountryWrap, {
       hiLabel: intl.formatMessage(rootMessages.labels.hiCountry),
     })}`;
+  }
+  if (showGovRespondentsLabel && country && hasCountryGovRespondents(country)) {
+    label = `${label} <sup>${intl.formatMessage(
+      rootMessages.labels.govResponseCountry,
+    )}</sup>`;
   }
   return label;
 };
@@ -123,6 +137,7 @@ const prepareData = ({
   onCountryClick,
   activeCode,
   showHILabel,
+  showGovRespondentsLabel,
 }) =>
   // prettier-ignore
   scores.map(s =>
@@ -135,7 +150,13 @@ const prepareData = ({
         unit: '%',
         stripes: standard === 'hi',
         key: s.country_code,
-        label: getCountryLabel(s, countries, showHILabel, intl),
+        label: getCountryLabel(
+          s,
+          countries,
+          showHILabel,
+          showGovRespondentsLabel,
+          intl,
+        ),
         onClick: () => onCountryClick(s.country_code),
         active: activeCode === s.country_code,
       }
@@ -146,7 +167,13 @@ const prepareData = ({
         unit: '',
         band: getBand(s),
         key: s.country_code,
-        label: getCountryLabel(s, countries, showHILabel, intl),
+        label: getCountryLabel(
+          s,
+          countries,
+          showHILabel,
+          showGovRespondentsLabel,
+          intl,
+        ),
         onClick: () => onCountryClick(s.country_code),
         active: activeCode === s.country_code,
       }
@@ -175,7 +202,6 @@ export function ChartContainerMetric({
   auxIndicators,
   onCountryClick,
   activeCode,
-  showHILabel,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -219,99 +245,122 @@ export function ChartContainerMetric({
 
   const hasResults =
     dataReady && ((sorted && sorted.length > 0) || (other && other.length > 0));
+  const hasHICountries = countriesForScores.some(c => isCountryHighIncome(c));
+  const hasGovRespondentsCountries = countriesForScores.some(c =>
+    hasCountryGovRespondents(c),
+  );
+  // mark countries with symbol?
+  const showHILabel =
+    metric.type === 'esr' && metric.metricType !== 'indicators';
+  const showGovRespondentsLabel = metric.type === 'cpr';
+
   return (
-    <Box margin={{ bottom: 'xlarge' }}>
-      <ChartHeader
-        chartId="single-metric"
-        tools={{
-          howToReadConfig: {
-            contxt: 'PathMetric',
-            chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
-            dimension: metric.color,
-            data: metric.color,
-          },
-          settingsConfig: (metric.type === 'esr' ||
-            metric.metricType === 'indicators') && {
-            key: 'metric',
-            showStandard: metric.metricType !== 'indicators',
-            showBenchmark: true,
-          },
-        }}
-        messageValues={{ no: scores.length }}
-        filter={{
-          regionFilterValue,
-          subregionFilterValue,
-          onRemoveFilter,
-          onAddFilter,
-          incomeFilterValue,
-          countryGroupFilterValue,
-          treatyFilterValue,
-          filterValues,
-        }}
-        sort={{
-          sort: currentSort,
-          options: SORT_OPTIONS,
-          order: currentSortOrder,
-          onSortSelect,
-          onOrderToggle: onOrderChange,
-        }}
-      />
-      {!dataReady && <LoadingIndicator />}
-      {!hasResults && dataReady && (
-        <Hint italic>
-          <FormattedMessage {...rootMessages.hints.noResults} />
-        </Hint>
-      )}
-      {hasResults && sorted && sorted.length > 0 && (
-        <ChartBars
-          data={prepareData({
-            scores: sorted,
-            metric,
-            currentBenchmark,
-            standard,
-            intl,
-            countries,
-            onCountryClick,
-            activeCode,
-            showHILabel,
-          })}
-          currentBenchmark={currentBenchmark}
-          metric={metric}
-          listHeader
-          bullet={metric.type === 'cpr'}
-          allowWordBreak
-          labelColor={`${metric.color}Dark`}
-          padVertical="xsmall"
-          annotateBetter
-        />
-      )}
-      {hasResults && other && other.length > 0 && (
-        <Box border="top">
-          <Hint italic>
-            <FormattedMessage {...rootMessages.hints.noSortData} />
-          </Hint>
-          <ChartBars
-            data={prepareData({
-              scores: other,
-              metric,
-              currentBenchmark,
-              standard,
-              intl,
-              countries,
-              onCountryClick,
-              activeCode,
-              showHILabel,
-            })}
-            currentBenchmark={currentBenchmark}
-            metric={metric}
-            bullet={metric.type === 'cpr'}
-            allowWordBreak
-            padVertical="xsmall"
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box margin={{ bottom: 'xlarge' }}>
+          <ChartHeader
+            chartId="single-metric"
+            tools={{
+              howToReadConfig: {
+                contxt: 'PathMetric',
+                chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
+                dimension: metric.color,
+                data: metric.color,
+              },
+              settingsConfig: (metric.type === 'esr' ||
+                metric.metricType === 'indicators') && {
+                key: 'metric',
+                showStandard: metric.metricType !== 'indicators',
+                showBenchmark: true,
+              },
+            }}
+            messageValues={{ no: scores.length }}
+            filter={{
+              regionFilterValue,
+              subregionFilterValue,
+              onRemoveFilter,
+              onAddFilter,
+              incomeFilterValue,
+              countryGroupFilterValue,
+              treatyFilterValue,
+              filterValues,
+            }}
+            sort={{
+              sort: currentSort,
+              options: SORT_OPTIONS,
+              order: currentSortOrder,
+              onSortSelect,
+              onOrderToggle: onOrderChange,
+            }}
+          />
+          {!dataReady && <LoadingIndicator />}
+          {!hasResults && dataReady && (
+            <Hint italic>
+              <FormattedMessage {...rootMessages.hints.noResults} />
+            </Hint>
+          )}
+          {hasResults && sorted && sorted.length > 0 && (
+            <ChartBars
+              data={prepareData({
+                scores: sorted,
+                metric,
+                currentBenchmark,
+                standard,
+                intl,
+                countries,
+                onCountryClick,
+                activeCode,
+                showHILabel,
+                showGovRespondentsLabel,
+              })}
+              currentBenchmark={currentBenchmark}
+              metric={metric}
+              listHeader
+              bullet={metric.type === 'cpr'}
+              allowWordBreak
+              labelColor={`${metric.color}Dark`}
+              padVertical="xsmall"
+              annotateBetter
+            />
+          )}
+          {hasResults && other && other.length > 0 && (
+            <Box border="top">
+              <Hint italic>
+                <FormattedMessage {...rootMessages.hints.noSortData} />
+              </Hint>
+              <ChartBars
+                data={prepareData({
+                  scores: other,
+                  metric,
+                  currentBenchmark,
+                  standard,
+                  intl,
+                  countries,
+                  onCountryClick,
+                  activeCode,
+                  showHILabel,
+                })}
+                currentBenchmark={currentBenchmark}
+                metric={metric}
+                bullet={metric.type === 'cpr'}
+                allowWordBreak
+                padVertical="xsmall"
+              />
+            </Box>
+          )}
+          {hasResults && <Source />}
+          <CountryNotes
+            hasAside={isMinSize(size, 'large')}
+            settingHint
+            notes={{
+              govRespondents:
+                showGovRespondentsLabel && hasGovRespondentsCountries,
+              hiCountries: showHILabel && hasHICountries,
+            }}
           />
         </Box>
       )}
-      {hasResults && <Source />}
-    </Box>
+    </ResponsiveContext.Consumer>
   );
 }
 // metric={metric}

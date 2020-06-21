@@ -31,7 +31,9 @@ const StyledBox = styled(Box)`
     hasAside ? theme.global.edgeSize.xlarge : 0};
 `;
 
-function CountryNotes({ intl, hasAside, settingHint }) {
+function CountryNotes({ intl, hasAside, settingHint, notes }) {
+  const anyNotes = Object.keys(notes).some(key => notes[key]);
+  if (!anyNotes) return null;
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -46,19 +48,40 @@ function CountryNotes({ intl, hasAside, settingHint }) {
                   hasAside={hasAside}
                   background="white"
                 >
-                  <Text size="xxsmall" color="dark" textAlign="start">
-                    <FormattedMessage
-                      {...messages.hiNote}
-                      values={{
-                        hiLabel: intl.formatMessage(
-                          rootMessages.labels.hiCountry,
-                        ),
-                      }}
-                    />
-                    {settingHint && isMinSize(size, 'medium') && (
-                      <FormattedMessage {...rootMessages.hints.settings} />
-                    )}
-                  </Text>
+                  {notes.hiCountries && (
+                    <Text size="xxsmall" color="dark" textAlign="start">
+                      <FormattedMessage
+                        {...messages.hiNote}
+                        values={{
+                          hiLabel: intl.formatMessage(
+                            rootMessages.labels.hiCountry,
+                          ),
+                        }}
+                      />
+                      {settingHint && isMinSize(size, 'medium') && (
+                        <FormattedMessage {...rootMessages.hints.settings} />
+                      )}
+                    </Text>
+                  )}
+                  {notes.govRespondents && (
+                    <Text size="xxsmall" color="dark" textAlign="start">
+                      <FormattedMessage
+                        {...messages.govResponseNote}
+                        values={{
+                          label: intl.formatMessage(
+                            rootMessages.labels.govResponseCountry,
+                          ),
+                          labelSuperscript: (
+                            <sup>
+                              {intl.formatMessage(
+                                rootMessages.labels.govResponseCountry,
+                              )}
+                            </sup>
+                          ),
+                        }}
+                      />
+                    </Text>
+                  )}
                 </StyledBox>
                 {hasAside && <Aside />}
               </Box>
@@ -74,6 +97,7 @@ CountryNotes.propTypes = {
   intl: intlShape.isRequired,
   hasAside: PropTypes.bool,
   settingHint: PropTypes.bool,
+  notes: PropTypes.object,
 };
 
 export default injectIntl(CountryNotes);

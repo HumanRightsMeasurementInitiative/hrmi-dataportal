@@ -189,7 +189,7 @@ export const FAQS = {
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countries_v3.csv',
+    file: 'countries_v3-1.csv',
   },
   {
     key: 'countriesGrammar',
