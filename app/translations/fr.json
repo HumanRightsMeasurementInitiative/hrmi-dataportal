@@ -846,7 +846,6 @@
   "hrmi.containers.AboutCountryContainer.countryLink": "Explorer {country}",
   "hrmi.components.CountryNotes.hiNote": "{hiLabel} Pays à revenus élevés : pour ces pays, il est préférable de se référer à la norme d’évaluation des revenus élevés. ",
   "hrmi.components.CountryNotes.govResponseNote": "{labelSuperscript} Some survey respondents in the smallest countries worked for or with the government (only allowed for countries with a population of fewer than 120,000 people)",
-  "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "Pour quelle norme d'évaluation l'indicateur est-il utilisé ?",
   "hrmi.labels.abbrev.notAvailable": "S.O",
   "hrmi.containers.AboutCountryContainer.more": "Afficher les catégories de pays",

@@ -20,6 +20,8 @@ import {
   COLUMNS,
 } from 'containers/App/constants';
 
+import CountryLabel from 'components/CountryLabel';
+
 import ButtonPlain from 'styled/ButtonPlain';
 
 import rootMessages from 'messages';
@@ -53,7 +55,7 @@ const Button = styled(ButtonPlain)`
     z-index: 8;
   }
 `;
-const CountryLabel = styled.span`
+const CountryLabelWrap = styled.span`
   font-weight: 700;
   color: ${({ theme }) => theme.global.colors.dark};
 `;
@@ -210,10 +212,7 @@ export function ChartCountryDiamond({
   showAnnotation,
   onCountryHover,
   width,
-  label,
 }) {
-  // required for setting inner HTML (from markdown content)
-  /* eslint-disable react/no-danger */
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -267,10 +266,10 @@ export function ChartCountryDiamond({
                 )}
                 <Box pad={{ top: 'small' }}>
                   <Text textAlign="center" alignSelf="center">
-                    <CountryLabel>
-                      <span dangerouslySetInnerHTML={{ __html: label }} />
+                    <CountryLabelWrap>
+                      <CountryLabel country={country} />
                       {isMaxSize(size, 'medium') && <FormNext size="medium" />}
-                    </CountryLabel>
+                    </CountryLabelWrap>
                   </Text>
                 </Box>
               </Box>
@@ -280,7 +279,6 @@ export function ChartCountryDiamond({
       )}
     </ResponsiveContext.Consumer>
   );
-  /* eslint-enable react/no-danger */
 }
 
 ChartCountryDiamond.propTypes = {
@@ -297,7 +295,6 @@ ChartCountryDiamond.propTypes = {
   showAnnotation: PropTypes.bool,
   benchmark: PropTypes.object,
   intl: intlShape.isRequired,
-  label: PropTypes.string,
 };
 
 export default injectIntl(ChartCountryDiamond);

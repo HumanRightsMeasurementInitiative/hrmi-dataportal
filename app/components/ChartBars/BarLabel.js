@@ -21,18 +21,15 @@ const Styled = styled.span`
 `;
 
 function BarLabel({ label, allowWordBreak, color, level }) {
-  // required for setting inner HTML (from markdown content)
-  /* eslint-disable react/no-danger */
   return (
     <Styled allowWordBreak={allowWordBreak} color={color} level={level}>
-      <span dangerouslySetInnerHTML={{ __html: label }} />
+      {label}
     </Styled>
   );
-  /* eslint-enable react/no-danger */
 }
 
 BarLabel.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   color: PropTypes.string,
   allowWordBreak: PropTypes.bool,
   level: PropTypes.number,

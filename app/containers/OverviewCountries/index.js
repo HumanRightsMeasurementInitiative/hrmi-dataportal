@@ -53,11 +53,7 @@ import Hint from 'styled/Hint';
 import { isMaxSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
 import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
-import {
-  isCountryHighIncome,
-  hasCountryGovRespondents,
-  getCountryLabel,
-} from 'utils/countries';
+import { isCountryHighIncome, hasCountryGovRespondents } from 'utils/countries';
 
 import rootMessages from 'messages';
 
@@ -293,7 +289,6 @@ export function OverviewCountries({
                         indicators={indicators}
                         onCountryHover={code => code || true}
                         width={cardWidth}
-                        label={getCountryLabel(intl, c)}
                       />
                     )}
                   </InfiniteScroll>
@@ -324,7 +319,6 @@ export function OverviewCountries({
                           showAnnotation={index === 0}
                           key={c[COLUMNS.COUNTRIES.CODE]}
                           country={c}
-                          label={getCountryLabel(intl, c)}
                           scale={scale}
                           scores={getScoresForCountry(
                             c[COLUMNS.COUNTRIES.CODE],

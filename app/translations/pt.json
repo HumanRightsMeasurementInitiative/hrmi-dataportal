@@ -846,7 +846,6 @@
   "hrmi.containers.AboutCountryContainer.countryLink": "Explorar {country}",
   "hrmi.components.CountryNotes.hiNote": "{hiLabel} Países com rendimentos elevados: Para estes países, é melhor usar o padrão de avaliação de rendimentos elevados. ",
   "hrmi.components.CountryNotes.govResponseNote": "{labelSuperscript} Some survey respondents in the smallest countries worked for or with the government (only allowed for countries with a population of fewer than 120,000 people)",
-  "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "Para que padrão de avaliação é usado o indicador?",
   "hrmi.labels.abbrev.notAvailable": "N/A",
   "hrmi.containers.AboutCountryContainer.more": "Mostrar categorias de países",
