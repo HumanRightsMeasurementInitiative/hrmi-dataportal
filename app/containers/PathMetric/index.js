@@ -28,7 +28,6 @@ import AboutMetricContainer from 'containers/AboutMetricContainer';
 import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
 import Aside from 'components/Aside';
-import CountryNotes from 'components/CountryNotes';
 
 import ContentWrap from 'styled/ContentWrap';
 import MainColumn from 'styled/MainColumn';
@@ -117,9 +116,6 @@ export function PathMetric({
             <title>{metricTitle}</title>
             <meta name="description" content="Description of metric" />
           </Helmet>
-          {metric.type === 'esr' && metric.metricType !== 'indicators' && (
-            <CountryNotes hasAside={isMinSize(size, 'large')} settingHint />
-          )}
           <div style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
             <ContentContainer direction="column" header>
@@ -206,10 +202,6 @@ export function PathMetric({
                     metric={metric}
                     onCountryClick={onCountryClick}
                     activeCode={activeCode}
-                    showHILabel={
-                      metric.type === 'esr' &&
-                      metric.metricType !== 'indicators'
-                    }
                   />
                 ),
               },
