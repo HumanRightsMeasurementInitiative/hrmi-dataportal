@@ -32,6 +32,7 @@ const StyledBox = styled(Box)`
 `;
 
 function CountryNotes({ intl, hasAside, settingHint, notes }) {
+  if (!notes) return null;
   const anyNotes = Object.keys(notes).some(key => notes[key]);
   if (!anyNotes) return null;
   return (
