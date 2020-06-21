@@ -26,7 +26,7 @@ const BGScale = styled.div`
 
 // background: rgba(0, 0, 0, 0.05);
 const BGScaleX = styled.div`
-  background: ${({ min }) => (min > 0 ? 'rgba(0, 0, 0, 0.06)' : 'transparent')};
+  background: rgba(0, 0, 0, 0.04);
   /* border-left: 1px solid rgba(0, 0, 0, 0.2); */
   position: absolute;
   right: 0;
