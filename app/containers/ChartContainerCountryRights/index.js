@@ -51,6 +51,7 @@ import { getRightsScoresForDimension } from 'utils/scores';
 import getMetricDetails from 'utils/metric-details';
 import { getMessageGrammar } from 'utils/narrative';
 import { isMinSize } from 'utils/responsive';
+import { chartLabelWidth } from 'components/ChartBars/chart-utils';
 
 import rootMessages from 'messages';
 
@@ -102,7 +103,8 @@ const getDimensionLabel = (score, intl) =>
   intl.formatMessage(rootMessages.dimensions[score.key]);
 
 const KeyItem = styled(Box)`
-  padding-left: 5px;
+  padding-left: 8px;
+  margin-right: 15px;
   max-height: 14px;
   ${({ lineStyle }) =>
     lineStyle === 'solid' &&
@@ -337,7 +339,7 @@ export function ChartContainerCountryRights({
                 align="baseline"
                 margin={{ top: 'medium', bottom: 'large' }}
               >
-                <Source />
+                <Source maxWidth={chartLabelWidth(size)} />
                 <Box direction="row">
                   <KeyItem direction="row" lineStyle="solid">
                     <Text size="xxsmall">Income Adjusted Benchmark</Text>
