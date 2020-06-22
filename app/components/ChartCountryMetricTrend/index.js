@@ -47,6 +47,12 @@ const PlotHint = styled.div`
   white-space: nowrap;
 `;
 
+const PlotHintTighter = styled(PlotHint)`
+  padding: 3px 6px;
+  margin-bottom: 5px;
+  font-size: 14px;
+`;
+
 const Settings = styled(Box)``;
 
 const isEven = n => n % 2 === 0;
@@ -142,12 +148,14 @@ function ChartCountryMetricTrend({
   const [highlight, setHighlight] = useState(false);
   const [highlightFemale, setHighlightFemale] = useState(false);
   const [highlightMale, setHighlightMale] = useState(false);
+  const [highlightUpper, setHighlightUpper] = useState(false);
+  const [highlightLower, setHighlightLower] = useState(false);
   if (!maxYear) return null;
 
   // dummy data to force the area plot from 0
   const dataForceYRange = [
-    { x: new Date(`${parseFloat(minYear) - 0.1}`).getTime(), y: 0 },
-    { x: new Date(`${parseFloat(maxYear) + 0.5}`).getTime(), y: maxValue },
+    { x: new Date(minYear).getTime(), y: 0 },
+    { x: new Date(maxYear).getTime(), y: maxValue },
   ];
   const hasScores = scores && scores.length > 0;
 
@@ -243,7 +251,7 @@ function ChartCountryMetricTrend({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box direction="column" pad={{ vertical: 'medium' }}>
+        <Box direction="column" align="start" pad={{ vertical: 'medium' }}>
           <WrapPlot>
             <FlexibleWidthXYPlot
               height={isMinSize(size, 'medium') ? 240 : 200}
@@ -253,6 +261,8 @@ function ChartCountryMetricTrend({
                 setHighlight(false);
                 setHighlightMale(false);
                 setHighlightFemale(false);
+                setHighlightUpper(false);
+                setHighlightLower(false);
               }}
             >
               <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
@@ -308,12 +318,18 @@ function ChartCountryMetricTrend({
                 <LineSeries
                   data={rangeUpper}
                   style={{ stroke: colorCode, opacity: 0.8, strokeWidth: 1 }}
+                  onNearestX={(point, { index }) =>
+                    setHighlightUpper({ point, index })
+                  }
                 />
               )}
               {hasScores && rangeLower && (
                 <LineSeries
                   data={rangeLower}
                   style={{ stroke: colorCode, opacity: 0.8, strokeWidth: 1 }}
+                  onNearestX={(point, { index }) =>
+                    setHighlightLower({ point, index })
+                  }
                 />
               )}
               {groupsAll && scoresAll && (
@@ -407,16 +423,32 @@ function ChartCountryMetricTrend({
               {highlight && highlight.point && (
                 <Hint
                   value={highlight.point}
-                  align={{ vertical: 'top', horizontal: 'left' }}
+                  align={{ horizontal: 'right' }}
                   style={{
-                    transform: 'translateX(50%)',
+                    transform: 'translate(40%, 50%)',
                   }}
                 >
-                  <PlotHint color={colorHint}>
-                    {`${formatScore(highlight.point.y, 1, intl)}${
-                      percentage ? '%' : ''
-                    }`}
-                  </PlotHint>
+                  <>
+                    {highlightUpper && highlightUpper.point && (
+                      <PlotHintTighter color={colorHint}>
+                        {`${formatScore(highlightUpper.point.y, 1, intl)}${
+                          percentage ? '%' : ''
+                        }`}
+                      </PlotHintTighter>
+                    )}
+                    <PlotHintTighter color={colorHint}>
+                      {`${formatScore(highlight.point.y, 1, intl)}${
+                        percentage ? '%' : ''
+                      }`}
+                    </PlotHintTighter>
+                    {highlightUpper && highlightLower.point && (
+                      <PlotHintTighter color={colorHint}>
+                        {`${formatScore(highlightLower.point.y, 1, intl)}${
+                          percentage ? '%' : ''
+                        }`}
+                      </PlotHintTighter>
+                    )}
+                  </>
                 </Hint>
               )}
               {highlightFemale && highlightFemale.point && (
