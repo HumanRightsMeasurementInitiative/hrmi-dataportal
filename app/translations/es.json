@@ -890,5 +890,7 @@
   "hrmi.status.nonselfgoverning": "Territorio no autónomo",
   "hrmi.status.commonwealth_politicalunion": "Mancomunidad en unión política",
   "hrmi.containers.AboutCountryContainer.countryStatus": "Estado del país",
-  "hrmi.components.ChartHeader.countries-overview-sub": "También se muestra {noWithout} {noWithout, select, 1 {country} other {countries}} sin ningún puntaje"
+  "hrmi.components.ChartHeader.countries-overview-sub": "También se muestra {noWithout} {noWithout, select, 1 {country} other {countries}} sin ningún puntaje",
+  "hrmi.components.ChartHeader.assessment-standard-high-sub": "TODO",
+  "hrmi.components.ChartHeader.assessment-standard-low-sub": "TODO"
 }
