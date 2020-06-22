@@ -13,8 +13,6 @@ import styled from 'styled-components';
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 
-import { isMaxSize } from 'utils/responsive';
-
 import rootMessages from 'messages';
 // import messages from './messages';
 import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
@@ -89,27 +87,21 @@ export function ListHeader({
             align="center"
           >
             {annotateMinMax && metric && (
-              <>
+              <Box direction="row" justify="between" width="100%">
                 <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
                   0
                 </Text>
-                <Box
-                  margin={{ left: 'auto' }}
-                  pad={annotateBk ? { left: 'xsmall' } : null}
-                  style={{
-                    transform:
-                      isMaxSize(size, 'sm') && metric.type === 'esr'
-                        ? 'translateX(30%)'
-                        : 'translateX(50%)',
-                  }}
-                >
-                  <Text size="xsmall">
-                    {metric.type === 'esr' || metric.metricType === 'indicators'
-                      ? '100%'
-                      : '10'}
-                  </Text>
-                </Box>
-              </>
+                <Text size="xsmall" weight={600} textAlign="center">
+                  <FormattedMessage
+                    {...rootMessages.labels.xAxis[benchmark || 'cpr']}
+                  />
+                </Text>
+                <Text size="xsmall" style={{ transform: 'translateX(50%)' }}>
+                  {metric.type === 'esr' || metric.metricType === 'indicators'
+                    ? '100%'
+                    : '10'}
+                </Text>
+              </Box>
             )}
             {annotateBetter && (
               <WrapAnnotateBetter>

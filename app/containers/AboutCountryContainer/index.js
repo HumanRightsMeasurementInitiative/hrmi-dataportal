@@ -117,7 +117,7 @@ function AboutCountryContainer({
   return (
     <Box
       direction="column"
-      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
+      pad={{ left: 'medium', bottom: 'medium', top: 'large' }}
     >
       <Heading responsive={false} level={3}>
         {!showTitle && <FormattedMessage {...messages.title} />}
