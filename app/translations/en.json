@@ -170,6 +170,7 @@
   "hrmi.containers.Settings.hi.title": "NOT USED: High income country",
   "hrmi.containers.Settings.hi.text": "NOT USED: For these countries it is best to use the high income assessment standard",
   "hrmi.containers.Settings.hi.textIndicator": "NOT USED: For these countries it is best to use indicators used for the high income assessment standard",
+  "hrmi.containers.FAQs.title": "FAQs",
   "hrmi.containers.FAQs.questions.uncertainty": "Why do some uncertainty bands go under 0 or above 10?",
   "hrmi.containers.FAQs.answers.uncertainty": "The short answer is that this sometimes happens when we convert our statistical calculations into scores from 0 to 10, and it doesn’t mean anything special.",
   "hrmi.containers.FAQs.methodologyUncertainty": "For more information please see our methodology handbook",
