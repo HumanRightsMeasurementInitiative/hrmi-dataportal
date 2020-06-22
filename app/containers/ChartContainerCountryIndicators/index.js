@@ -17,8 +17,6 @@ import { BENCHMARKS, GRADES, COLUMNS } from 'containers/App/constants';
 
 import {
   getIndicatorsForCountryAndRight,
-  getCountry,
-  getCountryGrammar,
   getStandardSearch,
   getBenchmarkSearch,
   getDependenciesReady,
@@ -92,8 +90,6 @@ const prepareData = ({
 export function ChartContainerCountryIndicators({
   metricCode,
   onLoadData,
-  // country,
-  // dimensionCode,
   right,
   indicators,
   standard,
@@ -189,9 +185,6 @@ ChartContainerCountryIndicators.propTypes = {
   metricSelector: PropTypes.node,
 };
 const mapStateToProps = createStructuredSelector({
-  country: (state, { countryCode }) => getCountry(state, countryCode),
-  countryGrammar: (state, { countryCode }) =>
-    getCountryGrammar(state, countryCode),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   indicators: (state, { countryCode, metricCode }) =>
     getIndicatorsForCountryAndRight(state, countryCode, { metricCode }),
