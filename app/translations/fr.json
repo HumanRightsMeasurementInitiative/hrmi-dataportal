@@ -167,6 +167,7 @@
   "hrmi.containers.AboutMetricContainer.titleChildren.rights.esr": "Quels indicateurs ont été utilisés pour mesurer le respect de ce droit humain ?",
   "hrmi.containers.AboutMetricSources.titleStandards": "Norme(s) d'évaluation",
   "hrmi.containers.AboutMetricSources.titleSourceShort": "Source(s)",
+  "hrmi.containers.AboutMetricSources.nationalSources": "Country-specific source(s)",
   "hrmi.components.AboutMetric.titleSourcesByIndicator": "Sources de données pour les indicateurs sous-jacents",
   "hrmi.containers.Settings.hi.title": "NON UTILISÉ : pays à revenu élevé",
   "hrmi.containers.Settings.hi.text": "NON UTILISÉ : pour ces pays, il est préférable d’utiliser les normes d’évaluation des revenus élevés",

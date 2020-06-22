@@ -229,7 +229,7 @@ export function PathCountry({
     ),
   };
 
-  const onMetricClick = (code, dimension) => {
+  const onMetricClick = (code, dimension, dateRange) => {
     if (asideLayer && asideLayer.key === code) {
       onSetAsideLayer(false);
     } else {
@@ -239,6 +239,8 @@ export function PathCountry({
         showSources: dimension === 'esr' || code === 'esr',
         key: code,
         code,
+        countryCode,
+        dateRange,
         countryScoreMsg: getScoreMsg(
           code,
           benchmark,
