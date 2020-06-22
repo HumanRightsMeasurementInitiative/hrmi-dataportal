@@ -41,4 +41,12 @@ export default defineMessages({
     id: `${scope}.people`,
     defaultMessage: 'People at risk',
   },
+  'assessment-standard-hi-sub': {
+    id: `${scope}.assessment-standard-high-sub`,
+    defaultMessage: 'Using the high income assessment standard',
+  },
+  'assessment-standard-core-sub': {
+    id: `${scope}.assessment-standard-low-sub`,
+    defaultMessage: 'Using the low and middle income assessment standard',
+  },
 });
