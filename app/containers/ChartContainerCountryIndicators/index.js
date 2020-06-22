@@ -83,7 +83,7 @@ const prepareData = ({
     stripes: standard === 'hi',
     key: i.key,
     label: getIndicatorLabel(i.key, intl),
-    onClick: () => onClick(i.key, 'esr'),
+    onClick: () => onClick(i.key, 'esr', {min: 2016, max: 2020}),
     active: activeCode === i.key,
   }));
 
