@@ -890,5 +890,7 @@
   "hrmi.status.nonselfgoverning": "Non-self-governing territory",
   "hrmi.status.commonwealth_politicalunion": "Commonwealth in political union",
   "hrmi.containers.AboutCountryContainer.countryStatus": "Country status",
-  "hrmi.components.ChartHeader.countries-overview-sub": "Also showing {noWithout} {noWithout, select, 1 {country} other {countries}} without any scores"
+  "hrmi.components.ChartHeader.countries-overview-sub": "Also showing {noWithout} {noWithout, select, 1 {country} other {countries}} without any scores",
+  "hrmi.components.ChartHeader.assessment-standard-high-sub": "Using the high income assessment standard",
+  "hrmi.components.ChartHeader.assessment-standard-low-sub": "Using the low and middle income assessment standard"
 }
