@@ -170,6 +170,7 @@
   "hrmi.containers.Settings.hi.title": "NON UTILISÉ : pays à revenu élevé",
   "hrmi.containers.Settings.hi.text": "NON UTILISÉ : pour ces pays, il est préférable d’utiliser les normes d’évaluation des revenus élevés",
   "hrmi.containers.Settings.hi.textIndicator": "NON UTILISÉ : pour ces pays, il est préférable d’utiliser des indicateurs pris en compte pour les normes d’évaluation des revenus élevés",
+  "hrmi.containers.FAQs.title": "TODO",
   "hrmi.containers.FAQs.questions.uncertainty": "Pourquoi certaines marges d’inexactitude vont-elles en-dessous de 0 ou au-delà de 10 ?",
   "hrmi.containers.FAQs.answers.uncertainty": "En bref, cela arrive parfois lorsque nous convertissons nos calculs de statistiques en scores de 0 à 10 et cela n'a pas d’importance particulière.",
   "hrmi.containers.FAQs.methodologyUncertainty": "Pour plus d’informations, veuillez consulter notre manuel de méthodologie",
