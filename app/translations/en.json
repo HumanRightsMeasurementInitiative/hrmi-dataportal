@@ -28,6 +28,7 @@
   "hrmi.containers.PathCountry.countryScoreExplainer.cpr": "On the {metric}, {countryWithArticle} {isPlural, select, true {score} false {scores}} {score} out of 10, based on information gathered from {link}.",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.url": "https://humanrightsmeasurement.org/human-rights-practitioners/",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.anchor": "human rights practitioners",
+  "hrmi.containers.PathCountry.countryScoreExplainer.noData": "Score not available for {countryWithArticle}",
   "hrmi.containers.PathCountryOverview.title": "All countries (and territories)",
   "hrmi.containers.PathCountryOverview.header.d": "Search for a country, or compare a selection of countries across 13 human rights, grouped in three human rights categories: {esrLink}, {physintLink} and {empowerLink}",
   "hrmi.containers.PathCountryOverview.header.r": "Search for a country, or compare a selection of countries across 13 human rights, grouped in three human rights categories: {esrLink}, {physintLink} and {empowerLink}",
