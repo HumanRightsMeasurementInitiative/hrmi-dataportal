@@ -28,6 +28,7 @@
   "hrmi.containers.PathCountry.countryScoreExplainer.cpr": "No {metric}, {countryWithArticle} {isPlural, select, true {pontuam} false {pontua}} {score} de 10, baseado na informação obtida em {link}.",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.url": "https://humanrightsmeasurement.org/human-rights-practitioners/",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.anchor": "profissionais de direitos humanos",
+  "hrmi.containers.PathCountry.countryScoreExplainer.noData": "Pontuação não disponível para {countryWithArticle}",
   "hrmi.containers.PathCountryOverview.title": "Todos os países (e territórios)",
   "hrmi.containers.PathCountryOverview.header.d": "Pesquisar por país ou comparar uma seleção de países em 13 direitos humanos, agrupados em três categorias de direitos humanos: {esrLink}, {physintLink} e {empowerLink}",
   "hrmi.containers.PathCountryOverview.header.r": "Pesquisar por país ou comparar uma seleção de países em 13 direitos humanos, agrupados em três categorias de direitos humanos: {esrLink}, {physintLink} e {empowerLink}",
