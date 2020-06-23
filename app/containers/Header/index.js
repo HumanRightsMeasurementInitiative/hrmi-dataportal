@@ -17,14 +17,15 @@ import { Menu, Close, Share } from 'grommet-icons';
 import logo from 'images/HRMI-Logo-HOR-RGB-x2.png';
 import logoS from 'images/HRMI-Logo-HOR-RGB-small-x2.png';
 
-import { appLocales } from 'i18n';
+import { appLocales, DEFAULT_LOCALE } from 'i18n';
 import LocaleToggle from 'containers/LocaleToggle';
 import {
   getRouterMatch,
   getRouterRoute,
   getLocale,
 } from 'containers/App/selectors';
-import { PAGES, PATHS } from 'containers/App/constants';
+import { PAGES, PATHS, XPATHS } from 'containers/App/constants';
+
 import {
   navigate,
   loadDataIfNeeded,
@@ -160,7 +161,7 @@ const navButtonOnClick = ({ match, onClick, align, locale }) =>
     .map(page =>
       page.key === 'download' ? (
         <a
-          href={page[`url-${locale}`]}
+          href={XPATHS.download[locale] || XPATHS.download[DEFAULT_LOCALE]}
           target="_blank"
           rel="noopener noreferrer"
           key={page.key}
