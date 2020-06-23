@@ -95,7 +95,7 @@ export function PathHome({
       />
       <SectionSearch />
       <SectionPeople nav={nav} countryNo={countryCountAtRisk} />
-      <SectionOurData nav={nav} />
+      <SectionOurData locale={locale} nav={nav} />
       <SectionAbout locale={locale} nav={nav} />
       <SectionFooter locale={locale} nav={nav} />
     </ContentWrap>
