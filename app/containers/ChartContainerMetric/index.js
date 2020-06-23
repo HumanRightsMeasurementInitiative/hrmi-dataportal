@@ -223,6 +223,7 @@ export function ChartContainerMetric({
     <Box margin={{ bottom: 'xlarge' }}>
       <ChartHeader
         chartId="single-metric"
+        hasSubHeading={metric.type === 'esr'}
         tools={{
           howToReadConfig: {
             contxt: 'PathMetric',
@@ -255,6 +256,7 @@ export function ChartContainerMetric({
           onSortSelect,
           onOrderToggle: onOrderChange,
         }}
+        standard={standard}
       />
       {!dataReady && <LoadingIndicator />}
       {!hasResults && dataReady && (
