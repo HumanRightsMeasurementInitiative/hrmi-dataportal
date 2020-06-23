@@ -18,7 +18,6 @@ import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import GraphicWrap from 'styled/GraphicWrap';
 import GraphicCircle from 'styled/GraphicCircle';
-import GraphicDiamond from 'styled/GraphicDiamond';
 
 import { isMinSize, isMaxSize } from 'utils/responsive';
 
@@ -152,12 +151,23 @@ export function SectionIntro({ theme }) {
             {isMinSize(size, 'large') && (
               <GraphicWrap
                 style={{
-                  top: 0,
-                  left: '66%',
-                  transform: 'translateY(-240%)',
+                  top: '33%',
+                  left: '40%',
+                  transform: 'translateX(20%)',
                 }}
               >
-                <GraphicCircle color="graphicRed" size="32px" />
+                <GraphicCircle color="graphicPurple" size="32px" />
+              </GraphicWrap>
+            )}
+            {isMinSize(size, 'large') && (
+              <GraphicWrap
+                style={{
+                  bottom: '0',
+                  left: '30%',
+                  transform: 'translateX(20%)',
+                }}
+              >
+                <GraphicCircle color="graphicYellow" size="20px" />
               </GraphicWrap>
             )}
             {isMinSize(size, 'large') && (
@@ -170,20 +180,6 @@ export function SectionIntro({ theme }) {
                   position: 'relative',
                 }}
               />
-            )}
-            {isMinSize(size, 'large') && (
-              <GraphicWrap
-                style={{
-                  bottom: 0,
-                  right: 0,
-                  transform: 'translate(40%, 40%)',
-                }}
-              >
-                <GraphicDiamond
-                  color="physint"
-                  size={isMinSize(size, 'xlarge') ? 140 : 80}
-                />
-              </GraphicWrap>
             )}
           </ContentMaxWidth>
         </SectionContainer>
