@@ -171,7 +171,6 @@
   "hrmi.containers.Settings.hi.title": "NÃO UTILIZADO: País de rendimentos elevados",
   "hrmi.containers.Settings.hi.text": "NÃO UTILIZADO: Para estes países é melhor utilizar o padrão de avaliação de altos rendimentos",
   "hrmi.containers.Settings.hi.textIndicator": "NÃO UTILIZADO: Para estes países é melhor utilizar os indicadores usados para o padrão de avaliação de altos rendimentos",
-  "hrmi.containers.FAQs.title": "TODO",
   "hrmi.containers.FAQs.questions.uncertainty": "Porque é que algumas bandas de incerteza estão abaixo de 0 ou acima de 10?",
   "hrmi.containers.FAQs.answers.uncertainty": "A resposta breve é que isto às vezes acontece quando convertemos os cálculos estatísticos em pontuações de 0 a 10, e tal não significa nada de especial.",
   "hrmi.containers.FAQs.methodologyUncertainty": "Para mais informações, por favor consulte o nosso manual de metodologia",
