@@ -48,7 +48,6 @@ export default defineMessages({
         defaultMessage: 'url',
       },
     },
-    // TODO?
     noData: {
       id: `${scope}.countryScoreExplainer.noData`,
       defaultMessage: 'Score not available for {countryWithArticle}',

@@ -6,6 +6,7 @@
     "v3.1": "rightstracker-v3-1",
     "stage": "hrmi-dataportal-stage",
     "v2": "rightstracker-v2",
+    "test": "rightstracker-test",
     "summary1": "hrmi-dataportal-summary1",
     "summary1b": "hrmi-dataportal-summary1b",
     "summary2": "hrmi-dataportal-summary2",
