@@ -340,14 +340,16 @@ export function ChartContainerCountryRights({
                 margin={{ top: 'medium', bottom: 'large' }}
               >
                 <Source maxWidth={chartLabelWidth(size)} />
-                <Box direction="row">
-                  <KeyItem direction="row" lineStyle="solid">
-                    <Text size="xxsmall">Income Adjusted Benchmark</Text>
-                  </KeyItem>
-                  <KeyItem direction="row" lineStyle="dashed">
-                    <Text size="xxsmall">Global Best Benchmark</Text>
-                  </KeyItem>
-                </Box>
+                {currentBenchmark.key === 'best' && (
+                  <Box direction="row">
+                    <KeyItem direction="row" lineStyle="dashed">
+                      <Text size="xxsmall">Income Adjusted Benchmark</Text>
+                    </KeyItem>
+                    <KeyItem direction="row" lineStyle="solid">
+                      <Text size="xxsmall">Global Best Benchmark</Text>
+                    </KeyItem>
+                  </Box>
+                )}
               </Box>
               <NarrativeESR
                 dimensionScore={dimension.score}
