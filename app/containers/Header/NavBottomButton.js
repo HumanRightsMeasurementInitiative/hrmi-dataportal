@@ -57,7 +57,7 @@ const NavBottomButton = React.forwardRef(
             </Text>
             {open && (
               <FormUp
-                size={isMinSize(windowSize, 'medium') ? 'xxlarge' : 'xlarge'}
+                size={isMinSize(windowSize, 'medium') ? 'xlarge' : 'large'}
                 style={{ stroke: 'currentColor', marginRight: '-3px' }}
               />
             )}
