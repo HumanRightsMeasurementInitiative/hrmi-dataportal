@@ -26,7 +26,7 @@ const Image = styled.img`
 
 const imageSrc = `${IMAGE_PATH}/section_people.png`;
 
-export function SectionPeople({ nav, intl, theme }) {
+export function SectionPeople({ nav, intl, theme, countryNo }) {
   const hasSecondPara =
     intl.messages[messages.people.para2] &&
     intl.formatMessage(messages.people.para2).trim() !== '';
@@ -78,11 +78,17 @@ export function SectionPeople({ nav, intl, theme }) {
                 size="large"
                 margin={{ bottom: hasSecondPara ? 'small' : 'medium' }}
               >
-                <FormattedMessage {...messages.people.para1} />
+                <FormattedMessage
+                  {...messages.people.para1}
+                  values={{ countryNo }}
+                />
               </Paragraph>
               {hasSecondPara && (
                 <Paragraph size="large" margin={{ bottom: 'medium' }}>
-                  <FormattedMessage {...messages.people.para2} />
+                  <FormattedMessage
+                    {...messages.people.para2}
+                    values={{ countryNo }}
+                  />
                 </Paragraph>
               )}
               <Box direction="row">
@@ -115,6 +121,7 @@ SectionPeople.propTypes = {
   nav: PropTypes.func,
   theme: PropTypes.object,
   intl: intlShape.isRequired,
+  countryNo: PropTypes.number,
 };
 
 export default injectIntl(withTheme(SectionPeople));
