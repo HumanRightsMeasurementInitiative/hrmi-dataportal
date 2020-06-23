@@ -349,9 +349,9 @@
   "hrmi.labels.grades.good": "Bon",
   "hrmi.labels.chartTools.howToRead": "Comment le lire",
   "hrmi.labels.chartTools.settings": "Changer de vue",
-  "hrmi.labels.xAxis.cpr": "TODO",
-  "hrmi.labels.xAxis.adjusted": "TODO",
-  "hrmi.labels.xAxis.best": "TODO",
+  "hrmi.labels.xAxis.cpr": "Score",
+  "hrmi.labels.xAxis.adjusted": "% du référentiel ajusté aux revenus atteint",
+  "hrmi.labels.xAxis.best": "% du référentiel des meilleures pratiques mondiales atteint",
   "hrmi.hints.noResults": "Nous n'avons pas pu trouver de pays correspondant aux paramètres choisis",
   "hrmi.hints.noSortData": "Informations manquantes",
   "hrmi.tabs.snapshot": "Aperçu",
@@ -891,6 +891,6 @@
   "hrmi.status.commonwealth_politicalunion": "État du Commonwealth en union politique",
   "hrmi.containers.AboutCountryContainer.countryStatus": "Statut du pays",
   "hrmi.components.ChartHeader.countries-overview-sub": "Affiche également {noWithout} {noWithout, select, 1 {country} other {countries}} sans aucun score",
-  "hrmi.components.ChartHeader.assessment-standard-high-sub": "TODO",
-  "hrmi.components.ChartHeader.assessment-standard-low-sub": "TODO"
+  "hrmi.components.ChartHeader.assessment-standard-high-sub": "En utilisant la norme d’évaluation des revenus élevés",
+  "hrmi.components.ChartHeader.assessment-standard-low-sub": "En utilisant  la norme d'évaluation des pays à revenu faible et moyen"
 }
