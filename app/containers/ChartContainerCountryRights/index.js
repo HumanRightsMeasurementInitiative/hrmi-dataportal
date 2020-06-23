@@ -339,7 +339,11 @@ export function ChartContainerCountryRights({
                 align="baseline"
                 margin={{ top: 'medium', bottom: 'large' }}
               >
-                <Source maxWidth={chartLabelWidth(size)} />
+                <Source
+                  maxWidth={
+                    currentBenchmark.key === 'best' && chartLabelWidth(size)
+                  }
+                />
                 {currentBenchmark.key === 'best' && (
                   <Box direction="row">
                     <KeyItem direction="row" lineStyle="dashed">
