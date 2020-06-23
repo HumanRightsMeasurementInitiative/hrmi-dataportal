@@ -832,7 +832,7 @@
   "hrmi.containers.Search.optionGroups.countries": "Perfiles del país",
   "hrmi.containers.Search.optionGroups.people": "Personas en grupos de riesgo",
   "hrmi.containers.Search.peopleSearch": "Encontrar personas en grupo de riesgo",
-  "hrmi.components.Sections.people.para1": "Descubra, para 34 países hasta ahora, quién está en situación especial de riesgo de violación de derechos en cada país.",
+  "hrmi.components.Sections.people.para1": "Descubra, para {countryNo} países hasta ahora, quién está en situación especial de riesgo de violación de derechos en cada país.",
   "hrmi.components.Sections.people.para2": "",
   "hrmi.components.Sections.people.link": "Explorar",
   "hrmi.components.Sections.about.title": "Sobre nosotros",
