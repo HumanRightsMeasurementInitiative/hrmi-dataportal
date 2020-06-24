@@ -326,7 +326,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " no {right}",
   "hrmi.components.CountryNarrative.compAssessmentESR.endSome": " quando nos deparamos com os direitos sobre os quais temos dados",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (esta comparação é calculada com o uso da referência '{benchmark}').",
-  "hrmi.components.CountryNarrative.compAssessmentESR.noData": "Para {countryWithArticle} não existem pontuações de direitos disponíveis devido à falta de dados indicadores. ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.noData": "Para {countryWithArticle} não existem pontuações de direitos disponíveis devido à falta de dados nos bancos de dados internacionais relevantes. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "Com mais recursos financeiros, a HRMI poderia investigar a razão de cada lacuna de dados e explorar formas para ajudar a preenchê-la. ",
   "hrmi.components.Source.source": "Fonte: HRMI 2020 rightstracker.org/pt",
   "hrmi.components.ReadMore.more": "Ler mais",
