@@ -16,8 +16,8 @@ import convert from 'color-convert';
 
 const ArrowWrapper = styled.div`
   position: absolute;
-  top: -10px;
-  bottom: -10px;
+  top: -20px;
+  bottom: -20px;
   transition: all 0.5s;
   z-index: 8;
   opacity: 1;
