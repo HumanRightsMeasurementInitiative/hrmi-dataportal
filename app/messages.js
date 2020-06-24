@@ -61,9 +61,9 @@ export default defineMessages({
       id: `${scope}.labels.hiCountry`,
       defaultMessage: 'HI',
     },
-    hiCountryWrap: {
-      id: `${scope}.labels.hiCountryWrap`,
-      defaultMessage: ' {hiLabel}',
+    govResponseCountry: {
+      id: `${scope}.labels.govResponseCountry`,
+      defaultMessage: 'g',
     },
     better: {
       id: `${scope}.labels.better`,
