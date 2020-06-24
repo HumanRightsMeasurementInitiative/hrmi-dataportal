@@ -21,7 +21,9 @@ function NarrativeCPRCompAssessment({
   referenceScore,
   referenceCount,
   intl,
-  conjunct = false,
+  comparativeGroup,
+  hadSurvey,
+  someRights,
 }) {
   const messageValues = {
     ...getMessageGrammar(
@@ -29,34 +31,38 @@ function NarrativeCPRCompAssessment({
       country.country_code,
       country.region_code,
       countryGrammar,
+      comparativeGroup === 'subregion' ? country.subregion_code : null,
     ),
-    physint: intl.formatMessage(rootMessages.dimensions.physint),
-    empowerment: intl.formatMessage(rootMessages.dimensions.empowerment),
+    dimension: intl.formatMessage(rootMessages.dimensions[dimensionKey]),
     referenceCount,
-    referenceCountLessOne: referenceCount - 1,
   };
-
   const isHiOECD = isCountryHighIncome(country) && isCountryOECD(country);
   if (!score) {
-    return <NarrativeCPRNoData messageValues={messageValues} />;
+    return (
+      <NarrativeCPRNoData
+        messageValues={messageValues}
+        hadSurvey={hadSurvey}
+        someRights={someRights}
+      />
+    );
   }
   return (
     <Paragraph>
-      {!conjunct && isHiOECD && (
+      {isHiOECD && (
         <FormattedMessage
-          {...messages.compAssessmentCPR.hiOECD}
+          {...messages.compAssessmentCPR.startHiOECD}
           values={messageValues}
         />
       )}
-      {!conjunct && !isHiOECD && (
+      {!isHiOECD && comparativeGroup === 'all' && (
         <FormattedMessage
-          {...messages.compAssessmentCPR.notHiOECD}
+          {...messages.compAssessmentCPR.startNotHiOECD}
           values={messageValues}
         />
       )}
-      {conjunct && (
+      {!isHiOECD && comparativeGroup !== 'all' && (
         <FormattedMessage
-          {...messages.compAssessmentCPR.conjunct}
+          {...messages.compAssessment.start}
           values={messageValues}
         />
       )}
@@ -76,18 +82,19 @@ function NarrativeCPRCompAssessment({
         {...messages.compAssessmentCPR.end[dimensionKey]}
         values={messageValues}
       />
-      {conjunct && <span>.</span>}
     </Paragraph>
   );
 }
 NarrativeCPRCompAssessment.propTypes = {
-  conjunct: PropTypes.bool,
-  country: PropTypes.object,
-  countryGrammar: PropTypes.object,
-  referenceCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
-  referenceScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   dimensionKey: PropTypes.string,
   score: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  country: PropTypes.object,
+  countryGrammar: PropTypes.object,
+  referenceScore: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  referenceCount: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
+  comparativeGroup: PropTypes.string,
+  hadSurvey: PropTypes.bool,
+  someRights: PropTypes.bool,
   intl: intlShape.isRequired,
 };
 

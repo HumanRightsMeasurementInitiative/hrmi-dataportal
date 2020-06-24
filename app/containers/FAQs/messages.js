@@ -9,6 +9,10 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.containers.FAQs';
 
 export default defineMessages({
+  title: {
+    id: `${scope}.title`,
+    defaultMessage: 'FAQs',
+  },
   methodology: {
     id: `${scope}.methodology`,
     defaultMessage: 'Learn more about the HRMI methodology',

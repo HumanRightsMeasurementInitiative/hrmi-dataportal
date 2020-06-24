@@ -61,9 +61,9 @@ export default defineMessages({
       id: `${scope}.labels.hiCountry`,
       defaultMessage: 'HI',
     },
-    hiCountryWrap: {
-      id: `${scope}.labels.hiCountryWrap`,
-      defaultMessage: ' {hiLabel}',
+    govResponseCountry: {
+      id: `${scope}.labels.govResponseCountry`,
+      defaultMessage: 'g',
     },
     better: {
       id: `${scope}.labels.better`,
@@ -137,6 +137,20 @@ export default defineMessages({
       notAvailable: {
         id: `${scope}.labels.abbrev.notAvailable`,
         defaultMessage: `${scope}.labels.abbrev.notAvailable`,
+      },
+    },
+    xAxis: {
+      cpr: {
+        id: `${scope}.labels.xAxis.cpr`,
+        defaultMessage: 'Score',
+      },
+      adjusted: {
+        id: `${scope}.labels.xAxis.adjusted`,
+        defaultMessage: '% of income adjusted benchmark achieved',
+      },
+      best: {
+        id: `${scope}.labels.xAxis.best`,
+        defaultMessage: '% of global best benchmark achieved',
       },
     },
   },
@@ -477,7 +491,7 @@ export default defineMessages({
     },
     download: {
       id: `${scope}.page.download`,
-      defaultMessage: 'Download data',
+      defaultMessage: 'Download Data',
     },
     'at-risk': {
       id: `${scope}.page.at-risk`,
@@ -612,6 +626,14 @@ export default defineMessages({
     31: {
       id: `${scope}.people-at-risk.31`,
       defaultMessage: 'People 31',
+    },
+    32: {
+      id: `${scope}.people-at-risk.32`,
+      defaultMessage: 'People 32',
+    },
+    33: {
+      id: `${scope}.people-at-risk.33`,
+      defaultMessage: 'People 33',
     },
   },
   'people-at-risk-intro': {
@@ -1075,9 +1097,9 @@ export default defineMessages({
       id: `${scope}.indicators.food-security`,
       defaultMessage: 'food-security',
     },
-    'survival-65': {
-      id: `${scope}.indicators.survival-65`,
-      defaultMessage: 'survival-65',
+    'adult-survival': {
+      id: `${scope}.indicators.adult-survival`,
+      defaultMessage: 'adult-survival',
     },
     'under-5-survival': {
       id: `${scope}.indicators.under-5-survival`,
@@ -1115,6 +1137,10 @@ export default defineMessages({
       id: `${scope}.indicators.longterm-unemployment`,
       defaultMessage: 'longterm-unemployment',
     },
+    'affordable-housing': {
+      id: `${scope}.indicators.affordable-housing`,
+      defaultMessage: 'affordable-housing',
+    },
   },
   'indicators-raw': {
     'net-primary': {
@@ -1145,9 +1171,9 @@ export default defineMessages({
       id: `${scope}.indicators-raw.food-security`,
       defaultMessage: 'food-security',
     },
-    'survival-65': {
-      id: `${scope}.indicators-raw.survival-65`,
-      defaultMessage: 'survival-65',
+    'adult-survival': {
+      id: `${scope}.indicators-raw.adult-survival`,
+      defaultMessage: 'adult-survival',
     },
     'under-5-survival': {
       id: `${scope}.indicators-raw.under-5-survival`,
@@ -1185,6 +1211,10 @@ export default defineMessages({
       id: `${scope}.indicators-raw.longterm-unemployment`,
       defaultMessage: 'longterm-unemployment',
     },
+    'affordable-housing': {
+      id: `${scope}.indicators-raw.affordable-housing`,
+      defaultMessage: 'affordable-housing',
+    },
   },
   'indicators-about': {
     'net-primary': {
@@ -1215,9 +1245,9 @@ export default defineMessages({
       id: `${scope}.indicators-about.food-security`,
       defaultMessage: 'food-security-about',
     },
-    'survival-65': {
-      id: `${scope}.indicators-about.survival-65`,
-      defaultMessage: 'survival-65-about',
+    'adult-survival': {
+      id: `${scope}.indicators-about.adult-survival`,
+      defaultMessage: 'adult-survival-about',
     },
     'under-5-survival': {
       id: `${scope}.indicators-about.under-5-survival`,
@@ -1255,35 +1285,75 @@ export default defineMessages({
       id: `${scope}.indicators-about.longterm-unemployment`,
       defaultMessage: 'longterm-unemployment-about',
     },
+    'affordable-housing': {
+      id: `${scope}.indicators-about.affordable-housing`,
+      defaultMessage: 'affordable-housing-about',
+    },
   },
   sources: {
-    fao: {
-      id: `${scope}.sources.fao`,
-      defaultMessage: 'fao',
+    WB_WDI: {
+      id: `${scope}.sources.WB_WDI`,
+      defaultMessage: 'WB_WDI',
     },
-    oecd: {
-      id: `${scope}.sources.oecd`,
-      defaultMessage: 'oecd',
+    WHO_UNICEF_JMP: {
+      id: `${scope}.sources.WHO_UNICEF_JMP`,
+      defaultMessage: 'WHO_UNICEF_JMP',
     },
-    wb_edstats: {
-      id: `${scope}.sources.wb_edstats`,
-      defaultMessage: 'wb_edstats',
+    LIS: {
+      id: `${scope}.sources.LIS`,
+      defaultMessage: 'LIS',
     },
-    wb_hnp: {
-      id: `${scope}.sources.wb_hnp`,
-      defaultMessage: 'wb_hnp',
+    JME: {
+      id: `${scope}.sources.JME`,
+      defaultMessage: 'JME',
     },
-    wb_wdi: {
-      id: `${scope}.sources.wb_wdi`,
-      defaultMessage: 'wb_wdi',
+    FAOSTAT: {
+      id: `${scope}.sources.FAOSTAT`,
+      defaultMessage: 'FAOSTAT',
     },
-    who_unicef: {
-      id: `${scope}.sources.who_unicef`,
-      defaultMessage: 'who_unicef',
+    OECD: {
+      id: `${scope}.sources.OECD`,
+      defaultMessage: 'OECD',
     },
-    lis: {
-      id: `${scope}.sources.lis`,
-      defaultMessage: 'lis',
+    OECD_ed: {
+      id: `${scope}.sources.OECD_ed`,
+      defaultMessage: 'OECD_ed',
+    },
+    OECD_unempl: {
+      id: `${scope}.sources.OECD_unempl`,
+      defaultMessage: 'OECD_unempl',
+    },
+    OECD_housing: {
+      id: `${scope}.sources.OECD_housing`,
+      defaultMessage: 'OECD_housing',
+    },
+    UNESCO: {
+      id: `${scope}.sources.UNESCO`,
+      defaultMessage: 'UNESCO',
+    },
+    UNICEF: {
+      id: `${scope}.sources.UNICEF`,
+      defaultMessage: 'UNICEF',
+    },
+    UN_IGME: {
+      id: `${scope}.sources.UN_IGME`,
+      defaultMessage: 'UN_IGME',
+    },
+    UNDP: {
+      id: `${scope}.sources.UNDP`,
+      defaultMessage: 'UNDP',
+    },
+    UNPD: {
+      id: `${scope}.sources.UNPD`,
+      defaultMessage: 'United Nations Population Division',
+    },
+    UNPD_MPI: {
+      id: `${scope}.sources.UNPD_MPI`,
+      defaultMessage: 'UNPD_MPI',
+    },
+    WB_POVCAL: {
+      id: `${scope}.sources.WB_POVCAL`,
+      defaultMessage: 'WB_POVCAL',
     },
   },
   regions: {
@@ -2304,6 +2374,36 @@ export default defineMessages({
     any: {
       id: `${scope}.featured.any`,
       defaultMessage: 'Featured',
+    },
+  },
+  status: {
+    unincorporated: {
+      id: `${scope}.status.unincorporated`,
+      defaultMessage: 'Unincorporated territory',
+    },
+    associated: {
+      id: `${scope}.status.associated`,
+      defaultMessage: 'Associated state',
+    },
+    collectivity_overseas: {
+      id: `${scope}.status.collectivity_overseas`,
+      defaultMessage: 'Overseas collectivity',
+    },
+    collectivity_special: {
+      id: `${scope}.status.collectivity_special`,
+      defaultMessage: 'Special collectivity',
+    },
+    selfgoverning: {
+      id: `${scope}.status.selfgoverning`,
+      defaultMessage: 'Self-governing in free association',
+    },
+    nonselfgoverning: {
+      id: `${scope}.status.nonselfgoverning`,
+      defaultMessage: 'Non-self-governing territory',
+    },
+    commonwealth_politicalunion: {
+      id: `${scope}.status.commonwealth_politicalunion`,
+      defaultMessage: 'Commonwealth in political union',
     },
   },
 });

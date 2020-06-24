@@ -28,6 +28,8 @@ function AboutMetric({
   standard,
   showSources,
   onSelectMetric,
+  dateRange,
+  countryCode,
 }) {
   const [actives, setActive] = useState([]);
   const { metricType } = metric;
@@ -158,6 +160,8 @@ function AboutMetric({
                 metric={metric}
                 indicatorInfo={metricInfo}
                 onSelectMetric={onSelectMetric}
+                countryCode={countryCode}
+                dateRange={dateRange}
               />
             </Box>
           </AccordionPanel>
@@ -173,6 +177,8 @@ AboutMetric.propTypes = {
   standard: PropTypes.object,
   showSources: PropTypes.bool,
   onSelectMetric: PropTypes.func,
+  countryCode: PropTypes.string,
+  dateRange: PropTypes.object,
 };
 
 export default AboutMetric;

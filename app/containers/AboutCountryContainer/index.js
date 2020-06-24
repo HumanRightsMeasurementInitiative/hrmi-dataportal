@@ -18,9 +18,10 @@ import { selectCountry } from 'containers/App/actions';
 
 import {
   getCountry,
-  getAuxIndicatorsForCountry,
+  getLatestCountryPopulation,
   getLatestCountryCurrentGDP,
   getLatestCountry2011PPPGDP,
+  getCountriesGrammar,
 } from 'containers/App/selectors';
 
 import Tooltip from 'components/Tooltip';
@@ -32,6 +33,7 @@ import ButtonTextIcon from 'styled/ButtonTextIcon';
 import ButtonHero from 'styled/ButtonHero';
 
 import { roundScore } from 'utils/scores';
+import { getTerritoryStatus } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -79,9 +81,9 @@ const renderCategory = (label, onClick, cat, value) =>
 function AboutCountryContainer({
   intl,
   country,
-  auxIndicators,
   currentGDP,
   pppGDP,
+  population,
   onCategoryClick,
   onCountryClick,
   showFAQs,
@@ -91,6 +93,7 @@ function AboutCountryContainer({
   collapsible = true,
   inverse,
   inAside,
+  countriesGrammar,
 }) {
   const [more, setMore] = useState(false);
   if (!country) return null;
@@ -100,19 +103,21 @@ function AboutCountryContainer({
     currentGDP && currentGDP.value && currentGDP.value !== '';
   const hasPPPGDP = pppGDP && pppGDP.value && pppGDP.value !== '';
   const hasPopulation =
-    auxIndicators &&
-    auxIndicators[COLUMNS.AUX.POPULATION] &&
-    auxIndicators[COLUMNS.AUX.POPULATION] !== '';
+    population && population.value && population.value !== '';
+
   const countryGroups =
     country[COLUMNS.COUNTRIES.GROUPS] &&
     country[COLUMNS.COUNTRIES.GROUPS].split(',');
   const treaties =
     country[COLUMNS.COUNTRIES.TREATIES] &&
     country[COLUMNS.COUNTRIES.TREATIES].split(',');
+
+  const countryStatus = country[COLUMNS.COUNTRIES.STATUS];
+
   return (
     <Box
       direction="column"
-      pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
+      pad={{ left: 'medium', bottom: 'medium', top: 'large' }}
     >
       <Heading responsive={false} level={3}>
         {!showTitle && <FormattedMessage {...messages.title} />}
@@ -120,6 +125,27 @@ function AboutCountryContainer({
           <FormattedMessage {...rootMessages.countries[countryCode]} />
         )}
       </Heading>
+      {countriesGrammar && countryStatus.trim() !== '' && (
+        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+          <Box width="50%">
+            <Label>
+              <FormattedMessage {...messages.countryStatus} />
+            </Label>
+          </Box>
+          <Box width="50%">
+            <Text>
+              {getTerritoryStatus(
+                countryStatus,
+                country[COLUMNS.COUNTRIES.RELATED],
+                countriesGrammar.find(
+                  c => c.country_code === country[COLUMNS.COUNTRIES.RELATED],
+                ),
+                intl,
+              )}
+            </Text>
+          </Box>
+        </Box>
+      )}
       {hasPopulation && (
         <Box direction="row" margin={{ bottom: 'xsmall' }}>
           <Box width="50%">
@@ -132,9 +158,9 @@ function AboutCountryContainer({
               <FormattedMessage
                 {...messages.populationValue}
                 values={prepPopulationValue(
-                  auxIndicators[COLUMNS.AUX.POPULATION],
+                  population.value,
                   intl,
-                  auxIndicators.year,
+                  population.year,
                 )}
               />
             </Text>
@@ -350,20 +376,23 @@ AboutCountryContainer.propTypes = {
   inAside: PropTypes.bool,
   countryCode: PropTypes.string,
   country: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  countriesGrammar: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   auxIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   currentGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   pppGDP: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  population: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   intl: intlShape.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
+  countriesGrammar: state => getCountriesGrammar(state),
   currentGDP: (state, { countryCode }) =>
     getLatestCountryCurrentGDP(state, countryCode),
   pppGDP: (state, { countryCode }) =>
     getLatestCountry2011PPPGDP(state, countryCode),
-  auxIndicators: (state, { countryCode }) =>
-    getAuxIndicatorsForCountry(state, countryCode),
+  population: (state, { countryCode }) =>
+    getLatestCountryPopulation(state, countryCode),
 });
 
 export function mapDispatchToProps(dispatch) {
