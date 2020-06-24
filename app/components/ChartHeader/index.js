@@ -59,9 +59,11 @@ export function ChartHeader({
   hasWhiteBG,
   top,
   hasSubHeading,
+  standard,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -75,14 +77,23 @@ export function ChartHeader({
               >
                 {chartName}
               </Heading>
-              {hasSubHeading && messages[`${chartId}-sub`] && (
+              {((hasSubHeading && messages[`${chartId}-sub`]) ||
+                (hasSubHeading &&
+                  messages[`assessment-standard-${standard}-sub`])) && (
                 <SubHeading
                   size={isMinSize(size, 'medium') ? 'xsmall' : 'xxsmall'}
                 >
-                  <FormattedMessage
-                    {...messages[`${chartId}-sub`]}
-                    values={messageValues}
-                  />
+                  {messages[`${chartId}-sub`] ? (
+                    <FormattedMessage
+                      {...messages[`${chartId}-sub`]}
+                      values={messageValues}
+                    />
+                  ) : (
+                    <FormattedMessage
+                      {...messages[`assessment-standard-${standard}-sub`]}
+                      values={messageValues}
+                    />
+                  )}
                 </SubHeading>
               )}
             </HeadingWrap>
@@ -173,6 +184,7 @@ ChartHeader.propTypes = {
   hasWhiteBG: PropTypes.bool,
   top: PropTypes.bool,
   hasSubHeading: PropTypes.bool,
+  standard: PropTypes.string,
   intl: intlShape.isRequired,
 };
 

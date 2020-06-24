@@ -12,15 +12,19 @@ import { createStructuredSelector } from 'reselect';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
 import { Box, Button, ResponsiveContext, Image, Layer } from 'grommet';
-import { Menu, Close } from 'grommet-icons';
+import { Menu, Close, Share } from 'grommet-icons';
 
-import logo from 'images/HRMI-Logo-HOR-RGB-x2.png';
-import logoS from 'images/HRMI-Logo-HOR-RGB-small-x2.png';
+import logo from 'images/HRMI-logo.svg';
 
-import { appLocales } from 'i18n';
+import { appLocales, DEFAULT_LOCALE } from 'i18n';
 import LocaleToggle from 'containers/LocaleToggle';
-import { getRouterMatch, getRouterRoute } from 'containers/App/selectors';
-import { PAGES, PATHS } from 'containers/App/constants';
+import {
+  getRouterMatch,
+  getRouterRoute,
+  getLocale,
+} from 'containers/App/selectors';
+import { PAGES, PATHS, XPATHS } from 'containers/App/constants';
+
 import {
   navigate,
   loadDataIfNeeded,
@@ -98,32 +102,19 @@ const BrandButton = styled(Button)`
 // color: ${({ theme }) => theme.global.colors.hover};
 const BrandInner = styled(Box)`
   padding-top: ${({ theme }) => theme.sizes.header.small.padTop}px;
-  padding-bottom: ${({ theme }) => theme.sizes.header.small.padBottom - 2}px;
+  padding-bottom: ${({ theme }) => theme.sizes.header.small.padBottom}px;
   padding-right: ${({ theme }) => theme.sizes.header.small.padRight}px;
   height: ${({ theme }) => theme.sizes.header.small.heightTop}px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     height: ${({ theme }) => theme.sizes.header.height}px;
     padding-top: ${({ theme }) => theme.sizes.header.padTop}px;
-    padding-bottom: ${({ theme }) => theme.sizes.header.padBottom - 2}px;
+    padding-bottom: ${({ theme }) => theme.sizes.header.padBottom}px;
     padding-right: ${({ theme }) => theme.sizes.header.padRight}px;
   }
 `;
 
 const LogoWrap = styled(Box)``;
 const Logo = styled(Image)``;
-
-const TitleWrap = styled(Box)`
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-top: -1px;
-  font-size: 15px;
-  line-height: 18px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    margin-top: -8px;
-    font-size: 22px;
-    line-height: 31px;
-  }
-`;
 
 const MenuList = styled(Box)`
   padding: ${({ theme }) => theme.global.edgeSize.small} 0;
@@ -149,21 +140,48 @@ const SearchWrap = styled(Box)`
   }
 `;
 
-const renderPages = ({ match, onClick, align }) =>
+const StyledShare = styled(p => <Share {...p} size="small" />)`
+  vertical-align: middle;
+  margin-left: 7px;
+  stroke: currentColor;
+`;
+
+const TextWrap = styled.span`
+  vertical-align: middle;
+`;
+
+const navButtonOnClick = ({ match, onClick, align, locale }) =>
   PAGES &&
   Object.values(PAGES)
     .filter(page => page.primary)
-    .map(page => (
-      <ButtonNavPrimary
-        key={page.key}
-        active={page.key === match}
-        disabled={page.key === match}
-        align={align}
-        onClick={() => onClick(page.key)}
-      >
-        <FormattedMessage {...rootMessages.page[page.key]} />
-      </ButtonNavPrimary>
-    ));
+    .map(page =>
+      page.key === 'download' ? (
+        <ButtonNavPrimary
+          as="a"
+          href={XPATHS.download[locale] || XPATHS.download[DEFAULT_LOCALE]}
+          target="_blank"
+          rel="noopener noreferrer"
+          key={page.key}
+        >
+          <TextWrap>
+            <FormattedMessage {...rootMessages.page[page.key]} />
+          </TextWrap>
+          <StyledShare />
+        </ButtonNavPrimary>
+      ) : (
+        <ButtonNavPrimary
+          key={page.key}
+          active={page.key === match}
+          disabled={page.key === match}
+          align={align}
+          onClick={() => onClick(page.key)}
+        >
+          <TextWrap>
+            <FormattedMessage {...rootMessages.page[page.key]} />
+          </TextWrap>
+        </ButtonNavPrimary>
+      ),
+    );
 
 const DEPENDENCIES = ['countries'];
 
@@ -175,6 +193,7 @@ export function Header({
   theme,
   intl,
   onHideAsideLayer,
+  locale,
 }) {
   useEffect(() => {
     // kick off loading of page content
@@ -218,7 +237,7 @@ export function Header({
                       flex={{ shrink: 0 }}
                     >
                       <Logo
-                        src={isMaxSize(size, 'sm') ? logoS : logo}
+                        src={logo}
                         alt={`${intl.formatMessage(rootMessages.app.title)}`}
                         a11yTitle={`${intl.formatMessage(
                           rootMessages.app.title,
@@ -226,9 +245,6 @@ export function Header({
                         fit="contain"
                       />
                     </LogoWrap>
-                    <TitleWrap>
-                      <FormattedMessage {...rootMessages.app.title} />
-                    </TitleWrap>
                   </BrandInner>
                 </BrandButton>
                 {isMaxSize(size, 'sm') && appLocales.length > 1 && (
@@ -258,13 +274,14 @@ export function Header({
                   >
                     <MenuList elevation="large">
                       <MenuGroup>
-                        {renderPages({
+                        {navButtonOnClick({
                           match,
                           onClick: key => {
                             setShowMenu(false);
                             nav(`${PATHS.PAGE}/${key}`);
                           },
                           align: 'left',
+                          locale,
                         })}
                       </MenuGroup>
                     </MenuList>
@@ -278,13 +295,15 @@ export function Header({
                     direction="row"
                     justify="end"
                     size={size}
+                    style={{ paddingTop: '25px' }}
                   >
-                    {renderPages({
+                    {navButtonOnClick({
                       match,
                       onClick: key => {
                         setShowSearch(false);
                         nav(`${PATHS.PAGE}/${key}`);
                       },
+                      locale,
                     })}
                     {appLocales.length > 1 && isMinSize(size, 'medium') && (
                       <LocaleToggle />
@@ -346,6 +365,7 @@ export function Header({
                       <Search
                         expand={showSearch}
                         onToggle={show => setShowSearch(show)}
+                        borderSize="none"
                       />
                     </SearchWrap>
                   )}
@@ -365,6 +385,7 @@ Header.propTypes = {
   onHideAsideLayer: PropTypes.func.isRequired,
   match: PropTypes.string,
   path: PropTypes.string,
+  locale: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   theme: PropTypes.object,
   intl: intlShape.isRequired,
@@ -395,6 +416,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = createStructuredSelector({
   match: state => getRouterMatch(state),
   path: state => getRouterRoute(state),
+  locale: state => getLocale(state),
 });
 
 const withConnect = connect(

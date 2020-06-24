@@ -101,7 +101,7 @@ export function AboutMetricContainer({
   return (
     <Box
       direction="column"
-      pad={{ horizontal: 'medium', bottom: 'medium', top: 'small' }}
+      pad={{ horizontal: 'medium', bottom: 'medium', top: 'xlarge' }}
     >
       {showRelated && (
         <div pad={{ vertical: 'medium', horizontal: 'medium' }} justify="start">

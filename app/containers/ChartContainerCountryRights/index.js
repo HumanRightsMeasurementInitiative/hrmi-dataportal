@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { withTheme } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { Paragraph, Box, Text, ResponsiveContext } from 'grommet';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
@@ -44,6 +44,7 @@ import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
 import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRStandardHint';
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
+import NarrativeCPRGovRespondents from 'components/CountryNarrative/NarrativeCPRGovRespondents';
 
 import Hint from 'styled/Hint';
 
@@ -51,6 +52,10 @@ import { getRightsScoresForDimension } from 'utils/scores';
 import getMetricDetails from 'utils/metric-details';
 import { getMessageGrammar } from 'utils/narrative';
 import { isMinSize } from 'utils/responsive';
+import { lowerCase } from 'utils/string';
+
+import { hasCountryGovRespondents } from 'utils/countries';
+import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
 
 import rootMessages from 'messages';
 
@@ -100,6 +105,31 @@ const getMetricLabel = (score, intl) =>
 
 const getDimensionLabel = (score, intl) =>
   intl.formatMessage(rootMessages.dimensions[score.key]);
+
+const KeyItem = styled(Box)`
+  margin-left: 15px;
+  text-align: right;
+  position: relative;
+`;
+const KeyItemSolid = styled.span`
+  max-height: 14px;
+  border-right: 1px solid;
+  border-color: ${props => props.theme.global.colors['dark-2']};
+  margin-left: 8px;
+`;
+
+const KeyItemDashed = styled.span`
+  background-image: linear-gradient(
+    ${props => props.theme.global.colors['dark-2']} 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: right center;
+  background-size: 2px 4px;
+  background-repeat: repeat-y;
+  height: 14px;
+  margin-left: 8px;
+  width: 3px;
+`;
 
 const prepareData = ({
   scores,
@@ -285,7 +315,6 @@ export function ChartContainerCountryRights({
                     ),
                     maxValue: 100,
                   }}
-                  benchmarkIconOnly
                 />
                 <ChartBars
                   data={prepareData({
@@ -310,7 +339,57 @@ export function ChartContainerCountryRights({
                   annotateMinMax={false}
                 />
               </Box>
-              <Box margin={{ bottom: 'large' }}>
+              {currentBenchmark.key === 'best' && (
+                <Box
+                  direction="row"
+                  margin={{
+                    top: 'small',
+                    right: scoreAsideWidth(size),
+                  }}
+                  justify="end"
+                >
+                  <KeyItem direction="row">
+                    <Text size="xxsmall">
+                      <FormattedMessage
+                        {...rootMessages.settings.benchmark.adjusted}
+                      />
+                      {isMinSize(size, 'medium') && (
+                        <span>
+                          {` ${lowerCase(
+                            intl.formatMessage(
+                              rootMessages.settings.benchmark.nameShort,
+                            ),
+                          )}`}
+                        </span>
+                      )}
+                    </Text>
+                    <KeyItemDashed />
+                  </KeyItem>
+                  <KeyItem direction="row">
+                    <Text size="xxsmall">
+                      <FormattedMessage
+                        {...rootMessages.settings.benchmark.best}
+                      />
+                      {isMinSize(size, 'medium') && (
+                        <span>
+                          {` ${lowerCase(
+                            intl.formatMessage(
+                              rootMessages.settings.benchmark.nameShort,
+                            ),
+                          )}`}
+                        </span>
+                      )}
+                    </Text>
+                    <KeyItemSolid />
+                  </KeyItem>
+                </Box>
+              )}
+              <Box
+                margin={{
+                  top: currentBenchmark.key === 'best' ? 'xsmall' : 'medium',
+                  bottom: 'large',
+                }}
+              >
                 <Source />
               </Box>
               <NarrativeESR
@@ -416,7 +495,7 @@ export function ChartContainerCountryRights({
                   annotateMinMax={false}
                 />
               </Box>
-              <Box margin={{ bottom: 'large' }}>
+              <Box margin={{ top: 'medium', bottom: 'large' }}>
                 <Source />
               </Box>
               <NarrativeCPR
@@ -447,6 +526,12 @@ export function ChartContainerCountryRights({
                     : 'all'
                 }
               />
+              {hasCountryGovRespondents(country) && (
+                <NarrativeCPRGovRespondents
+                  country={country}
+                  countryGrammar={countryGrammar}
+                />
+              )}
             </>
           )}
         </div>

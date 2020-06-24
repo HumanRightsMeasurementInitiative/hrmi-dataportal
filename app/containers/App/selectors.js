@@ -1660,7 +1660,7 @@ export const getAuxIndicatorsLatest = createSelector(
   getAuxIndicators,
   getCountries,
   (values, countries) => {
-    if (!values) return null;
+    if (!values || !countries) return null;
     const latestYearsPerAttribute = map(COLUMNS.AUX, column => {
       const attrValues = values.filter(
         val => val[column] && val[column] !== '',

@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import { Paragraph, Box, ResponsiveContext, Text } from 'grommet';
-import { NewWindow } from 'grommet-icons';
+import { Share } from 'grommet-icons';
 
 import { DEFAULT_LOCALE } from 'i18n';
 import { XPATHS } from 'containers/App/constants';
@@ -39,7 +39,10 @@ export function SectionAbout({ intl, locale }) {
                 margin={{ bottom: 'large' }}
               >
                 <Paragraph margin={{ bottom: 'medium' }}>
-                  <Text weight={600}>
+                  <Text
+                    weight={600}
+                    style={{ fontSize: '18px', lineHeight: '24px' }}
+                  >
                     <FormattedMessage {...messages.about.lead} />
                   </Text>
                 </Paragraph>
@@ -47,7 +50,7 @@ export function SectionAbout({ intl, locale }) {
                   href={XPATHS.home[locale] || XPATHS.home[DEFAULT_LOCALE]}
                   target="_blank"
                   label={intl.formatMessage(messages.about.link)}
-                  icon={<NewWindow color="dark" />}
+                  icon={<Share color="dark" size="small" />}
                   gap="xsmall"
                 />
               </Box>
@@ -56,7 +59,7 @@ export function SectionAbout({ intl, locale }) {
                 pad={{ left: isMinSize(size, 'large') ? 'ms' : '0' }}
                 margin={{ bottom: 'small' }}
               >
-                <Paragraph>
+                <Paragraph style={{ fontSize: '18px', lineHeight: '24px' }}>
                   <FormattedMessage {...messages.about.text} />
                 </Paragraph>
               </Box>

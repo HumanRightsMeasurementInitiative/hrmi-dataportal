@@ -91,6 +91,7 @@ export const COLUMNS = {
     TREATIES: 'treaty_codes',
     STATUS: 'country_status',
     RELATED: 'related_country_code',
+    GOV_RESPONDENTS: 'gov_respondents',
   },
   FEATURED: {
     CAT: 'featured_category',
@@ -134,6 +135,7 @@ export const PAGES = {
   download: {
     key: 'download',
     primary: true,
+    url: 'https://humanrightsmeasurement.org/download-the-dataset/',
   },
 };
 
@@ -164,6 +166,14 @@ export const XPATHS = {
     pt:
       '//humanrightsmeasurement.org/pt-pt/about-hrmi/entre-em-contato-com-hrmi/',
   },
+  download: {
+    en: 'https://humanrightsmeasurement.org/download-the-dataset/',
+    es: 'https://humanrightsmeasurement.org/es/descarga-de-contenido/',
+    pt:
+      'https://humanrightsmeasurement.org/pt-pt/descarregue-o-conjunto-de-dados/',
+    fr:
+      'https://humanrightsmeasurement.org/fr/telechargez-lensemble-de-donnees/',
+  },
 };
 
 export const FAQS = {
@@ -188,7 +198,7 @@ export const FAQS = {
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countries_v3.csv',
+    file: 'countries_v3-1.csv',
   },
   {
     key: 'countriesGrammar',

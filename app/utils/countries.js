@@ -2,6 +2,8 @@ import { COLUMNS, INCOME_GROUPS } from 'containers/App/constants';
 
 export const isCountryHighIncome = country =>
   country[COLUMNS.COUNTRIES.HIGH_INCOME] === '1';
+export const hasCountryGovRespondents = country =>
+  country[COLUMNS.COUNTRIES.GOV_RESPONDENTS] === '1';
 
 export const hasCountryAttribute = (country, values, column) => {
   const countryValues = country[column] && country[column].split(',');

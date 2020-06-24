@@ -87,7 +87,9 @@ class NavTop extends React.Component {
                 style={{ padding: '0' }}
               />
             )}
-            {(!search || search.length === 0) && <Search color="dark" />}
+            {(!search || search.length === 0) && (
+              <Search borderSize="small" borderColor="dark" color="dark" />
+            )}
           </Box>
           {isMaxSize(size, 'sm') && (
             <Box
