@@ -270,7 +270,6 @@ function ChartCountrySnapshot({
                   listHeader
                   metric={getMetricDetails(dimensionCode)}
                   annotateBetter={false}
-                  benchmarkIconOnly
                 />
               </Dimension>
             </ChartArea>
