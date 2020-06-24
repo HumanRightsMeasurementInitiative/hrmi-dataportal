@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Text } from 'grommet';
-import { FormNext, NewWindow } from 'grommet-icons';
+import { FormNext, Share } from 'grommet-icons';
 
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
@@ -18,7 +18,7 @@ function MethodologyLink({ external, text, ...rest }) {
       size="small"
       margin={{ vertical: 'xxsmall' }}
       gap={external ? 'small' : '0'}
-      icon={external ? <NewWindow size="medium" /> : <FormNext size="medium" />}
+      icon={external ? <Share size="small" /> : <FormNext size="medium" />}
       label={<StyledText size="small">{text}</StyledText>}
       {...rest}
     />
