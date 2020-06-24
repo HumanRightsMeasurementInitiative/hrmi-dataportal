@@ -170,7 +170,8 @@ export const XPATHS = {
     es: 'https://humanrightsmeasurement.org/es/descarga-de-contenido/',
     pt:
       'https://humanrightsmeasurement.org/pt-pt/descarregue-o-conjunto-de-dados/',
-    fr: 'https://humanrightsmeasurement.org/download-the-dataset/',
+    fr:
+      'https://humanrightsmeasurement.org/fr/telechargez-lensemble-de-donnees/',
   },
 };
 
