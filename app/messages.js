@@ -1343,9 +1343,17 @@ export default defineMessages({
       id: `${scope}.sources.UNDP`,
       defaultMessage: 'UNDP',
     },
+    UNPD: {
+      id: `${scope}.sources.UNDP`,
+      defaultMessage: 'United Nations Population Division',
+    },
     UNDP_MPI: {
       id: `${scope}.sources.UNDP_MPI`,
       defaultMessage: 'UNDP_MPI',
+    },
+    WB_POVCAL: {
+      id: `${scope}.sources.WB_POVCAL`,
+      defaultMessage: 'WB_POVCAL',
     },
   },
   regions: {
