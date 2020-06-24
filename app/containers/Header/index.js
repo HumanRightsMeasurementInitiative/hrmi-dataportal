@@ -365,7 +365,7 @@ export function Header({
                       <Search
                         expand={showSearch}
                         onToggle={show => setShowSearch(show)}
-                        borderSize="none"
+                        bordersize="none"
                       />
                     </SearchWrap>
                   )}
