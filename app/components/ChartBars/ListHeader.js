@@ -11,7 +11,7 @@ import { Box, Text, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
-import AnnotateBetter from 'components/AnnotateBetterWorse';
+import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
 
 import { isMinSize } from 'utils/responsive';
 
@@ -19,14 +19,11 @@ import rootMessages from 'messages';
 // import messages from './messages';
 import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
 
-const WrapAnnotateBetter = styled.div`
+const WrapAnnotateBetterWorse = styled.div`
   position: absolute;
   left: ${({ theme }) => theme.global.edgeSize.small};
   right: ${({ theme }) => theme.global.edgeSize.medium};
-  top: -2px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    right: ${({ theme }) => theme.global.edgeSize.small};
-  }
+  top: -5px;
 `;
 
 // prettier-ignore
@@ -108,9 +105,9 @@ export function ListHeader({
               </Box>
             )}
             {annotateBetter && isMinSize(size, 'medium') && (
-              <WrapAnnotateBetter>
-                <AnnotateBetter />
-              </WrapAnnotateBetter>
+              <WrapAnnotateBetterWorse>
+                <AnnotateBetterWorse />
+              </WrapAnnotateBetterWorse>
             )}
             {annotateBk && (
               <AnnotateBenchmark
