@@ -91,6 +91,7 @@ export const COLUMNS = {
     TREATIES: 'treaty_codes',
     STATUS: 'country_status',
     RELATED: 'related_country_code',
+    GOV_RESPONDENTS: 'gov_respondents',
   },
   FEATURED: {
     CAT: 'featured_category',
@@ -197,7 +198,7 @@ export const FAQS = {
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countries_v3.csv',
+    file: 'countries_v3-1.csv',
   },
   {
     key: 'countriesGrammar',

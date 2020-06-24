@@ -29,7 +29,7 @@ function BarLabel({ label, allowWordBreak, color, level }) {
 }
 
 BarLabel.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   color: PropTypes.string,
   allowWordBreak: PropTypes.bool,
   level: PropTypes.number,
