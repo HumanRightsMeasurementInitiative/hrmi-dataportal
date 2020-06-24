@@ -129,7 +129,7 @@
   "hrmi.charts.dimensionIntro.empowerment": "Em que medida está o governo {countryOf} a respeitar cada direito?",
   "hrmi.components.ChartHeader.single-metric": "Resultados disponíveis para {no} países",
   "hrmi.components.ChartHeader.countries-overview": "Mostrando pontuações para {no} {no, select, 1 {país} other {países}} {filtered, select, true {(filtered)} false {}}",
-  "hrmi.components.ChartHeader.dimension-overview": "resumo {dimension}",
+  "hrmi.components.ChartHeader.dimension-overview": "Resumo: {dimension}",
   "hrmi.components.ChartHeader.indicators": "Dados indicadores",
   "hrmi.components.ChartHeader.sex": "Por sexo",
   "hrmi.components.ChartHeader.trend": "Ao longo do tempo",
