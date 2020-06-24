@@ -164,6 +164,14 @@ export const XPATHS = {
     pt:
       '//humanrightsmeasurement.org/pt-pt/about-hrmi/entre-em-contato-com-hrmi/',
   },
+  download: {
+    en: 'https://humanrightsmeasurement.org/download-the-dataset/',
+    es: 'https://humanrightsmeasurement.org/es/descarga-de-contenido/',
+    pt:
+      'https://humanrightsmeasurement.org/pt-pt/descarregue-o-conjunto-de-dados/',
+    fr:
+      'https://humanrightsmeasurement.org/fr/telechargez-lensemble-de-donnees/',
+  },
 };
 
 export const FAQS = {
