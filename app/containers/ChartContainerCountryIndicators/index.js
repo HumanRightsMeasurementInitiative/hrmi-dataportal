@@ -140,7 +140,6 @@ export function ChartContainerCountryIndicators({
           )}
           listHeader
           metric={getMetricDetails(metricCode)}
-          benchmarkIconOnly
         />
         <ChartBars
           data={prepareData({

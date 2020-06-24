@@ -56,7 +56,7 @@ export function ListHeader({
   labelColor = 'dark',
   annotateBetter = true,
   hasAside = false,
-  benchmarkIconOnly,
+  benchmarkIconOnly = true,
   annotateBenchmark = true,
   annotateMinMax = true,
 }) {
