@@ -214,7 +214,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'auxIndicators',
-    file: 'auxiliary-indicators_v3-1a.csv',
+    file: 'auxiliary-indicators_v3-1.csv',
   },
   {
     key: 'cprScores',
