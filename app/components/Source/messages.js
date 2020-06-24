@@ -11,7 +11,6 @@ export const scope = 'hrmi.components.Source';
 export default defineMessages({
   source: {
     id: `${scope}.source`,
-    defaultMessage:
-      'Source: 2019 Human Rights Measurement Initiative (HRMI) dataset, data.humanrightsmeasurement.org',
+    defaultMessage: 'Source: HRMI 2020 rightstracker.org',
   },
 });

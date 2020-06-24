@@ -8,6 +8,7 @@ import Hint from 'styled/Hint';
 import messages from './messages';
 
 const Styled = styled(Hint)`
+  max-width: ${({ maxWidth }) => maxWidth || 'none'};
   font-size: 12px;
   line-height: 16px;
   text-align: ${({ center }) => (center ? 'center' : 'left')};
@@ -17,9 +18,9 @@ const Styled = styled(Hint)`
   }
 `;
 
-function Source({ center = false }) {
+function Source({ center = false, maxWidth = 'none' }) {
   return (
-    <Styled center={center}>
+    <Styled center={center} maxWidth={maxWidth}>
       <div>
         <FormattedMessage {...messages.source} />
       </div>
@@ -29,6 +30,7 @@ function Source({ center = false }) {
 
 Source.propTypes = {
   intl: intlShape.isRequired,
+  maxWidth: PropTypes.string,
   center: PropTypes.bool,
 };
 
