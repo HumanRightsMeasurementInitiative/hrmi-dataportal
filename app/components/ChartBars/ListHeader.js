@@ -11,22 +11,19 @@ import { Box, Text, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
-import AnnotateBetter from 'components/AnnotateBetterWorse';
+import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
 
-import { isMaxSize } from 'utils/responsive';
+import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 // import messages from './messages';
 import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
 
-const WrapAnnotateBetter = styled.div`
+const WrapAnnotateBetterWorse = styled.div`
   position: absolute;
   left: ${({ theme }) => theme.global.edgeSize.small};
   right: ${({ theme }) => theme.global.edgeSize.medium};
-  top: -2px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    right: ${({ theme }) => theme.global.edgeSize.small};
-  }
+  top: -5px;
 `;
 
 // prettier-ignore
@@ -56,7 +53,7 @@ export function ListHeader({
   labelColor = 'dark',
   annotateBetter = true,
   hasAside = false,
-  benchmarkIconOnly,
+  benchmarkIconOnly = true,
   annotateBenchmark = true,
   annotateMinMax = true,
 }) {
@@ -89,32 +86,28 @@ export function ListHeader({
             align="center"
           >
             {annotateMinMax && metric && (
-              <>
+              <Box direction="row" justify="between" width="100%">
                 <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
                   0
                 </Text>
-                <Box
-                  margin={{ left: 'auto' }}
-                  pad={annotateBk ? { left: 'xsmall' } : null}
-                  style={{
-                    transform:
-                      isMaxSize(size, 'sm') && metric.type === 'esr'
-                        ? 'translateX(30%)'
-                        : 'translateX(50%)',
-                  }}
-                >
-                  <Text size="xsmall">
-                    {metric.type === 'esr' || metric.metricType === 'indicators'
-                      ? '100%'
-                      : '10'}
+                {metric && metric.type === 'esr' && (
+                  <Text size="xsmall" weight={600} textAlign="center">
+                    <FormattedMessage
+                      {...rootMessages.labels.xAxis[benchmark || 'cpr']}
+                    />
                   </Text>
-                </Box>
-              </>
+                )}
+                <Text size="xsmall" style={{ transform: 'translateX(50%)' }}>
+                  {metric.type === 'esr' || metric.metricType === 'indicators'
+                    ? '100%'
+                    : '10'}
+                </Text>
+              </Box>
             )}
-            {annotateBetter && (
-              <WrapAnnotateBetter>
-                <AnnotateBetter />
-              </WrapAnnotateBetter>
+            {annotateBetter && isMinSize(size, 'medium') && (
+              <WrapAnnotateBetterWorse>
+                <AnnotateBetterWorse />
+              </WrapAnnotateBetterWorse>
             )}
             {annotateBk && (
               <AnnotateBenchmark

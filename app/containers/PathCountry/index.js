@@ -229,16 +229,18 @@ export function PathCountry({
     ),
   };
 
-  const onMetricClick = (code, dimension) => {
+  const onMetricClick = (code, dimension, dateRange) => {
     if (asideLayer && asideLayer.key === code) {
       onSetAsideLayer(false);
     } else {
       onSetAsideLayer({
         type: 'aboutMetric',
         background: `${dimension || code}Active`,
-        showSources: dimension === 'esr',
+        showSources: dimension === 'esr' || code === 'esr',
         key: code,
         code,
+        countryCode,
+        dateRange,
         countryScoreMsg: getScoreMsg(
           code,
           benchmark,
@@ -407,7 +409,7 @@ export function PathCountry({
                 key: 'about',
                 title: intl.formatMessage(rootMessages.tabs.about),
                 content: props => {
-                  let faqs = [];
+                  let faqs = null;
                   if (
                     props &&
                     (props.active === 0 || props.active === 'snapshot')
