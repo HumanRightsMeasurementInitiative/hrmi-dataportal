@@ -874,7 +874,7 @@
   "hrmi.sources.UN_IGME": "United Nations Inter-agency Group for Child Mortality Estimation (UN IGME)",
   "hrmi.sources.UNDP": "United Nations Development Program (UNDP)",
   "hrmi.sources.UNPD": "United Nations Population Division (UNPD)",
-  "hrmi.sources.UNPD_MPI": "Base de Datos de Mortalidad Humana de UNPD y el Instituto Max Planck",
+  "hrmi.sources.UNPD_MPI": "UNPD y Base de Datos de Mortalidad Humana del Instituto Max Planck",
   "hrmi.sources.WB_POVCAL": "World Bank PovcalNet",
   "hrmi.containers.PathMetric.indicators.affordable-housing.header.a": "¿Qué tan bien están haciendo los países para garantizar que las personas puedan acceder a viviendas asequibles?",
   "hrmi.containers.PathMetric.indicators.affordable-housing.header.b": "Estos son puntajes de qué tan bien están los países, no números o porcentajes de personas.",
