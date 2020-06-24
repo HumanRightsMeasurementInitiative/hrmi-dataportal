@@ -9,8 +9,11 @@ import PropTypes from 'prop-types';
 import { Paragraph, Box, ResponsiveContext } from 'grommet';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
+import { NewWindow } from 'grommet-icons';
 
-import { PATHS, PAGES } from 'containers/App/constants';
+import { PATHS, PAGES, XPATHS } from 'containers/App/constants';
+import { DEFAULT_LOCALE } from 'i18n';
+
 // styles
 import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
@@ -46,7 +49,7 @@ const getBasisAside = size => {
   return '0';
 };
 
-export function SectionOurData({ nav, intl }) {
+export function SectionOurData({ nav, intl, locale }) {
   const hasSecondPara =
     intl.messages[messages.ourData.para2] &&
     intl.formatMessage(messages.ourData.para2).trim() !== '';
@@ -85,9 +88,13 @@ export function SectionOurData({ nav, intl }) {
               )}
               <Box direction={isMaxSize(size, 'sm') ? 'column' : 'row'}>
                 <ButtonTextIcon
-                  onClick={() => nav(`${PATHS.PAGE}/${PAGES.download.key}`)}
+                  href={
+                    XPATHS.download[locale] || XPATHS.download[DEFAULT_LOCALE]
+                  }
+                  target="_blank"
                   label={intl.formatMessage(messages.ourData.downloadLink)}
-                  hasIcon
+                  icon={<NewWindow color="dark" />}
+                  gap="xsmall"
                 />
                 <ButtonTextIcon
                   style={
@@ -112,6 +119,7 @@ export function SectionOurData({ nav, intl }) {
 SectionOurData.propTypes = {
   nav: PropTypes.func,
   intl: intlShape.isRequired,
+  locale: PropTypes.string,
 };
 
 export default injectIntl(SectionOurData);

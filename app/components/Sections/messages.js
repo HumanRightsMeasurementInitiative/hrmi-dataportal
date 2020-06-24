@@ -101,7 +101,7 @@ export default defineMessages({
     },
     downloadLink: {
       id: `${scope}.ourData.downloadLink`,
-      defaultMessage: 'Download data',
+      defaultMessage: 'Download Data',
     },
     aboutLink: {
       id: `${scope}.ourData.aboutLink`,
