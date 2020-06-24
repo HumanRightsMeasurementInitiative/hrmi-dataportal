@@ -236,7 +236,7 @@ export function PathCountry({
       onSetAsideLayer({
         type: 'aboutMetric',
         background: `${dimension || code}Active`,
-        showSources: dimension === 'esr',
+        showSources: dimension === 'esr' || code === 'esr',
         key: code,
         code,
         countryScoreMsg: getScoreMsg(
@@ -407,7 +407,7 @@ export function PathCountry({
                 key: 'about',
                 title: intl.formatMessage(rootMessages.tabs.about),
                 content: props => {
-                  let faqs = [];
+                  let faqs = null;
                   if (
                     props &&
                     (props.active === 0 || props.active === 'snapshot')
