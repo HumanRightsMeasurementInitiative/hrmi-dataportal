@@ -16,10 +16,15 @@ import { Menu, Close, Share } from 'grommet-icons';
 
 import logo from 'images/HRMI-Logo.svg';
 
-import { appLocales } from 'i18n';
+import { appLocales, DEFAULT_LOCALE } from 'i18n';
 import LocaleToggle from 'containers/LocaleToggle';
-import { getRouterMatch, getRouterRoute } from 'containers/App/selectors';
-import { PAGES, PATHS } from 'containers/App/constants';
+import {
+  getRouterMatch,
+  getRouterRoute,
+  getLocale,
+} from 'containers/App/selectors';
+import { PAGES, PATHS, XPATHS } from 'containers/App/constants';
+
 import {
   navigate,
   loadDataIfNeeded,
@@ -135,14 +140,14 @@ const SearchWrap = styled(Box)`
   }
 `;
 
-const navButtonOnClick = ({ match, onClick, align }) =>
+const navButtonOnClick = ({ match, onClick, align, locale }) =>
   PAGES &&
   Object.values(PAGES)
     .filter(page => page.primary)
     .map(page =>
       page.key === 'download' ? (
         <a
-          href={page.url}
+          href={XPATHS.download[locale] || XPATHS.download[DEFAULT_LOCALE]}
           target="_blank"
           rel="noopener noreferrer"
           key={page.key}
@@ -185,6 +190,7 @@ export function Header({
   theme,
   intl,
   onHideAsideLayer,
+  locale,
 }) {
   useEffect(() => {
     // kick off loading of page content
@@ -272,6 +278,7 @@ export function Header({
                             nav(`${PATHS.PAGE}/${key}`);
                           },
                           align: 'left',
+                          locale,
                         })}
                       </MenuGroup>
                     </MenuList>
@@ -293,6 +300,7 @@ export function Header({
                         setShowSearch(false);
                         nav(`${PATHS.PAGE}/${key}`);
                       },
+                      locale,
                     })}
                     {appLocales.length > 1 && isMinSize(size, 'medium') && (
                       <LocaleToggle />
@@ -374,6 +382,7 @@ Header.propTypes = {
   onHideAsideLayer: PropTypes.func.isRequired,
   match: PropTypes.string,
   path: PropTypes.string,
+  locale: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   theme: PropTypes.object,
   intl: intlShape.isRequired,
@@ -404,6 +413,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = createStructuredSelector({
   match: state => getRouterMatch(state),
   path: state => getRouterRoute(state),
+  locale: state => getLocale(state),
 });
 
 const withConnect = connect(
