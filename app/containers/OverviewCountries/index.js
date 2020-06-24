@@ -242,8 +242,8 @@ export function OverviewCountries({
             }}
           />
           <Search
-            borderSize="small"
-            borderColor="dark"
+            bordersize="small"
+            bordercolor="dark"
             placeholder={intl.formatMessage(searchMessages.countrySearch)}
             onSearch={s => setSearch(s)}
             drop={false}
