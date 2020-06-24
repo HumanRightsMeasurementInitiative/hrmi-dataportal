@@ -4,7 +4,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
 import { Box, Drop, ResponsiveContext, Layer } from 'grommet';
-import { Close, Add } from 'grommet-icons';
+import { Close, FormDown } from 'grommet-icons';
 
 import {
   INCOME_GROUPS,
@@ -260,7 +260,7 @@ export function ChartSettingFilters({
                 {isMinSize(size, 'large') && (
                   <Box direction="row" align="center" gap="xsmall">
                     <FormattedMessage {...messages.addFilter} />
-                    <Add color="dark" size="medium" />
+                    <FormDown color="dark" size="xlarge" />
                   </Box>
                 )}
                 {isMaxSize(size, 'medium') && (

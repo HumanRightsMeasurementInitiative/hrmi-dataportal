@@ -409,7 +409,7 @@ export function PathCountry({
                 key: 'about',
                 title: intl.formatMessage(rootMessages.tabs.about),
                 content: props => {
-                  let faqs = [];
+                  let faqs = null;
                   if (
                     props &&
                     (props.active === 0 || props.active === 'snapshot')

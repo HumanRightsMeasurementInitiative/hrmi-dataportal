@@ -61,9 +61,9 @@ export default defineMessages({
       id: `${scope}.labels.hiCountry`,
       defaultMessage: 'HI',
     },
-    hiCountryWrap: {
-      id: `${scope}.labels.hiCountryWrap`,
-      defaultMessage: ' {hiLabel}',
+    govResponseCountry: {
+      id: `${scope}.labels.govResponseCountry`,
+      defaultMessage: 'g',
     },
     better: {
       id: `${scope}.labels.better`,
@@ -137,6 +137,20 @@ export default defineMessages({
       notAvailable: {
         id: `${scope}.labels.abbrev.notAvailable`,
         defaultMessage: `${scope}.labels.abbrev.notAvailable`,
+      },
+    },
+    xAxis: {
+      cpr: {
+        id: `${scope}.labels.xAxis.cpr`,
+        defaultMessage: 'Score',
+      },
+      adjusted: {
+        id: `${scope}.labels.xAxis.adjusted`,
+        defaultMessage: '% of income adjusted benchmark achieved',
+      },
+      best: {
+        id: `${scope}.labels.xAxis.best`,
+        defaultMessage: '% of global best benchmark achieved',
       },
     },
   },
@@ -477,7 +491,7 @@ export default defineMessages({
     },
     download: {
       id: `${scope}.page.download`,
-      defaultMessage: 'Download data',
+      defaultMessage: 'Download Data',
     },
     'at-risk': {
       id: `${scope}.page.at-risk`,

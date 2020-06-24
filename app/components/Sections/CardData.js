@@ -17,7 +17,7 @@ const Subject = styled(Text)``;
 const Teaser = styled(Paragraph)``;
 // prettier-ignore
 
-export function CardData({ onClick, no = 0, title, teaser, anchor }) {
+export function CardData({onClick, no = 0, title, teaser, anchor}) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -27,8 +27,8 @@ export function CardData({ onClick, no = 0, title, teaser, anchor }) {
           margin={{
             horizontal: isMaxSize(size, 'sm') ? 'xsmall' : 'small',
           }}
-          height={{ min: '200px' }}
-          pad={{ horizontal: 'medium', top: 'ms', bottom: 'medium' }}
+          height={{min: isMaxSize(size, 'sm') ? '271px' : '290px'}}
+          pad={{horizontal: 'medium', top: 'ms', bottom: 'medium'}}
           background="white"
         >
           <Number
@@ -40,7 +40,7 @@ export function CardData({ onClick, no = 0, title, teaser, anchor }) {
           <Subject
             size={isMinSize(size, 'large') ? 'xxlarge' : 'xlarge'}
             weight={600}
-            margin={{ bottom: 'small' }}
+            margin={{bottom: 'small'}}
           >
             {title}
           </Subject>
