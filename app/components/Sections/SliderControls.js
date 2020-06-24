@@ -11,8 +11,23 @@ import { Next, Previous } from 'grommet-icons';
 import ButtonPlain from 'styled/ButtonPlain';
 
 import styled from 'styled-components';
+import { startsWith } from 'utils/string';
+// import convert from 'color-convert';
 
-import convert from 'color-convert';
+const convertToRGBArray = color => {
+  if (startsWith(color, 'rgb') && color.indexOf('(') > -1) {
+    const left = color.indexOf('(') + 1;
+    const right = color.indexOf(')');
+    const inner = color.substr(left, right - left);
+    const split = inner.split(',');
+    return [split[0].trim(), split[1].trim(), split[2].trim()];
+  }
+  if (color.length < 7) {
+    return color.match(/[A-Za-z0-9]{1}/g).map(v => parseInt(`${v}${v}`, 16));
+  }
+  // https://stackoverflow.com/a/42429333
+  return color.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16));
+};
 
 const ArrowWrapper = styled.div`
   position: absolute;
@@ -74,7 +89,7 @@ const StyledButtonIcon = styled(ButtonPlain)`
       rgba(
         ${({ theme, background }) => {
     if (theme.global.colors[background]) {
-      const rgb = convert.hex.rgb(theme.global.colors[background]);
+      const rgb = convertToRGBArray(theme.global.colors[background]);
       return rgb.join(',');
     }
     return '255, 255, 255';
@@ -84,7 +99,7 @@ const StyledButtonIcon = styled(ButtonPlain)`
       rgba(
         ${({ theme, background }) => {
     if (theme.global.colors[background]) {
-      const rgb = convert.hex.rgb(theme.global.colors[background]);
+      const rgb = convertToRGBArray(theme.global.colors[background]);
       return rgb.join(',');
     }
     return '255, 255, 255';
@@ -103,7 +118,7 @@ const StyledButtonIcon = styled(ButtonPlain)`
         rgba(
           ${({ theme, background }) => {
     if (theme.global.colors[background]) {
-      const rgb = convert.hex.rgb(theme.global.colors[background]);
+      const rgb = convertToRGBArray(theme.global.colors[background]);
       return rgb.join(',');
     }
     return '255, 255, 255';
@@ -113,7 +128,7 @@ const StyledButtonIcon = styled(ButtonPlain)`
         rgba(
           ${({ theme, background }) => {
     if (theme.global.colors[background]) {
-      const rgb = convert.hex.rgb(theme.global.colors[background]);
+      const rgb = convertToRGBArray(theme.global.colors[background]);
       return rgb.join(',');
     }
     return '255, 255, 255';

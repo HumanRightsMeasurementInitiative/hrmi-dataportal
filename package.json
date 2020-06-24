@@ -68,7 +68,6 @@
     "@babel/polyfill": "7.4.3",
     "@rebass/grid": "^6.1.0",
     "chalk": "^2.4.2",
-    "color-convert": "^2.0.1",
     "compression": "1.7.4",
     "connected-react-router": "6.4.0",
     "core-js": "^3.6.5",
