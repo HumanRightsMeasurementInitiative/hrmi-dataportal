@@ -39,7 +39,10 @@ export function SectionAbout({ intl, locale }) {
                 margin={{ bottom: 'large' }}
               >
                 <Paragraph margin={{ bottom: 'medium' }}>
-                  <Text weight={600}>
+                  <Text
+                    weight={600}
+                    style={{ fontSize: '18px', lineHeight: '24px' }}
+                  >
                     <FormattedMessage {...messages.about.lead} />
                   </Text>
                 </Paragraph>
@@ -56,7 +59,7 @@ export function SectionAbout({ intl, locale }) {
                 pad={{ left: isMinSize(size, 'large') ? 'ms' : '0' }}
                 margin={{ bottom: 'small' }}
               >
-                <Paragraph>
+                <Paragraph style={{ fontSize: '18px', lineHeight: '24px' }}>
                   <FormattedMessage {...messages.about.text} />
                 </Paragraph>
               </Box>

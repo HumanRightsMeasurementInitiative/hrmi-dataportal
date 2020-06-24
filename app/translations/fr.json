@@ -171,6 +171,7 @@
   "hrmi.containers.Settings.hi.title": "NON UTILISÉ : pays à revenu élevé",
   "hrmi.containers.Settings.hi.text": "NON UTILISÉ : pour ces pays, il est préférable d’utiliser les normes d’évaluation des revenus élevés",
   "hrmi.containers.Settings.hi.textIndicator": "NON UTILISÉ : pour ces pays, il est préférable d’utiliser des indicateurs pris en compte pour les normes d’évaluation des revenus élevés",
+  "hrmi.containers.FAQs.title": "FAQs",
   "hrmi.containers.FAQs.questions.uncertainty": "Pourquoi certaines marges d’inexactitude vont-elles en-dessous de 0 ou au-delà de 10 ?",
   "hrmi.containers.FAQs.answers.uncertainty": "En bref, cela arrive parfois lorsque nous convertissons nos calculs de statistiques en scores de 0 à 10 et cela n'a pas d’importance particulière.",
   "hrmi.containers.FAQs.methodologyUncertainty": "Pour plus d’informations, veuillez consulter notre manuel de méthodologie",
@@ -349,6 +350,9 @@
   "hrmi.labels.grades.good": "Bon",
   "hrmi.labels.chartTools.howToRead": "Comment le lire",
   "hrmi.labels.chartTools.settings": "Changer de vue",
+  "hrmi.labels.xAxis.cpr": "Score",
+  "hrmi.labels.xAxis.adjusted": "% du référentiel ajusté aux revenus atteint",
+  "hrmi.labels.xAxis.best": "% du référentiel des meilleures pratiques mondiales atteint",
   "hrmi.hints.noResults": "Nous n'avons pas pu trouver de pays correspondant aux paramètres choisis",
   "hrmi.hints.noSortData": "Informations manquantes",
   "hrmi.tabs.snapshot": "Aperçu",
@@ -847,7 +851,7 @@
   "hrmi.components.HINote.hiNote": "{hiLabel} Pays à revenus élevés : pour ces pays, il est préférable de se référer à la norme d’évaluation des revenus élevés. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "Pour quelle norme d'évaluation l'indicateur est-il utilisé ?",
-  "hrmi.labels.abbrev.notAvailable": "S.O",
+  "hrmi.labels.abbrev.notAvailable": "–",
   "hrmi.containers.AboutCountryContainer.more": "Afficher les catégories de pays",
   "hrmi.containers.AboutCountryContainer.less": "Cacher les catégories de pays",
   "hrmi.indicators-about.net-primary": "Taux net de scolarisation dans le primaire: nombre d'élèves du groupe d'âge officiel du primaire inscrits dans tous les types d'écoles primaires, exprimé en pourcentage de la population totale de ce groupe d'âge.",
@@ -887,5 +891,7 @@
   "hrmi.status.nonselfgoverning": "Territoire non autonome",
   "hrmi.status.commonwealth_politicalunion": "État du Commonwealth en union politique",
   "hrmi.containers.AboutCountryContainer.countryStatus": "Statut du pays",
-  "hrmi.components.ChartHeader.countries-overview-sub": "Affiche également {noWithout} {noWithout, select, 1 {country} other {countries}} sans aucun score"
+  "hrmi.components.ChartHeader.countries-overview-sub": "Affiche également {noWithout} {noWithout, select, 1 {country} other {countries}} sans aucun score",
+  "hrmi.components.ChartHeader.assessment-standard-high-sub": "En utilisant la norme d’évaluation des revenus élevés",
+  "hrmi.components.ChartHeader.assessment-standard-low-sub": "En utilisant  la norme d'évaluation des pays à revenu faible et moyen"
 }

@@ -138,6 +138,9 @@ function FAQs({ questions, intl, metric, navMethodology }) {
   };
   return (
     <Box pad={{ vertical: 'large' }}>
+      <Heading responsive={false} level={3}>
+        <FormattedMessage {...messages.title} />
+      </Heading>
       <Accordion
         multiple
         activeIndex={actives}

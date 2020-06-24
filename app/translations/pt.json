@@ -171,6 +171,7 @@
   "hrmi.containers.Settings.hi.title": "NÃO UTILIZADO: País de rendimentos elevados",
   "hrmi.containers.Settings.hi.text": "NÃO UTILIZADO: Para estes países é melhor utilizar o padrão de avaliação de altos rendimentos",
   "hrmi.containers.Settings.hi.textIndicator": "NÃO UTILIZADO: Para estes países é melhor utilizar os indicadores usados para o padrão de avaliação de altos rendimentos",
+  "hrmi.containers.FAQs.title": "FAQs",
   "hrmi.containers.FAQs.questions.uncertainty": "Porque é que algumas bandas de incerteza estão abaixo de 0 ou acima de 10?",
   "hrmi.containers.FAQs.answers.uncertainty": "A resposta breve é que isto às vezes acontece quando convertemos os cálculos estatísticos em pontuações de 0 a 10, e tal não significa nada de especial.",
   "hrmi.containers.FAQs.methodologyUncertainty": "Para mais informações, por favor consulte o nosso manual de metodologia",
@@ -349,6 +350,9 @@
   "hrmi.labels.grades.good": "Bom",
   "hrmi.labels.chartTools.howToRead": "Como interpretar",
   "hrmi.labels.chartTools.settings": "Mudar de vista",
+  "hrmi.labels.xAxis.cpr": "Pontuação",
+  "hrmi.labels.xAxis.adjusted": "% de referencia ajustada em função dos rendimentos alcançada",
+  "hrmi.labels.xAxis.best": "% de melhor referencia global alcançada",
   "hrmi.hints.noResults": "Não foi possível encontrar nenhum país com as suas configurações de filtro atuais",
   "hrmi.hints.noSortData": "Falta informação classificada",
   "hrmi.tabs.snapshot": "Em resumo",
@@ -847,7 +851,7 @@
   "hrmi.components.HINote.hiNote": "{hiLabel} Países com rendimentos elevados: Para estes países, é melhor usar o padrão de avaliação de rendimentos elevados. ",
   "hrmi.labels.hiCountryWrap": " {hiLabel}",
   "hrmi.components.AboutMetric.titleStandards": "Para que padrão de avaliação é usado o indicador?",
-  "hrmi.labels.abbrev.notAvailable": "N/A",
+  "hrmi.labels.abbrev.notAvailable": "–",
   "hrmi.containers.AboutCountryContainer.more": "Mostrar categorias de países",
   "hrmi.containers.AboutCountryContainer.less": "Ocultar categorias de países",
   "hrmi.indicators-about.net-primary": "Taxa líquida de matrículas na escola primária: Número de alunos da faixa etária oficial da escola primária que estão matriculados em todos os tipos de escolas primárias, expressos como porcentagem da população total dessa faixa etária.",
@@ -887,5 +891,7 @@
   "hrmi.status.nonselfgoverning": "Território não autónomo",
   "hrmi.status.commonwealth_politicalunion": "Comunidade em união política",
   "hrmi.containers.AboutCountryContainer.countryStatus": "Status do país",
-  "hrmi.components.ChartHeader.countries-overview-sub": "Também mostrando {noWithout} {noWithout, select, 1 {country} other {countries}} sem pontuações"
+  "hrmi.components.ChartHeader.countries-overview-sub": "Também mostrando {noWithout} {noWithout, select, 1 {country} other {countries}} sem pontuações",
+  "hrmi.components.ChartHeader.assessment-standard-high-sub": "Usando o padrão de avaliação de rendimentos elevados",
+  "hrmi.components.ChartHeader.assessment-standard-low-sub": "Usando o padrão de avaliação de rendimentos baixos e médios"
 }

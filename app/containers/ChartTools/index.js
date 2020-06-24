@@ -36,6 +36,7 @@ const StyledButton = styled(Button)`
   font-weight: 600;
   &:last-child {
     margin-right: 0;
+    padding-right: 0;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 3px 10px;
