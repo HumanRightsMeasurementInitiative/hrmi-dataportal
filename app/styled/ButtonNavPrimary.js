@@ -14,5 +14,11 @@ export default styled(ButtonPlain)`
     display: inline-block;
     border: none;
     width: auto;
+    &:visited {
+      color: ${({ theme }) => theme.global.colors.secondary};
+    }
+    &:hover {
+      color: ${({ theme }) => theme.global.colors.dark};
+    }
   }
 `;
