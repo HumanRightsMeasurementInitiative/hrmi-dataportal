@@ -30,6 +30,7 @@ const StyledDropButton = styled(DropButton)`
   color: ${({ theme }) => theme.global.colors.secondary};
   font-weight: 600;
   background: transparent;
+  vertical-align: middle;
   &:hover {
     color: ${({ theme }) => theme.global.colors.dark};
   }
