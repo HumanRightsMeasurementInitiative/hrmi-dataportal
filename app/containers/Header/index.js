@@ -154,33 +154,34 @@ const SearchWrap = styled(Box)`
   }
 `;
 
+const StyledShare = styled(p => <Share {...p} size="small" />)`
+  vertical-align: middle;
+  margin-left: 7px;
+  stroke: currentColor;
+`;
+
+const TextWrap = styled.span`
+  vertical-align: middle;
+`;
+
 const navButtonOnClick = ({ match, onClick, align, locale }) =>
   PAGES &&
   Object.values(PAGES)
     .filter(page => page.primary)
     .map(page =>
       page.key === 'download' ? (
-        <a
+        <ButtonNavPrimary
+          as="a"
           href={XPATHS.download[locale] || XPATHS.download[DEFAULT_LOCALE]}
           target="_blank"
           rel="noopener noreferrer"
           key={page.key}
         >
-          <ButtonNavPrimary>
+          <TextWrap>
             <FormattedMessage {...rootMessages.page[page.key]} />
-            {/* prettier-ignore */}
-            <Share
-              color={
-                window.innerWidth > 991
-                  ? ({ theme, active }) =>
-                    theme.global.colors[active ? 'dark' : 'secondary']
-                  : ({ theme }) => theme.global.colors.dark
-              }
-              size="small"
-              style={{ margin: '0 0 5px 7px' }}
-            />
-          </ButtonNavPrimary>
-        </a>
+          </TextWrap>
+          <StyledShare />
+        </ButtonNavPrimary>
       ) : (
         <ButtonNavPrimary
           key={page.key}
@@ -189,7 +190,9 @@ const navButtonOnClick = ({ match, onClick, align, locale }) =>
           align={align}
           onClick={() => onClick(page.key)}
         >
-          <FormattedMessage {...rootMessages.page[page.key]} />
+          <TextWrap>
+            <FormattedMessage {...rootMessages.page[page.key]} />
+          </TextWrap>
         </ButtonNavPrimary>
       ),
     );
