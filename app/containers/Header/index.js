@@ -14,7 +14,7 @@ import styled, { withTheme } from 'styled-components';
 import { Box, Button, ResponsiveContext, Image, Layer } from 'grommet';
 import { Menu, Close, Share } from 'grommet-icons';
 
-import logo from 'images/HRMI-Logo.svg';
+import logo from 'images/HRMI-logo.svg';
 
 import { appLocales, DEFAULT_LOCALE } from 'i18n';
 import LocaleToggle from 'containers/LocaleToggle';
