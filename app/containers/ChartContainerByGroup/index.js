@@ -121,7 +121,7 @@ const mapStateToProps = createStructuredSelector({
     if (metric.metricType === 'indicators') {
       return getESRIndicatorScoresForCountry(state, {
         countryCode,
-        metric,
+        metricCode: metric.code,
       });
     }
     return false;
