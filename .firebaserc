@@ -1,10 +1,10 @@
 {
   "projects": {
-    "default": "rightstracker-v3-1",
-    "dev": "hrmi-dataportal-dev",
-    "v3": "hrmi-dataportal-v3",
-    "v3.1": "rightstracker-v3-1",
+    "default": "hrmi-dataportal-stage",
     "stage": "hrmi-dataportal-stage",
+    "dev": "hrmi-dataportal-dev",
+    "v3.1": "rightstracker-v3-1",
+    "v3": "hrmi-dataportal-v3",
     "v2": "rightstracker-v2",
     "test": "rightstracker-test",
     "summary1": "hrmi-dataportal-summary1",
