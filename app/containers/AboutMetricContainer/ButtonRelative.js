@@ -7,14 +7,19 @@ import { FormNext, FormPrevious } from 'grommet-icons';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 const TextRelative = styled(Text)`
-  font-weight: 400;
+  font-weight: 600;
+  color: white;
 `;
 
 function ButtonRelative({ text, previous, ...rest }) {
   return (
     <ButtonTextIcon
+      primary
       size="small"
       margin={{ vertical: 'xxsmall' }}
+      padding="10px"
+      color="dark"
+      borderRadius="5px"
       gap="0"
       icon={
         previous ? <FormPrevious size="medium" /> : <FormNext size="medium" />

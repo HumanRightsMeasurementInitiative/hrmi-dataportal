@@ -139,6 +139,20 @@ export default defineMessages({
         defaultMessage: `${scope}.labels.abbrev.notAvailable`,
       },
     },
+    xAxis: {
+      cpr: {
+        id: `${scope}.labels.xAxis.cpr`,
+        defaultMessage: 'Score',
+      },
+      adjusted: {
+        id: `${scope}.labels.xAxis.adjusted`,
+        defaultMessage: '% of income adjusted benchmark achieved',
+      },
+      best: {
+        id: `${scope}.labels.xAxis.best`,
+        defaultMessage: '% of global best benchmark achieved',
+      },
+    },
   },
   assessedFilters: {
     all: {
@@ -477,7 +491,7 @@ export default defineMessages({
     },
     download: {
       id: `${scope}.page.download`,
-      defaultMessage: 'Download data',
+      defaultMessage: 'Download Data',
     },
     'at-risk': {
       id: `${scope}.page.at-risk`,
