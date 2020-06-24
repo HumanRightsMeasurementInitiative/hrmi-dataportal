@@ -37,7 +37,7 @@ const getCardNumber = width => {
   return minCards > maxCards ? minCards : maxCards;
 };
 
-export function Slider({ stretch, children, cardMargin, ...rest }) {
+export function Slider({ stretch, children, cardMargin, background, ...rest }) {
   const ref = useRef(null);
   const [carouselWidth, setCarouselWidth] = useState(0);
 
@@ -63,7 +63,6 @@ export function Slider({ stretch, children, cardMargin, ...rest }) {
       partialVisibilityGutter: cardNumber < children.length ? 20 : 0,
     },
   }), {});
-
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -76,7 +75,9 @@ export function Slider({ stretch, children, cardMargin, ...rest }) {
               slidesToSlide={cardNumber}
               arrows={false}
               customButtonGroup={
-                isMinSize(size, 'medium') && <SliderControls />
+                isMinSize(size, 'medium') && (
+                  <SliderControls background={background} />
+                )
               }
               removeArrowOnDeviceType={['small', 'sm']}
               renderButtonGroupOutside
@@ -99,6 +100,7 @@ Slider.propTypes = {
   ]).isRequired,
   stretch: PropTypes.bool,
   cardMargin: PropTypes.string,
+  background: PropTypes.string,
 };
 
 export default Slider;

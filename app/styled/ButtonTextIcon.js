@@ -9,6 +9,8 @@ const Styled = styled(Button)`
   font-weight: ${({ weight }) => weight || 600};
   color: ${({ theme, secondary, color }) => theme.global.colors[color || (secondary ? 'secondary' : 'dark')]};
   font-size: ${({ theme, size }) => theme.text[size].size};
+  padding: ${({ padding }) => padding || '0px'};
+  border-radius: ${({ borderRadius }) => borderRadius || '18px'};
   &:hover {
     text-decoration: underline;
   }
