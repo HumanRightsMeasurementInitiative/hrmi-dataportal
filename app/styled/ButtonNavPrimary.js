@@ -7,8 +7,9 @@ export default styled(ButtonPlain)`
   padding: 10px 20px;
   font-size: 1em;
   font-weight: 600;
-  text-align: ${({ align }) => align || 'center'};
+  text-align: 'left';
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    text-align: 'center';
     color: ${({ theme, active }) => theme.global.colors[active ? 'dark' : 'secondary' ]};
     padding: 0px 10px;
     display: inline-block;
