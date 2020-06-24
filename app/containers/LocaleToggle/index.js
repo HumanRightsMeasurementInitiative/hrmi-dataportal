@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { DropButton, Box, ResponsiveContext } from 'grommet';
 import { FormDown, FormUp } from 'grommet-icons';
@@ -19,10 +19,6 @@ import { getLocale } from 'containers/App/selectors';
 import { LANGUAGES } from 'containers/App/constants';
 import { changeLocale } from 'containers/LanguageProvider/actions';
 
-import { isMaxSize } from 'utils/responsive';
-
-import messages from './messages';
-
 const Styled = styled.span``;
 // prettier-ignore
 const StyledDropButton = styled(DropButton)`
@@ -30,6 +26,7 @@ const StyledDropButton = styled(DropButton)`
   color: ${({ theme }) => theme.global.colors.secondary};
   font-weight: 600;
   background: transparent;
+  vertical-align: middle;
   &:hover {
     color: ${({ theme }) => theme.global.colors.dark};
   }
@@ -63,12 +60,12 @@ const DropContent = ({ active, options, onSelect }) => (
   </Box>
 );
 
-export function LocaleToggle({ intl, locale, onLocaleToggle, light }) {
+export function LocaleToggle({ locale, onLocaleToggle, light }) {
   const [open, setOpen] = useState(false);
   return (
     <Styled>
       <ResponsiveContext.Consumer>
-        {size => (
+        {() => (
           <StyledDropButton
             plain
             reverse
@@ -79,12 +76,7 @@ export function LocaleToggle({ intl, locale, onLocaleToggle, light }) {
             onOpen={() => setOpen(true)}
             dropProps={{ align: { top: 'bottom', right: 'right' } }}
             icon={open ? <FormUp /> : <FormDown />}
-            label={
-              isMaxSize(size, 'sm')
-                ? `${LANGUAGES.short[locale]}`
-                : `${intl.formatMessage(messages.language)}
-              ${LANGUAGES.short[locale]}`
-            }
+            label={LANGUAGES.short[locale]}
             dropContent={
               <DropContent
                 active={locale}
@@ -111,7 +103,6 @@ LocaleToggle.propTypes = {
   onLocaleToggle: PropTypes.func,
   locale: PropTypes.string,
   light: PropTypes.bool,
-  intl: intlShape.isRequired,
 };
 
 DropContent.propTypes = {

@@ -17,4 +17,8 @@ export default defineMessages({
     id: `${scope}.titleStandards`,
     defaultMessage: 'Assessment standard(s)',
   },
+  nationalSources: {
+    id: `${scope}.nationalSources`,
+    defaultMessage: 'Country-specific source(s)',
+  },
 });

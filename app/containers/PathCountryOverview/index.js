@@ -32,7 +32,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import OverviewCountries from 'containers/OverviewCountries';
 
 import Aside from 'components/Aside';
-import HINote from 'components/HINote';
+import CountryNotes from 'components/CountryNotes';
 
 // styles
 import MainColumn from 'styled/MainColumn';
@@ -85,7 +85,7 @@ export function PathCountryOverview({
     onLoadData();
   }, []);
   // prettier-ignore
-  const filteredCountries = assessed
+  const filteredCountries = assessed && countries
     ? countries && countries.filter(c =>
       filterByAssessment(
         c,
@@ -95,11 +95,12 @@ export function PathCountryOverview({
       ),
     )
     : countries;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
-          <HINote settingHint />
+          <CountryNotes settingHint />
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header
@@ -112,10 +113,7 @@ export function PathCountryOverview({
             >
               <MainColumn hasAside={isMinSize(size, 'large')} header>
                 <PageTitle>
-                  <FormattedMessage
-                    {...messages.title}
-                    values={{ no: filteredCountries.length }}
-                  />
+                  <FormattedMessage {...messages.title} />
                 </PageTitle>
                 {scale && (
                   <Paragraph size={isMaxSize(size, 'sm') ? 'medium' : 'large'}>

@@ -21,7 +21,7 @@ export default styled(ButtonPlain)`
     border-left: 4px solid ${({ theme, disabled }) => (disabled ? 'transparent' : theme.global.colors.dark)};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    padding: 4px 16px 4px 12px;
+    padding: 4px 32px 4px 12px;
     font-size: ${({ theme }) => theme.text.medium.size};
   }
 `;

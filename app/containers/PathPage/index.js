@@ -57,7 +57,7 @@ export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
           <Close closeTarget={closeTarget} />
           <StyledContent>
             <PageTitle level={1}>{pageTitle}</PageTitle>
-            {content && <HTMLWrapper innerhtml={content.content} />}
+            {content && <HTMLWrapper innerhtml={content.content} fullPage />}
             {!content && <LoadingIndicator />}
           </StyledContent>
         </ContentMaxWidth>
