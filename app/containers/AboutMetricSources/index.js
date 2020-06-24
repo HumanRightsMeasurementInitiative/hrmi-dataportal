@@ -150,7 +150,9 @@ export function AboutMetricSources({
       )}
       {metricType === 'indicators' && countrySources && countrySources.length > 0 && (
         <>
-          <Text weight="600"><FormattedMessage {...messages.nationalSources} /></Text>
+          <Text weight={600}>
+            <FormattedMessage {...messages.nationalSources} />
+          </Text>
           {countrySources.length === 1 && (
             <span>
               {countrySources[0].description || countrySources[0].source_code}
