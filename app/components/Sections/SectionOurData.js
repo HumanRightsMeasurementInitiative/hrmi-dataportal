@@ -77,12 +77,16 @@ export function SectionOurData({ nav, intl, locale }) {
                 title={intl.formatMessage(messages.ourData.title)}
               />
               <Paragraph
+                style={{ fontSize: '18px', lineHeight: '24px' }}
                 margin={{ bottom: hasSecondPara ? 'small' : 'medium' }}
               >
                 <FormattedMessage {...messages.ourData.para1} />
               </Paragraph>
               {hasSecondPara && (
-                <Paragraph margin={{ bottom: 'medium' }}>
+                <Paragraph
+                  style={{ fontSize: '18px', lineHeight: '24px' }}
+                  margin={{ bottom: 'medium' }}
+                >
                   <FormattedMessage {...messages.ourData.para2} />
                 </Paragraph>
               )}

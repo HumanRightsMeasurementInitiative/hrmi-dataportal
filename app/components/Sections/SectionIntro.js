@@ -18,7 +18,6 @@ import SectionContainer from 'styled/SectionContainer';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
 import GraphicWrap from 'styled/GraphicWrap';
 import GraphicCircle from 'styled/GraphicCircle';
-import GraphicDiamond from 'styled/GraphicDiamond';
 
 import { isMinSize, isMaxSize } from 'utils/responsive';
 
@@ -47,7 +46,7 @@ const PageTitle = styled(Heading)`
 `;
 
 const Claim = styled(Heading)`
-  font-weight: bold;
+  font-weight: 600;
   font-size: ${({ theme }) => theme.text.xlarge.size};
   line-height: ${({ theme }) => theme.text.xlarge.height};
   margin-top: 0;
@@ -133,11 +132,14 @@ export function SectionIntro({ theme }) {
                   margin={{
                     bottom: isMaxSize(size, 'sm') ? 'medium' : 'xlarge',
                   }}
+                  style={{ maxWidth: '380px' }}
                 >
                   <FormattedMessage {...messages.intro} />
                 </Paragraph>
                 <SearchWrapper>
                   <Search
+                    borderSize="small"
+                    borderColor="dark"
                     stretch
                     size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                     example
@@ -149,12 +151,23 @@ export function SectionIntro({ theme }) {
             {isMinSize(size, 'large') && (
               <GraphicWrap
                 style={{
-                  top: 0,
-                  left: '66%',
-                  transform: 'translateY(-240%)',
+                  top: '33%',
+                  left: '40%',
+                  transform: 'translateX(20%)',
                 }}
               >
-                <GraphicCircle color="graphicRed" size="32px" />
+                <GraphicCircle color="graphicPurple" size="32px" />
+              </GraphicWrap>
+            )}
+            {isMinSize(size, 'large') && (
+              <GraphicWrap
+                style={{
+                  bottom: '0',
+                  left: '30%',
+                  transform: 'translateX(20%)',
+                }}
+              >
+                <GraphicCircle color="graphicYellow" size="20px" />
               </GraphicWrap>
             )}
             {isMinSize(size, 'large') && (
@@ -167,20 +180,6 @@ export function SectionIntro({ theme }) {
                   position: 'relative',
                 }}
               />
-            )}
-            {isMinSize(size, 'large') && (
-              <GraphicWrap
-                style={{
-                  bottom: 0,
-                  right: 0,
-                  transform: 'translate(40%, 40%)',
-                }}
-              >
-                <GraphicDiamond
-                  color="physint"
-                  size={isMinSize(size, 'xlarge') ? 140 : 80}
-                />
-              </GraphicWrap>
             )}
           </ContentMaxWidth>
         </SectionContainer>
