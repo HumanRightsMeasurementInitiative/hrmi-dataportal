@@ -232,6 +232,10 @@ export const DATA_RESOURCES = [
     key: 'featured',
     file: 'featured_v3.csv',
   },
+  {
+    key: 'sources',
+    file: 'sources_v3-1.csv',
+  },
 ];
 
 export const COUNTRY_SORTS = {
