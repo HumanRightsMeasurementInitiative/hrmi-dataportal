@@ -22,6 +22,7 @@ const StyledText = styled(Text)`
   font-style: italic;
   display: inline-block;
   margin-right: 4px;
+  color: ${props => props.theme.global.colors[props.color]};
 `;
 
 const renderMessage = hint => {
@@ -58,7 +59,7 @@ const renderMessage = hint => {
   return <FormattedMessage {...rootMessages.charts.noData} />;
 };
 
-function NoDataHint({ hint, hints }) {
+function NoDataHint({ hint, hints, color = 'dark-4' }) {
   return (
     <Styled>
       <StyledTextWrap>
@@ -71,7 +72,7 @@ function NoDataHint({ hint, hints }) {
           hints
             .filter(h => !!h)
             .map((h, index) => (
-              <StyledText size="xxsmall" color="dark-4" key={h}>
+              <StyledText size="xsmall" color={color} key={h}>
                 {index > 0 && '('}
                 {renderMessage(h)}
                 {index > 0 && ')'}
@@ -84,6 +85,7 @@ function NoDataHint({ hint, hints }) {
 
 NoDataHint.propTypes = {
   hint: PropTypes.string,
+  color: PropTypes.string,
   hints: PropTypes.array,
 };
 

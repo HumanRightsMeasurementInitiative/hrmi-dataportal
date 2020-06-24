@@ -9,17 +9,17 @@ const Label = styled.div`
   position: absolute;
   top: 0;
   margin: 0 5px;
-  padding: 0 12px;
+  padding: 0 8px;
   display: table;
   height: 20px;
   &:after {
     content: '';
     position: absolute;
-    top: 7px;
+    top: 9px;
     width: 0;
     height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
   }
 `;
 
@@ -28,7 +28,7 @@ const Better = styled(Label)`
   text-align: right;
   &:after {
     right: 0;
-    border-left: 7px solid ${({ theme }) => theme.global.colors['dark-4']};
+    border-left: 4px solid ${({ theme }) => theme.global.colors['dark-4']};
   }
 `;
 const Worse = styled(Label)`
@@ -36,7 +36,7 @@ const Worse = styled(Label)`
   text-align: left;
   &:after {
     left: 0;
-    border-right: 7px solid ${({ theme }) => theme.global.colors['dark-4']};
+    border-right: 4px solid ${({ theme }) => theme.global.colors['dark-4']};
   }
 `;
 
@@ -58,12 +58,12 @@ function AnnotateBetterWorse({ absolute }) {
   return (
     <AnnotateBetterInner absolute={absolute}>
       <Worse>
-        <Text size="xsmall">
+        <Text size="xxsmall">
           <FormattedMessage {...rootMessages.labels.worse} />
         </Text>
       </Worse>
       <Better>
-        <Text size="xsmall">
+        <Text size="xxsmall">
           <FormattedMessage {...rootMessages.labels.better} />
         </Text>
       </Better>

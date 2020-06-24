@@ -33,20 +33,12 @@ const BarReference = styled.div`
   top: 50%;
   margin-top: -1px;
   width: 100%;
-  height: 2px;
-  background-color: ${({ theme, hasBackground }) =>
-    theme.global.colors[hasBackground ? 'light-2' : 'light-2']};
+  height: 1px;
+  background-color: ${({ theme, color }) =>
+    theme.global.colors[color || 'dark']};
+  opacity: 0.33;
 `;
 
-const BarValue = styled.div`
-  position: absolute;
-  left: 0;
-  top: ${props => props.height / 2 - 2}px;
-  height: 4px;
-  background-color: ${({ theme, color }) =>
-    theme.global.colors[color || 'light-5']};
-  opacity: 0.2;
-`;
 const MarkValue = styled.div`
   position: absolute;
   top: 0;
@@ -116,13 +108,6 @@ function BarBullet({
       <BarWrapper>
         <BarAnchor height={HEIGHT[level]}>
           {value && <BarReference hasBackground={hasBackground} />}
-          {value && (
-            <BarValue
-              height={HEIGHT[level]}
-              style={{ width: `${(value / maxValue) * 100}%` }}
-              color={active ? `${color}Active` : color}
-            />
-          )}
           {value && (
             <BarBand
               color={active ? `${color}Active` : color}
