@@ -13,6 +13,8 @@ import styled from 'styled-components';
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetter from 'components/AnnotateBetterWorse';
 
+import { isMinSize } from 'utils/responsive';
+
 import rootMessages from 'messages';
 // import messages from './messages';
 import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
@@ -105,7 +107,7 @@ export function ListHeader({
                 </Text>
               </Box>
             )}
-            {annotateBetter && (
+            {annotateBetter && isMinSize(size, 'medium') && (
               <WrapAnnotateBetter>
                 <AnnotateBetter />
               </WrapAnnotateBetter>
