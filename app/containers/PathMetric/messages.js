@@ -358,15 +358,15 @@ export default defineMessages({
         },
       },
     },
-    'survival-65': {
+    'adult-survival': {
       header: {
         a: {
-          id: `${scope}.indicators.survival-65.header.a`,
-          defaultMessage: 'indicators.survival-65.header.a',
+          id: `${scope}.indicators.adult-survival.header.a`,
+          defaultMessage: 'indicators.adult-survival.header.a',
         },
         b: {
-          id: `${scope}.indicators.survival-65.header.b`,
-          defaultMessage: 'indicators.survival-65.header.b',
+          id: `${scope}.indicators.adult-survival.header.b`,
+          defaultMessage: 'indicators.adult-survival.header.b',
         },
       },
     },
@@ -439,6 +439,18 @@ export default defineMessages({
         b: {
           id: `${scope}.indicators.safe-sanitation.header.b`,
           defaultMessage: 'indicators.safe-sanitation.header.b',
+        },
+      },
+    },
+    'affordable-housing': {
+      header: {
+        a: {
+          id: `${scope}.indicators.affordable-housing.header.a`,
+          defaultMessage: 'indicators.affordable-housing.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.affordable-housing.header.b`,
+          defaultMessage: 'indicators.affordable-housing.header.b',
         },
       },
     },

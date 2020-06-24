@@ -45,6 +45,7 @@ import LoadingIndicator from 'components/LoadingIndicator';
 import Source from 'components/Source';
 import ChartCountryDiamond from 'components/ChartCountryDiamond';
 import ChartHeader from 'components/ChartHeader';
+import CountryNotes from 'components/CountryNotes';
 
 import MainColumn from 'styled/MainColumn';
 import Hint from 'styled/Hint';
@@ -52,6 +53,7 @@ import Hint from 'styled/Hint';
 import { isMaxSize } from 'utils/responsive';
 import { sortCountries, getScoresForCountry } from 'utils/scores';
 import { getFilterOptionValues, areAnyFiltersSet } from 'utils/filters';
+import { isCountryHighIncome, hasCountryGovRespondents } from 'utils/countries';
 
 import rootMessages from 'messages';
 
@@ -130,26 +132,47 @@ export function OverviewCountries({
   const currentSort =
     sort && SORT_OPTIONS.indexOf(sort) > -1 ? sort : 'assessment';
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
-
+  const filtersSet = areAnyFiltersSet(COUNTRY_FILTERS.ALL, {
+    regionFilterValue,
+    subregionFilterValue,
+    incomeFilterValue,
+    assessedFilterValue,
+    countryGroupFilterValue,
+    treatyFilterValue,
+  });
   const filterValues = getFilterOptionValues(
     countries,
     COUNTRY_FILTERS.ALL,
     // check if any filters are already set -
     // if not we can just return all specified options
-    areAnyFiltersSet(COUNTRY_FILTERS.ALL, {
-      regionFilterValue,
-      subregionFilterValue,
-      incomeFilterValue,
-      assessedFilterValue,
-      countryGroupFilterValue,
-      treatyFilterValue,
-    }),
+    filtersSet,
     standardDetails,
     scoresAllCountries,
   );
-  const searched = search
-    ? filterCountries(countries, search, intl)
-    : countries;
+  // filter by text search
+  const searched =
+    search.length > 0 ? filterCountries(countries, search, intl) : countries;
+  // check if the text search has had an impact
+  const searchEffective =
+    countries && searched && searched.length !== countries.length;
+
+  // filter again to figure out number of countries with scores
+  // (remember list also shows countries without scores)
+  const countriesWithScores =
+    searched &&
+    searched.filter(
+      c =>
+        Object.keys(scoresAllCountries.cpr).indexOf(c[COLUMNS.COUNTRIES.CODE]) >
+          -1 ||
+        Object.keys(scoresAllCountries.esr).indexOf(c[COLUMNS.COUNTRIES.CODE]) >
+          -1,
+    );
+  const countryCount = countriesWithScores ? countriesWithScores.length : 0;
+  const countryWithoutCount =
+    countriesWithScores && searched
+      ? searched.length - countriesWithScores.length
+      : 0;
+
   // sortable and non-sortable countries
   const { sorted, other } = sortCountries({
     intl,
@@ -165,6 +188,12 @@ export function OverviewCountries({
   const cardWidth = gridWidth
     ? getCardWidth(gridWidth, cardNumber, theme)
     : `${CARD_WIDTH.min}px`;
+
+  const hasHICountries = searched.some(c => isCountryHighIncome(c));
+  const hasGovRespondentsCountries = searched.some(c =>
+    hasCountryGovRespondents(c),
+  );
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -172,7 +201,12 @@ export function OverviewCountries({
           <ChartHeader
             top
             chartId="countries-overview"
-            messageValues={{ no: countries.length }}
+            hasSubHeading={countryWithoutCount > 0}
+            messageValues={{
+              no: countryCount,
+              noWithout: countryWithoutCount,
+              filtered: filtersSet || searchEffective,
+            }}
             hasWhiteBG={false}
             tools={{
               howToReadConfig: {
@@ -208,6 +242,8 @@ export function OverviewCountries({
             }}
           />
           <Search
+            bordersize="small"
+            bordercolor="dark"
             placeholder={intl.formatMessage(searchMessages.countrySearch)}
             onSearch={s => setSearch(s)}
             drop={false}
@@ -238,18 +274,20 @@ export function OverviewCountries({
                     {(c, index) => (
                       <ChartCountryDiamond
                         showAnnotation={index === 0}
-                        key={c.country_code}
+                        key={c[COLUMNS.COUNTRIES.CODE]}
                         country={c}
                         scale={scale}
                         scores={getScoresForCountry(
-                          c.country_code,
+                          c[COLUMNS.COUNTRIES.CODE],
                           scoresAllCountries,
                         )}
                         standard={standardDetails}
                         otherStandard={otherStandardDetails}
                         defaultStandard={isDefaultStandard(c, standardDetails)}
                         benchmark={benchmarkDetails}
-                        onSelectCountry={() => onSelectCountry(c.country_code)}
+                        onSelectCountry={() =>
+                          onSelectCountry(c[COLUMNS.COUNTRIES.CODE])
+                        }
                         indicators={indicators}
                         onCountryHover={code => code || true}
                         width={cardWidth}
@@ -281,11 +319,11 @@ export function OverviewCountries({
                       {(c, index) => (
                         <ChartCountryDiamond
                           showAnnotation={index === 0}
-                          key={c.country_code}
+                          key={c[COLUMNS.COUNTRIES.CODE]}
                           country={c}
                           scale={scale}
                           scores={getScoresForCountry(
-                            c.country_code,
+                            c[COLUMNS.COUNTRIES.CODE],
                             scoresAllCountries,
                           )}
                           standard={standardDetails}
@@ -296,7 +334,7 @@ export function OverviewCountries({
                           )}
                           benchmark={benchmarkDetails}
                           onSelectCountry={() =>
-                            onSelectCountry(c.country_code)
+                            onSelectCountry(c[COLUMNS.COUNTRIES.CODE])
                           }
                           indicators={indicators}
                         />
@@ -317,6 +355,13 @@ export function OverviewCountries({
               {<Source />}
             </Box>
           )}
+          <CountryNotes
+            settingHint
+            notes={{
+              govRespondents: hasGovRespondentsCountries,
+              hiCountries: hasHICountries,
+            }}
+          />
         </MainColumn>
       )}
     </ResponsiveContext.Consumer>

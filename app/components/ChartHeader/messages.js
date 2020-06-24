@@ -17,6 +17,10 @@ export default defineMessages({
     id: `${scope}.countries-overview`,
     defaultMessage: '{no} countries',
   },
+  'countries-overview-sub': {
+    id: `${scope}.countries-overview-sub`,
+    defaultMessage: '{noWithout} countries without scores',
+  },
   'dimension-overview': {
     id: `${scope}.dimension-overview`,
     defaultMessage: '{dimension} overview',
@@ -36,5 +40,13 @@ export default defineMessages({
   people: {
     id: `${scope}.people`,
     defaultMessage: 'People at risk',
+  },
+  'assessment-standard-hi-sub': {
+    id: `${scope}.assessment-standard-high-sub`,
+    defaultMessage: 'Using the high income assessment standard',
+  },
+  'assessment-standard-core-sub': {
+    id: `${scope}.assessment-standard-low-sub`,
+    defaultMessage: 'Using the low and middle income assessment standard',
   },
 });
