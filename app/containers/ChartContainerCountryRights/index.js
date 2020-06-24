@@ -309,7 +309,6 @@ export function ChartContainerCountryRights({
                     ),
                     maxValue: 100,
                   }}
-                  benchmarkIconOnly
                 />
                 <ChartBars
                   data={prepareData({
