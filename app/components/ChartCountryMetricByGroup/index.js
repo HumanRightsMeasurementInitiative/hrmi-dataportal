@@ -171,7 +171,6 @@ function ChartCountryMetricByGroup({
         commonLabel="By sex"
         isStatic
         metric={{ type: 'esr' }}
-        benchmarkIconOnly
       />
       {hasRawOption && (
         <Settings direction="row" justify="end" pad="small" border="top">
