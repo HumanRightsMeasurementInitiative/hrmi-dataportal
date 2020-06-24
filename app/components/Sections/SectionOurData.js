@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Paragraph, Box, ResponsiveContext } from 'grommet';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled from 'styled-components';
-import { NewWindow } from 'grommet-icons';
+import { Share } from 'grommet-icons';
 
 import { PATHS, PAGES, XPATHS } from 'containers/App/constants';
 import { DEFAULT_LOCALE } from 'i18n';
@@ -93,7 +93,7 @@ export function SectionOurData({ nav, intl, locale }) {
                   }
                   target="_blank"
                   label={intl.formatMessage(messages.ourData.downloadLink)}
-                  icon={<NewWindow color="dark" />}
+                  icon={<Share color="dark" size="small" />}
                   gap="xsmall"
                 />
                 <ButtonTextIcon
