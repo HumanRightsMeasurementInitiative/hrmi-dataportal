@@ -91,6 +91,7 @@ export const COLUMNS = {
     TREATIES: 'treaty_codes',
     STATUS: 'country_status',
     RELATED: 'related_country_code',
+    GOV_RESPONDENTS: 'gov_respondents',
   },
   FEATURED: {
     CAT: 'featured_category',
@@ -120,7 +121,7 @@ export const LANGUAGES = {
 
 // URLs for external resources loaded on request
 export const DATA_URL = '//data-store.humanrightsmeasurement.org/data';
-export const PAGES_URL = '//content-store.humanrightsmeasurement.org/v3/';
+export const PAGES_URL = '//content-store.humanrightsmeasurement.org/v3_1/';
 
 export const PAGES = {
   about: {
@@ -134,6 +135,7 @@ export const PAGES = {
   download: {
     key: 'download',
     primary: true,
+    url: 'https://humanrightsmeasurement.org/download-the-dataset/',
   },
 };
 
@@ -164,6 +166,14 @@ export const XPATHS = {
     pt:
       '//humanrightsmeasurement.org/pt-pt/about-hrmi/entre-em-contato-com-hrmi/',
   },
+  download: {
+    en: 'https://humanrightsmeasurement.org/download-the-dataset/',
+    es: 'https://humanrightsmeasurement.org/es/descarga-de-contenido/',
+    pt:
+      'https://humanrightsmeasurement.org/pt-pt/descarregue-o-conjunto-de-dados/',
+    fr:
+      'https://humanrightsmeasurement.org/fr/telechargez-lensemble-de-donnees/',
+  },
 };
 
 export const FAQS = {
@@ -188,7 +198,7 @@ export const FAQS = {
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countries_v3.csv',
+    file: 'countries_v3-1.csv',
   },
   {
     key: 'countriesGrammar',
@@ -196,31 +206,35 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrIndicators',
-    file: 'esr-indicators_v3.csv',
+    file: 'esr-indicators_v3-1.csv',
   },
   {
     key: 'atRisk',
-    file: 'people-at-risk.csv',
+    file: 'people-at-risk_v3-1.csv',
   },
   {
     key: 'auxIndicators',
-    file: 'auxiliary-indicators_v3.csv',
+    file: 'auxiliary-indicators_v3-1.csv',
   },
   {
     key: 'cprScores',
-    file: 'cpr-scores.csv',
+    file: 'cpr-scores_v3-1.csv',
   },
   {
     key: 'esrScores',
-    file: 'esr-scores.csv',
+    file: 'esr-scores_v3-1.csv',
   },
   {
     key: 'esrIndicatorScores',
-    file: 'esr-indicator-scores.csv',
+    file: 'esr-indicator-scores_v3-1.csv',
   },
   {
     key: 'featured',
     file: 'featured_v3.csv',
+  },
+  {
+    key: 'sources',
+    file: 'sources_v3-1.csv',
   },
 ];
 
@@ -298,23 +312,8 @@ export const INCOME_GROUPS = {
 };
 
 export const COUNTRY_FILTERS = {
-  ALL: [
-    'income',
-    'region',
-    'assessed',
-    'subregion',
-    'treaty',
-    'cgroup',
-    'featured',
-  ],
-  SINGLE_METRIC: [
-    'income',
-    'region',
-    'subregion',
-    'treaty',
-    'cgroup',
-    'featured',
-  ],
+  ALL: ['income', 'region', 'assessed', 'subregion', 'treaty', 'cgroup'],
+  SINGLE_METRIC: ['income', 'region', 'subregion', 'treaty', 'cgroup'],
 };
 
 export const STANDARDS = [
@@ -418,7 +417,8 @@ export const GRADES = {
   ],
 };
 
-export const SUBREGIONS_FOR_COMPARISON = ['pacific'];
+export const SUBREGIONS_CPR_COMPLETE = ['pacific'];
+export const SUBREGIONS_FOR_COMPARISON_CPR = ['pacific'];
 
 export const DIMENSIONS = [
   {
@@ -613,20 +613,7 @@ export const AT_RISK_INDICATORS = [
   },
   {
     right: 'work',
-    subright: 'job',
     code: 'job_atrisk',
-    resource: 'atRisk',
-  },
-  {
-    right: 'work',
-    subright: 'jobcond',
-    code: 'jobcond_atrisk',
-    resource: 'atRisk',
-  },
-  {
-    right: 'work',
-    subright: 'union',
-    code: 'union_atrisk',
     resource: 'atRisk',
   },
 ];
@@ -636,7 +623,7 @@ export const INDICATOR_LOOKBACK = 10;
 export const INDICATORS = [
   {
     key: 'net-primary',
-    code: 'AdjNetPrim',
+    code: 'NetPrimEnrol',
     right: 'education',
     resource: 'esrIndicatorScores',
     hasGroups: true,
@@ -684,8 +671,8 @@ export const INDICATORS = [
     hasGroups: false,
   },
   {
-    key: 'survival-65',
-    code: 'SurvivalTo65',
+    key: 'adult-survival',
+    code: 'AdultSurvival',
     right: 'health',
     resource: 'esrIndicatorScores',
     hasGroups: true,
@@ -733,6 +720,13 @@ export const INDICATORS = [
     hasGroups: false,
   },
   {
+    key: 'affordable-housing',
+    code: 'AffordHouse',
+    right: 'housing',
+    resource: 'esrIndicatorScores',
+    hasGroups: false,
+  },
+  {
     key: 'relative-poverty',
     code: 'NotRelPoor',
     right: 'work',
@@ -748,7 +742,7 @@ export const INDICATORS = [
   },
   {
     key: 'longterm-unemployment',
-    code: 'NotLTUnemployed',
+    code: 'NotLTUnemploy',
     right: 'work',
     resource: 'esrIndicatorScores',
     hasGroups: false,
@@ -786,7 +780,9 @@ export const AT_RISK_GROUPS = [
   { key: '28', code: '28' },
   { key: '29', code: '29' },
   { key: '30', code: '30' },
-  { key: '31', code: '31' },
+  { key: '32', code: '32' },
+  { key: '33', code: '33' },
+  { key: '31', code: '31' }, // other
 ];
 
 export const COOKIECONSENT_NAME = 'hrmi-dataportal-cookie-consent-status';

@@ -11,24 +11,20 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
-import {
-  Box,
-  Button,
-  Drop,
-  ResponsiveContext,
-  Image,
-  Text,
-  Layer,
-} from 'grommet';
-import { Menu, Close, FormDown, FormUp } from 'grommet-icons';
+import { Box, Button, ResponsiveContext, Image, Layer } from 'grommet';
+import { Menu, Close, Share } from 'grommet-icons';
 
-import logo from 'images/HRMI-Logo-HOR-RGB-x2.png';
-import logoS from 'images/HRMI-Logo-HOR-RGB-small-x2.png';
+import logo from 'images/HRMI-logo.svg';
 
-import { appLocales } from 'i18n';
+import { appLocales, DEFAULT_LOCALE } from 'i18n';
 import LocaleToggle from 'containers/LocaleToggle';
-import { getRouterMatch, getRouterRoute } from 'containers/App/selectors';
-import { PAGES, PATHS } from 'containers/App/constants';
+import {
+  getRouterMatch,
+  getRouterRoute,
+  getLocale,
+} from 'containers/App/selectors';
+import { PAGES, PATHS, XPATHS } from 'containers/App/constants';
+
 import {
   navigate,
   loadDataIfNeeded,
@@ -36,9 +32,6 @@ import {
 } from 'containers/App/actions';
 
 import Search from 'containers/Search';
-import NavCountry from 'containers/Search/NavCountry';
-import NavMetric from 'containers/Search/NavMetric';
-import NavGroups from 'containers/Search/NavGroups';
 
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 import ContentMaxWidth from 'styled/ContentMaxWidth';
@@ -52,6 +45,8 @@ import {
 } from 'utils/responsive';
 
 import rootMessages from 'messages';
+
+import NavBottom from './NavBottom';
 
 const Styled = styled.header`
   position: fixed;
@@ -107,32 +102,19 @@ const BrandButton = styled(Button)`
 // color: ${({ theme }) => theme.global.colors.hover};
 const BrandInner = styled(Box)`
   padding-top: ${({ theme }) => theme.sizes.header.small.padTop}px;
-  padding-bottom: ${({ theme }) => theme.sizes.header.small.padBottom - 2}px;
+  padding-bottom: ${({ theme }) => theme.sizes.header.small.padBottom}px;
   padding-right: ${({ theme }) => theme.sizes.header.small.padRight}px;
   height: ${({ theme }) => theme.sizes.header.small.heightTop}px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     height: ${({ theme }) => theme.sizes.header.height}px;
     padding-top: ${({ theme }) => theme.sizes.header.padTop}px;
-    padding-bottom: ${({ theme }) => theme.sizes.header.padBottom - 2}px;
+    padding-bottom: ${({ theme }) => theme.sizes.header.padBottom}px;
     padding-right: ${({ theme }) => theme.sizes.header.padRight}px;
   }
 `;
 
 const LogoWrap = styled(Box)``;
 const Logo = styled(Image)``;
-
-const TitleWrap = styled(Box)`
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-top: -1px;
-  font-size: 15px;
-  line-height: 18px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    margin-top: -8px;
-    font-size: 22px;
-    line-height: 31px;
-  }
-`;
 
 const MenuList = styled(Box)`
   padding: ${({ theme }) => theme.global.edgeSize.small} 0;
@@ -157,101 +139,49 @@ const SearchWrap = styled(Box)`
     height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
   }
 `;
-// prettier-ignore
-const ButtonNavSecondary = styled(Button)`
-  margin: 0 5px;
-  padding-left: 1px;
-  font-weight: 600;
-  height: ${({ theme }) => getHeaderHeightBottom('small', theme)}px;
-  background: transparent;
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid;
-  border-bottom-color: ${({ theme, active }) => (
-    active ? theme.global.colors.dark : 'transparent'
-  )};
-  &:first-child {
-    margin-left: 0;
-  }
-  &:hover {
-    border-bottom-color: ${({ theme }) => theme.global.colors.dark};
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    height: ${({ theme }) => getHeaderHeightBottom('medium', theme)}px;
-    margin-left: 6px;
-    margin-right: 6px;
-  }
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
+
+const StyledShare = styled(p => <Share {...p} size="small" />)`
+  vertical-align: middle;
+  margin-left: 7px;
+  stroke: currentColor;
 `;
 
-const ButtonSecondary = React.forwardRef(
-  ({ active, open, onClick, label, windowSize }, ref) => {
-    let gap = 'hair';
-    if (windowSize === 'medium') {
-      gap = 'xxsmall';
-    }
-    if (isMinSize(windowSize, 'large')) {
-      gap = 'small';
-    }
-    return (
-      <ButtonNavSecondary
-        windowSize={windowSize}
-        plain
-        active={active}
-        open={open}
-        onClick={onClick}
-        justify="between"
-        align="center"
-        ref={ref}
-        label={
-          <Box direction="row" align="center" justify="between" fill gap={gap}>
-            <Text size={isMinSize(windowSize, 'medium') ? 'large' : 'medium'}>
-              <FormattedMessage {...rootMessages.labels[label]} />
-            </Text>
-            {open && (
-              <FormUp
-                size={isMinSize(windowSize, 'medium') ? 'xxlarge' : 'xlarge'}
-                style={{ stroke: 'currentColor', marginRight: '-3px' }}
-              />
-            )}
-            {!open && (
-              <FormDown
-                size={isMinSize(windowSize, 'medium') ? 'xxlarge' : 'xlarge'}
-                style={{ stroke: 'currentColor', marginRight: '-3px' }}
-              />
-            )}
-          </Box>
-        }
-      />
-    );
-  },
-);
+const TextWrap = styled.span`
+  vertical-align: middle;
+`;
 
-ButtonSecondary.propTypes = {
-  active: PropTypes.bool,
-  open: PropTypes.bool,
-  onClick: PropTypes.func,
-  label: PropTypes.string,
-  windowSize: PropTypes.string,
-};
-
-const renderPages = ({ match, onClick, align }) =>
+const navButtonOnClick = ({ match, onClick, align, locale }) =>
   PAGES &&
   Object.values(PAGES)
     .filter(page => page.primary)
-    .map(page => (
-      <ButtonNavPrimary
-        key={page.key}
-        active={page.key === match}
-        disabled={page.key === match}
-        align={align}
-        onClick={() => onClick(page.key)}
-      >
-        <FormattedMessage {...rootMessages.page[page.key]} />
-      </ButtonNavPrimary>
-    ));
+    .map(page =>
+      page.key === 'download' ? (
+        <ButtonNavPrimary
+          as="a"
+          href={XPATHS.download[locale] || XPATHS.download[DEFAULT_LOCALE]}
+          target="_blank"
+          rel="noopener noreferrer"
+          key={page.key}
+        >
+          <TextWrap>
+            <FormattedMessage {...rootMessages.page[page.key]} />
+          </TextWrap>
+          <StyledShare />
+        </ButtonNavPrimary>
+      ) : (
+        <ButtonNavPrimary
+          key={page.key}
+          active={page.key === match}
+          disabled={page.key === match}
+          align={align}
+          onClick={() => onClick(page.key)}
+        >
+          <TextWrap>
+            <FormattedMessage {...rootMessages.page[page.key]} />
+          </TextWrap>
+        </ButtonNavPrimary>
+      ),
+    );
 
 const DEPENDENCIES = ['countries'];
 
@@ -263,6 +193,7 @@ export function Header({
   theme,
   intl,
   onHideAsideLayer,
+  locale,
 }) {
   useEffect(() => {
     // kick off loading of page content
@@ -271,12 +202,6 @@ export function Header({
 
   const [showMenu, setShowMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-  const [showCountries, setShowCountries] = useState(false);
-  const [showMetrics, setShowMetrics] = useState(false);
-  const [showGroups, setShowGroups] = useState(false);
-  const countryTarget = useRef(null);
-  const metricTarget = useRef(null);
-  const groupTarget = useRef(null);
   const menuRef = useRef(null);
 
   const onHome = () => {
@@ -312,7 +237,7 @@ export function Header({
                       flex={{ shrink: 0 }}
                     >
                       <Logo
-                        src={isMaxSize(size, 'sm') ? logoS : logo}
+                        src={logo}
                         alt={`${intl.formatMessage(rootMessages.app.title)}`}
                         a11yTitle={`${intl.formatMessage(
                           rootMessages.app.title,
@@ -320,9 +245,6 @@ export function Header({
                         fit="contain"
                       />
                     </LogoWrap>
-                    <TitleWrap>
-                      <FormattedMessage {...rootMessages.app.title} />
-                    </TitleWrap>
                   </BrandInner>
                 </BrandButton>
                 {isMaxSize(size, 'sm') && appLocales.length > 1 && (
@@ -352,13 +274,14 @@ export function Header({
                   >
                     <MenuList elevation="large">
                       <MenuGroup>
-                        {renderPages({
+                        {navButtonOnClick({
                           match,
                           onClick: key => {
                             setShowMenu(false);
                             nav(`${PATHS.PAGE}/${key}`);
                           },
                           align: 'left',
+                          locale,
                         })}
                       </MenuGroup>
                     </MenuList>
@@ -372,13 +295,15 @@ export function Header({
                     direction="row"
                     justify="end"
                     size={size}
+                    style={{ paddingTop: '25px' }}
                   >
-                    {renderPages({
+                    {navButtonOnClick({
                       match,
                       onClick: key => {
                         setShowSearch(false);
                         nav(`${PATHS.PAGE}/${key}`);
                       },
+                      locale,
                     })}
                     {appLocales.length > 1 && isMinSize(size, 'medium') && (
                       <LocaleToggle />
@@ -410,102 +335,29 @@ export function Header({
                 <NavBarBottom theme={theme} size={size}>
                   {(!showSearch || isMaxSize(size, 'sm')) && (
                     <>
-                      <ButtonSecondary
+                      <NavBottom
+                        type="metrics"
                         active={path === PATHS.METRICS || path === PATHS.METRIC}
-                        open={showMetrics}
                         onClick={() => {
                           onHideAsideLayer();
-                          setShowCountries(false);
-                          setShowGroups(false);
-                          setShowMetrics(!showMetrics);
                         }}
-                        label="metrics"
-                        ref={metricTarget}
-                        windowSize={size}
                       />
-                      {showMetrics && isMaxSize(size, 'sm') && (
-                        <NavMetric
-                          onClose={() => setShowMetrics(false)}
-                          size={size}
-                        />
-                      )}
-                      {showMetrics && isMinSize(size, 'medium') && (
-                        <Drop
-                          align={{ top: 'bottom', right: 'right' }}
-                          target={metricTarget.current}
-                          onClickOutside={() => setShowMetrics(false)}
-                        >
-                          <NavMetric
-                            onClose={() => setShowMetrics(false)}
-                            size={size}
-                          />
-                        </Drop>
-                      )}
-                      <ButtonSecondary
+                      <NavBottom
+                        type="countries"
                         active={
                           path === PATHS.COUNTRIES || path === PATHS.COUNTRY
                         }
-                        open={showCountries}
                         onClick={() => {
                           onHideAsideLayer();
-                          setShowMetrics(false);
-                          setShowGroups(false);
-                          setShowCountries(!showCountries);
                         }}
-                        label="countries"
-                        ref={countryTarget}
-                        windowSize={size}
                       />
-                      {showCountries && isMaxSize(size, 'sm') && (
-                        <NavCountry
-                          onClose={() => setShowCountries(false)}
-                          size={size}
-                        />
-                      )}
-                      {showCountries && isMinSize(size, 'medium') && (
-                        <Drop
-                          align={{ top: 'bottom', right: 'right' }}
-                          target={countryTarget.current}
-                          onClickOutside={() => setShowCountries(false)}
-                          overflow="hidden"
-                        >
-                          <NavCountry
-                            onClose={() => setShowCountries(false)}
-                            size={size}
-                          />
-                        </Drop>
-                      )}
-                      <ButtonSecondary
+                      <NavBottom
+                        type="people"
                         active={path === PATHS.GROUPS || path === PATHS.GROUP}
-                        open={showGroups}
                         onClick={() => {
                           onHideAsideLayer();
-                          setShowCountries(false);
-                          setShowMetrics(false);
-                          setShowGroups(!showGroups);
                         }}
-                        label="people"
-                        ref={groupTarget}
-                        windowSize={size}
                       />
-                      {showGroups && isMaxSize(size, 'sm') && (
-                        <NavGroups
-                          onClose={() => setShowGroups(false)}
-                          size={size}
-                        />
-                      )}
-                      {showGroups && isMinSize(size, 'medium') && (
-                        <Drop
-                          align={{ top: 'bottom', right: 'right' }}
-                          target={groupTarget.current}
-                          onClickOutside={() => setShowGroups(false)}
-                        >
-                          <NavGroups
-                            onClose={() => setShowGroups(false)}
-                            size={size}
-                          />
-                        </Drop>
-                      )}
                     </>
                   )}
                   {isMinSize(size, 'large') && (
@@ -513,6 +365,7 @@ export function Header({
                       <Search
                         expand={showSearch}
                         onToggle={show => setShowSearch(show)}
+                        bordersize="none"
                       />
                     </SearchWrap>
                   )}
@@ -532,6 +385,7 @@ Header.propTypes = {
   onHideAsideLayer: PropTypes.func.isRequired,
   match: PropTypes.string,
   path: PropTypes.string,
+  locale: PropTypes.string,
   onLoadData: PropTypes.func.isRequired,
   theme: PropTypes.object,
   intl: intlShape.isRequired,
@@ -562,6 +416,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = createStructuredSelector({
   match: state => getRouterMatch(state),
   path: state => getRouterRoute(state),
+  locale: state => getLocale(state),
 });
 
 const withConnect = connect(

@@ -87,6 +87,8 @@ export function LayerAside({ onClose, theme, layer }) {
             {layer.type === 'aboutMetric' && (
               <AboutMetricContainer
                 metricCode={layer.code}
+                countryCode={layer.countryCode}
+                dateRange={layer.dateRange}
                 showTitle
                 showMetricLink
                 showSources={layer.showSources}

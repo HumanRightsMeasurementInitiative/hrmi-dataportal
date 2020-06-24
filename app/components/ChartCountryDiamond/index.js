@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 import { Box, Text, ResponsiveContext } from 'grommet';
 import { FormNext } from 'grommet-icons';
 import styled from 'styled-components';
@@ -19,6 +19,8 @@ import {
   INDICATORS,
   COLUMNS,
 } from 'containers/App/constants';
+
+import CountryLabel from 'components/CountryLabel';
 
 import ButtonPlain from 'styled/ButtonPlain';
 
@@ -53,7 +55,7 @@ const Button = styled(ButtonPlain)`
     z-index: 8;
   }
 `;
-const CountryLabel = styled.span`
+const CountryLabelWrap = styled.span`
   font-weight: 700;
   color: ${({ theme }) => theme.global.colors.dark};
 `;
@@ -211,13 +213,6 @@ export function ChartCountryDiamond({
   onCountryHover,
   width,
 }) {
-  if (!country) return null;
-  if (!rootMessages.countries[country[COLUMNS.COUNTRIES.CODE]]) {
-    console.log(
-      'Country code not in language files:',
-      country[COLUMNS.COUNTRIES.CODE],
-    );
-  }
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -271,31 +266,10 @@ export function ChartCountryDiamond({
                 )}
                 <Box pad={{ top: 'small' }}>
                   <Text textAlign="center" alignSelf="center">
-                    <CountryLabel>
-                      {rootMessages.countries[
-                        country[COLUMNS.COUNTRIES.CODE]
-                      ] && (
-                        <FormattedMessage
-                          {...rootMessages.countries[
-                            country[COLUMNS.COUNTRIES.CODE]
-                          ]}
-                        />
-                      )}
-                      {!rootMessages.countries[
-                        country[COLUMNS.COUNTRIES.CODE]
-                      ] && <span>{country[COLUMNS.COUNTRIES.CODE]}</span>}
-                      {country && country.high_income_country === '1' && (
-                        <FormattedMessage
-                          {...rootMessages.labels.hiCountryWrap}
-                          values={{
-                            hiLabel: intl.formatMessage(
-                              rootMessages.labels.hiCountry,
-                            ),
-                          }}
-                        />
-                      )}
+                    <CountryLabelWrap>
+                      <CountryLabel country={country} />
                       {isMaxSize(size, 'medium') && <FormNext size="medium" />}
-                    </CountryLabel>
+                    </CountryLabelWrap>
                   </Text>
                 </Box>
               </Box>
@@ -316,10 +290,8 @@ ChartCountryDiamond.propTypes = {
   scores: PropTypes.object,
   scale: PropTypes.string,
   width: PropTypes.string,
-  isActive: PropTypes.bool,
   standard: PropTypes.object,
   otherStandard: PropTypes.object,
-  isDefaultStandard: PropTypes.bool,
   showAnnotation: PropTypes.bool,
   benchmark: PropTypes.object,
   intl: intlShape.isRequired,
