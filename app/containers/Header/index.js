@@ -52,7 +52,7 @@ const Styled = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 10;
   width: 100%;
   height: ${({ theme }) => getHeaderHeight('small', theme)}px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
