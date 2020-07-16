@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import styled, { css, withTheme } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 import { Paragraph, Box, Text, ResponsiveContext } from 'grommet';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
@@ -44,6 +44,7 @@ import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
 import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRStandardHint';
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
+import NarrativeCPRGovRespondents from 'components/CountryNarrative/NarrativeCPRGovRespondents';
 
 import Hint from 'styled/Hint';
 
@@ -51,7 +52,10 @@ import { getRightsScoresForDimension } from 'utils/scores';
 import getMetricDetails from 'utils/metric-details';
 import { getMessageGrammar } from 'utils/narrative';
 import { isMinSize } from 'utils/responsive';
-import { chartLabelWidth } from 'components/ChartBars/chart-utils';
+import { lowerCase } from 'utils/string';
+
+import { hasCountryGovRespondents } from 'utils/countries';
+import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
 
 import rootMessages from 'messages';
 
@@ -103,26 +107,28 @@ const getDimensionLabel = (score, intl) =>
   intl.formatMessage(rootMessages.dimensions[score.key]);
 
 const KeyItem = styled(Box)`
-  padding-left: 8px;
-  margin-right: 15px;
+  margin-left: 15px;
+  text-align: right;
+  position: relative;
+`;
+const KeyItemSolid = styled.span`
   max-height: 14px;
-  ${({ lineStyle }) =>
-    lineStyle === 'solid' &&
-    css`
-      border-left: 2px solid;
-      border-color: ${props => props.theme.global.colors['dark-2']};
-    `}
-  ${({ lineStyle }) =>
-    lineStyle !== 'solid' &&
-    css`
-      background-image: linear-gradient(
-        ${props => props.theme.global.colors['dark-2']} 50%,
-        rgba(255, 255, 255, 0) 0%
-      );
-      background-position: left;
-      background-size: 2px 4px;
-      background-repeat: repeat-y;
-    `}
+  border-right: 1px solid;
+  border-color: ${props => props.theme.global.colors['dark-2']};
+  margin-left: 8px;
+`;
+
+const KeyItemDashed = styled.span`
+  background-image: linear-gradient(
+    ${props => props.theme.global.colors['dark-2']} 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: right center;
+  background-size: 2px 4px;
+  background-repeat: repeat-y;
+  height: 14px;
+  margin-left: 8px;
+  width: 3px;
 `;
 
 const prepareData = ({
@@ -333,26 +339,58 @@ export function ChartContainerCountryRights({
                   annotateMinMax={false}
                 />
               </Box>
+              {currentBenchmark.key === 'best' && (
+                <Box
+                  direction="row"
+                  margin={{
+                    top: 'small',
+                    right: scoreAsideWidth(size),
+                  }}
+                  justify="end"
+                >
+                  <KeyItem direction="row">
+                    <Text size="xxsmall">
+                      <FormattedMessage
+                        {...rootMessages.settings.benchmark.adjusted}
+                      />
+                      {isMinSize(size, 'medium') && (
+                        <span>
+                          {` ${lowerCase(
+                            intl.formatMessage(
+                              rootMessages.settings.benchmark.nameShort,
+                            ),
+                          )}`}
+                        </span>
+                      )}
+                    </Text>
+                    <KeyItemDashed />
+                  </KeyItem>
+                  <KeyItem direction="row">
+                    <Text size="xxsmall">
+                      <FormattedMessage
+                        {...rootMessages.settings.benchmark.best}
+                      />
+                      {isMinSize(size, 'medium') && (
+                        <span>
+                          {` ${lowerCase(
+                            intl.formatMessage(
+                              rootMessages.settings.benchmark.nameShort,
+                            ),
+                          )}`}
+                        </span>
+                      )}
+                    </Text>
+                    <KeyItemSolid />
+                  </KeyItem>
+                </Box>
+              )}
               <Box
-                direction="row"
-                align="baseline"
-                margin={{ top: 'medium', bottom: 'large' }}
+                margin={{
+                  top: currentBenchmark.key === 'best' ? 'xsmall' : 'medium',
+                  bottom: 'large',
+                }}
               >
-                <Source
-                  maxWidth={
-                    currentBenchmark.key === 'best' && chartLabelWidth(size)
-                  }
-                />
-                {currentBenchmark.key === 'best' && (
-                  <Box direction="row">
-                    <KeyItem direction="row" lineStyle="dashed">
-                      <Text size="xxsmall">Income Adjusted Benchmark</Text>
-                    </KeyItem>
-                    <KeyItem direction="row" lineStyle="solid">
-                      <Text size="xxsmall">Global Best Benchmark</Text>
-                    </KeyItem>
-                  </Box>
-                )}
+                <Source />
               </Box>
               <NarrativeESR
                 dimensionScore={dimension.score}
@@ -457,7 +495,7 @@ export function ChartContainerCountryRights({
                   annotateMinMax={false}
                 />
               </Box>
-              <Box margin={{ bottom: 'large' }}>
+              <Box margin={{ top: 'medium', bottom: 'large' }}>
                 <Source />
               </Box>
               <NarrativeCPR
@@ -488,6 +526,12 @@ export function ChartContainerCountryRights({
                     : 'all'
                 }
               />
+              {hasCountryGovRespondents(country) && (
+                <NarrativeCPRGovRespondents
+                  country={country}
+                  countryGrammar={countryGrammar}
+                />
+              )}
             </>
           )}
         </div>

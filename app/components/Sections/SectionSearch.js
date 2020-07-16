@@ -38,8 +38,8 @@ export function SectionSearch({ intl }) {
             />
             <SearchWrapper>
               <Search
-                borderSize="small"
-                borderColor="dark"
+                bordersize="small"
+                bordercolor="dark"
                 stretch
                 example
                 size={isMaxSize(size, 'sm') ? 'medium' : 'large'}

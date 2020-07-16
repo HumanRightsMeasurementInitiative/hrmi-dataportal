@@ -61,9 +61,9 @@ export default defineMessages({
       id: `${scope}.labels.hiCountry`,
       defaultMessage: 'HI',
     },
-    hiCountryWrap: {
-      id: `${scope}.labels.hiCountryWrap`,
-      defaultMessage: ' {hiLabel}',
+    govResponseCountry: {
+      id: `${scope}.labels.govResponseCountry`,
+      defaultMessage: 'g',
     },
     better: {
       id: `${scope}.labels.better`,
@@ -1343,9 +1343,17 @@ export default defineMessages({
       id: `${scope}.sources.UNDP`,
       defaultMessage: 'UNDP',
     },
-    UNDP_MPI: {
-      id: `${scope}.sources.UNDP_MPI`,
-      defaultMessage: 'UNDP_MPI',
+    UNPD: {
+      id: `${scope}.sources.UNPD`,
+      defaultMessage: 'United Nations Population Division',
+    },
+    UNPD_MPI: {
+      id: `${scope}.sources.UNPD_MPI`,
+      defaultMessage: 'UNPD_MPI',
+    },
+    WB_POVCAL: {
+      id: `${scope}.sources.WB_POVCAL`,
+      defaultMessage: 'WB_POVCAL',
     },
   },
   regions: {
