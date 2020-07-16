@@ -142,7 +142,6 @@ function ChartCountrySnapshot({
     ? { score: dimensionScore, maxValue }
     : null;
 
-  // TODO: "Summary Score" should be a formatted message, also perhaps "N/A"?
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -202,7 +201,9 @@ function ChartCountrySnapshot({
                       size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
                       color={`${dimensionCode}Dark`}
                     >
-                      Summary Score
+                      <FormattedMessage
+                        {...rootMessages.charts.dimensionSummaryLabel}
+                      />
                     </Text>
                     <Box
                       background={`${dimensionCode}Dark`}
