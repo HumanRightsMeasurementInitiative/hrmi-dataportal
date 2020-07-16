@@ -74,8 +74,14 @@ NavBarTop.propTypes = {
   size: PropTypes.string,
 };
 
+const NavBarBottomBox = styled(Box)`
+  @media print {
+    display: none;
+  }
+`;
+
 const NavBarBottom = props => (
-  <Box
+  <NavBarBottomBox
     direction="row"
     align="end"
     justify={isMinSize(props.size, 'medium') ? 'end' : 'start'}
@@ -131,6 +137,9 @@ const ToggleMenu = styled(Button)`
   height: 30px;
   background-color: transparent;
   text-align: center;
+  @media print {
+    display: none;
+  }
 `;
 
 const SearchWrap = styled(Box)`
