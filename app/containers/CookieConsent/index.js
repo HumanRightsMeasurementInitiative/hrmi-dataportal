@@ -21,6 +21,12 @@ import messages from './messages';
 
 const Styled = styled.div``;
 
+const StyledLayer = styled(Layer)`
+  @media print {
+    display: none;
+  }
+`;
+
 const LinkInText = styled.a`
   color: ${props => props.theme.global.colors.white};
   &:hover {
@@ -70,7 +76,7 @@ export function CookieConsent({
   return (
     <Styled>
       {checked && consentUnset && (
-        <Layer
+        <StyledLayer
           position="bottom-right"
           plain
           responsive={false}
@@ -119,7 +125,7 @@ export function CookieConsent({
               </LinkInText>
             </Paragraph>
           </Box>
-        </Layer>
+        </StyledLayer>
       )}
     </Styled>
   );
