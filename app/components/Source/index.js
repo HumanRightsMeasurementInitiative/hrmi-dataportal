@@ -8,7 +8,7 @@ import Hint from 'styled/Hint';
 import messages from './messages';
 
 const Styled = styled(Hint)`
-  max-width: ${({ maxWidth }) => maxWidth};
+  max-width: ${({ maxWidth }) => maxWidth || 'none'};
   font-size: 12px;
   line-height: 16px;
   text-align: ${({ center }) => (center ? 'center' : 'left')};

@@ -106,8 +106,8 @@ export function Search({
     >
       <Box
         border={{
-          color: borderColor,
-          size: borderSize,
+          color: expand ? 'dark' : borderColor,
+          size: expand ? 'small' : borderSize,
         }}
         direction="row"
         align="center"

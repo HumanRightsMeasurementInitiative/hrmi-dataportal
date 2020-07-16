@@ -309,7 +309,6 @@ export function ChartContainerCountryRights({
                     ),
                     maxValue: 100,
                   }}
-                  benchmarkIconOnly
                 />
                 <ChartBars
                   data={prepareData({
@@ -339,15 +338,21 @@ export function ChartContainerCountryRights({
                 align="baseline"
                 margin={{ top: 'medium', bottom: 'large' }}
               >
-                <Source maxWidth={chartLabelWidth(size)} />
-                <Box direction="row">
-                  <KeyItem direction="row" lineStyle="solid">
-                    <Text size="xxsmall">Income Adjusted Benchmark</Text>
-                  </KeyItem>
-                  <KeyItem direction="row" lineStyle="dashed">
-                    <Text size="xxsmall">Global Best Benchmark</Text>
-                  </KeyItem>
-                </Box>
+                <Source
+                  maxWidth={
+                    currentBenchmark.key === 'best' && chartLabelWidth(size)
+                  }
+                />
+                {currentBenchmark.key === 'best' && (
+                  <Box direction="row">
+                    <KeyItem direction="row" lineStyle="dashed">
+                      <Text size="xxsmall">Income Adjusted Benchmark</Text>
+                    </KeyItem>
+                    <KeyItem direction="row" lineStyle="solid">
+                      <Text size="xxsmall">Global Best Benchmark</Text>
+                    </KeyItem>
+                  </Box>
+                )}
               </Box>
               <NarrativeESR
                 dimensionScore={dimension.score}
