@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 
 import Hint from 'styled/Hint';
@@ -21,17 +21,14 @@ const Styled = styled(Hint)`
 function Source({ center = false, maxWidth = 'none' }) {
   return (
     <Styled center={center} maxWidth={maxWidth}>
-      <div>
-        <FormattedMessage {...messages.source} />
-      </div>
+      <FormattedMessage {...messages.source} />
     </Styled>
   );
 }
 
 Source.propTypes = {
-  intl: intlShape.isRequired,
   maxWidth: PropTypes.string,
   center: PropTypes.bool,
 };
 
-export default injectIntl(Source);
+export default Source;

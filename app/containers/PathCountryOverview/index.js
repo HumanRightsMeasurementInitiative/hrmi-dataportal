@@ -32,7 +32,7 @@ import { useInjectSaga } from 'utils/injectSaga';
 import OverviewCountries from 'containers/OverviewCountries';
 
 import Aside from 'components/Aside';
-import HINote from 'components/HINote';
+import CountryNotes from 'components/CountryNotes';
 
 // styles
 import MainColumn from 'styled/MainColumn';
@@ -100,7 +100,7 @@ export function PathCountryOverview({
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
-          <HINote settingHint />
+          <CountryNotes settingHint />
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header

@@ -138,8 +138,8 @@ export function SectionIntro({ theme }) {
                 </Paragraph>
                 <SearchWrapper>
                   <Search
-                    borderSize="small"
-                    borderColor="dark"
+                    bordersize="small"
+                    bordercolor="dark"
                     stretch
                     size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                     example

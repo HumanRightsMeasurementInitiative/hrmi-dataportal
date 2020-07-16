@@ -11,11 +11,28 @@ import { Next, Previous } from 'grommet-icons';
 import ButtonPlain from 'styled/ButtonPlain';
 
 import styled from 'styled-components';
+import { startsWith } from 'utils/string';
+// import convert from 'color-convert';
+
+const convertToRGBArray = color => {
+  if (startsWith(color, 'rgb') && color.indexOf('(') > -1) {
+    const left = color.indexOf('(') + 1;
+    const right = color.indexOf(')');
+    const inner = color.substr(left, right - left);
+    const split = inner.split(',');
+    return [split[0].trim(), split[1].trim(), split[2].trim()];
+  }
+  if (color.length < 7) {
+    return color.match(/[A-Za-z0-9]{1}/g).map(v => parseInt(`${v}${v}`, 16));
+  }
+  // https://stackoverflow.com/a/42429333
+  return color.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16));
+};
 
 const ArrowWrapper = styled.div`
   position: absolute;
-  top: -10px;
-  bottom: -10px;
+  top: -20px;
+  bottom: -20px;
   transition: all 0.5s;
   z-index: 8;
   opacity: 1;
@@ -62,17 +79,62 @@ const StyledButtonIcon = styled(ButtonPlain)`
     left: ${({ right }) => (right ? 0 : 'auto')};
     right: ${({ left }) => (left ? 0 : 'auto')};
     width: ${({ theme }) => theme.global.edgeSize.xxlarge};
-    background: rgb(255, 255, 255);
+    background: ${({ theme, background }) => {
+    if (theme.global.colors[background])
+      return theme.global.colors[background];
+    return 'rgb(255, 255, 255)'
+  }};
     background: linear-gradient(
       90deg,
-      rgba(255, 255, 255, ${({ right }) => (right ? 0.5 : 1)}) 0%,
-      rgba(255, 255, 255, ${({ right }) => (right ? 1 : 0.5)}) 100%
+      rgba(
+        ${({ theme, background }) => {
+    if (theme.global.colors[background]) {
+      const rgb = convertToRGBArray(theme.global.colors[background]);
+      return rgb.join(',');
+    }
+    return '255, 255, 255';
+  }},
+        ${({ right }) => (right ? 0.5 : 1)}
+      ) 0%,
+      rgba(
+        ${({ theme, background }) => {
+    if (theme.global.colors[background]) {
+      const rgb = convertToRGBArray(theme.global.colors[background]);
+      return rgb.join(',');
+    }
+    return '255, 255, 255';
+  }},
+          ${({ right }) => (right ? 1 : 0.5)}
+      ) 100%
     );
     &:hover {
       background: linear-gradient(
         90deg,
         rgba(255, 255, 255, ${({ right }) => (right ? 0.75 : 1)}) 0%,
         rgba(255, 255, 255, ${({ right }) => (right ? 1 : 0.75)}) 100%
+      );
+      background: linear-gradient(
+        90deg,
+        rgba(
+          ${({ theme, background }) => {
+    if (theme.global.colors[background]) {
+      const rgb = convertToRGBArray(theme.global.colors[background]);
+      return rgb.join(',');
+    }
+    return '255, 255, 255';
+  }},
+          ${({ right }) => (right ? 0.75 : 1)}
+        ) 0%,
+        rgba(
+          ${({ theme, background }) => {
+    if (theme.global.colors[background]) {
+      const rgb = convertToRGBArray(theme.global.colors[background]);
+      return rgb.join(',');
+    }
+    return '255, 255, 255';
+  }},
+            ${({ right }) => (right ? 1 : 0.75)}
+        ) 100%
       );
     }
   }
@@ -88,17 +150,23 @@ const SliderControlsWrapper = styled.div`
   width: 100%;
 `;
 
-const SliderControls = ({ next, previous, carouselState }) => {
+const SliderControls = ({ next, previous, carouselState, background }) => {
   const hasRight =
     carouselState.currentSlide + carouselState.slidesToShow <
     carouselState.totalItems;
   const hasLeft = carouselState.currentSlide > 0;
+
   return (
     <SliderControlsWrapper>
       {hasLeft && (
         <ArrowWrapper left>
           <ArrowWrapperFull left />
-          <StyledButtonIcon left onClick={previous} subtle>
+          <StyledButtonIcon
+            left
+            onClick={previous}
+            subtle
+            background={background}
+          >
             <Previous size="xxlarge" color="dark" />
           </StyledButtonIcon>
         </ArrowWrapper>
@@ -106,7 +174,7 @@ const SliderControls = ({ next, previous, carouselState }) => {
       {hasRight && (
         <ArrowWrapper right>
           <ArrowWrapperFull right />
-          <StyledButtonIcon right onClick={next} subtle>
+          <StyledButtonIcon right onClick={next} subtle background={background}>
             <Next size="xxlarge" color="dark" />
           </StyledButtonIcon>
         </ArrowWrapper>
@@ -119,6 +187,7 @@ SliderControls.propTypes = {
   next: PropTypes.func,
   previous: PropTypes.func,
   carouselState: PropTypes.object,
+  background: PropTypes.string,
 };
 
 export default SliderControls;

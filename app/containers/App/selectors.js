@@ -100,6 +100,10 @@ export const getFeatured = createSelector(
   getData,
   data => data.featured,
 );
+export const getSources = createSelector(
+  getData,
+  data => data.sources,
+);
 
 // router sub-state
 const getRouter = state => state.router;
@@ -695,13 +699,98 @@ export const getESRScoreForCountry = createSelector(
 
 export const getESRIndicatorScoresForCountry = createSelector(
   (state, { countryCode }) => countryCode,
-  (state, { metric }) => metric,
+  (state, { metricCode }) => metricCode,
   getESRIndicatorScores,
-  (countryCode, metric, scores) =>
+  (countryCode, metricCode, scores) =>
     scores &&
     scores.filter(
-      s => s.country_code === countryCode && s.metric_code === metric.code,
+      s => s.country_code === countryCode && s.metric_code === metricCode,
     ),
+);
+
+export const getSingleIndicatorScoresForCountry = createSelector(
+  (state, { dateRange }) => dateRange,
+  (state, { groups }) => groups,
+  getESRIndicatorScoresForCountry, // all scores for a country and metric
+  getESRYear,
+  (dateRange, groups, scores, esrYear) => {
+    if (!scores) return null;
+    // the group codes
+    const filterGroups = PEOPLE_GROUPS.filter(g =>
+      groups ? groups.indexOf(g.key) : g.key === 'all',
+    );
+    // the years
+    const filterRange = dateRange || {
+      min: esrYear,
+      max: esrYear,
+    };
+
+    const scoresByGroup = filterGroups.reduce((memo, group) => {
+      const data = [];
+      const groupCode = group.code;
+      const scoresAll = groupCode
+        ? scores.filter(s => s.group === groupCode)
+        : scores;
+      const scoresSorted = scoresAll.sort((a, b) =>
+        parseInt(a.year, 10) > parseInt(b.year, 10) ? 1 : -1,
+      );
+      /* eslint-disable no-plusplus */
+      for (
+        let y = parseInt(filterRange.min, 10);
+        y <= parseInt(filterRange.max, 10);
+        y++
+      ) {
+        const score = scoresSorted.reduce((m, s) => {
+          const scoreYear = parseInt(s.year, 10);
+          if (scoreYear === y) return s;
+          if (scoreYear < y && scoreYear >= y - INDICATOR_LOOKBACK) {
+            return s;
+          }
+          return m;
+        }, null);
+        // check if already present
+        if (score) {
+          const containsScore = data.find(
+            d => d.year === score.year && d.group === score.group,
+          );
+          if (!containsScore) data.push(score);
+        }
+      }
+      if (data.length === 0) {
+        return memo;
+      }
+      return {
+        ...memo,
+        [group.key]: data,
+      };
+    }, {});
+    return Object.keys(scoresByGroup).reduce(
+      (memo, group) => [...memo, ...scoresByGroup[group]],
+      [],
+    );
+  },
+);
+
+export const getAlternativeIndicatorCountrySources = createSelector(
+  getSingleIndicatorScoresForCountry,
+  getSources,
+  (scores, sources) => {
+    if (!scores || !sources) return null;
+    return scores.reduce((memo, score) => {
+      if (score.source_code && score.source_code.trim() !== '') {
+        const hasSource = memo.find(m => m.source_code === score.source_code);
+        if (!hasSource) {
+          const source = sources.find(s => s.source_code === score.source_code);
+          if (source) {
+            return [...memo, { ...source, ...score }];
+          }
+          return memo;
+        }
+        return memo;
+      }
+      return memo;
+    }, []);
+  },
 );
 
 // single country
@@ -1571,7 +1660,7 @@ export const getAuxIndicatorsLatest = createSelector(
   getAuxIndicators,
   getCountries,
   (values, countries) => {
-    if (!values) return null;
+    if (!values || !countries) return null;
     const latestYearsPerAttribute = map(COLUMNS.AUX, column => {
       const attrValues = values.filter(
         val => val[column] && val[column] !== '',
