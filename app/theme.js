@@ -1,10 +1,10 @@
 export const SIZES = {
   containerMaxWidth: 1328,
   // containerMaxWidth / 2 + edgesize.xxlarge
-  imageHomeMaxWidth: 1440,
+  imageHomeMaxWidth: 700,
   header: {
-    height: 65,
-    padTop: 30,
+    height: 100,
+    padTop: 0,
     padRight: 0,
     padBottom: 0,
     padTopBottom: 10,
@@ -232,6 +232,8 @@ const theme = {
       sectionAbout: '#ededf5',
       sectionCountryOverview: '#ededf5',
       graphicRed: '#EF4123',
+      graphicPurple: '#8D60BA',
+      graphicYellow: '#FDC65B',
       buttonPrimary: '#7F59A6',
       footer: '#423E86',
       female: '#EE5A45',

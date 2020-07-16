@@ -4,55 +4,66 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { intlShape, injectIntl } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
+import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
+import styled from 'styled-components';
+import { intlShape, injectIntl } from 'react-intl';
+
 import { loadContentIfNeeded } from 'containers/App/actions';
 import { getContentByKey, getCloseTargetPage } from 'containers/App/selectors';
-import Methodology from './methodologyPathPage';
-import About from './aboutPathPage';
-import Generic from './genericPathPage';
+
+import Close from 'containers/Close';
+import HTMLWrapper from 'components/HTMLWrapper';
+import LoadingIndicator from 'components/LoadingIndicator';
+import ContentWrap from 'styled/ContentWrap';
+import ContentContainer from 'styled/ContentContainer';
+import ContentMaxWidth from 'styled/ContentMaxWidth';
+import PageTitle from 'styled/PageTitle';
+
+import rootMessages from 'messages';
+
+const StyledContent = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 60px;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
+    margin-top: 40px;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    margin-top: 60px;
+  }
+`;
 
 export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
-  let pageName;
-  if (match) pageName = match.params.page;
+  useEffect(() => {
+    // kick off loading of page content
+    onLoadContent(match.params.page);
+  }, [match.params.page]);
+  const page = match && match.params.page;
+  const pageTitle = intl.formatMessage(rootMessages.page[page]);
 
-  const choosePage = () => {
-    if (pageName === 'methodology')
-      return (
-        <Methodology
-          match={match}
-          onLoadContent={onLoadContent}
-          content={content}
-          closeTarget={closeTarget}
-          intl={intl}
-        />
-      );
-    if (pageName === 'about')
-      return (
-        <About
-          match={match}
-          onLoadContent={onLoadContent}
-          content={content}
-          closeTarget={closeTarget}
-          intl={intl}
-        />
-      );
-    return (
-      <Generic
-        match={match}
-        onLoadContent={onLoadContent}
-        content={content}
-        closeTarget={closeTarget}
-        intl={intl}
-      />
-    );
-  };
-
-  return <React.Fragment>{choosePage()}</React.Fragment>;
+  return (
+    <ContentWrap>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <meta name="description" content="Description of Page" />
+      </Helmet>
+      <ContentContainer direction="column" header>
+        <ContentMaxWidth>
+          <Close closeTarget={closeTarget} />
+          <StyledContent>
+            <PageTitle level={1}>{pageTitle}</PageTitle>
+            {content && <HTMLWrapper innerhtml={content.content} fullPage />}
+            {!content && <LoadingIndicator />}
+          </StyledContent>
+        </ContentMaxWidth>
+      </ContentContainer>
+    </ContentWrap>
+  );
 }
 
 PathPage.propTypes = {

@@ -14,6 +14,7 @@ import {
   getNumberCountriesWithScores,
   getFeaturedCountries,
   getLocale,
+  getPeopleAtRiskCountryNo,
 } from 'containers/App/selectors';
 import {
   loadDataIfNeeded,
@@ -61,6 +62,7 @@ export function PathHome({
   onSelectCountry,
   onSelectCountryCategory,
   locale,
+  countryCountAtRisk,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
@@ -92,8 +94,8 @@ export function PathHome({
         onCatClick={cat => onSelectCountryCategory('featured', cat)}
       />
       <SectionSearch />
-      <SectionPeople nav={nav} />
-      <SectionOurData nav={nav} />
+      <SectionPeople nav={nav} countryNo={countryCountAtRisk} />
+      <SectionOurData locale={locale} nav={nav} />
       <SectionAbout locale={locale} nav={nav} />
       <SectionFooter locale={locale} nav={nav} />
     </ContentWrap>
@@ -105,6 +107,7 @@ PathHome.propTypes = {
   onLoadData: PropTypes.func.isRequired,
   // dataReady: PropTypes.bool,
   countryCount: PropTypes.number,
+  countryCountAtRisk: PropTypes.number,
   countriesFeatured: PropTypes.array,
   onSelectMetric: PropTypes.func,
   onSelectCountry: PropTypes.func,
@@ -116,6 +119,7 @@ const mapStateToProps = createStructuredSelector({
   countriesFeatured: state => getFeaturedCountries(state),
   countryCount: state => getNumberCountriesWithScores(state),
   locale: state => getLocale(state),
+  countryCountAtRisk: state => getPeopleAtRiskCountryNo(state),
 });
 
 export function mapDispatchToProps(dispatch) {
