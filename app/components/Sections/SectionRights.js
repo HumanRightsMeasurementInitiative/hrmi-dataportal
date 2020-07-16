@@ -66,7 +66,7 @@ export function SectionRights({
                 />
               )}
             </Box>
-            <Slider cardMargin="xsmall">
+            <Slider cardMargin="xsmall" background={background}>
               {rights.map(r => (
                 <Card
                   key={r.key}

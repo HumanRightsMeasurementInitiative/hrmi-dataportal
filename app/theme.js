@@ -42,7 +42,7 @@ export const SIZES = {
   },
   charts: {
     // small, sm, medium, large, xlarge, xxlarge
-    labels: [90, 100, 120, 90, 140, 180],
+    labels: [90, 100, 120, 120, 140, 180],
     scoresAside: [30, 60, 60, 40, 60, 80],
   },
 };

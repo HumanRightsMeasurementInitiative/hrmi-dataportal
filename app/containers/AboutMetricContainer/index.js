@@ -51,6 +51,8 @@ export function AboutMetricContainer({
   showSources,
   countryScoreMsg,
   inverse,
+  dateRange,
+  countryCode,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -236,6 +238,8 @@ export function AboutMetricContainer({
         standard={standard}
         onSelectMetric={onSelectMetric}
         showSources={showSources}
+        dateRange={dateRange}
+        countryCode={countryCode}
       />
       {showFAQs && (
         <FAQs
@@ -264,6 +268,8 @@ AboutMetricContainer.propTypes = {
   showSources: PropTypes.bool,
   inverse: PropTypes.bool,
   countryScoreMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  countryCode: PropTypes.string,
+  dateRange: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({

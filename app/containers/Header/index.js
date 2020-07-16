@@ -52,7 +52,7 @@ const Styled = styled.header`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 10;
   width: 100%;
   height: ${({ theme }) => getHeaderHeight('small', theme)}px;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
@@ -296,6 +296,7 @@ export function Header({
                     justify="end"
                     size={size}
                     style={{ paddingTop: '25px' }}
+                    align="end"
                   >
                     {navButtonOnClick({
                       match,
@@ -365,7 +366,7 @@ export function Header({
                       <Search
                         expand={showSearch}
                         onToggle={show => setShowSearch(show)}
-                        borderSize="none"
+                        bordersize="none"
                       />
                     </SearchWrap>
                   )}
