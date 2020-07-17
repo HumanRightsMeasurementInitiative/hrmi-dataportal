@@ -45,6 +45,7 @@ import NarrativeESRStandardHint from 'components/CountryNarrative/NarrativeESRSt
 import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESRCompAssessment';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
 import NarrativeCPRGovRespondents from 'components/CountryNarrative/NarrativeCPRGovRespondents';
+import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
 
 import Hint from 'styled/Hint';
 
@@ -53,9 +54,7 @@ import getMetricDetails from 'utils/metric-details';
 import { getMessageGrammar } from 'utils/narrative';
 import { isMinSize } from 'utils/responsive';
 import { lowerCase } from 'utils/string';
-
 import { hasCountryGovRespondents } from 'utils/countries';
-import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
 
 import rootMessages from 'messages';
 
