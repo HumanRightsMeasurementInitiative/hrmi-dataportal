@@ -29,6 +29,9 @@ const Styled = styled.div`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     margin-top: ${({ top }) => (top ? 20 : 60)}px;
   }
+  @media print {
+    display: ${({ displayInPDF }) => (displayInPDF ? 'initial' : 'none')};
+  }
 `;
 const Top = styled(Box)`
   position: relative;
@@ -60,6 +63,7 @@ export function ChartHeader({
   top,
   hasSubHeading,
   standard,
+  displayInPDF,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
@@ -67,7 +71,7 @@ export function ChartHeader({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Styled top={top}>
+        <Styled top={top} displayInPDF={displayInPDF}>
           <Top direction="row" align="center" justify="between">
             <HeadingWrap>
               <Heading
@@ -186,6 +190,7 @@ ChartHeader.propTypes = {
   hasSubHeading: PropTypes.bool,
   standard: PropTypes.string,
   intl: intlShape.isRequired,
+  displayInPDF: PropTypes.bool,
 };
 
 export default injectIntl(ChartHeader);
