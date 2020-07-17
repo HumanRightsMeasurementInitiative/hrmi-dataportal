@@ -5,9 +5,8 @@ import styled from 'styled-components';
 import { injectIntl, intlShape } from 'react-intl';
 
 import { Box, DropButton, ResponsiveContext, Text } from 'grommet';
-import { FormDown, FormUp, Ascend, Descend } from 'grommet-icons';
+import { FormDown, FormUp } from 'grommet-icons';
 
-import ButtonIcon from 'styled/ButtonIcon';
 import { isMinSize, isMaxSize } from 'utils/responsive';
 
 import messages from './messages';
@@ -24,13 +23,9 @@ const StyledDropButton = styled(DropButton)`
 }
 `;
 
-const StyledButtonIcon = styled(ButtonIcon)`
-  width: 30px;
-  height: 30px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    width: 35px;
-    height: 35px;
-  }
+const StyledSortButton = styled(DropButton)`
+  width: 85px;
+  text-align: right;
 `;
 
 export function ChartSettingSort({
@@ -111,17 +106,12 @@ export function ChartSettingSort({
               />
             </Box>
             <Box flex={{ shrink: 0 }}>
-              <StyledButtonIcon
-                subtle
+              <StyledSortButton
                 onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
               >
-                {order === 'asc' && (
-                  <Ascend size={isMaxSize(size, 'sm') ? 'small' : 'large'} />
-                )}
-                {order === 'desc' && (
-                  <Descend size={isMaxSize(size, 'sm') ? 'small' : 'large'} />
-                )}
-              </StyledButtonIcon>
+                {order === 'asc' && <p>Ascending</p>}
+                {order === 'desc' && <p>Descending</p>}
+              </StyledSortButton>
             </Box>
           </Box>
         );
