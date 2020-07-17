@@ -13,7 +13,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
 import { ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
-import { withTheme } from 'styled-components';
+import styled, { withTheme } from 'styled-components';
 
 import rootMessages from 'messages';
 
@@ -77,12 +77,23 @@ import { hasCPR, formatScore } from 'utils/scores';
 import { isMinSize, isMaxSize } from 'utils/responsive';
 import { getMessageGrammar } from 'utils/narrative';
 import { lowerCase } from 'utils/string';
-//
-// const Image = styled.img`
-//   width: 100%;
-// `;
 
 import messages from './messages';
+
+const RemoveFromPDFWrapper = styled.div`
+  @media print {
+    display: none;
+  }
+`;
+
+const TitleWrapper = styled.div`
+  @media print {
+    height: 200px;
+    width: 100%;
+    background-image: ${({ pdfImageSrc }) => `url(${pdfImageSrc})`};
+    background-size: cover;
+  }
+`;
 
 const DEPENDENCIES = [
   'countries',
@@ -274,7 +285,7 @@ export function PathCountry({
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
-                  <div>
+                  <RemoveFromPDFWrapper>
                     <Breadcrumb
                       onItemClick={(key, value) => onCategoryClick(key, value)}
                       breadcrumb
@@ -287,22 +298,30 @@ export function PathCountry({
                         },
                       ]}
                     />
-                  </div>
-                  <div>
+                  </RemoveFromPDFWrapper>
+                  <TitleWrapper
+                    pdfImageSrc={`${IMAGE_PATH}/country_${countryCode}.png`}
+                  >
                     <PageTitle>{countryTitle}</PageTitle>
-                  </div>
-                  <Paragraph size={isMaxSize(size, 'sm') ? 'small' : 'medium'}>
-                    <FormattedMessage
-                      {...messages.header.a}
-                      values={messageValues}
-                    />
-                  </Paragraph>
-                  <Paragraph size={isMaxSize(size, 'sm') ? 'small' : 'medium'}>
-                    <FormattedMessage
-                      {...messages.header.b}
-                      values={messageValues}
-                    />
-                  </Paragraph>
+                  </TitleWrapper>
+                  <RemoveFromPDFWrapper>
+                    <Paragraph
+                      size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
+                    >
+                      <FormattedMessage
+                        {...messages.header.a}
+                        values={messageValues}
+                      />
+                    </Paragraph>
+                    <Paragraph
+                      size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
+                    >
+                      <FormattedMessage
+                        {...messages.header.b}
+                        values={messageValues}
+                      />
+                    </Paragraph>
+                  </RemoveFromPDFWrapper>
                 </MainColumn>
                 {isMinSize(size, 'large') && (
                   <Aside image>
