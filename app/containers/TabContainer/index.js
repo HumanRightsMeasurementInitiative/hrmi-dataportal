@@ -51,7 +51,7 @@ const TabLinks = styled(Box)`
     margin-left: -10px;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    margin-left: -20px;
+    margin-left: 0px;
     height: 44px;
   }
 `;

@@ -147,22 +147,18 @@ export function PathMetric({
                     <PageTitle>{metricTitle}</PageTitle>
                   </div>
                   {messages[metric.metricType][metricCode].header.a && (
-                    <Paragraph
-                      size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
-                    >
+                    <p style={{ fontSize: '21px', lineHeight: '38px' }}>
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.a}
                       />
-                    </Paragraph>
+                    </p>
                   )}
                   {messages[metric.metricType][metricCode].header.b && (
-                    <Paragraph
-                      size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
-                    >
+                    <p style={{ fontSize: '21px', lineHeight: '38px' }}>
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.b}
                       />
-                    </Paragraph>
+                    </p>
                   )}
                   {messages[metric.metricType][metricCode].link && (
                     <Paragraph
