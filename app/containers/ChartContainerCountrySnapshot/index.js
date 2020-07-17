@@ -58,6 +58,13 @@ const Styled = styled.div`
   margin-bottom: 35px;
 `;
 
+const NarrativePDFBox = styled(Box)`
+  display: none;
+  @media print {
+    display: initial;
+  }
+`;
+
 const DEPENDENCIES = [
   'countries',
   'countriesGrammar',
@@ -147,6 +154,7 @@ export function ChartContainerCountrySnapshot({
             showBenchmark: true,
           },
         }}
+        displayInPDF={false}
       />
       <NarrativeESRStandardHint
         country={country}
@@ -171,6 +179,35 @@ export function ChartContainerCountrySnapshot({
           grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
           activeCode={activeCode}
         />
+        <NarrativePDFBox margin={{ bottom: 'medium' }}>
+          <NarrativeESRStandardHint
+            country={country}
+            standard={standard}
+            countryGrammar={countryGrammar}
+          />
+          <NarrativeESR
+            dimensionScore={dimensions.esr.score}
+            country={country}
+            countryGrammar={countryGrammar}
+            standard={standard}
+            short
+            benchmark={benchmark}
+            showNoData={false}
+          />
+          <NarrativeESRCompAssessment
+            country={country}
+            countryGrammar={countryGrammar}
+            comparativeScore={parseFloat(comparativeScoreESR)}
+            comparativeRights={comparativeRightsESR}
+            groupAverageScore={
+              dimensionAverages &&
+              dimensionAverages.esr &&
+              dimensionAverages.esr.average &&
+              dimensionAverages.esr.average[benchmark]
+            }
+            benchmark={currentBenchmark}
+          />
+        </NarrativePDFBox>
         <ChartCountrySnapshot
           type="cpr"
           dimensionCode="physint"
