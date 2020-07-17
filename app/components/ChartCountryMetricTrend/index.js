@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
-import { Box, ResponsiveContext } from 'grommet';
+import { Box, Text, ResponsiveContext } from 'grommet';
 import {
   FlexibleWidthXYPlot,
   XAxis,
@@ -23,10 +23,16 @@ import {
 import { utcFormat as timeFormat } from 'd3-time-format';
 import { formatScore } from 'utils/scores';
 import { isMaxSize, isMinSize } from 'utils/responsive';
+import { lowerCase } from 'utils/string';
 
 import Source from 'components/Source';
+import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
 
-import { INDICATOR_LOOKBACK, PEOPLE_GROUPS } from 'containers/App/constants';
+import {
+  INDICATOR_LOOKBACK,
+  BENCHMARKS,
+  PEOPLE_GROUPS,
+} from 'containers/App/constants';
 
 import SettingsMultiToggle from 'containers/LayerSettings/SettingsMultiToggle';
 
@@ -51,6 +57,31 @@ const PlotHintTighter = styled(PlotHint)`
   padding: 3px 6px;
   margin-bottom: 5px;
   font-size: 14px;
+`;
+
+const KeyItem = styled(Box)`
+  margin-left: 15px;
+  text-align: right;
+  position: relative;
+`;
+const KeyItemSolid = styled.span`
+  max-height: 14px;
+  border-right: 1px solid;
+  border-color: ${props => props.theme.global.colors['dark-2']};
+  margin-left: 8px;
+`;
+
+const KeyItemDashed = styled.span`
+  background-image: linear-gradient(
+    ${props => props.theme.global.colors['dark-2']} 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: right center;
+  background-size: 2px 4px;
+  background-repeat: repeat-y;
+  height: 14px;
+  margin-left: 8px;
+  width: 3px;
 `;
 
 const Settings = styled(Box)``;
@@ -136,6 +167,7 @@ function ChartCountryMetricTrend({
   colorCode,
   colorHint,
   // benchmarkRefs,
+  benchmark,
   hasRawOption,
   raw,
   onRawChange,
@@ -151,6 +183,8 @@ function ChartCountryMetricTrend({
   const [highlightUpper, setHighlightUpper] = useState(false);
   const [highlightLower, setHighlightLower] = useState(false);
   if (!maxYear) return null;
+
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   // dummy data to force the area plot from 0
   const dataForceYRange = [
@@ -251,7 +285,7 @@ function ChartCountryMetricTrend({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box direction="column" align="start" pad={{ vertical: 'medium' }}>
+        <div direction="column" align="start" pad={{ vertical: 'medium' }}>
           <WrapPlot>
             <FlexibleWidthXYPlot
               height={isMinSize(size, 'medium') ? 240 : 200}
@@ -483,7 +517,57 @@ function ChartCountryMetricTrend({
               )}
             </FlexibleWidthXYPlot>
           </WrapPlot>
-          <Source center />
+          {currentBenchmark.key === 'best' && (
+            <Box
+              direction="row"
+              margin={{
+                top: 'small',
+                right: scoreAsideWidth(size),
+              }}
+              justify="end"
+            >
+              <KeyItem direction="row">
+                <Text size="xxsmall">
+                  <FormattedMessage
+                    {...rootMessages.settings.benchmark.adjusted}
+                  />
+                  {isMinSize(size, 'medium') && (
+                    <span>
+                      {` ${lowerCase(
+                        intl.formatMessage(
+                          rootMessages.settings.benchmark.nameShort,
+                        ),
+                      )}`}
+                    </span>
+                  )}
+                </Text>
+                <KeyItemDashed />
+              </KeyItem>
+              <KeyItem direction="row">
+                <Text size="xxsmall">
+                  <FormattedMessage {...rootMessages.settings.benchmark.best} />
+                  {isMinSize(size, 'medium') && (
+                    <span>
+                      {` ${lowerCase(
+                        intl.formatMessage(
+                          rootMessages.settings.benchmark.nameShort,
+                        ),
+                      )}`}
+                    </span>
+                  )}
+                </Text>
+                <KeyItemSolid />
+              </KeyItem>
+            </Box>
+          )}
+          <Box
+            margin={{
+              top: currentBenchmark.key === 'best' ? 'xsmall' : 'medium',
+              bottom: 'large',
+            }}
+          >
+            <Source />
+          </Box>
           {(hasRawOption || groupsActive) && (
             <Settings
               direction="row"
@@ -533,7 +617,7 @@ function ChartCountryMetricTrend({
               )}
             </Settings>
           )}
-        </Box>
+        </div>
       )}
     </ResponsiveContext.Consumer>
   );
@@ -606,6 +690,7 @@ ChartCountryMetricTrend.propTypes = {
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
   benchmarkRefs: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   hasRawOption: PropTypes.bool,
   raw: PropTypes.bool,
   onRawChange: PropTypes.func,
