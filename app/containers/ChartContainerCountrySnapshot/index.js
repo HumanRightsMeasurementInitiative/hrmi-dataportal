@@ -56,6 +56,10 @@ import messages from './messages';
 
 const Styled = styled.div`
   margin-bottom: 35px;
+  @media print {
+    padding-left: ${({ theme }) => theme.global.edgeSize.large};
+    padding-right: ${({ theme }) => theme.global.edgeSize.large};
+  }
 `;
 
 const RemoveFromPDFWrapper = styled.div`

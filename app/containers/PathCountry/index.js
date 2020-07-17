@@ -88,6 +88,8 @@ const RemoveFromPDFWrapper = styled.div`
 
 const TitleWrapper = styled.div`
   @media print {
+    display: flex;
+    align-items: flex-end;
     height: 200px;
     width: 100%;
     background-image: ${({ pdfImageSrc }) => `url(${pdfImageSrc})`};
