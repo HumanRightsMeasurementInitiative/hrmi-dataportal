@@ -1470,7 +1470,7 @@ export const getReferenceScores = createSelector(
           let referenceCountries;
           if (isCountryHighIncome(country) && isCountryOECD(country)) {
             referenceCountries = countries.filter(
-              c => isCountryHighIncome(c) && isCountryOECD(country),
+              c => isCountryHighIncome(c) && isCountryOECD(c),
             );
           } else if (
             SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) > -1
