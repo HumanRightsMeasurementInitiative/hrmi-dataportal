@@ -1465,7 +1465,8 @@ export const getReferenceScores = createSelector(
         // 2. get reference countries if scores present
         if (hasCountryDimScore) {
           // these are the countries that we are comparing our country to
-          // if country high income country then compare with all other HI
+          // if country high income AND OECD country then
+          //   compare it with all other HI AND OECD countries
           // if not, compare with region/subregion
           let referenceCountries;
           if (isCountryHighIncome(country) && isCountryOECD(country)) {
