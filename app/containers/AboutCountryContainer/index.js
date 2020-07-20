@@ -54,6 +54,45 @@ const StyledButtonText = styled(ButtonTextIcon)`
   font-weight: 400;
 `;
 
+const ContainerBox = styled(Box)`
+  flex-direction: column;
+  padding-top: 48px;
+  padding-bottom: 24px;
+  @media print {
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #262064;
+    color: white;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+`;
+
+const RowBox = styled(Box)`
+  flex-direction: column;
+  width: 50%;
+  @media print {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 12px;
+  }
+`;
+
+const DetailBox = styled(Box)`
+  flex-direction: row;
+  @media print {
+    flex-direction: column;
+    margin-top: 24px;
+  }
+`;
+
+const RemoveFromPDFWrapper = styled.div`
+  @media print {
+    display: none;
+  }
+`;
+
 const prepPopulationValue = (value, intl, year) => {
   if (parseInt(value, 10) > 1000000) {
     return {
@@ -115,10 +154,7 @@ function AboutCountryContainer({
   const countryStatus = country[COLUMNS.COUNTRIES.STATUS];
 
   return (
-    <Box
-      direction="column"
-      pad={{ left: 'medium', bottom: 'medium', top: 'large' }}
-    >
+    <ContainerBox pad={{ left: 'medium' }}>
       <Heading responsive={false} level={3}>
         {!showTitle && <FormattedMessage {...messages.title} />}
         {showTitle && (
@@ -147,13 +183,13 @@ function AboutCountryContainer({
         </Box>
       )}
       {hasPopulation && (
-        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+        <DetailBox margin={{ bottom: 'xsmall' }}>
           <Box width="50%">
             <Label>
               <FormattedMessage {...messages.population} />
             </Label>
           </Box>
-          <Box width="50%">
+          <RowBox width="50%">
             <Text>
               <FormattedMessage
                 {...messages.populationValue}
@@ -164,17 +200,17 @@ function AboutCountryContainer({
                 )}
               />
             </Text>
-          </Box>
-        </Box>
+          </RowBox>
+        </DetailBox>
       )}
       {(hasCurrentGDP || hasPPPGDP) && (
-        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+        <DetailBox margin={{ bottom: 'xsmall' }}>
           <Box direction="column" width="50%">
             <Label>
               <FormattedMessage {...messages.gdp} />
             </Label>
           </Box>
-          <Box direction="column" width="50%">
+          <RowBox>
             {hasCurrentGDP && (
               <Box direction="column" margin={{ bottom: 'small' }}>
                 <Text>
@@ -223,8 +259,8 @@ function AboutCountryContainer({
                 </div>
               </Box>
             )}
-          </Box>
-        </Box>
+          </RowBox>
+        </DetailBox>
       )}
       {(!collapsible || more) && (
         <>
@@ -334,17 +370,19 @@ function AboutCountryContainer({
         </>
       )}
       {collapsible && (
-        <MoreWrap>
-          <StyledButtonText
-            onClick={() => setMore(!more)}
-            icon={
-              more ? <FormSubtract size="large" /> : <FormAdd size="large" />
-            }
-            color={inverse ? 'white' : 'dark'}
-            size="small"
-            label={<FormattedMessage {...messages[more ? 'less' : 'more']} />}
-          />
-        </MoreWrap>
+        <RemoveFromPDFWrapper>
+          <MoreWrap>
+            <StyledButtonText
+              onClick={() => setMore(!more)}
+              icon={
+                more ? <FormSubtract size="large" /> : <FormAdd size="large" />
+              }
+              color={inverse ? 'white' : 'dark'}
+              size="small"
+              label={<FormattedMessage {...messages[more ? 'less' : 'more']} />}
+            />
+          </MoreWrap>
+        </RemoveFromPDFWrapper>
       )}
       {showFAQs && <FAQs questions={showFAQs} />}
       {showCountryLink && (
@@ -361,14 +399,14 @@ function AboutCountryContainer({
           </ButtonHero>
         </div>
       )}
-    </Box>
+    </ContainerBox>
   );
 }
 
 AboutCountryContainer.propTypes = {
   onCategoryClick: PropTypes.func,
   onCountryClick: PropTypes.func,
-  showFAQs: PropTypes.array,
+  showFAQs: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   showTitle: PropTypes.bool,
   showCountryLink: PropTypes.bool,
   collapsible: PropTypes.bool,
