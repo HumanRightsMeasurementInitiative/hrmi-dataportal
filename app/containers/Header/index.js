@@ -159,6 +159,30 @@ const TextWrap = styled.span`
   vertical-align: middle;
 `;
 
+const ElevationBox = styled(Box)`
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  @media print {
+    box-shadow: none;
+    padding-left: ${({ theme }) => theme.global.edgeSize.large};
+    padding-right: ${({ theme }) => theme.global.edgeSize.large};
+    padding-top: ${({ theme }) => theme.global.edgeSize.xsmall};
+    padding-bottom: ${({ theme }) => theme.global.edgeSize.ms};
+  }
+`;
+
+const BrandBox = styled(Box)`
+  @media print {
+    width: 100%;
+    justify-content: space-between;
+  }
+`;
+
+const RemoveFromPDFBox = styled(Box)`
+  @media print {
+    display: none;
+  }
+`;
+
 const navButtonOnClick = ({ match, onClick, align, locale }) =>
   PAGES &&
   Object.values(PAGES)
@@ -221,9 +245,9 @@ export function Header({
     <ResponsiveContext.Consumer>
       {size => (
         <Styled role="banner" size={size}>
-          <Box elevation="medium" background="white">
+          <ElevationBox background="white">
             <ContentMaxWidth column={isMaxSize(size, 'sm')}>
-              <Box
+              <BrandBox
                 direction="row"
                 align="center"
                 justify="stretch"
@@ -296,8 +320,9 @@ export function Header({
                     </MenuList>
                   </Layer>
                 )}
-              </Box>
-              <Box fill>
+                <p>Country Profiles | Human Rights in COUNTRY, 2020</p>
+              </BrandBox>
+              <RemoveFromPDFBox fill>
                 {isMinSize(size, 'large') && (
                   <NavBarTop
                     theme={theme}
@@ -380,9 +405,9 @@ export function Header({
                     </SearchWrap>
                   )}
                 </NavBarBottom>
-              </Box>
+              </RemoveFromPDFBox>
             </ContentMaxWidth>
-          </Box>
+          </ElevationBox>
         </Styled>
       )}
     </ResponsiveContext.Consumer>
