@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Text } from 'grommet';
 import { FormNext, FormPrevious } from 'grommet-icons';
 
-import ButtonTextIcon from 'styled/ButtonTextIcon';
+import ButtonTextIconWide from 'styled/ButtonTextIconWide';
 
 const TextRelative = styled(Text)`
   font-weight: 600;
@@ -13,8 +13,9 @@ const TextRelative = styled(Text)`
 
 function ButtonRelative({ text, previous, ...rest }) {
   return (
-    <ButtonTextIcon
+    <ButtonTextIconWide
       primary
+      width="100%"
       size="small"
       margin={{ vertical: 'xxsmall' }}
       padding="10px"

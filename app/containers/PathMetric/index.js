@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import { ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
+import { ResponsiveContext, Paragraph } from 'grommet';
 import { withTheme } from 'styled-components';
 
 import { navigate, setAsideLayer } from 'containers/App/actions';
@@ -179,7 +179,16 @@ export function PathMetric({
                 </MainColumn>
                 {isMinSize(size, 'large') && (
                   <Aside image>
-                    <GImage src={imageSrc} fit="cover" />
+                    <img
+                      src={imageSrc}
+                      alt={metricTitle}
+                      fit="cover"
+                      style={{
+                        overflow: 'hidden',
+                        objectFit: 'cover',
+                        maxWidth: '350px',
+                      }}
+                    />
                   </Aside>
                 )}
               </ContentMaxWidth>
