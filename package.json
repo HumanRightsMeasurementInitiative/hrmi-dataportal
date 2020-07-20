@@ -13,6 +13,7 @@
   "author": "tmfrnz",
   "license": "MIT",
   "scripts": {
+    "dev": "next",
     "analyze:clean": "rimraf stats.json",
     "preanalyze": "npm run analyze:clean",
     "analyze": "node ./internals/scripts/analyze.js",
@@ -90,6 +91,7 @@
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.14",
     "minimist": "^1.2.5",
+    "next": "^9.4.4",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",

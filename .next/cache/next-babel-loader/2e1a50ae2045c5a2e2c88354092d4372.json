@@ -1,0 +1,17 @@
+{
+  "ast": null,
+  "code": "function HomePage() {\n  return /*#__PURE__*/React.createElement(\"div\", null, \"Welcome to Next.js!\");\n}\n\nexport default HomePage;",
+  "map": {
+    "version": 3,
+    "sources": [
+      "/Users/iainkirkpatrick/Development/HumanRightsMeasurementInitiative/hrmi-dataportal/src/pages/index.js"
+    ],
+    "names": ["HomePage"],
+    "mappings": "AAAA,SAASA,QAAT,GAAoB;AAClB,sBAAO,uDAAP;AACD;;AAED,eAAeA,QAAf",
+    "sourcesContent": [
+      "function HomePage() {\n  return <div>Welcome to Next.js!</div>\n}\n\nexport default HomePage\n"
+    ]
+  },
+  "metadata": {},
+  "sourceType": "module"
+}
