@@ -61,7 +61,7 @@ export function ListHeader({
           >
             <StyledScoreText
               size="small"
-              style={{ fontWeight: 600 }}
+              style={{ fontWeight: 300 }}
               color={labelColor}
             >
               {commonLabel || (
