@@ -160,12 +160,23 @@ function FAQs({
     metricLower: lowerCase(metric),
   };
 
-  const { metricType } = metrics;
-  const hasAbout = rootMessages[`${metricType}-about`];
-  const hasIndicator = metricType === 'indicators' && metricInfo;
+  let { metricType } = metrics;
+  let hasIndicator = metricType === 'indicators' && metricInfo;
+  let hasAbout = rootMessages[`${metricType}-about`];
   const aboutIndex = 0;
-  const indicatorIndex = hasIndicator && hasAbout ? 1 : 0;
-  const sourceIndex = aboutIndex + indicatorIndex + 1;
+  let indicatorIndex = hasIndicator && hasAbout ? 1 : 0;
+  let sourceIndex = aboutIndex + indicatorIndex + 1;
+
+  // for metric pages
+  if (metrics) {
+    /* eslint-disable prefer-destructuring */
+    metricType = metrics.metricType;
+    /* eslint-enable prefer-destructuring */
+    hasIndicator = metricType === 'indicators' && metricInfo;
+    hasAbout = rootMessages[`${metricType}-about`];
+    indicatorIndex = hasIndicator && hasAbout ? 1 : 0;
+    sourceIndex = aboutIndex + indicatorIndex + 1;
+  }
 
   return (
     <Box pad={{ vertical: 'large' }}>
@@ -177,7 +188,7 @@ function FAQs({
         activeIndex={actives}
         onActive={newActive => setActive(newActive)}
       >
-        {/* moved from AboutMetric */}
+        {/* for metric pages */}
         {hasAbout && (
           <AccordionPanel
             header={
@@ -304,6 +315,7 @@ function FAQs({
           </AccordionPanel>
         )}
 
+        {/* for all pages */}
         {questions.map((q, index) => (
           <AccordionPanel
             key={q}
