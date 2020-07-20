@@ -6,6 +6,7 @@ import { getAsideWidth } from 'utils/responsive';
 
 // prettier-ignore
 const Styled = styled(Box)`
+  justify-content: center;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding-right: ${({ theme, image }) =>
     image ? 0 : theme.global.edgeSize.medium};
