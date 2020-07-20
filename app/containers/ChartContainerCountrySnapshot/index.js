@@ -34,6 +34,7 @@ import {
   getReferenceScores,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
+import AboutCountryContainer from 'containers/AboutCountryContainer';
 
 import ChartHeader from 'components/ChartHeader';
 import LoadingIndicator from 'components/LoadingIndicator';
@@ -236,9 +237,6 @@ export function ChartContainerCountrySnapshot({
         />
         <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
-            <Heading level={4} margin={{ bottom: 'small' }}>
-              <FormattedMessage {...rootMessages.dimensions.physint} />
-            </Heading>
             <NarrativeCPR
               dimensionKey="physint"
               score={dimensions.physint.score}
@@ -276,15 +274,6 @@ export function ChartContainerCountrySnapshot({
                   : 'all'
               }
             />
-            {hasSomePhysintScore && (
-              <Paragraph>
-                <ButtonTextIcon
-                  onClick={() => goToTab('report-physint')}
-                  label={<FormattedMessage {...messages.exploreDetails} />}
-                  hasIcon
-                />
-              </Paragraph>
-            )}
           </Box>
         </AddToPDFWrapper>
         <ChartCountrySnapshot
@@ -303,9 +292,6 @@ export function ChartContainerCountrySnapshot({
         />
         <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
-            <Heading level={4} margin={{ bottom: 'small' }}>
-              <FormattedMessage {...rootMessages.dimensions.empowerment} />
-            </Heading>
             <NarrativeCPR
               dimensionKey="empowerment"
               score={dimensions.empowerment.score}
@@ -343,15 +329,6 @@ export function ChartContainerCountrySnapshot({
                   : 'all'
               }
             />
-            {hasSomeEmpowermentScore && (
-              <Paragraph>
-                <ButtonTextIcon
-                  onClick={() => goToTab('report-empowerment')}
-                  label={<FormattedMessage {...messages.exploreDetails} />}
-                  hasIcon
-                />
-              </Paragraph>
-            )}
           </Box>
         </AddToPDFWrapper>
         <Source />
@@ -510,6 +487,13 @@ export function ChartContainerCountrySnapshot({
           )}
         </Box>
       </RemoveFromPDFWrapper>
+      <AddToPDFWrapper>
+        <AboutCountryContainer
+          countryCode={countryCode}
+          onCategoryClick={() => {}}
+          showFAQs={false}
+        />
+      </AddToPDFWrapper>
     </Styled>
   );
 }
