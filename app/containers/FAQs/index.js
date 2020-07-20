@@ -160,12 +160,12 @@ function FAQs({
     metricLower: lowerCase(metric),
   };
 
-  let { metricType } = metrics;
-  let hasIndicator = metricType === 'indicators' && metricInfo;
-  let hasAbout = rootMessages[`${metricType}-about`];
+  let metricType;
+  let hasIndicator;
+  let hasAbout;
   const aboutIndex = 0;
-  let indicatorIndex = hasIndicator && hasAbout ? 1 : 0;
-  let sourceIndex = aboutIndex + indicatorIndex + 1;
+  let indicatorIndex;
+  let sourceIndex;
 
   // for metric pages
   if (metrics) {
