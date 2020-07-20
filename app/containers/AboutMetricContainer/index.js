@@ -19,8 +19,6 @@ import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 import FAQs from 'containers/FAQs';
 
-import AboutMetric from 'components/AboutMetric';
-
 import ButtonHero from 'styled/ButtonHero';
 
 import getMetricDetails from 'utils/metric-details';
@@ -104,12 +102,12 @@ export function AboutMetricContainer({
       pad={{ horizontal: 'medium', bottom: 'medium', top: 'xlarge' }}
     >
       {showRelated && (
-        <div pad={{ vertical: 'medium', horizontal: 'medium' }} justify="start">
+        <div justify="start">
           {metricType !== 'dimensions' && (
             <Pad>
               <Heading
                 responsive={false}
-                level={5}
+                size="18px"
                 margin={{ vertical: 'xsmall' }}
               >
                 {typeof metric.aggregate === 'undefined' && (
@@ -136,7 +134,7 @@ export function AboutMetricContainer({
             <Pad>
               <Heading
                 responsive={false}
-                level={5}
+                size="18px"
                 margin={{ vertical: 'xsmall' }}
               >
                 {metricType === 'dimensions' && (
@@ -172,8 +170,8 @@ export function AboutMetricContainer({
                   {children.map(as => (
                     <Pad key={as.key}>
                       <Text
-                        size="xsmall"
-                        color="secondary"
+                        size="14px"
+                        color="#262064"
                         margin={{ bottom: 'xxsmall' }}
                       >
                         {`${intl.formatMessage(
@@ -232,21 +230,19 @@ export function AboutMetricContainer({
           </ButtonHero>
         </div>
       )}
-      <AboutMetric
-        metric={metric}
-        metricInfo={metricInfo}
-        standard={standard}
-        onSelectMetric={onSelectMetric}
-        showSources={showSources}
-        dateRange={dateRange}
-        countryCode={countryCode}
-      />
       {showFAQs && (
         <FAQs
           questions={questions}
           metric={intl.formatMessage(
             rootMessages[metric.metricType][metric.key],
           )}
+          metrics={metric}
+          metricInfo={metricInfo}
+          standard={standard}
+          onSelectMetric={onSelectMetric}
+          showSources={showSources}
+          dateRange={dateRange}
+          countryCode={countryCode}
         />
       )}
     </Box>
