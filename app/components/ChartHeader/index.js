@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Heading, ResponsiveContext, Box, Text } from 'grommet';
 import styled from 'styled-components';
@@ -50,8 +50,9 @@ const HeadingWrap = styled(Box)`
 
 const ChartToolWrapper = styled(Box)``;
 
-function handleDownloadPDF(countryCode) {
+function handleDownloadPDF(countryCode, setDownloadingPDF) {
   return () => {
+    setDownloadingPDF(true);
     const url = window.location.href;
     fetch(`${url}?pdf=true`)
       .then(res => res.blob())
@@ -67,6 +68,12 @@ function handleDownloadPDF(countryCode) {
           // For Firefox it is necessary to delay revoking the ObjectURL
           window.URL.revokeObjectURL(data);
         }, 100);
+        setDownloadingPDF(false);
+      })
+      .catch(err => {
+        // TODO: handle error with UI
+        console.error(err);
+        setDownloadingPDF(false);
       });
   };
 }
@@ -87,6 +94,7 @@ export function ChartHeader({
   displayInPDF,
   countryCode,
 }) {
+  const [downloadingPDF, setDownloadingPDF] = useState(false);
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
 
@@ -122,8 +130,12 @@ export function ChartHeader({
                   )}
                 </SubHeading>
               )}
-              <button type="button" onClick={handleDownloadPDF(countryCode)}>
-                Download PDF
+              <button
+                type="button"
+                disabled={downloadingPDF}
+                onClick={handleDownloadPDF(countryCode, setDownloadingPDF)}
+              >
+                {downloadingPDF ? 'Loading' : 'Download PDF'}
               </button>
             </HeadingWrap>
             {tools && (
