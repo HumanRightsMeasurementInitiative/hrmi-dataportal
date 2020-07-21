@@ -14,7 +14,6 @@ const Styled = styled(Box)`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding-right: ${({ theme, image }) =>
     image ? 0 : theme.global.edgeSize.xlarge};
-    padding-left: 45px;
   }
 `;
 
