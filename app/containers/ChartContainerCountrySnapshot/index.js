@@ -166,6 +166,7 @@ export function ChartContainerCountrySnapshot({
           },
         }}
         displayInPDF={false}
+        countryCode={countryCode}
       />
       <NarrativeESRStandardHint
         country={country}
