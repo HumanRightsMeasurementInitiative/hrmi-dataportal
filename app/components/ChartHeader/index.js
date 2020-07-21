@@ -50,6 +50,27 @@ const HeadingWrap = styled(Box)`
 
 const ChartToolWrapper = styled(Box)``;
 
+function handleDownloadPDF(countryCode) {
+  return () => {
+    const url = window.location.href;
+    fetch(`${url}?pdf=true`)
+      .then(res => res.blob())
+      .then(blob => {
+        // see https://blog.jayway.com/2017/07/13/open-pdf-downloaded-api-javascript/
+        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+        const data = window.URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = data;
+        link.download = `${countryCode}.pdf`;
+        link.click();
+        setTimeout(() => {
+          // For Firefox it is necessary to delay revoking the ObjectURL
+          window.URL.revokeObjectURL(data);
+        }, 100);
+      });
+  };
+}
+
 export function ChartHeader({
   title,
   chartId,
@@ -64,6 +85,7 @@ export function ChartHeader({
   hasSubHeading,
   standard,
   displayInPDF,
+  countryCode,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
@@ -100,6 +122,9 @@ export function ChartHeader({
                   )}
                 </SubHeading>
               )}
+              <button type="button" onClick={handleDownloadPDF(countryCode)}>
+                Download PDF
+              </button>
             </HeadingWrap>
             {tools && (
               <ChartToolWrapper flex={{ shrink: 0 }}>
@@ -191,6 +216,7 @@ ChartHeader.propTypes = {
   standard: PropTypes.string,
   intl: intlShape.isRequired,
   displayInPDF: PropTypes.bool,
+  countryCode: PropTypes.string,
 };
 
 export default injectIntl(ChartHeader);
