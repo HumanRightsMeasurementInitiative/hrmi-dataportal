@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
-import { ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
+import { ResponsiveContext, Image as GImage } from 'grommet';
 import { withTheme } from 'styled-components';
 
 import rootMessages from 'messages';
@@ -74,7 +74,7 @@ import getMetricDetails from 'utils/metric-details';
 // import quasiEquals from 'utils/quasi-equals';
 import { hasCPR, formatScore } from 'utils/scores';
 
-import { isMinSize, isMaxSize } from 'utils/responsive';
+import { isMinSize } from 'utils/responsive';
 import { getMessageGrammar } from 'utils/narrative';
 import { lowerCase } from 'utils/string';
 //
@@ -211,9 +211,11 @@ export function PathCountry({
 
   const countryCode = match.params.country;
 
+  /* eslint-disable no-console */
   if (!rootMessages.countries[countryCode]) {
     console.log('Country code not in language files:', countryCode);
   }
+  /* eslint-enable no-console */
   const countryTitle =
     countryCode && rootMessages.countries[countryCode]
       ? intl.formatMessage(rootMessages.countries[countryCode])
@@ -291,18 +293,18 @@ export function PathCountry({
                   <div>
                     <PageTitle>{countryTitle}</PageTitle>
                   </div>
-                  <Paragraph size={isMaxSize(size, 'sm') ? 'small' : 'medium'}>
+                  <p style={{ fontSize: '21px', lineHeight: '38px' }}>
                     <FormattedMessage
                       {...messages.header.a}
                       values={messageValues}
                     />
-                  </Paragraph>
-                  <Paragraph size={isMaxSize(size, 'sm') ? 'small' : 'medium'}>
+                  </p>
+                  <p style={{ fontSize: '21px', lineHeight: '38px' }}>
                     <FormattedMessage
                       {...messages.header.b}
                       values={messageValues}
                     />
-                  </Paragraph>
+                  </p>
                 </MainColumn>
                 {isMinSize(size, 'large') && (
                   <Aside image>

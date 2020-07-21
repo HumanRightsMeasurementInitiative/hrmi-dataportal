@@ -13,13 +13,7 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { groupBy, map } from 'lodash/collection';
 
-import {
-  Text,
-  Box,
-  ResponsiveContext,
-  Image as GImage,
-  Paragraph,
-} from 'grommet';
+import { Text, Box, ResponsiveContext, Image as GImage } from 'grommet';
 import styled, { withTheme } from 'styled-components';
 
 import rootMessages from 'messages';
@@ -54,7 +48,7 @@ import ContentContainer from 'styled/ContentContainer';
 import MainColumn from 'styled/MainColumn';
 import ButtonText from 'styled/ButtonText';
 
-import { isMinSize, isMaxSize } from 'utils/responsive';
+import { isMinSize } from 'utils/responsive';
 import quasiEquals from 'utils/quasi-equals';
 import { sortCountriesByName } from 'utils/scores';
 import { lowerCase } from 'utils/string';
@@ -90,6 +84,7 @@ export function PathPeople({
 
   const peopleCode = match.params.group;
   let groupTitle = peopleCode;
+  /* eslint-disable no-console */
   if (rootMessages['people-at-risk'][peopleCode]) {
     groupTitle = intl.formatMessage(rootMessages['people-at-risk'][peopleCode]);
   } else {
@@ -116,6 +111,7 @@ export function PathPeople({
         ),
       c => c[COLUMNS.COUNTRIES.REGION],
     );
+  /* eslint-enable no-console */
   return (
     <ResponsiveContext.Consumer>
       {size => {
@@ -164,9 +160,7 @@ export function PathPeople({
                       ]}
                     />
                     <PageTitle>{groupTitle}</PageTitle>
-                    <Paragraph
-                      size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
-                    >
+                    <p style={{ fontSize: '21px', lineHeight: '38px' }}>
                       <FormattedMessage
                         {...messages.header}
                         values={{
@@ -174,7 +168,7 @@ export function PathPeople({
                           year: dataReady ? atRiskYear : 0,
                         }}
                       />
-                    </Paragraph>
+                    </p>
                   </MainColumn>
                   {isMinSize(size, 'large') && (
                     <Aside image>

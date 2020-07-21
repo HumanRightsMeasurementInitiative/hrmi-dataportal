@@ -34,7 +34,7 @@ function buttonContent(
   );
 }
 
-export function ButtonTextIconWide({
+export function ButtonAccordian({
   onClick,
   icon,
   hasIcon,
@@ -50,14 +50,16 @@ export function ButtonTextIconWide({
       onClick={onClick}
       style={{
         alignSelf: 'start',
-        fontWeight: 600,
-        backgroundColor: '#262262',
-        fontSize: '18px',
-        padding: '0 10px',
+        fontWeight: 400,
+        backgroundColor: 'transparent',
+        color: '#262064',
+        fontSize: '15px',
+        padding: '0',
         margin: '5px 0',
         width: '100%',
-        borderRadius: '5px',
+        borderRadius: '0',
         border: 'none',
+        borderBottom: '1px solid lightgrey',
         outline: 'none',
         cursor: 'pointer',
       }}
@@ -67,7 +69,7 @@ export function ButtonTextIconWide({
   );
 }
 
-ButtonTextIconWide.propTypes = {
+ButtonAccordian.propTypes = {
   onClick: PropTypes.func,
   icon: PropTypes.node,
   hasIcon: PropTypes.bool,
@@ -78,4 +80,4 @@ ButtonTextIconWide.propTypes = {
   iconSize: PropTypes.string,
 };
 
-export default ButtonTextIconWide;
+export default ButtonAccordian;
