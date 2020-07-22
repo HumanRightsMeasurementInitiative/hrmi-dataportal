@@ -9,10 +9,20 @@
     "static/development/_ssgManifest.js"
   ],
   "pages": {
-    "/": ["static/runtime/webpack.js", "static/runtime/main.js"],
-    "/_app": ["static/runtime/webpack.js", "static/runtime/main.js"],
-    "/_error": ["static/runtime/webpack.js", "static/runtime/main.js"],
-    "/_polyfills": ["static/runtime/polyfills.js"],
-    "/index": ["static/runtime/webpack.js", "static/runtime/main.js"]
+    "/_app": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/_error": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ],
+    "/_polyfills": [
+      "static/runtime/polyfills.js"
+    ],
+    "/en": [
+      "static/runtime/webpack.js",
+      "static/runtime/main.js"
+    ]
   }
 }
