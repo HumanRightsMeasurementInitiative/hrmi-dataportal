@@ -177,6 +177,13 @@ const BrandBox = styled(Box)`
   }
 `;
 
+const AddToPDFWrapper = styled.div`
+  display: none;
+  @media print {
+    display: initial;
+  }
+`;
+
 const RemoveFromPDFBox = styled(Box)`
   @media print {
     display: none;
@@ -241,6 +248,7 @@ export function Header({
     setShowMenu(false);
     nav({ pathname: '', search: '' });
   };
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -320,7 +328,18 @@ export function Header({
                     </MenuList>
                   </Layer>
                 )}
-                <p>Country Profiles | Human Rights in COUNTRY, 2020</p>
+                <AddToPDFWrapper>
+                  {rootMessages.countries[match] && (
+                    <FormattedMessage
+                      {...rootMessages.pdf.subtitle}
+                      values={{
+                        country: intl.formatMessage(
+                          rootMessages.countries[match],
+                        ),
+                      }}
+                    />
+                  )}
+                </AddToPDFWrapper>
               </BrandBox>
               <RemoveFromPDFBox fill>
                 {isMinSize(size, 'large') && (
