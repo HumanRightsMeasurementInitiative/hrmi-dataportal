@@ -16,14 +16,17 @@ function ButtonRelative({ text, previous, ...rest }) {
     <ButtonTextIconWide
       primary
       width="100%"
-      size="small"
       margin={{ vertical: 'xxsmall' }}
       padding="10px"
       color="dark"
       borderRadius="5px"
       gap="0"
       icon={
-        previous ? <FormPrevious size="medium" /> : <FormNext size="medium" />
+        previous ? (
+          <FormPrevious color="white" size="medium" />
+        ) : (
+          <FormNext color="white" size="medium" />
+        )
       }
       reverse={!previous}
       label={<TextRelative size="small">{text}</TextRelative>}
