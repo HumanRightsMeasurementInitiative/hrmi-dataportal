@@ -23,7 +23,6 @@ import {
 import { utcFormat as timeFormat } from 'd3-time-format';
 import { formatScore } from 'utils/scores';
 import { isMaxSize, isMinSize } from 'utils/responsive';
-import { lowerCase } from 'utils/string';
 
 import Source from 'components/Source';
 import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
@@ -64,24 +63,23 @@ const KeyItem = styled(Box)`
   text-align: right;
   position: relative;
 `;
-const KeyItemSolid = styled.span`
-  max-height: 14px;
-  border-right: 1px solid;
-  border-color: ${props => props.theme.global.colors['dark-2']};
-  margin-left: 8px;
+
+const CircleOpen = styled.div`
+  width: 7px;
+  height: 7px;
+  margin-left: 4px;
+  border-radius: 100%;
+  border: 1px solid rgb(39, 170, 225);
+  background-color: white;
 `;
 
-const KeyItemDashed = styled.span`
-  background-image: linear-gradient(
-    ${props => props.theme.global.colors['dark-2']} 50%,
-    rgba(255, 255, 255, 0) 0%
-  );
-  background-position: right center;
-  background-size: 2px 4px;
-  background-repeat: repeat-y;
-  height: 14px;
-  margin-left: 8px;
-  width: 3px;
+const CircleFill = styled.div`
+  width: 7px;
+  height: 7px;
+  margin-left: 4px;
+  border-radius: 100%;
+  border: 1px solid rgb(39, 170, 225);
+  background-color: rgb(39, 170, 225);
 `;
 
 const Settings = styled(Box)``;
@@ -517,53 +515,52 @@ function ChartCountryMetricTrend({
               )}
             </FlexibleWidthXYPlot>
           </WrapPlot>
-          {currentBenchmark.key === 'best' && (
-            <Box
-              direction="row"
-              margin={{
-                top: 'small',
-                right: scoreAsideWidth(size),
-              }}
-              justify="end"
-            >
-              <KeyItem direction="row">
-                <Text size="xxsmall">
-                  <FormattedMessage
-                    {...rootMessages.settings.benchmark.adjusted}
-                  />
-                  {isMinSize(size, 'medium') && (
-                    <span>
-                      {` ${lowerCase(
-                        intl.formatMessage(
-                          rootMessages.settings.benchmark.nameShort,
-                        ),
-                      )}`}
-                    </span>
-                  )}
-                </Text>
-                <KeyItemDashed />
-              </KeyItem>
-              <KeyItem direction="row">
-                <Text size="xxsmall">
-                  <FormattedMessage {...rootMessages.settings.benchmark.best} />
-                  {isMinSize(size, 'medium') && (
-                    <span>
-                      {` ${lowerCase(
-                        intl.formatMessage(
-                          rootMessages.settings.benchmark.nameShort,
-                        ),
-                      )}`}
-                    </span>
-                  )}
-                </Text>
-                <KeyItemSolid />
-              </KeyItem>
-            </Box>
-          )}
+          <Box
+            direction={isMinSize(size, 'medium') ? 'row' : 'column'}
+            margin={{
+              top: 'small',
+              right: scoreAsideWidth(size),
+              left: '-15px',
+            }}
+            justify={hasScores ? 'between' : 'end'}
+          >
+            {/* dots key */}
+            {hasScores && (
+              <Box direction="row">
+                <KeyItem direction="row" align="center">
+                  <Text size="xxsmall">
+                    {isMinSize(size, 'medium') ? (
+                      <FormattedMessage
+                        {...rootMessages.settings.dataYear.present}
+                      />
+                    ) : (
+                      <FormattedMessage
+                        {...rootMessages.settings.dataYear.presentShort}
+                      />
+                    )}
+                  </Text>
+                  <CircleFill />
+                </KeyItem>
+                <KeyItem direction="row" align="center">
+                  <Text size="xxsmall">
+                    {isMinSize(size, 'medium') ? (
+                      <FormattedMessage
+                        {...rootMessages.settings.dataYear.previous}
+                      />
+                    ) : (
+                      <FormattedMessage
+                        {...rootMessages.settings.dataYear.previousShort}
+                      />
+                    )}
+                  </Text>
+                  <CircleOpen />
+                </KeyItem>
+              </Box>
+            )}
+          </Box>
           <Box
             margin={{
               top: currentBenchmark.key === 'best' ? 'xsmall' : 'medium',
-              bottom: 'large',
             }}
           >
             <Source />

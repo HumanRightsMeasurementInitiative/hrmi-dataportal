@@ -406,6 +406,24 @@ export default defineMessages({
           'How well is the country doing compared to the best performance of all countries?',
       },
     },
+    dataYear: {
+      present: {
+        id: `${scope}.settings.dataYear.present`,
+        defaultMessage: 'Data from specified year',
+      },
+      previous: {
+        id: `${scope}.settings.dataYear.previous`,
+        defaultMessage: 'Data from previous year',
+      },
+      presentShort: {
+        id: `${scope}.settings.dataYear.presentShort`,
+        defaultMessage: 'Specified year data',
+      },
+      previousShort: {
+        id: `${scope}.settings.dataYear.previousShort`,
+        defaultMessage: 'Previous year data',
+      },
+    },
     groups: {
       name: {
         id: `${scope}.settings.groups.name`,
