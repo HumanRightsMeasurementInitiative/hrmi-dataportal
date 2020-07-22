@@ -90,7 +90,7 @@ const TitleWrapper = styled.div`
   @media print {
     display: flex;
     align-items: flex-end;
-    height: 200px;
+    height: 150px;
     width: 100%;
     background-image: ${({ pdfImageSrc }) => `url(${pdfImageSrc})`};
     background-size: cover;
