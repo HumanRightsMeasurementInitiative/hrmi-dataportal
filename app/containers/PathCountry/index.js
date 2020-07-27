@@ -253,6 +253,10 @@ export function PathCountry({
       });
     }
   };
+  console.log(
+    { countryTitle },
+    intl.formatMessage(rootMessages.countries[countryCode]),
+  );
   return (
     <ResponsiveContext.Consumer>
       {size => (

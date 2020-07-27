@@ -69,6 +69,7 @@ const Main = styled.main`
 export function App({ match, intl }) {
   const locale = match.params ? match.params.locale : DEFAULT_LOCALE;
   const title = intl.formatMessage(rootMessages.app.metaTitle);
+  console.log({ title });
   const description = intl.formatMessage(rootMessages.app.metaDescription);
   return (
     <AppWrapper>
