@@ -181,6 +181,7 @@ const AddToPDFWrapper = styled.div`
   display: none;
   @media print {
     display: initial;
+    margin-top: 15px;
   }
 `;
 
