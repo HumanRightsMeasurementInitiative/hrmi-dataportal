@@ -73,6 +73,22 @@ const AddToPDFWrapper = styled.div`
   display: none;
   @media print {
     display: initial;
+    h3 {
+      font-size: 16px;
+      margin-top: 22px;
+    }
+  }
+`;
+
+const StyledBox = styled(Box)`
+  @media print {
+    margin-top: 20px;
+  }
+`;
+
+const StyledPageTwoBox = styled(Box)`
+  @media print {
+    margin-top: 80px;
   }
 `;
 
@@ -173,7 +189,7 @@ export function ChartContainerCountrySnapshot({
         standard={standard}
         countryGrammar={countryGrammar}
       />
-      <Box margin={{ bottom: 'large' }}>
+      <StyledBox margin={{ bottom: 'large' }}>
         <ChartCountrySnapshot
           type="esr"
           dimensionCode="esr"
@@ -277,63 +293,66 @@ export function ChartContainerCountrySnapshot({
             />
           </Box>
         </AddToPDFWrapper>
-        <ChartCountrySnapshot
-          type="cpr"
-          dimensionCode="empowerment"
-          dimensionScore={
-            dimensions.empowerment.score &&
-            getDimensionScore('cpr', dimensions.empowerment)
-          }
-          rights={getRightsScoresForDimension(rights, 'empowerment')}
-          year={cprYear}
-          maxValue={10}
-          onMetricClick={onMetricClick}
-          grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
-          activeCode={activeCode}
-        />
-        <AddToPDFWrapper>
-          <Box margin={{ bottom: 'medium' }}>
-            <NarrativeCPR
-              dimensionKey="empowerment"
-              score={dimensions.empowerment.score}
-              country={country}
-              countryGrammar={countryGrammar}
-              showNoData={false}
-            />
-            <NarrativeCPRCompAssessment
-              dimensionKey="empowerment"
-              score={dimensions.empowerment.score}
-              someRights={hasSomeEmpowermentScore}
-              hadSurvey={
-                hasSomePhysintScore ||
-                hasSomeEmpowermentScore ||
-                SUBREGIONS_CPR_COMPLETE.indexOf(
-                  country[COLUMNS.COUNTRIES.SUBREGION],
-                ) > -1
-              }
-              country={country}
-              countryGrammar={countryGrammar}
-              referenceScore={
-                dimensionAverages &&
-                dimensionAverages.empowerment &&
-                dimensionAverages.empowerment.average
-              }
-              referenceCount={
-                dimensionAverages &&
-                dimensionAverages.empowerment &&
-                dimensionAverages.empowerment.count
-              }
-              comparativeGroup={
-                SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) >
-                -1
-                  ? 'subregion'
-                  : 'all'
-              }
-            />
-          </Box>
-        </AddToPDFWrapper>
+        <StyledPageTwoBox>
+          <ChartCountrySnapshot
+            type="cpr"
+            dimensionCode="empowerment"
+            dimensionScore={
+              dimensions.empowerment.score &&
+              getDimensionScore('cpr', dimensions.empowerment)
+            }
+            rights={getRightsScoresForDimension(rights, 'empowerment')}
+            year={cprYear}
+            maxValue={10}
+            onMetricClick={onMetricClick}
+            grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+            activeCode={activeCode}
+          />
+          <AddToPDFWrapper>
+            <Box margin={{ bottom: 'medium' }}>
+              <NarrativeCPR
+                dimensionKey="empowerment"
+                score={dimensions.empowerment.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                showNoData={false}
+              />
+              <NarrativeCPRCompAssessment
+                dimensionKey="empowerment"
+                score={dimensions.empowerment.score}
+                someRights={hasSomeEmpowermentScore}
+                hadSurvey={
+                  hasSomePhysintScore ||
+                  hasSomeEmpowermentScore ||
+                  SUBREGIONS_CPR_COMPLETE.indexOf(
+                    country[COLUMNS.COUNTRIES.SUBREGION],
+                  ) > -1
+                }
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={
+                  dimensionAverages &&
+                  dimensionAverages.empowerment &&
+                  dimensionAverages.empowerment.average
+                }
+                referenceCount={
+                  dimensionAverages &&
+                  dimensionAverages.empowerment &&
+                  dimensionAverages.empowerment.count
+                }
+                comparativeGroup={
+                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
+                    country.subregion_code,
+                  ) > -1
+                    ? 'subregion'
+                    : 'all'
+                }
+              />
+            </Box>
+          </AddToPDFWrapper>
+        </StyledPageTwoBox>
         <Source />
-      </Box>
+      </StyledBox>
       <RemoveFromPDFWrapper>
         <Box margin={{ bottom: 'medium' }}>
           <Heading level={4} margin={{ bottom: 'small' }}>
@@ -494,6 +513,11 @@ export function ChartContainerCountrySnapshot({
           onCategoryClick={() => {}}
           showFAQs={false}
         />
+        <p style={{ fontWeight: 600 }}>
+          {' '}
+          To explore this country’s scores in more detail please go to{' '}
+          <a href="https://rightstracker.org">rightstracker.org</a>
+        </p>
       </AddToPDFWrapper>
     </Styled>
   );

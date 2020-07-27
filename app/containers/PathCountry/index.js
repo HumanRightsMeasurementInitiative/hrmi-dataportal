@@ -90,10 +90,17 @@ const TitleWrapper = styled.div`
   @media print {
     display: flex;
     align-items: flex-end;
-    height: 200px;
+    height: 140px;
     width: 100%;
     background-image: ${({ pdfImageSrc }) => `url(${pdfImageSrc})`};
     background-size: cover;
+  }
+`;
+
+const StyledPageTitle = styled(PageTitle)`
+  @media print {
+    font-size: 40px;
+    line-height: 43px;
   }
 `;
 
@@ -304,7 +311,7 @@ export function PathCountry({
                   <TitleWrapper
                     pdfImageSrc={`${IMAGE_PATH}/country_${countryCode}.png`}
                   >
-                    <PageTitle>{countryTitle}</PageTitle>
+                    <StyledPageTitle>{countryTitle}</StyledPageTitle>
                   </TitleWrapper>
                   <RemoveFromPDFWrapper>
                     <Paragraph
