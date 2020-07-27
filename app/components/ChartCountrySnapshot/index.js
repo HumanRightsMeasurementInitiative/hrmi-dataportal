@@ -42,6 +42,12 @@ const StyledDimensionHeading = styled(Heading)`
     min-width: 180px;
     padding-right: 10px;
   }
+  @media print {
+    font-size: 25px;
+    margin-top: 10px;
+    font-weight: 600;
+    margin-bottom:10px;
+  }
 `;
 const DimensionHeading = props => (
   <StyledDimensionHeading
@@ -51,6 +57,12 @@ const DimensionHeading = props => (
     {...props}
   />
 );
+
+const StyledText = styled(Text)`
+  @media print {
+    margin-bottom: 20px;
+  }
+`;
 
 const getESRDimensionValue = (score, benchmark) => {
   if (score) {
@@ -232,7 +244,9 @@ function ChartCountrySnapshot({
                   margin={{ top: 'small', bottom: 'xsmall' }}
                   responsive={false}
                 >
-                  <Text size={isMinSize(size, 'large') ? 'medium' : 'small'}>
+                  <StyledText
+                    size={isMinSize(size, 'large') ? 'medium' : 'small'}
+                  >
                     {type === 'esr' && currentBenchmark && (
                       <FormattedMessage
                         {...rootMessages.charts.dimensionIntro.esr[
@@ -247,7 +261,7 @@ function ChartCountrySnapshot({
                         values={grammar}
                       />
                     )}
-                  </Text>
+                  </StyledText>
                 </Box>
                 <ChartBars
                   summaryScore={summaryScore}
