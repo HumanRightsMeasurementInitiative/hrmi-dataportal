@@ -80,15 +80,10 @@ const AddToPDFWrapper = styled.div`
   }
 `;
 
-const StyledBox = styled(Box)`
+const StyledPageTwoPDF = styled.div`
   @media print {
-    margin-top: 20px;
-  }
-`;
-
-const StyledPageTwoBox = styled(Box)`
-  @media print {
-    margin-top: 80px;
+    break-before: page;
+    margin-top: -100px;
   }
 `;
 
@@ -184,12 +179,14 @@ export function ChartContainerCountrySnapshot({
         displayInPDF={false}
         countryCode={countryCode}
       />
-      <NarrativeESRStandardHint
-        country={country}
-        standard={standard}
-        countryGrammar={countryGrammar}
-      />
-      <StyledBox margin={{ bottom: 'large' }}>
+      <RemoveFromPDFWrapper>
+        <NarrativeESRStandardHint
+          country={country}
+          standard={standard}
+          countryGrammar={countryGrammar}
+        />
+      </RemoveFromPDFWrapper>
+      <div margin={{ bottom: 'large' }}>
         <ChartCountrySnapshot
           type="esr"
           dimensionCode="esr"
@@ -209,11 +206,6 @@ export function ChartContainerCountrySnapshot({
         />
         <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
-            <NarrativeESRStandardHint
-              country={country}
-              standard={standard}
-              countryGrammar={countryGrammar}
-            />
             <NarrativeESR
               dimensionScore={dimensions.esr.score}
               country={country}
@@ -293,7 +285,7 @@ export function ChartContainerCountrySnapshot({
             />
           </Box>
         </AddToPDFWrapper>
-        <StyledPageTwoBox>
+        <StyledPageTwoPDF>
           <ChartCountrySnapshot
             type="cpr"
             dimensionCode="empowerment"
@@ -350,9 +342,9 @@ export function ChartContainerCountrySnapshot({
               />
             </Box>
           </AddToPDFWrapper>
-        </StyledPageTwoBox>
+        </StyledPageTwoPDF>
         <Source />
-      </StyledBox>
+      </div>
       <RemoveFromPDFWrapper>
         <Box margin={{ bottom: 'medium' }}>
           <Heading level={4} margin={{ bottom: 'small' }}>
