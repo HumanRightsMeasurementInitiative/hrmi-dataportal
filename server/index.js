@@ -17,31 +17,6 @@ const app = express();
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);
 
-app.get('/test', (req, res) => {
-  res.send('hello');
-});
-
-app.get('/:language/country/:country', (req, res, next) => {
-  res.send('hello');
-  // const botAgentStrings = ['facebookexternalhit', 'Twitterbot', 'LinkedInBot']
-  // // console.log("req.params", req.params)
-  // // console.log("req.query", req.query)
-  // // console.log(req.get('user-agent'))
-
-  // const isBotAgent = botAgentStrings.some(s => req.get('user-agent').includes(s))
-  // console.log(isBotAgent)
-
-  // // TODO: insert the right country name in the og:title content
-  // // but may need to upgrade react-intl to use imperative API's
-
-  // if (isBotAgent) {
-  //   const html = `<!DOCTYPE html><html><head><meta property=\"og:title\" content=\"HRMI Rights Tracker\"></meta><meta property=\"og:image\" content=\"http://content-store.humanrightsmeasurement.org/assets/uploads/country_${req.params.country}.png\"><meta name=\"twitter:card\" content=\"summary_large_image\"></meta></head><body></body></html>`;
-  //   res.send(html);
-  // } else {
-  //   next()
-  // }
-});
-
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),
