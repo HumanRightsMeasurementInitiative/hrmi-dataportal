@@ -8,6 +8,8 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const WebpackGitHash = require('webpack-git-hash');
 
+const htmlPlugins = require('./html-plugins');
+
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
 
@@ -86,23 +88,6 @@ module.exports = require('./webpack.base.babel')({
       },
       inject: true,
     }),
-    new HtmlWebpackPlugin({
-      filename: 'AFG.html',
-      template: 'app/AFG.html',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeRedundantAttributes: true,
-        useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        keepClosingSlash: true,
-        minifyJS: true,
-        minifyCSS: true,
-        minifyURLs: true,
-      },
-      inject: true,
-    }),
 
     // Put it in the end to capture all the HtmlWebpackPlugin's
     // assets manipulations and do leak its manipulations to HtmlWebpackPlugin
@@ -166,7 +151,7 @@ module.exports = require('./webpack.base.babel')({
       hashDigest: 'hex',
       hashDigestLength: 20,
     }),
-  ],
+  ].concat(htmlPlugins),
 
   performance: {
     assetFilter: assetFilename =>
