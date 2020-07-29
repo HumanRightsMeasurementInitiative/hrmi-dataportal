@@ -54,7 +54,8 @@ function handleDownloadPDF(countryCode, setDownloadingPDF) {
   return () => {
     setDownloadingPDF(true);
     const url = window.location.href;
-    fetch(`${url}?pdf=true`)
+    const params = window.location.search;
+    fetch(!params ? `${url}?pdf=true` : `${url}&pdf=true`)
       .then(res => res.blob())
       .then(blob => {
         // see https://blog.jayway.com/2017/07/13/open-pdf-downloaded-api-javascript/
