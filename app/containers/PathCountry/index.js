@@ -94,6 +94,7 @@ const TitleWrapper = styled.div`
     width: 100%;
     background-image: ${({ pdfImageSrc }) => `url(${pdfImageSrc})`};
     background-size: cover;
+    background-position: center;
   }
 `;
 
