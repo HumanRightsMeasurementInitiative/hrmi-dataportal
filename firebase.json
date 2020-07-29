@@ -225,7 +225,61 @@
       { "source": "**/NIU*", "destination": "/NIU.html" },
       { "source": "**/TKL*", "destination": "/TKL.html" },
       { "source": "**/WLF*", "destination": "/WLF.html" },
-      { "source": "**/AFG*", "destination": "/AFG.html" },
+      { "source": "**/arrest*", "destination": "/arrest.html" },
+      { "source": "**/disappearance*", "destination": "/disappearance.html" },
+      { "source": "**/death-penalty*", "destination": "/death-penalty.html" },
+      {
+        "source": "**/extrajud-killing*",
+        "destination": "/extrajud-killing.html"
+      },
+      { "source": "**/torture*", "destination": "/torture.html" },
+      { "source": "**/assembly*", "destination": "/assembly.html" },
+      { "source": "**/expression*", "destination": "/expression.html" },
+      { "source": "**/participation*", "destination": "/participation.html" },
+      { "source": "**/education*", "destination": "/education.html" },
+      { "source": "**/food*", "destination": "/food.html" },
+      { "source": "**/health*", "destination": "/health.html" },
+      { "source": "**/housing*", "destination": "/housing.html" },
+      { "source": "**/work*", "destination": "/work.html" },
+      { "source": "**/net-primary*", "destination": "/net-primary.html" },
+      { "source": "**/sec-enrol*", "destination": "/sec-enrol.html" },
+      { "source": "**/pisa-science*", "destination": "/pisa-science.html" },
+      { "source": "**/pisa-math*", "destination": "/pisa-math.html" },
+      { "source": "**/pisa-reading*", "destination": "/pisa-reading.html" },
+      { "source": "**/not-stunted*", "destination": "/not-stunted.html" },
+      { "source": "**/food-security*", "destination": "/food-security.html" },
+      {
+        "source": "**/under-5-survival*",
+        "destination": "/under-5-survival.html"
+      },
+      { "source": "**/contraception*", "destination": "/contraception.html" },
+      { "source": "**/birth-weight*", "destination": "/birth-weight.html" },
+      { "source": "**/water-in-home*", "destination": "/water-in-home.html" },
+      {
+        "source": "**/basic-sanitation*",
+        "destination": "/basic-sanitation.html"
+      },
+      {
+        "source": "**/safe-sanitation*",
+        "destination": "/safe-sanitation.html"
+      },
+      {
+        "source": "**/relative-poverty*",
+        "destination": "/relative-poverty.html"
+      },
+      {
+        "source": "**/absolute-poverty*",
+        "destination": "/absolute-poverty.html"
+      },
+      {
+        "source": "**/longterm-unemployment*",
+        "destination": "/longterm-unemployment.html"
+      },
+      {
+        "source": "**/affordable-housing*",
+        "destination": "/affordable-housing.html"
+      },
+      { "source": "**/adult-survival*", "destination": "/adult-survival.html" },
       { "source": "**", "destination": "/index.html" }
     ],
     "headers": [
