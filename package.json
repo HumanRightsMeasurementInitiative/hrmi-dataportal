@@ -42,7 +42,8 @@
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prettify": "prettier --write"
+    "prettify": "prettier --write",
+    "test-pdf": "tsc functions/src/index.ts && node internals/scripts/test-pdf.js"
   },
   "browserslist": [
     "last 2 versions",
@@ -89,7 +90,6 @@
     "lodash": "^4.17.14",
     "minimist": "^1.2.5",
     "prop-types": "15.7.2",
-    "puppeteer": "^5.2.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-ga": "^2.7.0",
@@ -172,6 +172,7 @@
     "stylelint-processor-styled-components": "1.6.0",
     "svg-url-loader": "2.3.2",
     "terser-webpack-plugin": "^1.4.3",
+    "typescript": "^3.9.7",
     "url-loader": "1.1.2",
     "webpack": "4.30.0",
     "webpack-cli": "^3.3.11",
