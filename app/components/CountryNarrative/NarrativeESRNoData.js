@@ -17,6 +17,7 @@ function NarrativeESRNoData({ messageValues, showFundingNote, short }) {
             {...messages.compAssessmentESR.noData}
             values={messageValues}
           />
+          <span style={{ marginLeft: '5px' }} />
           {showFundingNote && (
             <FormattedMessage
               {...messages.compAssessmentESR.noDataFunding}
