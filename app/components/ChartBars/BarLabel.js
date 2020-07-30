@@ -9,6 +9,7 @@ const Styled = styled.span`
   line-height: 14px;
   min-height: 20px;
   font-size: 12px;
+  font-weight: 600;
   color: ${({ color, theme }) => color
     ? theme.global.colors[color]
     : theme.global.colors['dark-1']};

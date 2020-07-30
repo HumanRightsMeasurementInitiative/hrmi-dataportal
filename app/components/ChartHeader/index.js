@@ -36,14 +36,7 @@ const Styled = styled.div`
 const Top = styled(Box)`
   position: relative;
 `;
-const SubHeading = styled(Text)`
-  margin-top: -5px;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    position: absolute;
-    top: 100%;
-    margin-top: -8px;
-  }
-`;
+
 const HeadingWrap = styled(Box)`
   position: relative;
 `;
@@ -74,6 +67,7 @@ function handleDownloadPDF(countryCode, setDownloadingPDF) {
       })
       .catch(err => {
         // TODO: handle error with UI
+        // eslint-disable-next-line
         console.error(err);
         setDownloadingPDF(false);
       });
@@ -104,7 +98,7 @@ export function ChartHeader({
     <ResponsiveContext.Consumer>
       {size => (
         <Styled top={top} displayInPDF={displayInPDF}>
-          <Top direction="row" align="center" justify="between">
+          <Top direction="row" align="baseline" justify="between">
             <HeadingWrap>
               <Heading
                 level={isMaxSize(size, 'sm') ? 5 : 2}
@@ -116,9 +110,7 @@ export function ChartHeader({
               {((hasSubHeading && messages[`${chartId}-sub`]) ||
                 (hasSubHeading &&
                   messages[`assessment-standard-${standard}-sub`])) && (
-                <SubHeading
-                  size={isMinSize(size, 'medium') ? 'xsmall' : 'xxsmall'}
-                >
+                <Text size={isMinSize(size, 'medium') ? 'xsmall' : 'xxsmall'}>
                   {messages[`${chartId}-sub`] ? (
                     <FormattedMessage
                       {...messages[`${chartId}-sub`]}
@@ -130,7 +122,7 @@ export function ChartHeader({
                       values={messageValues}
                     />
                   )}
-                </SubHeading>
+                </Text>
               )}
               <button
                 type="button"

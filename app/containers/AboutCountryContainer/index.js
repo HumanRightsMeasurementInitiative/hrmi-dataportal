@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { Heading, Box, Text } from 'grommet';
-import { FormAdd, FormSubtract } from 'grommet-icons';
+import { Up, Down } from 'grommet-icons';
 
 import { selectCountry } from 'containers/App/actions';
 
@@ -29,7 +29,7 @@ import { COLUMNS } from 'containers/App/constants';
 
 import FAQs from 'containers/FAQs';
 import ButtonText from 'styled/ButtonText';
-import ButtonTextIcon from 'styled/ButtonTextIcon';
+import ButtonAccordian from 'styled/ButtonAccordian';
 import ButtonHero from 'styled/ButtonHero';
 
 import { roundScore } from 'utils/scores';
@@ -49,9 +49,7 @@ const Label = styled(Text)`
 const MoreWrap = styled.div`
   text-align: left;
   margin-top: 10px;
-`;
-const StyledButtonText = styled(ButtonTextIcon)`
-  font-weight: 400;
+  justify-content: space-between;
 `;
 
 const ContainerBox = styled(Box)`
@@ -372,11 +370,9 @@ function AboutCountryContainer({
       {collapsible && (
         <RemoveFromPDFWrapper>
           <MoreWrap>
-            <StyledButtonText
+            <ButtonAccordian
               onClick={() => setMore(!more)}
-              icon={
-                more ? <FormSubtract size="large" /> : <FormAdd size="large" />
-              }
+              icon={more ? <Up size="small" /> : <Down size="small" />}
               color={inverse ? 'white' : 'dark'}
               size="small"
               label={<FormattedMessage {...messages[more ? 'less' : 'more']} />}

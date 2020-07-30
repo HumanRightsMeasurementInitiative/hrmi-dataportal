@@ -19,10 +19,10 @@ import ButtonIcon from 'styled/ButtonIcon';
 const Styled = styled(Box)`
   z-index: 8;
   position: absolute;
-  top: ${({ theme }) => theme.global.edgeSize.small};
+  top: 45px;
   right: ${({ theme }) => theme.global.edgeSize.small};
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
-    top: ${({ theme }) => theme.global.edgeSize.medium};
+    top: 45px;
   }
 `;
 
