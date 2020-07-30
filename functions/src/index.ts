@@ -1,11 +1,15 @@
-const url = require('url');
 import * as functions from 'firebase-functions';
 import * as puppeteer  from 'puppeteer'
+import * as express from 'express'
+import * as cors from 'cors'
 
 interface printPDFOptions {
   route?: string;
   path?: string;
 }
+
+const pdf = express()
+pdf.use(cors({ origin: true }))
 
 export async function printPDF({
   route = 'http://localhost:3000/en/country/FJI?as=core',
@@ -19,7 +23,7 @@ export async function printPDF({
   await page.goto(route, {
     waitUntil: 'networkidle2',
   });
-  const pdf = await page.pdf({
+  const result = await page.pdf({
     path,
     format: 'A4',
     printBackground: true,
@@ -27,27 +31,21 @@ export async function printPDF({
 
   await browser.close();
 
-  return pdf;
+  return result;
 }
 
-export const generatePDF = functions.https.onRequest((request, response) => {
-  functions.logger.info("generatePDF called", { structuredData: true });
-  const host = request.get('host')
-  let fullRoute
+pdf.post('/', (request, response) => {
+  const { href } = JSON.parse(request.body)
+  functions.logger.log(href)
 
-  // if local dev, fullRoute is just the default path above
-  if (host && !host.includes('localhost')) {
-    fullRoute = `${request.protocol}://${host}${
-      url.parse(request.url).pathname
-    }`;
-  }
-
-  printPDF({ route: fullRoute })
-  .then(pdf => {
+  printPDF({ route: href })
+  .then(result => {
     response.setHeader('Content-Type', 'application/pdf')
-    response.status(200).send(pdf)
+    response.status(200).send(result)
   })
   .catch(error => {
     response.status(500).send({ error });
   });
-});
+})
+
+exports.pdf = functions.runWith({ memory: '512MB' }).https.onRequest(pdf);

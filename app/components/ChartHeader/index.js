@@ -53,9 +53,10 @@ const ChartToolWrapper = styled(Box)``;
 function handleDownloadPDF(countryCode, setDownloadingPDF) {
   return () => {
     setDownloadingPDF(true);
-    const url = window.location.href;
-    const params = window.location.search;
-    fetch(!params ? `${url}?pdf=true` : `${url}&pdf=true`)
+    fetch(process.env.PDF_URL, {
+      method: 'POST',
+      body: JSON.stringify({ href: window.location.href }),
+    })
       .then(res => res.blob())
       .then(blob => {
         // see https://blog.jayway.com/2017/07/13/open-pdf-downloaded-api-javascript/
