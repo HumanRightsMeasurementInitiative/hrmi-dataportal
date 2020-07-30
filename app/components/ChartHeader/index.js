@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Heading, ResponsiveContext, Box, Text } from 'grommet';
 import styled from 'styled-components';
@@ -29,6 +29,9 @@ const Styled = styled.div`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     margin-top: ${({ top }) => (top ? 20 : 60)}px;
   }
+  @media print {
+    display: ${({ displayInPDF }) => (displayInPDF ? 'initial' : 'none')};
+  }
 `;
 const Top = styled(Box)`
   position: relative;
@@ -47,6 +50,36 @@ const HeadingWrap = styled(Box)`
 
 const ChartToolWrapper = styled(Box)``;
 
+function handleDownloadPDF(countryCode, setDownloadingPDF) {
+  return () => {
+    setDownloadingPDF(true);
+    fetch(process.env.PDF_URL, {
+      method: 'POST',
+      body: JSON.stringify({ href: window.location.href }),
+    })
+      .then(res => res.blob())
+      .then(blob => {
+        // see https://blog.jayway.com/2017/07/13/open-pdf-downloaded-api-javascript/
+        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+        const data = window.URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = data;
+        link.download = `${countryCode}.pdf`;
+        link.click();
+        setTimeout(() => {
+          // For Firefox it is necessary to delay revoking the ObjectURL
+          window.URL.revokeObjectURL(data);
+        }, 100);
+        setDownloadingPDF(false);
+      })
+      .catch(err => {
+        // TODO: handle error with UI
+        console.error(err);
+        setDownloadingPDF(false);
+      });
+  };
+}
+
 export function ChartHeader({
   title,
   chartId,
@@ -60,14 +93,17 @@ export function ChartHeader({
   top,
   hasSubHeading,
   standard,
+  displayInPDF,
+  countryCode,
 }) {
+  const [downloadingPDF, setDownloadingPDF] = useState(false);
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
 
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Styled top={top}>
+        <Styled top={top} displayInPDF={displayInPDF}>
           <Top direction="row" align="center" justify="between">
             <HeadingWrap>
               <Heading
@@ -96,6 +132,13 @@ export function ChartHeader({
                   )}
                 </SubHeading>
               )}
+              <button
+                type="button"
+                disabled={downloadingPDF}
+                onClick={handleDownloadPDF(countryCode, setDownloadingPDF)}
+              >
+                {downloadingPDF ? 'Loading' : 'Download PDF'}
+              </button>
             </HeadingWrap>
             {tools && (
               <ChartToolWrapper flex={{ shrink: 0 }}>
@@ -186,6 +229,8 @@ ChartHeader.propTypes = {
   hasSubHeading: PropTypes.bool,
   standard: PropTypes.string,
   intl: intlShape.isRequired,
+  displayInPDF: PropTypes.bool,
+  countryCode: PropTypes.string,
 };
 
 export default injectIntl(ChartHeader);

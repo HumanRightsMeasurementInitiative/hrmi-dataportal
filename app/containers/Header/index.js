@@ -74,8 +74,14 @@ NavBarTop.propTypes = {
   size: PropTypes.string,
 };
 
+const NavBarBottomBox = styled(Box)`
+  @media print {
+    display: none;
+  }
+`;
+
 const NavBarBottom = props => (
-  <Box
+  <NavBarBottomBox
     direction="row"
     align="end"
     justify={isMinSize(props.size, 'medium') ? 'end' : 'start'}
@@ -131,6 +137,9 @@ const ToggleMenu = styled(Button)`
   height: 30px;
   background-color: transparent;
   text-align: center;
+  @media print {
+    display: none;
+  }
 `;
 
 const SearchWrap = styled(Box)`
@@ -148,6 +157,38 @@ const StyledShare = styled(p => <Share {...p} size="small" />)`
 
 const TextWrap = styled.span`
   vertical-align: middle;
+`;
+
+const ElevationBox = styled(Box)`
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  @media print {
+    box-shadow: none;
+    padding-left: ${({ theme }) => theme.global.edgeSize.large};
+    padding-right: ${({ theme }) => theme.global.edgeSize.large};
+    padding-top: ${({ theme }) => theme.global.edgeSize.xsmall};
+    padding-bottom: ${({ theme }) => theme.global.edgeSize.ms};
+  }
+`;
+
+const BrandBox = styled(Box)`
+  @media print {
+    width: 100%;
+    justify-content: space-between;
+  }
+`;
+
+const AddToPDFWrapper = styled.div`
+  display: none;
+  @media print {
+    display: initial;
+    margin-top: 15px;
+  }
+`;
+
+const RemoveFromPDFBox = styled(Box)`
+  @media print {
+    display: none;
+  }
 `;
 
 const navButtonOnClick = ({ match, onClick, align, locale }) =>
@@ -208,13 +249,14 @@ export function Header({
     setShowMenu(false);
     nav({ pathname: '', search: '' });
   };
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Styled role="banner" size={size}>
-          <Box elevation="medium" background="white">
+          <ElevationBox background="white">
             <ContentMaxWidth column={isMaxSize(size, 'sm')}>
-              <Box
+              <BrandBox
                 direction="row"
                 align="center"
                 justify="stretch"
@@ -287,8 +329,20 @@ export function Header({
                     </MenuList>
                   </Layer>
                 )}
-              </Box>
-              <Box fill>
+                <AddToPDFWrapper>
+                  {rootMessages.countries[match] && (
+                    <FormattedMessage
+                      {...rootMessages.pdf.subtitle}
+                      values={{
+                        country: intl.formatMessage(
+                          rootMessages.countries[match],
+                        ),
+                      }}
+                    />
+                  )}
+                </AddToPDFWrapper>
+              </BrandBox>
+              <RemoveFromPDFBox fill>
                 {isMinSize(size, 'large') && (
                   <NavBarTop
                     theme={theme}
@@ -371,9 +425,9 @@ export function Header({
                     </SearchWrap>
                   )}
                 </NavBarBottom>
-              </Box>
+              </RemoveFromPDFBox>
             </ContentMaxWidth>
-          </Box>
+          </ElevationBox>
         </Styled>
       )}
     </ResponsiveContext.Consumer>

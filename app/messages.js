@@ -2406,4 +2406,10 @@ export default defineMessages({
       defaultMessage: 'Commonwealth in political union',
     },
   },
+  pdf: {
+    subtitle: {
+      id: `${scope}.pdf.subtitle`,
+      defaultMessage: 'Country Profiles | Human Rights in',
+    },
+  },
 });

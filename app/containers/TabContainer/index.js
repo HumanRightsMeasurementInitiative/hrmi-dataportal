@@ -21,7 +21,11 @@ import isNumber from 'utils/is-number';
 
 // const Tab = styled.div``;
 // prettier-ignore
-const Tabs = styled.div``;
+const Tabs = styled.div`
+  @media print {
+    display: none;
+  }
+`;
 const Spacer = styled.div`
   background: 'transparent';
   height: ${({ height }) => height}px;

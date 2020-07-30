@@ -19,7 +19,11 @@ import { getLocale } from 'containers/App/selectors';
 import { LANGUAGES } from 'containers/App/constants';
 import { changeLocale } from 'containers/LanguageProvider/actions';
 
-const Styled = styled.span``;
+const Styled = styled.span`
+  @media print {
+    display: none;
+  }
+`;
 // prettier-ignore
 const StyledDropButton = styled(DropButton)`
   padding: 0 0 0 6px;
