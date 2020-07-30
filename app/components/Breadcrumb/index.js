@@ -14,6 +14,7 @@ const CategoryLink = styled(ButtonPlain)`
   padding-left: ${({ firstChild }) => (firstChild ? 0 : 3)}px;
   color: ${({ theme }) => theme.global.colors.dark};
   font-size: ${({ theme }) => theme.text.small.size};
+  font-weight: 600;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding-left: ${({ firstChild }) => (firstChild ? 2 : 3)}px;
   }
@@ -46,7 +47,7 @@ function Breadcrumb({ items, onItemClick, breadcrumb }) {
           {!breadcrumb && index < list.length - 1 && <SepWrap>|</SepWrap>}
           {breadcrumb && (
             <IconWrap>
-              <FormNext />
+              <FormNext color="#262262" />
             </IconWrap>
           )}
         </Box>

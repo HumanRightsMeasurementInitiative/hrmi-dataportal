@@ -25,7 +25,7 @@ export const SIZES = {
     },
   },
   top: {
-    height: 320,
+    height: 350,
   },
   aside: {
     // small, sm, medium, large, xlarge, xxlarge
@@ -282,8 +282,8 @@ const theme = {
           height: '36px',
         },
         large: {
-          size: '42px',
-          height: '48px',
+          size: '50px',
+          height: '62px',
         },
       },
       2: {
