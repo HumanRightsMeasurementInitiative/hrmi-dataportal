@@ -13,3 +13,7 @@ npm-debug.log
 
 # asdf
 .tool-versions
+
+# firebase functions
+ui-debug.log
+functions/firebase-debug.log

@@ -54,8 +54,10 @@ const Main = styled.main`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding-top: ${({ theme }) => getHeaderHeight('medium', theme)}px;
   }
+  @media print {
+    padding-top: 40px;
+  }
 `;
-// ${props => console.log(props.thesme)}
 
 /**
  * routes: /[locale] +

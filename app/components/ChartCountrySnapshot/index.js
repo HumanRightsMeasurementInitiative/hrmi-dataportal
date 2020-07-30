@@ -42,6 +42,12 @@ const StyledDimensionHeading = styled(Heading)`
     min-width: 180px;
     padding-right: 10px;
   }
+  @media print {
+    font-size: 25px;
+    margin-top: 10px;
+    font-weight: 600;
+    margin-bottom:10px;
+  }
 `;
 const DimensionHeading = props => (
   <StyledDimensionHeading
