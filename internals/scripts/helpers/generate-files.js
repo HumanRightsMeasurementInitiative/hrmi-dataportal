@@ -2,27 +2,34 @@ const pickBy = require('lodash/pickBy')
 const flow = require('lodash/flow')
 const mapKeys = require('lodash/mapKeys')
 
-export const getMessageName = (data) => mapKeys(data, (v, k) => {
+const getMessageName = (data) => mapKeys(data, (v, k) => {
   return k.split('.')[2]
 })
 
-export const getCountries = flow([
+const getCountries = flow([
   (data) => pickBy(data, (v, k) => {
     return k.includes('hrmi.countries')
   }),
   getMessageName
 ])
 
-export const getRights = flow([
+const getRights = flow([
   (data) => pickBy(data, (v, k) => {
     return k.includes('hrmi.rights.') && !k.includes('job') && !k.includes('union') // N.B. note the dot following hrmi.rights.
   }),
   getMessageName
 ])
 
-export const getIndicators = flow([
+const getIndicators = flow([
   (data) => pickBy(data, (v, k) => {
     return k.includes('hrmi.indicators.') // N.B. note the dot following hrmi.indicators.
   }),
   getMessageName
 ])
+
+module.exports = {
+  getMessageName,
+  getCountries,
+  getRights,
+  getIndicators
+}
