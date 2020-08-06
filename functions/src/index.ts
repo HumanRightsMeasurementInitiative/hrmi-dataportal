@@ -7,7 +7,8 @@ import * as cors from 'cors'
 interface printPDFOptions {
   route?: string;
   path?: string;
-  countryCode: string
+  countryCode: string,
+  local?: boolean
 }
 
 const pdf = express()
@@ -20,39 +21,44 @@ admin.initializeApp({
 export async function printPDF({
   route = 'http://localhost:3000/en/country/FJI?as=core',
   path,
-  countryCode
+  countryCode,
+  local
 }: printPDFOptions) {
   const timePuppeteer = process.hrtime()
 
   const timeStorage = process.hrtime()
-  const pdfBucket = admin.storage().bucket()
-  const pdfFile = pdfBucket.file(`${countryCode}.pdf`)
 
-  let exists
-  try {
-    exists = await pdfFile.exists()
-  } catch(err) {
-    console.error(err)
-    throw new Error("Error determining if file exists in storage")
-  }
+  let pdfFile
+  if (!local) {
+    const pdfBucket = admin.storage().bucket()
+    pdfFile = pdfBucket.file(`${countryCode}.pdf`)
 
-  if (exists[0]) {
+    let exists
     try {
-      // download the file here, and send it to user as a response without needing to use puppeteer to snapshot the page
-      // TODO: harden the GCS bucket to only accept reads from this function
-      // OLD: just send the storage bucket file link to user
-      // pdfFileResult = await pdfFile.get()
-      // // @ts-ignore
-      // return pdfFileResult[1].mediaLink
-
-      const pdfDownload = await pdfFile.download()
-      const pdfContents = pdfDownload[0]
-      functions.logger.log(`timeStorage: ${process.hrtime(timeStorage)}`)
-      functions.logger.log(`timePuppeteer: ${process.hrtime(timePuppeteer)}`)
-      return pdfContents
+      exists = await pdfFile.exists()
     } catch(err) {
       console.error(err)
-      throw new Error("Error getting file from storage")
+      throw new Error("Error determining if file exists in storage")
+    }
+
+    if (exists[0]) {
+      try {
+        // download the file here, and send it to user as a response without needing to use puppeteer to snapshot the page
+        // TODO: harden the GCS bucket to only accept reads from this function
+        // OLD: just send the storage bucket file link to user
+        // pdfFileResult = await pdfFile.get()
+        // // @ts-ignore
+        // return pdfFileResult[1].mediaLink
+
+        const pdfDownload = await pdfFile.download()
+        const pdfContents = pdfDownload[0]
+        functions.logger.log(`timeStorage: ${process.hrtime(timeStorage)}`)
+        functions.logger.log(`timePuppeteer: ${process.hrtime(timePuppeteer)}`)
+        return pdfContents
+      } catch(err) {
+        console.error(err)
+        throw new Error("Error getting file from storage")
+      }
     }
   }
 
@@ -83,13 +89,17 @@ export async function printPDF({
   functions.logger.log(`timePuppeteer: ${process.hrtime(timePuppeteer)}`)
   await browser.close();
 
-  try {
-    await pdfFile.save(result)
-    await pdfFile.makePublic()
+  if (!local) {
+    try {
+      await pdfFile.save(result)
+      await pdfFile.makePublic()
+      return result
+    } catch(err) {
+      console.error(err)
+      throw new Error("Error saving file to storage")
+    }
+  } else {
     return result
-  } catch(err) {
-    console.error(err)
-    throw new Error("Error saving file to storage")
   }
 }
 
