@@ -1,38 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const pickBy = require('lodash/pickBy');
-const flow = require('lodash/flow');
-const mapKeys = require('lodash/mapKeys');
 const keys = require('lodash/keys');
 
+const {
+  getCountries,
+  getIndicators,
+  getRights,
+} = require('../scripts/helpers/generate-files');
+
 const langJSON = require('../../app/translations/en.json');
-
-const getMessageName = data => mapKeys(data, (v, k) => k.split('.')[2]);
-
-const getCountries = flow([
-  data => pickBy(data, (v, k) => k.includes('hrmi.countries')),
-  getMessageName,
-]);
-
-const getRights = flow([
-  data =>
-    pickBy(
-      data,
-      (v, k) =>
-        k.includes('hrmi.rights.') &&
-        !k.includes('job') &&
-        !k.includes('union'), // N.B. note the dot following hrmi.rights.
-    ),
-  getMessageName,
-]);
-
-const getIndicators = flow([
-  data =>
-    pickBy(
-      data,
-      (v, k) => k.includes('hrmi.indicators.'), // N.B. note the dot following hrmi.indicators.
-    ),
-  getMessageName,
-]);
 
 const countries = getCountries(langJSON);
 const rights = getRights(langJSON);
