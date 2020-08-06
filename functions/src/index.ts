@@ -86,7 +86,6 @@ export async function printPDF({
   try {
     await pdfFile.save(result)
     await pdfFile.makePublic()
-    // return the downloadable url?
     return result
   } catch(err) {
     console.error(err)
