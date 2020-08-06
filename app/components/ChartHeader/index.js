@@ -48,7 +48,7 @@ function handleDownloadPDF(countryCode, setDownloadingPDF) {
     setDownloadingPDF(true);
     fetch(process.env.PDF_URL, {
       method: 'POST',
-      body: JSON.stringify({ href: window.location.href }),
+      body: JSON.stringify({ href: window.location.href, countryCode }),
     })
       .then(res => res.blob())
       .then(blob => {
