@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Heading, ResponsiveContext, Box, Text } from 'grommet';
 import styled from 'styled-components';
@@ -43,37 +43,6 @@ const HeadingWrap = styled(Box)`
 
 const ChartToolWrapper = styled(Box)``;
 
-function handleDownloadPDF(countryCode, setDownloadingPDF) {
-  return () => {
-    setDownloadingPDF(true);
-    fetch(process.env.PDF_URL, {
-      method: 'POST',
-      body: JSON.stringify({ href: window.location.href, countryCode }),
-    })
-      .then(res => res.blob())
-      .then(blob => {
-        // see https://blog.jayway.com/2017/07/13/open-pdf-downloaded-api-javascript/
-        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
-        const data = window.URL.createObjectURL(pdfBlob);
-        const link = document.createElement('a');
-        link.href = data;
-        link.download = `${countryCode}.pdf`;
-        link.click();
-        setTimeout(() => {
-          // For Firefox it is necessary to delay revoking the ObjectURL
-          window.URL.revokeObjectURL(data);
-        }, 100);
-        setDownloadingPDF(false);
-      })
-      .catch(err => {
-        // TODO: handle error with UI
-        // eslint-disable-next-line
-        console.error(err);
-        setDownloadingPDF(false);
-      });
-  };
-}
-
 export function ChartHeader({
   title,
   chartId,
@@ -90,7 +59,6 @@ export function ChartHeader({
   displayInPDF,
   countryCode,
 }) {
-  const [downloadingPDF, setDownloadingPDF] = useState(false);
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
 
@@ -124,13 +92,9 @@ export function ChartHeader({
                   )}
                 </Text>
               )}
-              <button
-                type="button"
-                disabled={downloadingPDF}
-                onClick={handleDownloadPDF(countryCode, setDownloadingPDF)}
-              >
-                {downloadingPDF ? 'Loading' : 'Download PDF'}
-              </button>
+              <a target="_blank" href={`/${countryCode}.pdf`}>
+                Download PDF
+              </a>
             </HeadingWrap>
             {tools && (
               <ChartToolWrapper flex={{ shrink: 0 }}>
