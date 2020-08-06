@@ -1,5 +1,6 @@
 const { printPDF } = require('../../functions/src/index')
 printPDF({
   path: 'test-country.pdf',
-  countryCode: 'FJI'
+  countryCode: 'FJI',
+  local: true
 });
