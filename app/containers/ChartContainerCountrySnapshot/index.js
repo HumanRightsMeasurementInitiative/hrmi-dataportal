@@ -32,6 +32,7 @@ import {
   getCountry,
   getCountryGrammar,
   getReferenceScores,
+  getLocale,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded } from 'containers/App/actions';
 import AboutCountryContainer from 'containers/AboutCountryContainer';
@@ -125,6 +126,7 @@ export function ChartContainerCountrySnapshot({
   goToTab,
   onMetricClick,
   activeCode,
+  locale,
 }) {
   useEffect(() => {
     onLoadData();
@@ -178,6 +180,7 @@ export function ChartContainerCountrySnapshot({
         }}
         displayInPDF={false}
         countryCode={countryCode}
+        locale={locale}
       />
       <RemoveFromPDFWrapper>
         <NarrativeESRStandardHint
@@ -533,6 +536,7 @@ ChartContainerCountrySnapshot.propTypes = {
   intl: intlShape.isRequired,
   onMetricClick: PropTypes.func,
   activeCode: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  locale: PropTypes.string,
 };
 const mapStateToProps = createStructuredSelector({
   country: (state, { countryCode }) => getCountry(state, countryCode),
@@ -550,6 +554,7 @@ const mapStateToProps = createStructuredSelector({
   cprYear: state => getCPRYear(state),
   dimensionAverages: (state, { countryCode }) =>
     getReferenceScores(state, countryCode),
+  locale: state => getLocale(state),
 });
 
 export function mapDispatchToProps(dispatch) {
