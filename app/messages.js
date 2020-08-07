@@ -132,6 +132,10 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.settings`,
         defaultMessage: 'Data settings',
       },
+      downloadPDF: {
+        id: `${scope}.labels.chartTools.downloadPDF`,
+        defaultMessage: 'Download PDF',
+      },
     },
     abbrev: {
       notAvailable: {

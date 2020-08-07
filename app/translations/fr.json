@@ -353,6 +353,7 @@
   "hrmi.labels.grades.good": "Bon",
   "hrmi.labels.chartTools.howToRead": "Comment le lire",
   "hrmi.labels.chartTools.settings": "Changer de vue",
+  "hrmi.labels.chartTools.downloadPDF": "Download PDF",
   "hrmi.labels.xAxis.cpr": "Score",
   "hrmi.labels.xAxis.adjusted": "% du référentiel ajusté aux revenus atteint",
   "hrmi.labels.xAxis.best": "% du référentiel des meilleures pratiques mondiales atteint",

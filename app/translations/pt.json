@@ -353,6 +353,7 @@
   "hrmi.labels.grades.good": "Bom",
   "hrmi.labels.chartTools.howToRead": "Como interpretar",
   "hrmi.labels.chartTools.settings": "Mudar de vista",
+  "hrmi.labels.chartTools.downloadPDF": "Download PDF",
   "hrmi.labels.xAxis.cpr": "Pontuação",
   "hrmi.labels.xAxis.adjusted": "% de referencia ajustada em função dos rendimentos alcançada",
   "hrmi.labels.xAxis.best": "% de melhor referencia global alcançada",
