@@ -13,7 +13,7 @@ async function printPDF({
 
   const cluster = await Cluster.launch({
     concurrency: Cluster.CONCURRENCY_PAGE,
-    maxConcurrency: 4
+    maxConcurrency: 4 // should probably match the no. of cores on your machine
   })
 
   await cluster.task(async ({ page, data: { lan, country } }) => {
