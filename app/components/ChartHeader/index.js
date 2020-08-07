@@ -64,6 +64,7 @@ const DownloadButton = styled(ButtonNavPrimary)`
   font-size: 0.8em;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     padding: 8px 2px;
+    font-size: 1em;
   }
 `;
 
@@ -86,7 +87,7 @@ export function ChartHeader({
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
-
+  console.log({ tools });
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -135,19 +136,23 @@ export function ChartHeader({
                     }
                   }
                 />
-                <DownloadButton
-                  as="a"
-                  href={`/${locale}-${countryCode}.pdf`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <TextWrap>
-                    <FormattedMessage
-                      {...rootMessages.labels.chartTools.downloadPDF}
-                    />
-                  </TextWrap>
-                  <StyledShare />
-                </DownloadButton>
+                {tools &&
+                  tools.settingsConfig &&
+                  tools.settingsConfig.key === 'tab-snapshot' && (
+                  <DownloadButton
+                    as="a"
+                    href={`/${locale}-${countryCode}.pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <TextWrap>
+                      <FormattedMessage
+                        {...rootMessages.labels.chartTools.downloadPDF}
+                      />
+                    </TextWrap>
+                    <StyledShare />
+                  </DownloadButton>
+                )}
               </ChartToolWrapper>
             )}
           </Top>
