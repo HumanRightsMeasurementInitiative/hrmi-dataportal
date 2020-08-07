@@ -17,3 +17,6 @@ npm-debug.log
 # firebase functions
 ui-debug.log
 functions/firebase-debug.log
+
+# pdfs
+pdfs
