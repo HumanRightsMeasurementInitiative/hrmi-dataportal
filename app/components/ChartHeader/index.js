@@ -58,6 +58,7 @@ export function ChartHeader({
   standard,
   displayInPDF,
   countryCode,
+  locale,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
@@ -92,7 +93,7 @@ export function ChartHeader({
                   )}
                 </Text>
               )}
-              <a target="_blank" href={`/${countryCode}.pdf`}>
+              <a target="_blank" href={`/${locale}-${countryCode}.pdf`}>
                 Download PDF
               </a>
             </HeadingWrap>
@@ -187,6 +188,7 @@ ChartHeader.propTypes = {
   intl: intlShape.isRequired,
   displayInPDF: PropTypes.bool,
   countryCode: PropTypes.string,
+  locale: PropTypes.string,
 };
 
 export default injectIntl(ChartHeader);
