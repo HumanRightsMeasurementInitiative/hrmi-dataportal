@@ -56,6 +56,7 @@ const PlotHintTighter = styled(PlotHint)`
   padding: 3px 6px;
   margin-bottom: 5px;
   font-size: 14px;
+  font-weight: ${({ fontWeight }) => fontWeight || 700};
 `;
 
 const KeyItem = styled(Box)`
@@ -462,7 +463,7 @@ function ChartCountryMetricTrend({
                 >
                   <>
                     {highlightUpper && highlightUpper.point && (
-                      <PlotHintTighter color={colorHint}>
+                      <PlotHintTighter color={colorHint} fontWeight={500}>
                         {`${formatScore(highlightUpper.point.y, 1, intl)}${
                           percentage ? '%' : ''
                         }`}
@@ -474,7 +475,7 @@ function ChartCountryMetricTrend({
                       }`}
                     </PlotHintTighter>
                     {highlightUpper && highlightLower.point && (
-                      <PlotHintTighter color={colorHint}>
+                      <PlotHintTighter color={colorHint} fontWeight={500}>
                         {`${formatScore(highlightLower.point.y, 1, intl)}${
                           percentage ? '%' : ''
                         }`}
