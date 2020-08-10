@@ -87,7 +87,6 @@ export function ChartHeader({
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
-  console.log({ tools });
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -139,6 +138,7 @@ export function ChartHeader({
                 {tools &&
                   tools.settingsConfig &&
                   tools.settingsConfig.key === 'tab-snapshot' && (
+                  /* eslint-disable */
                   <DownloadButton
                     as="a"
                     href={`/${locale}-${countryCode}.pdf`}
@@ -154,6 +154,7 @@ export function ChartHeader({
                   </DownloadButton>
                 )}
               </ChartToolWrapper>
+                /* eslint-enable */
             )}
           </Top>
           {(filter || sort) && (
