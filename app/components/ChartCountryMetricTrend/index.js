@@ -56,6 +56,7 @@ const PlotHintTighter = styled(PlotHint)`
   padding: 3px 6px;
   margin-bottom: 5px;
   font-size: 14px;
+  font-weight: ${({ fontWeight }) => fontWeight || 700};
 `;
 
 const KeyItem = styled(Box)`
@@ -185,9 +186,10 @@ function ChartCountryMetricTrend({
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   // dummy data to force the area plot from 0
+  // with some horizontal padding, hard-coded
   const dataForceYRange = [
-    { x: new Date(minYear).getTime(), y: 0 },
-    { x: new Date(maxYear).getTime(), y: maxValue },
+    { x: new Date(minYear).getTime() - 15000000000, y: 0 },
+    { x: new Date(maxYear).getTime() + 15000000000, y: maxValue },
   ];
   const hasScores = scores && scores.length > 0;
 
@@ -284,7 +286,7 @@ function ChartCountryMetricTrend({
     <ResponsiveContext.Consumer>
       {size => (
         <div direction="column" align="start" pad={{ vertical: 'medium' }}>
-          <WrapPlot>
+          <WrapPlot metricType={metric.type}>
             <FlexibleWidthXYPlot
               height={isMinSize(size, 'medium') ? 240 : 200}
               xType="time"
@@ -462,7 +464,7 @@ function ChartCountryMetricTrend({
                 >
                   <>
                     {highlightUpper && highlightUpper.point && (
-                      <PlotHintTighter color={colorHint}>
+                      <PlotHintTighter color={colorHint} fontWeight={500}>
                         {`${formatScore(highlightUpper.point.y, 1, intl)}${
                           percentage ? '%' : ''
                         }`}
@@ -474,7 +476,7 @@ function ChartCountryMetricTrend({
                       }`}
                     </PlotHintTighter>
                     {highlightUpper && highlightLower.point && (
-                      <PlotHintTighter color={colorHint}>
+                      <PlotHintTighter color={colorHint} fontWeight={500}>
                         {`${formatScore(highlightLower.point.y, 1, intl)}${
                           percentage ? '%' : ''
                         }`}
