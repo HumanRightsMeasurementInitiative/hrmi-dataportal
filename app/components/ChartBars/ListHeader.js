@@ -80,13 +80,11 @@ export function ListHeader({
                 <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
                   0
                 </Text>
-                {metric && metric.type === 'esr' && (
-                  <Text size="xsmall" weight={500} textAlign="center">
-                    <FormattedMessage
-                      {...rootMessages.labels.xAxis[benchmark || 'cpr']}
-                    />
-                  </Text>
-                )}
+                <Text size="xsmall" weight={500} textAlign="center">
+                  <FormattedMessage
+                    {...rootMessages.labels.xAxis[benchmark || 'cpr']}
+                  />
+                </Text>
                 <Text size="xsmall" style={{ transform: 'translateX(50%)' }}>
                   {metric.type === 'esr' || metric.metricType === 'indicators'
                     ? '100%'
