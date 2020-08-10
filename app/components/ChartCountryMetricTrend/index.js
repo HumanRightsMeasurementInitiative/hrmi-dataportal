@@ -525,7 +525,7 @@ function ChartCountryMetricTrend({
             justify={hasScores ? 'between' : 'end'}
           >
             {/* dots key */}
-            {hasScores && (
+            {hasScores && metric.metricType === 'indicators' && (
               <Box direction="row">
                 <KeyItem direction="row" align="center">
                   <Text size="xxsmall">
