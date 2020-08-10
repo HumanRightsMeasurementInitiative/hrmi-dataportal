@@ -346,7 +346,9 @@ export function ChartContainerCountrySnapshot({
             </Box>
           </AddToPDFWrapper>
         </StyledPageTwoPDF>
-        <Source />
+        <RemoveFromPDFWrapper>
+          <Source />
+        </RemoveFromPDFWrapper>
       </div>
       <RemoveFromPDFWrapper>
         <Box margin={{ bottom: 'medium' }}>
