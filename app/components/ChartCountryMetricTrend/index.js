@@ -285,7 +285,7 @@ function ChartCountryMetricTrend({
     <ResponsiveContext.Consumer>
       {size => (
         <div direction="column" align="start" pad={{ vertical: 'medium' }}>
-          <WrapPlot>
+          <WrapPlot metricType={metric.type}>
             <FlexibleWidthXYPlot
               height={isMinSize(size, 'medium') ? 240 : 200}
               xType="time"
