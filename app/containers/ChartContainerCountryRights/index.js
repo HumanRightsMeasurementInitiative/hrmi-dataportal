@@ -466,7 +466,9 @@ export function ChartContainerCountryRights({
                   grades={GRADES[type]}
                   gradeLabels={false}
                   level={1}
-                  commonLabel="Category"
+                  commonLabel={intl.formatMessage(
+                    rootMessages.charts.dimensionSummaryLabel,
+                  )}
                   bullet={!!dimension.score}
                   listHeader
                   metric={getMetricDetails(dimensionCode)}
