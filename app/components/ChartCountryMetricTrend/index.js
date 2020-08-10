@@ -186,9 +186,10 @@ function ChartCountryMetricTrend({
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
 
   // dummy data to force the area plot from 0
+  // with some horizontal padding, hard-coded
   const dataForceYRange = [
-    { x: new Date(minYear).getTime(), y: 0 },
-    { x: new Date(maxYear).getTime(), y: maxValue },
+    { x: new Date(minYear).getTime() - 15000000000, y: 0 },
+    { x: new Date(maxYear).getTime() + 15000000000, y: maxValue },
   ];
   const hasScores = scores && scores.length > 0;
 
