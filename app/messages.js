@@ -413,11 +413,11 @@ export default defineMessages({
     dataYear: {
       present: {
         id: `${scope}.settings.dataYear.present`,
-        defaultMessage: 'Data from specified year',
+        defaultMessage: 'Score based on data from specified year',
       },
       previous: {
         id: `${scope}.settings.dataYear.previous`,
-        defaultMessage: 'Data from previous year',
+        defaultMessage: 'Score based on data from earlier year',
       },
       presentShort: {
         id: `${scope}.settings.dataYear.presentShort`,
