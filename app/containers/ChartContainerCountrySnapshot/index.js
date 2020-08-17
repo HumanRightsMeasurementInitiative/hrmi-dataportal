@@ -59,6 +59,7 @@ import messages from './messages';
 const Styled = styled.div`
   margin-bottom: 35px;
   @media print {
+    position: relative;
     padding-left: ${({ theme }) => theme.global.edgeSize.large};
     padding-right: ${({ theme }) => theme.global.edgeSize.large};
   }
@@ -79,11 +80,6 @@ const AddToPDFWrapper = styled.div`
       margin-top: 22px;
     }
   }
-`;
-
-const BreakBefore = styled.div`
-  page-break-inside: avoid;
-  page-break-before: always;
 `;
 
 const DEPENDENCIES = [
@@ -160,204 +156,53 @@ export function ChartContainerCountrySnapshot({
 
   return (
     <Styled>
-      <BreakBefore>
-        <ChartHeader
-          title={intl.formatMessage(
-            messages.title,
-            getMessageGrammar(intl, countryCode, null, countryGrammar),
+      <ChartHeader
+        title={intl.formatMessage(
+          messages.title,
+          getMessageGrammar(intl, countryCode, null, countryGrammar),
+        )}
+        tools={{
+          howToReadConfig: {
+            key: 'tab-snapshot',
+            chart: 'Snapshot',
+          },
+          settingsConfig: {
+            key: 'tab-snapshot',
+            showStandard: true,
+            showBenchmark: true,
+          },
+        }}
+        displayInPDF={false}
+        countryCode={countryCode}
+        locale={locale}
+      />
+      {/* <RemoveFromPDFWrapper> */}
+      <NarrativeESRStandardHint
+        country={country}
+        standard={standard}
+        countryGrammar={countryGrammar}
+      />
+      {/* </RemoveFromPDFWrapper> */}
+      <div margin={{ bottom: 'large' }}>
+        <ChartCountrySnapshot
+          type="esr"
+          dimensionCode="esr"
+          dimensionScore={getDimensionScore(
+            'esr',
+            dimensions.esr,
+            currentBenchmark,
           )}
-          tools={{
-            howToReadConfig: {
-              key: 'tab-snapshot',
-              chart: 'Snapshot',
-            },
-            settingsConfig: {
-              key: 'tab-snapshot',
-              showStandard: true,
-              showBenchmark: true,
-            },
-          }}
-          displayInPDF={false}
-          countryCode={countryCode}
-          locale={locale}
+          rights={getRightsScoresForDimension(rights, 'esr')}
+          currentBenchmark={currentBenchmark}
+          standard={standard}
+          year={esrYear}
+          maxValue={100}
+          onMetricClick={onMetricClick}
+          grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+          activeCode={activeCode}
         />
-        <RemoveFromPDFWrapper>
-          <NarrativeESRStandardHint
-            country={country}
-            standard={standard}
-            countryGrammar={countryGrammar}
-          />
-        </RemoveFromPDFWrapper>
-        <div margin={{ bottom: 'large' }}>
-          <ChartCountrySnapshot
-            type="esr"
-            dimensionCode="esr"
-            dimensionScore={getDimensionScore(
-              'esr',
-              dimensions.esr,
-              currentBenchmark,
-            )}
-            rights={getRightsScoresForDimension(rights, 'esr')}
-            currentBenchmark={currentBenchmark}
-            standard={standard}
-            year={esrYear}
-            maxValue={100}
-            onMetricClick={onMetricClick}
-            grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
-            activeCode={activeCode}
-          />
-          <AddToPDFWrapper>
-            <Box margin={{ bottom: 'medium' }}>
-              <NarrativeESR
-                dimensionScore={dimensions.esr.score}
-                country={country}
-                countryGrammar={countryGrammar}
-                standard={standard}
-                short
-                benchmark={benchmark}
-                showNoData={false}
-              />
-              <NarrativeESRCompAssessment
-                country={country}
-                countryGrammar={countryGrammar}
-                comparativeScore={parseFloat(comparativeScoreESR)}
-                comparativeRights={comparativeRightsESR}
-                groupAverageScore={
-                  dimensionAverages &&
-                  dimensionAverages.esr &&
-                  dimensionAverages.esr.average &&
-                  dimensionAverages.esr.average[benchmark]
-                }
-                benchmark={currentBenchmark}
-              />
-            </Box>
-          </AddToPDFWrapper>
-          <ChartCountrySnapshot
-            type="cpr"
-            dimensionCode="physint"
-            dimensionScore={
-              dimensions.physint.score &&
-              getDimensionScore('cpr', dimensions.physint)
-            }
-            rights={getRightsScoresForDimension(rights, 'physint')}
-            year={cprYear}
-            maxValue={10}
-            onMetricClick={onMetricClick}
-            grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
-            activeCode={activeCode}
-          />
-          <AddToPDFWrapper>
-            <Box margin={{ bottom: 'medium' }}>
-              <NarrativeCPR
-                dimensionKey="physint"
-                score={dimensions.physint.score}
-                country={country}
-                countryGrammar={countryGrammar}
-                showNoData={false}
-              />
-              <NarrativeCPRCompAssessment
-                dimensionKey="physint"
-                score={dimensions.physint.score}
-                someRights={hasSomePhysintScore}
-                hadSurvey={
-                  hasSomePhysintScore ||
-                  hasSomeEmpowermentScore ||
-                  SUBREGIONS_CPR_COMPLETE.indexOf(
-                    country[COLUMNS.COUNTRIES.SUBREGION],
-                  ) > -1
-                }
-                country={country}
-                countryGrammar={countryGrammar}
-                referenceScore={
-                  dimensionAverages &&
-                  dimensionAverages.physint &&
-                  dimensionAverages.physint.average
-                }
-                referenceCount={
-                  dimensionAverages &&
-                  dimensionAverages.physint &&
-                  dimensionAverages.physint.count
-                }
-                comparativeGroup={
-                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
-                    country.subregion_code,
-                  ) > -1
-                    ? 'subregion'
-                    : 'all'
-                }
-              />
-            </Box>
-          </AddToPDFWrapper>
-          <ChartCountrySnapshot
-            type="cpr"
-            dimensionCode="empowerment"
-            dimensionScore={
-              dimensions.empowerment.score &&
-              getDimensionScore('cpr', dimensions.empowerment)
-            }
-            rights={getRightsScoresForDimension(rights, 'empowerment')}
-            year={cprYear}
-            maxValue={10}
-            onMetricClick={onMetricClick}
-            grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
-            activeCode={activeCode}
-          />
-          <AddToPDFWrapper>
-            <Box margin={{ bottom: 'medium' }}>
-              <NarrativeCPR
-                dimensionKey="empowerment"
-                score={dimensions.empowerment.score}
-                country={country}
-                countryGrammar={countryGrammar}
-                showNoData={false}
-              />
-              <NarrativeCPRCompAssessment
-                dimensionKey="empowerment"
-                score={dimensions.empowerment.score}
-                someRights={hasSomeEmpowermentScore}
-                hadSurvey={
-                  hasSomePhysintScore ||
-                  hasSomeEmpowermentScore ||
-                  SUBREGIONS_CPR_COMPLETE.indexOf(
-                    country[COLUMNS.COUNTRIES.SUBREGION],
-                  ) > -1
-                }
-                country={country}
-                countryGrammar={countryGrammar}
-                referenceScore={
-                  dimensionAverages &&
-                  dimensionAverages.empowerment &&
-                  dimensionAverages.empowerment.average
-                }
-                referenceCount={
-                  dimensionAverages &&
-                  dimensionAverages.empowerment &&
-                  dimensionAverages.empowerment.count
-                }
-                comparativeGroup={
-                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
-                    country.subregion_code,
-                  ) > -1
-                    ? 'subregion'
-                    : 'all'
-                }
-              />
-            </Box>
-          </AddToPDFWrapper>
-          <RemoveFromPDFWrapper>
-            <Source />
-          </RemoveFromPDFWrapper>
-        </div>
-        <RemoveFromPDFWrapper>
+        <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
-            <Heading level={4} margin={{ bottom: 'small' }}>
-              <FormattedMessage {...rootMessages.dimensions.esr} />
-            </Heading>
-            <NarrativeESRStandardHint
-              country={country}
-              standard={standard}
-              countryGrammar={countryGrammar}
-            />
             <NarrativeESR
               dimensionScore={dimensions.esr.score}
               country={country}
@@ -380,29 +225,24 @@ export function ChartContainerCountrySnapshot({
               }
               benchmark={currentBenchmark}
             />
-            {comparativeScoreESR && (
-              <Paragraph>
-                <Hint italic>
-                  <FormattedMessage {...rootMessages.hints.settings} />
-                </Hint>
-              </Paragraph>
-            )}
-            {hasSomeIndicatorScores && (
-              <Paragraph>
-                <ButtonTextIcon
-                  onClick={() => goToTab('report-esr')}
-                  label={<FormattedMessage {...messages.exploreDetails} />}
-                  hasIcon
-                />
-              </Paragraph>
-            )}
           </Box>
-        </RemoveFromPDFWrapper>
-        <RemoveFromPDFWrapper>
+        </AddToPDFWrapper>
+        <ChartCountrySnapshot
+          type="cpr"
+          dimensionCode="physint"
+          dimensionScore={
+            dimensions.physint.score &&
+            getDimensionScore('cpr', dimensions.physint)
+          }
+          rights={getRightsScoresForDimension(rights, 'physint')}
+          year={cprYear}
+          maxValue={10}
+          onMetricClick={onMetricClick}
+          grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+          activeCode={activeCode}
+        />
+        <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
-            <Heading level={4} margin={{ bottom: 'small' }}>
-              <FormattedMessage {...rootMessages.dimensions.physint} />
-            </Heading>
             <NarrativeCPR
               dimensionKey="physint"
               score={dimensions.physint.score}
@@ -440,22 +280,24 @@ export function ChartContainerCountrySnapshot({
                   : 'all'
               }
             />
-            {hasSomePhysintScore && (
-              <Paragraph>
-                <ButtonTextIcon
-                  onClick={() => goToTab('report-physint')}
-                  label={<FormattedMessage {...messages.exploreDetails} />}
-                  hasIcon
-                />
-              </Paragraph>
-            )}
           </Box>
-        </RemoveFromPDFWrapper>
-        <RemoveFromPDFWrapper>
+        </AddToPDFWrapper>
+        <ChartCountrySnapshot
+          type="cpr"
+          dimensionCode="empowerment"
+          dimensionScore={
+            dimensions.empowerment.score &&
+            getDimensionScore('cpr', dimensions.empowerment)
+          }
+          rights={getRightsScoresForDimension(rights, 'empowerment')}
+          year={cprYear}
+          maxValue={10}
+          onMetricClick={onMetricClick}
+          grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
+          activeCode={activeCode}
+        />
+        <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
-            <Heading level={4} margin={{ bottom: 'small' }}>
-              <FormattedMessage {...rootMessages.dimensions.empowerment} />
-            </Heading>
             <NarrativeCPR
               dimensionKey="empowerment"
               score={dimensions.empowerment.score}
@@ -493,30 +335,178 @@ export function ChartContainerCountrySnapshot({
                   : 'all'
               }
             />
-            {hasSomeEmpowermentScore && (
-              <Paragraph>
-                <ButtonTextIcon
-                  onClick={() => goToTab('report-empowerment')}
-                  label={<FormattedMessage {...messages.exploreDetails} />}
-                  hasIcon
-                />
-              </Paragraph>
-            )}
           </Box>
-        </RemoveFromPDFWrapper>
-        <AddToPDFWrapper>
-          <AboutCountryContainer
-            countryCode={countryCode}
-            onCategoryClick={() => {}}
-            showFAQs={false}
-          />
-          <p style={{ fontWeight: 600 }}>
-            {' '}
-            To explore this country’s scores in more detail please go to{' '}
-            <a href="https://rightstracker.org">rightstracker.org</a>
-          </p>
         </AddToPDFWrapper>
-      </BreakBefore>
+        <RemoveFromPDFWrapper>
+          <Source />
+        </RemoveFromPDFWrapper>
+      </div>
+      <RemoveFromPDFWrapper>
+        <Box margin={{ bottom: 'medium' }}>
+          <Heading level={4} margin={{ bottom: 'small' }}>
+            <FormattedMessage {...rootMessages.dimensions.esr} />
+          </Heading>
+          <NarrativeESRStandardHint
+            country={country}
+            standard={standard}
+            countryGrammar={countryGrammar}
+          />
+          <NarrativeESR
+            dimensionScore={dimensions.esr.score}
+            country={country}
+            countryGrammar={countryGrammar}
+            standard={standard}
+            short
+            benchmark={benchmark}
+            showNoData={false}
+          />
+          <NarrativeESRCompAssessment
+            country={country}
+            countryGrammar={countryGrammar}
+            comparativeScore={parseFloat(comparativeScoreESR)}
+            comparativeRights={comparativeRightsESR}
+            groupAverageScore={
+              dimensionAverages &&
+              dimensionAverages.esr &&
+              dimensionAverages.esr.average &&
+              dimensionAverages.esr.average[benchmark]
+            }
+            benchmark={currentBenchmark}
+          />
+          {comparativeScoreESR && (
+            <Paragraph>
+              <Hint italic>
+                <FormattedMessage {...rootMessages.hints.settings} />
+              </Hint>
+            </Paragraph>
+          )}
+          {hasSomeIndicatorScores && (
+            <Paragraph>
+              <ButtonTextIcon
+                onClick={() => goToTab('report-esr')}
+                label={<FormattedMessage {...messages.exploreDetails} />}
+                hasIcon
+              />
+            </Paragraph>
+          )}
+        </Box>
+      </RemoveFromPDFWrapper>
+      <RemoveFromPDFWrapper>
+        <Box margin={{ bottom: 'medium' }}>
+          <Heading level={4} margin={{ bottom: 'small' }}>
+            <FormattedMessage {...rootMessages.dimensions.physint} />
+          </Heading>
+          <NarrativeCPR
+            dimensionKey="physint"
+            score={dimensions.physint.score}
+            country={country}
+            countryGrammar={countryGrammar}
+            showNoData={false}
+          />
+          <NarrativeCPRCompAssessment
+            dimensionKey="physint"
+            score={dimensions.physint.score}
+            someRights={hasSomePhysintScore}
+            hadSurvey={
+              hasSomePhysintScore ||
+              hasSomeEmpowermentScore ||
+              SUBREGIONS_CPR_COMPLETE.indexOf(
+                country[COLUMNS.COUNTRIES.SUBREGION],
+              ) > -1
+            }
+            country={country}
+            countryGrammar={countryGrammar}
+            referenceScore={
+              dimensionAverages &&
+              dimensionAverages.physint &&
+              dimensionAverages.physint.average
+            }
+            referenceCount={
+              dimensionAverages &&
+              dimensionAverages.physint &&
+              dimensionAverages.physint.count
+            }
+            comparativeGroup={
+              SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) > -1
+                ? 'subregion'
+                : 'all'
+            }
+          />
+          {hasSomePhysintScore && (
+            <Paragraph>
+              <ButtonTextIcon
+                onClick={() => goToTab('report-physint')}
+                label={<FormattedMessage {...messages.exploreDetails} />}
+                hasIcon
+              />
+            </Paragraph>
+          )}
+        </Box>
+      </RemoveFromPDFWrapper>
+      <RemoveFromPDFWrapper>
+        <Box margin={{ bottom: 'medium' }}>
+          <Heading level={4} margin={{ bottom: 'small' }}>
+            <FormattedMessage {...rootMessages.dimensions.empowerment} />
+          </Heading>
+          <NarrativeCPR
+            dimensionKey="empowerment"
+            score={dimensions.empowerment.score}
+            country={country}
+            countryGrammar={countryGrammar}
+            showNoData={false}
+          />
+          <NarrativeCPRCompAssessment
+            dimensionKey="empowerment"
+            score={dimensions.empowerment.score}
+            someRights={hasSomeEmpowermentScore}
+            hadSurvey={
+              hasSomePhysintScore ||
+              hasSomeEmpowermentScore ||
+              SUBREGIONS_CPR_COMPLETE.indexOf(
+                country[COLUMNS.COUNTRIES.SUBREGION],
+              ) > -1
+            }
+            country={country}
+            countryGrammar={countryGrammar}
+            referenceScore={
+              dimensionAverages &&
+              dimensionAverages.empowerment &&
+              dimensionAverages.empowerment.average
+            }
+            referenceCount={
+              dimensionAverages &&
+              dimensionAverages.empowerment &&
+              dimensionAverages.empowerment.count
+            }
+            comparativeGroup={
+              SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) > -1
+                ? 'subregion'
+                : 'all'
+            }
+          />
+          {hasSomeEmpowermentScore && (
+            <Paragraph>
+              <ButtonTextIcon
+                onClick={() => goToTab('report-empowerment')}
+                label={<FormattedMessage {...messages.exploreDetails} />}
+                hasIcon
+              />
+            </Paragraph>
+          )}
+        </Box>
+      </RemoveFromPDFWrapper>
+      <AddToPDFWrapper>
+        <AboutCountryContainer
+          countryCode={countryCode}
+          onCategoryClick={() => {}}
+          showFAQs={false}
+        />
+        <p style={{ fontWeight: 600 }}>
+          {' '}
+          To explore this country’s scores in more detail please go to{' '}
+          <a href="https://rightstracker.org">rightstracker.org</a>
+        </p>
+      </AddToPDFWrapper>
     </Styled>
   );
 }

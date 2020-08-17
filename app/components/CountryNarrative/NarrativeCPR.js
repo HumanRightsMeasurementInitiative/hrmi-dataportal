@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Paragraph } from 'grommet';
+import styled from 'styled-components';
 
 import { formatScore } from 'utils/scores';
 
@@ -9,6 +9,15 @@ import { getCPRScoreRange, getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
+
+const NoPageBreak = styled.div`
+  @media print {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    page-break-inside: avoid;
+  }
+`;
 
 function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
   const messageValues = {
@@ -30,7 +39,7 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
     const range = score && getCPRScoreRange(score.mean);
     return (
       range && (
-        <Paragraph>
+        <NoPageBreak>
           <FormattedMessage
             {...messages.cpr.start}
             values={{
@@ -49,7 +58,7 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
               ...messageValues,
             }}
           />
-        </Paragraph>
+        </NoPageBreak>
       )
     );
   }
@@ -57,7 +66,7 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
     const range = score && getCPRScoreRange(score.mean);
     return (
       range && (
-        <Paragraph>
+        <NoPageBreak>
           <FormattedMessage
             {...messages.cpr.start}
             values={{
@@ -72,7 +81,7 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
               ...messageValues,
             }}
           />
-        </Paragraph>
+        </NoPageBreak>
       )
     );
   }
