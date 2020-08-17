@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Paragraph } from 'grommet';
+import styled from 'styled-components';
 
 import { compareRange, getMessageGrammar } from 'utils/narrative';
 import { isCountryHighIncome, isCountryOECD } from 'utils/countries';
@@ -12,6 +12,15 @@ import rootMessages from 'messages';
 import messages from './messages';
 
 import NarrativeCPRNoData from './NarrativeCPRNoData';
+
+const NoPageBreak = styled.div`
+  @media print {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    page-break-inside: avoid;
+  }
+`;
 
 function NarrativeCPRCompAssessment({
   dimensionKey,
@@ -47,7 +56,7 @@ function NarrativeCPRCompAssessment({
     );
   }
   return (
-    <Paragraph>
+    <NoPageBreak>
       {isHiOECD && (
         <FormattedMessage
           {...messages.compAssessmentCPR.startHiOECD}
@@ -82,7 +91,7 @@ function NarrativeCPRCompAssessment({
         {...messages.compAssessmentCPR.end[dimensionKey]}
         values={messageValues}
       />
-    </Paragraph>
+    </NoPageBreak>
   );
 }
 NarrativeCPRCompAssessment.propTypes = {

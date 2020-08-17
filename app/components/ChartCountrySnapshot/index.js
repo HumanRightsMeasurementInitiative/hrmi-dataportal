@@ -28,6 +28,15 @@ const Dimension = styled(Box)`
   position: relative;
 `;
 
+const NoPageBreak = styled(Box)`
+  @media print {
+    position: relative;
+    width: 100%;
+    height: 310px;
+    page-break-inside: avoid;
+  }
+`;
+
 const ChartArea = props => (
   <Box direction="column" fill="horizontal" {...props} />
 );
@@ -151,7 +160,7 @@ function ChartCountrySnapshot({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box
+        <NoPageBreak
           direction="column"
           pad={{ bottom: 'small' }}
           margin={{ bottom: 'small' }}
@@ -282,7 +291,7 @@ function ChartCountrySnapshot({
             </ChartArea>
           </Box>
           {source && <Source />}
-        </Box>
+        </NoPageBreak>
       )}
     </ResponsiveContext.Consumer>
   );
