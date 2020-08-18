@@ -28,12 +28,20 @@ const Dimension = styled(Box)`
   position: relative;
 `;
 
-const NoPageBreak = styled(Box)`
+const RemoveFromPDFWrapper = styled.div`
   @media print {
-    position: relative;
-    width: 100%;
-    height: 310px;
-    page-break-inside: avoid;
+    display: none;
+  }
+`;
+
+const AddToPDFWrapper = styled.div`
+  display: none;
+  @media print {
+    display: initial;
+    h3 {
+      font-size: 16px;
+      margin-top: 22px;
+    }
   }
 `;
 
@@ -157,141 +165,347 @@ function ChartCountrySnapshot({
     ? { score: dimensionScore, maxValue }
     : null;
 
+  const hasData = rights.map(right => !!right.score).some(item => !!item);
+  const rightsLabels = rights.map(right => getMetricLabel(right, intl));
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <NoPageBreak
+        <Box
           direction="column"
           pad={{ bottom: 'small' }}
           margin={{ bottom: 'small' }}
         >
-          <Box direction="row">
-            <ChartArea>
-              <Dimension>
-                <Box
-                  direction="row"
-                  justify="between"
-                  align={isMaxSize(size, 'sm') ? 'start' : 'end'}
-                  margin={isMaxSize(size, 'sm') ? { top: '12px' } : 'none'}
-                >
-                  <Box direction="column" align="start">
-                    <Button
-                      onClick={() => onMetricClick(dimensionCode)}
-                      onMouseEnter={() => setHover(true)}
-                      onMouseLeave={() => setHover(false)}
-                      style={{ position: 'relative' }}
-                      margin={{ right: 'ms' }}
-                    >
-                      {(hover || activeCode === dimensionCode) && (
-                        <Active color={`${dimensionCode}Active`} />
-                      )}
-
-                      <DimensionHeading
-                        color={
-                          hover || activeCode === dimensionCode
-                            ? `${dimensionCode}Active`
-                            : `${dimensionCode}Dark`
-                        }
-                      >
-                        <FormattedMessage
-                          {...rootMessages.dimensions[dimensionCode]}
-                        />
-                      </DimensionHeading>
-                    </Button>
-                    <Text
-                      size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
-                      color={`${dimensionCode}Dark`}
-                    >
-                      <FormattedMessage
-                        {...rootMessages['rights-types'][type]}
-                      />
-                      {` (${year})`}
-                    </Text>
-                  </Box>
-                  <Box
-                    direction={isMinSize(size, 'sm') ? 'row' : 'column'}
-                    align="center"
+          {!hasData ? (
+            <div>
+              <AddToPDFWrapper>
+                <Box direction="column" align="start">
+                  <Button
+                    onClick={() => onMetricClick(dimensionCode)}
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                    style={{ position: 'relative' }}
+                    margin={{ right: 'ms' }}
                   >
-                    <Text
-                      size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
-                      color={`${dimensionCode}Dark`}
+                    {(hover || activeCode === dimensionCode) && (
+                      <Active color={`${dimensionCode}Active`} />
+                    )}
+
+                    <DimensionHeading
+                      color={
+                        hover || activeCode === dimensionCode
+                          ? `${dimensionCode}Active`
+                          : `${dimensionCode}Dark`
+                      }
                     >
                       <FormattedMessage
-                        {...rootMessages.charts.dimensionSummaryLabel}
+                        {...rootMessages.dimensions[dimensionCode]}
                       />
-                    </Text>
-                    <Box
-                      background={`${dimensionCode}Dark`}
-                      pad={{ vertical: '4px', horizontal: '12px' }}
-                      margin={{ left: isMinSize(size, 'sm') ? '10px' : '0px' }}
-                    >
-                      {/* prettier-ignore */}
-                      <Text
-                        size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
-                        color="white"
-                      >
-                        {summaryScore
-                          ? formatScoreMax(
-                            summaryScore.score,
-                            summaryScore.maxValue,
-                            1,
-                            false,
-                            intl,
-                          )
-                          : 'N/A'}
-                      </Text>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  margin={{ top: 'small', bottom: 'xsmall' }}
-                  responsive={false}
-                >
-                  <Text size={isMinSize(size, 'large') ? 'medium' : 'small'}>
-                    {type === 'esr' && currentBenchmark && (
-                      <FormattedMessage
-                        {...rootMessages.charts.dimensionIntro.esr[
-                          currentBenchmark.key
-                        ]}
-                        values={grammar}
-                      />
-                    )}
-                    {type === 'cpr' && (
-                      <FormattedMessage
-                        {...rootMessages.charts.dimensionIntro[dimensionCode]}
-                        values={grammar}
-                      />
-                    )}
+                    </DimensionHeading>
+                  </Button>
+                  <Text
+                    size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                    color={`${dimensionCode}Dark`}
+                  >
+                    <FormattedMessage {...rootMessages['rights-types'][type]} />
+                    {` (${year})`}
                   </Text>
                 </Box>
-                <ChartBars
-                  summaryScore={summaryScore}
-                  data={prepareData({
-                    scores: rights,
-                    dimensionCode,
-                    currentBenchmark,
-                    standard,
-                    onClick: onMetricClick,
-                    intl,
-                    activeCode,
-                  })}
-                  currentBenchmark={type === 'esr' && currentBenchmark}
-                  standard={type === 'esr' && standard}
-                  commonLabel={`${intl.formatMessage(
-                    rootMessages.charts.rightsColumnLabel[dimensionCode],
-                  )}`}
-                  labelColor={`${dimensionCode}Dark`}
-                  padVertical="small"
-                  grades={GRADES[type]}
-                  listHeader
-                  metric={getMetricDetails(dimensionCode)}
-                  annotateBetter={false}
-                />
-              </Dimension>
-            </ChartArea>
-          </Box>
-          {source && <Source />}
-        </NoPageBreak>
+                <div>
+                  <p>
+                    {rootMessages.pdf.noData.category}&nbsp;
+                    <FormattedMessage
+                      {...rootMessages.dimensions[dimensionCode]}
+                    />
+                    &nbsp;
+                    {rootMessages.pdf.noData.includes}
+                  </p>
+                  <ul>
+                    {rightsLabels.map(right => (
+                      <li
+                        style={{ listStyle: 'none', color: '#620292' }}
+                        key={right}
+                      >
+                        –<span style={{ marginLeft: '10px' }}>{right}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AddToPDFWrapper>
+              <RemoveFromPDFWrapper>
+                <Box direction="row">
+                  <ChartArea>
+                    <Dimension>
+                      <Box
+                        direction="row"
+                        justify="between"
+                        align={isMaxSize(size, 'sm') ? 'start' : 'end'}
+                        margin={
+                          isMaxSize(size, 'sm') ? { top: '12px' } : 'none'
+                        }
+                      >
+                        <Box direction="column" align="start">
+                          <Button
+                            onClick={() => onMetricClick(dimensionCode)}
+                            onMouseEnter={() => setHover(true)}
+                            onMouseLeave={() => setHover(false)}
+                            style={{ position: 'relative' }}
+                            margin={{ right: 'ms' }}
+                          >
+                            {(hover || activeCode === dimensionCode) && (
+                              <Active color={`${dimensionCode}Active`} />
+                            )}
+
+                            <DimensionHeading
+                              color={
+                                hover || activeCode === dimensionCode
+                                  ? `${dimensionCode}Active`
+                                  : `${dimensionCode}Dark`
+                              }
+                            >
+                              <FormattedMessage
+                                {...rootMessages.dimensions[dimensionCode]}
+                              />
+                            </DimensionHeading>
+                          </Button>
+                          <Text
+                            size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                            color={`${dimensionCode}Dark`}
+                          >
+                            <FormattedMessage
+                              {...rootMessages['rights-types'][type]}
+                            />
+                            {` (${year})`}
+                          </Text>
+                        </Box>
+                        <Box
+                          direction={isMinSize(size, 'sm') ? 'row' : 'column'}
+                          align="center"
+                        >
+                          <Text
+                            size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                            color={`${dimensionCode}Dark`}
+                          >
+                            <FormattedMessage
+                              {...rootMessages.charts.dimensionSummaryLabel}
+                            />
+                          </Text>
+                          <Box
+                            background={`${dimensionCode}Dark`}
+                            pad={{ vertical: '4px', horizontal: '12px' }}
+                            margin={{
+                              left: isMinSize(size, 'sm') ? '10px' : '0px',
+                            }}
+                          >
+                            {/* prettier-ignore */}
+                            <Text
+                              size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                              color="white"
+                            >
+                              {summaryScore
+                                ? formatScoreMax(
+                                  summaryScore.score,
+                                  summaryScore.maxValue,
+                                  1,
+                                  false,
+                                  intl,
+                                )
+                                : 'N/A'}
+                            </Text>
+                          </Box>
+                        </Box>
+                      </Box>
+                      <Box
+                        margin={{ top: 'small', bottom: 'xsmall' }}
+                        responsive={false}
+                      >
+                        <Text
+                          size={isMinSize(size, 'large') ? 'medium' : 'small'}
+                        >
+                          {type === 'esr' && currentBenchmark && (
+                            <FormattedMessage
+                              {...rootMessages.charts.dimensionIntro.esr[
+                                currentBenchmark.key
+                              ]}
+                              values={grammar}
+                            />
+                          )}
+                          {type === 'cpr' && (
+                            <FormattedMessage
+                              {...rootMessages.charts.dimensionIntro[
+                                dimensionCode
+                              ]}
+                              values={grammar}
+                            />
+                          )}
+                        </Text>
+                      </Box>
+                      <ChartBars
+                        summaryScore={summaryScore}
+                        data={prepareData({
+                          scores: rights,
+                          dimensionCode,
+                          currentBenchmark,
+                          standard,
+                          onClick: onMetricClick,
+                          intl,
+                          activeCode,
+                        })}
+                        currentBenchmark={type === 'esr' && currentBenchmark}
+                        standard={type === 'esr' && standard}
+                        commonLabel={`${intl.formatMessage(
+                          rootMessages.charts.rightsColumnLabel[dimensionCode],
+                        )}`}
+                        labelColor={`${dimensionCode}Dark`}
+                        padVertical="small"
+                        grades={GRADES[type]}
+                        listHeader
+                        metric={getMetricDetails(dimensionCode)}
+                        annotateBetter={false}
+                      />
+                    </Dimension>
+                  </ChartArea>
+                </Box>
+                {source && <Source />}
+              </RemoveFromPDFWrapper>
+            </div>
+          ) : (
+            <div>
+              <Box direction="row">
+                <ChartArea>
+                  <Dimension>
+                    <Box
+                      direction="row"
+                      justify="between"
+                      align={isMaxSize(size, 'sm') ? 'start' : 'end'}
+                      margin={isMaxSize(size, 'sm') ? { top: '12px' } : 'none'}
+                    >
+                      <Box direction="column" align="start">
+                        <Button
+                          onClick={() => onMetricClick(dimensionCode)}
+                          onMouseEnter={() => setHover(true)}
+                          onMouseLeave={() => setHover(false)}
+                          style={{ position: 'relative' }}
+                          margin={{ right: 'ms' }}
+                        >
+                          {(hover || activeCode === dimensionCode) && (
+                            <Active color={`${dimensionCode}Active`} />
+                          )}
+
+                          <DimensionHeading
+                            color={
+                              hover || activeCode === dimensionCode
+                                ? `${dimensionCode}Active`
+                                : `${dimensionCode}Dark`
+                            }
+                          >
+                            <FormattedMessage
+                              {...rootMessages.dimensions[dimensionCode]}
+                            />
+                          </DimensionHeading>
+                        </Button>
+                        <Text
+                          size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                          color={`${dimensionCode}Dark`}
+                        >
+                          <FormattedMessage
+                            {...rootMessages['rights-types'][type]}
+                          />
+                          {` (${year})`}
+                        </Text>
+                      </Box>
+                      <Box
+                        direction={isMinSize(size, 'sm') ? 'row' : 'column'}
+                        align="center"
+                      >
+                        <Text
+                          size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                          color={`${dimensionCode}Dark`}
+                        >
+                          <FormattedMessage
+                            {...rootMessages.charts.dimensionSummaryLabel}
+                          />
+                        </Text>
+                        <Box
+                          background={`${dimensionCode}Dark`}
+                          pad={{ vertical: '4px', horizontal: '12px' }}
+                          margin={{
+                            left: isMinSize(size, 'sm') ? '10px' : '0px',
+                          }}
+                        >
+                          {/* prettier-ignore */}
+                          <Text
+                            size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                            color="white"
+                          >
+                            {summaryScore
+                              ? formatScoreMax(
+                                summaryScore.score,
+                                summaryScore.maxValue,
+                                1,
+                                false,
+                                intl,
+                              )
+                              : 'N/A'}
+                          </Text>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box
+                      margin={{ top: 'small', bottom: 'xsmall' }}
+                      responsive={false}
+                    >
+                      <Text
+                        size={isMinSize(size, 'large') ? 'medium' : 'small'}
+                      >
+                        {type === 'esr' && currentBenchmark && (
+                          <FormattedMessage
+                            {...rootMessages.charts.dimensionIntro.esr[
+                              currentBenchmark.key
+                            ]}
+                            values={grammar}
+                          />
+                        )}
+                        {type === 'cpr' && (
+                          <FormattedMessage
+                            {...rootMessages.charts.dimensionIntro[
+                              dimensionCode
+                            ]}
+                            values={grammar}
+                          />
+                        )}
+                      </Text>
+                    </Box>
+                    <ChartBars
+                      summaryScore={summaryScore}
+                      data={prepareData({
+                        scores: rights,
+                        dimensionCode,
+                        currentBenchmark,
+                        standard,
+                        onClick: onMetricClick,
+                        intl,
+                        activeCode,
+                      })}
+                      currentBenchmark={type === 'esr' && currentBenchmark}
+                      standard={type === 'esr' && standard}
+                      commonLabel={`${intl.formatMessage(
+                        rootMessages.charts.rightsColumnLabel[dimensionCode],
+                      )}`}
+                      labelColor={`${dimensionCode}Dark`}
+                      padVertical="small"
+                      grades={GRADES[type]}
+                      listHeader
+                      metric={getMetricDetails(dimensionCode)}
+                      annotateBetter={false}
+                    />
+                  </Dimension>
+                </ChartArea>
+              </Box>
+              {source && <Source />}{' '}
+            </div>
+          )}
+        </Box>
       )}
     </ResponsiveContext.Consumer>
   );

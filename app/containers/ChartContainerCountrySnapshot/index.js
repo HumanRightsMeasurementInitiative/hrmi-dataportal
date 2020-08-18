@@ -82,6 +82,18 @@ const AddToPDFWrapper = styled.div`
   }
 `;
 
+const BreakBefore = styled(Box)`
+  position: relative;
+  page-break-before: always;
+  break-before: page;
+`;
+
+const BreakAfter = styled(Box)`
+  position: relative;
+  page-break-after: always;
+  break-after: page;
+`;
+
 const DEPENDENCIES = [
   'countries',
   'countriesGrammar',
@@ -153,6 +165,7 @@ export function ChartContainerCountrySnapshot({
   const hasSomeEmpowermentScore = Object.values(rights).some(
     s => s.dimension === 'empowerment' && !!s.score,
   );
+  const hasData = !dimensions.physint.score;
 
   return (
     <Styled>
@@ -176,14 +189,15 @@ export function ChartContainerCountrySnapshot({
         countryCode={countryCode}
         locale={locale}
       />
-      {/* <RemoveFromPDFWrapper> */}
-      <NarrativeESRStandardHint
-        country={country}
-        standard={standard}
-        countryGrammar={countryGrammar}
-      />
-      {/* </RemoveFromPDFWrapper> */}
+      <RemoveFromPDFWrapper>
+        <NarrativeESRStandardHint
+          country={country}
+          standard={standard}
+          countryGrammar={countryGrammar}
+        />
+      </RemoveFromPDFWrapper>
       <div margin={{ bottom: 'large' }}>
+        {/* Quality of Life */}
         <ChartCountrySnapshot
           type="esr"
           dimensionCode="esr"
@@ -227,6 +241,7 @@ export function ChartContainerCountrySnapshot({
             />
           </Box>
         </AddToPDFWrapper>
+        {/* Safety from the State */}
         <ChartCountrySnapshot
           type="cpr"
           dimensionCode="physint"
@@ -242,46 +257,91 @@ export function ChartContainerCountrySnapshot({
           activeCode={activeCode}
         />
         <AddToPDFWrapper>
-          <Box margin={{ bottom: 'medium' }}>
-            <NarrativeCPR
-              dimensionKey="physint"
-              score={dimensions.physint.score}
-              country={country}
-              countryGrammar={countryGrammar}
-              showNoData={false}
-            />
-            <NarrativeCPRCompAssessment
-              dimensionKey="physint"
-              score={dimensions.physint.score}
-              someRights={hasSomePhysintScore}
-              hadSurvey={
-                hasSomePhysintScore ||
-                hasSomeEmpowermentScore ||
-                SUBREGIONS_CPR_COMPLETE.indexOf(
-                  country[COLUMNS.COUNTRIES.SUBREGION],
-                ) > -1
-              }
-              country={country}
-              countryGrammar={countryGrammar}
-              referenceScore={
-                dimensionAverages &&
-                dimensionAverages.physint &&
-                dimensionAverages.physint.average
-              }
-              referenceCount={
-                dimensionAverages &&
-                dimensionAverages.physint &&
-                dimensionAverages.physint.count
-              }
-              comparativeGroup={
-                SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) >
-                -1
-                  ? 'subregion'
-                  : 'all'
-              }
-            />
-          </Box>
+          {!hasData ? (
+            <BreakBefore margin={{ bottom: 'medium' }}>
+              <NarrativeCPR
+                dimensionKey="physint"
+                score={dimensions.physint.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                showNoData={false}
+              />
+              <NarrativeCPRCompAssessment
+                dimensionKey="physint"
+                score={dimensions.physint.score}
+                someRights={hasSomePhysintScore}
+                hadSurvey={
+                  hasSomePhysintScore ||
+                  hasSomeEmpowermentScore ||
+                  SUBREGIONS_CPR_COMPLETE.indexOf(
+                    country[COLUMNS.COUNTRIES.SUBREGION],
+                  ) > -1
+                }
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={
+                  dimensionAverages &&
+                  dimensionAverages.physint &&
+                  dimensionAverages.physint.average
+                }
+                referenceCount={
+                  dimensionAverages &&
+                  dimensionAverages.physint &&
+                  dimensionAverages.physint.count
+                }
+                comparativeGroup={
+                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
+                    country.subregion_code,
+                  ) > -1
+                    ? 'subregion'
+                    : 'all'
+                }
+              />
+            </BreakBefore>
+          ) : (
+            <BreakAfter margin={{ bottom: 'medium' }}>
+              <NarrativeCPR
+                dimensionKey="physint"
+                score={dimensions.physint.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                showNoData={false}
+              />
+              <NarrativeCPRCompAssessment
+                dimensionKey="physint"
+                score={dimensions.physint.score}
+                someRights={hasSomePhysintScore}
+                hadSurvey={
+                  hasSomePhysintScore ||
+                  hasSomeEmpowermentScore ||
+                  SUBREGIONS_CPR_COMPLETE.indexOf(
+                    country[COLUMNS.COUNTRIES.SUBREGION],
+                  ) > -1
+                }
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={
+                  dimensionAverages &&
+                  dimensionAverages.physint &&
+                  dimensionAverages.physint.average
+                }
+                referenceCount={
+                  dimensionAverages &&
+                  dimensionAverages.physint &&
+                  dimensionAverages.physint.count
+                }
+                comparativeGroup={
+                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
+                    country.subregion_code,
+                  ) > -1
+                    ? 'subregion'
+                    : 'all'
+                }
+              />
+            </BreakAfter>
+          )}
         </AddToPDFWrapper>
+        {/* Empowerment */}
         <ChartCountrySnapshot
           type="cpr"
           dimensionCode="empowerment"
