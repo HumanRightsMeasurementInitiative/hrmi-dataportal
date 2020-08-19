@@ -409,6 +409,10 @@
   "hrmi.settings.value.note": "Nota: os valores do indicador em bruto são primeiro convertidos em pontuações e depois agregados na pontuação certa",
   "hrmi.settings.value.score": "Pontuações",
   "hrmi.settings.value.raw": "Valores em bruto",
+  "hrmi.settings.dataYear.present": "Score based on data from specified year",
+  "hrmi.settings.dataYear.previous": "Score based on data from earlier year",
+  "hrmi.settings.dataYear.presentShort": "Specified year data",
+  "hrmi.settings.dataYear.previousShort": "Earlier year data",
   "hrmi.groups.all": "Todas as pessoas",
   "hrmi.groups.female": "Feminino",
   "hrmi.groups.male": "Masculino",
@@ -899,5 +903,8 @@
   "hrmi.containers.AboutCountryContainer.countryStatus": "Status do país",
   "hrmi.components.ChartHeader.countries-overview-sub": "Também mostrando {noWithout} {noWithout, select, 1 {country} other {countries}} sem pontuações",
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "Usando o padrão de avaliação de rendimentos elevados",
-  "hrmi.components.ChartHeader.assessment-standard-low-sub": "Usando o padrão de avaliação de rendimentos baixos e médios"
+  "hrmi.components.ChartHeader.assessment-standard-low-sub": "Usando o padrão de avaliação de rendimentos baixos e médios",
+  "hrmi.pdf.subtitle": "Country Profiles | Human Rights in {country}, 2020",
+  "hrmi.pdf.category": "The category",
+  "hrmi.pdf.includes": "includes the following rights:"
 }
