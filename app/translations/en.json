@@ -406,13 +406,13 @@
   "hrmi.settings.benchmark.best": "Global best",
   "hrmi.settings.benchmark.bestInfo": "How well is the country doing compared to the rest of the world, including the wealthiest countries?",
   "hrmi.settings.benchmark.min": "Natural minimum",
-  "hrmi.settings.dataYear.present": "Score based on data from specified year",
-  "hrmi.settings.dataYear.previous": "Score based on data from earlier year",
-  "hrmi.settings.dataYear.presentShort": "Score from specified year",
-  "hrmi.settings.dataYear.previousShort": "Score from earlier year",
   "hrmi.settings.value.note": "Note: raw indicator values are first converted into scores and then aggregated into the right score",
   "hrmi.settings.value.score": "Scores",
   "hrmi.settings.value.raw": "Raw values",
+  "hrmi.settings.dataYear.present": "Score based on data from specified year",
+  "hrmi.settings.dataYear.previous": "Score based on data from earlier year",
+  "hrmi.settings.dataYear.presentShort": "Specified year data",
+  "hrmi.settings.dataYear.previousShort": "Earlier year data",
   "hrmi.groups.all": "All people",
   "hrmi.groups.female": "Female",
   "hrmi.groups.male": "Male",
@@ -904,5 +904,7 @@
   "hrmi.components.ChartHeader.countries-overview-sub": "Also showing {noWithout} {noWithout, select, 1 {country} other {countries}} without any scores",
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "Using the high income assessment standard",
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Using the low and middle income assessment standard",
-  "hrmi.pdf.subtitle": "Country Profiles | Human Rights in {country}, 2020"
+  "hrmi.pdf.subtitle": "Country Profiles | Human Rights in {country}, 2020",
+  "hrmi.pdf.category": "The category",
+  "hrmi.pdf.includes": "includes the following rights:"
 }
