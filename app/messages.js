@@ -2433,5 +2433,10 @@ export default defineMessages({
       id: `${scope}.pdf.subtitle`,
       defaultMessage: 'Country Profiles | Human Rights in',
     },
+    noData: {
+      id: `${scope}.pdf.noData`,
+      category: 'The category',
+      includes: 'includes the following rights:',
+    },
   },
 });

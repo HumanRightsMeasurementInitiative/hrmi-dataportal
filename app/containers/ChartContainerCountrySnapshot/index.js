@@ -59,6 +59,7 @@ import messages from './messages';
 const Styled = styled.div`
   margin-bottom: 35px;
   @media print {
+    position: relative;
     padding-left: ${({ theme }) => theme.global.edgeSize.large};
     padding-right: ${({ theme }) => theme.global.edgeSize.large};
   }
@@ -81,11 +82,10 @@ const AddToPDFWrapper = styled.div`
   }
 `;
 
-const StyledPageTwoPDF = styled.div`
-  @media print {
-    break-before: page;
-    margin-top: -100px;
-  }
+const BreakBefore = styled(Box)`
+  position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+  break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+  margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
 `;
 
 const DEPENDENCIES = [
@@ -159,6 +159,7 @@ export function ChartContainerCountrySnapshot({
   const hasSomeEmpowermentScore = Object.values(rights).some(
     s => s.dimension === 'empowerment' && !!s.score,
   );
+  const physIntData = dimensions.physint.score;
 
   return (
     <Styled>
@@ -190,6 +191,7 @@ export function ChartContainerCountrySnapshot({
         />
       </RemoveFromPDFWrapper>
       <div margin={{ bottom: 'large' }}>
+        {/* Quality of Life */}
         <ChartCountrySnapshot
           type="esr"
           dimensionCode="esr"
@@ -233,6 +235,7 @@ export function ChartContainerCountrySnapshot({
             />
           </Box>
         </AddToPDFWrapper>
+        {/* Safety from the State */}
         <ChartCountrySnapshot
           type="cpr"
           dimensionCode="physint"
@@ -248,7 +251,7 @@ export function ChartContainerCountrySnapshot({
           activeCode={activeCode}
         />
         <AddToPDFWrapper>
-          <Box margin={{ bottom: 'medium' }}>
+          <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}>
             <NarrativeCPR
               dimensionKey="physint"
               score={dimensions.physint.score}
@@ -286,9 +289,10 @@ export function ChartContainerCountrySnapshot({
                   : 'all'
               }
             />
-          </Box>
+          </BreakBefore>
         </AddToPDFWrapper>
-        <StyledPageTwoPDF>
+        {/* Empowerment */}
+        <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}>
           <ChartCountrySnapshot
             type="cpr"
             dimensionCode="empowerment"
@@ -303,49 +307,48 @@ export function ChartContainerCountrySnapshot({
             grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
             activeCode={activeCode}
           />
-          <AddToPDFWrapper>
-            <Box margin={{ bottom: 'medium' }}>
-              <NarrativeCPR
-                dimensionKey="empowerment"
-                score={dimensions.empowerment.score}
-                country={country}
-                countryGrammar={countryGrammar}
-                showNoData={false}
-              />
-              <NarrativeCPRCompAssessment
-                dimensionKey="empowerment"
-                score={dimensions.empowerment.score}
-                someRights={hasSomeEmpowermentScore}
-                hadSurvey={
-                  hasSomePhysintScore ||
-                  hasSomeEmpowermentScore ||
-                  SUBREGIONS_CPR_COMPLETE.indexOf(
-                    country[COLUMNS.COUNTRIES.SUBREGION],
-                  ) > -1
-                }
-                country={country}
-                countryGrammar={countryGrammar}
-                referenceScore={
-                  dimensionAverages &&
-                  dimensionAverages.empowerment &&
-                  dimensionAverages.empowerment.average
-                }
-                referenceCount={
-                  dimensionAverages &&
-                  dimensionAverages.empowerment &&
-                  dimensionAverages.empowerment.count
-                }
-                comparativeGroup={
-                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
-                    country.subregion_code,
-                  ) > -1
-                    ? 'subregion'
-                    : 'all'
-                }
-              />
-            </Box>
-          </AddToPDFWrapper>
-        </StyledPageTwoPDF>
+        </BreakBefore>
+        <AddToPDFWrapper>
+          <Box margin={{ bottom: 'medium' }}>
+            <NarrativeCPR
+              dimensionKey="empowerment"
+              score={dimensions.empowerment.score}
+              country={country}
+              countryGrammar={countryGrammar}
+              showNoData={false}
+            />
+            <NarrativeCPRCompAssessment
+              dimensionKey="empowerment"
+              score={dimensions.empowerment.score}
+              someRights={hasSomeEmpowermentScore}
+              hadSurvey={
+                hasSomePhysintScore ||
+                hasSomeEmpowermentScore ||
+                SUBREGIONS_CPR_COMPLETE.indexOf(
+                  country[COLUMNS.COUNTRIES.SUBREGION],
+                ) > -1
+              }
+              country={country}
+              countryGrammar={countryGrammar}
+              referenceScore={
+                dimensionAverages &&
+                dimensionAverages.empowerment &&
+                dimensionAverages.empowerment.average
+              }
+              referenceCount={
+                dimensionAverages &&
+                dimensionAverages.empowerment &&
+                dimensionAverages.empowerment.count
+              }
+              comparativeGroup={
+                SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) >
+                -1
+                  ? 'subregion'
+                  : 'all'
+              }
+            />
+          </Box>
+        </AddToPDFWrapper>
         <RemoveFromPDFWrapper>
           <Source />
         </RemoveFromPDFWrapper>
