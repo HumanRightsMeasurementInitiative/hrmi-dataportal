@@ -28,7 +28,6 @@ async function printPDF({
 
   await cluster.task(async ({ page, data: { lang, code, langFile, as } }) => {
     const timePagePDF = process.hrtime()
-    console.log({ lang, code, as }, !!langFile)
 
     await page.emulateMediaType('print');
     await page.goto(`http://localhost:3000/${lang}/country/${code}?as=${as}`, {
