@@ -904,7 +904,7 @@
   "hrmi.components.ChartHeader.countries-overview-sub": "Also showing {noWithout} {noWithout, select, 1 {country} other {countries}} without any scores",
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "Using the high income assessment standard",
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Using the low and middle income assessment standard",
-  "hrmi.pdf.subtitle": "Country Profiles | Human Rights in {country}, 2020",
+  "hrmi.pdf.subtitle": "Country Profiles | Human Rights in ",
   "hrmi.pdf.category": "The category",
   "hrmi.pdf.includes": "includes the following rights:"
 }
