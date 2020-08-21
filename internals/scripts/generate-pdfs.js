@@ -1,6 +1,7 @@
+const fetch = require('node-fetch')
+const { csvParse } = require('d3-dsv')
 const { Cluster } = require('puppeteer-cluster')
 const keys = require('lodash/keys')
-// const { messages } = require('../../app/messages')
 
 const { getCountries } = require('./helpers/generate-files')
 
@@ -25,39 +26,35 @@ async function printPDF({
     maxConcurrency: 4 // should probably match the no. of cores on your machine
   })
 
-  await cluster.task(async ({ page, data: { lang, country, langFile } }) => {
+  await cluster.task(async ({ page, data: { lang, code, langFile, as } }) => {
     const timePagePDF = process.hrtime()
+    console.log({ lang, code, as }, !!langFile)
 
     await page.emulateMediaType('print');
-    await page.goto(`http://localhost:3000/${lang}/country/${country}?as=core`, {
+    await page.goto(`http://localhost:3000/${lang}/country/${code}?as=${as}`, {
       waitUntil: 'networkidle2',
     });
 
-    // <style> #header {padding: 0 !important} p, span { font-family: 'Source Sans Pro', sans-serif; font-size: 10px; color: #262064;}</style><div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between;margin-left: 35px; margin-right: 35px; margin-top: 5px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 120px"></img> <p style="font-weight: 600">${langFile['hrmi.pdf.subtitle']} ${langFile[`hrmi.countries.${country}`]}, ${currentYear}</p> </div>
-
-    // <style> @font-face {font-family: SourceSansPro;src:url(../../fonts/SourceSansPro-Regular.ttf) format("truetype");} p, span {font-family: SourceSansPro !important; font-size: 10px; color: #262064;} #footer { padding: 0 !important; } </style><div style="height: 40px; width: 100%; background-color: #d3d3d3; -webkit-print-color-adjust: exact; display: flex; flex-direction: row; justify-content: space-around;"> <p style="font-weight: 600;">  ©HRMI 2020 </p> <a href="http://rightstracker.org" style="text-decoration: none; color: unset"> <p>rightstracker.org </p> </a> <p style="font-weight: 600;"> Page <span class="pageNumber"></span>/<span class="totalPages"></span> </p></div>
-
     const headerFooterStyle = `<style>@font-face{font-family:'Source Sans Pro';src:url(../../fonts/SourceSansPro-Regular.ttf) format("truetype");} #header { padding: 0 !important; } #footer { padding: 0 !important; } p, span { font-family: 'Source Sans Pro', sans-serif; font-size: 10px; color: #262064;}</style>`
-
-
+    
     try {
       await page.pdf({
-        path: `pdfs/${lang}-${country}.pdf`,
+        path: `pdfs/${lang}-${code}.pdf`,
         format: 'A4',
         printBackground: true,
         displayHeaderFooter: true,
-        headerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; width: 100%; display: flex; flex-direction: row; justify-content: space-between;margin-left: 35px; margin-right: 35px; margin-top: 5px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 120px"></img> <p style="font-weight: 600">${langFile['hrmi.pdf.subtitle']} ${langFile[`hrmi.countries.${country}`]}, ${currentYear}</p> </div>`,
+        headerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; width: 100%; display: flex; flex-direction: row; justify-content: space-between;margin-left: 35px; margin-right: 35px; margin-top: 5px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 120px"></img> <p style="font-weight: 600">${langFile['hrmi.pdf.subtitle']} ${langFile[`hrmi.countries.${code}`]}, ${currentYear}</p> </div>`,
         footerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; height: 40px; width: 100%; background-color: #d3d3d3; -webkit-print-color-adjust: exact; display: flex; flex-direction: row; justify-content: space-around;"> <p style="font-weight: 600;">  ©HRMI 2020 </p> <a href="http://rightstracker.org" style="text-decoration: none; color: unset"> <p>rightstracker.org </p> </a> <p style="font-weight: 600;"> Page <span class="pageNumber"></span>/<span class="totalPages"></span> </p></div>`,
         margin: {
           top: "55px",
           bottom: "76px",
         }
-      })
-    } catch (e) {
-      console.log('Pdf error', e);
+      });
+    } catch (err) {
+      console.error(err)
     }
 
-    console.log(`${lang}-${country} done, timePagePDF: ${process.hrtime(timePagePDF)[0]}.${process.hrtime(timePagePDF)[1]} seconds`)
+    console.log(`${lang}-${code} done, timePagePDF: ${process.hrtime(timePagePDF)[0]}.${process.hrtime(timePagePDF)[1]} seconds`)
   })
 
   const langFileMap = {
@@ -70,7 +67,13 @@ async function printPDF({
     const country = countries[i];
     for (let j = 0; j < languages.length; j++) {
       const lang = languages[j];
-      cluster.queue({ lang, country, langFile: langFileMap[lang] })
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang,
+        code: country.code,
+        langFile: langFileMap[lang],
+        as
+      })
     }
   }
 
@@ -80,11 +83,18 @@ async function printPDF({
 
 (async () => {
   const timePrintPDF = process.hrtime()
+  const dataResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/countries.csv')
+  const countriesCsv = await dataResponse.text()
+  const countriesData = csvParse(countriesCsv)
+
+  // N.B. 4 more country codes in the lang file than in data, investigate
+  const countries = countriesData.map(c => ({ code: c.country_code, income: c.high_income_country }))
+
   await printPDF({
-    // countries: keys(getCountries(enJSON)),
-    countries: ['CAN'],
-    // languages: ['en', 'fr', 'es', 'pt']
-    languages: ['fr', 'es', 'pt']
+    // countries: keys(getCountries(langJSON)),
+    countries: [{ code: 'NZL', income: '1' }],
+    // countries,
+    languages: ['en', 'es', 'fr', 'pt']
   });
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)

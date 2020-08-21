@@ -46,7 +46,7 @@ const HeadingWrap = styled(Box)`
 `;
 
 const ChartToolWrapper = styled(Box)`
-  align-items: end;
+  align-items: flex-end;
 `;
 
 const TextWrap = styled.span`
