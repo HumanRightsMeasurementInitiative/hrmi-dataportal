@@ -83,9 +83,11 @@ const AddToPDFWrapper = styled.div`
 `;
 
 const BreakBefore = styled(Box)`
-  position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
-  break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
-  margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+  @media print {
+    position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+    break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+  }
 `;
 
 const DEPENDENCIES = [
