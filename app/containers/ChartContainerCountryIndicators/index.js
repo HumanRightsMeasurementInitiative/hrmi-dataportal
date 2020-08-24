@@ -105,6 +105,7 @@ const prepareData = ({
   // prettier-ignore
   indicators.map(i => ({
     color: 'esr',
+    refValues: getRightRefs(i.score, currentBenchmark),
     value: getRightValue(i.score, currentBenchmark),
     maxValue: 100,
     unit: '%',
