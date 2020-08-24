@@ -86,7 +86,11 @@ async function printPDF({
   const countriesCsv = await dataResponse.text()
   const countriesData = csvParse(countriesCsv)
 
-  const countries = countriesData.map(c => ({ code: c.country_code, income: c.high_income_country }))
+  const countries = countriesData.map(c => {
+    // N.B. can't just access with country_code due to weird csv column key parsing
+    const countryCodeAccess = Object.keys(c)[0]
+    return { code: c[countryCodeAccess], income: c.high_income_country }
+  })
 
   await printPDF({
     // countries: keys(getCountries(langJSON)),
