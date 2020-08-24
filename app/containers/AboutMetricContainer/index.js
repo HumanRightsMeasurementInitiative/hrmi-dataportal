@@ -19,6 +19,8 @@ import { getIndicatorInfo, getESRIndicators } from 'containers/App/selectors';
 import { loadDataIfNeeded, selectMetric } from 'containers/App/actions';
 import FAQs from 'containers/FAQs';
 
+import AboutMetric from 'components/AboutMetric';
+
 import ButtonHero from 'styled/ButtonHero';
 
 import getMetricDetails from 'utils/metric-details';
@@ -51,6 +53,7 @@ export function AboutMetricContainer({
   inverse,
   dateRange,
   countryCode,
+  showAboutMetric,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -230,6 +233,17 @@ export function AboutMetricContainer({
           </ButtonHero>
         </div>
       )}
+      {showAboutMetric && (
+        <AboutMetric
+          metric={metric}
+          metricInfo={metricInfo}
+          standard={standard}
+          onSelectMetric={onSelectMetric}
+          showSources={showSources}
+          dateRange={dateRange}
+          countryCode={countryCode}
+        />
+      )}
       {showFAQs && (
         <FAQs
           questions={questions}
@@ -266,6 +280,7 @@ AboutMetricContainer.propTypes = {
   countryScoreMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   countryCode: PropTypes.string,
   dateRange: PropTypes.object,
+  showAboutMetric: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
