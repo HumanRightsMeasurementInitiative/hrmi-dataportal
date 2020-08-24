@@ -904,7 +904,7 @@
   "hrmi.components.ChartHeader.countries-overview-sub": "Também mostrando {noWithout} {noWithout, select, 1 {country} other {countries}} sem pontuações",
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "Usando o padrão de avaliação de rendimentos elevados",
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Usando o padrão de avaliação de rendimentos baixos e médios",
-  "hrmi.pdf.subtitle": "Perfis de país | Direitos Humanos em ",
+  "hrmi.pdf.subtitle": "Perfiles dos países | Direitos Humanos em ",
   "hrmi.pdf.category": "A categoria",
   "hrmi.pdf.includes": "inclui os seguintes direitos:"
 }
