@@ -42,7 +42,7 @@ async function printPDF({
         format: 'A4',
         printBackground: true,
         displayHeaderFooter: true,
-        headerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 35px; margin-right: 35px; margin-top: 12px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 120px"></img> <p style="font-weight: 600">${langFile['hrmi.pdf.subtitle']} ${langFile[`hrmi.countries.${code}`]}, ${currentYear}</p> </div>`,
+        headerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 35px; margin-right: 35px; margin-top: 12px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 140px"></img> <p style="font-weight: 600">${langFile['hrmi.pdf.subtitle']} ${langFile[`hrmi.countries.${code}`]}, ${currentYear}</p> </div>`,
         footerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; height: 40px; width: 100%; background-color: #d3d3d3; -webkit-print-color-adjust: exact; display: flex; flex-direction: row; justify-content: space-around; align-items: center;"> <p style="font-weight: 600;">  ©HRMI 2020 </p> <a href="http://rightstracker.org" style="text-decoration: none; color: unset"> <p>rightstracker.org </p> </a> <p style="font-weight: 600;"> Page <span class="pageNumber"></span>/<span class="totalPages"></span> </p></div>`,
         margin: {
           top: "55px",
@@ -82,11 +82,10 @@ async function printPDF({
 
 (async () => {
   const timePrintPDF = process.hrtime()
-  const dataResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/countries.csv')
+  const dataResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/countries_v3-1.csv')
   const countriesCsv = await dataResponse.text()
   const countriesData = csvParse(countriesCsv)
 
-  // N.B. 4 more country codes in the lang file than in data, investigate
   const countries = countriesData.map(c => ({ code: c.country_code, income: c.high_income_country }))
 
   await printPDF({
