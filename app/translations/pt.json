@@ -905,7 +905,6 @@
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "Usando o padrão de avaliação de rendimentos elevados",
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Usando o padrão de avaliação de rendimentos baixos e médios",
   "hrmi.pdf.subtitle": "Perfiles dos países | Direitos Humanos em ",
-  "hrmi.pdf.category": "A categoria",
-  "hrmi.pdf.includes": "inclui os seguintes direitos:",
+  "hrmi.pdf.noData": "A categoria {category} inclui os seguintes direitos:",
   "hrmi.pdf.explore": "Para explorar as pontuações deste país em mais detalhes, visite rightstracker.org/pt"
 }

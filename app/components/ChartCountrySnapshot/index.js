@@ -213,12 +213,14 @@ function ChartCountrySnapshot({
                 </Box>
                 <div>
                   <p>
-                    {rootMessages.pdf.noData.category}&nbsp;
                     <FormattedMessage
-                      {...rootMessages.dimensions[dimensionCode]}
+                      {...rootMessages.pdf.noData}
+                      values={{
+                        category: intl.formatMessage(
+                          rootMessages.dimensions[dimensionCode],
+                        ),
+                      }}
                     />
-                    &nbsp;
-                    {rootMessages.pdf.noData.includes}
                   </p>
                   <ul>
                     {rightsLabels.map(right => (

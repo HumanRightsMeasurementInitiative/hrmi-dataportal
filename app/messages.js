@@ -2435,8 +2435,7 @@ export default defineMessages({
     },
     noData: {
       id: `${scope}.pdf.noData`,
-      category: 'The category',
-      includes: 'includes the following rights:',
+      defaultMessage: 'This category includes the following rights:',
     },
   },
 });
