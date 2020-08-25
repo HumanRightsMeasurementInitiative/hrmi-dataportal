@@ -2437,5 +2437,10 @@ export default defineMessages({
       id: `${scope}.pdf.noData`,
       defaultMessage: 'This category includes the following rights:',
     },
+    explore: {
+      id: `${scope}.pdf.explore`,
+      defaultMessage:
+        "To explore this country's scores in more detail please go to rightstracker.org",
+    },
   },
 });

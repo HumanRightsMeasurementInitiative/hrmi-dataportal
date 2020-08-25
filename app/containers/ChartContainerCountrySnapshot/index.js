@@ -516,9 +516,7 @@ export function ChartContainerCountrySnapshot({
           showFAQs={false}
         />
         <p style={{ fontWeight: 600 }}>
-          {' '}
-          To explore this country’s scores in more detail please go to{' '}
-          <a href="https://rightstracker.org">rightstracker.org</a>
+          <FormattedMessage {...rootMessages.pdf.explore} />
         </p>
       </AddToPDFWrapper>
     </Styled>
