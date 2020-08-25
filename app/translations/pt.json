@@ -906,5 +906,6 @@
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Usando o padrão de avaliação de rendimentos baixos e médios",
   "hrmi.pdf.subtitle": "Perfiles dos países | Direitos Humanos em ",
   "hrmi.pdf.category": "A categoria",
-  "hrmi.pdf.includes": "inclui os seguintes direitos:"
+  "hrmi.pdf.includes": "inclui os seguintes direitos:",
+  "hrmi.pdf.explore": "To explore this country's scores in more detail please go to"
 }

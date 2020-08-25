@@ -906,5 +906,6 @@
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Using the low and middle income assessment standard",
   "hrmi.pdf.subtitle": "Country Profiles | Human Rights in ",
   "hrmi.pdf.category": "The category",
-  "hrmi.pdf.includes": "includes the following rights:"
+  "hrmi.pdf.includes": "includes the following rights:",
+  "hrmi.pdf.explore": "To explore this country's scores in more detail please go to"
 }
