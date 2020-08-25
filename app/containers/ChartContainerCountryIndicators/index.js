@@ -45,12 +45,14 @@ const getRightValue = (score, benchmark) => {
   return false;
 };
 
-const getRightRefs = (score, benchmark) => {
+const getRightRefs = (score, benchmark, isIndicator) => {
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refColumn;
+    const col = isIndicator
+      ? benchmark.refIndicatorColumn
+      : benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
@@ -105,7 +107,7 @@ const prepareData = ({
   // prettier-ignore
   indicators.map(i => ({
     color: 'esr',
-    refValues: getRightRefs(i.score, currentBenchmark),
+    refValues: getRightRefs(i.score, currentBenchmark, true),
     value: getRightValue(i.score, currentBenchmark),
     maxValue: 100,
     unit: '%',
