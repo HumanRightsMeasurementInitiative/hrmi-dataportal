@@ -45,6 +45,12 @@ const AddToPDFWrapper = styled.div`
   }
 `;
 
+const PDFBox = styled(Box)`
+  @media print {
+    margin-bottom: 0px;
+  }
+`;
+
 const ChartArea = props => (
   <Box direction="column" fill="horizontal" {...props} />
 );
@@ -171,7 +177,7 @@ function ChartCountrySnapshot({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box
+        <PDFBox
           direction="column"
           pad={{ bottom: 'small' }}
           margin={{ bottom: 'small' }}
@@ -507,7 +513,7 @@ function ChartCountrySnapshot({
               {source && <Source />}{' '}
             </div>
           )}
-        </Box>
+        </PDFBox>
       )}
     </ResponsiveContext.Consumer>
   );
