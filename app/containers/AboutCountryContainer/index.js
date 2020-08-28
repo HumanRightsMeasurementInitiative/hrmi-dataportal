@@ -80,8 +80,15 @@ const RowBox = styled(Box)`
 const DetailBox = styled(Box)`
   flex-direction: row;
   @media print {
+    flex: 1;
     flex-direction: column;
     margin-top: 24px;
+  }
+`;
+
+const HeadingBox = styled(Box)`
+  @media print {
+    flex: 1;
   }
 `;
 
@@ -153,20 +160,22 @@ function AboutCountryContainer({
 
   return (
     <ContainerBox pad={{ left: 'medium' }}>
-      <Heading responsive={false} level={3}>
-        {!showTitle && <FormattedMessage {...messages.title} />}
-        {showTitle && (
-          <FormattedMessage {...rootMessages.countries[countryCode]} />
-        )}
-      </Heading>
+      <HeadingBox>
+        <Heading responsive={false} level={3}>
+          {!showTitle && <FormattedMessage {...messages.title} />}
+          {showTitle && (
+            <FormattedMessage {...rootMessages.countries[countryCode]} />
+          )}
+        </Heading>
+      </HeadingBox>
       {countriesGrammar && countryStatus.trim() !== '' && (
-        <Box direction="row" margin={{ bottom: 'xsmall' }}>
+        <DetailBox margin={{ bottom: 'xsmall' }}>
           <Box width="50%">
             <Label>
               <FormattedMessage {...messages.countryStatus} />
             </Label>
           </Box>
-          <Box width="50%">
+          <RowBox margin={{ bottom: 'small' }}>
             <Text>
               {getTerritoryStatus(
                 countryStatus,
@@ -177,8 +186,8 @@ function AboutCountryContainer({
                 intl,
               )}
             </Text>
-          </Box>
-        </Box>
+          </RowBox>
+        </DetailBox>
       )}
       {hasPopulation && (
         <DetailBox margin={{ bottom: 'xsmall' }}>
