@@ -41,10 +41,9 @@ keys(pages).forEach(code => {
   } else if (indicator) {
     $("head meta[property='og:image']").attr('content', `http://content-store.humanrightsmeasurement.org/assets/uploads/indicator_${code}.png`)
   } else {
-    // TODO: can't use rights svg's as og:image, upload them somewhere as png's?
-    // keep as default HRMI image for now
-    $("head meta[property='og:image']").attr('content', `/hrmi-og.png`)
+    $("head meta[property='og:image']").attr('content', `http://content-store.humanrightsmeasurement.org/assets/uploads/right_${code}.png`)
   }
+  
   
   $("head title").text(`${country || right || indicator} - HRMI Rights Tracker`)
   fs.writeFileSync(path.join(__dirname, `../../app/templates/${code}.html`), $.html())
