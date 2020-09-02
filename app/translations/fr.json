@@ -283,6 +283,8 @@
   "hrmi.components.ChartSettingSort.sortOptions.assessment": "Disponibilité des données",
   "hrmi.components.ChartSettingSort.sortOptions.gdp": "PIB / habitant (2011 PPA$)",
   "hrmi.components.ChartSettingSort.sortOptions.population": "Population",
+  "hrmi.components.ChartSettingSort.sortOrderAsc": "Ascending",
+  "hrmi.components.ChartSettingSort.sortOrderDesc": "Descending",
   "hrmi.components.CountryNarrative.cpr.start": "La note de {dimension} de {scoreBold} {countryOf} suggère que ",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.a": "de nombreuses personnes ne bénéficient pas de leurs libertés civiles ou politiques (liberté d'expression, réunion et association et des droits démocratiques). ",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.b": "bien que de nombreuses personnes bénéficient de leurs libertés civiles ou politiques (liberté d'expression, réunion et association et les droits démocratiques), un nombre important n'en bénéficient pas. ",
