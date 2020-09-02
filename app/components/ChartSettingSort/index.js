@@ -109,8 +109,12 @@ export function ChartSettingSort({
               <StyledSortButton
                 onClick={() => onOrderToggle(order === 'asc' ? 'desc' : 'asc')}
               >
-                {order === 'asc' && <p>Ascending</p>}
-                {order === 'desc' && <p>Descending</p>}
+                {order === 'asc' && (
+                  <Text>{intl.formatMessage(messages.sortOrderAsc)}</Text>
+                )}
+                {order === 'desc' && (
+                  <Text>{intl.formatMessage(messages.sortOrderDesc)}</Text>
+                )}
               </StyledSortButton>
             </Box>
           </Box>
