@@ -30,6 +30,11 @@ const CountryWrap = styled(Box)`
   border-right: 1px solid;
   border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
 `;
+const RemoveFromPDFWrapper = styled.div`
+  @media print {
+    display: none;
+  }
+`;
 const getScoreAsideWidth = (size, hasAside = false) => {
   if (hasAside) {
     return scoreAsideWidth(size);
@@ -96,13 +101,15 @@ export function ListHeader({
                 </Text>
               </Box>
             )}
-            {annotateBk && (
-              <AnnotateBenchmark
-                benchmarkKey={benchmark}
-                hasBetter={annotateBetter}
-                type={benchmarkIconOnly ? 'icon' : 'header'}
-              />
-            )}
+            <RemoveFromPDFWrapper>
+              {annotateBk && (
+                <AnnotateBenchmark
+                  benchmarkKey={benchmark}
+                  hasBetter={annotateBetter}
+                  type={benchmarkIconOnly ? 'icon' : 'header'}
+                />
+              )}
+            </RemoveFromPDFWrapper>
           </BarWrap>
           {hasAside && (
             <Box width={getScoreAsideWidth(size, true)} flex={{ shrink: 0 }} />
