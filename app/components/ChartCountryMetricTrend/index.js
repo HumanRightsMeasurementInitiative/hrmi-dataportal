@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
-import { Box, ResponsiveContext } from 'grommet';
+import { Box, Text, ResponsiveContext } from 'grommet';
 import {
   FlexibleWidthXYPlot,
   XAxis,
@@ -25,8 +25,13 @@ import { formatScore } from 'utils/scores';
 import { isMaxSize, isMinSize } from 'utils/responsive';
 
 import Source from 'components/Source';
+import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
 
-import { INDICATOR_LOOKBACK, PEOPLE_GROUPS } from 'containers/App/constants';
+import {
+  INDICATOR_LOOKBACK,
+  BENCHMARKS,
+  PEOPLE_GROUPS,
+} from 'containers/App/constants';
 
 import SettingsMultiToggle from 'containers/LayerSettings/SettingsMultiToggle';
 
@@ -51,6 +56,31 @@ const PlotHintTighter = styled(PlotHint)`
   padding: 3px 6px;
   margin-bottom: 5px;
   font-size: 14px;
+  font-weight: ${({ fontWeight }) => fontWeight || 700};
+`;
+
+const KeyItem = styled(Box)`
+  margin-left: 15px;
+  text-align: right;
+  position: relative;
+`;
+
+const CircleOpen = styled.div`
+  width: 7px;
+  height: 7px;
+  margin-left: 4px;
+  border-radius: 100%;
+  border: 1px solid rgb(39, 170, 225);
+  background-color: white;
+`;
+
+const CircleFill = styled.div`
+  width: 7px;
+  height: 7px;
+  margin-left: 4px;
+  border-radius: 100%;
+  border: 1px solid rgb(39, 170, 225);
+  background-color: rgb(39, 170, 225);
 `;
 
 const Settings = styled(Box)``;
@@ -136,6 +166,7 @@ function ChartCountryMetricTrend({
   colorCode,
   colorHint,
   // benchmarkRefs,
+  benchmark,
   hasRawOption,
   raw,
   onRawChange,
@@ -152,10 +183,13 @@ function ChartCountryMetricTrend({
   const [highlightLower, setHighlightLower] = useState(false);
   if (!maxYear) return null;
 
+  const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
+
   // dummy data to force the area plot from 0
+  // with some horizontal padding, hard-coded
   const dataForceYRange = [
-    { x: new Date(minYear).getTime(), y: 0 },
-    { x: new Date(maxYear).getTime(), y: maxValue },
+    { x: new Date(minYear).getTime() - 15000000000, y: 0 },
+    { x: new Date(maxYear).getTime() + 15000000000, y: maxValue },
   ];
   const hasScores = scores && scores.length > 0;
 
@@ -251,8 +285,8 @@ function ChartCountryMetricTrend({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box direction="column" align="start" pad={{ vertical: 'medium' }}>
-          <WrapPlot>
+        <div direction="column" align="start" pad={{ vertical: 'medium' }}>
+          <WrapPlot metricType={metric.type}>
             <FlexibleWidthXYPlot
               height={isMinSize(size, 'medium') ? 240 : 200}
               xType="time"
@@ -430,7 +464,7 @@ function ChartCountryMetricTrend({
                 >
                   <>
                     {highlightUpper && highlightUpper.point && (
-                      <PlotHintTighter color={colorHint}>
+                      <PlotHintTighter color={colorHint} fontWeight={500}>
                         {`${formatScore(highlightUpper.point.y, 1, intl)}${
                           percentage ? '%' : ''
                         }`}
@@ -442,7 +476,7 @@ function ChartCountryMetricTrend({
                       }`}
                     </PlotHintTighter>
                     {highlightUpper && highlightLower.point && (
-                      <PlotHintTighter color={colorHint}>
+                      <PlotHintTighter color={colorHint} fontWeight={500}>
                         {`${formatScore(highlightLower.point.y, 1, intl)}${
                           percentage ? '%' : ''
                         }`}
@@ -483,7 +517,56 @@ function ChartCountryMetricTrend({
               )}
             </FlexibleWidthXYPlot>
           </WrapPlot>
-          <Source center />
+          <Box
+            direction={isMinSize(size, 'medium') ? 'row' : 'column'}
+            margin={{
+              top: 'small',
+              right: scoreAsideWidth(size),
+              left: '-15px',
+            }}
+            justify={hasScores ? 'between' : 'end'}
+          >
+            {/* dots key */}
+            {hasScores && metric.metricType === 'indicators' && (
+              <Box direction="row">
+                <KeyItem direction="row" align="center">
+                  <Text size="xxsmall">
+                    {isMinSize(size, 'medium') ? (
+                      <FormattedMessage
+                        {...rootMessages.settings.dataYear.present}
+                      />
+                    ) : (
+                      <FormattedMessage
+                        {...rootMessages.settings.dataYear.presentShort}
+                      />
+                    )}
+                  </Text>
+                  <CircleFill />
+                </KeyItem>
+                <KeyItem direction="row" align="center">
+                  <Text size="xxsmall">
+                    {isMinSize(size, 'medium') ? (
+                      <FormattedMessage
+                        {...rootMessages.settings.dataYear.previous}
+                      />
+                    ) : (
+                      <FormattedMessage
+                        {...rootMessages.settings.dataYear.previousShort}
+                      />
+                    )}
+                  </Text>
+                  <CircleOpen />
+                </KeyItem>
+              </Box>
+            )}
+          </Box>
+          <Box
+            margin={{
+              top: currentBenchmark.key === 'best' ? 'xsmall' : 'medium',
+            }}
+          >
+            <Source />
+          </Box>
           {(hasRawOption || groupsActive) && (
             <Settings
               direction="row"
@@ -533,7 +616,7 @@ function ChartCountryMetricTrend({
               )}
             </Settings>
           )}
-        </Box>
+        </div>
       )}
     </ResponsiveContext.Consumer>
   );
@@ -606,6 +689,7 @@ ChartCountryMetricTrend.propTypes = {
   maxValue: PropTypes.number,
   percentage: PropTypes.bool,
   benchmarkRefs: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   hasRawOption: PropTypes.bool,
   raw: PropTypes.bool,
   onRawChange: PropTypes.func,

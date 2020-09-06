@@ -53,6 +53,7 @@ export function AboutMetricContainer({
   inverse,
   dateRange,
   countryCode,
+  showAboutMetric,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -104,12 +105,12 @@ export function AboutMetricContainer({
       pad={{ horizontal: 'medium', bottom: 'medium', top: 'xlarge' }}
     >
       {showRelated && (
-        <div pad={{ vertical: 'medium', horizontal: 'medium' }} justify="start">
+        <div justify="start">
           {metricType !== 'dimensions' && (
             <Pad>
               <Heading
                 responsive={false}
-                level={5}
+                size="18px"
                 margin={{ vertical: 'xsmall' }}
               >
                 {typeof metric.aggregate === 'undefined' && (
@@ -136,7 +137,7 @@ export function AboutMetricContainer({
             <Pad>
               <Heading
                 responsive={false}
-                level={5}
+                size="18px"
                 margin={{ vertical: 'xsmall' }}
               >
                 {metricType === 'dimensions' && (
@@ -172,8 +173,8 @@ export function AboutMetricContainer({
                   {children.map(as => (
                     <Pad key={as.key}>
                       <Text
-                        size="xsmall"
-                        color="secondary"
+                        size="14px"
+                        color="#262064"
                         margin={{ bottom: 'xxsmall' }}
                       >
                         {`${intl.formatMessage(
@@ -232,21 +233,30 @@ export function AboutMetricContainer({
           </ButtonHero>
         </div>
       )}
-      <AboutMetric
-        metric={metric}
-        metricInfo={metricInfo}
-        standard={standard}
-        onSelectMetric={onSelectMetric}
-        showSources={showSources}
-        dateRange={dateRange}
-        countryCode={countryCode}
-      />
+      {showAboutMetric && (
+        <AboutMetric
+          metric={metric}
+          metricInfo={metricInfo}
+          standard={standard}
+          onSelectMetric={onSelectMetric}
+          showSources={showSources}
+          dateRange={dateRange}
+          countryCode={countryCode}
+        />
+      )}
       {showFAQs && (
         <FAQs
           questions={questions}
           metric={intl.formatMessage(
             rootMessages[metric.metricType][metric.key],
           )}
+          metrics={metric}
+          metricInfo={metricInfo}
+          standard={standard}
+          onSelectMetric={onSelectMetric}
+          showSources={showSources}
+          dateRange={dateRange}
+          countryCode={countryCode}
         />
       )}
     </Box>
@@ -270,6 +280,7 @@ AboutMetricContainer.propTypes = {
   countryScoreMsg: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   countryCode: PropTypes.string,
   dateRange: PropTypes.object,
+  showAboutMetric: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -283,6 +283,8 @@
   "hrmi.components.ChartSettingSort.sortOptions.assessment": "Disponibilité des données",
   "hrmi.components.ChartSettingSort.sortOptions.gdp": "PIB / habitant (2011 PPA$)",
   "hrmi.components.ChartSettingSort.sortOptions.population": "Population",
+  "hrmi.components.ChartSettingSort.sortOrderAsc": "Ascending",
+  "hrmi.components.ChartSettingSort.sortOrderDesc": "Descending",
   "hrmi.components.CountryNarrative.cpr.start": "La note de {dimension} de {scoreBold} {countryOf} suggère que ",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.a": "de nombreuses personnes ne bénéficient pas de leurs libertés civiles ou politiques (liberté d'expression, réunion et association et des droits démocratiques). ",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.b": "bien que de nombreuses personnes bénéficient de leurs libertés civiles ou politiques (liberté d'expression, réunion et association et les droits démocratiques), un nombre important n'en bénéficient pas. ",
@@ -353,6 +355,7 @@
   "hrmi.labels.grades.good": "Bon",
   "hrmi.labels.chartTools.howToRead": "Comment le lire",
   "hrmi.labels.chartTools.settings": "Changer de vue",
+  "hrmi.labels.chartTools.downloadPDF": "Télécharger PDF",
   "hrmi.labels.xAxis.cpr": "Score",
   "hrmi.labels.xAxis.adjusted": "% du référentiel ajusté aux revenus atteint",
   "hrmi.labels.xAxis.best": "% du référentiel des meilleures pratiques mondiales atteint",
@@ -408,6 +411,10 @@
   "hrmi.settings.value.note": "Remarque : les valeurs brutes des indicateurs sont d'abord converties en notes, puis intégrées au score en matière de droits",
   "hrmi.settings.value.score": "Scores",
   "hrmi.settings.value.raw": "Valeurs brutes",
+  "hrmi.settings.dataYear.present": "Score basé sur des données de l’année déterminée",
+  "hrmi.settings.dataYear.previous": "Score basé sur des données d'une année antérieure",
+  "hrmi.settings.dataYear.presentShort": "Données de l'année déterminée",
+  "hrmi.settings.dataYear.previousShort": "Données d'une année antérieure",
   "hrmi.groups.all": "Toutes les personnes",
   "hrmi.groups.female": "Femme",
   "hrmi.groups.male": "Homme",
@@ -898,5 +905,8 @@
   "hrmi.containers.AboutCountryContainer.countryStatus": "Statut du pays",
   "hrmi.components.ChartHeader.countries-overview-sub": "Affiche également {noWithout} {noWithout, select, 1 {country} other {countries}} sans aucun score",
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "En utilisant la norme d’évaluation des revenus élevés",
-  "hrmi.components.ChartHeader.assessment-standard-low-sub": "En utilisant  la norme d'évaluation des pays à revenu faible et moyen"
+  "hrmi.components.ChartHeader.assessment-standard-low-sub": "En utilisant  la norme d'évaluation des pays à revenu faible et moyen",
+  "hrmi.pdf.subtitle": "Profils par pays | Droits humains en",
+  "hrmi.pdf.noData": "La catégorie {category} comprend les droits suivants:",
+  "hrmi.pdf.explore": "Pour explorer plus en détail les scores de ce pays, consultez rightstracker.org/fr"
 }

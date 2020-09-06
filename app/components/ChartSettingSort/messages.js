@@ -35,4 +35,12 @@ export default defineMessages({
       defaultMessage: 'Population',
     },
   },
+  sortOrderAsc: {
+    id: `${scope}.sortOrderAsc`,
+    defaultmessage: 'Ascending',
+  },
+  sortOrderDesc: {
+    id: `${scope}.sortOrderDesc`,
+    defaultmessage: 'Descending',
+  },
 });

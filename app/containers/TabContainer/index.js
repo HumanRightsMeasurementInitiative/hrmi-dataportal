@@ -21,7 +21,11 @@ import isNumber from 'utils/is-number';
 
 // const Tab = styled.div``;
 // prettier-ignore
-const Tabs = styled.div``;
+const Tabs = styled.div`
+  @media print {
+    display: none;
+  }
+`;
 const Spacer = styled.div`
   background: 'transparent';
   height: ${({ height }) => height}px;
@@ -51,7 +55,7 @@ const TabLinks = styled(Box)`
     margin-left: -10px;
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    margin-left: -20px;
+    margin-left: 0px;
     height: 44px;
   }
 `;
