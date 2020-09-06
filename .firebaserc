@@ -13,6 +13,9 @@
     "summary3": "hrmi-dataportal-summary3",
     "summary3b": "hrmi-dataportal-summary3b",
     "summary4": "hrmi-dataportal-summary4",
-    "design-tweaks-3.1": "hrmi-design-tweak"
+    "design-tweaks-3.1": "hrmi-design-tweak",
+    "social-preview": "hrmi-dataportal-social-preview",
+    "pdf": "hrmi-dataportal-pdf",
+    "staging": "hrmi-dataportal-staging"
   }
 }

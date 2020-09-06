@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Text } from 'grommet';
 import { FormNext, FormPrevious } from 'grommet-icons';
 
-import ButtonTextIcon from 'styled/ButtonTextIcon';
+import ButtonTextIconWide from 'styled/ButtonTextIconWide';
 
 const TextRelative = styled(Text)`
   font-weight: 600;
@@ -13,16 +13,20 @@ const TextRelative = styled(Text)`
 
 function ButtonRelative({ text, previous, ...rest }) {
   return (
-    <ButtonTextIcon
+    <ButtonTextIconWide
       primary
-      size="small"
+      width="100%"
       margin={{ vertical: 'xxsmall' }}
       padding="10px"
       color="dark"
       borderRadius="5px"
       gap="0"
       icon={
-        previous ? <FormPrevious size="medium" /> : <FormNext size="medium" />
+        previous ? (
+          <FormPrevious color="white" size="medium" />
+        ) : (
+          <FormNext color="white" size="medium" />
+        )
       }
       reverse={!previous}
       label={<TextRelative size="small">{text}</TextRelative>}

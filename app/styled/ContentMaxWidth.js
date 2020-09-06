@@ -19,6 +19,10 @@ const Styled = styled(Box)`
     padding-left: ${({ theme }) => theme.global.edgeSize.xlarge};
     padding-right: ${({ theme, hasAside }) => hasAside ? 0 : theme.global.edgeSize.xlarge};
   }
+  @media print {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 `;
 
 export function ContentMaxWidth(props) {

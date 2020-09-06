@@ -12,8 +12,8 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 
-import { ResponsiveContext, Image as GImage, Paragraph } from 'grommet';
-import { withTheme } from 'styled-components';
+import { ResponsiveContext, Image as GImage } from 'grommet';
+import styled, { withTheme } from 'styled-components';
 
 import rootMessages from 'messages';
 
@@ -74,15 +74,36 @@ import getMetricDetails from 'utils/metric-details';
 // import quasiEquals from 'utils/quasi-equals';
 import { hasCPR, formatScore } from 'utils/scores';
 
-import { isMinSize, isMaxSize } from 'utils/responsive';
+import { isMinSize } from 'utils/responsive';
 import { getMessageGrammar } from 'utils/narrative';
 import { lowerCase } from 'utils/string';
-//
-// const Image = styled.img`
-//   width: 100%;
-// `;
 
 import messages from './messages';
+
+const RemoveFromPDFWrapper = styled.div`
+  @media print {
+    display: none;
+  }
+`;
+
+const TitleWrapper = styled.div`
+  @media print {
+    display: flex;
+    align-items: flex-end;
+    height: 140px;
+    width: 100%;
+    background-image: ${({ pdfImageSrc }) => `url(${pdfImageSrc})`};
+    background-size: cover;
+    background-position: center;
+  }
+`;
+
+const StyledPageTitle = styled(PageTitle)`
+  @media print {
+    font-size: 40px;
+    line-height: 43px;
+  }
+`;
 
 const DEPENDENCIES = [
   'countries',
@@ -211,9 +232,11 @@ export function PathCountry({
 
   const countryCode = match.params.country;
 
+  /* eslint-disable no-console */
   if (!rootMessages.countries[countryCode]) {
     console.log('Country code not in language files:', countryCode);
   }
+  /* eslint-enable no-console */
   const countryTitle =
     countryCode && rootMessages.countries[countryCode]
       ? intl.formatMessage(rootMessages.countries[countryCode])
@@ -274,7 +297,7 @@ export function PathCountry({
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
-                  <div>
+                  <RemoveFromPDFWrapper>
                     <Breadcrumb
                       onItemClick={(key, value) => onCategoryClick(key, value)}
                       breadcrumb
@@ -287,22 +310,26 @@ export function PathCountry({
                         },
                       ]}
                     />
-                  </div>
-                  <div>
-                    <PageTitle>{countryTitle}</PageTitle>
-                  </div>
-                  <Paragraph size={isMaxSize(size, 'sm') ? 'small' : 'medium'}>
-                    <FormattedMessage
-                      {...messages.header.a}
-                      values={messageValues}
-                    />
-                  </Paragraph>
-                  <Paragraph size={isMaxSize(size, 'sm') ? 'small' : 'medium'}>
-                    <FormattedMessage
-                      {...messages.header.b}
-                      values={messageValues}
-                    />
-                  </Paragraph>
+                  </RemoveFromPDFWrapper>
+                  <TitleWrapper
+                    pdfImageSrc={`${IMAGE_PATH}/country_${countryCode}.png`}
+                  >
+                    <StyledPageTitle>{countryTitle}</StyledPageTitle>
+                  </TitleWrapper>
+                  <RemoveFromPDFWrapper>
+                    <p style={{ fontSize: '21px', lineHeight: '38px' }}>
+                      <FormattedMessage
+                        {...messages.header.a}
+                        values={messageValues}
+                      />
+                    </p>
+                    <p style={{ fontSize: '21px', lineHeight: '38px' }}>
+                      <FormattedMessage
+                        {...messages.header.b}
+                        values={messageValues}
+                      />
+                    </p>
+                  </RemoveFromPDFWrapper>
                 </MainColumn>
                 {isMinSize(size, 'large') && (
                   <Aside image>

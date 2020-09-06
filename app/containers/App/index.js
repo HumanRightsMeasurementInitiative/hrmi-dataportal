@@ -13,6 +13,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
+import { Box } from 'grommet';
 
 import GlobalStyle from 'global-styles';
 
@@ -54,8 +55,17 @@ const Main = styled.main`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding-top: ${({ theme }) => getHeaderHeight('medium', theme)}px;
   }
+  @media print {
+    padding-top: 0px;
+    margin-top: 0px;
+  }
 `;
-// ${props => console.log(props.thesme)}
+
+const RemoveFromPDFBox = styled(Box)`
+  @media print {
+    display: none;
+  }
+`;
 
 /**
  * routes: /[locale] +
@@ -77,7 +87,9 @@ export function App({ match, intl }) {
       </Helmet>
       <ScrollToTop>
         <CookieConsent />
-        <Header />
+        <RemoveFromPDFBox>
+          <Header />
+        </RemoveFromPDFBox>
         <LayerAside />
         <Main>
           <Switch>

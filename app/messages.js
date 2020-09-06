@@ -132,6 +132,10 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.settings`,
         defaultMessage: 'Data settings',
       },
+      downloadPDF: {
+        id: `${scope}.labels.chartTools.downloadPDF`,
+        defaultMessage: 'Download PDF',
+      },
     },
     abbrev: {
       notAvailable: {
@@ -404,6 +408,24 @@ export default defineMessages({
         id: `${scope}.settings.benchmark.bestInfo`,
         defaultMessage:
           'How well is the country doing compared to the best performance of all countries?',
+      },
+    },
+    dataYear: {
+      present: {
+        id: `${scope}.settings.dataYear.present`,
+        defaultMessage: 'Score based on data from specified year',
+      },
+      previous: {
+        id: `${scope}.settings.dataYear.previous`,
+        defaultMessage: 'Score based on data from earlier year',
+      },
+      presentShort: {
+        id: `${scope}.settings.dataYear.presentShort`,
+        defaultMessage: 'Specified year data',
+      },
+      previousShort: {
+        id: `${scope}.settings.dataYear.previousShort`,
+        defaultMessage: 'Previous year data',
       },
     },
     groups: {
@@ -2404,6 +2426,21 @@ export default defineMessages({
     commonwealth_politicalunion: {
       id: `${scope}.status.commonwealth_politicalunion`,
       defaultMessage: 'Commonwealth in political union',
+    },
+  },
+  pdf: {
+    subtitle: {
+      id: `${scope}.pdf.subtitle`,
+      defaultMessage: 'Country Profiles | Human Rights in',
+    },
+    noData: {
+      id: `${scope}.pdf.noData`,
+      defaultMessage: 'This category includes the following rights:',
+    },
+    explore: {
+      id: `${scope}.pdf.explore`,
+      defaultMessage:
+        "To explore this country's scores in more detail please go to rightstracker.org",
     },
   },
 });

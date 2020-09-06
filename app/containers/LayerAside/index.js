@@ -91,6 +91,7 @@ export function LayerAside({ onClose, theme, layer }) {
                 dateRange={layer.dateRange}
                 showTitle
                 showMetricLink
+                showAboutMetric
                 showSources={layer.showSources}
                 countryScoreMsg={layer.countryScoreMsg}
                 inverse

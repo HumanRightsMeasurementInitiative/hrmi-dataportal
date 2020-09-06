@@ -11,20 +11,10 @@ import { Box, Text, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
-import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
-
-import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
 // import messages from './messages';
 import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
-
-const WrapAnnotateBetterWorse = styled.div`
-  position: absolute;
-  left: ${({ theme }) => theme.global.edgeSize.small};
-  right: ${({ theme }) => theme.global.edgeSize.medium};
-  top: -5px;
-`;
 
 // prettier-ignore
 const StyledScoreText = styled(Text)`
@@ -39,6 +29,11 @@ const BarWrap = styled(Box)``;
 const CountryWrap = styled(Box)`
   border-right: 1px solid;
   border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
+`;
+const RemoveFromPDFWrapper = styled.div`
+  @media print {
+    display: none;
+  }
 `;
 const getScoreAsideWidth = (size, hasAside = false) => {
   if (hasAside) {
@@ -71,7 +66,7 @@ export function ListHeader({
           >
             <StyledScoreText
               size="small"
-              style={{ fontWeight: 600 }}
+              style={{ fontWeight: 300 }}
               color={labelColor}
             >
               {commonLabel || (
@@ -90,10 +85,12 @@ export function ListHeader({
                 <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
                   0
                 </Text>
-                {metric && metric.type === 'esr' && (
-                  <Text size="xsmall" weight={600} textAlign="center">
+                {metric && (
+                  <Text size="xsmall" weight={500} textAlign="center">
                     <FormattedMessage
-                      {...rootMessages.labels.xAxis[benchmark || 'cpr']}
+                      {...rootMessages.labels.xAxis[
+                        metric.type === 'esr' ? benchmark : 'cpr'
+                      ]}
                     />
                   </Text>
                 )}
@@ -104,18 +101,15 @@ export function ListHeader({
                 </Text>
               </Box>
             )}
-            {annotateBetter && isMinSize(size, 'medium') && (
-              <WrapAnnotateBetterWorse>
-                <AnnotateBetterWorse />
-              </WrapAnnotateBetterWorse>
-            )}
-            {annotateBk && (
-              <AnnotateBenchmark
-                benchmarkKey={benchmark}
-                hasBetter={annotateBetter}
-                type={benchmarkIconOnly ? 'icon' : 'header'}
-              />
-            )}
+            <RemoveFromPDFWrapper>
+              {annotateBk && (
+                <AnnotateBenchmark
+                  benchmarkKey={benchmark}
+                  hasBetter={annotateBetter}
+                  type={benchmarkIconOnly ? 'icon' : 'header'}
+                />
+              )}
+            </RemoveFromPDFWrapper>
           </BarWrap>
           {hasAside && (
             <Box width={getScoreAsideWidth(size, true)} flex={{ shrink: 0 }} />

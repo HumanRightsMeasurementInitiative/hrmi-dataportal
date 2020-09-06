@@ -9,6 +9,7 @@ const Styled = styled.span`
   line-height: 14px;
   min-height: 20px;
   font-size: 12px;
+  font-weight: 600;
   color: ${({ color, theme }) => color
     ? theme.global.colors[color]
     : theme.global.colors['dark-1']};
@@ -16,7 +17,11 @@ const Styled = styled.span`
     padding: 2px 0 2px 0;
     min-height: 20px;
     line-height: 19px;
-    font-size: ${({ level }) => (level > 1 ? '14px' : '16px' )};
+    font-size: ${({ level }) => (level > 1 ? '14px' : '16px')};
+  }
+  @media print {
+    font-size: 15px;
+    line-height: 20px;
   }
 `;
 

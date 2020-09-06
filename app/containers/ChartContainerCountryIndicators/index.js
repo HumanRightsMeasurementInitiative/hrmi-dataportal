@@ -9,11 +9,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { withTheme } from 'styled-components';
-import { Box } from 'grommet';
-import { injectIntl, intlShape } from 'react-intl';
+import styled, { withTheme } from 'styled-components';
+import { Box, Text, ResponsiveContext } from 'grommet';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import { BENCHMARKS, GRADES, COLUMNS } from 'containers/App/constants';
+import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
 
 import {
   getIndicatorsForCountryAndRight,
@@ -29,6 +30,8 @@ import ChartBars from 'components/ChartBars';
 import Source from 'components/Source';
 
 import getMetricDetails from 'utils/metric-details';
+import { isMinSize } from 'utils/responsive';
+import { lowerCase } from 'utils/string';
 
 import rootMessages from 'messages';
 
@@ -42,12 +45,14 @@ const getRightValue = (score, benchmark) => {
   return false;
 };
 
-const getRightRefs = (score, benchmark) => {
+const getRightRefs = (score, benchmark, isIndicator) => {
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
   if (benchmark && benchmark.key === 'best') {
-    const col = benchmark.refColumn;
+    const col = isIndicator
+      ? benchmark.refIndicatorColumn
+      : benchmark.refColumn;
     return [
       { value: 100, style: 'solid', key: 'best' },
       {
@@ -66,6 +71,31 @@ const getMetricLabel = (metricCode, intl) =>
 const getIndicatorLabel = (metricCode, intl) =>
   intl.formatMessage(rootMessages.indicators[metricCode]);
 
+const KeyItem = styled(Box)`
+  margin-left: 15px;
+  text-align: right;
+  position: relative;
+`;
+const KeyItemSolid = styled.span`
+  max-height: 14px;
+  border-right: 1px solid;
+  border-color: ${props => props.theme.global.colors['dark-2']};
+  margin-left: 8px;
+`;
+
+const KeyItemDashed = styled.span`
+  background-image: linear-gradient(
+    ${props => props.theme.global.colors['dark-2']} 50%,
+    rgba(255, 255, 255, 0) 0%
+  );
+  background-position: right center;
+  background-size: 2px 4px;
+  background-repeat: repeat-y;
+  height: 14px;
+  margin-left: 8px;
+  width: 3px;
+`;
+
 const prepareData = ({
   indicators,
   currentBenchmark,
@@ -77,6 +107,7 @@ const prepareData = ({
   // prettier-ignore
   indicators.map(i => ({
     color: 'esr',
+    refValues: getRightRefs(i.score, currentBenchmark, true),
     value: getRightValue(i.score, currentBenchmark),
     maxValue: 100,
     unit: '%',
@@ -110,63 +141,115 @@ export function ChartContainerCountryIndicators({
   // const currentStandard = STANDARDS.find(s => s.key === standard);
 
   return (
-    <div>
-      <Box margin={{ bottom: 'small' }} responsive={false}>
-        {metricSelector}
-        <ChartBars
-          data={[
-            {
-              color: 'esr',
-              refValues: getRightRefs(right, currentBenchmark),
-              value: getRightValue(right, currentBenchmark),
-              maxValue: 100,
-              unit: '%',
-              stripes: standard === 'hi',
-              key: metricCode,
-              label: getMetricLabel(metricCode, intl),
-              onClick: () => onMetricClick(metricCode, 'esr'),
-              active: activeCode === metricCode,
-            },
-          ]}
-          currentBenchmark={currentBenchmark}
-          standard={standard}
-          labelColor="esrDark"
-          padVertical="xsmall"
-          grades={GRADES.esr}
-          gradeLabels={false}
-          level={1}
-          commonLabel={intl.formatMessage(
-            rootMessages.charts.rightsColumnLabel.esr,
+    <ResponsiveContext.Consumer>
+      {size => (
+        <div>
+          <Box margin={{ bottom: 'small' }} responsive={false}>
+            {metricSelector}
+            <ChartBars
+              data={[
+                {
+                  color: 'esr',
+                  refValues: getRightRefs(right, currentBenchmark),
+                  value: getRightValue(right, currentBenchmark),
+                  maxValue: 100,
+                  unit: '%',
+                  stripes: standard === 'hi',
+                  key: metricCode,
+                  label: getMetricLabel(metricCode, intl),
+                  onClick: () => onMetricClick(metricCode, 'esr'),
+                  active: activeCode === metricCode,
+                },
+              ]}
+              currentBenchmark={currentBenchmark}
+              standard={standard}
+              labelColor="esrDark"
+              padVertical="xsmall"
+              grades={GRADES.esr}
+              gradeLabels={false}
+              level={1}
+              commonLabel={intl.formatMessage(
+                rootMessages.charts.rightsColumnLabel.esr,
+              )}
+              listHeader
+              metric={getMetricDetails(metricCode)}
+            />
+            <ChartBars
+              data={prepareData({
+                indicators,
+                currentBenchmark,
+                standard,
+                onClick: onMetricClick,
+                intl,
+                activeCode,
+              })}
+              currentBenchmark={currentBenchmark}
+              standard={standard}
+              commonLabel={intl.formatMessage(
+                rootMessages.charts.indicatorsColumnLabel,
+              )}
+              labelColor="esrDark"
+              grades={GRADES.esr}
+              listHeader
+              metric={getMetricDetails('esr')}
+              annotateBenchmark={false}
+              annotateMinMax={false}
+            />
+          </Box>
+          {currentBenchmark.key === 'best' && (
+            <Box
+              direction="row"
+              margin={{
+                top: 'small',
+                right: scoreAsideWidth(size),
+              }}
+              justify="end"
+            >
+              <KeyItem direction="row">
+                <Text size="xxsmall">
+                  <FormattedMessage
+                    {...rootMessages.settings.benchmark.adjusted}
+                  />
+                  {isMinSize(size, 'medium') && (
+                    <span>
+                      {` ${lowerCase(
+                        intl.formatMessage(
+                          rootMessages.settings.benchmark.nameShort,
+                        ),
+                      )}`}
+                    </span>
+                  )}
+                </Text>
+                <KeyItemDashed />
+              </KeyItem>
+              <KeyItem direction="row">
+                <Text size="xxsmall">
+                  <FormattedMessage {...rootMessages.settings.benchmark.best} />
+                  {isMinSize(size, 'medium') && (
+                    <span>
+                      {` ${lowerCase(
+                        intl.formatMessage(
+                          rootMessages.settings.benchmark.nameShort,
+                        ),
+                      )}`}
+                    </span>
+                  )}
+                </Text>
+                <KeyItemSolid />
+              </KeyItem>
+            </Box>
           )}
-          listHeader
-          metric={getMetricDetails(metricCode)}
-        />
-        <ChartBars
-          data={prepareData({
-            indicators,
-            currentBenchmark,
-            standard,
-            onClick: onMetricClick,
-            intl,
-            activeCode,
-          })}
-          currentBenchmark={currentBenchmark}
-          standard={standard}
-          commonLabel={intl.formatMessage(
-            rootMessages.charts.indicatorsColumnLabel,
-          )}
-          labelColor="esrDark"
-          grades={GRADES.esr}
-          listHeader
-          metric={getMetricDetails('esr')}
-          annotateBenchmark={false}
-          annotateMinMax={false}
-        />
-      </Box>
-      <Box margin={{ bottom: 'large' }}>
-        <Source />
-      </Box>
-    </div>
+          <Box
+            margin={{
+              top: currentBenchmark.key === 'best' ? 'xsmall' : 'medium',
+              bottom: 'large',
+            }}
+          >
+            <Source />
+          </Box>
+        </div>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

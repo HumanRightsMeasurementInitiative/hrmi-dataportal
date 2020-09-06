@@ -113,6 +113,8 @@ module.exports = options => ({
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
+      PDF_URL:
+        'https://us-central1-hrmi-dataportal-staging.cloudfunctions.net/pdf', // default to the production pdf function, override for local dev in webpack.dev.babel.js
     }),
   ]),
   resolve: {
