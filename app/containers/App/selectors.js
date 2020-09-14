@@ -187,13 +187,7 @@ export const getScaleSearch = createSelector(
       ? search.get('scale')
       : SCALES[0].key,
 );
-export const getStandardSearch = createSelector(
-  getRouterSearchParams,
-  search =>
-    search.has('as') && STANDARDS.map(s => s.key).indexOf(search.get('as')) > -1
-      ? search.get('as')
-      : STANDARDS[0].key,
-);
+
 export const getBenchmarkSearch = createSelector(
   getRouterSearchParams,
   search =>
@@ -448,6 +442,22 @@ export const getCountryGrammar = createSelector(
   getCountriesGrammar,
   (code, countries) =>
     countries && countries.find(c => c.country_code === code),
+);
+
+// N.B. moved down here to use getCountry
+export const getStandardSearch = createSelector(
+  getRouterSearchParams,
+  getCountry,
+  (search, country) => {
+    // TODO: not an ideal solution to get the default AS per country if no query param supplied, but workable
+    const noCode = country
+      ? STANDARDS.find(s => country.high_income_country === s.hiValue).key
+      : STANDARDS[0].key;
+    return search.has('as') &&
+      STANDARDS.map(s => s.key).indexOf(search.get('as')) > -1
+      ? search.get('as')
+      : noCode;
+  },
 );
 
 export const getCountriesFiltered = createSelector(

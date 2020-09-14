@@ -130,6 +130,7 @@ export function ChartContainerCountrySnapshot({
   activeCode,
   locale,
 }) {
+  console.log({ standard, benchmark, country });
   useEffect(() => {
     onLoadData();
   }, []);
@@ -548,7 +549,7 @@ const mapStateToProps = createStructuredSelector({
   countryGrammar: (state, { countryCode }) =>
     getCountryGrammar(state, countryCode),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  standard: state => getStandardSearch(state),
+  standard: (state, { countryCode }) => getStandardSearch(state, countryCode),
   benchmark: state => getBenchmarkSearch(state),
   indicators: (state, { countryCode }) =>
     getIndicatorsForCountry(state, countryCode),
