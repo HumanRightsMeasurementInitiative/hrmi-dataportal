@@ -12,16 +12,19 @@ const enLocaleData = require('react-intl/locale-data/en');
 const esLocaleData = require('react-intl/locale-data/es');
 const ptLocaleData = require('react-intl/locale-data/pt');
 const frLocaleData = require('react-intl/locale-data/fr');
+const zhLocaleData = require('react-intl/locale-data/zh');
 
 const enTranslationMessages = require('./translations/en.json');
 const esTranslationMessages = require('./translations/es.json');
 const ptTranslationMessages = require('./translations/pt.json');
 const frTranslationMessages = require('./translations/fr.json');
+const zhTranslationMessages = require('./translations/zh.json');
 
 addLocaleData(enLocaleData);
 addLocaleData(esLocaleData);
 addLocaleData(ptLocaleData);
 addLocaleData(frLocaleData);
+addLocaleData(zhLocaleData);
 
 const DEFAULT_LOCALE = 'en';
 
@@ -31,6 +34,7 @@ const appLocales = [
   'es',
   'pt',
   'fr',
+  'zh',
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -59,6 +63,9 @@ const translationMessages = {
   fr:
     frTranslationMessages &&
     formatTranslationMessages('fr', frTranslationMessages),
+  zh:
+    zhTranslationMessages &&
+    formatTranslationMessages('zh', zhTranslationMessages),
 };
 
 exports.appLocales = appLocales;
