@@ -38,7 +38,7 @@ const StyledContent = styled.div`
   }
 `;
 
-export function GenericPathPage({
+export function GenericPathPage ({
   match,
   onLoadContent,
   content,
@@ -56,9 +56,9 @@ export function GenericPathPage({
     <ContentWrap>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content="Description of Page" />
+        <meta name='description' content='Description of Page' />
       </Helmet>
-      <ContentContainer direction="column" header>
+      <ContentContainer direction='column' header>
         <ContentMaxWidth>
           <Close closeTarget={closeTarget} />
           <StyledContent>
@@ -85,7 +85,7 @@ const mapStateToProps = createStructuredSelector({
   closeTarget: state => getCloseTargetPage(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onLoadContent: page => {
       dispatch(loadContentIfNeeded(page));
@@ -93,9 +93,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(GenericPathPage));

@@ -50,7 +50,7 @@ const getRightGroups = (d, i) => {
   }));
 };
 
-function HTROverviewRights({ intl }) {
+function HTROverviewRights ({ intl }) {
   return (
     <Styled>
       <HTRParagraph>
@@ -61,9 +61,9 @@ function HTROverviewRights({ intl }) {
           <Heading responsive={false} level={4}>
             <FormattedMessage {...rootMessages.dimensions[d.key]} />
           </Heading>
-          <Box direction="row" align="center">
+          <Box direction='row' align='center'>
             <Box
-              width="50%"
+              width='50%'
               flex={{ shrink: 0 }}
               pad={{ left: 'small', right: 'medium', vertical: 'medium' }}
             >
@@ -75,7 +75,7 @@ function HTROverviewRights({ intl }) {
                 small
               />
             </Box>
-            <Box width="50%" flex={{ shrink: 0 }} pad={{ left: 'medium' }}>
+            <Box width='50%' flex={{ shrink: 0 }} pad={{ left: 'medium' }}>
               <HTRParagraph>
                 <FormattedMessage {...messages.overview.rights[d.key]} />
               </HTRParagraph>
@@ -91,7 +91,7 @@ function HTROverviewRights({ intl }) {
           <StyledUL>
             {rightsForDimension(d.key).map(r => (
               <StyledLI key={r.key}>
-                <Text size="xsmall">
+                <Text size='xsmall'>
                   <FormattedMessage {...rootMessages.rights[r.key]} />
                 </Text>
               </StyledLI>

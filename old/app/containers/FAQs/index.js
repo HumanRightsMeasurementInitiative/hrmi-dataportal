@@ -42,19 +42,19 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
   if (question === 'measureRightESR') {
     return (
       <>
-        <Text size="small">
+        <Text size='small'>
           <FormattedMarkdown
             {...messages.answers.measureRightESR}
             values={msgValues}
           />
         </Text>
-        <Text size="small">
+        <Text size='small'>
           <FormattedMarkdown
             {...messages.answers.measureRightESRNotesIntro}
             values={msgValues}
           />
         </Text>
-        <Text size="small">
+        <Text size='small'>
           <OL>
             <LI>
               <FormattedMarkdown
@@ -108,15 +108,15 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
   if (question === 'uncertainty') {
     return (
       <>
-        <Text size="small">
+        <Text size='small'>
           <FormattedMarkdown {...messages.answers.uncertainty} />
         </Text>
-        <Text size="small">
+        <Text size='small'>
           <FormattedMarkdown {...messages.answers.uncertaintyLong} />
         </Text>
         <MethodologyLink
           href={intl.formatMessage(messages.methodologyUncertaintyURL)}
-          target="_blank"
+          target='_blank'
           text={<FormattedMessage {...messages.methodologyUncertainty} />}
         />
       </>
@@ -124,7 +124,7 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
   }
   return (
     <>
-      <Text size="small">
+      <Text size='small'>
         <FormattedMarkdown {...messages.answers[question]} values={msgValues} />
       </Text>
       <MethodologyLink
@@ -141,7 +141,7 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
   );
 };
 
-function FAQs({
+function FAQs ({
   questions,
   intl,
   metric,
@@ -193,10 +193,10 @@ function FAQs({
           <AccordionPanel
             header={
               <Box
-                direction="row"
-                gap="xsmall"
-                align="center"
-                justify="between"
+                direction='row'
+                gap='xsmall'
+                align='center'
+                justify='between'
               >
                 <Box>
                   <Heading
@@ -209,13 +209,13 @@ function FAQs({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(aboutIndex) && <Down size="small" />}
-                  {actives.includes(aboutIndex) && <Up size="small" />}
+                  {!actives.includes(aboutIndex) && <Down size='small' />}
+                  {actives.includes(aboutIndex) && <Up size='small' />}
                 </Box>
               </Box>
             }
           >
-            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border='top'>
               <StyledText>
                 <FormattedMessage
                   {...rootMessages[`${metricType}-about`][metrics.key]}
@@ -228,10 +228,10 @@ function FAQs({
           <AccordionPanel
             header={
               <Box
-                direction="row"
-                gap="xsmall"
-                align="center"
-                justify="between"
+                direction='row'
+                gap='xsmall'
+                align='center'
+                justify='between'
               >
                 <Box>
                   <Heading
@@ -244,13 +244,13 @@ function FAQs({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(indicatorIndex) && <Down size="small" />}
-                  {actives.includes(indicatorIndex) && <Up size="small" />}
+                  {!actives.includes(indicatorIndex) && <Down size='small' />}
+                  {actives.includes(indicatorIndex) && <Up size='small' />}
                 </Box>
               </Box>
             }
           >
-            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border='top'>
               {metricInfo.standard === 'Both' && (
                 <StyledUL>
                   {STANDARDS.map(s => (
@@ -274,10 +274,10 @@ function FAQs({
           <AccordionPanel
             header={
               <Box
-                direction="row"
-                gap="xsmall"
-                align="center"
-                justify="between"
+                direction='row'
+                gap='xsmall'
+                align='center'
+                justify='between'
               >
                 <Box>
                   <Heading
@@ -297,13 +297,13 @@ function FAQs({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(sourceIndex) && <Down size="small" />}
-                  {actives.includes(sourceIndex) && <Up size="small" />}
+                  {!actives.includes(sourceIndex) && <Down size='small' />}
+                  {actives.includes(sourceIndex) && <Up size='small' />}
                 </Box>
               </Box>
             }
           >
-            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border='top'>
               <AboutMetricSources
                 metric={metrics}
                 indicatorInfo={metricInfo}
@@ -320,7 +320,7 @@ function FAQs({
           <AccordionPanel
             key={q}
             header={
-              <Box direction="row" gap="xsmall" align="center">
+              <Box direction='row' gap='xsmall' align='center'>
                 <Box>
                   <Heading
                     responsive={false}
@@ -335,13 +335,13 @@ function FAQs({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(index) && <Down size="small" />}
-                  {actives.includes(index) && <Up size="small" />}
+                  {!actives.includes(index) && <Down size='small' />}
+                  {actives.includes(index) && <Up size='small' />}
                 </Box>
               </Box>
             }
           >
-            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border='top'>
               {renderAnswer(q, intl, msgValues, navMethodology)}
             </Box>
           </AccordionPanel>
@@ -380,9 +380,6 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
+const withConnect = connect(null, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(FAQs));

@@ -137,7 +137,7 @@ const prepareData = ({
     };
   });
 
-function ChartCountryMetricByGroup({
+function ChartCountryMetricByGroup ({
   scores,
   metricInfo,
   // colorHint,
@@ -151,7 +151,7 @@ function ChartCountryMetricByGroup({
   intl,
 }) {
   return (
-    <Styled direction="column">
+    <Styled direction='column'>
       <ChartBars
         data={prepareData({
           scores,
@@ -165,16 +165,16 @@ function ChartCountryMetricByGroup({
         })}
         currentBenchmark={currentBenchmark}
         standard={standard}
-        labelColor="esrDark"
-        padVertical="small"
+        labelColor='esrDark'
+        padVertical='small'
         grades={GRADES.esr}
-        commonLabel="By sex"
+        commonLabel='By sex'
         isStatic
         metric={{ type: 'esr' }}
       />
       {hasRawOption && (
-        <Settings direction="row" justify="end" pad="small" border="top">
-          <Box direction="row" justify="end">
+        <Settings direction='row' justify='end' pad='small' border='top'>
+          <Box direction='row' justify='end'>
             <ButtonToggleSetting
               active={!raw}
               disabled={!raw}

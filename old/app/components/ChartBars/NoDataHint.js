@@ -59,12 +59,12 @@ const renderMessage = hint => {
   return <FormattedMessage {...rootMessages.charts.noData} />;
 };
 
-function NoDataHint({ hint, hints, color = 'dark-4' }) {
+function NoDataHint ({ hint, hints, color = 'dark-4' }) {
   return (
     <Styled>
       <StyledTextWrap>
         {hint && (
-          <StyledText size="xsmall" color="dark-4">
+          <StyledText size='xsmall' color='dark-4'>
             {renderMessage(hint)}
           </StyledText>
         )}
@@ -72,7 +72,7 @@ function NoDataHint({ hint, hints, color = 'dark-4' }) {
           hints
             .filter(h => !!h)
             .map((h, index) => (
-              <StyledText size="xsmall" color={color} key={h}>
+              <StyledText size='xsmall' color={color} key={h}>
                 {index > 0 && '('}
                 {renderMessage(h)}
                 {index > 0 && ')'}

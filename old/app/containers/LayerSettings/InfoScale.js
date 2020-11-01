@@ -5,7 +5,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
 import rootMessages from 'messages';
 
-function InfoScale({ intl, size = 'small' }) {
+function InfoScale ({ intl, size = 'small' }) {
   return (
     <div>
       <Paragraph margin={{ vertical: 'xsmall' }} size={size}>

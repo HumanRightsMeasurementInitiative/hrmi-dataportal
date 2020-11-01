@@ -1,6 +1,6 @@
 import { DIMENSIONS, RIGHTS, INDICATORS } from 'containers/App/constants';
 
-export default function(code) {
+export default function (code) {
   const dimension = DIMENSIONS.find(m => m.key === code);
   if (dimension) {
     return {

@@ -4,7 +4,7 @@ import { Box } from 'grommet';
 
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 
-export function AllLinkButton({ label, onClick, size = 'large', ...rest }) {
+export function AllLinkButton ({ label, onClick, size = 'large', ...rest }) {
   return (
     <Box {...rest}>
       <ButtonTextIcon label={label} onClick={onClick} hasIcon size={size} />

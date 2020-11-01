@@ -11,25 +11,25 @@ const TextRelative = styled(Text)`
   color: white;
 `;
 
-function ButtonRelative({ text, previous, ...rest }) {
+function ButtonRelative ({ text, previous, ...rest }) {
   return (
     <ButtonTextIconWide
       primary
-      width="100%"
+      width='100%'
       margin={{ vertical: 'xxsmall' }}
-      padding="10px"
-      color="dark"
-      borderRadius="5px"
-      gap="0"
+      padding='10px'
+      color='dark'
+      borderRadius='5px'
+      gap='0'
       icon={
         previous ? (
-          <FormPrevious color="white" size="medium" />
+          <FormPrevious color='white' size='medium' />
         ) : (
-          <FormNext color="white" size="medium" />
+          <FormNext color='white' size='medium' />
         )
       }
       reverse={!previous}
-      label={<TextRelative size="small">{text}</TextRelative>}
+      label={<TextRelative size='small'>{text}</TextRelative>}
       {...rest}
     />
   );

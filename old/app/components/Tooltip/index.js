@@ -30,7 +30,7 @@ const StyledDrop = styled(Drop)`
   }
 `;
 
-function Tooltip({
+function Tooltip ({
   text = 'I am a tooltip',
   iconSize = 'large',
   component,

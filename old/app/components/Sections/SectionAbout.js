@@ -22,12 +22,12 @@ import { isMinSize } from 'utils/responsive';
 import SectionTitle from './SectionTitle';
 import messages from './messages';
 
-export function SectionAbout({ intl, locale }) {
+export function SectionAbout ({ intl, locale }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer background="sectionAbout">
-          <ContentMaxWidth stretch direction="column">
+        <SectionContainer background='sectionAbout'>
+          <ContentMaxWidth stretch direction='column'>
             <SectionTitle
               title={intl.formatMessage(messages.about.title)}
               marginTop
@@ -48,10 +48,10 @@ export function SectionAbout({ intl, locale }) {
                 </Paragraph>
                 <ButtonTextIcon
                   href={XPATHS.home[locale] || XPATHS.home[DEFAULT_LOCALE]}
-                  target="_blank"
+                  target='_blank'
                   label={intl.formatMessage(messages.about.link)}
-                  icon={<Share color="dark" size="small" />}
-                  gap="xsmall"
+                  icon={<Share color='dark' size='small' />}
+                  gap='xsmall'
                 />
               </Box>
               <Box

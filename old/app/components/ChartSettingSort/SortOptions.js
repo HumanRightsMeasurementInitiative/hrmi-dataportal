@@ -7,7 +7,7 @@ import DropOption from 'styled/DropOption';
 import messages from './messages';
 
 const SortOptions = ({ options, onSelect, active }) => (
-  <Box pad="none">
+  <Box pad='none'>
     {options &&
       options.map(option => (
         <DropOption

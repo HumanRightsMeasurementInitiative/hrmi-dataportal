@@ -67,7 +67,7 @@ const BarBand = styled.div`
   }};
 `;
 
-function BarBullet({
+function BarBullet ({
   data,
   level = 2,
   showLabels,
@@ -152,7 +152,7 @@ function BarBullet({
               level={Math.max(2, level)}
               direction={scoreAbove ? 'top' : 'bottom'}
               secondary
-              align="right"
+              align='right'
               title={labels && labels.lo}
             />
           )}
@@ -163,7 +163,7 @@ function BarBullet({
               level={Math.max(2, level)}
               direction={scoreAbove ? 'top' : 'bottom'}
               secondary
-              align="left"
+              align='left'
               title={labels && labels.hi}
             />
           )}
@@ -185,7 +185,7 @@ function BarBullet({
               level={Math.max(2, level)}
               direction={scoreAbove ? 'top' : 'bottom'}
               secondary
-              align="right"
+              align='right'
             />
           )}
           {band.hi && bandOnHover && (hover || showScore) && (
@@ -196,7 +196,7 @@ function BarBullet({
               level={Math.max(2, level)}
               direction={scoreAbove ? 'top' : 'bottom'}
               secondary
-              align="left"
+              align='left'
             />
           )}
           {value && (showScore || (hover && scoreOnHover)) && (
@@ -212,7 +212,7 @@ function BarBullet({
       </BarWrapper>
       {showLabels && (
         <MaxLabel>
-          <Text size="small">
+          <Text size='small'>
             {unit ? `${maxValue}${unit}` : `${maxValue}`}
           </Text>
         </MaxLabel>

@@ -22,12 +22,12 @@ const ActiveFilterButton = ({ label, onRemove }) => (
   <ResponsiveContext.Consumer>
     {size => (
       <StyledButton onClick={() => onRemove()} title={label}>
-        <Box direction="row" align="center" gap="xsmall">
+        <Box direction='row' align='center' gap='xsmall'>
           <StyledText>
             {truncateText(label, isMaxSize(size, 'sm') ? 6 : 10)}
           </StyledText>
           <Close
-            color="white"
+            color='white'
             size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
           />
         </Box>

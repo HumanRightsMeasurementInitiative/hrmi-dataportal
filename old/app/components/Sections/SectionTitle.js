@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Heading } from 'grommet';
 
-export function SectionTitle({ title, level = 1, marginTop }) {
+export function SectionTitle ({ title, level = 1, marginTop }) {
   return (
     <Heading
       level={level}

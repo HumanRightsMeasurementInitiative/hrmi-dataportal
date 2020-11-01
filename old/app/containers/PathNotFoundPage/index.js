@@ -11,7 +11,7 @@ import { Heading } from 'grommet';
 
 import messages from './messages';
 
-export default function PathNotFound() {
+export default function PathNotFound () {
   return (
     <article>
       <Heading responsive={false}>

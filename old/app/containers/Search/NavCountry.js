@@ -22,7 +22,7 @@ import NavOptionGroup from './NavOptionGroup';
 
 import messages from './messages';
 
-export function NavCountry({
+export function NavCountry ({
   countries,
   onSelectCountry,
   intl,
@@ -74,7 +74,7 @@ export function NavCountry({
         size={size}
       />
       <NavScroll>
-        <Box flex overflow="auto" pad={{ vertical: 'medium' }}>
+        <Box flex overflow='auto' pad={{ vertical: 'medium' }}>
           {search === '' && (
             <NavOptionGroup
               label={intl.formatMessage(messages.optionGroups.overview)}
@@ -129,7 +129,7 @@ const mapStateToProps = state => ({
   countries: getCountries(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onSelectCountry: country => dispatch(selectCountry(country)),
     nav: location => {
@@ -147,9 +147,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(NavCountry)));

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 class ScrollToTop extends React.Component {
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     const nextSplitPath = this.props.location.pathname.split('/');
     const prevSplitPath = prevProps.location.pathname.split('/');
 
@@ -25,7 +25,7 @@ class ScrollToTop extends React.Component {
     // }
   }
 
-  render() {
+  render () {
     return this.props.children;
   }
 }

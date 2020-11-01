@@ -12,7 +12,7 @@ import rootMessages from 'messages';
 // const HEIGHT = 20;
 // const heightRotated = HEIGHT * 2 ** (1 / 2); // height * sqrt(2)
 
-function SettingsToggle({
+function SettingsToggle ({
   name,
   options,
   onActivate,
@@ -21,10 +21,10 @@ function SettingsToggle({
   msgValues,
 }) {
   return (
-    <Box direction="column" flex={{ shrink: 0 }} responsive={false}>
-      <Box direction="row" align="center">
-        <Box pad={{ vertical: 'small' }} direction="row">
-          <Text size="large" style={{ fontWeight: 600 }}>
+    <Box direction='column' flex={{ shrink: 0 }} responsive={false}>
+      <Box direction='row' align='center'>
+        <Box pad={{ vertical: 'small' }} direction='row'>
+          <Text size='large' style={{ fontWeight: 600 }}>
             {name || (
               <FormattedMessage
                 {...rootMessages.settings[setting].name}
@@ -34,7 +34,7 @@ function SettingsToggle({
           </Text>
         </Box>
       </Box>
-      <Box direction="row" align="center" margin={{ bottom: 'small' }}>
+      <Box direction='row' align='center' margin={{ bottom: 'small' }}>
         {options.map(option => (
           <ButtonToggleSetting
             key={option.key}
@@ -44,7 +44,7 @@ function SettingsToggle({
               onActivate(option.key);
             }}
           >
-            <Text size="small">
+            <Text size='small'>
               <FormattedMessage
                 {...rootMessages.settings[setting][option.label || option.key]}
                 values={msgValues}

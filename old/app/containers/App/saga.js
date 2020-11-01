@@ -81,7 +81,7 @@ const MAX_LOAD_ATTEMPTS = 5;
  * @param {integer} maxTries the maximum number of tries
  */
 const autoRestart = (generator, handleError, maxTries = MAX_LOAD_ATTEMPTS) =>
-  function* autoRestarting(...args) {
+  function * autoRestarting (...args) {
     let n = 0;
     while (n < maxTries) {
       n += 1;
@@ -96,7 +96,7 @@ const autoRestart = (generator, handleError, maxTries = MAX_LOAD_ATTEMPTS) =>
     }
   };
 
-export function* loadDataSaga({ key }) {
+export function * loadDataSaga ({ key }) {
   const resourceIndex = DATA_RESOURCES.map(r => r.key).indexOf(key);
   if (resourceIndex > -1) {
     // requestedSelector returns the times that entities where fetched from the API
@@ -131,7 +131,7 @@ export function* loadDataSaga({ key }) {
   }
 }
 // key expected to include full path, for at risk data metric/country
-export function* loadContentSaga({ key, contentType = 'page', locale }) {
+export function * loadContentSaga ({ key, contentType = 'page', locale }) {
   const pageIndex = Object.values(PAGES)
     .map(page => page.key)
     .indexOf(key);
@@ -183,14 +183,14 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
  *
  * @param {object} payload {key: data set key}
  */
-function* loadDataErrorHandler(err, { key }) {
+function * loadDataErrorHandler (err, { key }) {
   yield put(dataLoadingError(err, key));
 }
-function* loadContentErrorHandler(err, { key }) {
+function * loadContentErrorHandler (err, { key }) {
   yield put(contentLoadingError(err, key));
 }
 
-export function* selectCountrySaga({ code, tab, atRisk }) {
+export function * selectCountrySaga ({ code, tab, atRisk }) {
   // figure out country group and default standard
   const country = yield select(getCountry, code);
   const group =
@@ -240,7 +240,7 @@ const getScaleValue = value => {
   return value;
 };
 
-export function* setScaleSaga({ value }) {
+export function * setScaleSaga ({ value }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('scale', value);
@@ -257,7 +257,7 @@ export function* setScaleSaga({ value }) {
   yield put(replace(`${path}?${searchParams.toString()}`));
 }
 
-export function* setStandardSaga({ value }) {
+export function * setStandardSaga ({ value }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('as', value);
@@ -273,7 +273,7 @@ export function* setStandardSaga({ value }) {
   const path = yield select(getRouterPath);
   yield put(replace(`${path}?${searchParams.toString()}`));
 }
-export function* highlightGroupSaga({ code }) {
+export function * highlightGroupSaga ({ code }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
   if (code) {
@@ -294,7 +294,7 @@ export function* highlightGroupSaga({ code }) {
   yield put(replace(`${path}?${searchParams.toString()}`));
 }
 
-export function* setBenchmarkSaga({ value }) {
+export function * setBenchmarkSaga ({ value }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('pb', value);
@@ -310,7 +310,7 @@ export function* setBenchmarkSaga({ value }) {
   const path = yield select(getRouterPath);
   yield put(replace(`${path}?${searchParams.toString()}`));
 }
-export function* setRawSaga({ value }) {
+export function * setRawSaga ({ value }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('raw', value ? '1' : '0');
@@ -326,7 +326,7 @@ export function* setRawSaga({ value }) {
   yield put(push(`${path}?${searchParams.toString()}`));
 }
 
-export function* toggleGroupSaga({ values }) {
+export function * toggleGroupSaga ({ values }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
   searchParams.delete('gactive');
@@ -341,7 +341,7 @@ export function* toggleGroupSaga({ values }) {
   );
   yield put(push(`${path}?${searchParams.toString()}`));
 }
-export function* setTabSaga({ value }) {
+export function * setTabSaga ({ value }) {
   // get URL search params
   const searchParams = yield select(getRouterSearchParams);
   yield searchParams.set('tab', value);
@@ -359,7 +359,7 @@ export function* setTabSaga({ value }) {
   yield put(push(`${path}?${searchParams.toString()}`));
 }
 
-export function* selectMetricSaga({ code }) {
+export function * selectMetricSaga ({ code }) {
   const requestLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
   const currentSearchParams = new URLSearchParams(currentLocation.search);
@@ -376,7 +376,7 @@ export function* selectMetricSaga({ code }) {
   yield put(setAsideLayer(null));
   yield put(push(`/${requestLocale}/${PATHS.METRIC}/${code}${search}`));
 }
-export function* selectGroupSaga({ code }) {
+export function * selectGroupSaga ({ code }) {
   const requestLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
   const currentSearchParams = new URLSearchParams(currentLocation.search);
@@ -394,7 +394,7 @@ export function* selectGroupSaga({ code }) {
 }
 
 // location can either be string or object { pathname, search}
-export function* navigateSaga({ location, args }) {
+export function * navigateSaga ({ location, args }) {
   // default args
   const xArgs = extend(
     {
@@ -492,18 +492,18 @@ export function* navigateSaga({ location, args }) {
   yield put(push(`${newPathname}${search}`));
 }
 
-export function* checkCookieConsentSaga() {
+export function * checkCookieConsentSaga () {
   const consentStatus = Cookies.get(COOKIECONSENT_NAME);
   // console.log('Checking for cookie consent. Current status: ', consentStatus);
   yield disableAnalytics(consentStatus !== 'true');
   yield put(cookieConsentChecked(consentStatus));
 }
-export function* setCookieConsentSaga({ status }) {
+export function * setCookieConsentSaga ({ status }) {
   Cookies.set(COOKIECONSENT_NAME, status, { expires: 365, sameSite: 'strict' });
   yield put(checkCookieConsent());
 }
 // status = consentStatus
-export function* initialiseAnalyticsSaga({ status }) {
+export function * initialiseAnalyticsSaga ({ status }) {
   // console.log('Initialise Google Analytics?', status);
   if (status === 'true') {
     const initialisedGA = yield select(getGAStatus);
@@ -530,7 +530,7 @@ export function* initialiseAnalyticsSaga({ status }) {
   }
 }
 
-export function* trackPageviewSaga({ payload }) {
+export function * trackPageviewSaga ({ payload }) {
   const initialisedGA = yield select(getGAStatus);
   const consentStatus = Cookies.get(COOKIECONSENT_NAME);
   if (consentStatus === 'true' && initialisedGA && !payload.isFirstRendering) {
@@ -538,7 +538,7 @@ export function* trackPageviewSaga({ payload }) {
   }
 }
 
-export function* trackEventSaga({ gaEvent }) {
+export function * trackEventSaga ({ gaEvent }) {
   const initialisedGA = yield select(getGAStatus);
   const currentLocation = yield select(getRouterLocation);
   const consentStatus = Cookies.get(COOKIECONSENT_NAME);
@@ -554,7 +554,7 @@ export function* trackEventSaga({ gaEvent }) {
   }
 }
 
-export default function* defaultSaga() {
+export default function * defaultSaga () {
   // See example in containers/HomePage/saga.js
   yield takeEvery(
     LOAD_DATA_IF_NEEDED,

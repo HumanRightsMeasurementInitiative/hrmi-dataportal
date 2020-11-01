@@ -118,7 +118,7 @@ const prepareData = ({
     active: activeCode === i.key,
   }));
 
-export function ChartContainerCountryIndicators({
+export function ChartContainerCountryIndicators ({
   metricCode,
   onLoadData,
   right,
@@ -163,8 +163,8 @@ export function ChartContainerCountryIndicators({
               ]}
               currentBenchmark={currentBenchmark}
               standard={standard}
-              labelColor="esrDark"
-              padVertical="xsmall"
+              labelColor='esrDark'
+              padVertical='xsmall'
               grades={GRADES.esr}
               gradeLabels={false}
               level={1}
@@ -188,7 +188,7 @@ export function ChartContainerCountryIndicators({
               commonLabel={intl.formatMessage(
                 rootMessages.charts.indicatorsColumnLabel,
               )}
-              labelColor="esrDark"
+              labelColor='esrDark'
               grades={GRADES.esr}
               listHeader
               metric={getMetricDetails('esr')}
@@ -198,15 +198,15 @@ export function ChartContainerCountryIndicators({
           </Box>
           {currentBenchmark.key === 'best' && (
             <Box
-              direction="row"
+              direction='row'
               margin={{
                 top: 'small',
                 right: scoreAsideWidth(size),
               }}
-              justify="end"
+              justify='end'
             >
-              <KeyItem direction="row">
-                <Text size="xxsmall">
+              <KeyItem direction='row'>
+                <Text size='xxsmall'>
                   <FormattedMessage
                     {...rootMessages.settings.benchmark.adjusted}
                   />
@@ -222,8 +222,8 @@ export function ChartContainerCountryIndicators({
                 </Text>
                 <KeyItemDashed />
               </KeyItem>
-              <KeyItem direction="row">
-                <Text size="xxsmall">
+              <KeyItem direction='row'>
+                <Text size='xxsmall'>
                   <FormattedMessage {...rootMessages.settings.benchmark.best} />
                   {isMinSize(size, 'medium') && (
                     <span>
@@ -277,16 +277,13 @@ const mapStateToProps = createStructuredSelector({
   rights: (state, { countryCode }) => getRightsForCountry(state, countryCode),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
   };
 }
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(
   withTheme(injectIntl(ChartContainerCountryIndicators)),

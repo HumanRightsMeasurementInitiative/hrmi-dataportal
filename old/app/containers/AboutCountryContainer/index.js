@@ -122,7 +122,7 @@ const renderCategory = (label, onClick, cat, value) =>
     <Text>{label}</Text>
   );
 
-function AboutCountryContainer({
+function AboutCountryContainer ({
   intl,
   country,
   currentGDP,
@@ -170,7 +170,7 @@ function AboutCountryContainer({
       </HeadingBox>
       {countriesGrammar && countryStatus.trim() !== '' && (
         <DetailBox margin={{ bottom: 'xsmall' }}>
-          <Box width="50%">
+          <Box width='50%'>
             <Label>
               <FormattedMessage {...messages.countryStatus} />
             </Label>
@@ -191,12 +191,12 @@ function AboutCountryContainer({
       )}
       {hasPopulation && (
         <DetailBox margin={{ bottom: 'xsmall' }}>
-          <Box width="50%">
+          <Box width='50%'>
             <Label>
               <FormattedMessage {...messages.population} />
             </Label>
           </Box>
-          <RowBox width="50%">
+          <RowBox width='50%'>
             <Text>
               <FormattedMessage
                 {...messages.populationValue}
@@ -212,14 +212,14 @@ function AboutCountryContainer({
       )}
       {(hasCurrentGDP || hasPPPGDP) && (
         <DetailBox margin={{ bottom: 'xsmall' }}>
-          <Box direction="column" width="50%">
+          <Box direction='column' width='50%'>
             <Label>
               <FormattedMessage {...messages.gdp} />
             </Label>
           </Box>
           <RowBox>
             {hasCurrentGDP && (
-              <Box direction="column" margin={{ bottom: 'small' }}>
+              <Box direction='column' margin={{ bottom: 'small' }}>
                 <Text>
                   <FormattedMessage
                     {...messages.gdpValue}
@@ -230,11 +230,11 @@ function AboutCountryContainer({
                   />
                 </Text>
                 <div>
-                  <Text size="xsmall">
+                  <Text size='xsmall'>
                     <FormattedMessage {...messages.gdpHint} />
                   </Text>
                   <Tooltip
-                    iconSize="medium"
+                    iconSize='medium'
                     text={intl.formatMessage(messages.gdpTooltip)}
                     inverse={inverse}
                     inAside={inAside}
@@ -243,7 +243,7 @@ function AboutCountryContainer({
               </Box>
             )}
             {hasPPPGDP && (
-              <Box direction="column" margin={{ bottom: 'xsmall' }}>
+              <Box direction='column' margin={{ bottom: 'xsmall' }}>
                 <Text>
                   <FormattedMessage
                     {...messages.gdpValue}
@@ -254,11 +254,11 @@ function AboutCountryContainer({
                   />
                 </Text>
                 <div>
-                  <Text size="xsmall">
+                  <Text size='xsmall'>
                     <FormattedMessage {...messages.gdpHintPPP} />
                   </Text>
                   <Tooltip
-                    iconSize="medium"
+                    iconSize='medium'
                     text={intl.formatMessage(messages.gdpTooltipPPP)}
                     inverse={inverse}
                     inAside={inAside}
@@ -271,13 +271,13 @@ function AboutCountryContainer({
       )}
       {(!collapsible || more) && (
         <>
-          <Box direction="row" margin={{ bottom: 'xsmall' }}>
-            <Box width="50%">
+          <Box direction='row' margin={{ bottom: 'xsmall' }}>
+            <Box width='50%'>
               <Label>
                 <FormattedMessage {...messages.region} />
               </Label>
             </Box>
-            <Box width="50%">
+            <Box width='50%'>
               {renderCategory(
                 intl.formatMessage(
                   rootMessages.regions[country[COLUMNS.COUNTRIES.REGION]],
@@ -289,13 +289,13 @@ function AboutCountryContainer({
             </Box>
           </Box>
           {country[COLUMNS.COUNTRIES.SUBREGION] && (
-            <Box direction="row" margin={{ bottom: 'xsmall' }}>
-              <Box width="50%">
+            <Box direction='row' margin={{ bottom: 'xsmall' }}>
+              <Box width='50%'>
                 <Label>
                   <FormattedMessage {...messages.subregion} />
                 </Label>
               </Box>
-              <Box width="50%">
+              <Box width='50%'>
                 {renderCategory(
                   intl.formatMessage(
                     rootMessages.subregions[
@@ -310,8 +310,8 @@ function AboutCountryContainer({
             </Box>
           )}
           {countryGroups && (
-            <Box direction="row" margin={{ bottom: 'xsmall' }}>
-              <Box width="50%">
+            <Box direction='row' margin={{ bottom: 'xsmall' }}>
+              <Box width='50%'>
                 <Label>
                   <FormattedMessage
                     {...messages.groups[
@@ -320,7 +320,7 @@ function AboutCountryContainer({
                   />
                 </Label>
               </Box>
-              <Box width="50%">
+              <Box width='50%'>
                 {countryGroups.map(g => (
                   <span key={g}>
                     {renderCategory(
@@ -335,8 +335,8 @@ function AboutCountryContainer({
             </Box>
           )}
           {treaties && (
-            <Box direction="row" margin={{ bottom: 'xsmall' }}>
-              <Box width="50%">
+            <Box direction='row' margin={{ bottom: 'xsmall' }}>
+              <Box width='50%'>
                 <Label>
                   <FormattedMessage
                     {...messages.treaties[
@@ -345,7 +345,7 @@ function AboutCountryContainer({
                   />
                 </Label>
               </Box>
-              <Box width="50%">
+              <Box width='50%'>
                 {treaties.map(g => (
                   <span key={g}>
                     {renderCategory(
@@ -359,13 +359,13 @@ function AboutCountryContainer({
               </Box>
             </Box>
           )}
-          <Box direction="row" margin={{ bottom: 'xsmall' }}>
-            <Box width="50%">
+          <Box direction='row' margin={{ bottom: 'xsmall' }}>
+            <Box width='50%'>
               <Label>
                 <FormattedMessage {...messages.income} />
               </Label>
             </Box>
-            <Box width="50%">
+            <Box width='50%'>
               {renderCategory(
                 intl.formatMessage(rootMessages.income[incomeCode]),
                 onCategoryClick,
@@ -381,9 +381,9 @@ function AboutCountryContainer({
           <MoreWrap>
             <ButtonAccordian
               onClick={() => setMore(!more)}
-              icon={more ? <Up size="small" /> : <Down size="small" />}
+              icon={more ? <Up size='small' /> : <Down size='small' />}
               color={inverse ? 'white' : 'dark'}
-              size="small"
+              size='small'
               label={<FormattedMessage {...messages[more ? 'less' : 'more']} />}
             />
           </MoreWrap>
@@ -438,15 +438,12 @@ const mapStateToProps = createStructuredSelector({
     getLatestCountryPopulation(state, countryCode),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onCountryClick: code => dispatch(selectCountry(code)),
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(AboutCountryContainer));

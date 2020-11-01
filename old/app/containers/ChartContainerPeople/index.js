@@ -60,7 +60,7 @@ const generateKey = (metricCode, countryCode) => {
 
 const DEPENDENCIES = ['countries', 'atRisk'];
 
-export function ChartContainerPeople({
+export function ChartContainerPeople ({
   atRisk,
   metricCode,
   countryCode,
@@ -162,7 +162,7 @@ const mapStateToProps = createStructuredSelector({
     getCountryGrammar(state, countryCode),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
@@ -175,10 +175,7 @@ export function mapDispatchToProps(dispatch) {
     },
   };
 }
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(
   injectIntl(withTheme(ChartContainerPeople)),

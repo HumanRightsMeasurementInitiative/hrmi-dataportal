@@ -63,7 +63,7 @@ const Top = styled.div``;
 
 const DEPENDENCIES = ['atRisk', 'countries'];
 
-export function PathPeople({
+export function PathPeople ({
   intl,
   onLoadData,
   nav,
@@ -128,11 +128,11 @@ export function PathPeople({
           <ContentWrap>
             <Helmet>
               <title>{groupTitle}</title>
-              <meta name="description" content="Description of Country page" />
+              <meta name='description' content='Description of Country page' />
             </Helmet>
             <Box style={{ position: 'relative' }}>
-              {isMinSize(size, 'large') && <AsideBackground color="white" />}
-              <ContentContainer direction="column" header>
+              {isMinSize(size, 'large') && <AsideBackground color='white' />}
+              <ContentContainer direction='column' header>
                 <ContentMaxWidth
                   header
                   height={
@@ -174,18 +174,18 @@ export function PathPeople({
                     <Aside image>
                       <GImage
                         src={`${IMAGE_PATH}/people_${peopleCode}.png`}
-                        fit="cover"
+                        fit='cover'
                       />
                     </Aside>
                   )}
                 </ContentMaxWidth>
               </ContentContainer>
             </Box>
-            <SectionContainer background="sectionPeople">
+            <SectionContainer background='sectionPeople'>
               <ContentMaxWidth column>
                 <Styled>
                   <Top>
-                    <Text margin={{ bottom: 'xsmall', top: '0' }} size="medium">
+                    <Text margin={{ bottom: 'xsmall', top: '0' }} size='medium'>
                       <FormattedMessage
                         {...messages.text}
                         values={{
@@ -267,7 +267,7 @@ const mapStateToProps = createStructuredSelector({
   countryNo: state => getPeopleAtRiskCountryNo(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
@@ -290,9 +290,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(PathPeople)));

@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
-function createWebpackMiddleware(compiler, publicPath) {
+function createWebpackMiddleware (compiler, publicPath) {
   return webpackDevMiddleware(compiler, {
     logLevel: 'warn',
     publicPath,
@@ -12,7 +12,7 @@ function createWebpackMiddleware(compiler, publicPath) {
   });
 }
 
-module.exports = function addDevMiddlewares(app, webpackConfig) {
+module.exports = function addDevMiddlewares (app, webpackConfig) {
   const compiler = webpack(webpackConfig);
   const middleware = createWebpackMiddleware(
     compiler,

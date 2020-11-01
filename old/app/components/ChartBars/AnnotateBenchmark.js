@@ -20,7 +20,7 @@ import AnnotateRef from './styled/AnnotateRef';
 import AnnotateRefLine from './styled/AnnotateRefLine';
 import AnnotateRefInner from './styled/AnnotateRefInner';
 
-function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
+function AnnotateBenchmark ({ intl, benchmarkKey, label, type, hasBetter }) {
   const tooltip = type !== 'htr';
   const iconOnly = type === 'diamond' || type === 'icon';
   // prettier-ignore

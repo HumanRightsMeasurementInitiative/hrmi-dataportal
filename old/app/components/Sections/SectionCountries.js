@@ -24,7 +24,7 @@ import Slider from './Slider';
 import Card from './Card';
 import AllLinkButton from './AllLinkButton';
 
-export function SectionCountries({
+export function SectionCountries ({
   countries,
   onSelectCountry,
   navAllCountries,

@@ -52,7 +52,7 @@ const PDFBox = styled(Box)`
 `;
 
 const ChartArea = props => (
-  <Box direction="column" fill="horizontal" {...props} />
+  <Box direction='column' fill='horizontal' {...props} />
 );
 
 // prettier-ignore
@@ -151,7 +151,7 @@ const prepareData = ({
       }
   );
 
-function ChartCountrySnapshot({
+function ChartCountrySnapshot ({
   type,
   dimensionCode,
   dimensionScore,
@@ -178,14 +178,14 @@ function ChartCountrySnapshot({
     <ResponsiveContext.Consumer>
       {size => (
         <PDFBox
-          direction="column"
+          direction='column'
           pad={{ bottom: 'small' }}
           margin={{ bottom: 'small' }}
         >
           {!hasData ? (
             <div>
               <AddToPDFWrapper>
-                <Box direction="column" align="start">
+                <Box direction='column' align='start'>
                   <Button
                     onClick={() => onMetricClick(dimensionCode)}
                     onMouseEnter={() => setHover(true)}
@@ -241,18 +241,18 @@ function ChartCountrySnapshot({
                 </div>
               </AddToPDFWrapper>
               <RemoveFromPDFWrapper>
-                <Box direction="row">
+                <Box direction='row'>
                   <ChartArea>
                     <Dimension>
                       <Box
-                        direction="row"
-                        justify="between"
+                        direction='row'
+                        justify='between'
                         align={isMaxSize(size, 'sm') ? 'start' : 'end'}
                         margin={
                           isMaxSize(size, 'sm') ? { top: '12px' } : 'none'
                         }
                       >
-                        <Box direction="column" align="start">
+                        <Box direction='column' align='start'>
                           <Button
                             onClick={() => onMetricClick(dimensionCode)}
                             onMouseEnter={() => setHover(true)}
@@ -288,7 +288,7 @@ function ChartCountrySnapshot({
                         </Box>
                         <Box
                           direction={isMinSize(size, 'sm') ? 'row' : 'column'}
-                          align="center"
+                          align='center'
                         >
                           <Text
                             size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
@@ -365,7 +365,7 @@ function ChartCountrySnapshot({
                           rootMessages.charts.rightsColumnLabel[dimensionCode],
                         )}`}
                         labelColor={`${dimensionCode}Dark`}
-                        padVertical="small"
+                        padVertical='small'
                         grades={GRADES[type]}
                         listHeader
                         metric={getMetricDetails(dimensionCode)}
@@ -379,16 +379,16 @@ function ChartCountrySnapshot({
             </div>
           ) : (
             <div>
-              <Box direction="row">
+              <Box direction='row'>
                 <ChartArea>
                   <Dimension>
                     <Box
-                      direction="row"
-                      justify="between"
+                      direction='row'
+                      justify='between'
                       align={isMaxSize(size, 'sm') ? 'start' : 'end'}
                       margin={isMaxSize(size, 'sm') ? { top: '12px' } : 'none'}
                     >
-                      <Box direction="column" align="start">
+                      <Box direction='column' align='start'>
                         <Button
                           onClick={() => onMetricClick(dimensionCode)}
                           onMouseEnter={() => setHover(true)}
@@ -424,7 +424,7 @@ function ChartCountrySnapshot({
                       </Box>
                       <Box
                         direction={isMinSize(size, 'sm') ? 'row' : 'column'}
-                        align="center"
+                        align='center'
                       >
                         <Text
                           size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
@@ -501,7 +501,7 @@ function ChartCountrySnapshot({
                         rootMessages.charts.rightsColumnLabel[dimensionCode],
                       )}`}
                       labelColor={`${dimensionCode}Dark`}
-                      padVertical="small"
+                      padVertical='small'
                       grades={GRADES[type]}
                       listHeader
                       metric={getMetricDetails(dimensionCode)}

@@ -14,12 +14,12 @@ import {
   getFloatingAsideWidth,
 } from 'utils/responsive';
 
-function AsideBackground({ theme, color }) {
+function AsideBackground ({ theme, color }) {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions(),
   );
   useEffect(() => {
-    function handleResize() {
+    function handleResize () {
       setWindowDimensions(getWindowDimensions());
     }
 
@@ -31,14 +31,14 @@ function AsideBackground({ theme, color }) {
     <ResponsiveContext.Consumer>
       {size => (
         <Box
-          direction="row"
+          direction='row'
           fill
           style={{ position: 'absolute', left: 0, right: 0 }}
-          justify="end"
+          justify='end'
         >
           <Box
             background={color || 'light-1'}
-            fill="vertical"
+            fill='vertical'
             width={
               isMaxSize(size, 'medium')
                 ? '100%'

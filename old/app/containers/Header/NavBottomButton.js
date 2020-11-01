@@ -47,11 +47,11 @@ const NavBottomButton = React.forwardRef(
         active={active}
         open={open}
         onClick={onClick}
-        justify="between"
-        align="center"
+        justify='between'
+        align='center'
         ref={ref}
         label={
-          <Box direction="row" align="center" justify="between" fill gap={gap}>
+          <Box direction='row' align='center' justify='between' fill gap={gap}>
             <Text size={isMinSize(windowSize, 'medium') ? 'large' : 'medium'}>
               <FormattedMessage {...rootMessages.labels[label]} />
             </Text>

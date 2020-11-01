@@ -36,7 +36,7 @@ const Pad = styled(Box)`
 
 const DEPENDENCIES_INDICATORS = ['esrIndicators'];
 
-export function AboutMetricContainer({
+export function AboutMetricContainer ({
   metricCode,
   ancestors,
   metricInfo,
@@ -101,16 +101,16 @@ export function AboutMetricContainer({
   }
   return (
     <Box
-      direction="column"
+      direction='column'
       pad={{ horizontal: 'medium', bottom: 'medium', top: 'xlarge' }}
     >
       {showRelated && (
-        <div justify="start">
+        <div justify='start'>
           {metricType !== 'dimensions' && (
             <Pad>
               <Heading
                 responsive={false}
-                size="18px"
+                size='18px'
                 margin={{ vertical: 'xsmall' }}
               >
                 {typeof metric.aggregate === 'undefined' && (
@@ -137,7 +137,7 @@ export function AboutMetricContainer({
             <Pad>
               <Heading
                 responsive={false}
-                size="18px"
+                size='18px'
                 margin={{ vertical: 'xsmall' }}
               >
                 {metricType === 'dimensions' && (
@@ -173,8 +173,8 @@ export function AboutMetricContainer({
                   {children.map(as => (
                     <Pad key={as.key}>
                       <Text
-                        size="14px"
-                        color="#262064"
+                        size='14px'
+                        color='#262064'
                         margin={{ bottom: 'xxsmall' }}
                       >
                         {`${intl.formatMessage(
@@ -300,7 +300,7 @@ const mapStateToProps = createStructuredSelector({
   },
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: metric => {
       if (metric.metricType === 'indicators') {
@@ -314,9 +314,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(AboutMetricContainer));

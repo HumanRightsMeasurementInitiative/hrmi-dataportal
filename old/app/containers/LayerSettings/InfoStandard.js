@@ -38,7 +38,7 @@ const Square = styled.div`
       background-repeat: repeat;
     `}
 `;
-function StandardOverlay({ intl, size = 'small', hasKey }) {
+function StandardOverlay ({ intl, size = 'small', hasKey }) {
   return (
     <Box>
       <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
@@ -46,7 +46,7 @@ function StandardOverlay({ intl, size = 'small', hasKey }) {
       </Paragraph>
       {hasKey && (
         <SquareWrap>
-          <Square color="esr" type="square" lineStyle="solid" />
+          <Square color='esr' type='square' lineStyle='solid' />
         </SquareWrap>
       )}
       <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
@@ -59,7 +59,7 @@ function StandardOverlay({ intl, size = 'small', hasKey }) {
       </Paragraph>
       {hasKey && (
         <SquareWrap>
-          <Square color="esr" type="square" lineStyle="stripes" />
+          <Square color='esr' type='square' lineStyle='stripes' />
         </SquareWrap>
       )}
       <Paragraph margin={{ vertical: 'xsmall' }} size={size}>

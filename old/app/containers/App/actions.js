@@ -34,34 +34,34 @@ import {
   HIGHLIGHT_GROUP,
 } from './constants';
 
-export function checkCookieConsent() {
+export function checkCookieConsent () {
   // console.log('Action: check cookie consent');
   return {
     type: CHECK_COOKIECONSENT,
   };
 }
-export function setCookieConsent(status) {
+export function setCookieConsent (status) {
   // console.log('Action: set cookie consent. Status: ', status);
   return {
     type: SET_COOKIECONSENT,
     status,
   };
 }
-export function cookieConsentChecked(status) {
+export function cookieConsentChecked (status) {
   // console.log('Action: cookie consent checked. Status: ', status);
   return {
     type: COOKIECONSENT_CHECKED,
     status,
   };
 }
-export function setGAinitialised(status) {
+export function setGAinitialised (status) {
   // console.log('Action: set Google Analytics status. Status: ', status);
   return {
     type: GA_INITIALISED,
     status,
   };
 }
-export function trackEvent(gaEvent) {
+export function trackEvent (gaEvent) {
   return {
     type: TRACK_EVENT,
     gaEvent,
@@ -71,14 +71,14 @@ export function trackEvent(gaEvent) {
  * Load the data, this action starts the request saga
  *
  */
-export function loadDataIfNeeded(key) {
+export function loadDataIfNeeded (key) {
   return {
     type: LOAD_DATA_IF_NEEDED,
     key,
   };
 }
 
-export function dataLoaded(key, data, time) {
+export function dataLoaded (key, data, time) {
   return {
     type: LOAD_DATA_SUCCESS,
     data,
@@ -87,7 +87,7 @@ export function dataLoaded(key, data, time) {
   };
 }
 
-export function dataRequested(key, time) {
+export function dataRequested (key, time) {
   return {
     type: DATA_REQUESTED,
     key,
@@ -95,7 +95,7 @@ export function dataRequested(key, time) {
   };
 }
 
-export function dataLoadingError(error, key) {
+export function dataLoadingError (error, key) {
   return {
     type: LOAD_DATA_ERROR,
     error,
@@ -103,14 +103,14 @@ export function dataLoadingError(error, key) {
   };
 }
 
-export function dataReady(key, time) {
+export function dataReady (key, time) {
   return {
     type: DATA_READY,
     key,
     time,
   };
 }
-export function loadContentIfNeeded(key, contentType, locale) {
+export function loadContentIfNeeded (key, contentType, locale) {
   return {
     type: LOAD_CONTENT_IF_NEEDED,
     key,
@@ -118,14 +118,14 @@ export function loadContentIfNeeded(key, contentType, locale) {
     locale,
   };
 }
-export function contentRequested(key, time) {
+export function contentRequested (key, time) {
   return {
     type: CONTENT_REQUESTED,
     key,
     time,
   };
 }
-export function contentLoaded(key, content, time, locale) {
+export function contentLoaded (key, content, time, locale) {
   return {
     type: LOAD_CONTENT_SUCCESS,
     content,
@@ -135,7 +135,7 @@ export function contentLoaded(key, content, time, locale) {
   };
 }
 
-export function contentLoadingError(error, key) {
+export function contentLoadingError (error, key) {
   return {
     type: LOAD_CONTENT_ERROR,
     error,
@@ -143,7 +143,7 @@ export function contentLoadingError(error, key) {
   };
 }
 
-export function contentReady(key, time) {
+export function contentReady (key, time) {
   return {
     type: CONTENT_READY,
     key,
@@ -151,7 +151,7 @@ export function contentReady(key, time) {
   };
 }
 
-export function selectCountry(code, tab, atRisk) {
+export function selectCountry (code, tab, atRisk) {
   return {
     type: SELECT_COUNTRY,
     code,
@@ -159,49 +159,49 @@ export function selectCountry(code, tab, atRisk) {
     atRisk,
   };
 }
-export function selectMetric(code) {
+export function selectMetric (code) {
   return {
     type: SELECT_METRIC,
     code,
   };
 }
-export function selectGroup(code) {
+export function selectGroup (code) {
   return {
     type: SELECT_GROUP,
     code,
   };
 }
-export function setScale(value) {
+export function setScale (value) {
   return {
     type: SET_SCALE,
     value,
   };
 }
-export function setStandard(value) {
+export function setStandard (value) {
   return {
     type: SET_STANDARD,
     value,
   };
 }
-export function setBenchmark(value) {
+export function setBenchmark (value) {
   return {
     type: SET_BENCHMARK,
     value,
   };
 }
-export function toggleGroup(values) {
+export function toggleGroup (values) {
   return {
     type: TOGGLE_GROUP,
     values,
   };
 }
-export function setRaw(value) {
+export function setRaw (value) {
   return {
     type: SET_RAW,
     value,
   };
 }
-export function setTab(value) {
+export function setTab (value) {
   return {
     type: SET_TAB,
     value,
@@ -214,20 +214,20 @@ export function setTab(value) {
  * @param {object} args navigation arguments
  * @return {object} `{type: action id, location: new location, args: navigation arguments}`
  */
-export function navigate(location, args) {
+export function navigate (location, args) {
   return {
     type: NAVIGATE,
     location,
     args,
   };
 }
-export function setAsideLayer(args) {
+export function setAsideLayer (args) {
   return {
     type: ASIDE_LAYER,
     layer: args,
   };
 }
-export function setHighlightGroup(code) {
+export function setHighlightGroup (code) {
   return {
     type: HIGHLIGHT_GROUP,
     code,

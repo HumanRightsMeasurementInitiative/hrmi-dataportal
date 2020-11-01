@@ -46,7 +46,7 @@ const StyledRightHeadingAbove = styled(Text)`
   margin-top: 10px;
 `;
 
-export function ChartWordCloud({
+export function ChartWordCloud ({
   data,
   subright,
   dimension,
@@ -77,7 +77,7 @@ export function ChartWordCloud({
     : activeWord;
   return (
     <Styled
-      direction="column"
+      direction='column'
       pad={{ bottom: 'large', top: 'xsmall' }}
       border={border ? 'top' : false}
     >
@@ -96,18 +96,18 @@ export function ChartWordCloud({
       {scores && (
         <TextWrap>
           <Box>
-            <Text size="small" style={{ fontStyle: 'italic' }}>
+            <Text size='small' style={{ fontStyle: 'italic' }}>
               <FormattedMessage {...messages.interpretation} />
             </Text>
           </Box>
           {!activeWord && (
             <Box>
-              <Text size="medium">&nbsp;</Text>
+              <Text size='medium'>&nbsp;</Text>
             </Box>
           )}
           {wordHighlighted && (
             <Box>
-              <Text size="medium">
+              <Text size='medium'>
                 <span style={{ fontWeight: 700 }}>
                   {`${Math.round(100 * wordHighlighted.proportion)}% `}
                 </span>
@@ -130,7 +130,7 @@ export function ChartWordCloud({
           </Hint>
         </TextWrap>
       )}
-      <Words direction="column" align="center">
+      <Words direction='column' align='center'>
         {scores &&
           scores.map(s => (
             <Word

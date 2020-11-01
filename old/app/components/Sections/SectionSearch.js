@@ -26,20 +26,20 @@ const SearchWrapper = styled.div`
   margin: 20px 0;
 `;
 
-export function SectionSearch({ intl }) {
+export function SectionSearch ({ intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <SectionContainer pad={{ top: 'medium', bottom: 'large' }}>
-          <ContentMaxWidth align="start" column>
+          <ContentMaxWidth align='start' column>
             <SectionTitle
               title={intl.formatMessage(messages.search.title)}
               level={1}
             />
             <SearchWrapper>
               <Search
-                bordersize="small"
-                bordercolor="dark"
+                bordersize='small'
+                bordercolor='dark'
                 stretch
                 example
                 size={isMaxSize(size, 'sm') ? 'medium' : 'large'}

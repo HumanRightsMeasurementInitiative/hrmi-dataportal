@@ -23,7 +23,7 @@ import Slider from './Slider';
 import Card from './Card';
 import AllLinkButton from './AllLinkButton';
 
-export function SectionRights({
+export function SectionRights ({
   rights,
   onSelectRight,
   navAllRights,
@@ -44,8 +44,8 @@ export function SectionRights({
         <SectionContainer background={background}>
           <ContentMaxWidth column>
             <Box
-              direction="row"
-              align="center"
+              direction='row'
+              align='center'
               margin={{ top: 'small' }}
               justify={stretchAllLink ? 'between' : 'stretch'}
               gap={stretchAllLink ? 'none' : 'large'}
@@ -66,11 +66,11 @@ export function SectionRights({
                 />
               )}
             </Box>
-            <Slider cardMargin="xsmall" background={background}>
+            <Slider cardMargin='xsmall' background={background}>
               {rights.map(r => (
                 <Card
                   key={r.key}
-                  margin="xsmall"
+                  margin='xsmall'
                   onCardClick={() => {
                     onSelectRight(r.key);
                   }}
@@ -83,7 +83,7 @@ export function SectionRights({
                   imageWhitespace
                   activeColor={`${r.dimension}Dark`}
                   minHeight={allCats || minHeight}
-                  type="icon"
+                  type='icon'
                 />
               ))}
             </Slider>

@@ -10,7 +10,7 @@ import { getCPRScoreRange, getMessageGrammar } from 'utils/narrative';
 import rootMessages from 'messages';
 import messages from './messages';
 
-function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
+function NarrativeCPR ({ dimensionKey, country, score, intl, countryGrammar }) {
   const messageValues = {
     ...getMessageGrammar(
       intl,

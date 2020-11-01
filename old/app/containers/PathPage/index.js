@@ -16,7 +16,13 @@ import Methodology from './methodologyPathPage';
 import About from './aboutPathPage';
 import Generic from './genericPathPage';
 
-export function PathPage({ match, onLoadContent, content, closeTarget, intl }) {
+export function PathPage ({
+  match,
+  onLoadContent,
+  content,
+  closeTarget,
+  intl,
+}) {
   let pageName;
   if (match) pageName = match.params.page;
 
@@ -68,7 +74,7 @@ const mapStateToProps = createStructuredSelector({
   closeTarget: state => getCloseTargetPage(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onLoadContent: page => {
       dispatch(loadContentIfNeeded(page));
@@ -76,9 +82,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(PathPage));

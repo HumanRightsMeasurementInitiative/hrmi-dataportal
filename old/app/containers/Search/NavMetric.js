@@ -27,7 +27,14 @@ import NavOptionGroup from './NavOptionGroup';
 
 import messages from './messages';
 
-export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
+export function NavMetric ({
+  onSelectMetric,
+  intl,
+  onClose,
+  size,
+  nav,
+  theme,
+}) {
   const [search, setSearch] = useState('');
   const [activeResult, setActiveResult] = useState(0);
   // const [focus, setFocus] = useState(false);
@@ -72,7 +79,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
         size={size}
       />
       <NavScroll>
-        <Box flex overflow="auto" pad={{ vertical: 'medium' }}>
+        <Box flex overflow='auto' pad={{ vertical: 'medium' }}>
           {search === '' && (
             <NavOptionGroup
               label={intl.formatMessage(messages.optionGroups.overview)}
@@ -148,7 +155,7 @@ NavMetric.propTypes = {
   theme: PropTypes.object,
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onSelectMetric: metric => dispatch(selectMetric(metric)),
     nav: location => {
@@ -165,9 +172,6 @@ export function mapDispatchToProps(dispatch) {
     },
   };
 }
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
+const withConnect = connect(null, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(NavMetric)));

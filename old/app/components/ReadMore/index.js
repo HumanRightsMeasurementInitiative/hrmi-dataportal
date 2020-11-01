@@ -24,7 +24,7 @@ const StyledButtonText = styled(ButtonText)`
 
 const LIMIT = 180;
 
-function ReadMore({ message }) {
+function ReadMore ({ message }) {
   const [more, setMore] = useState(false);
   const text = more ? message : truncateText(message, LIMIT);
   return (

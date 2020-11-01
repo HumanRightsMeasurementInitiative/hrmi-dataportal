@@ -15,14 +15,14 @@ const Styled = styled.div``;
 const stackContent = size =>
   size === 'large' || size === 'small' || size === 'sm';
 
-function HTRBar({ contxt, intl, dimension }) {
+function HTRBar ({ contxt, intl, dimension }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Styled>
           <Box
             direction={stackContent(size) ? 'column' : 'row'}
-            align="center"
+            align='center'
             responsive={false}
           >
             <Box
@@ -45,7 +45,7 @@ function HTRBar({ contxt, intl, dimension }) {
                     label={intl.formatMessage(
                       rootMessages.settings.benchmark.name,
                     )}
-                    type="htr"
+                    type='htr'
                   />
                 )}
                 <Bar

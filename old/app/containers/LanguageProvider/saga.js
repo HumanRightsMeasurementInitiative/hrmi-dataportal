@@ -18,7 +18,7 @@ const updateLocale = (currentLocation, currentLocale, newLocale) => {
   return currentLocation;
 };
 
-export function* changeLocaleSaga({ locale }) {
+export function * changeLocaleSaga ({ locale }) {
   const currentLocale = yield select(getLocale);
   const currentLocation = yield select(getRouterLocation);
   yield put(push(updateLocale(currentLocation, currentLocale, locale)));
@@ -31,7 +31,7 @@ export function* changeLocaleSaga({ locale }) {
   );
 }
 
-export default function* defaultSaga() {
+export default function * defaultSaga () {
   // See example in containers/HomePage/sagas.js
   yield takeLatest(CHANGE_LOCALE, changeLocaleSaga);
 }

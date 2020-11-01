@@ -4,7 +4,7 @@ import { Box, ResponsiveContext } from 'grommet';
 
 import { getAsideWidth } from 'utils/responsive';
 
-function TabAside({ asideTab, activeTab }) {
+function TabAside ({ asideTab, activeTab }) {
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>

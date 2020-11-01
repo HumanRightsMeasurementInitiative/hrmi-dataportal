@@ -83,7 +83,7 @@ const getCardWidth = (width, number, theme) => {
   return `${width / number - edge * 2}px`;
 };
 
-export function OverviewCountries({
+export function OverviewCountries ({
   countries,
   scoresAllCountries,
   regionFilterValue,
@@ -200,7 +200,7 @@ export function OverviewCountries({
         <MainColumn hasAside={hasAside}>
           <ChartHeader
             top
-            chartId="countries-overview"
+            chartId='countries-overview'
             hasSubHeading={countryWithoutCount > 0}
             messageValues={{
               no: countryCount,
@@ -242,8 +242,8 @@ export function OverviewCountries({
             }}
           />
           <Search
-            bordersize="small"
-            bordercolor="dark"
+            bordersize='small'
+            bordercolor='dark'
             placeholder={intl.formatMessage(searchMessages.countrySearch)}
             onSearch={s => setSearch(s)}
             drop={false}
@@ -251,7 +251,7 @@ export function OverviewCountries({
           {sorted && scoresAllCountries && (
             <CardWrapper
               pad={{ top: isMaxSize(size, 'sm') ? 'xsmall' : '0' }}
-              align="start"
+              align='start'
               responsive={false}
               margin={{ horizontal: `-${theme.global.edgeSize.xsmall}` }}
               ref={ref}
@@ -264,11 +264,11 @@ export function OverviewCountries({
               )}
               {dataReady && sorted && sorted.length > 0 && (
                 <Box
-                  direction="row"
+                  direction='row'
                   wrap
                   overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
-                  align="start"
+                  align='start'
                 >
                   <InfiniteScroll items={sorted} step={36} show={0}>
                     {(c, index) => (
@@ -298,22 +298,22 @@ export function OverviewCountries({
               )}
               {dataReady && other && other.length > 0 && (
                 <Box
-                  direction="column"
+                  direction='column'
                   margin={{ top: 'medium' }}
-                  border="top"
-                  width="100%"
+                  border='top'
+                  width='100%'
                 >
-                  <Box direction="row" margin={{ vertical: 'small' }}>
+                  <Box direction='row' margin={{ vertical: 'small' }}>
                     <Hint italic>
                       <FormattedMessage {...rootMessages.hints.noSortData} />
                     </Hint>
                   </Box>
                   <Box
-                    direction="row"
+                    direction='row'
                     wrap
                     overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
                     pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
-                    margin="0"
+                    margin='0'
                   >
                     <InfiniteScroll items={other} step={36} show={0}>
                       {(c, index) => (
@@ -347,9 +347,9 @@ export function OverviewCountries({
           )}
           {sorted && scoresAllCountries && hasResults && (
             <Box
-              width="100%"
+              width='100%'
               pad={{ bottom: 'medium', top: '0' }}
-              align="center"
+              align='center'
               responsive={false}
             >
               {<Source />}
@@ -414,7 +414,7 @@ const mapStateToProps = createStructuredSelector({
   sortOrder: state => getSortOrderSearch(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onRemoveFilter: (key, value) =>
       dispatch(
@@ -483,9 +483,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(OverviewCountries)));

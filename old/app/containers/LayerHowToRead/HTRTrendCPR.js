@@ -11,7 +11,7 @@ import messages from './messages';
 const Styled = styled.div``;
 
 // function HTRTrendCPR({ dimension }) {
-function HTRTrendCPR() {
+function HTRTrendCPR () {
   return (
     <Styled>
       <HTRParagraph>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormNext } from 'grommet-icons';
 
-function buttonContent(
+function buttonContent (
   label,
   size,
   icon,
@@ -20,7 +20,7 @@ function buttonContent(
     icon ||
     (hasIcon && (
       // todo access colour
-      <FormNext color="#ffffff" size={iSize} />
+      <FormNext color='#ffffff' size={iSize} />
     ));
 
   return reverse ? (
@@ -34,7 +34,7 @@ function buttonContent(
   );
 }
 
-export function ButtonAccordian({
+export function ButtonAccordian ({
   onClick,
   icon,
   hasIcon,
@@ -46,7 +46,7 @@ export function ButtonAccordian({
 }) {
   return (
     <button
-      type="button"
+      type='button'
       onClick={onClick}
       style={{
         alignSelf: 'start',

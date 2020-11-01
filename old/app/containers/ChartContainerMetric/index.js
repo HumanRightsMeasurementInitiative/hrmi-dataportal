@@ -153,7 +153,7 @@ const prepareData = ({
       }
   );
 
-export function ChartContainerMetric({
+export function ChartContainerMetric ({
   onLoadData,
   metric,
   scores,
@@ -233,7 +233,7 @@ export function ChartContainerMetric({
       {size => (
         <Box margin={{ bottom: 'xlarge' }}>
           <ChartHeader
-            chartId="single-metric"
+            chartId='single-metric'
             hasSubHeading={metric.type === 'esr'}
             tools={{
               howToReadConfig: {
@@ -294,12 +294,12 @@ export function ChartContainerMetric({
               bullet={metric.type === 'cpr'}
               allowWordBreak
               labelColor={`${metric.color}Dark`}
-              padVertical="xsmall"
+              padVertical='xsmall'
               annotateBetter
             />
           )}
           {hasResults && other && other.length > 0 && (
-            <Box border="top">
+            <Box border='top'>
               <Hint italic>
                 <FormattedMessage {...rootMessages.hints.noSortData} />
               </Hint>
@@ -319,7 +319,7 @@ export function ChartContainerMetric({
                 metric={metric}
                 bullet={metric.type === 'cpr'}
                 allowWordBreak
-                padVertical="xsmall"
+                padVertical='xsmall'
               />
             </Box>
           )}
@@ -403,7 +403,7 @@ const mapStateToProps = createStructuredSelector({
   sortOrder: state => getSortOrderSearch(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
@@ -473,9 +473,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(ChartContainerMetric));

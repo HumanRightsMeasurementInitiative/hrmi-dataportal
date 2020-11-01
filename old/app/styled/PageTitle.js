@@ -22,4 +22,4 @@ const Styled = styled(Heading)`
     padding: ${({ theme }) => `6px ${theme.global.edgeSize.medium} 6px ${theme.global.edgeSize.large}`};
   }
 `;
-export default props => <Styled margin="none" responsive={false} {...props} />;
+export default props => <Styled margin='none' responsive={false} {...props} />;

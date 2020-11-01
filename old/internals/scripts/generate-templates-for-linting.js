@@ -40,7 +40,7 @@ const NAMESPACE = 'RbGenerated';
  * @param {*} data
  * @returns {string}
  */
-function prettyStringify(data) {
+function prettyStringify (data) {
   return JSON.stringify(data, null, 2);
 }
 
@@ -50,7 +50,7 @@ function prettyStringify(data) {
  * @param {array} failures
  * @returns {Promise<*>}
  */
-function handleResult({ changes, failures }) {
+function handleResult ({ changes, failures }) {
   return new Promise((resolve, reject) => {
     if (Array.isArray(failures) && failures.length > 0) {
       reject(new Error(prettyStringify(failures)));
@@ -65,7 +65,7 @@ function handleResult({ changes, failures }) {
  * @param {string} info
  * @returns {Function}
  */
-function feedbackToUser(info) {
+function feedbackToUser (info) {
   return result => {
     console.info(chalk.blue(info));
     return result;
@@ -77,7 +77,7 @@ function feedbackToUser(info) {
  * @param {string} message
  * @returns {Function}
  */
-function reportSuccess(message) {
+function reportSuccess (message) {
   return result => {
     addCheckmark(() => console.log(chalk.green(` ${message}`)));
     return result;
@@ -89,7 +89,7 @@ function reportSuccess(message) {
  * @param {string} reason
  * @returns {Function}
  */
-function reportErrors(reason) {
+function reportErrors (reason) {
   // TODO Replace with our own helpers/log that is guaranteed to be blocking?
   xmark(() => console.error(chalk.red(` ${reason}`)));
   process.exit(1);
@@ -100,7 +100,7 @@ function reportErrors(reason) {
  * @param {string} relativePath
  * @returns {Promise<string>}
  */
-function runLintingOnDirectory(relativePath) {
+function runLintingOnDirectory (relativePath) {
   return new Promise((resolve, reject) => {
     shell.exec(
       `npm run lint:eslint "app/${relativePath}/**/**.js"`,
@@ -120,7 +120,7 @@ function runLintingOnDirectory(relativePath) {
  * @param {string} filePath
  * @returns {Promise<string>}
  */
-function runLintingOnFile(filePath) {
+function runLintingOnFile (filePath) {
   return new Promise((resolve, reject) => {
     shell.exec(
       `npm run lint:eslint "${filePath}"`,
@@ -143,7 +143,7 @@ function runLintingOnFile(filePath) {
  * @param {string} relativePath
  * @returns {Promise<any>}
  */
-function removeDir(relativePath) {
+function removeDir (relativePath) {
   return new Promise((resolve, reject) => {
     try {
       rimraf(path.join(__dirname, '/../../app/', relativePath), err => {
@@ -161,7 +161,7 @@ function removeDir(relativePath) {
  * @param {string} filePath
  * @returns {Promise<any>}
  */
-function removeFile(filePath) {
+function removeFile (filePath) {
   return new Promise((resolve, reject) => {
     try {
       fs.unlink(filePath, err => {
@@ -180,7 +180,7 @@ function removeFile(filePath) {
  * @param {string} [backupFileExtension=BACKUPFILE_EXTENSION]
  * @returns {Promise<*>}
  */
-async function restoreModifiedFile(
+async function restoreModifiedFile (
   filePath,
   backupFileExtension = BACKUPFILE_EXTENSION,
 ) {
@@ -203,7 +203,7 @@ async function restoreModifiedFile(
  * @param {string} type - Plop Action type
  * @returns {Promise<string>} - Relative path to the generated component
  */
-async function generateComponent({ name, memo }) {
+async function generateComponent ({ name, memo }) {
   const targetFolder = 'components';
   const componentName = `${NAMESPACE}Component${name}`;
   const relativePath = `${targetFolder}/${componentName}`;
@@ -235,7 +235,7 @@ async function generateComponent({ name, memo }) {
  * @param {string} type - Plop Action type
  * @returns {Promise<string>} - Relative path to the generated container
  */
-async function generateContainer({ name, memo }) {
+async function generateContainer ({ name, memo }) {
   const targetFolder = 'containers';
   const componentName = `${NAMESPACE}Container${name}`;
   const relativePath = `${targetFolder}/${componentName}`;
@@ -269,7 +269,7 @@ async function generateContainer({ name, memo }) {
  * @param {array} components
  * @returns {Promise<[string]>}
  */
-async function generateComponents(components) {
+async function generateComponents (components) {
   const promises = components.map(async component => {
     let result;
 
@@ -292,7 +292,7 @@ async function generateComponents(components) {
  * @param {string} language
  * @returns {Promise<*>}
  */
-async function generateLanguage(language) {
+async function generateLanguage (language) {
   // Run generator
   const generatedFiles = await languageGen
     .runActions({ language, test: true })

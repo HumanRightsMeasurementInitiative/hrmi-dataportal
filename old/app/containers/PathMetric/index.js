@@ -42,7 +42,7 @@ import { isMinSize, isMaxSize } from 'utils/responsive';
 import rootMessages from 'messages';
 import messages from './messages';
 
-export function PathMetric({
+export function PathMetric ({
   match,
   intl,
   onMetricClick,
@@ -114,11 +114,11 @@ export function PathMetric({
         <ContentWrap>
           <Helmet>
             <title>{metricTitle}</title>
-            <meta name="description" content="Description of metric" />
+            <meta name='description' content='Description of metric' />
           </Helmet>
           <div style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
-            <ContentContainer direction="column" header>
+            <ContentContainer direction='column' header>
               <ContentMaxWidth
                 header
                 height={
@@ -171,7 +171,7 @@ export function PathMetric({
                         onClick={() =>
                           nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)
                         }
-                        size="small"
+                        size='small'
                         hasIcon
                       />
                     </Paragraph>
@@ -182,7 +182,7 @@ export function PathMetric({
                     <img
                       src={imageSrc}
                       alt={metricTitle}
-                      fit="cover"
+                      fit='cover'
                       style={{
                         overflow: 'hidden',
                         objectFit: 'cover',
@@ -253,7 +253,7 @@ const mapStateToProps = createStructuredSelector({
   activeCode: state => getAsideLayerActiveCode(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onSetAsideLayer: config => {
       dispatch(setAsideLayer(config));
@@ -289,9 +289,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(PathMetric)));

@@ -53,7 +53,7 @@ const DEPENDENCIES = [
   'cprScores',
 ];
 
-export function PathHome({
+export function PathHome ({
   onLoadData,
   nav,
   countryCount,
@@ -122,7 +122,7 @@ const mapStateToProps = createStructuredSelector({
   countryCountAtRisk: state => getPeopleAtRiskCountryNo(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
@@ -164,9 +164,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(PathHome);

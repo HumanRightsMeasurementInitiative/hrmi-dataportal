@@ -99,7 +99,7 @@ const MarkValue = styled.div`
 // level:
 const HEIGHT = [50, 36, 16, 12];
 
-function Bar({
+function Bar ({
   data,
   level = 1,
   showLabels = false,

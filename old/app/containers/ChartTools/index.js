@@ -43,7 +43,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-export function ChartTools({
+export function ChartTools ({
   howToReadConfig,
   settingsConfig,
   onSetAsideLayer,
@@ -62,7 +62,7 @@ export function ChartTools({
                   ...howToReadConfig,
                 });
               }}
-              icon={<CircleQuestion color="dark" size="large" />}
+              icon={<CircleQuestion color='dark' size='large' />}
               plain
               label={
                 isMinSize(size, 'medium') ? (
@@ -73,7 +73,7 @@ export function ChartTools({
                   </StyledText>
                 ) : null
               }
-              gap="xsmall"
+              gap='xsmall'
               reverse
             />
           )}
@@ -85,7 +85,7 @@ export function ChartTools({
                   ...settingsConfig,
                 });
               }}
-              icon={<Performance color="dark" size="large" />}
+              icon={<Performance color='dark' size='large' />}
               plain
               label={
                 isMinSize(size, 'medium') ? (
@@ -96,7 +96,7 @@ export function ChartTools({
                   </StyledText>
                 ) : null
               }
-              gap="xsmall"
+              gap='xsmall'
               reverse
             />
           )}
@@ -114,15 +114,12 @@ ChartTools.propTypes = {
   hasWhiteBG: PropTypes.bool,
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onSetAsideLayer: args => dispatch(setAsideLayer(args)),
   };
 }
 
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
+const withConnect = connect(null, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(ChartTools));

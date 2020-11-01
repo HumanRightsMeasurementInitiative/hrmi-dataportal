@@ -56,7 +56,7 @@ const getStandards = (standard, intl) => {
     return memo === '' ? formatted : `${memo}, ${formatted}`;
   }, '');
 };
-export function AboutMetricSources({
+export function AboutMetricSources ({
   metric,
   indicatorInfo,
   allIndicators,
@@ -240,7 +240,7 @@ const mapStateToProps = createStructuredSelector({
   },
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: metric => {
       if (metric.metricType === 'indicators') {
@@ -251,9 +251,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(AboutMetricSources));

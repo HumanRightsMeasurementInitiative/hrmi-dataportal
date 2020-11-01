@@ -83,7 +83,7 @@ const StyledContentInfoBox = styled.div`
   margin-bottom: 50px;
 `;
 
-export function AboutPathPage({
+export function AboutPathPage ({
   match,
   onLoadContent,
   content,
@@ -118,12 +118,12 @@ export function AboutPathPage({
     <ContentWrap>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content="Description of Page" />
+        <meta name='description' content='Description of Page' />
       </Helmet>
-      <ContentContainer direction="column" header>
+      <ContentContainer direction='column' header>
         <StyledContentHeader>
           <Close closeTarget={closeTarget} />
-          <ContentMaxWidth direction="column">
+          <ContentMaxWidth direction='column'>
             <PageTitle level={1}>{pageTitle}</PageTitle>
             <StyledContentSubHeading>
               <p>
@@ -150,7 +150,7 @@ export function AboutPathPage({
                   const sectionReplaced = section.replace('text-section', ' ');
                   return (
                     <p
-                      key="text-section"
+                      key='text-section'
                       dangerouslySetInnerHTML={{ __html: sectionReplaced }}
                     />
                   );
@@ -159,7 +159,7 @@ export function AboutPathPage({
                   const sectionReplaced = section.replace('info-box', ' ');
                   return (
                     <StyledContentInfoBox
-                      key="info-box"
+                      key='info-box'
                       dangerouslySetInnerHTML={{ __html: sectionReplaced }}
                     />
                   );
@@ -188,7 +188,7 @@ const mapStateToProps = createStructuredSelector({
   closeTarget: state => getCloseTargetPage(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onLoadContent: page => {
       dispatch(loadContentIfNeeded(page));
@@ -196,9 +196,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(AboutPathPage));

@@ -33,11 +33,11 @@ const SepWrap = styled.span`
   }
 `;
 
-function Breadcrumb({ items, onItemClick, breadcrumb }) {
+function Breadcrumb ({ items, onItemClick, breadcrumb }) {
   return (
-    <HeaderCategories direction="row" wrap>
+    <HeaderCategories direction='row' wrap>
       {items.map((item, index, list) => (
-        <Box key={item.key} direction="row" align="center">
+        <Box key={item.key} direction='row' align='center'>
           <CategoryLink
             onClick={() => onItemClick(item.key, item.value)}
             firstChild={index === 0}
@@ -47,7 +47,7 @@ function Breadcrumb({ items, onItemClick, breadcrumb }) {
           {!breadcrumb && index < list.length - 1 && <SepWrap>|</SepWrap>}
           {breadcrumb && (
             <IconWrap>
-              <FormNext color="#262262" />
+              <FormNext color='#262262' />
             </IconWrap>
           )}
         </Box>

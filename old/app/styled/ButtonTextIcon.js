@@ -16,7 +16,7 @@ const Styled = styled(Button)`
   }
 `;
 
-export function ButtonTextIcon({
+export function ButtonTextIcon ({
   icon,
   hasIcon,
   label,
@@ -46,7 +46,7 @@ export function ButtonTextIcon({
       plain
       reverse={reverse}
       gap={gap || (size !== 'medium' ? 'hair' : '0')}
-      alignSelf="start"
+      alignSelf='start'
       size={size}
       {...rest}
     />

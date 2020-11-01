@@ -5,7 +5,7 @@
  * @param {number|string|null} value the value to test against
  * @return {boolean} if values are quasi equal
  */
-export default function quasiEquals(testValue, value) {
+export default function quasiEquals (testValue, value) {
   if (typeof value === 'undefined' || typeof testValue === 'undefined') {
     return undefined;
   }

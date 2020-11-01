@@ -38,7 +38,7 @@ const SettingWrap = styled.div`
   margin-bottom: 30px;
 `;
 
-export function LayerSettings({
+export function LayerSettings ({
   scale,
   standard,
   benchmark,
@@ -52,7 +52,7 @@ export function LayerSettings({
 
   return (
     <Box
-      direction="column"
+      direction='column'
       pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
     >
       <Heading level={2}>
@@ -70,7 +70,7 @@ export function LayerSettings({
       {showScale && (
         <SettingWrap>
           <SettingsToggle
-            setting="scale"
+            setting='scale'
             active={scale}
             onActivate={onSetScale}
             options={SCALES.map(s => ({
@@ -88,27 +88,27 @@ export function LayerSettings({
       {showBenchmark && (
         <SettingWrap>
           <SettingsToggle
-            setting="benchmark"
+            setting='benchmark'
             active={benchmark}
             onActivate={onSetBenchmark}
             options={BENCHMARKS}
             horizontal
             name={intl.formatMessage(messages.labelBenchmark)}
           />
-          <InfoBenchmark size="xsmall" hasKey />
+          <InfoBenchmark size='xsmall' hasKey />
         </SettingWrap>
       )}
       {showStandard && (
         <SettingWrap>
           <SettingsToggle
-            setting="standard"
+            setting='standard'
             active={standard}
             onActivate={onSetStandard}
             options={STANDARDS}
             horizontal
             name={intl.formatMessage(messages.labelStandard)}
           />
-          <InfoStandard size="xsmall" hasKey />
+          <InfoStandard size='xsmall' hasKey />
         </SettingWrap>
       )}
     </Box>
@@ -133,7 +133,7 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onSetStandard: value => dispatch(setStandard(value)),
     onSetBenchmark: value => dispatch(setBenchmark(value)),
@@ -141,9 +141,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(LayerSettings));

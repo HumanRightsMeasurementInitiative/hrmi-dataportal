@@ -14,7 +14,7 @@ const StyledText = styled(Text)`
   margin-bottom: 2px;
 `;
 
-export function NavOptionGroup({
+export function NavOptionGroup ({
   label,
   options,
   onClick,
@@ -51,7 +51,7 @@ export function NavOptionGroup({
     <div>
       <NavOptionWrap>
         {label && (
-          <StyledText color="secondary" size="small">
+          <StyledText color='secondary' size='small'>
             {label}
           </StyledText>
         )}
@@ -66,7 +66,7 @@ export function NavOptionGroup({
             onFocus={() => onFocus && onFocus(index)}
             active={index === activeResult}
           >
-            <Box direction="row" align="end" fill="horizontal" width="100%">
+            <Box direction='row' align='end' fill='horizontal' width='100%'>
               <Text color={subject}>{m.label}</Text>
             </Box>
           </NavOption>

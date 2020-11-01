@@ -25,7 +25,7 @@ const getDimensions = (d, i) => {
   }));
 };
 
-function HTROverviewDimensions({ intl }) {
+function HTROverviewDimensions ({ intl }) {
   return (
     <Styled>
       <HTRParagraph>
@@ -36,9 +36,9 @@ function HTROverviewDimensions({ intl }) {
           <Heading responsive={false} level={4} margin={{ bottom: 'none' }}>
             <FormattedMessage {...rootMessages.dimensions[d.key]} />
           </Heading>
-          <Box direction="row" align="center">
+          <Box direction='row' align='center'>
             <Box
-              width="50%"
+              width='50%'
               flex={{ shrink: 0 }}
               pad={{ left: 'small', right: 'medium', vertical: 'medium' }}
             >
@@ -51,7 +51,7 @@ function HTROverviewDimensions({ intl }) {
                 showBenchmark={false}
               />
             </Box>
-            <Box width="50%" flex={{ shrink: 0 }} pad={{ left: 'medium' }}>
+            <Box width='50%' flex={{ shrink: 0 }} pad={{ left: 'medium' }}>
               <HTRParagraph>
                 <FormattedMessage {...messages.overview.dimensions[d.key]} />
               </HTRParagraph>

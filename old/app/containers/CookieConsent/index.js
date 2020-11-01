@@ -46,7 +46,7 @@ const ButtonWrap = styled.div`
   margin: 0 auto;
 `;
 
-export function CookieConsent({
+export function CookieConsent ({
   init,
   cookieConsent,
   cookieConsentApp,
@@ -77,22 +77,22 @@ export function CookieConsent({
     <Styled>
       {checked && consentUnset && (
         <StyledLayer
-          position="bottom-right"
+          position='bottom-right'
           plain
           responsive={false}
           modal={false}
           animate={false}
-          margin="small"
+          margin='small'
         >
           <Box
             pad={{ vertical: 'small', horizontal: 'medium' }}
-            background="darker"
+            background='darker'
             style={{ maxWidth: '100%', width: '360px' }}
-            elevation="large"
+            elevation='large'
           >
             <Paragraph
               margin={{ top: 'small', bottom: 'medium' }}
-              size="medium"
+              size='medium'
             >
               <FormattedMessage {...messages.nonEssentialConsentInfo} />
             </Paragraph>
@@ -115,11 +115,11 @@ export function CookieConsent({
                 <FormattedMessage {...messages.buttonReject} />
               </StyledButtonHero>
             </ButtonWrap>
-            <Paragraph margin={{ top: 'medium', bottom: 'small' }} size="small">
+            <Paragraph margin={{ top: 'medium', bottom: 'small' }} size='small'>
               <FormattedMessage {...messages.additionalInfo} />
               <LinkInText
                 href={intl.formatMessage(messages.urlPrivacyPolicy)}
-                target="_blank"
+                target='_blank'
               >
                 <FormattedMessage {...messages.linkPrivacyPolicy} />
               </LinkInText>
@@ -146,16 +146,13 @@ const mapStateToProps = createStructuredSelector({
   checked: state => getCookieConsentChecked(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     init: () => dispatch(checkCookieConsent()),
     onConsent: status => dispatch(setCookieConsent(status)),
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(CookieConsent));

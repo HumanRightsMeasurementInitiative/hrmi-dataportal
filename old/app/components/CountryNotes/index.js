@@ -31,7 +31,7 @@ const StyledBox = styled(Box)`
     hasAside ? theme.global.edgeSize.xlarge : 0};
 `;
 
-function CountryNotes({ intl, hasAside, settingHint, notes }) {
+function CountryNotes ({ intl, hasAside, settingHint, notes }) {
   if (!notes) return null;
   const anyNotes = Object.keys(notes).some(key => notes[key]);
   if (!anyNotes) return null;
@@ -39,18 +39,18 @@ function CountryNotes({ intl, hasAside, settingHint, notes }) {
     <ResponsiveContext.Consumer>
       {size => (
         <Styled hasAside={hasAside}>
-          <ContentContainer direction="column">
+          <ContentContainer direction='column'>
             <ContentMaxWidth hasAside={hasAside}>
-              <Box direction="row" fill="horizontal">
+              <Box direction='row' fill='horizontal'>
                 <StyledBox
                   pad={{ bottom: 'xsmall', top: 'xsmall' }}
-                  align="start"
-                  fill="horizontal"
+                  align='start'
+                  fill='horizontal'
                   hasAside={hasAside}
-                  background="white"
+                  background='white'
                 >
                   {notes.hiCountries && (
-                    <Text size="xxsmall" color="dark" textAlign="start">
+                    <Text size='xxsmall' color='dark' textAlign='start'>
                       <FormattedMessage
                         {...messages.hiNote}
                         values={{
@@ -65,7 +65,7 @@ function CountryNotes({ intl, hasAside, settingHint, notes }) {
                     </Text>
                   )}
                   {notes.govRespondents && (
-                    <Text size="xxsmall" color="dark" textAlign="start">
+                    <Text size='xxsmall' color='dark' textAlign='start'>
                       <FormattedMessage
                         {...messages.govResponseNote}
                         values={{

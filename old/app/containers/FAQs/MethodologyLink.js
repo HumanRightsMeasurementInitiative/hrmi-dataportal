@@ -12,14 +12,14 @@ const StyledText = styled(Text)`
   margin: 1em 0;
 `;
 
-function MethodologyLink({ external, text, ...rest }) {
+function MethodologyLink ({ external, text, ...rest }) {
   return (
     <ButtonTextIcon
-      size="small"
+      size='small'
       margin={{ vertical: 'xxsmall' }}
       gap={external ? 'small' : '0'}
-      icon={external ? <Share size="small" /> : <FormNext size="medium" />}
-      label={<StyledText size="small">{text}</StyledText>}
+      icon={external ? <Share size='small' /> : <FormNext size='medium' />}
+      label={<StyledText size='small'>{text}</StyledText>}
       {...rest}
     />
   );

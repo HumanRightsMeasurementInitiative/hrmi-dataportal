@@ -10,7 +10,7 @@ import HTRParagraph from './HTRParagraph';
 
 const Styled = styled.div``;
 
-function HTRTrendESR({ contxt, intl }) {
+function HTRTrendESR ({ contxt, intl }) {
   return (
     <Styled>
       <HTRParagraph>
@@ -29,18 +29,18 @@ function HTRTrendESR({ contxt, intl }) {
         />
       </HTRParagraph>
       <HTRParagraph margin={{ vertical: 'xsmall' }}>
-        <Text size="small" style={{ fontWeight: 600 }}>
+        <Text size='small' style={{ fontWeight: 600 }}>
           {`${intl.formatMessage(rootMessages.settings.benchmark.adjusted)}: `}
         </Text>
-        <Text size="small">
+        <Text size='small'>
           {intl.formatMessage(rootMessages.settings.benchmark.adjustedInfo)}
         </Text>
       </HTRParagraph>
       <HTRParagraph margin={{ vertical: 'xsmall' }}>
-        <Text size="small" style={{ fontWeight: 600 }}>
+        <Text size='small' style={{ fontWeight: 600 }}>
           {`${intl.formatMessage(rootMessages.settings.benchmark.best)}: `}
         </Text>
-        <Text size="small">
+        <Text size='small'>
           <FormattedMessage {...rootMessages.settings.benchmark.bestInfo} />
         </Text>
       </HTRParagraph>

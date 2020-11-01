@@ -49,7 +49,7 @@ const StyledDropButton = styled(DropButton)`
 `;
 
 const DropContent = ({ active, options, onSelect }) => (
-  <Box pad="none">
+  <Box pad='none'>
     {options &&
       options.map(option => (
         <DropOption
@@ -64,7 +64,7 @@ const DropContent = ({ active, options, onSelect }) => (
   </Box>
 );
 
-export function LocaleToggle({ locale, onLocaleToggle, light }) {
+export function LocaleToggle ({ locale, onLocaleToggle, light }) {
   const [open, setOpen] = useState(false);
   return (
     <Styled>
@@ -74,7 +74,7 @@ export function LocaleToggle({ locale, onLocaleToggle, light }) {
             plain
             reverse
             light={light}
-            gap="xxsmall"
+            gap='xxsmall'
             active={open}
             onClose={() => setOpen(false)}
             onOpen={() => setOpen(true)}
@@ -119,7 +119,7 @@ const mapStateToProps = state => ({
   locale: getLocale(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLocaleToggle: locale => dispatch(changeLocale(locale)),
     dispatch,

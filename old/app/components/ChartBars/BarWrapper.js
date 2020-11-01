@@ -30,7 +30,7 @@ const LabelWrap = styled(Box)`
 // prettier-ignore
 const ScoreAsideWrap = styled(Box)``;
 
-export function BarWrapper({
+export function BarWrapper ({
   score,
   bullet,
   labelColor,
@@ -52,10 +52,10 @@ export function BarWrapper({
           onMouseLeave={() => isStatic || setHover(false)}
         >
           {(hover || score.active) && <Active color={`${score.color}Active`} />}
-          <Box key={score.key} direction="row" align="center">
+          <Box key={score.key} direction='row' align='center'>
             <LabelWrap
               width={chartLabelWidth(size)}
-              align="start"
+              align='start'
               flex={{ shrink: 0 }}
               pad={{ right: 'small' }}
             >
@@ -71,7 +71,7 @@ export function BarWrapper({
                 </BarLabel>
               )}
             </LabelWrap>
-            <BarWrap flex border="right">
+            <BarWrap flex border='right'>
               {!bullet && (
                 <Bar
                   showScore={scoreOnHover && hover}
@@ -103,7 +103,7 @@ export function BarWrapper({
             {scoresAside && (
               <ScoreAsideWrap
                 width={scoreAsideWidth(size)}
-                align="start"
+                align='start'
                 flex={{ shrink: 0 }}
                 pad={{ left: 'small' }}
               >

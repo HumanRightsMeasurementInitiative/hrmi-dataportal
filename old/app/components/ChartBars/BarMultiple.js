@@ -27,7 +27,7 @@ const Wrapper = styled(BarWrapper)`
 // level:
 const HEIGHT = 8;
 
-function BarMultiple({
+function BarMultiple ({
   dataMultiple,
   showLabels,
   rotate,

@@ -167,7 +167,7 @@ const SliderControls = ({ next, previous, carouselState, background }) => {
             subtle
             background={background}
           >
-            <Previous size="xxlarge" color="dark" />
+            <Previous size='xxlarge' color='dark' />
           </StyledButtonIcon>
         </ArrowWrapper>
       )}
@@ -175,7 +175,7 @@ const SliderControls = ({ next, previous, carouselState, background }) => {
         <ArrowWrapper right>
           <ArrowWrapperFull right />
           <StyledButtonIcon right onClick={next} subtle background={background}>
-            <Next size="xxlarge" color="dark" />
+            <Next size='xxlarge' color='dark' />
           </StyledButtonIcon>
         </ArrowWrapper>
       )}

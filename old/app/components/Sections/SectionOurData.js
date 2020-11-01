@@ -49,7 +49,7 @@ const getBasisAside = size => {
   return '0';
 };
 
-export function SectionOurData({ nav, intl, locale }) {
+export function SectionOurData ({ nav, intl, locale }) {
   const hasSecondPara =
     intl.messages[messages.ourData.para2] &&
     intl.formatMessage(messages.ourData.para2).trim() !== '';
@@ -95,10 +95,10 @@ export function SectionOurData({ nav, intl, locale }) {
                   href={
                     XPATHS.download[locale] || XPATHS.download[DEFAULT_LOCALE]
                   }
-                  target="_blank"
+                  target='_blank'
                   label={intl.formatMessage(messages.ourData.downloadLink)}
-                  icon={<Share color="dark" size="small" />}
-                  gap="xsmall"
+                  icon={<Share color='dark' size='small' />}
+                  gap='xsmall'
                 />
                 <ButtonTextIcon
                   style={

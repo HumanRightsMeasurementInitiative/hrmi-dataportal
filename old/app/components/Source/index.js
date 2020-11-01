@@ -18,7 +18,7 @@ const Styled = styled(Hint)`
   }
 `;
 
-function Source({ center = false, maxWidth = 'none' }) {
+function Source ({ center = false, maxWidth = 'none' }) {
   return (
     <Styled center={center} maxWidth={maxWidth}>
       <FormattedMessage {...messages.source} />

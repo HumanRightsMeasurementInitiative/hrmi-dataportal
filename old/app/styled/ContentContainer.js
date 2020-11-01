@@ -13,5 +13,5 @@ const Styled = styled(Box)`
 `;
 
 export default props => (
-  <Styled responsive={false} direction="row" {...props} />
+  <Styled responsive={false} direction='row' {...props} />
 );

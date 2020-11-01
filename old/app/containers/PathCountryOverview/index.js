@@ -66,7 +66,7 @@ const DEPENDENCIES = [
   // 'esrIndicatorScores', // consider removing to improve IE11/Edge performance
 ];
 
-export function PathCountryOverview({
+export function PathCountryOverview ({
   countries,
   scoresAllCountries,
   standard,
@@ -101,7 +101,7 @@ export function PathCountryOverview({
       {size => (
         <ContentWrap>
           <CountryNotes settingHint />
-          <ContentContainer direction="column" header>
+          <ContentContainer direction='column' header>
             <ContentMaxWidth
               header
               height={
@@ -123,7 +123,7 @@ export function PathCountryOverview({
                         no: RIGHTS.length,
                         esrLink: (
                           <ButtonTextIcon
-                            color="esrDark"
+                            color='esrDark'
                             size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
@@ -134,7 +134,7 @@ export function PathCountryOverview({
                         ),
                         physintLink: (
                           <ButtonTextIcon
-                            color="physintDark"
+                            color='physintDark'
                             size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
@@ -145,7 +145,7 @@ export function PathCountryOverview({
                         ),
                         empowerLink: (
                           <ButtonTextIcon
-                            color="empowermentDark"
+                            color='empowermentDark'
                             size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                             weight={700}
                             label={intl.formatMessage(
@@ -160,13 +160,13 @@ export function PathCountryOverview({
                 )}
               </MainColumn>
               {isMinSize(size, 'large') && (
-                <Aside align="center" justify="center">
+                <Aside align='center' justify='center'>
                   <Image src={graphic} />
                 </Aside>
               )}
             </ContentMaxWidth>
           </ContentContainer>
-          <SectionContainer background="sectionCountryOverview">
+          <SectionContainer background='sectionCountryOverview'>
             <ContentMaxWidth column>
               <OverviewCountries
                 countries={filteredCountries}
@@ -205,7 +205,7 @@ const mapStateToProps = createStructuredSelector({
   scale: state => getScaleSearch(state),
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
 });
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
@@ -214,9 +214,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(PathCountryOverview)));

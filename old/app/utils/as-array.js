@@ -4,6 +4,6 @@
  * @param {object} v an array or an object to be returned as array
  * @return {array} an array
  */
-export default function asArray(v) {
+export default function asArray (v) {
   return Array.isArray(v) ? v : [v];
 }

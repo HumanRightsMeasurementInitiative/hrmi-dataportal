@@ -17,7 +17,7 @@ import messages from './messages';
 
 import NavOptionGroup from './NavOptionGroup';
 
-export function SearchResults({
+export function SearchResults ({
   countries,
   dimensions,
   rights,
@@ -64,9 +64,9 @@ export function SearchResults({
   const hasCountries = countries && countries.length > 0;
   const hasGroups = groups && groups.length > 0;
   return (
-    <Box flex overflow="auto" pad={{ top: 'medium' }}>
+    <Box flex overflow='auto' pad={{ top: 'medium' }}>
       {!hasCountries && !hasMetrics && !hasGroups && (
-        <Box pad="small">
+        <Box pad='small'>
           <Hint italic>
             <FormattedMessage {...messages.noResults} />
           </Hint>
@@ -186,7 +186,7 @@ SearchResults.propTypes = {
   maxResult: PropTypes.number,
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onSelectMetric: code => dispatch(selectMetric(code)),
     onSelectCountry: code => dispatch(selectCountry(code)),
@@ -194,9 +194,6 @@ export function mapDispatchToProps(dispatch) {
     intl: intlShape.isRequired,
   };
 }
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
+const withConnect = connect(null, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(SearchResults));

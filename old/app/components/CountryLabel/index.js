@@ -11,7 +11,7 @@ const StyledMarks = styled.span`
   font-weight: normal !important;
 `;
 
-export function CountryLabel({
+export function CountryLabel ({
   intl,
   country,
   showHILabel = true,

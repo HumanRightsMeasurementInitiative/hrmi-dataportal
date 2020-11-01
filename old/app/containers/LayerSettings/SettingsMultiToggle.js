@@ -10,7 +10,7 @@ import ButtonToggleSetting from 'styled/ButtonToggleSetting';
 import rootMessages from 'messages';
 // import messages from './messages';
 
-function SettingsMultiToggle({
+function SettingsMultiToggle ({
   options,
   onChange,
   active,
@@ -18,15 +18,15 @@ function SettingsMultiToggle({
   defaultColor,
 }) {
   return (
-    <Box direction="column" flex={{ shrink: 0 }} responsive={false}>
-      <Box direction="row" align="center">
-        <Box pad={{ vertical: 'small' }} direction="row">
-          <Text size="small" style={{ fontWeight: 600 }}>
+    <Box direction='column' flex={{ shrink: 0 }} responsive={false}>
+      <Box direction='row' align='center'>
+        <Box pad={{ vertical: 'small' }} direction='row'>
+          <Text size='small' style={{ fontWeight: 600 }}>
             <FormattedMessage {...rootMessages.settings[setting].name} />
           </Text>
         </Box>
       </Box>
-      <Box direction="row" align="center">
+      <Box direction='row' align='center'>
         {options.map(option => (
           <ButtonToggleSetting
             multi
@@ -51,7 +51,7 @@ function SettingsMultiToggle({
               }
             }}
           >
-            <Text size="small">
+            <Text size='small'>
               {setting !== 'groups' && (
                 <FormattedMessage
                   {...rootMessages.settings[setting][option.key]}

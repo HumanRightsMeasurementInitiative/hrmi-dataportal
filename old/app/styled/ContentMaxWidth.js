@@ -25,7 +25,7 @@ const Styled = styled(Box)`
   }
 `;
 
-export function ContentMaxWidth(props) {
+export function ContentMaxWidth (props) {
   return <Styled direction={props.column ? 'column' : 'row'} {...props} />;
 }
 

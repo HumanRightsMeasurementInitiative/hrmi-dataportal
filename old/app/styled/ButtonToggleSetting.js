@@ -47,7 +47,7 @@ const StyledButton = styled(Button)`
   }
 `;
 
-function ButtonToggleSetting(props) {
+function ButtonToggleSetting (props) {
   if (props.active) {
     return <StyledPrimary {...props} />;
   }

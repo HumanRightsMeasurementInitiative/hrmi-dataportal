@@ -27,7 +27,7 @@ const Top = styled.div`
   height: ${({ theme }) => theme.navTop};
 `;
 
-function NavTop({ search, onClose, onSearch, placeholder = 'search', size }) {
+function NavTop ({ search, onClose, onSearch, placeholder = 'search', size }) {
   const inputRef = useRef(null);
   useEffect(() => {
     if (isMinSize(size, 'medium')) {
@@ -43,19 +43,19 @@ function NavTop({ search, onClose, onSearch, placeholder = 'search', size }) {
           vertical: 'small',
           right: isMaxSize(size, 'sm') ? 'small' : 'medium',
         }}
-        direction="row"
-        fill="vertical"
-        align="center"
+        direction='row'
+        fill='vertical'
+        align='center'
         responsive={false}
       >
         <Box
-          background="white"
-          direction="row"
-          align="center"
-          round="xlarge"
+          background='white'
+          direction='row'
+          align='center'
+          round='xlarge'
           height={isMaxSize(size, 'sm') ? '26px' : '32px'}
           pad={{ horizontal: 'ms', vertical: 'xsmall' }}
-          fill="horizontal"
+          fill='horizontal'
         >
           <TextInput
             plain
@@ -69,7 +69,7 @@ function NavTop({ search, onClose, onSearch, placeholder = 'search', size }) {
               onClick={() => onSearch('')}
               icon={
                 <Close
-                  color="dark"
+                  color='dark'
                   size={isMaxSize(size, 'sm') ? 'small' : 'medium'}
                 />
               }
@@ -77,7 +77,7 @@ function NavTop({ search, onClose, onSearch, placeholder = 'search', size }) {
             />
           )}
           {(!search || search.length === 0) && (
-            <Search bordersize="small" bordercolor="dark" color="dark" />
+            <Search bordersize='small' bordercolor='dark' color='dark' />
           )}
         </Box>
         {isMaxSize(size, 'sm') && (
@@ -87,7 +87,7 @@ function NavTop({ search, onClose, onSearch, placeholder = 'search', size }) {
             margin={{ left: 'small' }}
           >
             <StyledButtonIcon onClick={() => onClose()}>
-              <Close color="white" size="large" />
+              <Close color='white' size='large' />
             </StyledButtonIcon>
           </Box>
         )}

@@ -16,7 +16,7 @@ const WrapInnerChart = styled(Box)`
   position: relative;
 `;
 
-function ChartBars({
+function ChartBars ({
   data,
   listHeader,
   metric,
@@ -47,8 +47,8 @@ function ChartBars({
             top: 'ms',
             bottom: padVertical || 'medium',
           }}
-          direction="column"
-          fill="horizontal"
+          direction='column'
+          fill='horizontal'
         >
           {(commonLabel || listHeader) && (
             <ListHeader

@@ -100,7 +100,7 @@ const DEPENDENCIES = [
   'esrIndicatorScores',
 ];
 
-export function ChartContainerTrend({
+export function ChartContainerTrend ({
   metricCode,
   scores,
   onLoadData,
@@ -260,7 +260,7 @@ const mapStateToProps = createStructuredSelector({
   activeGroups: state => getActiveGroupsSearch(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
@@ -291,9 +291,6 @@ export function mapDispatchToProps(dispatch) {
     },
   };
 }
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(withTheme(ChartContainerTrend));

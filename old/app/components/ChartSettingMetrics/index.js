@@ -28,7 +28,7 @@ const ButtonDropdown = styled(Button)`
   }
 `;
 
-function ChartSettingMetrics({
+function ChartSettingMetrics ({
   activeDefault,
   metrics,
   chart,
@@ -95,8 +95,8 @@ function ChartSettingMetrics({
                             isMaxSize(size, 'sm') ? 30 : 60,
                           )}
                         </Text>
-                        {open && <FormUp size="large" />}
-                        {!open && <FormDown size="large" />}
+                        {open && <FormUp size='large' />}
+                        {!open && <FormDown size='large' />}
                       </span>
                     }
                     ref={dropButton}
@@ -109,7 +109,7 @@ function ChartSettingMetrics({
                 align={{ top: 'bottom', left: 'left' }}
                 target={dropButton.current}
                 onClickOutside={() => setOpen(false)}
-                overflow="hidden"
+                overflow='hidden'
               >
                 <MetricSelect
                   onClose={() => setOpen(false)}

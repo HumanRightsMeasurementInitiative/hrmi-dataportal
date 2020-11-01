@@ -153,7 +153,7 @@ const getDataForValue = (value, minYear, maxYear) => {
   }
   return data;
 };
-function ChartCountryMetricTrend({
+function ChartCountryMetricTrend ({
   scores,
   column,
   maxYear,
@@ -285,11 +285,11 @@ function ChartCountryMetricTrend({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <div direction="column" align="start" pad={{ vertical: 'medium' }}>
+        <div direction='column' align='start' pad={{ vertical: 'medium' }}>
           <WrapPlot metricType={metric.type}>
             <FlexibleWidthXYPlot
               height={isMinSize(size, 'medium') ? 240 : 200}
-              xType="time"
+              xType='time'
               margin={{ bottom: 30, right: 10, left: percentage ? 30 : 25 }}
               onMouseLeave={() => {
                 setHighlight(false);
@@ -420,7 +420,7 @@ function ChartCountryMetricTrend({
               )}
               {groupsAll && scoresAllRawAvailable && (
                 <MarkSeries
-                  colorType="literal"
+                  colorType='literal'
                   data={scoresAllRawAvailable}
                   size={3}
                   style={{
@@ -432,7 +432,7 @@ function ChartCountryMetricTrend({
               )}
               {groupsFemale && scoresFemaleRawAvailable && (
                 <MarkSeries
-                  colorType="literal"
+                  colorType='literal'
                   data={scoresFemaleRawAvailable}
                   size={3}
                   style={{
@@ -444,7 +444,7 @@ function ChartCountryMetricTrend({
               )}
               {groupsMale && scoresMaleRawAvailable && (
                 <MarkSeries
-                  colorType="literal"
+                  colorType='literal'
                   data={scoresMaleRawAvailable}
                   size={3}
                   style={{
@@ -528,9 +528,9 @@ function ChartCountryMetricTrend({
           >
             {/* dots key */}
             {hasScores && metric.metricType === 'indicators' && (
-              <Box direction="row">
-                <KeyItem direction="row" align="center">
-                  <Text size="xxsmall">
+              <Box direction='row'>
+                <KeyItem direction='row' align='center'>
+                  <Text size='xxsmall'>
                     {isMinSize(size, 'medium') ? (
                       <FormattedMessage
                         {...rootMessages.settings.dataYear.present}
@@ -543,8 +543,8 @@ function ChartCountryMetricTrend({
                   </Text>
                   <CircleFill />
                 </KeyItem>
-                <KeyItem direction="row" align="center">
-                  <Text size="xxsmall">
+                <KeyItem direction='row' align='center'>
+                  <Text size='xxsmall'>
                     {isMinSize(size, 'medium') ? (
                       <FormattedMessage
                         {...rootMessages.settings.dataYear.previous}
@@ -569,20 +569,20 @@ function ChartCountryMetricTrend({
           </Box>
           {(hasRawOption || groupsActive) && (
             <Settings
-              direction="row"
-              justify="end"
-              pad="xsmall"
+              direction='row'
+              justify='end'
+              pad='xsmall'
               margin={{ bottom: 'small' }}
             >
               {groupsActive && (
                 <Box
                   direction={isMinSize(size, 'medium') ? 'row' : 'column'}
                   pad={isMinSize(size, 'medium') && { horizontal: 'medium' }}
-                  justify="start"
-                  fill="horizontal"
+                  justify='start'
+                  fill='horizontal'
                 >
                   <SettingsMultiToggle
-                    setting="groups"
+                    setting='groups'
                     active={groupsActive}
                     onChange={groups => {
                       onGroupToggle(groups);
@@ -593,7 +593,7 @@ function ChartCountryMetricTrend({
                 </Box>
               )}
               {hasRawOption && (
-                <Box direction="row" justify="end" align="center">
+                <Box direction='row' justify='end' align='center'>
                   <ButtonToggleSetting
                     active={!raw}
                     disabled={!raw}

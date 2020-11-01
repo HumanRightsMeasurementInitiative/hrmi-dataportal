@@ -29,7 +29,7 @@ const FilterOptions = ({ optionGroups, onSelect }) => (
       optionGroups.map((group, index, list) => (
         <div key={group.group}>
           <GroupLabel>
-            <Text size="small" color="secondary">
+            <Text size='small' color='secondary'>
               {group.label}
             </Text>
           </GroupLabel>

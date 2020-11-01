@@ -1,4 +1,4 @@
-export default function isInteger(test) {
+export default function isInteger (test) {
   /* eslint-disable no-restricted-globals */
   return (
     !isNaN(test) &&

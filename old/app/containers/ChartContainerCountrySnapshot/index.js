@@ -110,7 +110,7 @@ const getDimensionScore = (type, data, benchmark) => {
   return false;
 };
 
-export function ChartContainerCountrySnapshot({
+export function ChartContainerCountrySnapshot ({
   onLoadData,
   dataReady,
   rights,
@@ -196,8 +196,8 @@ export function ChartContainerCountrySnapshot({
       <div margin={{ bottom: 'large' }}>
         {/* Quality of Life */}
         <ChartCountrySnapshot
-          type="esr"
-          dimensionCode="esr"
+          type='esr'
+          dimensionCode='esr'
           dimensionScore={getDimensionScore(
             'esr',
             dimensions.esr,
@@ -240,8 +240,8 @@ export function ChartContainerCountrySnapshot({
         </AddToPDFWrapper>
         {/* Safety from the State */}
         <ChartCountrySnapshot
-          type="cpr"
-          dimensionCode="physint"
+          type='cpr'
+          dimensionCode='physint'
           dimensionScore={
             dimensions.physint.score &&
             getDimensionScore('cpr', dimensions.physint)
@@ -256,14 +256,14 @@ export function ChartContainerCountrySnapshot({
         <AddToPDFWrapper>
           <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}>
             <NarrativeCPR
-              dimensionKey="physint"
+              dimensionKey='physint'
               score={dimensions.physint.score}
               country={country}
               countryGrammar={countryGrammar}
               showNoData={false}
             />
             <NarrativeCPRCompAssessment
-              dimensionKey="physint"
+              dimensionKey='physint'
               score={dimensions.physint.score}
               someRights={hasSomePhysintScore}
               hadSurvey={
@@ -297,8 +297,8 @@ export function ChartContainerCountrySnapshot({
         {/* Empowerment */}
         <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}>
           <ChartCountrySnapshot
-            type="cpr"
-            dimensionCode="empowerment"
+            type='cpr'
+            dimensionCode='empowerment'
             dimensionScore={
               dimensions.empowerment.score &&
               getDimensionScore('cpr', dimensions.empowerment)
@@ -314,14 +314,14 @@ export function ChartContainerCountrySnapshot({
         <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
             <NarrativeCPR
-              dimensionKey="empowerment"
+              dimensionKey='empowerment'
               score={dimensions.empowerment.score}
               country={country}
               countryGrammar={countryGrammar}
               showNoData={false}
             />
             <NarrativeCPRCompAssessment
-              dimensionKey="empowerment"
+              dimensionKey='empowerment'
               score={dimensions.empowerment.score}
               someRights={hasSomeEmpowermentScore}
               hadSurvey={
@@ -412,14 +412,14 @@ export function ChartContainerCountrySnapshot({
             <FormattedMessage {...rootMessages.dimensions.physint} />
           </Heading>
           <NarrativeCPR
-            dimensionKey="physint"
+            dimensionKey='physint'
             score={dimensions.physint.score}
             country={country}
             countryGrammar={countryGrammar}
             showNoData={false}
           />
           <NarrativeCPRCompAssessment
-            dimensionKey="physint"
+            dimensionKey='physint'
             score={dimensions.physint.score}
             someRights={hasSomePhysintScore}
             hadSurvey={
@@ -464,14 +464,14 @@ export function ChartContainerCountrySnapshot({
             <FormattedMessage {...rootMessages.dimensions.empowerment} />
           </Heading>
           <NarrativeCPR
-            dimensionKey="empowerment"
+            dimensionKey='empowerment'
             score={dimensions.empowerment.score}
             country={country}
             countryGrammar={countryGrammar}
             showNoData={false}
           />
           <NarrativeCPRCompAssessment
-            dimensionKey="empowerment"
+            dimensionKey='empowerment'
             score={dimensions.empowerment.score}
             someRights={hasSomeEmpowermentScore}
             hadSurvey={
@@ -563,15 +563,12 @@ const mapStateToProps = createStructuredSelector({
   locale: state => getLocale(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
   };
 }
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(ChartContainerCountrySnapshot));

@@ -13,7 +13,7 @@ import messages from './messages';
 
 import NarrativeCPRNoData from './NarrativeCPRNoData';
 
-function NarrativeCPRCompAssessment({
+function NarrativeCPRCompAssessment ({
   dimensionKey,
   country,
   countryGrammar,

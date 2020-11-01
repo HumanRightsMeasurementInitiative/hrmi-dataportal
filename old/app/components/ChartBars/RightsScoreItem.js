@@ -38,12 +38,12 @@ const RightsScoresWrapperCellLabel = styled.div`
     display: table-cell;
   }
 `;
-const RightScoreText = props => <Text weight="bold" size="small" {...props} />;
+const RightScoreText = props => <Text weight='bold' size='small' {...props} />;
 const RightLabelText = styled.span`
   font-size: 12px;
 `;
 
-function RightsScoresItem({ dimensionKey, right, maxValue, intl }) {
+function RightsScoresItem ({ dimensionKey, right, maxValue, intl }) {
   return (
     <RightsScoresWrapperRow>
       <RightsScoresWrapperCellScore>

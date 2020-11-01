@@ -23,8 +23,8 @@ const checkDescriptor = descriptor => {
   );
 };
 
-export function injectSagaFactory(store, isValid) {
-  return function injectSaga(key, descriptor = {}, args) {
+export function injectSagaFactory (store, isValid) {
+  return function injectSaga (key, descriptor = {}, args) {
     if (!isValid) checkStore(store);
 
     const newDescriptor = {
@@ -61,8 +61,8 @@ export function injectSagaFactory(store, isValid) {
   };
 }
 
-export function ejectSagaFactory(store, isValid) {
-  return function ejectSaga(key) {
+export function ejectSagaFactory (store, isValid) {
+  return function ejectSaga (key) {
     if (!isValid) checkStore(store);
 
     checkKey(key);
@@ -81,7 +81,7 @@ export function ejectSagaFactory(store, isValid) {
   };
 }
 
-export default function getInjectors(store) {
+export default function getInjectors (store) {
   checkStore(store);
 
   return {

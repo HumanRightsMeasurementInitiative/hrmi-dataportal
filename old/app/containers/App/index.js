@@ -76,14 +76,14 @@ const RemoveFromPDFBox = styled(Box)`
  *
  */
 
-export function App({ match, intl }) {
+export function App ({ match, intl }) {
   const locale = match.params ? match.params.locale : DEFAULT_LOCALE;
   const title = intl.formatMessage(rootMessages.app.metaTitle);
   const description = intl.formatMessage(rootMessages.app.metaDescription);
   return (
     <AppWrapper>
       <Helmet titleTemplate={`%s - ${title}`} defaultTitle={title}>
-        <meta name="description" content={description} />
+        <meta name='description' content={description} />
       </Helmet>
       <ScrollToTop>
         <CookieConsent />

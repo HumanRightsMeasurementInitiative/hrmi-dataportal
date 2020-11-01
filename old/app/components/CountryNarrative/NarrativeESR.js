@@ -13,7 +13,7 @@ import { BENCHMARKS } from 'containers/App/constants';
 import rootMessages from 'messages';
 import messages from './messages';
 
-function NarrativeESR({
+function NarrativeESR ({
   country,
   dimensionScore,
   intl,

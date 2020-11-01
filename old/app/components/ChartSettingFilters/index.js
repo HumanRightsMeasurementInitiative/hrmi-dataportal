@@ -138,9 +138,9 @@ const getFilterOptions = (
 };
 
 const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
-  <Box width={{ min: '280px' }} overflow="auto">
+  <Box width={{ min: '280px' }} overflow='auto'>
     <StyledButtonIcon subtle onClick={() => setFilterOpen(false)}>
-      <Close size="large" color="dark" />
+      <Close size='large' color='dark' />
     </StyledButtonIcon>
     <FilterOptions
       optionGroups={filterOptions.filter(g => g.options.length > 0)}
@@ -152,7 +152,7 @@ const renderContent = (filterOptions, setFilterOpen, onAddFilter) => (
   </Box>
 );
 
-export function ChartSettingFilters({
+export function ChartSettingFilters ({
   regionFilterValue,
   subregionFilterValue,
   onRemoveFilter,
@@ -258,9 +258,9 @@ export function ChartSettingFilters({
                 hasWhiteBG={hasWhiteBG}
               >
                 {isMinSize(size, 'large') && (
-                  <Box direction="row" align="center" gap="xsmall">
+                  <Box direction='row' align='center' gap='xsmall'>
                     <FormattedMessage {...messages.addFilter} />
-                    <FormDown color="dark" size="xlarge" />
+                    <FormDown color='dark' size='xlarge' />
                   </Box>
                 )}
                 {isMaxSize(size, 'medium') && (

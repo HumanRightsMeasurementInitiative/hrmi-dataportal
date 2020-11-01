@@ -22,7 +22,7 @@ import messages from './messages';
 const StyledUL = styled(UL)`
   margin-top: 0;
 `;
-function AboutMetric({
+function AboutMetric ({
   metric,
   metricInfo,
   standard,
@@ -50,10 +50,10 @@ function AboutMetric({
           <AccordionPanel
             header={
               <Box
-                direction="row"
-                gap="xsmall"
-                align="center"
-                justify="between"
+                direction='row'
+                gap='xsmall'
+                align='center'
+                justify='between'
               >
                 <Box>
                   <Heading
@@ -65,13 +65,13 @@ function AboutMetric({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(aboutIndex) && <Down size="small" />}
-                  {actives.includes(aboutIndex) && <Up size="small" />}
+                  {!actives.includes(aboutIndex) && <Down size='small' />}
+                  {actives.includes(aboutIndex) && <Up size='small' />}
                 </Box>
               </Box>
             }
           >
-            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border='top'>
               <Text>
                 <FormattedMessage
                   {...rootMessages[`${metricType}-about`][metric.key]}
@@ -84,10 +84,10 @@ function AboutMetric({
           <AccordionPanel
             header={
               <Box
-                direction="row"
-                gap="xsmall"
-                align="center"
-                justify="between"
+                direction='row'
+                gap='xsmall'
+                align='center'
+                justify='between'
               >
                 <Box>
                   <Heading
@@ -99,13 +99,13 @@ function AboutMetric({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(indicatorIndex) && <Down size="small" />}
-                  {actives.includes(indicatorIndex) && <Up size="small" />}
+                  {!actives.includes(indicatorIndex) && <Down size='small' />}
+                  {actives.includes(indicatorIndex) && <Up size='small' />}
                 </Box>
               </Box>
             }
           >
-            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border='top'>
               {metricInfo.standard === 'Both' && (
                 <StyledUL>
                   {STANDARDS.map(s => (
@@ -129,10 +129,10 @@ function AboutMetric({
           <AccordionPanel
             header={
               <Box
-                direction="row"
-                gap="xsmall"
-                align="center"
-                justify="between"
+                direction='row'
+                gap='xsmall'
+                align='center'
+                justify='between'
               >
                 <Box>
                   <Heading
@@ -149,13 +149,13 @@ function AboutMetric({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(sourceIndex) && <Down size="small" />}
-                  {actives.includes(sourceIndex) && <Up size="small" />}
+                  {!actives.includes(sourceIndex) && <Down size='small' />}
+                  {actives.includes(sourceIndex) && <Up size='small' />}
                 </Box>
               </Box>
             }
           >
-            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border='top'>
               <AboutMetricSources
                 metric={metric}
                 indicatorInfo={metricInfo}

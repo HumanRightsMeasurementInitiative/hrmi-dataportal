@@ -75,12 +75,12 @@ const scaleOpacity = scaleLinear()
   .domain([0, 1])
   .range([0.66, 1]);
 
-export function Word({ score, dimension, intl, active, setActive }) {
+export function Word ({ score, dimension, intl, active, setActive }) {
   const [over, setOver] = useState(null);
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box direction="row" align="center" key={score.people_code}>
+        <Box direction='row' align='center' key={score.people_code}>
           <Tag
             key={score.people_code}
             weight={scaleFontWeight(score.proportion)}
@@ -91,8 +91,8 @@ export function Word({ score, dimension, intl, active, setActive }) {
                 : scaleFont(score.proportion) * MAX_SIZE
             }
             color={over || active ? 'highlight2' : `${dimension}Cloud`}
-            direction="row"
-            align="center"
+            direction='row'
+            align='center'
           >
             <StyledButton
               onClick={evt => {
@@ -118,14 +118,14 @@ export function Word({ score, dimension, intl, active, setActive }) {
                 {...rootMessages['people-at-risk'][score.people_code]}
               />
               {over && !active && (
-                <StyledDrop elevation="small" fixed={isMaxSize(size, 'sm')}>
+                <StyledDrop elevation='small' fixed={isMaxSize(size, 'sm')}>
                   <Box
                     pad={{ vertical: 'small', horizontal: 'small' }}
-                    background="dark"
-                    align="start"
+                    background='dark'
+                    align='start'
                     responsive={false}
                   >
-                    <Text size="xxlarge">
+                    <Text size='xxlarge'>
                       {`${Math.round(100 * score.proportion)}%`}
                     </Text>
                     <Text style={{ maxWidth: '276px' }}>

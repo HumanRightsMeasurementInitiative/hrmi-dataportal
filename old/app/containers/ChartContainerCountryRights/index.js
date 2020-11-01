@@ -167,7 +167,7 @@ const prepareData = ({
       }
   );
 
-export function ChartContainerCountryRights({
+export function ChartContainerCountryRights ({
   type,
   onLoadData,
   country,
@@ -228,7 +228,7 @@ export function ChartContainerCountryRights({
           {type === 'esr' && dimension && (
             <>
               <ChartHeader
-                chartId="dimension-overview"
+                chartId='dimension-overview'
                 messageValues={{
                   dimension: intl.formatMessage(
                     rootMessages.dimensions[dimensionCode],
@@ -298,7 +298,7 @@ export function ChartContainerCountryRights({
                   currentBenchmark={currentBenchmark}
                   standard={standard}
                   labelColor={`${dimensionCode}Dark`}
-                  padVertical="xsmall"
+                  padVertical='xsmall'
                   grades={GRADES[type]}
                   gradeLabels={false}
                   level={1}
@@ -340,15 +340,15 @@ export function ChartContainerCountryRights({
               </Box>
               {currentBenchmark.key === 'best' && (
                 <Box
-                  direction="row"
+                  direction='row'
                   margin={{
                     top: 'small',
                     right: scoreAsideWidth(size),
                   }}
-                  justify="end"
+                  justify='end'
                 >
-                  <KeyItem direction="row">
-                    <Text size="xxsmall">
+                  <KeyItem direction='row'>
+                    <Text size='xxsmall'>
                       <FormattedMessage
                         {...rootMessages.settings.benchmark.adjusted}
                       />
@@ -364,8 +364,8 @@ export function ChartContainerCountryRights({
                     </Text>
                     <KeyItemDashed />
                   </KeyItem>
-                  <KeyItem direction="row">
-                    <Text size="xxsmall">
+                  <KeyItem direction='row'>
+                    <Text size='xxsmall'>
                       <FormattedMessage
                         {...rootMessages.settings.benchmark.best}
                       />
@@ -417,7 +417,7 @@ export function ChartContainerCountryRights({
           {type === 'cpr' && dimension && (
             <>
               <ChartHeader
-                chartId="dimension-overview"
+                chartId='dimension-overview'
                 messageValues={{
                   dimension: intl.formatMessage(
                     rootMessages.dimensions[dimensionCode],
@@ -462,7 +462,7 @@ export function ChartContainerCountryRights({
                     },
                   ]}
                   labelColor={`${dimensionCode}Dark`}
-                  padVertical="small"
+                  padVertical='small'
                   grades={GRADES[type]}
                   gradeLabels={false}
                   level={1}
@@ -489,7 +489,7 @@ export function ChartContainerCountryRights({
                     rootMessages.charts.rightsColumnLabel[dimensionCode],
                   )}`}
                   labelColor={`${dimensionCode}Dark`}
-                  padVertical="small"
+                  padVertical='small'
                   grades={GRADES[type]}
                   bullet={hasSomeRights}
                   listHeader
@@ -571,16 +571,13 @@ const mapStateToProps = createStructuredSelector({
   rights: (state, { countryCode }) => getRightsForCountry(state, countryCode),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
   };
 }
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(
   withTheme(injectIntl(ChartContainerCountryRights)),

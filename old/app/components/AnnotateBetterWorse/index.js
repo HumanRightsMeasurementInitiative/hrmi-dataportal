@@ -54,16 +54,16 @@ const AnnotateBetterInner = styled.div`
   padding: 12px;
 `;
 
-function AnnotateBetterWorse({ absolute }) {
+function AnnotateBetterWorse ({ absolute }) {
   return (
     <AnnotateBetterInner absolute={absolute}>
       <Worse>
-        <Text size="xxsmall">
+        <Text size='xxsmall'>
           <FormattedMessage {...rootMessages.labels.worse} />
         </Text>
       </Worse>
       <Better>
-        <Text size="xxsmall">
+        <Text size='xxsmall'>
           <FormattedMessage {...rootMessages.labels.better} />
         </Text>
       </Better>

@@ -37,7 +37,13 @@ const getCardNumber = width => {
   return minCards > maxCards ? minCards : maxCards;
 };
 
-export function Slider({ stretch, children, cardMargin, background, ...rest }) {
+export function Slider ({
+  stretch,
+  children,
+  cardMargin,
+  background,
+  ...rest
+}) {
   const ref = useRef(null);
   const [carouselWidth, setCarouselWidth] = useState(0);
 
@@ -69,7 +75,7 @@ export function Slider({ stretch, children, cardMargin, background, ...rest }) {
         <SliderWrapper ref={ref} edge={cardMargin}>
           {carouselWidth > 0 && (
             <Carousel
-              containerClass="react-multi-carousel-list__custom"
+              containerClass='react-multi-carousel-list__custom'
               responsive={responsive}
               keyBoardControl={false}
               slidesToSlide={cardNumber}

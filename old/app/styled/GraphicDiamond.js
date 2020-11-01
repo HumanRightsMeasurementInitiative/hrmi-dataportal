@@ -20,7 +20,7 @@ const Bar = styled.div`
   }
 `;
 
-export function GraphicDiamond({ color, size }) {
+export function GraphicDiamond ({ color, size }) {
   return (
     <Styled size={`${size}px`}>
       <Bar color={color} width={`${size}px`} height={`${size / 3 - 10}px`} />

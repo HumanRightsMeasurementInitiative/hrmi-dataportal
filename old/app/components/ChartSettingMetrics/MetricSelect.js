@@ -36,7 +36,7 @@ const StyledOption = styled(DropOption)`
   }
 `;
 
-export function MetricSelect({
+export function MetricSelect ({
   setActiveMetric,
   activeMetric,
   metrics,
@@ -56,7 +56,7 @@ export function MetricSelect({
             {!m.disabled && (
               <StyledOption
                 level={1}
-                fill="horizontal"
+                fill='horizontal'
                 active={m.key === activeMetric}
                 disabled={m.key === activeMetric}
                 onClick={() => setActiveMetric(m.key)}
@@ -81,7 +81,7 @@ export function MetricSelect({
                   <div key={m2.key}>
                     <StyledOption
                       level={2}
-                      fill="horizontal"
+                      fill='horizontal'
                       active={m2.key === activeMetric}
                       disabled={m2.key === activeMetric}
                       onClick={() => setActiveMetric(m2.key)}
@@ -98,7 +98,7 @@ export function MetricSelect({
                           <div key={m3.key}>
                             <StyledOption
                               level={3}
-                              fill="horizontal"
+                              fill='horizontal'
                               active={m3.key === activeMetric}
                               disabled={m3.key === activeMetric}
                               onClick={() => setActiveMetric(m3.key)}

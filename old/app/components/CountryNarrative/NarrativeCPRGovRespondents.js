@@ -13,7 +13,7 @@ const StyledPara = styled(Paragraph)`
   font-style: italic;
 `;
 
-function NarrativeCPRGovRespondents({ countryGrammar, country, intl }) {
+function NarrativeCPRGovRespondents ({ countryGrammar, country, intl }) {
   const messageValues = {
     ...getMessageGrammar(
       intl,

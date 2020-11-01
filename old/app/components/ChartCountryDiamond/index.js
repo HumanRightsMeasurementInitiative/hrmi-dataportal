@@ -199,7 +199,7 @@ const getRightGroups = (
       }))
   }));
 
-export function ChartCountryDiamond({
+export function ChartCountryDiamond ({
   onSelectCountry,
   country,
   scale,
@@ -216,7 +216,7 @@ export function ChartCountryDiamond({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box margin="xsmall" width={width} alignContent="center">
+        <Box margin='xsmall' width={width} alignContent='center'>
           {country && (
             <Button
               onClick={() => onSelectCountry(country[COLUMNS.COUNTRIES.CODE])}
@@ -230,7 +230,7 @@ export function ChartCountryDiamond({
               <Box
                 pad={{ horizontal: 'small', vertical: 'medium' }}
                 width={isMinSize(size, 'large') ? '250px' : '280px'}
-                alignContent="center"
+                alignContent='center'
               >
                 {scale === 'd' && (
                   <DiamondChart
@@ -265,10 +265,10 @@ export function ChartCountryDiamond({
                   />
                 )}
                 <Box pad={{ top: 'small' }}>
-                  <Text textAlign="center" alignSelf="center">
+                  <Text textAlign='center' alignSelf='center'>
                     <CountryLabelWrap>
                       <CountryLabel country={country} />
-                      {isMaxSize(size, 'medium') && <FormNext size="medium" />}
+                      {isMaxSize(size, 'medium') && <FormNext size='medium' />}
                     </CountryLabelWrap>
                   </Text>
                 </Box>

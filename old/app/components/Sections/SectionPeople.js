@@ -26,7 +26,7 @@ const Image = styled.img`
 
 const imageSrc = `${IMAGE_PATH}/section_people.png`;
 
-export function SectionPeople({ nav, intl, theme, countryNo }) {
+export function SectionPeople ({ nav, intl, theme, countryNo }) {
   const hasSecondPara =
     intl.messages[messages.people.para2] &&
     intl.formatMessage(messages.people.para2).trim() !== '';
@@ -35,19 +35,19 @@ export function SectionPeople({ nav, intl, theme, countryNo }) {
       {size => (
         <SectionContainer
           margin={{ top: 'small', bottom: 'large' }}
-          pad="0"
-          background="sectionPeople"
+          pad='0'
+          background='sectionPeople'
         >
           <Box
-            align="start"
-            direction="row"
+            align='start'
+            direction='row'
             style={{ position: 'absolute', top: '36px', left: 0, right: 0 }}
           >
             {isMinSize(size, 'large') && (
               <>
-                <Box basis="1/2" />
+                <Box basis='1/2' />
                 <Box
-                  basis="1/2"
+                  basis='1/2'
                   style={{
                     minHeight: '300px',
                     maxHeight: '300px',
@@ -55,17 +55,17 @@ export function SectionPeople({ nav, intl, theme, countryNo }) {
                     maxWidth: `${theme.sizes.imageHomeMaxWidth}px`,
                     position: 'relative',
                   }}
-                  justify="start"
-                  align="start"
+                  justify='start'
+                  align='start'
                 >
-                  <Image alt="intro" src={imageSrc} />
+                  <Image alt='intro' src={imageSrc} />
                 </Box>
               </>
             )}
           </Box>
           <ContentMaxWidth
-            align="start"
-            direction="row"
+            align='start'
+            direction='row'
             stretch
             style={{ paddingTop: '36px', paddingBottom: '48px' }}
           >
@@ -73,14 +73,14 @@ export function SectionPeople({ nav, intl, theme, countryNo }) {
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
               pad={{ right: 'xlarge', top: 'small', bottom: 'medium' }}
               style={{ position: 'relative' }}
-              justify="start"
+              justify='start'
             >
               <SectionTitle
                 title={intl.formatMessage(messages.people.title)}
                 marginTop
               />
               <Paragraph
-                size="large"
+                size='large'
                 margin={{ bottom: hasSecondPara ? 'small' : 'medium' }}
               >
                 <FormattedMessage
@@ -89,14 +89,14 @@ export function SectionPeople({ nav, intl, theme, countryNo }) {
                 />
               </Paragraph>
               {hasSecondPara && (
-                <Paragraph size="large" margin={{ bottom: 'medium' }}>
+                <Paragraph size='large' margin={{ bottom: 'medium' }}>
                   <FormattedMessage
                     {...messages.people.para2}
                     values={{ countryNo }}
                   />
                 </Paragraph>
               )}
-              <Box direction="row">
+              <Box direction='row'>
                 <ButtonTextIcon
                   onClick={() => nav(PATHS.GROUPS)}
                   label={intl.formatMessage(messages.people.link)}
@@ -106,7 +106,7 @@ export function SectionPeople({ nav, intl, theme, countryNo }) {
             </Box>
             {isMinSize(size, 'large') && (
               <Box
-                basis="1/2"
+                basis='1/2'
                 style={{
                   minHeight: '300px',
                   maxHeight: '300px',

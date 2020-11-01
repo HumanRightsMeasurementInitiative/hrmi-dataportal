@@ -4,6 +4,6 @@
  * @param {string} html an HTML string
  * @return the modified HTML string
  */
-export default function setLinkTarget(html) {
+export default function setLinkTarget (html) {
   return html.split('<a ').join('<a target="_blank" ');
 }

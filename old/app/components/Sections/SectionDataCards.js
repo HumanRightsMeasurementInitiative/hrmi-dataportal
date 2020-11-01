@@ -21,7 +21,7 @@ import SectionTitle from './SectionTitle';
 import Slider from './Slider';
 import CardData from './CardData';
 
-export function SectionDataCards({
+export function SectionDataCards ({
   noCountries = 0,
   noRights = 0,
   noGroups = 0,
@@ -33,7 +33,7 @@ export function SectionDataCards({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <SectionContainer background="sectionDataCards">
+        <SectionContainer background='sectionDataCards'>
           <ContentMaxWidth column>
             <SectionTitle
               title={intl.formatMessage(messages.dataCards.title)}

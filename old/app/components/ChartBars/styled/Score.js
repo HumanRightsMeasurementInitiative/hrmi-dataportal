@@ -52,7 +52,7 @@ const getSize = level => {
   return 'medium';
 };
 
-function Score({
+function Score ({
   score,
   left,
   color,
@@ -74,10 +74,10 @@ function Score({
       rotate={rotate}
     >
       <Box
-        elevation="small"
+        elevation='small'
         pad={{ horizontal: 'xsmall', vertical: 'hair' }}
-        background="white"
-        round="xxsmall"
+        background='white'
+        round='xxsmall'
       >
         {title && (
           <Text

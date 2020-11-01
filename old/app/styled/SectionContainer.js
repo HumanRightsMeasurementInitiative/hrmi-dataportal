@@ -11,7 +11,7 @@ const Styled = styled(Box)`
 // @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
 // }
 
-export function SectionContainer(props) {
+export function SectionContainer (props) {
   return (
     <Styled
       responsive={false}

@@ -18,7 +18,7 @@ import { getLocale } from 'containers/App/selectors';
 import saga from './saga';
 const key = 'languageProvider';
 
-export function LanguageProvider(props) {
+export function LanguageProvider (props) {
   useInjectSaga({ key, saga });
 
   return (

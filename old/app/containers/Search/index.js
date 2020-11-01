@@ -28,7 +28,7 @@ import SearchResults from './SearchResults';
 import TextInput from './TextInput';
 import { prepMetrics, prepCountries, prepGroups } from './search';
 
-export function Search({
+export function Search ({
   intl,
   searched,
   margin,
@@ -109,15 +109,15 @@ export function Search({
           color: expand ? 'dark' : bordercolor,
           size: expand ? 'small' : bordersize,
         }}
-        direction="row"
-        align="center"
-        round="xlarge"
+        direction='row'
+        align='center'
+        round='xlarge'
         ref={searchRef}
         style={stretch ? null : { maxWidth: '500px' }}
         height={`${theme.sizes.search[size]}px`}
         pad={{ horizontal: 'ms' }}
         margin={{ left: hasToggle ? 'ms' : '0' }}
-        background="white"
+        background='white'
       >
         {hasToggle && !expand && (
           <Button
@@ -130,9 +130,9 @@ export function Search({
               <Text weight={600}>{intl.formatMessage(messages.search)}</Text>
             }
             reverse
-            icon={<SearchIcon size={size} color="dark" />}
+            icon={<SearchIcon size={size} color='dark' />}
             style={{ textAlign: 'center' }}
-            gap="xsmall"
+            gap='xsmall'
           />
         )}
         {((hasToggle && expand) || !hasToggle) && (
@@ -158,20 +158,20 @@ export function Search({
             />
             {!hasToggle && search.length === 0 && (
               <Box pad={{ right: 'xsmall' }}>
-                <SearchIcon size={size} color="dark" />
+                <SearchIcon size={size} color='dark' />
               </Box>
             )}
             {(hasToggle || search.length > 0) && (
               <Button
                 plain
-                fill="vertical"
+                fill='vertical'
                 onClick={() => {
                   setSearch('');
                   if (onSearch) onSearch('');
                   if (hasToggle) onToggle(false);
                   setActiveResult(0);
                 }}
-                icon={<Close size={size} color="dark" />}
+                icon={<Close size={size} color='dark' />}
                 style={{
                   textAlign: 'center',
                   height: `${theme.sizes.search[size]}px`,
@@ -267,9 +267,6 @@ const mapStateToProps = state => ({
   countries: getCountries(state),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(Search)));

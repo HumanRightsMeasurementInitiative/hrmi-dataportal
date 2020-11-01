@@ -38,7 +38,7 @@ const renderAnalysis = (atRiskAnalysis, intl) => (
   </Box>
 );
 
-function ChartCountryMetricPeople({
+function ChartCountryMetricPeople ({
   data,
   metric,
   atRiskAnalysis,
@@ -52,7 +52,7 @@ function ChartCountryMetricPeople({
   return (
     <Styled
       pad={showIntro || hasSubrights ? { vertical: 'medium' } : null}
-      direction="column"
+      direction='column'
     >
       {metric.metricType === 'rights' && (
         <Box>

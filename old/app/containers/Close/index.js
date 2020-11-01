@@ -37,9 +37,9 @@ const getTrackValue = location => {
 };
 
 // <FormattedMessage {...messages.label} />
-function Close({ onClose, closeTarget, keepTab = true, onClick }) {
+function Close ({ onClose, closeTarget, keepTab = true, onClick }) {
   return (
-    <Styled direction="row" align="center">
+    <Styled direction='row' align='center'>
       <ButtonIcon
         subtle
         onClick={() =>
@@ -56,7 +56,7 @@ function Close({ onClose, closeTarget, keepTab = true, onClick }) {
             })
         }
       >
-        <CloseIcon size="xlarge" color="dark" />
+        <CloseIcon size='xlarge' color='dark' />
       </ButtonIcon>
     </Styled>
   );
@@ -69,15 +69,12 @@ Close.propTypes = {
   keepTab: PropTypes.bool,
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onClose: (location, args) => dispatch(navigate(location, args)),
   };
 }
 
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
+const withConnect = connect(null, mapDispatchToProps);
 
 export default compose(withConnect)(Close);

@@ -25,7 +25,12 @@ const StyledParagraph = styled(Paragraph)`
   font-weight: 600;
 `;
 
-function NarrativeESRStandardHint({ standard, country, intl, countryGrammar }) {
+function NarrativeESRStandardHint ({
+  standard,
+  country,
+  intl,
+  countryGrammar,
+}) {
   const messageValues = {
     ...getMessageGrammar(
       intl,

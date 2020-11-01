@@ -39,7 +39,7 @@ const Square = styled.div`
     `}
 `;
 
-function BenchmarkOverlay({
+function BenchmarkOverlay ({
   intl,
   size = 'small',
   hasKey,
@@ -62,7 +62,7 @@ function BenchmarkOverlay({
         <>
           {hasKey && (
             <SquareWrap>
-              <Square color="light-2" type="line" lineStyle="dashed" />
+              <Square color='light-2' type='line' lineStyle='dashed' />
             </SquareWrap>
           )}
           <Paragraph margin={{ vertical: 'xsmall' }} size={size}>
@@ -81,7 +81,7 @@ function BenchmarkOverlay({
         <>
           {hasKey && (
             <SquareWrap>
-              <Square color="light-2" type="line" lineStyle="solid" />
+              <Square color='light-2' type='line' lineStyle='solid' />
             </SquareWrap>
           )}
           <Paragraph margin={{ vertical: 'xsmall' }} size={size}>

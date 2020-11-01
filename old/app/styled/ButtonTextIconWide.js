@@ -17,7 +17,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-export function ButtonTextIconWide({
+export function ButtonTextIconWide ({
   onClick,
   icon,
   hasIcon,
@@ -26,11 +26,11 @@ export function ButtonTextIconWide({
   reverse = true,
 }) {
   return (
-    <StyledButton type="button" onClick={onClick}>
+    <StyledButton type='button' onClick={onClick}>
       <p style={{ display: 'flex', justifyContent: 'space-between' }}>
         {reverse && label}
         {icon ||
-          (hasIcon && <FormNext color="white" size={iconSize || 'large'} />)}
+          (hasIcon && <FormNext color='white' size={iconSize || 'large'} />)}
         {!reverse && label}
       </p>
     </StyledButton>

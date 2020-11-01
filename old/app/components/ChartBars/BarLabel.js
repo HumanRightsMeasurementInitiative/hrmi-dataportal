@@ -25,7 +25,7 @@ const Styled = styled.span`
   }
 `;
 
-function BarLabel({ label, allowWordBreak, color, level }) {
+function BarLabel ({ label, allowWordBreak, color, level }) {
   return (
     <Styled allowWordBreak={allowWordBreak} color={color} level={level}>
       {label}

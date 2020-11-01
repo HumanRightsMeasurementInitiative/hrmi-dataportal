@@ -7,7 +7,7 @@ import { isMinSize, isMaxSize } from 'utils/responsive';
 import NavBottomButton from './NavBottomButton';
 import NavBottomContent from './NavBottomContent';
 
-export function NavBottom({ active, onClick, onClose, type }) {
+export function NavBottom ({ active, onClick, onClose, type }) {
   const [open, setOpen] = useState(false);
   const buttonRef = useRef(null);
 

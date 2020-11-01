@@ -26,7 +26,7 @@ export default ({ key, saga, mode }) => WrappedComponent => {
       WrappedComponent.name ||
       'Component'})`;
 
-    constructor(props, context) {
+    constructor (props, context) {
       super(props, context);
 
       this.injectors = getInjectors(context.store);
@@ -34,11 +34,11 @@ export default ({ key, saga, mode }) => WrappedComponent => {
       this.injectors.injectSaga(key, { saga, mode }, this.props);
     }
 
-    componentWillUnmount() {
+    componentWillUnmount () {
       this.injectors.ejectSaga(key);
     }
 
-    render() {
+    render () {
       return <WrappedComponent {...this.props} />;
     }
   }

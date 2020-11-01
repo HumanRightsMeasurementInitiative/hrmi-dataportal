@@ -200,7 +200,7 @@ const getScoreMsg = (
   return countryScoreMsg;
 };
 
-export function PathCountry({
+export function PathCountry ({
   intl,
   onLoadData,
   onCategoryClick,
@@ -282,11 +282,11 @@ export function PathCountry({
         <ContentWrap>
           <Helmet>
             <title>{countryTitle}</title>
-            <meta name="description" content="Description of Country page" />
+            <meta name='description' content='Description of Country page' />
           </Helmet>
           <div style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
-            <ContentContainer direction="column" header>
+            <ContentContainer direction='column' header>
               <ContentMaxWidth
                 header
                 height={
@@ -335,7 +335,7 @@ export function PathCountry({
                   <Aside image>
                     <GImage
                       src={`${IMAGE_PATH}/country_${countryCode}.png`}
-                      fit="cover"
+                      fit='cover'
                     />
                   </Aside>
                 )}
@@ -364,8 +364,8 @@ export function PathCountry({
                 content: props => (
                   <TabCountryReport
                     {...props}
-                    type="esr"
-                    dimension="esr"
+                    type='esr'
+                    dimension='esr'
                     countryTitle={countryTitle}
                     hasDimensionScore={dataReady && !!dimensions.esr.score}
                     indicators={indicators}
@@ -385,8 +385,8 @@ export function PathCountry({
                 content: props => (
                   <TabCountryReport
                     {...props}
-                    type="cpr"
-                    dimension="physint"
+                    type='cpr'
+                    dimension='physint'
                     countryTitle={countryTitle}
                     hasDimensionScore={dataReady && hasCPR(dimensions)}
                     country={country}
@@ -403,8 +403,8 @@ export function PathCountry({
                 content: props => (
                   <TabCountryReport
                     {...props}
-                    type="cpr"
-                    dimension="empowerment"
+                    type='cpr'
+                    dimension='empowerment'
                     countryTitle={countryTitle}
                     hasDimensionScore={dataReady && hasCPR(dimensions)}
                     country={country}
@@ -524,7 +524,7 @@ const mapStateToProps = createStructuredSelector({
   highlightGroup: state => getAtRiskSearch(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onSetHighlightGroup: code => {
       dispatch(setHighlightGroup(code));
@@ -559,9 +559,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(PathCountry)));

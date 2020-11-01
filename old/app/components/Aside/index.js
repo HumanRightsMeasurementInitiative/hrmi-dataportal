@@ -17,7 +17,7 @@ const Styled = styled(Box)`
   }
 `;
 
-function Aside({ content, image, active, children, ...other }) {
+function Aside ({ content, image, active, children, ...other }) {
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>

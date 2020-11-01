@@ -82,7 +82,7 @@ const AnnotateBetterInner = styled.div`
   transform: rotate(45deg);
 `;
 
-export function DiamondChart({
+export function DiamondChart ({
   dimensions,
   rightGroups,
   showLabels,
@@ -101,14 +101,14 @@ export function DiamondChart({
         {showLabels && (
           <AnnotateBetter>
             <AnnotateBetterInner>
-              <Text size="xsmall">
+              <Text size='xsmall'>
                 <FormattedMessage {...rootMessages.labels.better} />
               </Text>
             </AnnotateBetterInner>
           </AnnotateBetter>
         )}
         {showBenchmark && (
-          <AnnotateBenchmark type="diamond" benchmarkKey={benchmark.key} />
+          <AnnotateBenchmark type='diamond' benchmarkKey={benchmark.key} />
         )}
         {dimensions &&
           dimensions.map((dim, index, list) => (
@@ -122,7 +122,7 @@ export function DiamondChart({
                 showLabels={(!hideZeroLabels || dim.value > 0) && showLabels}
                 rotate={45}
                 showIncompleteAction={false}
-                scoreOnHover="top"
+                scoreOnHover='top'
                 hoverEnabled={hoverEnabled}
                 height={(w - MARGINS * 2) / list.length}
                 hasBackground
@@ -140,7 +140,7 @@ export function DiamondChart({
                 dataMultiple={rightGroup}
                 showLabels={showLabels}
                 rotate={45}
-                scoreOnHover="top"
+                scoreOnHover='top'
                 heightIndividual={(w - MARGINS * 2) / 13}
                 hasBackground
               />

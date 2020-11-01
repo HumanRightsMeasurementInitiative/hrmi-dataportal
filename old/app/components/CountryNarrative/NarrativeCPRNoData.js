@@ -7,7 +7,7 @@ import ButtonTextIcon from 'styled/ButtonTextIcon';
 
 import messages from './messages';
 
-function NarrativeCPRNoData({ messageValues, hadSurvey, someRights, intl }) {
+function NarrativeCPRNoData ({ messageValues, hadSurvey, someRights, intl }) {
   if (someRights) {
     return (
       <Paragraph>
@@ -36,9 +36,9 @@ function NarrativeCPRNoData({ messageValues, hadSurvey, someRights, intl }) {
       />
       <ButtonTextIcon
         href={intl.formatMessage(messages.compAssessmentCPR.noDataLinkURL)}
-        target="_blank"
+        target='_blank'
         label={intl.formatMessage(messages.compAssessmentCPR.noDataLinkAnchor)}
-        gap="xsmall"
+        gap='xsmall'
       />
     </Paragraph>
   );

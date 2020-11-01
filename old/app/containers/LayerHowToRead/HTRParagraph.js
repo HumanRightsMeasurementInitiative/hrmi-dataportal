@@ -13,6 +13,6 @@ const Styled = styled(Paragraph)`
   }
 `;
 
-export default function HTRParagraph(props) {
+export default function HTRParagraph (props) {
   return <Styled {...props} />;
 }

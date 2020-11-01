@@ -14,7 +14,7 @@ const pageContainers = fs.readdirSync(
 );
 const components = pageComponents.concat(pageContainers);
 
-function componentExists(comp) {
+function componentExists (comp) {
   return components.indexOf(comp) >= 0;
 }
 

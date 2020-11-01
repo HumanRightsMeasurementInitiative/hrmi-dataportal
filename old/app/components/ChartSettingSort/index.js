@@ -28,7 +28,7 @@ const StyledSortButton = styled(DropButton)`
   text-align: right;
 `;
 
-export function ChartSettingSort({
+export function ChartSettingSort ({
   sort,
   options,
   order,
@@ -56,13 +56,13 @@ export function ChartSettingSort({
           );
         return (
           <Box
-            direction="row"
+            direction='row'
             pad={
               isMaxSize(size, 'medium')
                 ? { top: '0' }
                 : { vertical: '10px', left: 'small' }
             }
-            align="center"
+            align='center'
             responsive={false}
             flex={{ shrink: 0 }}
           >
@@ -70,8 +70,8 @@ export function ChartSettingSort({
               <StyledDropButton
                 plain
                 reverse
-                gap="xxsmall"
-                alignSelf="end"
+                gap='xxsmall'
+                alignSelf='end'
                 margin={
                   isMinSize(size, 'large')
                     ? { horizontal: 'xsmall' }
@@ -79,9 +79,9 @@ export function ChartSettingSort({
                 }
                 icon={
                   optionsOpen ? (
-                    <FormUp size="large" />
+                    <FormUp size='large' />
                   ) : (
-                    <FormDown size="large" />
+                    <FormDown size='large' />
                   )
                 }
                 label={label}

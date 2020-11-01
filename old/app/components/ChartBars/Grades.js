@@ -66,12 +66,12 @@ const Key = styled.span`
   width: 8px;
 `;
 const KeyWrap = styled(props => (
-  <Box direction="row" {...props} gap="hair" align="center" />
+  <Box direction='row' {...props} gap='hair' align='center' />
 ))`
   margin-top: 4px;
 `;
 
-export function Grades({ grades, labels = true, hasAside }) {
+export function Grades ({ grades, labels = true, hasAside }) {
   // const minGap = grades.reduce((memo, grade, index, list) => {
   //   // console.log(memo, grade, index, list.length, list[index + 1])
   //   const gap =
@@ -102,7 +102,7 @@ export function Grades({ grades, labels = true, hasAside }) {
           ))}
           {isMaxSize(size, 'sm') && labels && (
             <BGScaleLabelWrap single>
-              <Box direction="row" align="center" justify="center" gap="xsmall">
+              <Box direction='row' align='center' justify='center' gap='xsmall'>
                 {grades.map((grade, index) => (
                   <KeyWrap key={grade.min}>
                     <Key index={index} />

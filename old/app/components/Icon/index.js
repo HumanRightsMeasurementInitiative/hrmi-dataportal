@@ -54,7 +54,7 @@ const defaultSize = 24;
  * @return {Component} Icon component
  */
 class Icon extends React.PureComponent {
-  render() {
+  render () {
     const {
       name,
       title,
@@ -72,7 +72,7 @@ class Icon extends React.PureComponent {
       return (
         <SVG
           viewBox={`0 0 ${iSizeX} ${iSizeY}`}
-          preserveAspectRatio="xMidYMid meet"
+          preserveAspectRatio='xMidYMid meet'
           sizes={{
             width: `${size || iSizeX}px`,
             height: `${size || iSizeY}px`,

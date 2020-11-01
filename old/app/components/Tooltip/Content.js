@@ -8,7 +8,7 @@ const ContentWrap = styled.span`
   width: 100%;
 `;
 
-function Content({ maxWidth, component, text, onClose, inModal, inverse }) {
+function Content ({ maxWidth, component, text, onClose, inModal, inverse }) {
   return (
     <Box
       pad={{ vertical: 'small', horizontal: 'small' }}
@@ -29,7 +29,7 @@ function Content({ maxWidth, component, text, onClose, inModal, inverse }) {
           }}
           margin={{ left: 'auto' }}
         >
-          <Close color="white" size="large" />
+          <Close color='white' size='large' />
         </Button>
       )}
       <ContentWrap>

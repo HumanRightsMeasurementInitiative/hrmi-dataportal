@@ -62,9 +62,9 @@ const Styled = styled.header`
 
 const NavBarTop = props => (
   <Box
-    direction="row"
-    align="center"
-    justify="end"
+    direction='row'
+    align='center'
+    justify='end'
     height={`${getHeaderHeightTop(props.size, props.theme)}px`}
     {...props}
   />
@@ -82,8 +82,8 @@ const NavBarBottomBox = styled(Box)`
 
 const NavBarBottom = props => (
   <NavBarBottomBox
-    direction="row"
-    align="end"
+    direction='row'
+    align='end'
     justify={isMinSize(props.size, 'medium') ? 'end' : 'start'}
     height={`${getHeaderHeightBottom(props.size, props.theme)}px`}
     {...props}
@@ -149,7 +149,7 @@ const SearchWrap = styled(Box)`
   }
 `;
 
-const StyledShare = styled(p => <Share {...p} size="small" />)`
+const StyledShare = styled(p => <Share {...p} size='small' />)`
   vertical-align: middle;
   margin-left: 7px;
   stroke: currentColor;
@@ -198,10 +198,10 @@ const navButtonOnClick = ({ match, onClick, align, locale }) =>
     .map(page =>
       page.key === 'download' ? (
         <ButtonNavPrimary
-          as="a"
+          as='a'
           href={XPATHS.download[locale] || XPATHS.download[DEFAULT_LOCALE]}
-          target="_blank"
-          rel="noopener noreferrer"
+          target='_blank'
+          rel='noopener noreferrer'
           key={page.key}
         >
           <TextWrap>
@@ -226,7 +226,7 @@ const navButtonOnClick = ({ match, onClick, align, locale }) =>
 
 const DEPENDENCIES = ['countries'];
 
-export function Header({
+export function Header ({
   nav,
   onLoadData,
   match,
@@ -253,24 +253,24 @@ export function Header({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Styled role="banner" size={size}>
-          <ElevationBox background="white">
+        <Styled role='banner' size={size}>
+          <ElevationBox background='white'>
             <ContentMaxWidth column={isMaxSize(size, 'sm')}>
               <BrandBox
-                direction="row"
-                align="center"
-                justify="stretch"
+                direction='row'
+                align='center'
+                justify='stretch'
                 fill={isMaxSize(size, 'sm') ? 'horizontal' : false}
               >
                 <BrandButton plain onClick={onHome}>
                   <BrandInner
-                    direction="row"
-                    justify="start"
-                    gap="10px"
+                    direction='row'
+                    justify='start'
+                    gap='10px'
                     fill={false}
                   >
                     <LogoWrap
-                      justify="start"
+                      justify='start'
                       width={`${
                         isMaxSize(size, 'sm')
                           ? theme.sizes.header.small.logoWidth
@@ -284,7 +284,7 @@ export function Header({
                         a11yTitle={`${intl.formatMessage(
                           rootMessages.app.title,
                         )}`}
-                        fit="contain"
+                        fit='contain'
                       />
                     </LogoWrap>
                   </BrandInner>
@@ -300,8 +300,8 @@ export function Header({
                     onClick={() => setShowMenu(!showMenu)}
                     ref={menuRef}
                   >
-                    {!showMenu && <Menu color="dark" />}
-                    {showMenu && <Close color="dark" />}
+                    {!showMenu && <Menu color='dark' />}
+                    {showMenu && <Close color='dark' />}
                   </ToggleMenu>
                 )}
                 {showMenu && isMaxSize(size, 'medium') && (
@@ -314,7 +314,7 @@ export function Header({
                     modal={false}
                     animate={false}
                   >
-                    <MenuList elevation="large">
+                    <MenuList elevation='large'>
                       <MenuGroup>
                         {navButtonOnClick({
                           match,
@@ -346,11 +346,11 @@ export function Header({
                 {isMinSize(size, 'large') && (
                   <NavBarTop
                     theme={theme}
-                    direction="row"
-                    justify="end"
+                    direction='row'
+                    justify='end'
                     size={size}
                     style={{ paddingTop: '25px' }}
-                    align="end"
+                    align='end'
                   >
                     {navButtonOnClick({
                       match,
@@ -368,8 +368,8 @@ export function Header({
                 {size === 'medium' && (
                   <NavBarTop
                     theme={theme}
-                    direction="row"
-                    justify="end"
+                    direction='row'
+                    justify='end'
                     size={size}
                   >
                     {appLocales.length > 1 && (
@@ -382,8 +382,8 @@ export function Header({
                       onClick={() => setShowMenu(!showMenu)}
                       ref={menuRef}
                     >
-                      {!showMenu && <Menu color="dark" />}
-                      {showMenu && <Close color="dark" />}
+                      {!showMenu && <Menu color='dark' />}
+                      {showMenu && <Close color='dark' />}
                     </ToggleMenu>
                   </NavBarTop>
                 )}
@@ -391,14 +391,14 @@ export function Header({
                   {(!showSearch || isMaxSize(size, 'sm')) && (
                     <>
                       <NavBottom
-                        type="metrics"
+                        type='metrics'
                         active={path === PATHS.METRICS || path === PATHS.METRIC}
                         onClick={() => {
                           onHideAsideLayer();
                         }}
                       />
                       <NavBottom
-                        type="countries"
+                        type='countries'
                         active={
                           path === PATHS.COUNTRIES || path === PATHS.COUNTRY
                         }
@@ -407,7 +407,7 @@ export function Header({
                         }}
                       />
                       <NavBottom
-                        type="people"
+                        type='people'
                         active={path === PATHS.GROUPS || path === PATHS.GROUP}
                         onClick={() => {
                           onHideAsideLayer();
@@ -416,11 +416,11 @@ export function Header({
                     </>
                   )}
                   {isMinSize(size, 'large') && (
-                    <SearchWrap justify="center">
+                    <SearchWrap justify='center'>
                       <Search
                         expand={showSearch}
                         onToggle={show => setShowSearch(show)}
-                        bordersize="none"
+                        bordersize='none'
                       />
                     </SearchWrap>
                   )}
@@ -474,9 +474,6 @@ const mapStateToProps = createStructuredSelector({
   locale: state => getLocale(state),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(withTheme(injectIntl(Header)));

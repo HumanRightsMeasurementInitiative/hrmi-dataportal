@@ -66,7 +66,7 @@ const getCardWidth = (width, number, theme) => {
   return `${width / number - edge * 2}px`;
 };
 
-export function PathPeopleOverview({
+export function PathPeopleOverview ({
   onLoadData,
   countryNo,
   theme,
@@ -101,7 +101,7 @@ export function PathPeopleOverview({
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
-          <ContentContainer direction="column" header>
+          <ContentContainer direction='column' header>
             <ContentMaxWidth
               header
               height={
@@ -126,27 +126,27 @@ export function PathPeopleOverview({
                 </Paragraph>
               </MainColumn>
               {isMinSize(size, 'large') && (
-                <Aside align="center" justify="center">
+                <Aside align='center' justify='center'>
                   <Image src={graphic} />
                 </Aside>
               )}
             </ContentMaxWidth>
           </ContentContainer>
-          <SectionContainer background="sectionPeople">
+          <SectionContainer background='sectionPeople'>
             <ContentMaxWidth column>
               <CardWrapper
                 pad={{ top: isMaxSize(size, 'sm') ? 'xsmall' : '0' }}
-                align="start"
+                align='start'
                 responsive={false}
                 margin={{ horizontal: `-${theme.global.edgeSize.xsmall}` }}
                 ref={ref}
               >
                 <Box
-                  direction="row"
+                  direction='row'
                   wrap
                   overflow={isMaxSize(size, 'medium') ? 'hidden' : 'visible'}
                   pad={isMaxSize(size, 'medium') ? '40px 0 0' : '20px 0 0'}
-                  align="start"
+                  align='start'
                 >
                   {gridWidth > 100 &&
                     AT_RISK_GROUPS.map(g => (
@@ -161,8 +161,8 @@ export function PathPeopleOverview({
                           rootMessages['people-at-risk'][g.key],
                         )}`}
                         imageWhitespace
-                        activeColor="brand"
-                        type="photos"
+                        activeColor='brand'
+                        type='photos'
                         width={cardWidth}
                         minHeight
                       />
@@ -190,7 +190,7 @@ const mapStateToProps = createStructuredSelector({
   // dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   countryNo: state => getPeopleAtRiskCountryNo(state),
 });
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () => {
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key)));
@@ -199,9 +199,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(PathPeopleOverview)));

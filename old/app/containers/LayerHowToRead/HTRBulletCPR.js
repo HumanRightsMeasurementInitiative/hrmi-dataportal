@@ -16,7 +16,7 @@ import messages from './messages';
 
 const Styled = styled.div``;
 
-function HTRBulletCPR({ contxt, dimension, intl }) {
+function HTRBulletCPR ({ contxt, dimension, intl }) {
   return (
     <Styled>
       <HTRParagraph>

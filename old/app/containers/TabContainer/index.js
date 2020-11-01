@@ -64,7 +64,7 @@ const SingleTabLabel = styled(Text)`
   color: white;
 `;
 
-function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
+function TabContainer ({ tabs, tabKey, onTabClick, size, theme }) {
   const [scrollTop, setScrollTop] = useState(0);
   const tabsRef = useRef();
   const fixedRef = useRef();
@@ -77,7 +77,7 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
   const fixedTop = scrollTop > hh && tabsRefOffset < hh;
 
   useEffect(() => {
-    function handleScroll() {
+    function handleScroll () {
       setScrollTop(window.pageYOffset);
     }
     window.addEventListener('scroll', handleScroll);
@@ -116,12 +116,12 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
   const activeTab = mainTabs[activeIndex];
 
   return (
-    <Box direction="column" style={{ position: 'relative' }}>
-      <Tabs justify="start" ref={tabsRef}>
+    <Box direction='column' style={{ position: 'relative' }}>
+      <Tabs justify='start' ref={tabsRef}>
         <FixedBar fixed={fixedTop} ref={fixedRef} top={hh}>
           <ContentMaxWidth hasAside>
-            <Box direction="row" fill="horizontal">
-              <TabLinks direction="row" flex align="center" wrap>
+            <Box direction='row' fill='horizontal'>
+              <TabLinks direction='row' flex align='center' wrap>
                 {mainTabs &&
                   mainTabs.length > 1 &&
                   mainTabs.map(tab => (
@@ -139,7 +139,7 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
                     </ButtonNavTab>
                   ))}
                 {mainTabs && mainTabs.length === 1 && (
-                  <SingleTabLabel alignSelf="center">
+                  <SingleTabLabel alignSelf='center'>
                     {mainTabs[0].title}
                   </SingleTabLabel>
                 )}
@@ -151,10 +151,10 @@ function TabContainer({ tabs, tabKey, onTabClick, size, theme }) {
           <Spacer height={fixedRef && fixedRef.current.offsetHeight} />
         )}
       </Tabs>
-      <Box direction="column" style={{ position: 'relative' }}>
+      <Box direction='column' style={{ position: 'relative' }}>
         {asideTab && <AsideBackground />}
         <ContentMaxWidth column hasAside={!!asideTab}>
-          <Box direction="row" fill="horizontal">
+          <Box direction='row' fill='horizontal'>
             <MainColumn hasAside={!!asideTab}>
               {activeTab.content({
                 activeTab: activeTab.key,
@@ -184,7 +184,7 @@ const mapStateToProps = createStructuredSelector({
   tabKey: state => getTabSearch(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onTabClick: key => {
       dispatch(setAsideLayer(null));
@@ -193,9 +193,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(withTheme(TabContainer));

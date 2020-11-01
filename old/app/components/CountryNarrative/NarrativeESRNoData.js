@@ -5,7 +5,7 @@ import { Paragraph } from 'grommet';
 
 import messages from './messages';
 
-function NarrativeESRNoData({ messageValues, showFundingNote, short }) {
+function NarrativeESRNoData ({ messageValues, showFundingNote, short }) {
   return (
     <Paragraph>
       {short && (

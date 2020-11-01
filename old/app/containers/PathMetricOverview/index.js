@@ -42,7 +42,7 @@ const Image = styled.img`
   max-width: 200px;
 `;
 
-export function PathMetricOverview({
+export function PathMetricOverview ({
   onSelectMetric,
   navMethodology,
   intl,
@@ -52,7 +52,7 @@ export function PathMetricOverview({
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
-          <ContentContainer direction="column" header>
+          <ContentContainer direction='column' header>
             <ContentMaxWidth
               header
               height={
@@ -76,7 +76,7 @@ export function PathMetricOverview({
                       no: RIGHTS.length,
                       esrLink: (
                         <ButtonTextIcon
-                          color="esrDark"
+                          color='esrDark'
                           size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
@@ -87,7 +87,7 @@ export function PathMetricOverview({
                       ),
                       physintLink: (
                         <ButtonTextIcon
-                          color="physintDark"
+                          color='physintDark'
                           size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
@@ -98,7 +98,7 @@ export function PathMetricOverview({
                       ),
                       empowerLink: (
                         <ButtonTextIcon
-                          color="empowermentDark"
+                          color='empowermentDark'
                           size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                           weight={700}
                           label={intl.formatMessage(
@@ -112,7 +112,7 @@ export function PathMetricOverview({
                 </Paragraph>
               </MainColumn>
               {isMinSize(size, 'large') && (
-                <Aside align="center" justify="center">
+                <Aside align='center' justify='center'>
                   <Image src={graphic} />
                 </Aside>
               )}
@@ -168,7 +168,7 @@ PathMetricOverview.propTypes = {
   theme: PropTypes.object,
 };
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onSelectMetric: metric => dispatch(selectMetric(metric)),
     // navigate to location
@@ -186,9 +186,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  null,
-  mapDispatchToProps,
-);
+const withConnect = connect(null, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(withTheme(PathMetricOverview)));

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import Select from './Select';
 import ToggleOption from '../ToggleOption';
 
-function Toggle(props) {
+function Toggle (props) {
   let content = <option>--</option>;
   // If we have items, render them
   if (props.values) {

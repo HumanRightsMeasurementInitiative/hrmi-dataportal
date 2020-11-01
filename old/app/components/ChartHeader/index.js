@@ -53,7 +53,7 @@ const TextWrap = styled.span`
   vertical-align: middle;
 `;
 
-const StyledShare = styled(p => <Share {...p} size="small" />)`
+const StyledShare = styled(p => <Share {...p} size='small' />)`
   vertical-align: middle;
   margin-left: 7px;
   stroke: currentColor;
@@ -68,7 +68,7 @@ const DownloadButton = styled(ButtonNavPrimary)`
   }
 `;
 
-export function ChartHeader({
+export function ChartHeader ({
   title,
   chartId,
   filter,
@@ -91,7 +91,7 @@ export function ChartHeader({
     <ResponsiveContext.Consumer>
       {size => (
         <Styled top={top} displayInPDF={displayInPDF}>
-          <Top direction="row" align="baseline" justify="between">
+          <Top direction='row' align='baseline' justify='between'>
             <HeadingWrap>
               <Heading
                 level={isMaxSize(size, 'sm') ? 5 : 2}
@@ -138,29 +138,29 @@ export function ChartHeader({
                 {tools &&
                   tools.settingsConfig &&
                   tools.settingsConfig.key === 'tab-snapshot' && (
-                  /* eslint-disable */
-                  <DownloadButton
-                    as="a"
-                    href={`/${locale}-${countryCode}.pdf`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <TextWrap>
-                      <FormattedMessage
-                        {...rootMessages.labels.chartTools.downloadPDF}
-                      />
-                    </TextWrap>
-                    <StyledShare />
-                  </DownloadButton>
-                )}
+                    /* eslint-disable */
+                    <DownloadButton
+                      as='a'
+                      href={`/${locale}-${countryCode}.pdf`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      <TextWrap>
+                        <FormattedMessage
+                          {...rootMessages.labels.chartTools.downloadPDF}
+                        />
+                      </TextWrap>
+                      <StyledShare />
+                    </DownloadButton>
+                  )}
               </ChartToolWrapper>
-                /* eslint-enable */
+              /* eslint-enable */
             )}
           </Top>
           {(filter || sort) && (
             <Box
               direction={isMaxSize(size, 'sm') ? 'column' : 'row'}
-              justify="between"
+              justify='between'
               align={isMinSize(size, 'medium') ? 'center' : 'start'}
               margin={{
                 bottom: isMinSize(size, 'medium') ? '0' : 'small',

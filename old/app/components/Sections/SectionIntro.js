@@ -63,7 +63,7 @@ const getRightPad = size => {
   return { right: '0' };
 };
 
-export function SectionIntro({ theme }) {
+export function SectionIntro ({ theme }) {
   const [index, setIndex] = useState(0);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -81,16 +81,16 @@ export function SectionIntro({ theme }) {
           }}
         >
           <Box
-            align="start"
-            direction="row"
+            align='start'
+            direction='row'
             pad={{ top: 'xxlarge' }}
             style={{ position: 'absolute', top: 0, left: 0, right: 0 }}
           >
             {isMinSize(size, 'large') && (
               <>
-                <Box basis="1/2" />
+                <Box basis='1/2' />
                 <Box
-                  basis="1/2"
+                  basis='1/2'
                   style={{
                     minHeight: '400px',
                     maxHeight: '444px',
@@ -98,15 +98,15 @@ export function SectionIntro({ theme }) {
                     maxWidth: `${theme.sizes.imageHomeMaxWidth}px`,
                     position: 'relative',
                   }}
-                  justify="start"
-                  align="start"
+                  justify='start'
+                  align='start'
                 >
-                  <Image alt="intro" src={INTRO_IMAGES[index]} />
+                  <Image alt='intro' src={INTRO_IMAGES[index]} />
                 </Box>
               </>
             )}
           </Box>
-          <ContentMaxWidth align="start" direction="row" stretch>
+          <ContentMaxWidth align='start' direction='row' stretch>
             <Box
               basis={isMinSize(size, 'large') ? '1/2' : '1'}
               pad={getRightPad(size)}
@@ -116,7 +116,7 @@ export function SectionIntro({ theme }) {
                 style={{ top: 0, left: 0, transform: 'translate(-55%, -45%)' }}
               >
                 <GraphicCircle
-                  color="graphicRed"
+                  color='graphicRed'
                   size={isMaxSize(size, 'sm') ? '75px' : '100px'}
                 />
               </GraphicWrap>
@@ -138,8 +138,8 @@ export function SectionIntro({ theme }) {
                 </Paragraph>
                 <SearchWrapper>
                   <Search
-                    bordersize="small"
-                    bordercolor="dark"
+                    bordersize='small'
+                    bordercolor='dark'
                     stretch
                     size={isMaxSize(size, 'sm') ? 'medium' : 'large'}
                     example
@@ -156,7 +156,7 @@ export function SectionIntro({ theme }) {
                   transform: 'translateX(20%)',
                 }}
               >
-                <GraphicCircle color="graphicPurple" size="32px" />
+                <GraphicCircle color='graphicPurple' size='32px' />
               </GraphicWrap>
             )}
             {isMinSize(size, 'large') && (
@@ -167,12 +167,12 @@ export function SectionIntro({ theme }) {
                   transform: 'translateX(20%)',
                 }}
               >
-                <GraphicCircle color="graphicYellow" size="20px" />
+                <GraphicCircle color='graphicYellow' size='20px' />
               </GraphicWrap>
             )}
             {isMinSize(size, 'large') && (
               <Box
-                basis="1/2"
+                basis='1/2'
                 style={{
                   minHeight: '400px',
                   maxHeight: '444px',

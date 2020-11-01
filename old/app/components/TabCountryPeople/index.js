@@ -43,7 +43,7 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-function TabCountryPeople({ data, highlight, setHighlight }) {
+function TabCountryPeople ({ data, highlight, setHighlight }) {
   return (
     <>
       <StyledHeading responsive={false} level={2}>
@@ -54,7 +54,7 @@ function TabCountryPeople({ data, highlight, setHighlight }) {
       </Paragraph>
       {data &&
         data.map(dim => (
-          <Box key={dim.key} border="top" margin={{ top: 'large' }}>
+          <Box key={dim.key} border='top' margin={{ top: 'large' }}>
             <DimensionHeading>
               <FormattedMessage {...rootMessages.dimensions[dim.key]} />
             </DimensionHeading>
@@ -62,7 +62,7 @@ function TabCountryPeople({ data, highlight, setHighlight }) {
               Object.values(dim.rights).map((right, index) => (
                 <div key={right.key}>
                   {Object.values(right.atRiskData).length > 1 && (
-                    <Box border="top">
+                    <Box border='top'>
                       <RightHeading margin={{ bottom: 'none' }}>
                         <FormattedMessage {...rootMessages.rights[right.key]} />
                       </RightHeading>

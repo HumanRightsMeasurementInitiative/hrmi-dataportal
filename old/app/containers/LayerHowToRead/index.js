@@ -18,12 +18,12 @@ import HTRBar from './HTRBar';
 import HTRTrendESR from './HTRTrendESR';
 import HTRTrendCPR from './HTRTrendCPR';
 
-function LayerHowToRead({ layer }) {
+function LayerHowToRead ({ layer }) {
   const { contxt, scale, dimension, chart, chartName } = layer;
   const charts = chart ? asArray(chart) : [];
   return (
     <Box
-      direction="column"
+      direction='column'
       pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
     >
       <Heading level={2}>

@@ -41,7 +41,7 @@ const getScoreAsideWidth = (size, hasAside = false) => {
   }
   return 0;
 };
-export function ListHeader({
+export function ListHeader ({
   metric,
   benchmark,
   commonLabel,
@@ -56,16 +56,16 @@ export function ListHeader({
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box direction="row" align="end" pad={{ bottom: 'xxsmall' }}>
+        <Box direction='row' align='end' pad={{ bottom: 'xxsmall' }}>
           <CountryWrap
             width={chartLabelWidth(size)}
             noBorder
-            align="start"
+            align='start'
             flex={{ shrink: 0 }}
             pad={{ right: 'small' }}
           >
             <StyledScoreText
-              size="small"
+              size='small'
               style={{ fontWeight: 300 }}
               color={labelColor}
             >
@@ -76,17 +76,17 @@ export function ListHeader({
           </CountryWrap>
           <BarWrap
             flex
-            direction="row"
+            direction='row'
             style={{ position: 'relative' }}
-            align="center"
+            align='center'
           >
             {annotateMinMax && metric && (
-              <Box direction="row" justify="between" width="100%">
-                <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
+              <Box direction='row' justify='between' width='100%'>
+                <Text size='xsmall' style={{ transform: 'translateX(-50%)' }}>
                   0
                 </Text>
                 {metric && (
-                  <Text size="xsmall" weight={500} textAlign="center">
+                  <Text size='xsmall' weight={500} textAlign='center'>
                     <FormattedMessage
                       {...rootMessages.labels.xAxis[
                         metric.type === 'esr' ? benchmark : 'cpr'
@@ -94,7 +94,7 @@ export function ListHeader({
                     />
                   </Text>
                 )}
-                <Text size="xsmall" style={{ transform: 'translateX(50%)' }}>
+                <Text size='xsmall' style={{ transform: 'translateX(50%)' }}>
                   {metric.type === 'esr' || metric.metricType === 'indicators'
                     ? '100%'
                     : '10'}

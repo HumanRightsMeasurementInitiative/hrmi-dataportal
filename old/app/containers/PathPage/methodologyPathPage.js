@@ -83,7 +83,7 @@ const StyledContentInfoBox = styled.div`
   margin-bottom: 50px;
 `;
 
-export function MethodologyPathPage({
+export function MethodologyPathPage ({
   match,
   onLoadContent,
   content,
@@ -118,12 +118,12 @@ export function MethodologyPathPage({
     <ContentWrap>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content="Description of Page" />
+        <meta name='description' content='Description of Page' />
       </Helmet>
-      <ContentContainer direction="column" header>
+      <ContentContainer direction='column' header>
         <StyledContentHeader>
           <Close closeTarget={closeTarget} />
-          <ContentMaxWidth direction="column">
+          <ContentMaxWidth direction='column'>
             <PageTitle level={1}>{pageTitle}</PageTitle>
             <StyledContentSubHeading>
               {/* eslint-disable react/no-danger */}
@@ -193,7 +193,7 @@ const mapStateToProps = createStructuredSelector({
   closeTarget: state => getCloseTargetPage(state),
 });
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     onLoadContent: page => {
       dispatch(loadContentIfNeeded(page));
@@ -201,9 +201,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(injectIntl(MethodologyPathPage));

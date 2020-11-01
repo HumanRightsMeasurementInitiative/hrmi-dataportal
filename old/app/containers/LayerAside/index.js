@@ -35,12 +35,12 @@ const ButtonWrap = styled.div`
   right: 1em;
 `;
 
-export function LayerAside({ onClose, theme, layer }) {
+export function LayerAside ({ onClose, theme, layer }) {
   const [windowDimensions, setWindowDimensions] = useState(
     getWindowDimensions(),
   );
   useEffect(() => {
-    function handleResize() {
+    function handleResize () {
       setWindowDimensions(getWindowDimensions());
     }
 
@@ -58,20 +58,20 @@ export function LayerAside({ onClose, theme, layer }) {
           onClickOutside={() => onClose()}
           modal={isMaxSize(size, 'medium')}
           animation={isMinSize(size, 'large')}
-          position="right"
+          position='right'
           full={isMaxSize(size, 'medium') || 'vertical'}
         >
           <Box
-            elevation="large"
+            elevation='large'
             width={
               isMaxSize(size, 'medium')
                 ? '100%'
                 : `${getFloatingAsideWidth(size, theme, windowDimensions)}px`
             }
-            direction="column"
+            direction='column'
             flex={{ shrink: 0 }}
-            fill="vertical"
-            overflow="auto"
+            fill='vertical'
+            overflow='auto'
             style={{ position: 'relative' }}
             responsive={false}
             background={layer.background || 'white'}
@@ -79,7 +79,7 @@ export function LayerAside({ onClose, theme, layer }) {
           >
             <ButtonWrap>
               <ButtonIcon onClick={onClose} subtle inverse={inverse}>
-                <CloseIcon size="xlarge" color={inverse ? 'white' : 'dark'} />
+                <CloseIcon size='xlarge' color={inverse ? 'white' : 'dark'} />
               </ButtonIcon>
             </ButtonWrap>
             {layer.type === 'htr' && <LayerHowToRead layer={layer} />}
@@ -125,7 +125,7 @@ const mapStateToProps = createStructuredSelector({
   layer: state => getAsideLayer(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onClose: () => {
       dispatch(setAsideLayer(false));
@@ -133,9 +133,6 @@ export function mapDispatchToProps(dispatch) {
   };
 }
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(withTheme(LayerAside));

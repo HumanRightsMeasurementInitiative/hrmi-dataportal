@@ -60,18 +60,9 @@ export const getCloseTargetCountry = createSelector(
 );
 
 // get data / content
-const getData = createSelector(
-  getGlobal,
-  global => global.data,
-);
-export const getESRScores = createSelector(
-  getData,
-  data => data.esrScores,
-);
-export const getCPRScores = createSelector(
-  getData,
-  data => data.cprScores,
-);
+const getData = createSelector(getGlobal, global => global.data);
+export const getESRScores = createSelector(getData, data => data.esrScores);
+export const getCPRScores = createSelector(getData, data => data.cprScores);
 export const getAuxIndicators = createSelector(
   getData,
   data => data.auxIndicators,
@@ -84,26 +75,14 @@ export const getESRIndicatorScores = createSelector(
   getData,
   data => data.esrIndicatorScores,
 );
-export const getAtRiskData = createSelector(
-  getData,
-  data => data.atRisk,
-);
-export const getCountries = createSelector(
-  getData,
-  data => data.countries,
-);
+export const getAtRiskData = createSelector(getData, data => data.atRisk);
+export const getCountries = createSelector(getData, data => data.countries);
 export const getCountriesGrammar = createSelector(
   getData,
   data => data.countriesGrammar,
 );
-export const getFeatured = createSelector(
-  getData,
-  data => data.featured,
-);
-export const getSources = createSelector(
-  getData,
-  data => data.sources,
-);
+export const getFeatured = createSelector(getData, data => data.featured);
+export const getSources = createSelector(getData, data => data.sources);
 
 // router sub-state
 const getRouter = state => state.router;
@@ -123,41 +102,32 @@ export const getRouterPath = createSelector(
 /**
  * Get the language locale
  */
-export const getLocale = createSelector(
-  getRouterPath,
-  path => {
-    if (path) {
-      const splitPath = path.split('/');
-      return splitPath.length > 1 && appLocales.indexOf(splitPath[1]) >= 0
-        ? splitPath[1]
-        : DEFAULT_LOCALE;
-    }
-    return DEFAULT_LOCALE;
-  },
-);
+export const getLocale = createSelector(getRouterPath, path => {
+  if (path) {
+    const splitPath = path.split('/');
+    return splitPath.length > 1 && appLocales.indexOf(splitPath[1]) >= 0
+      ? splitPath[1]
+      : DEFAULT_LOCALE;
+  }
+  return DEFAULT_LOCALE;
+});
 
-export const getRouterRoute = createSelector(
-  getRouterPath,
-  path => {
-    if (path) {
-      const splitPath = path.split('/');
-      // should result in ["", "en", "page", "about"]
-      return splitPath.length > 2 ? splitPath[2] : '';
-    }
-    return '';
-  },
-);
-export const getRouterMatch = createSelector(
-  getRouterPath,
-  path => {
-    if (path) {
-      const splitPath = path.split('/');
-      // should result in ["", "en", "page", "about"]
-      return splitPath.length > 3 ? splitPath[3] : '';
-    }
-    return '';
-  },
-);
+export const getRouterRoute = createSelector(getRouterPath, path => {
+  if (path) {
+    const splitPath = path.split('/');
+    // should result in ["", "en", "page", "about"]
+    return splitPath.length > 2 ? splitPath[2] : '';
+  }
+  return '';
+});
+export const getRouterMatch = createSelector(getRouterPath, path => {
+  if (path) {
+    const splitPath = path.split('/');
+    // should result in ["", "en", "page", "about"]
+    return splitPath.length > 3 ? splitPath[3] : '';
+  }
+  return '';
+});
 
 export const getRawSearch = createSelector(
   getRouterSearchParams,
@@ -170,22 +140,19 @@ export const getActiveGroupsSearch = createSelector(
     search.has('gactive') ? search.getAll('gactive') : [PEOPLE_GROUPS[0].key],
 );
 
-export const getTabSearch = createSelector(
-  getRouterSearchParams,
-  search => (search.has('tab') ? search.get('tab') : '0'),
+export const getTabSearch = createSelector(getRouterSearchParams, search =>
+  search.has('tab') ? search.get('tab') : '0',
 );
 export const getAtRiskSearch = createSelector(
   getRouterSearchParams,
   search => search.has('atRisk') && search.get('atRisk'),
 );
 
-export const getScaleSearch = createSelector(
-  getRouterSearchParams,
-  search =>
-    search.has('scale') &&
-    SCALES.map(s => s.key).indexOf(search.get('scale')) > -1
-      ? search.get('scale')
-      : SCALES[0].key,
+export const getScaleSearch = createSelector(getRouterSearchParams, search =>
+  search.has('scale') &&
+  SCALES.map(s => s.key).indexOf(search.get('scale')) > -1
+    ? search.get('scale')
+    : SCALES[0].key,
 );
 
 export const getBenchmarkSearch = createSelector(
@@ -196,19 +163,15 @@ export const getBenchmarkSearch = createSelector(
       ? search.get('pb')
       : BENCHMARKS[0].key,
 );
-export const getYearESRSearch = createSelector(
-  getRouterSearchParams,
-  search =>
-    search.has('yesr') && isInteger(search.get('yesr'))
-      ? search.get('yesr')
-      : false,
+export const getYearESRSearch = createSelector(getRouterSearchParams, search =>
+  search.has('yesr') && isInteger(search.get('yesr'))
+    ? search.get('yesr')
+    : false,
 );
-export const getYearCPRSearch = createSelector(
-  getRouterSearchParams,
-  search =>
-    search.has('ycpr') && isInteger(search.get('ycpr'))
-      ? search.get('ycpr')
-      : false,
+export const getYearCPRSearch = createSelector(getRouterSearchParams, search =>
+  search.has('ycpr') && isInteger(search.get('ycpr'))
+    ? search.get('ycpr')
+    : false,
 );
 
 const searchValues = (validValues, search) => {
@@ -238,7 +201,10 @@ export const getIncomeSearch = createSelector(
   getRouterSearchParams,
   search =>
     search.has('income') &&
-    searchValues(INCOME_GROUPS.values.map(s => s.key), search.getAll('income')),
+    searchValues(
+      INCOME_GROUPS.values.map(s => s.key),
+      search.getAll('income'),
+    ),
 );
 export const getCountryGroupSearch = createSelector(
   getRouterSearchParams,
@@ -310,10 +276,7 @@ export const getFeaturedCountries = createSelector(
 );
 
 // data / content
-const getContent = createSelector(
-  getGlobal,
-  global => global.content,
-);
+const getContent = createSelector(getGlobal, global => global.content);
 export const getContentByKey = createSelector(
   (state, key) => key,
   getContent,
@@ -339,10 +302,7 @@ const getContentReady = createSelector(
   global => global.contentReady,
 );
 
-const getDataReady = createSelector(
-  getGlobal,
-  global => global.dataReady,
-);
+const getDataReady = createSelector(getGlobal, global => global.dataReady);
 // requested data / content
 export const getDataRequestedByKey = createSelector(
   (state, key) => key,
@@ -394,29 +354,23 @@ const calcMinYear = scores =>
     9999,
   ).toString();
 
-export const getMaxYearESR = createSelector(
-  getESRScores,
-  scores => calcMaxYear(scores),
+export const getMaxYearESR = createSelector(getESRScores, scores =>
+  calcMaxYear(scores),
 );
-export const getMinYearESR = createSelector(
-  getESRScores,
-  scores => calcMinYear(scores),
+export const getMinYearESR = createSelector(getESRScores, scores =>
+  calcMinYear(scores),
 );
-export const getMaxYearCPR = createSelector(
-  getCPRScores,
-  scores => calcMaxYear(scores),
+export const getMaxYearCPR = createSelector(getCPRScores, scores =>
+  calcMaxYear(scores),
 );
-export const getMinYearCPR = createSelector(
-  getCPRScores,
-  scores => calcMinYear(scores),
+export const getMinYearCPR = createSelector(getCPRScores, scores =>
+  calcMinYear(scores),
 );
-export const getMaxYearAtRisk = createSelector(
-  getAtRiskData,
-  data => calcMaxYear(data),
+export const getMaxYearAtRisk = createSelector(getAtRiskData, data =>
+  calcMaxYear(data),
 );
-export const getMinYearAtRisk = createSelector(
-  getAtRiskData,
-  data => calcMinYear(data),
+export const getMinYearAtRisk = createSelector(getAtRiskData, data =>
+  calcMinYear(data),
 );
 export const getESRYear = createSelector(
   getYearESRSearch,
@@ -1218,17 +1172,14 @@ export const getPeopleAtRisk = createSelector(
   },
 );
 
-export const getPeopleAtRiskCountryNo = createSelector(
-  getAtRiskData,
-  data => {
-    if (!data) return 0;
-    const year = calcMaxYear(data);
-    const countries = data
-      .filter(d => quasiEquals(d.year, year))
-      .map(d => d[COLUMNS.AT_RISK.COUNTRY_CODE]);
-    return countries ? uniq(countries).length : 0;
-  },
-);
+export const getPeopleAtRiskCountryNo = createSelector(getAtRiskData, data => {
+  if (!data) return 0;
+  const year = calcMaxYear(data);
+  const countries = data
+    .filter(d => quasiEquals(d.year, year))
+    .map(d => d[COLUMNS.AT_RISK.COUNTRY_CODE]);
+  return countries ? uniq(countries).length : 0;
+});
 
 export const getPeopleAtRiskForGroup = createSelector(
   (state, { group }) => group,

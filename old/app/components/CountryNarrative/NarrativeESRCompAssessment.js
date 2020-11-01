@@ -13,7 +13,7 @@ const RANGE = 5;
 
 const isCountryHighIncome = country => country.high_income_country === '1';
 
-function NarrativeESRCompAssessment({
+function NarrativeESRCompAssessment ({
   benchmark,
   country,
   intl,

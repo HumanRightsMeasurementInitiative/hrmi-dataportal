@@ -77,7 +77,7 @@ const KeyItemDashed = styled.span`
   width: 3px;
 `;
 
-export function ChartContainerByGroup({
+export function ChartContainerByGroup ({
   metricCode,
   scores,
   onLoadData,
@@ -225,7 +225,7 @@ const mapStateToProps = createStructuredSelector({
   raw: state => getRawSearch(state),
 });
 
-export function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps (dispatch) {
   return {
     onLoadData: () =>
       DEPENDENCIES.forEach(key => dispatch(loadDataIfNeeded(key))),
@@ -234,10 +234,7 @@ export function mapDispatchToProps(dispatch) {
     },
   };
 }
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
 export default compose(withConnect)(
   withTheme(injectIntl(ChartContainerByGroup)),

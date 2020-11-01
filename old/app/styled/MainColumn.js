@@ -37,8 +37,8 @@ const Styled = styled(Box)`
   }
 `;
 
-function MainColumn(props) {
-  return <Styled direction="column" {...props} flex />;
+function MainColumn (props) {
+  return <Styled direction='column' {...props} flex />;
 }
 
 MainColumn.propTypes = {

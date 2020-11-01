@@ -34,7 +34,7 @@ const Banner = styled.div`
   padding: ${({ theme }) => theme.global.edgeSize.hair}
     ${({ theme }) => theme.global.edgeSize.xsmall};
 `;
-export function Card({
+export function Card ({
   imageSrc,
   margin,
   onCardClick,
@@ -52,12 +52,12 @@ export function Card({
   }
   return (
     <Box
-      elevation="medium"
+      elevation='medium'
       responsive={false}
       margin={margin || 'xsmall'}
-      pad="none"
-      align="start"
-      background="white"
+      pad='none'
+      align='start'
+      background='white'
       style={{ position: 'relative' }}
       {...rest}
     >
@@ -69,8 +69,8 @@ export function Card({
             overflow: 'hidden',
             position: 'relative',
           }}
-          justify="start"
-          align="center"
+          justify='start'
+          align='center'
         >
           {imageSrc && <Image src={imageSrc} alt={label} type={type} />}
         </Box>
@@ -87,7 +87,7 @@ export function Card({
         >
           {superLabel && (
             <div>
-              <Text size="xsmall">{superLabel}</Text>
+              <Text size='xsmall'>{superLabel}</Text>
             </div>
           )}
           <div>
