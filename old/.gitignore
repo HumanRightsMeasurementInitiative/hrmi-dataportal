@@ -1,0 +1,22 @@
+# Don't check auto-generated stuff into git
+coverage
+build
+node_modules
+stats.json
+.firebase
+package-lock.json
+
+# Cruft
+.DS_Store
+npm-debug.log
+.idea
+
+# asdf
+.tool-versions
+
+# firebase functions
+ui-debug.log
+functions/firebase-debug.log
+
+# pdfs
+pdfs
