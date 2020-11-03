@@ -310,7 +310,7 @@ export const getFeaturedCountries = createSelector(
 );
 
 // data / content
-const getContent = createSelector(
+export const getContent = createSelector(
   getGlobal,
   global => global.content,
 );
