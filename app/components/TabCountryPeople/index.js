@@ -11,9 +11,12 @@ import styled from 'styled-components';
 import { Heading, Paragraph, Box } from 'grommet';
 
 import rootMessages from 'messages';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import ChartWordCloud from 'components/ChartWordCloud';
+import Loading from 'components/LoadingIndicator';
+import HTMLWrapper from 'components/HTMLWrapper';
+import Hint from 'styled/Hint';
 
 import messages from './messages';
 
@@ -43,7 +46,33 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-function TabCountryPeople({ data, highlight, setHighlight }) {
+// N.B. same as ChartCountryMetricPeople
+const renderAnalysis = (atRiskAnalysis, intl) => (
+  <Box>
+    {atRiskAnalysis && atRiskAnalysis.content && (
+      <>
+        {atRiskAnalysis.locale !== intl.locale && (
+          <Paragraph>
+            <Hint italic>
+              <FormattedMessage {...messages.noAnalysisInLanguage} />
+            </Hint>
+          </Paragraph>
+        )}
+        <HTMLWrapper innerhtml={atRiskAnalysis.content} />
+      </>
+    )}
+    {(!atRiskAnalysis || !atRiskAnalysis.content) && <Loading />}
+  </Box>
+);
+
+function TabCountryPeople({
+  data,
+  highlight,
+  setHighlight,
+  content,
+  countryCode,
+  intl,
+}) {
   return (
     <>
       <StyledHeading responsive={false} level={2}>
@@ -85,6 +114,7 @@ function TabCountryPeople({ data, highlight, setHighlight }) {
                       />
                     ),
                   )}
+                  {renderAnalysis(content[`${right.key}/${countryCode}`], intl)}
                 </div>
               ))}
           </Box>
@@ -98,6 +128,9 @@ TabCountryPeople.propTypes = {
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   setHighlight: PropTypes.func,
+  content: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryCode: PropTypes.string,
+  intl: intlShape,
 };
 
-export default TabCountryPeople;
+export default injectIntl(TabCountryPeople);
