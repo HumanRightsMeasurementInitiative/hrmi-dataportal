@@ -141,9 +141,7 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
     // If haven't loaded yet, do so now.
     if (!requestedAt && !ready) {
       const requestLocale = yield locale || select(getLocale);
-      const url = `${PAGES_URL}${requestLocale}/${
-        key === 'about' || key === 'methodology' ? `${key}-staging` : key
-      }/`;
+      const url = `${PAGES_URL}${requestLocale}/${key}/`;
       try {
         // First record that we are requesting
         yield put(contentRequested(key, Date.now()));
