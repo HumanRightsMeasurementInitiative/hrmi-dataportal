@@ -43,6 +43,7 @@ export function ButtonAccordian({
   size = 'medium',
   iconSize,
   reverse = true,
+  border = '1px solid lightgrey',
 }) {
   return (
     <button
@@ -59,7 +60,7 @@ export function ButtonAccordian({
         width: '100%',
         borderRadius: '0',
         border: 'none',
-        borderBottom: '1px solid lightgrey',
+        borderBottom: border,
         outline: 'none',
         cursor: 'pointer',
       }}
@@ -75,6 +76,7 @@ ButtonAccordian.propTypes = {
   hasIcon: PropTypes.bool,
   secondary: PropTypes.bool,
   reverse: PropTypes.bool,
+  border: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   size: PropTypes.string,
   iconSize: PropTypes.string,

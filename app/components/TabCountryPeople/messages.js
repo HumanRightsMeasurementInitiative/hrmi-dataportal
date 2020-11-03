@@ -17,4 +17,12 @@ export default defineMessages({
     id: `${scope}.intro`,
     defaultMessage: 'An overview of people at risk by human right',
   },
+  showAnalysis: {
+    id: `${scope}.show`,
+    defaultMessage: 'Show qualitative data',
+  },
+  hideAnalysis: {
+    id: `${scope}.hide`,
+    defaultMessage: 'Hide qualitative data',
+  },
 });
