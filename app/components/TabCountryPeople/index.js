@@ -4,11 +4,12 @@
  *
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { Heading, Paragraph, Box } from 'grommet';
+import { Up, Down } from 'grommet-icons';
 
 import rootMessages from 'messages';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -16,7 +17,9 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import ChartWordCloud from 'components/ChartWordCloud';
 import Loading from 'components/LoadingIndicator';
 import HTMLWrapper from 'components/HTMLWrapper';
+
 import Hint from 'styled/Hint';
+import ButtonAccordian from 'styled/ButtonAccordian';
 
 import messages from './messages';
 
@@ -65,6 +68,38 @@ const renderAnalysis = (atRiskAnalysis, intl) => (
   </Box>
 );
 
+const QualitativeData = ({ right, index, arr, content, countryCode, intl }) => {
+  const [analysis, setAnalysis] = useState(false);
+  const isLast = index === arr.length - 1;
+
+  return (
+    <>
+      {analysis && renderAnalysis(content[`${right.key}/${countryCode}`], intl)}
+      <ButtonAccordian
+        onClick={() => setAnalysis(!analysis)}
+        icon={analysis ? <Up size="small" /> : <Down size="small" />}
+        color="white"
+        size="small"
+        label={
+          <FormattedMessage
+            {...messages[analysis ? 'hideAnalysis' : 'showAnalysis']}
+          />
+        }
+        border={isLast ? '1px solid lightgrey' : 'none'}
+      />
+    </>
+  );
+};
+
+QualitativeData.propTypes = {
+  right: PropTypes.any,
+  index: PropTypes.number,
+  arr: PropTypes.array,
+  content: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+  countryCode: PropTypes.string,
+  intl: intlShape,
+};
+
 function TabCountryPeople({
   data,
   highlight,
@@ -88,7 +123,7 @@ function TabCountryPeople({
               <FormattedMessage {...rootMessages.dimensions[dim.key]} />
             </DimensionHeading>
             {dim.rights &&
-              Object.values(dim.rights).map((right, index) => (
+              Object.values(dim.rights).map((right, index, arr) => (
                 <div key={right.key}>
                   {Object.values(right.atRiskData).length > 1 && (
                     <Box border="top">
@@ -114,7 +149,14 @@ function TabCountryPeople({
                       />
                     ),
                   )}
-                  {renderAnalysis(content[`${right.key}/${countryCode}`], intl)}
+                  <QualitativeData
+                    right={right}
+                    index={index}
+                    arr={arr}
+                    content={content}
+                    countryCode={countryCode}
+                    intl={intl}
+                  />
                 </div>
               ))}
           </Box>
