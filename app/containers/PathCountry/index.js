@@ -31,6 +31,7 @@ import {
   getAsideLayer,
   getAsideLayerActiveCode,
   getAtRiskSearch,
+  getContent,
 } from 'containers/App/selectors';
 
 import {
@@ -39,6 +40,7 @@ import {
   trackEvent,
   setAsideLayer,
   setHighlightGroup,
+  loadContentIfNeeded,
 } from 'containers/App/actions';
 import {
   // INCOME_GROUPS,
@@ -48,6 +50,7 @@ import {
   IMAGE_PATH,
   BENCHMARKS,
   COLUMNS,
+  RIGHTS,
 } from 'containers/App/constants';
 
 import saga from 'containers/App/saga';
@@ -115,6 +118,33 @@ const DEPENDENCIES = [
   'auxIndicators',
   'atRisk',
 ];
+
+const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
+
+const hasSubrights = metric => {
+  const subrights = getSubrights(metric);
+  return subrights.length > 0;
+};
+
+const hasAnalysis = metric =>
+  metric.metricType === 'rights' ||
+  (metric.metricType === 'dimensions' && metric.key === 'esr');
+
+const generateKey = (metricCode, countryCode) => {
+  const metric = getMetricDetails(metricCode);
+  if (hasAnalysis(metric)) {
+    if (metric.metricType === 'rights') {
+      if (hasSubrights(metric)) {
+        return getSubrights(metric).map(sr => `${sr.key}/${countryCode}`);
+      }
+      return `${metricCode}/${countryCode}`;
+    }
+    if (metric.metricType === 'dimensions' && metric.key === 'esr') {
+      return `esr/${countryCode}`;
+    }
+  }
+  return null;
+};
 
 const getMetricScore = (metric, dimensions, rights, indicators, benchmark) => {
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
@@ -221,6 +251,8 @@ export function PathCountry({
   activeCode,
   highlightGroup,
   onSetHighlightGroup,
+  content,
+  onLoadContent,
 }) {
   // const [activeCode, setActiveCode] = useState();
   useInjectSaga({ key: 'app', saga });
@@ -231,6 +263,13 @@ export function PathCountry({
   }, []);
 
   const countryCode = match.params.country;
+  const keys = RIGHTS.map(r => generateKey(r.key, countryCode));
+
+  // loads content for all rights for people at risk tab
+  useEffect(() => {
+    keys.forEach(k => onLoadContent(k));
+    onLoadData();
+  }, []);
 
   /* eslint-disable no-console */
   if (!rootMessages.countries[countryCode]) {
@@ -276,6 +315,7 @@ export function PathCountry({
       });
     }
   };
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -428,6 +468,8 @@ export function PathCountry({
                       messageValues={messageValues}
                       highlight={highlightGroup}
                       setHighlight={onSetHighlightGroup}
+                      content={content}
+                      keys={keys}
                     />
                   ),
               },
@@ -502,6 +544,8 @@ PathCountry.propTypes = {
   asideLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   highlightGroup: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onSetHighlightGroup: PropTypes.func,
+  content: PropTypes.object,
+  onLoadContent: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -522,6 +566,7 @@ const mapStateToProps = createStructuredSelector({
   asideLayer: state => getAsideLayer(state),
   activeCode: state => getAsideLayerActiveCode(state),
   highlightGroup: state => getAtRiskSearch(state),
+  content: state => getContent(state),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -556,6 +601,13 @@ export function mapDispatchToProps(dispatch) {
       );
     },
     onTrackEvent: e => dispatch(trackEvent(e)),
+    onLoadContent: path => {
+      if (Array.isArray(path)) {
+        path.forEach(p => dispatch(loadContentIfNeeded(p, 'atrisk')));
+      } else {
+        dispatch(loadContentIfNeeded(path, 'atrisk'));
+      }
+    },
   };
 }
 

@@ -144,7 +144,6 @@ const mapStateToProps = createStructuredSelector({
     const metric = getMetricDetails(metricCode);
     if (hasSubrights(metric)) {
       const subrights = getSubrights(metric);
-      // console.log(subrights)
       return subrights.map(sr => {
         const content = getContentByKey(
           state,
