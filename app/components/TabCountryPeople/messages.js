@@ -25,4 +25,8 @@ export default defineMessages({
     id: `${scope}.hide`,
     defaultMessage: 'Hide qualitative data',
   },
+  people: {
+    id: `${scope}.people`,
+    defaultMessage: 'Highlight {dropdown} in the word clouds below.',
+  },
 });
