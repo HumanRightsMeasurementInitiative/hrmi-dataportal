@@ -41,6 +41,7 @@ import {
   setAsideLayer,
   setHighlightGroup,
   loadContentIfNeeded,
+  selectCountry,
 } from 'containers/App/actions';
 import {
   // INCOME_GROUPS,
@@ -295,6 +296,7 @@ export function PathCountry({
   onSetHighlightGroup,
   content,
   onLoadContent,
+  onSelectCountry,
 }) {
   // const [activeCode, setActiveCode] = useState();
   useInjectSaga({ key: 'app', saga });
@@ -524,6 +526,7 @@ export function PathCountry({
                       setHighlight={onSetHighlightGroup}
                       content={content}
                       keys={keys}
+                      onSelectCountry={onSelectCountry}
                     />
                   ),
               },
@@ -600,6 +603,7 @@ PathCountry.propTypes = {
   onSetHighlightGroup: PropTypes.func,
   content: PropTypes.object,
   onLoadContent: PropTypes.func,
+  onSelectCountry: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -661,6 +665,9 @@ export function mapDispatchToProps(dispatch) {
       } else {
         dispatch(loadContentIfNeeded(path, 'atrisk'));
       }
+    },
+    onSelectCountry: (countryCode, peopleCode) => {
+      dispatch(selectCountry(countryCode, 'atrisk', peopleCode));
     },
   };
 }
