@@ -153,6 +153,23 @@ const getDataForValue = (value, minYear, maxYear) => {
   }
   return data;
 };
+
+function bifurcateScoresIntoConsecutiveYearGroups(scoresAll) {
+  return scoresAll.reduce((acc, curr) => {
+    if (acc.length < 1) return [[curr]]; // first iteration
+    // if previous year is not equal to the current year minus 1
+    const recentScores = acc[acc.length - 1];
+    const recentScore = recentScores[recentScores.length - 1];
+    if (recentScore.syear !== curr.syear - 1) {
+      // return a new array inside the outer array
+      return acc.concat([[curr]]);
+    }
+    // add the consecutive score to the existing array
+    acc[acc.length - 1] = recentScores.concat(curr);
+    return acc;
+  }, []);
+}
+
 function ChartCountryMetricTrend({
   scores,
   column,
@@ -366,58 +383,70 @@ function ChartCountryMetricTrend({
                   }
                 />
               )}
-              {groupsAll && scoresAll && (
-                <LineMarkSeries
-                  data={scoresAll}
-                  size={2.5}
-                  style={{
-                    stroke: colorCode,
-                    strokeWidth: 1,
-                  }}
-                  fill={
-                    metric.metricType === 'indicators' ? 'white' : colorCode
-                  }
-                  onNearestX={(point, { index }) =>
-                    setHighlight({ point, index })
-                  }
-                />
-              )}
-              {groupsFemale && scoresFemale && (
-                <LineMarkSeries
-                  data={scoresFemale}
-                  size={2.5}
-                  style={{
-                    stroke: '#EE5A45',
-                    strokeWidth: 1,
-                  }}
-                  fill={
-                    metric.metricType === 'indicators'
-                      ? 'white'
-                      : theme.global.colors[PEOPLE_GROUPS[1].color]
-                  }
-                  onNearestX={(point, { index }) =>
-                    setHighlightFemale({ point, index })
-                  }
-                />
-              )}
-              {groupsMale && scoresMale && (
-                <LineMarkSeries
-                  data={scoresMale}
-                  size={2.5}
-                  style={{
-                    stroke: '#0D6D64',
-                    strokeWidth: 1,
-                  }}
-                  fill={
-                    metric.metricType === 'indicators'
-                      ? 'white'
-                      : theme.global.colors[PEOPLE_GROUPS[2].color]
-                  }
-                  onNearestX={(point, { index }) =>
-                    setHighlightMale({ point, index })
-                  }
-                />
-              )}
+              {groupsAll &&
+                scoresAll &&
+                bifurcateScoresIntoConsecutiveYearGroups(scoresAll).map(
+                  scoresGroup => (
+                    <LineMarkSeries
+                      data={scoresGroup}
+                      size={2.5}
+                      style={{
+                        stroke: colorCode,
+                        strokeWidth: 1,
+                      }}
+                      fill={
+                        metric.metricType === 'indicators' ? 'white' : colorCode
+                      }
+                      onNearestX={(point, { index }) =>
+                        setHighlight({ point, index })
+                      }
+                    />
+                  ),
+                )}
+              {groupsFemale &&
+                scoresFemale &&
+                bifurcateScoresIntoConsecutiveYearGroups(scoresFemale).map(
+                  scoresGroup => (
+                    <LineMarkSeries
+                      data={scoresGroup}
+                      size={2.5}
+                      style={{
+                        stroke: '#EE5A45',
+                        strokeWidth: 1,
+                      }}
+                      fill={
+                        metric.metricType === 'indicators'
+                          ? 'white'
+                          : theme.global.colors[PEOPLE_GROUPS[1].color]
+                      }
+                      onNearestX={(point, { index }) =>
+                        setHighlightFemale({ point, index })
+                      }
+                    />
+                  ),
+                )}
+              {groupsMale &&
+                scoresMale &&
+                bifurcateScoresIntoConsecutiveYearGroups(scoresMale).map(
+                  scoresGroup => (
+                    <LineMarkSeries
+                      data={scoresGroup}
+                      size={2.5}
+                      style={{
+                        stroke: '#0D6D64',
+                        strokeWidth: 1,
+                      }}
+                      fill={
+                        metric.metricType === 'indicators'
+                          ? 'white'
+                          : theme.global.colors[PEOPLE_GROUPS[2].color]
+                      }
+                      onNearestX={(point, { index }) =>
+                        setHighlightMale({ point, index })
+                      }
+                    />
+                  ),
+                )}
               {groupsAll && scoresAllRawAvailable && (
                 <MarkSeries
                   colorType="literal"
