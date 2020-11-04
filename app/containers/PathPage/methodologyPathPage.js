@@ -94,6 +94,20 @@ export function MethodologyPathPage({
     // kick off loading of page content
     onLoadContent(match.params.page);
   }, [match.params.page]);
+  useEffect(() => {
+    if (content && window.location.hash) {
+      // N.B. subtract 100px off the scroll position to account for the header - this does not take into account different header size for mobile, which would be tricky to work out with JS.
+      window.scrollTo({
+        top:
+          document
+            .getElementById(
+              'understanding-how-to-interpret-the-good-fair-bad-and-very-bad-labels-on-the-country-charts',
+            )
+            .getBoundingClientRect().top - 100,
+        behavior: 'smooth',
+      });
+    }
+  }, [content]);
   const page = match && match.params.page;
   const pageTitle = intl.formatMessage(rootMessages.page[page]);
 

@@ -369,13 +369,16 @@ const mapDispatchToProps = dispatch => ({
   // navigate to location
   navMethodology: () => {
     dispatch(
-      navigate('page/methodology', {
-        trackEvent: {
-          category: 'Content',
-          action: 'FAQs: open page',
-          value: 'methodology',
+      navigate(
+        'page/methodology#understanding-how-to-interpret-the-good-fair-bad-and-very-bad-labels-on-the-country-charts',
+        {
+          trackEvent: {
+            category: 'Content',
+            action: 'FAQs: open page',
+            value: 'methodology',
+          },
         },
-      }),
+      ),
     );
   },
 });
