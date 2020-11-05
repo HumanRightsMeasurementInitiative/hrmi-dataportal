@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -46,6 +46,7 @@ const getRightValue = (score, benchmark) => {
 };
 
 const getRightRefs = (score, benchmark, isIndicator) => {
+  // console.log({ score, benchmark, isIndicator });
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
@@ -70,6 +71,8 @@ const getMetricLabel = (metricCode, intl) =>
 
 const getIndicatorLabel = (metricCode, intl) =>
   intl.formatMessage(rootMessages.indicators[metricCode]);
+const getRawIndicatorLabel = (metricCode, intl) =>
+  intl.formatMessage(rootMessages['indicators-raw'][metricCode]);
 
 const KeyItem = styled(Box)`
   margin-left: 15px;
@@ -103,17 +106,18 @@ const prepareData = ({
   onClick,
   intl,
   activeCode,
+  showRawScores,
 }) =>
   // prettier-ignore
   indicators.map(i => ({
     color: 'esr',
     refValues: getRightRefs(i.score, currentBenchmark, true),
-    value: getRightValue(i.score, currentBenchmark),
+    value: showRawScores ? i.score && i.score.value && parseFloat(i.score.value) : getRightValue(i.score, currentBenchmark),
     maxValue: 100,
     unit: '%',
     stripes: standard === 'hi',
     key: i.key,
-    label: getIndicatorLabel(i.key, intl),
+    label: showRawScores ? getRawIndicatorLabel(i.key ,intl) : getIndicatorLabel(i.key, intl),
     onClick: () => onClick(i.key, 'esr'),
     active: activeCode === i.key,
   }));
@@ -131,6 +135,7 @@ export function ChartContainerCountryIndicators({
   activeCode,
   metricSelector,
 }) {
+  const [showRawScores, setShowRawScores] = useState(false);
   useEffect(() => {
     onLoadData();
   }, []);
@@ -140,6 +145,7 @@ export function ChartContainerCountryIndicators({
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   // const currentStandard = STANDARDS.find(s => s.key === standard);
 
+  // console.log({ indicators });
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -182,6 +188,7 @@ export function ChartContainerCountryIndicators({
                 onClick: onMetricClick,
                 intl,
                 activeCode,
+                showRawScores,
               })}
               currentBenchmark={currentBenchmark}
               standard={standard}
@@ -194,6 +201,9 @@ export function ChartContainerCountryIndicators({
               metric={getMetricDetails('esr')}
               annotateBenchmark={false}
               annotateMinMax={false}
+              canShowRaw
+              showRawScores={showRawScores}
+              toggleShowRawScores={() => setShowRawScores(!showRawScores)}
             />
           </Box>
           {currentBenchmark.key === 'best' && (

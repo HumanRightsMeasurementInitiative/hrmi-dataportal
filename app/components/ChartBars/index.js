@@ -37,6 +37,9 @@ function ChartBars({
   benchmarkIconOnly,
   annotateBenchmark = true,
   annotateMinMax = true,
+  canShowRaw,
+  showRawScores,
+  toggleShowRawScores,
 }) {
   if (!data) return null;
   return (
@@ -62,6 +65,11 @@ function ChartBars({
               annotateBenchmark={annotateBenchmark}
               annotateMinMax={annotateMinMax}
             />
+          )}
+          {canShowRaw && (
+            <button type="button" onClick={toggleShowRawScores}>
+              {showRawScores ? 'show scores' : 'show raw values'}
+            </button>
           )}
           <WrapInnerChart>
             {grades && (
@@ -117,6 +125,9 @@ ChartBars.propTypes = {
   annotateMinMax: PropTypes.bool,
   level: PropTypes.number,
   summaryScore: PropTypes.object,
+  canShowRaw: PropTypes.bool,
+  showRawScores: PropTypes.bool,
+  toggleShowRawScores: PropTypes.func,
 };
 
 export default injectIntl(ChartBars);
