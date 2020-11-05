@@ -7,8 +7,9 @@ import { IntlProvider } from 'react-intl'
 import theme from '../theme'
 
 // TODO: figure out if this way of simple importing is conditionally loading messages thanks to some Next magic :)
-import messagesEN from '../lang/en.json'
-import messagesFR from '../lang/fr.json'
+// import messagesEN from '../lang/en.json'
+import messagesEN from '../old/app/translations/en.json'
+import messagesFR from '../old/app/translations/fr.json'
 const messagesMap = {
   en: messagesEN,
   fr: messagesFR
