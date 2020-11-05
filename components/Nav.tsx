@@ -35,25 +35,17 @@ export default function Nav ({}: NavProps) {
         </Flex>
 
         <Flex sx={{ justifyContent: 'flex-end' }}>
-          <FormattedMessage
-            id="rights"
-          >
-            {(msg) => <Text mr={4}>{msg}</Text>}
+          <FormattedMessage id='rights'>
+            {msg => <Text mr={4}>{msg}</Text>}
           </FormattedMessage>
-          <FormattedMessage
-            id="countries"
-          >
-            {(msg) => <Text mr={4}>{msg}</Text>}
+          <FormattedMessage id='countries'>
+            {msg => <Text mr={4}>{msg}</Text>}
           </FormattedMessage>
-          <FormattedMessage
-            id="people"
-          >
-            {(msg) => <Text mr={4}>{msg}</Text>}
+          <FormattedMessage id='people'>
+            {msg => <Text mr={4}>{msg}</Text>}
           </FormattedMessage>
-          <FormattedMessage
-            id="search"
-          >
-            {(msg) => <Text>{msg}</Text>}
+          <FormattedMessage id='search'>
+            {msg => <Text>{msg}</Text>}
           </FormattedMessage>
         </Flex>
       </Flex>

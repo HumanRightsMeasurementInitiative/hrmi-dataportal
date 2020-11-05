@@ -19,7 +19,11 @@ export default function App ({ Component, pageProps }) {
         <title>Human Rights Measurement Initiative</title>
       </Head>
       <ThemeProvider theme={theme}>
-        <IntlProvider defaultLocale={defaultLocale} locale={locale} messages={locale === 'en' ? messagesEN : messagesFR}>
+        <IntlProvider
+          defaultLocale={defaultLocale}
+          locale={locale}
+          messages={locale === 'en' ? messagesEN : messagesFR}
+        >
           <Component {...pageProps} />
         </IntlProvider>
       </ThemeProvider>
