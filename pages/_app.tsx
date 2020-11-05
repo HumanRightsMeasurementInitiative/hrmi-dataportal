@@ -9,6 +9,10 @@ import theme from '../theme'
 // TODO: figure out if this way of simple importing is conditionally loading messages thanks to some Next magic :)
 import messagesEN from '../lang/en.json'
 import messagesFR from '../lang/fr.json'
+const messagesMap = {
+  en: messagesEN,
+  fr: messagesFR
+}
 
 export default function App ({ Component, pageProps }) {
   const { locale, defaultLocale } = useRouter()
@@ -22,7 +26,7 @@ export default function App ({ Component, pageProps }) {
         <IntlProvider
           defaultLocale={defaultLocale}
           locale={locale}
-          messages={locale === 'en' ? messagesEN : messagesFR}
+          messages={messagesMap[locale]}
         >
           <Component {...pageProps} />
         </IntlProvider>
