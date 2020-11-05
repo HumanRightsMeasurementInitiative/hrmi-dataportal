@@ -2,8 +2,10 @@
 /** @jsx jsx */
 import { jsx, Flex, Heading, Text } from 'theme-ui'
 
-import Nav from '../components/Nav'
+import Layout from '../components/Layout'
 
-export default function Home () {
-  return <Nav />
+export default function Index () {
+  return <Heading>HRMI</Heading>
 }
+
+Index.withLayout = page => <Layout>{page}</Layout>

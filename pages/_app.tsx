@@ -16,6 +16,7 @@ const messagesMap = {
 
 export default function App ({ Component, pageProps }) {
   const { locale, defaultLocale } = useRouter()
+  const withLayout = Component.withLayout || (page => page)
 
   return (
     <>
@@ -28,7 +29,7 @@ export default function App ({ Component, pageProps }) {
           locale={locale}
           messages={messagesMap[locale]}
         >
-          <Component {...pageProps} />
+          {withLayout(<Component {...pageProps} />)}
         </IntlProvider>
       </ThemeProvider>
       <Global
