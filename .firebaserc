@@ -17,6 +17,7 @@
     "social-preview": "hrmi-dataportal-social-preview",
     "pdf": "hrmi-dataportal-pdf",
     "staging": "hrmi-dataportal-staging",
-    "raw-indicators": "hrmi-dataportal-raw-indicators"
+    "raw-indicators": "hrmi-dataportal-raw-indicators",
+    "uncertainty": "hrmi-dataportal-uncertainty"
   }
 }
