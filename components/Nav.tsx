@@ -2,11 +2,12 @@
 /** @jsx jsx */
 import { jsx, Flex, Box, Heading, Text, Image, Button } from 'theme-ui'
 import { useRouter } from 'next/router'
+import { FormattedMessage } from 'react-intl'
 
 interface NavProps {}
 
 export default function Nav ({}: NavProps) {
-  const { locale, locales, push, pathname } = useRouter()
+  const { locale, push, pathname } = useRouter()
   return (
     <Flex
       py={4}
@@ -34,10 +35,26 @@ export default function Nav ({}: NavProps) {
         </Flex>
 
         <Flex sx={{ justifyContent: 'flex-end' }}>
-          <Text mr={4}>Rights</Text>
-          <Text mr={4}>Countries</Text>
-          <Text mr={4}>People</Text>
-          <Text>Search</Text>
+          <FormattedMessage
+            id="rights"
+          >
+            {(msg) => <Text mr={4}>{msg}</Text>}
+          </FormattedMessage>
+          <FormattedMessage
+            id="countries"
+          >
+            {(msg) => <Text mr={4}>{msg}</Text>}
+          </FormattedMessage>
+          <FormattedMessage
+            id="people"
+          >
+            {(msg) => <Text mr={4}>{msg}</Text>}
+          </FormattedMessage>
+          <FormattedMessage
+            id="search"
+          >
+            {(msg) => <Text>{msg}</Text>}
+          </FormattedMessage>
         </Flex>
       </Flex>
     </Flex>

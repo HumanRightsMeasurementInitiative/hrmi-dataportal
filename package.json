@@ -18,9 +18,11 @@
     }
   },
   "dependencies": {
+    "i18next": "^19.8.3",
     "next": "10.0.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-i18next": "^11.7.3",
     "react-intl": "^5.8.8",
     "theme-ui": "^0.3.1",
     "zod": "^1.11.10"
