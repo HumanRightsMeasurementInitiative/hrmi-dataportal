@@ -9,7 +9,7 @@ interface NavProps {}
 export default function Nav ({}: NavProps) {
   const { locale, push, pathname } = useRouter()
   const intl = useIntl()
-  
+
   return (
     <Flex
       py={4}
@@ -49,9 +49,10 @@ export default function Nav ({}: NavProps) {
             {msg => <Text mr={4}>{msg}</Text>}
           </FormattedMessage> */}
           <Text mr={4}>{intl.messages['hrmi.labels.people']}</Text>
-          <FormattedMessage id='search'>
+          {/* <FormattedMessage id='search'>
             {msg => <Text>{msg}</Text>}
-          </FormattedMessage>
+          </FormattedMessage> */}
+          <Text mr={4}>{intl.messages['hrmi.containers.Search.search']}</Text>
         </Flex>
       </Flex>
     </Flex>
