@@ -19,11 +19,11 @@ export default defineMessages({
   },
   showAnalysis: {
     id: `${scope}.show`,
-    defaultMessage: 'Show qualitative data',
+    defaultMessage: 'Show more detail',
   },
   hideAnalysis: {
     id: `${scope}.hide`,
-    defaultMessage: 'Hide qualitative data',
+    defaultMessage: 'Show less detail',
   },
   people: {
     id: `${scope}.people`,
