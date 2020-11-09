@@ -94,7 +94,7 @@ export function ListHeader({
                     />
                   </Text>
                 )}
-                <Text size="xsmall" style={{ transform: 'translateX(50%)' }}>
+                <Text size="xsmall">
                   {metric.type === 'esr' || metric.metricType === 'indicators'
                     ? '100%'
                     : '10'}
