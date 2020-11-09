@@ -37,38 +37,55 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
           )}
           <AnnotateRefInner type={type} offsetTop={hasBetter}>
             {tooltip && (
-              <Tooltip
-                textAnchor={!iconOnly && (
-                  <Text
-                    size="xsmall"
-                    color="highlight2"
-                    style={
-                      {
-                        display: 'inline',
-                        verticalAlign: 'middle',
+              <div style={{ marginRight: 4 }}>
+                <Tooltip
+                  textAnchor={!iconOnly && (
+                    <Text
+                      size="xsmall"
+                      color="highlight2"
+                      style={
+                        {
+                          display: 'inline',
+                          verticalAlign: 'middle',
+                        }
                       }
-                    }
-                  >
-                    {label || `${intl.formatMessage(
-                      rootMessages.settings.benchmark[benchmarkKey]
-                    )} ${isMaxSize(size, 'sm') ? '' : lowerCase(intl.formatMessage(
-                      rootMessages.settings.benchmark.nameShort
-                    ))}`}
-                  </Text>
-                )}
-                insideButton
-                margin={{ left: 'xsmall' }}
-                iconSize="medium"
-                maxWidth="300px"
-                large
-                component={
-                  <InfoBenchmark
-                    size="xsmall"
-                    singleBenchmark={iconOnly}
-                    benchmarkKey={benchmarkKey}
-                  />
+                    >
+                      {label || `${intl.formatMessage(
+                        rootMessages.settings.benchmark[benchmarkKey]
+                      )} ${isMaxSize(size, 'sm') ? '' : lowerCase(intl.formatMessage(
+                        rootMessages.settings.benchmark.nameShort
+                      ))}`}
+                    </Text>
+                  )}
+                  insideButton
+                  margin={{ left: 'xsmall' }}
+                  iconSize="medium"
+                  maxWidth="300px"
+                  large
+                  component={
+                    <InfoBenchmark
+                      size="xsmall"
+                      singleBenchmark={iconOnly}
+                      benchmarkKey={benchmarkKey}
+                    />
+                  }
+                />
+              </div>
+            )}
+            {iconOnly && (
+              <Text
+                size="xsmall"
+                color="highlight2"
+                style={
+                  {
+                    display: 'inline',
+                    verticalAlign: 'middle',
+                    marginRight: 4
+                  }
                 }
-              />
+              >
+                HRMI Score
+              </Text>
             )}
             {!tooltip && (
               <Text
