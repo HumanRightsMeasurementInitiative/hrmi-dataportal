@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, ResponsiveContext } from 'grommet';
+import { Box, ResponsiveContext, Button, Text } from 'grommet';
+import { Performance } from 'grommet-icons';
 import { injectIntl } from 'react-intl'; // not used now?
 
 import BarWrapper from './BarWrapper';
@@ -14,6 +15,23 @@ const Styled = styled(Box)`
 `;
 const WrapInnerChart = styled(Box)`
   position: relative;
+`;
+// prettier-ignore
+const StyledText = styled(Text)`
+  border-bottom: 3px solid
+    ${({ theme, hasWhiteBG = true }) =>
+    hasWhiteBG
+      ? theme.global.colors.buttonSecondaryOnWhiteHover
+      : theme.global.colors.buttonSecondaryHover};
+`;
+const StyledButton = styled(Button)`
+  background: transparent;
+  padding: 3px;
+  margin-right: ${({ theme }) => theme.global.edgeSize.xxsmall};
+  font-weight: 600;
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    padding: 3px 10px;
+  }
 `;
 
 function ChartBars({
@@ -72,13 +90,21 @@ function ChartBars({
               />
             )}
             {canShowRaw && (
-              <Box>
-                <button type="button" onClick={() => setRawScores(false)}>
-                  HRMI Score/s
-                </button>
-                <button type="button" onClick={() => setRawScores(true)}>
-                  Indicator value/s
-                </button>
+              <Box align="end" margin={{ bottom: '8px' }}>
+                <StyledButton
+                  plain
+                  onClick={() => setRawScores(false)}
+                  label={<StyledText>HRMI Score/s</StyledText>}
+                  icon={<Performance color="dark" size="large" />}
+                  reverse
+                />
+                <StyledButton
+                  plain
+                  onClick={() => setRawScores(true)}
+                  label={<StyledText>Indicator value/s</StyledText>}
+                  icon={<Performance color="dark" size="large" />}
+                  reverse
+                />
               </Box>
             )}
           </Box>
