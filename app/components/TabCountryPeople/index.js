@@ -131,7 +131,29 @@ const QualitativeData = ({ right, index, arr, content, countryCode, intl }) => {
       {analysis && renderAnalysis(content[`${right.key}/${countryCode}`], intl)}
       <ButtonAccordian
         onClick={() => setAnalysis(!analysis)}
-        icon={analysis ? <Up size="small" /> : <Down size="small" />}
+        icon={
+          analysis ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: '8px',
+              }}
+            >
+              <Up size="small" />
+            </div>
+          ) : (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                marginLeft: '8px',
+              }}
+            >
+              <Down size="small" />
+            </div>
+          )
+        }
         color="white"
         size="small"
         label={
@@ -140,6 +162,7 @@ const QualitativeData = ({ right, index, arr, content, countryCode, intl }) => {
           />
         }
         border={isLast ? '1px solid lightgrey' : 'none'}
+        spaced={false}
       />
     </>
   );
