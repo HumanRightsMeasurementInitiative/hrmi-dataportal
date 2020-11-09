@@ -38,8 +38,7 @@ function ChartBars({
   annotateBenchmark = true,
   annotateMinMax = true,
   canShowRaw,
-  showRawScores,
-  toggleShowRawScores,
+  setRawScores,
 }) {
   if (!data) return null;
   return (
@@ -53,24 +52,35 @@ function ChartBars({
           direction="column"
           fill="horizontal"
         >
-          {(commonLabel || listHeader) && (
-            <ListHeader
-              metric={metric}
-              benchmark={currentBenchmark && currentBenchmark.key}
-              commonLabel={commonLabel}
-              labelColor={labelColor}
-              annotateBetter={!grades && annotateBetter}
-              hasAside={scoresAside}
-              benchmarkIconOnly={benchmarkIconOnly}
-              annotateBenchmark={annotateBenchmark}
-              annotateMinMax={annotateMinMax}
-            />
-          )}
-          {canShowRaw && (
-            <button type="button" onClick={toggleShowRawScores}>
-              {showRawScores ? 'show scores' : 'show raw values'}
-            </button>
-          )}
+          <Box
+            width="100%"
+            direction={canShowRaw ? 'row' : 'column'}
+            justify={canShowRaw ? 'between' : 'center'}
+          >
+            {(commonLabel || listHeader) && (
+              <ListHeader
+                metric={metric}
+                benchmark={currentBenchmark && currentBenchmark.key}
+                commonLabel={commonLabel}
+                labelColor={labelColor}
+                annotateBetter={!grades && annotateBetter}
+                hasAside={scoresAside}
+                benchmarkIconOnly={benchmarkIconOnly}
+                annotateBenchmark={annotateBenchmark}
+                annotateMinMax={annotateMinMax}
+              />
+            )}
+            {canShowRaw && (
+              <Box>
+                <button type="button" onClick={() => setRawScores(false)}>
+                  HRMI Score/s
+                </button>
+                <button type="button" onClick={() => setRawScores(true)}>
+                  Indicator value/s
+                </button>
+              </Box>
+            )}
+          </Box>
           <WrapInnerChart>
             {grades && (
               <Grades
@@ -126,8 +136,7 @@ ChartBars.propTypes = {
   level: PropTypes.number,
   summaryScore: PropTypes.object,
   canShowRaw: PropTypes.bool,
-  showRawScores: PropTypes.bool,
-  toggleShowRawScores: PropTypes.func,
+  setRawScores: PropTypes.func,
 };
 
 export default injectIntl(ChartBars);

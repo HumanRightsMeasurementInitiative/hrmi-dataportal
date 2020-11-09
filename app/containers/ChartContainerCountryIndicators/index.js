@@ -106,18 +106,18 @@ const prepareData = ({
   onClick,
   intl,
   activeCode,
-  showRawScores,
+  rawScores,
 }) =>
   // prettier-ignore
   indicators.map(i => ({
     color: 'esr',
     refValues: getRightRefs(i.score, currentBenchmark, true),
-    value: showRawScores ? i.score && i.score.value && parseFloat(i.score.value) : getRightValue(i.score, currentBenchmark),
+    value: rawScores ? i.score && i.score.value && parseFloat(i.score.value) : getRightValue(i.score, currentBenchmark),
     maxValue: 100,
     unit: '%',
     stripes: standard === 'hi',
     key: i.key,
-    label: showRawScores ? getRawIndicatorLabel(i.key ,intl) : getIndicatorLabel(i.key, intl),
+    label: rawScores ? getRawIndicatorLabel(i.key ,intl) : getIndicatorLabel(i.key, intl),
     onClick: () => onClick(i.key, 'esr'),
     active: activeCode === i.key,
   }));
@@ -135,7 +135,7 @@ export function ChartContainerCountryIndicators({
   activeCode,
   metricSelector,
 }) {
-  const [showRawScores, setShowRawScores] = useState(false);
+  const [rawScores, setRawScores] = useState(false);
   useEffect(() => {
     onLoadData();
   }, []);
@@ -145,7 +145,6 @@ export function ChartContainerCountryIndicators({
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   // const currentStandard = STANDARDS.find(s => s.key === standard);
 
-  // console.log({ indicators });
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -188,7 +187,7 @@ export function ChartContainerCountryIndicators({
                 onClick: onMetricClick,
                 intl,
                 activeCode,
-                showRawScores,
+                rawScores,
               })}
               currentBenchmark={currentBenchmark}
               standard={standard}
@@ -202,8 +201,8 @@ export function ChartContainerCountryIndicators({
               annotateBenchmark={false}
               annotateMinMax={false}
               canShowRaw
-              showRawScores={showRawScores}
-              toggleShowRawScores={() => setShowRawScores(!showRawScores)}
+              rawScores={rawScores}
+              setRawScores={setRawScores}
             />
           </Box>
           {currentBenchmark.key === 'best' && (
