@@ -38,6 +38,7 @@ function ChartBars({
   annotateBenchmark = true,
   annotateMinMax = true,
   canShowRaw,
+  rawScores,
   setRawScores,
 }) {
   if (!data) return null;
@@ -87,6 +88,7 @@ function ChartBars({
                 grades={grades}
                 labels={gradeLabels}
                 hasAside={scoresAside}
+                rawScores={rawScores}
               />
             )}
             {data.map(d => (
@@ -102,6 +104,7 @@ function ChartBars({
                 scoresAside={scoresAside}
                 summaryScore={summaryScore}
                 isStatic={isStatic}
+                rawScores={rawScores}
               />
             ))}
           </WrapInnerChart>
@@ -136,6 +139,7 @@ ChartBars.propTypes = {
   level: PropTypes.number,
   summaryScore: PropTypes.object,
   canShowRaw: PropTypes.bool,
+  rawScores: PropTypes.bool,
   setRawScores: PropTypes.func,
 };
 
