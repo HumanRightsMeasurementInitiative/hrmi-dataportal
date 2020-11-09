@@ -46,14 +46,28 @@ function LayerHowToRead({ layer }) {
             {chrt === 'Bar' && <HTRBar contxt={contxt} dimension={dimension} />}
             {chrt === 'Snapshot' && (
               <>
-                {DIMENSIONS.map(d => (
-                  <span key={d.key}>
-                    <Heading level={4}>
-                      <FormattedMessage {...rootMessages.dimensions[d.key]} />
-                    </Heading>
-                    <HTRBar contxt={contxt} dimension={d.key} />
-                  </span>
-                ))}
+                {DIMENSIONS.map(d => {
+                  if (d.type === 'esr') {
+                    return (
+                      <span key={d.key}>
+                        <Heading level={4}>
+                          <FormattedMessage
+                            {...rootMessages.dimensions[d.key]}
+                          />
+                        </Heading>
+                        <HTRBar contxt={contxt} dimension={d.key} />
+                      </span>
+                    );
+                  }
+                  return (
+                    <span key={d.key}>
+                      <Heading level={4}>
+                        <FormattedMessage {...rootMessages.dimensions[d.key]} />
+                      </Heading>
+                      <HTRBulletCPR contxt={contxt} dimension={d.key} />
+                    </span>
+                  );
+                })}
               </>
             )}
             {chrt === 'Trend' && scale === 'esr' && <HTRTrendESR />}
