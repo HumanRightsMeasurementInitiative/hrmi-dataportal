@@ -110,8 +110,8 @@ const prepareData = ({
 }) =>
   // prettier-ignore
   indicators.map(i => ({
-    color: 'esr',
-    refValues: getRightRefs(i.score, currentBenchmark, true),
+    color: rawScores ? 'esrIndicator' : 'esr',
+    refValues: rawScores ? null : getRightRefs(i.score, currentBenchmark, true),
     value: rawScores ? i.score && i.score.value && parseFloat(i.score.value) : getRightValue(i.score, currentBenchmark),
     maxValue: 100,
     unit: '%',
@@ -192,7 +192,9 @@ export function ChartContainerCountryIndicators({
               currentBenchmark={currentBenchmark}
               standard={standard}
               commonLabel={intl.formatMessage(
-                rootMessages.charts.indicatorsColumnLabel,
+                rawScores
+                  ? rootMessages.charts.indicatorsColumnLabel
+                  : rootMessages.charts.rightsColumnLabel.esr,
               )}
               labelColor="esrDark"
               grades={GRADES.esr}

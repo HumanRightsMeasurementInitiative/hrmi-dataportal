@@ -219,6 +219,11 @@ const theme = {
       esrDark: '#027AC0', // AA
       esrActive: '#0674b5', // AA
       esrCloud: '#004f8f', // AA
+      esrIndicator: '#a9ddf3',
+      esrIndicatorActive: '#27AAE1',
+      esrIndicatorTrans: 'rgba(169, 221, 243, 0.3)',
+      esrIndicatorActiveTrans: 'rgba(169, 221, 243, 0.3)',
+      esrIndicatorDark: '#027AC0', // AA
       hover: '#6C3F99',
       countries: '#0D6D64',
       countriesLight: '#C9E0D4',
