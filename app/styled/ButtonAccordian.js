@@ -10,6 +10,7 @@ function buttonContent(
   iconSize,
   secondary,
   reverse,
+  spaced,
 ) {
   let iSize = iconSize;
   if (!iSize) {
@@ -24,11 +25,21 @@ function buttonContent(
     ));
 
   return reverse ? (
-    <p style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <p
+      style={{
+        display: 'flex',
+        justifyContent: spaced ? 'space-between' : 'initial',
+      }}
+    >
       {label} {textIcon}
     </p>
   ) : (
-    <p style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <p
+      style={{
+        display: 'flex',
+        justifyContent: spaced ? 'space-between' : 'initial',
+      }}
+    >
       {textIcon} {label}
     </p>
   );
@@ -44,6 +55,7 @@ export function ButtonAccordian({
   iconSize,
   reverse = true,
   border = '1px solid lightgrey',
+  spaced = true,
 }) {
   return (
     <button
@@ -65,7 +77,16 @@ export function ButtonAccordian({
         cursor: 'pointer',
       }}
     >
-      {buttonContent(label, size, icon, hasIcon, iconSize, secondary, reverse)}
+      {buttonContent(
+        label,
+        size,
+        icon,
+        hasIcon,
+        iconSize,
+        secondary,
+        reverse,
+        spaced,
+      )}
     </button>
   );
 }
@@ -80,6 +101,7 @@ ButtonAccordian.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   size: PropTypes.string,
   iconSize: PropTypes.string,
+  spaced: PropTypes.bool,
 };
 
 export default ButtonAccordian;
