@@ -29,4 +29,9 @@ export default defineMessages({
     id: `${scope}.people`,
     defaultMessage: 'Highlight {dropdown} in the word clouds below.',
   },
+  noAnalysisInLanguage: {
+    id: `${scope}.noAnalysisInLanguage`,
+    defaultMessage:
+      'We are sorry but this information is not yet available in your language',
+  },
 });
