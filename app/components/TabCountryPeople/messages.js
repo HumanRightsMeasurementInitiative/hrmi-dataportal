@@ -18,11 +18,11 @@ export default defineMessages({
     defaultMessage: 'An overview of people at risk by human right',
   },
   showAnalysis: {
-    id: `${scope}.show`,
+    id: `${scope}.showAnalysis`,
     defaultMessage: 'Show more detail',
   },
   hideAnalysis: {
-    id: `${scope}.hide`,
+    id: `${scope}.hideAnalysis`,
     defaultMessage: 'Show less detail',
   },
   people: {
