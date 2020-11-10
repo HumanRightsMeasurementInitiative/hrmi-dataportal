@@ -360,6 +360,8 @@
   "hrmi.labels.xAxis.adjusted": "% of income adjusted benchmark achieved",
   "hrmi.labels.xAxis.best": "% of global best benchmark achieved",
   "hrmi.labels.xAxis.hrmiscore": "HRMI Score",
+  "hrmi.labels.indicatorToggles.hrmi": "HRMI {isPlural, select, true {scores} false {score}}",
+  "hrmi.labels.indicatorToggles.indicator": "Indicator {isPlural, select, true {values} false {value}}",
   "hrmi.hints.noResults": "We could not find any countries for your current filter settings",
   "hrmi.hints.noSortData": "Sorting information missing",
   "hrmi.tabs.snapshot": "At a glance",

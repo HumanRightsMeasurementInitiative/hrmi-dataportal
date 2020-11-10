@@ -161,6 +161,17 @@ export default defineMessages({
         defaultMessage: 'HRMI Score',
       },
     },
+    indicatorToggles: {
+      hrmi: {
+        id: `${scope}.labels.indicatorToggles.hrmi`,
+        defaultMessage: 'HRMI {isPlural, select, true {scores} false {score}}',
+      },
+      indicator: {
+        id: `${scope}.labels.indicatorToggles.indicator`,
+        defaultMessage:
+          'Indicator {isPlural, select, true {values} false {value}}',
+      },
+    },
   },
   assessedFilters: {
     all: {
