@@ -156,6 +156,10 @@ export default defineMessages({
         id: `${scope}.labels.xAxis.best`,
         defaultMessage: '% of global best benchmark achieved',
       },
+      hrmiscore: {
+        id: `${scope}.labels.xAxis.hrmiscore`,
+        defaultMessage: 'HRMI Score',
+      },
     },
   },
   assessedFilters: {
