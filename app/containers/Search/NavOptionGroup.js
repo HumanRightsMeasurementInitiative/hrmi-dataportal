@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Box, Text } from 'grommet';
 
 import NavOption from './NavOption';
+import NavSubOption from './NavSubOption';
 
 const NavOptionWrap = styled(Box)`
   padding-top: 10px;
@@ -56,20 +57,46 @@ export function NavOptionGroup({
           </StyledText>
         )}
         {options.map((m, index) => (
-          <NavOption
-            key={m.code}
-            onClick={() => onClick(m.code)}
-            special={m.special}
-            ref={el => {
-              myRefs.current[index] = el;
-            }}
-            onFocus={() => onFocus && onFocus(index)}
-            active={index === activeResult}
-          >
-            <Box direction="row" align="end" fill="horizontal" width="100%">
-              <Text color={subject}>{m.label}</Text>
-            </Box>
-          </NavOption>
+          <>
+            <NavOption
+              key={m.code}
+              onClick={() => onClick(m.code)}
+              special={m.special}
+              ref={el => {
+                myRefs.current[index] = el;
+              }}
+              onFocus={() => onFocus && onFocus(index)}
+              active={index === activeResult}
+            >
+              <Box direction="row" align="end" fill="horizontal" width="100%">
+                <Text color={subject}>{m.label}</Text>
+              </Box>
+            </NavOption>
+            {m.indicators &&
+              m.indicators.map(i => (
+                <NavSubOption
+                  key={i.code}
+                  onClick={() => onClick(i.code)}
+                  special={i.special}
+                  ref={el => {
+                    myRefs.current[index] = el;
+                  }}
+                  onFocus={() => onFocus && onFocus(index)}
+                  active={index === activeResult}
+                >
+                  <Box
+                    direction="row"
+                    align="end"
+                    fill="horizontal"
+                    width="100%"
+                  >
+                    <Text color={subject} size="small">
+                      {i.label}
+                    </Text>
+                  </Box>
+                </NavSubOption>
+              ))}
+          </>
         ))}
       </NavOptionWrap>
     </div>
