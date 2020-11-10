@@ -117,7 +117,7 @@ export const LANGUAGES = {
     es: 'Español',
     pt: 'Português',
     fr: 'Français',
-    zh: 'Chinese',
+    zh: '中文',
   },
 };
 
