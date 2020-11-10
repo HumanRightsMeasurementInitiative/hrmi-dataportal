@@ -19,6 +19,7 @@ const WrapInnerChart = styled(Box)`
 `;
 // prettier-ignore
 const StyledText = styled(Text)`
+  color: ${({ selected }) => selected ? 'inherit' : '#B1B0CB'};
   border-bottom: 3px solid
     ${({ theme, hasWhiteBG = true }) =>
     hasWhiteBG
@@ -96,7 +97,7 @@ function ChartBars({
                   plain
                   onClick={() => setRawScores(false)}
                   label={
-                    <StyledText>
+                    <StyledText selected={!rawScores}>
                       <FormattedMessage
                         {...rootMessages.labels.indicatorToggles.hrmi}
                         values={{
@@ -105,14 +106,19 @@ function ChartBars({
                       />
                     </StyledText>
                   }
-                  icon={<Performance color="dark" size="large" />}
+                  icon={
+                    <Performance
+                      color={!rawScores ? 'dark' : '#B1B0CB'}
+                      size="large"
+                    />
+                  }
                   reverse
                 />
                 <StyledButton
                   plain
                   onClick={() => setRawScores(true)}
                   label={
-                    <StyledText>
+                    <StyledText selected={rawScores}>
                       <FormattedMessage
                         {...rootMessages.labels.indicatorToggles.indicator}
                         values={{
@@ -121,7 +127,12 @@ function ChartBars({
                       />
                     </StyledText>
                   }
-                  icon={<Performance color="dark" size="large" />}
+                  icon={
+                    <Performance
+                      color={rawScores ? 'dark' : '#B1B0CB'}
+                      size="large"
+                    />
+                  }
                   reverse
                 />
               </Box>
