@@ -51,6 +51,7 @@ export const prepMetrics = (metrics, metricType, search, intl) =>
     .map(m => ({
       code: m.key,
       label: intl.formatMessage(rootMessages[metricType][m.key]),
+      right: m.right,
     }))
     .filter(m => filterMetric(m, search));
 
