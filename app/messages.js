@@ -1164,6 +1164,80 @@ export default defineMessages({
       defaultMessage: 'affordable-housing',
     },
   },
+  subrights: {
+    'net-primary': {
+      id: `${scope}.subrights.net-primary`,
+      defaultMessage: 'net-primary',
+    },
+    'sec-enrol': {
+      id: `${scope}.subrights.sec-enrol`,
+      defaultMessage: 'sec-enrol',
+    },
+    'pisa-science': {
+      id: `${scope}.subrights.pisa-science`,
+      defaultMessage: 'pisa-science',
+    },
+    'pisa-math': {
+      id: `${scope}.subrights.pisa-math`,
+      defaultMessage: 'pisa-math',
+    },
+    'pisa-reading': {
+      id: `${scope}.subrights.pisa-reading`,
+      defaultMessage: 'pisa-reading',
+    },
+    'not-stunted': {
+      id: `${scope}.subrights.not-stunted`,
+      defaultMessage: 'not-stunted',
+    },
+    'food-security': {
+      id: `${scope}.subrights.food-security`,
+      defaultMessage: 'food-security',
+    },
+    'adult-survival': {
+      id: `${scope}.subrights.adult-survival`,
+      defaultMessage: 'adult-survival',
+    },
+    'under-5-survival': {
+      id: `${scope}.subrights.under-5-survival`,
+      defaultMessage: 'under-5-survival',
+    },
+    contraception: {
+      id: `${scope}.subrights.contraception`,
+      defaultMessage: 'contraception',
+    },
+    'birth-weight': {
+      id: `${scope}.subrights.birth-weight`,
+      defaultMessage: 'birth-weight',
+    },
+    'water-in-home': {
+      id: `${scope}.subrights.water-in-home`,
+      defaultMessage: 'water-in-home',
+    },
+    'basic-sanitation': {
+      id: `${scope}.subrights.basic-sanitation`,
+      defaultMessage: 'basic-sanitation',
+    },
+    'safe-sanitation': {
+      id: `${scope}.subrights.safe-sanitation`,
+      defaultMessage: 'safe-sanitation',
+    },
+    'relative-poverty': {
+      id: `${scope}.subrights.relative-poverty`,
+      defaultMessage: 'relative-poverty',
+    },
+    'absolute-poverty': {
+      id: `${scope}.subrights.absolute-poverty`,
+      defaultMessage: 'absolute-poverty',
+    },
+    'longterm-unemployment': {
+      id: `${scope}.subrights.longterm-unemployment`,
+      defaultMessage: 'longterm-unemployment',
+    },
+    'affordable-housing': {
+      id: `${scope}.subrights.affordable-housing`,
+      defaultMessage: 'affordable-housing',
+    },
+  },
   'indicators-raw': {
     'net-primary': {
       id: `${scope}.indicators-raw.net-primary`,

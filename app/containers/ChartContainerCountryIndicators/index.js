@@ -70,9 +70,9 @@ const getMetricLabel = (metricCode, intl) =>
   intl.formatMessage(rootMessages['rights-xshort'][metricCode]);
 
 const getIndicatorLabel = (metricCode, intl) =>
-  intl.formatMessage(rootMessages.indicators[metricCode]);
+  intl.formatMessage(rootMessages.subrights[metricCode]);
 const getRawIndicatorLabel = (metricCode, intl) =>
-  intl.formatMessage(rootMessages['indicators-raw'][metricCode]);
+  intl.formatMessage(rootMessages.indicators[metricCode]);
 
 const KeyItem = styled(Box)`
   margin-left: 15px;
