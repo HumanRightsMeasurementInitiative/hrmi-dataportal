@@ -88,7 +88,9 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
                   size="xsmall"
                   color='#262064'
                   style={{ marginRight: 4 }}
-                >HRMI Score</StyledText>
+                >{intl.formatMessage(
+                    rootMessages.labels.xAxis.hrmiscore
+                  )}</StyledText>
               </Box>
             )}
             {!tooltip && (
