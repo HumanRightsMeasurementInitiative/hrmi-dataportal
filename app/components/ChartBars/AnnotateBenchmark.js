@@ -80,7 +80,7 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
                 }
               />
             )}
-            {iconOnly && (
+            {iconOnly && type !== 'diamond' && (
               <Box
                 style={{ transform: "translateX(50%)" }}
               >
