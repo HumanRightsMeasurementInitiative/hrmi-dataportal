@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Box, ResponsiveContext, Button, Text } from 'grommet';
 import { Performance } from 'grommet-icons';
-import { injectIntl } from 'react-intl'; // not used now?
+import { injectIntl, FormattedMessage } from 'react-intl'; // not used now?
 
+import rootMessages from 'messages';
 import BarWrapper from './BarWrapper';
 import Grades from './Grades';
 import ListHeader from './ListHeader';
@@ -94,14 +95,32 @@ function ChartBars({
                 <StyledButton
                   plain
                   onClick={() => setRawScores(false)}
-                  label={<StyledText>HRMI Score/s</StyledText>}
+                  label={
+                    <StyledText>
+                      <FormattedMessage
+                        {...rootMessages.labels.indicatorToggles.hrmi}
+                        values={{
+                          isPlural: data.length > 1,
+                        }}
+                      />
+                    </StyledText>
+                  }
                   icon={<Performance color="dark" size="large" />}
                   reverse
                 />
                 <StyledButton
                   plain
                   onClick={() => setRawScores(true)}
-                  label={<StyledText>Indicator value/s</StyledText>}
+                  label={
+                    <StyledText>
+                      <FormattedMessage
+                        {...rootMessages.labels.indicatorToggles.indicator}
+                        values={{
+                          isPlural: data.length > 1,
+                        }}
+                      />
+                    </StyledText>
+                  }
                   icon={<Performance color="dark" size="large" />}
                   reverse
                 />
