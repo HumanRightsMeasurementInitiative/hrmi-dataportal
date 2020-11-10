@@ -6,7 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, ResponsiveContext } from 'grommet';
+import styled from 'styled-components';
+import { Box, Text, ResponsiveContext } from 'grommet';
 import { injectIntl, intlShape } from 'react-intl';
 import { lowerCase } from 'utils/string';
 import rootMessages from 'messages';
@@ -19,6 +20,15 @@ import { isMaxSize } from 'utils/responsive';
 import AnnotateRef from './styled/AnnotateRef';
 import AnnotateRefLine from './styled/AnnotateRefLine';
 import AnnotateRefInner from './styled/AnnotateRefInner';
+
+// prettier-ignore
+const StyledText = styled(Text)`
+  border-bottom: 3px solid
+    ${({ theme, hasWhiteBG = true }) =>
+    hasWhiteBG
+      ? theme.global.colors.buttonSecondaryOnWhiteHover
+      : theme.global.colors.buttonSecondaryHover};
+`;
 
 function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
   const tooltip = type !== 'htr';
@@ -37,55 +47,49 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
           )}
           <AnnotateRefInner type={type} offsetTop={hasBetter}>
             {tooltip && (
-              <div style={{ marginRight: 4 }}>
-                <Tooltip
-                  textAnchor={!iconOnly && (
-                    <Text
-                      size="xsmall"
-                      color="highlight2"
-                      style={
-                        {
-                          display: 'inline',
-                          verticalAlign: 'middle',
-                        }
+              <Tooltip
+                textAnchor={!iconOnly && (
+                  <Text
+                    size="xsmall"
+                    color="highlight2"
+                    style={
+                      {
+                        display: 'inline',
+                        verticalAlign: 'middle',
                       }
-                    >
-                      {label || `${intl.formatMessage(
-                        rootMessages.settings.benchmark[benchmarkKey]
-                      )} ${isMaxSize(size, 'sm') ? '' : lowerCase(intl.formatMessage(
-                        rootMessages.settings.benchmark.nameShort
-                      ))}`}
-                    </Text>
-                  )}
-                  insideButton
-                  margin={{ left: 'xsmall' }}
-                  iconSize="medium"
-                  maxWidth="300px"
-                  large
-                  component={
-                    <InfoBenchmark
-                      size="xsmall"
-                      singleBenchmark={iconOnly}
-                      benchmarkKey={benchmarkKey}
-                    />
-                  }
-                />
-              </div>
+                    }
+                  >
+                    {label || `${intl.formatMessage(
+                      rootMessages.settings.benchmark[benchmarkKey]
+                    )} ${isMaxSize(size, 'sm') ? '' : lowerCase(intl.formatMessage(
+                      rootMessages.settings.benchmark.nameShort
+                    ))}`}
+                  </Text>
+                )}
+                insideButton
+                margin={{ left: 'xsmall' }}
+                iconSize="medium"
+                maxWidth="300px"
+                large
+                component={
+                  <InfoBenchmark
+                    size="xsmall"
+                    singleBenchmark={iconOnly}
+                    benchmarkKey={benchmarkKey}
+                  />
+                }
+              />
             )}
             {iconOnly && (
-              <Text
-                size="xsmall"
-                color="highlight2"
-                style={
-                  {
-                    display: 'inline',
-                    verticalAlign: 'middle',
-                    marginRight: 4
-                  }
-                }
+              <Box
+                style={{ transform: "translateX(50%)" }}
               >
-                HRMI Score
-              </Text>
+                <StyledText
+                  size="xsmall"
+                  color='#262064'
+                  style={{ marginRight: 4 }}
+                >HRMI Score</StyledText>
+              </Box>
             )}
             {!tooltip && (
               <Text
