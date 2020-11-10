@@ -267,6 +267,7 @@
   "hrmi.components.TabCountryPeople.showAnalysis": "Mostrar más detalles",
   "hrmi.components.TabCountryPeople.hideAnalysis": "Mostrar menos detalles",
   "hrmi.components.TabCountryPeople.people": "Resaltar {dropdown} en las nubes de palabras a continuación.",
+  "hrmi.components.TabCountryPeople.noAnalysisInLanguage": "Lo sentimos. Esta información todavía no se encuentra disponible en su idioma",
   "hrmi.components.AboutMetric.title.dimensions": "¿Cómo está definida esta categoría de derechos?",
   "hrmi.components.AboutMetric.title.rights": "¿Cómo está definido este derecho humano?",
   "hrmi.components.AboutMetric.title.indicators": "¿Sobre qué datos está basado el indicador?",
