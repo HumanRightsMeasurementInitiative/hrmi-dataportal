@@ -110,12 +110,14 @@ export const LANGUAGES = {
     es: 'ES',
     pt: 'PT',
     fr: 'FR',
+    zh: 'ZH',
   },
   long: {
     en: 'English',
     es: 'Español',
     pt: 'Português',
     fr: 'Français',
+    zh: 'Chinese',
   },
 };
 
