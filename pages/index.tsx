@@ -6,15 +6,15 @@ import { useIntl } from 'react-intl'
 import Layout from '../components/Layout'
 
 export default function Index () {
-  const intl = useIntl()
+  const { messages } = useIntl()
 
   return (
     <Flex sx={{ flexDirection: 'column' }}>
       <Flex>
         <Flex sx={{ flexDirection: 'column' }}>
-          <Heading as='h1'>{intl.messages['hrmi.app.title']}</Heading>
-          <Text>{intl.messages['hrmi.app.claim']}</Text>
-          <Text>{intl.messages['hrmi.components.Sections.intro']}</Text>
+          <Heading as='h1'>{messages['hrmi.app.title']}</Heading>
+          <Text>{messages['hrmi.app.claim']}</Text>
+          <Text>{messages['hrmi.components.Sections.intro']}</Text>
         </Flex>
       </Flex>
     </Flex>

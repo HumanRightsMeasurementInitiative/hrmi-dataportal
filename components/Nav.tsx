@@ -4,11 +4,17 @@ import { jsx, Flex, Box, Heading, Text, Image, Button } from 'theme-ui'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
 
+import Menu from './Menu'
+
 interface NavProps {}
 
 export default function Nav ({}: NavProps) {
   const { locale, push, pathname } = useRouter()
   const intl = useIntl()
+  const items = [
+    { name: 'one', href: `/country/AUS` },
+    { name: 'two', href: `/country/NZL` }
+  ]
 
   return (
     <Flex
@@ -40,7 +46,12 @@ export default function Nav ({}: NavProps) {
           {/* <FormattedMessage id='rights'>
             {msg => <Text mr={4}>{msg}</Text>}
           </FormattedMessage> */}
-          <Text mr={4}>{intl.messages['hrmi.labels.metrics']}</Text>
+          <Menu
+            name={intl.messages['hrmi.labels.metrics']}
+            items={items}
+            onChange={() => console.log('wef')}
+          />
+          {/* <Text mr={4}>{intl.messages['hrmi.labels.metrics']}</Text> */}
           {/* <FormattedMessage id='countries'>
             {msg => <Text mr={4}>{msg}</Text>}
           </FormattedMessage> */}
