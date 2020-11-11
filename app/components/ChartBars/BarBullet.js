@@ -51,7 +51,7 @@ const MarkValue = styled.div`
 const MarkBound = styled(MarkValue)`
   top: ${props => props.height / 2 - props.height * 0.35}px;
   margin-left: -0.5px;
-  border-right-width: 1px;
+  border-right-width: ${props => (props.bandOnHover ? 1 : 0)}px;
   height: ${props => props.height * 0.7}px;
 `;
 
@@ -146,6 +146,7 @@ function BarBullet({
             <MarkBound
               color={color}
               height={HEIGHT[level]}
+              bandOnHover={bandOnHover}
               style={{ left: `${(band.hi / maxValue) * 100}%` }}
             />
           )}
