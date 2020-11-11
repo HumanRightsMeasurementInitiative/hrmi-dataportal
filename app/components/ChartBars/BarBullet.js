@@ -118,8 +118,12 @@ function BarBullet({
               hi={(band.hi / maxValue) * 100}
               style={{
                 left: `${(band.lo / maxValue) * 100}%`,
-                width: `${(band.hi / maxValue) * 100 -
-                  (band.lo / maxValue) * 100}%`,
+                width: `${
+                  !bandOnHover
+                    ? Math.min(band.hi / maxValue, 1) * 100 -
+                      (band.lo / maxValue) * 100
+                    : (band.hi / maxValue) * 100 - (band.lo / maxValue) * 100
+                }%`,
               }}
             />
           )}
