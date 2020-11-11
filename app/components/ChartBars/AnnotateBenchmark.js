@@ -38,10 +38,23 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
     <ResponsiveContext.Consumer>
       {size => (
         <AnnotateRef
-          type={iconOnly ? 'icon' : type}
+          type={type}
           isRotated={type==='diamond'}
           offsetTop={hasBetter}
         >
+          {iconOnly && type !== 'diamond' && (
+            <Box
+              style={{ transform: "translate(10%, -20%)" }}
+            >
+              <StyledText
+                size="xsmall"
+                color='#262064'
+                style={{ marginRight: 4 }}
+              >{intl.formatMessage(
+                  rootMessages.labels.xAxis.hrmiscore
+                )}</StyledText>
+            </Box>
+          )}
           {!iconOnly && (
             <AnnotateRefLine type={type} offsetTop={hasBetter} />
           )}
@@ -79,19 +92,6 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
                   />
                 }
               />
-            )}
-            {iconOnly && type !== 'diamond' && (
-              <Box
-                style={{ transform: "translateX(50%)" }}
-              >
-                <StyledText
-                  size="xsmall"
-                  color='#262064'
-                  style={{ marginRight: 4 }}
-                >{intl.formatMessage(
-                    rootMessages.labels.xAxis.hrmiscore
-                  )}</StyledText>
-              </Box>
             )}
             {!tooltip && (
               <Text
