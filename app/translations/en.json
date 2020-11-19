@@ -905,6 +905,7 @@
   "hrmi.containers.PathMetric.indicators.affordable-housing.header.a": "How well are countries doing at ensuring people can access affordable housing?",
   "hrmi.containers.PathMetric.indicators.affordable-housing.header.b": "These are scores for how well the countries are doing, not numbers or percentages of people.",
   "hrmi.indicators.affordable-housing": "Affordable Housing",
+  "hrmi.subrights.affordable-housing": "Affordable housing",
   "hrmi.indicators-raw.affordable-housing": "Affordable Housing Raw",
   "hrmi.indicators-about.affordable-housing": "The affordable housing indicator is the percentage of the poorest quintile of the population who are living in a household where the cost of rent or mortgage represents less than 40% of total disposable household income (net of housing allowances).",
   "hrmi.containers.PathMetric.indicators.adult-survival.header.a": "How well are countries doing at ensuring people are healthy enough to enjoy long lives?",

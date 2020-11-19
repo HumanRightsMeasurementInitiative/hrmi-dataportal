@@ -70,7 +70,7 @@ const getMetricLabel = (metricCode, intl) =>
   intl.formatMessage(rootMessages['rights-xshort'][metricCode]);
 
 const getIndicatorLabel = (metricCode, intl) =>
-  intl.formatMessage(rootMessages.subrights[metricCode]);
+  intl.formatMessage(rootMessages['indicators-raw'][metricCode]);
 const getRawIndicatorLabel = (metricCode, intl) =>
   intl.formatMessage(rootMessages.indicators[metricCode]);
 
