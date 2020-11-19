@@ -158,7 +158,7 @@ export default defineMessages({
       },
       hrmiscore: {
         id: `${scope}.labels.xAxis.hrmiscore`,
-        defaultMessage: 'HRMI Score',
+        defaultMessage: 'HRMI score',
       },
     },
     indicatorToggles: {
