@@ -6,7 +6,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
 import { injectIntl, intlShape } from 'react-intl';
 import { lowerCase } from 'utils/string';
@@ -20,15 +19,6 @@ import { isMaxSize } from 'utils/responsive';
 import AnnotateRef from './styled/AnnotateRef';
 import AnnotateRefLine from './styled/AnnotateRefLine';
 import AnnotateRefInner from './styled/AnnotateRefInner';
-
-// prettier-ignore
-const StyledText = styled(Text)`
-  border-bottom: 3px solid
-    ${({ theme, hasWhiteBG = true }) =>
-    hasWhiteBG
-      ? theme.global.colors.buttonSecondaryOnWhiteHover
-      : theme.global.colors.buttonSecondaryHover};
-`;
 
 function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
   const tooltip = type !== 'htr';
@@ -46,13 +36,13 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
             <Box
               style={{ transform: "translate(10%, -20%)" }}
             >
-              <StyledText
+              <Text
                 size="xsmall"
                 color='#262064'
                 style={{ marginRight: 4 }}
               >{intl.formatMessage(
                   rootMessages.labels.xAxis.hrmiscore
-                )}</StyledText>
+                )}</Text>
             </Box>
           )}
           {!iconOnly && (
