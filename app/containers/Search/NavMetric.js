@@ -57,7 +57,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
   }, [activeResult]);
   const dimensions = prepMetrics(DIMENSIONS, 'dimensions', search, intl);
   const rights = prepMetrics(RIGHTS, 'rights', search, intl);
-  const indicators = prepMetrics(INDICATORS, 'indicators', search, intl);
+  const indicators = prepMetrics(INDICATORS, 'subrights', search, intl);
   const hasMetrics =
     dimensions.length > 0 || rights.length > 0 || indicators.length > 0;
   // figure out available height for IE11
