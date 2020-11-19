@@ -1179,6 +1179,80 @@ export default defineMessages({
       defaultMessage: 'affordable-housing',
     },
   },
+  'indicators-definition': {
+    'net-primary': {
+      id: `${scope}.indicators-definition.net-primary`,
+      defaultMessage: 'net-primary',
+    },
+    'sec-enrol': {
+      id: `${scope}.indicators-definition.sec-enrol`,
+      defaultMessage: 'sec-enrol',
+    },
+    'pisa-science': {
+      id: `${scope}.indicators-definition.pisa-science`,
+      defaultMessage: 'pisa-science',
+    },
+    'pisa-math': {
+      id: `${scope}.indicators-definition.pisa-math`,
+      defaultMessage: 'pisa-math',
+    },
+    'pisa-reading': {
+      id: `${scope}.indicators-definition.pisa-reading`,
+      defaultMessage: 'pisa-reading',
+    },
+    'not-stunted': {
+      id: `${scope}.indicators-definition.not-stunted`,
+      defaultMessage: 'not-stunted',
+    },
+    'food-security': {
+      id: `${scope}.indicators-definition.food-security`,
+      defaultMessage: 'food-security',
+    },
+    'adult-survival': {
+      id: `${scope}.indicators-definition.adult-survival`,
+      defaultMessage: 'adult-survival',
+    },
+    'under-5-survival': {
+      id: `${scope}.indicators-definition.under-5-survival`,
+      defaultMessage: 'under-5-survival',
+    },
+    contraception: {
+      id: `${scope}.indicators-definition.contraception`,
+      defaultMessage: 'contraception',
+    },
+    'birth-weight': {
+      id: `${scope}.indicators-definition.birth-weight`,
+      defaultMessage: 'birth-weight',
+    },
+    'water-in-home': {
+      id: `${scope}.indicators-definition.water-in-home`,
+      defaultMessage: 'water-in-home',
+    },
+    'basic-sanitation': {
+      id: `${scope}.indicators-definition.basic-sanitation`,
+      defaultMessage: 'basic-sanitation',
+    },
+    'safe-sanitation': {
+      id: `${scope}.indicators-definition.safe-sanitation`,
+      defaultMessage: 'safe-sanitation',
+    },
+    'relative-poverty': {
+      id: `${scope}.indicators-definition.relative-poverty`,
+      defaultMessage: 'relative-poverty',
+    },
+    'absolute-poverty': {
+      id: `${scope}.indicators-definition.absolute-poverty`,
+      defaultMessage: 'absolute-poverty',
+    },
+    'longterm-unemployment': {
+      id: `${scope}.indicators-definition.longterm-unemployment`,
+      defaultMessage: 'longterm-unemployment',
+    },
+    'affordable-housing': {
+      id: `${scope}.indicators-definition.affordable-housing`,
+      defaultMessage: 'affordable-housing',
+    },
+  },
   subrights: {
     'net-primary': {
       id: `${scope}.subrights.net-primary`,
