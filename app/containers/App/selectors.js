@@ -920,6 +920,7 @@ export const getIndicatorsForCountry = createSelector(
         const details = indicators.find(id => id.metric_code === i.code);
         if (details.standard === 'Both' || details.standard === standardCode) {
           return {
+            ...memo,
             [i.key]: {
               score: scores.find(
                 s =>
@@ -928,7 +929,6 @@ export const getIndicatorsForCountry = createSelector(
               details,
               ...i,
             },
-            ...memo,
           };
         }
         return memo;
