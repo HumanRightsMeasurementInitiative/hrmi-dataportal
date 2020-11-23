@@ -157,8 +157,12 @@ function AboutMetric({
             <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
               {childrenIndicators &&
                 childrenIndicators.map(ci => (
-                  <>
-                    <Text size="14px" margin={{ bottom: 'xxsmall' }}>
+                  <Box margin={{ bottom: 'small' }}>
+                    <Text
+                      size="small"
+                      weight="bold"
+                      margin={{ bottom: 'xxsmall' }}
+                    >
                       {`${intl.formatMessage(
                         rootMessages.settings.standard.name,
                       )}: '${intl.formatMessage(
@@ -166,9 +170,11 @@ function AboutMetric({
                       )}'`}
                     </Text>
                     {ci.indicators.map(i => (
-                      <FormattedMessage {...rootMessages.subrights[i.key]} />
+                      <Text size="small">
+                        <FormattedMessage {...rootMessages.subrights[i.key]} />
+                      </Text>
                     ))}
-                  </>
+                  </Box>
                 ))}
             </Box>
           </AccordionPanel>
