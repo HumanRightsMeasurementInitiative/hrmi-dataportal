@@ -83,7 +83,7 @@ export function AboutMetricContainer({
 
   let children = [];
   let questions = [];
-  if (showRelated) {
+  if (showRelated || isSubright !== false) {
     if (metricType === 'dimensions') {
       children = RIGHTS.filter(
         r => r.dimension === metric.key && typeof r.aggregate === 'undefined',
@@ -112,6 +112,7 @@ export function AboutMetricContainer({
       questions = FAQS.ESR_INDICATOR;
     }
   }
+
   return (
     <Box
       direction="column"
@@ -273,6 +274,7 @@ export function AboutMetricContainer({
           dateRange={dateRange}
           countryCode={countryCode}
           isSubright={isSubright}
+          childrenIndicators={children}
         />
       )}
       {showFAQs && (

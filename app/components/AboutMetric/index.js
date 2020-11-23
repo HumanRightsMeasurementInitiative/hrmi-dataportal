@@ -6,7 +6,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Heading, Box, AccordionPanel, Accordion, Text } from 'grommet';
 import { Down, Up } from 'grommet-icons';
 import styled from 'styled-components';
@@ -31,6 +31,8 @@ function AboutMetric({
   dateRange,
   countryCode,
   isSubright,
+  childrenIndicators,
+  intl,
 }) {
   const [actives, setActive] = useState([]);
   const { metricType } = metric;
@@ -153,12 +155,21 @@ function AboutMetric({
             }
           >
             <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
-              <Text>
-                CHANGE ME
-                {/* <FormattedMessage
-                {...rootMessages[`${metricType}-about`][metric.key]}
-              /> */}
-              </Text>
+              {childrenIndicators &&
+                childrenIndicators.map(ci => (
+                  <>
+                    <Text size="14px" margin={{ bottom: 'xxsmall' }}>
+                      {`${intl.formatMessage(
+                        rootMessages.settings.standard.name,
+                      )}: '${intl.formatMessage(
+                        rootMessages.settings.standard[ci.key],
+                      )}'`}
+                    </Text>
+                    {ci.indicators.map(i => (
+                      <FormattedMessage {...rootMessages.subrights[i.key]} />
+                    ))}
+                  </>
+                ))}
             </Box>
           </AccordionPanel>
         )}
@@ -218,6 +229,8 @@ AboutMetric.propTypes = {
   countryCode: PropTypes.string,
   dateRange: PropTypes.object,
   isSubright: PropTypes.bool,
+  childrenIndicators: PropTypes.array,
+  intl: intlShape.isRequired,
 };
 
-export default AboutMetric;
+export default injectIntl(AboutMetric);
