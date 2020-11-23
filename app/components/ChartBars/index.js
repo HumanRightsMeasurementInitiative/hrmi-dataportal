@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Box, ResponsiveContext, Button, Text } from 'grommet';
-import { Performance } from 'grommet-icons';
+import {
+  Box,
+  ResponsiveContext,
+  // Button,
+  Text,
+} from 'grommet';
+// import { Performance } from 'grommet-icons';
 import { injectIntl, FormattedMessage } from 'react-intl'; // not used now?
 
 import rootMessages from 'messages';
+import ButtonToggleSetting from 'styled/ButtonToggleSetting';
 import BarWrapper from './BarWrapper';
 import Grades from './Grades';
 import ListHeader from './ListHeader';
@@ -18,23 +24,23 @@ const WrapInnerChart = styled(Box)`
   position: relative;
 `;
 // prettier-ignore
-const StyledText = styled(Text)`
-  color: ${({ selected }) => selected ? 'inherit' : '#B1B0CB'};
-  border-bottom: 3px solid
-    ${({ theme, hasWhiteBG = true }) =>
-    hasWhiteBG
-      ? theme.global.colors.buttonSecondaryOnWhiteHover
-      : theme.global.colors.buttonSecondaryHover};
-`;
-const StyledButton = styled(Button)`
-  background: transparent;
-  padding: 3px;
-  margin-right: ${({ theme }) => theme.global.edgeSize.xxsmall};
-  font-weight: 600;
-  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-    padding: 3px 10px;
-  }
-`;
+// const StyledText = styled(Text)`
+//   color: ${({ selected }) => selected ? 'inherit' : '#B1B0CB'};
+//   border-bottom: 3px solid
+//     ${({ theme, hasWhiteBG = true }) =>
+//     hasWhiteBG
+//       ? theme.global.colors.buttonSecondaryOnWhiteHover
+//       : theme.global.colors.buttonSecondaryHover};
+// `;
+// const StyledButton = styled(Button)`
+//   background: transparent;
+//   padding: 3px;
+//   margin-right: ${({ theme }) => theme.global.edgeSize.xxsmall};
+//   font-weight: 600;
+//   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+//     padding: 3px 10px;
+//   }
+// `;
 
 function ChartBars({
   data,
@@ -93,7 +99,37 @@ function ChartBars({
             )}
             {canShowRaw && (
               <Box align="end" margin={{ bottom: '8px' }}>
-                <StyledButton
+                <ButtonToggleSetting
+                  // key={option.key}
+                  active={!rawScores}
+                  onClick={() => setRawScores(false)}
+                  stacked
+                >
+                  <Text size="small">
+                    <FormattedMessage
+                      {...rootMessages.labels.indicatorToggles.hrmi}
+                      values={{
+                        isPlural: data.length > 1,
+                      }}
+                    />
+                  </Text>
+                </ButtonToggleSetting>
+                <ButtonToggleSetting
+                  // key={option.key}
+                  active={rawScores}
+                  onClick={() => setRawScores(true)}
+                  stacked
+                >
+                  <Text size="small">
+                    <FormattedMessage
+                      {...rootMessages.labels.indicatorToggles.indicator}
+                      values={{
+                        isPlural: data.length > 1,
+                      }}
+                    />
+                  </Text>
+                </ButtonToggleSetting>
+                {/* <StyledButton
                   plain
                   onClick={() => setRawScores(false)}
                   label={
@@ -134,7 +170,7 @@ function ChartBars({
                     />
                   }
                   reverse
-                />
+                /> */}
               </Box>
             )}
           </Box>
