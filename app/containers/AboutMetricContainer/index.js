@@ -224,15 +224,15 @@ export function AboutMetricContainer({
       {showTitle && (
         <Heading responsive={false} level={3}>
           {isSubright ? (
-            `Right to ${intl.formatMessage(
-              rootMessages[subMetricType][metric.key],
-            )}`
+            `Right to ${intl
+              .formatMessage(rootMessages[subMetricType][metric.key])
+              .toLowerCase()}`
           ) : (
             <FormattedMessage {...rootMessages[subMetricType][metric.key]} />
           )}
         </Heading>
       )}
-      {countryScoreMsg && (
+      {countryScoreMsg && isSubright !== false && (
         <div>
           <Text color={inverse ? 'white' : 'dark'}>{countryScoreMsg}</Text>
         </div>
@@ -240,20 +240,31 @@ export function AboutMetricContainer({
       {showMetricLink && (
         <div>
           <ButtonHero onClick={() => onSelectMetric(metricCode)}>
-            <FormattedMessage
-              {...messages.metricLink}
-              values={{
-                metric: lowerCase(
-                  intl.formatMessage(rootMessages[subMetricType][metricCode]),
-                ),
-              }}
-            />
+            {isSubright ? (
+              <FormattedMessage
+                {...messages['metricLink-subrights']}
+                values={{
+                  metric: lowerCase(
+                    intl.formatMessage(rootMessages[subMetricType][metricCode]),
+                  ),
+                }}
+              />
+            ) : (
+              <FormattedMessage
+                {...messages.metricLink}
+                values={{
+                  metric: lowerCase(
+                    intl.formatMessage(rootMessages[subMetricType][metricCode]),
+                  ),
+                }}
+              />
+            )}
           </ButtonHero>
         </div>
       )}
       {isSubright === false && (
         <div style={{ marginTop: 12 }}>
-          <Text size="large" weight="bold">
+          <Text weight="bold">
             <FormattedMessage
               {...messages.indicator}
               values={{
