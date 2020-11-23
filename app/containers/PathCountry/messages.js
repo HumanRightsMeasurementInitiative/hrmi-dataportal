@@ -32,6 +32,16 @@ export default defineMessages({
         defaultMessage:
           'On the {metric}, {countryWithArticle} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at any income level (measured against the global best benchmark)',
       },
+      'adjusted-subrights': {
+        id: `${scope}.countryScoreExplainer.esr.adjusted-subrights`,
+        defaultMessage:
+          'On the right to {metric} score, {countryWithArticle} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at {isPlural, select, true {their} false {its}} level of income (measured against the income-adjusted benchmark).',
+      },
+      'best-subrights': {
+        id: `${scope}.countryScoreExplainer.esr.best-subrights`,
+        defaultMessage:
+          'On the right to {metric} score, {countryWithArticle} {isPlural, select, true {are} false {is}} doing {score}% of what should be possible at any income level (measured against the global best benchmark)',
+      },
     },
     cpr: {
       id: `${scope}.countryScoreExplainer.cpr`,

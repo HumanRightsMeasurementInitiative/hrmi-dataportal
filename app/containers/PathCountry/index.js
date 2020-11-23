@@ -145,6 +145,7 @@ const getScoreMsg = (
   indicators,
   intl,
   messageValues,
+  isSubright,
 ) => {
   let countryScoreMsg;
   const aboutMetricDetails = getMetricDetails(code);
@@ -155,21 +156,42 @@ const getScoreMsg = (
     indicators,
     benchmark,
   );
+  /* eslint-disable no-nested-ternary */
+  // prettier-ignore
+  const metric =
+    typeof isSubright === 'undefined'
+      ? lowerCase(
+        intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+      )
+      : isSubright
+        ? lowerCase(intl.formatMessage(rootMessages.subrights[code]))
+        : lowerCase(intl.formatMessage(rootMessages['indicators-raw'][code]));
+
   if (aboutMetricDetails.type === 'esr') {
     // prettier-ignore
-    countryScoreMsg = score
+    countryScoreMsg = score && isSubright
       ? intl.formatMessage(
-        messages.countryScoreExplainer.esr[benchmark],
+        messages.countryScoreExplainer.esr[`${benchmark}-subrights`],
         ({
           ...messageValues,
           score: formatScore(score, 1, intl),
-          metric: lowerCase(intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code])),
+          metric,
         }),
       )
-      : intl.formatMessage(
-        messages.countryScoreExplainer.noData,
-        messageValues,
-      );
+      : score 
+        ? intl.formatMessage(
+          messages.countryScoreExplainer.esr[benchmark],
+          ({
+            ...messageValues,
+            score: formatScore(score, 1, intl),
+            metric,
+          }),
+        )
+        : intl.formatMessage(
+          messages.countryScoreExplainer.noData,
+          messageValues,
+        );
+    /* eslint-enable */
   }
   if (aboutMetricDetails.type === 'cpr') {
     // prettier-ignore
@@ -179,7 +201,7 @@ const getScoreMsg = (
         values={{
           ...messageValues,
           score: formatScore(score, 1, intl),
-          metric: lowerCase(intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code])),
+          metric,
           link: (
             <ButtonText
               as="a"
@@ -278,6 +300,7 @@ export function PathCountry({
           indicators,
           intl,
           messageValues,
+          isSubright,
         ),
         isSubright,
         hasMultipleIndicators,

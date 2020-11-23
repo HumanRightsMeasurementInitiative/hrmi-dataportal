@@ -21,7 +21,7 @@ export default defineMessages({
     },
     indicators: {
       id: `${scope}.title.indicators`,
-      defaultMessage: 'What data is the indicator based on?',
+      defaultMessage: 'What data is used to measure this right aspect?',
     },
     indicatorsRaw: {
       id: `${scope}.title.indicatorsRaw`,

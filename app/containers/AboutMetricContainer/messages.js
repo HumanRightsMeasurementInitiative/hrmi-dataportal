@@ -38,6 +38,10 @@ export default defineMessages({
     id: `${scope}.metricLink`,
     defaultMessage: `${scope}.metricLink`,
   },
+  'metricLink-subrights': {
+    id: `${scope}.metricLink-subrights`,
+    defaultMessage: `${scope}.metricLink-subrights`,
+  },
   indicator: {
     id: `${scope}.indicator`,
     defaultMessage: `${scope}.indicator`,
