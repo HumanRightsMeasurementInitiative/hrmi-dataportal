@@ -30,6 +30,7 @@ function AboutMetric({
   onSelectMetric,
   dateRange,
   countryCode,
+  isSubright,
 }) {
   const [actives, setActive] = useState([]);
   const { metricType } = metric;
@@ -125,6 +126,43 @@ function AboutMetric({
             </Box>
           </AccordionPanel>
         )}
+
+        {typeof isSubright === 'undefined' && (
+          <AccordionPanel
+            header={
+              <Box
+                direction="row"
+                gap="xsmall"
+                align="center"
+                justify="between"
+              >
+                <Box>
+                  <Heading
+                    responsive={false}
+                    level={5}
+                    margin={{ vertical: 'xsmall' }}
+                  >
+                    <FormattedMessage {...messages.measure} />
+                  </Heading>
+                </Box>
+                <Box margin={{ left: 'auto' }}>
+                  {!actives.includes(aboutIndex) && <Down size="small" />}
+                  {actives.includes(aboutIndex) && <Up size="small" />}
+                </Box>
+              </Box>
+            }
+          >
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+              <Text>
+                CHANGE ME
+                {/* <FormattedMessage
+                {...rootMessages[`${metricType}-about`][metric.key]}
+              /> */}
+              </Text>
+            </Box>
+          </AccordionPanel>
+        )}
+
         {showSources && (
           <AccordionPanel
             header={
@@ -179,6 +217,7 @@ AboutMetric.propTypes = {
   onSelectMetric: PropTypes.func,
   countryCode: PropTypes.string,
   dateRange: PropTypes.object,
+  isSubright: PropTypes.bool,
 };
 
 export default AboutMetric;
