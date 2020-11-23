@@ -28,6 +28,10 @@ export default defineMessages({
       defaultMessage: 'How is this indicator defined?',
     },
   },
+  measure: {
+    id: `${scope}.measure`,
+    defaultMessage: 'What aspects of this right do we measure?',
+  },
   titleStandards: {
     id: `${scope}.titleStandards`,
     defaultMessage: 'What assessment standard is it used for?',

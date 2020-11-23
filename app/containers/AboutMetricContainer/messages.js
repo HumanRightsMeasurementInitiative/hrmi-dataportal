@@ -38,4 +38,8 @@ export default defineMessages({
     id: `${scope}.metricLink`,
     defaultMessage: `${scope}.metricLink`,
   },
+  indicator: {
+    id: `${scope}.indicator`,
+    defaultMessage: `${scope}.indicator`,
+  },
 });

@@ -118,7 +118,7 @@ const prepareData = ({
     stripes: standard === 'hi',
     key: i.key,
     label: rawScores ? getRawIndicatorLabel(i.key ,intl) : getIndicatorLabel(i.key, intl),
-    onClick: () => onClick(i.key, 'esr'),
+    onClick: () => onClick(i.key, 'esr', null, !rawScores, indicators.length > 1),
     active: activeCode === i.key,
   }));
 

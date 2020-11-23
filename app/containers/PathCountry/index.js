@@ -252,7 +252,13 @@ export function PathCountry({
     ),
   };
 
-  const onMetricClick = (code, dimension, dateRange) => {
+  const onMetricClick = (
+    code,
+    dimension,
+    dateRange,
+    isSubright,
+    hasMultipleIndicators,
+  ) => {
     if (asideLayer && asideLayer.key === code) {
       onSetAsideLayer(false);
     } else {
@@ -273,6 +279,8 @@ export function PathCountry({
           intl,
           messageValues,
         ),
+        isSubright,
+        hasMultipleIndicators,
       });
     }
   };

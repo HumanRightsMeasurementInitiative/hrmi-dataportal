@@ -90,12 +90,14 @@ export function LayerAside({ onClose, theme, layer }) {
                 countryCode={layer.countryCode}
                 dateRange={layer.dateRange}
                 showTitle
-                showMetricLink
+                showMetricLink={layer.isSubright !== false} // isSubright may be undefined, true or false, fix in future version
                 showAboutMetric
                 showSources={layer.showSources}
                 countryScoreMsg={layer.countryScoreMsg}
                 inverse
                 inAside
+                isSubright={layer.isSubright}
+                hasMultipleIndicators={layer.hasMultipleIndicators}
               />
             )}
             {layer.type === 'aboutCountry' && (

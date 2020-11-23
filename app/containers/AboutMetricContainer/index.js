@@ -54,6 +54,8 @@ export function AboutMetricContainer({
   dateRange,
   countryCode,
   showAboutMetric,
+  isSubright,
+  hasMultipleIndicators,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -62,6 +64,17 @@ export function AboutMetricContainer({
 
   const metric = getMetricDetails(metricCode);
   const { metricType } = metric;
+
+  // N.B. not the ideal way to handle clicking subrights / indicators, but could be re-worked in a rebuild
+  /* eslint-disable no-nested-ternary */
+  // prettier-ignore
+  const subMetricType =
+    typeof isSubright === 'undefined'
+      ? metric.metricType
+      : isSubright 
+        ? 'subrights'
+        : 'indicators-raw';
+  /* eslint-enable */
 
   const standard =
     metricType === 'indicators'
@@ -209,7 +222,13 @@ export function AboutMetricContainer({
       )}
       {showTitle && (
         <Heading responsive={false} level={3}>
-          <FormattedMessage {...rootMessages[metricType][metric.key]} />
+          {isSubright ? (
+            `Right to ${intl.formatMessage(
+              rootMessages[subMetricType][metric.key],
+            )}`
+          ) : (
+            <FormattedMessage {...rootMessages[subMetricType][metric.key]} />
+          )}
         </Heading>
       )}
       {countryScoreMsg && (
@@ -224,13 +243,24 @@ export function AboutMetricContainer({
               {...messages.metricLink}
               values={{
                 metric: lowerCase(
-                  intl.formatMessage(
-                    rootMessages[metric.metricType][metricCode],
-                  ),
+                  intl.formatMessage(rootMessages[subMetricType][metricCode]),
                 ),
               }}
             />
           </ButtonHero>
+        </div>
+      )}
+      {isSubright === false && (
+        <div style={{ marginTop: 12 }}>
+          <Text size="large" weight="bold">
+            <FormattedMessage
+              {...messages.indicator}
+              values={{
+                right: metric.right,
+                isPlural: hasMultipleIndicators,
+              }}
+            />
+          </Text>
         </div>
       )}
       {showAboutMetric && (
@@ -242,6 +272,7 @@ export function AboutMetricContainer({
           showSources={showSources}
           dateRange={dateRange}
           countryCode={countryCode}
+          isSubright={isSubright}
         />
       )}
       {showFAQs && (
@@ -281,6 +312,8 @@ AboutMetricContainer.propTypes = {
   countryCode: PropTypes.string,
   dateRange: PropTypes.object,
   showAboutMetric: PropTypes.bool,
+  isSubright: PropTypes.bool,
+  hasMultipleIndicators: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
