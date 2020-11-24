@@ -258,7 +258,7 @@
   "hrmi.components.ChartWordCloud.interpretation": "Interpretação: Texto maior = mais especialistas em direitos humanos identificaram este grupo como estando em risco.",
   "hrmi.components.ChartWordCloud.highlightStart": " dos nossos direitos humanos, os especialistas identificaram ",
   "hrmi.components.ChartWordCloud.highlightEnd": " como estando em risco de ter este direito violado.",
-  "hrmi.components.CountryMetricPeople.noAnalysisInLanguage": "Pedimos desculpa. Esta informação ainda não está disponível no seu idioma",
+  "hrmi.components.CountryMetricPeople.noAnalysisInLanguage": "Pedimos desculpa. Esta informação não está disponível no seu idioma",
   "hrmi.components.CountryMetricPeople.introRight": "Pedimos aos especialistas em direitos humanos que nos dissessem quais as pessoas com maior risco de terem este direito violado. As imagems abaixo mostram suas respostas.",
   "hrmi.components.CountryMetricPeople.introDimension": "Pedimos aos especialistas em direitos humanos que nos dissessem que grupo de pessoas corre o maior risco de ter cada direito desta categoria violado. As imagems abaixo mostram suas respostas.",
   "hrmi.components.Close.label": "Voltar",
