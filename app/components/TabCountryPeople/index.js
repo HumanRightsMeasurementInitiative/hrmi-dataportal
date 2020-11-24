@@ -62,10 +62,6 @@ const StyledHeading = styled(Heading)`
     line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
   }
 `;
-const StyledText = styled(Text)`
-  padding: 0 10px 0 16px;
-  margin-bottom: 2px;
-`;
 // prettier-ignore
 const ButtonDropdown = styled(Button)`
   display: inline;
@@ -195,7 +191,8 @@ function TabCountryPeople({
     code: g.code,
     disabled: false,
   }));
-  const [activeMetric, setActiveMetric] = useState(metrics[0].code);
+  // N.B. start with fake active metric with code 99 to represent the un-selectable 'peopleHeader' message
+  const [activeMetric, setActiveMetric] = useState(99);
   const [open, setOpen] = useState(false);
   const dropButton = useRef(null);
 
@@ -224,12 +221,16 @@ function TabCountryPeople({
                           style={{ whiteSpace: 'nowrap', paddingRight: '5px' }}
                           size={isMinSize(size, 'large') ? 'medium' : 'small'}
                         >
-                          {truncateText(
-                            intl.formatMessage(
-                              rootMessages['people-at-risk'][activeMetric],
-                            ),
-                            isMaxSize(size, 'sm') ? 30 : 60,
-                          )}
+                          {/* eslint-disable */}
+                          {activeMetric === 99
+                            ? intl.formatMessage(messages.peopleHeader)
+                            : truncateText(
+                              intl.formatMessage(
+                                rootMessages['people-at-risk'][activeMetric],
+                              ),
+                              isMaxSize(size, 'sm') ? 30 : 60,
+                            )}
+                            {/* eslint-enable */}
                         </Text>
                         {open && <FormUp size="large" />}
                         {!open && <FormDown size="large" />}
@@ -249,9 +250,9 @@ function TabCountryPeople({
               >
                 {/* N.B. This is similar to MetricSelect, but specific functionality for this dropdown */}
                 <Styled>
-                  <StyledText color="secondary" size="small">
+                  <StyledOption disabled noBorderLast>
                     <FormattedMessage {...messages.peopleHeader} />
-                  </StyledText>
+                  </StyledOption>
                   {metrics.map(m => (
                     <div key={m.code}>
                       <StyledOption
