@@ -62,6 +62,10 @@ const StyledHeading = styled(Heading)`
     line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
   }
 `;
+const StyledText = styled(Text)`
+  padding: 0 10px 0 16px;
+  margin-bottom: 2px;
+`;
 // prettier-ignore
 const ButtonDropdown = styled(Button)`
   display: inline;
@@ -245,6 +249,9 @@ function TabCountryPeople({
               >
                 {/* N.B. This is similar to MetricSelect, but specific functionality for this dropdown */}
                 <Styled>
+                  <StyledText color="secondary" size="small">
+                    <FormattedMessage {...messages.peopleHeader} />
+                  </StyledText>
                   {metrics.map(m => (
                     <div key={m.code}>
                       <StyledOption
