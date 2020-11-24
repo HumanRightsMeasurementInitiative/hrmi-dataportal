@@ -310,10 +310,11 @@ export function PathCountry({
   const keys = RIGHTS.map(r => generateKey(r.key, countryCode));
 
   // loads content for all rights for people at risk tab
+  // re-runs when country code changes
   useEffect(() => {
     keys.forEach(k => onLoadContent(k));
     onLoadData();
-  }, []);
+  }, [match.params.country]);
 
   /* eslint-disable no-console */
   if (!rootMessages.countries[countryCode]) {
