@@ -258,7 +258,7 @@
   "hrmi.components.ChartWordCloud.interpretation": "Interprétation : Texte plus grand = davantage d'experts en droits humains ont identifié ce groupe comme étant à risque.",
   "hrmi.components.ChartWordCloud.highlightStart": " de nos experts en droits humains ont identifiés ",
   "hrmi.components.ChartWordCloud.highlightEnd": " comme personnes à risque susceptibles de subir la violation de ce droit.",
-  "hrmi.components.CountryMetricPeople.noAnalysisInLanguage": "Nous sommes désolés. Cette page n'est pas encore disponible dans votre langue",
+  "hrmi.components.CountryMetricPeople.noAnalysisInLanguage": "Nous sommes désolés. Cette information n'est pas disponible dans votre langue",
   "hrmi.components.CountryMetricPeople.introRight": "Nous avons demandé à des experts des droits humains de nous indiquer quelles étaient les personnes les plus exposées à subir la violation de ce droit. Les images ci-dessous présentent leurs réponses.",
   "hrmi.components.CountryMetricPeople.introDimension": "Nous avons demandé à des spécialistes des droits humains de nous dire quelles sont les personnes les plus exposées au risque de violation de chaque droit dans cette catégorie. Les images ci-dessous présentent leurs réponses.",
   "hrmi.components.Close.label": "Retour",
