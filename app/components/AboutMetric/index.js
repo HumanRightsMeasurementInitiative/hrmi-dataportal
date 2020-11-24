@@ -38,9 +38,13 @@ function AboutMetric({
   const { metricType } = metric;
   const hasAbout = rootMessages[`${metricType}-about`];
   const hasIndicator = metricType === 'indicators' && metricInfo;
+  const hasAspect = typeof isSubright === 'undefined';
   const aboutIndex = 0;
   const indicatorIndex = hasIndicator && hasAbout ? 1 : 0;
-  const sourceIndex = aboutIndex + indicatorIndex + 1;
+  const aspectIndex = indicatorIndex + 1;
+  const sourceIndex = hasAspect
+    ? aspectIndex + 1
+    : aboutIndex + indicatorIndex + 1;
 
   return (
     <Box margin={{ top: 'medium' }}>
@@ -129,7 +133,7 @@ function AboutMetric({
           </AccordionPanel>
         )}
 
-        {typeof isSubright === 'undefined' && (
+        {hasAspect && (
           <AccordionPanel
             header={
               <Box
@@ -148,8 +152,8 @@ function AboutMetric({
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
-                  {!actives.includes(aboutIndex) && <Down size="small" />}
-                  {actives.includes(aboutIndex) && <Up size="small" />}
+                  {!actives.includes(aspectIndex) && <Down size="small" />}
+                  {actives.includes(aspectIndex) && <Up size="small" />}
                 </Box>
               </Box>
             }
