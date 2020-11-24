@@ -287,6 +287,7 @@
   "hrmi.components.TabCountryPeople.showAnalysis": "Show more information from survey respondents",
   "hrmi.components.TabCountryPeople.hideAnalysis": "Show less",
   "hrmi.components.TabCountryPeople.people": "Highlight {dropdown} in the word clouds below.",
+  "hrmi.components.TabCountryPeople.people.header": "Select group below",
   "hrmi.components.TabCountryPeople.noAnalysisInLanguage": "We are sorry. This information is not yet available in your language",
   "hrmi.components.AboutMetric.title.dimensions": "How is this category of rights defined?",
   "hrmi.components.AboutMetric.title.rights": "How is this human right defined?",

@@ -29,6 +29,10 @@ export default defineMessages({
     id: `${scope}.people`,
     defaultMessage: 'Highlight {dropdown} in the word clouds below.',
   },
+  peopleHeader: {
+    id: `${scope}.people.header`,
+    defaultMessage: 'Select group below',
+  },
   noAnalysisInLanguage: {
     id: `${scope}.noAnalysisInLanguage`,
     defaultMessage:
