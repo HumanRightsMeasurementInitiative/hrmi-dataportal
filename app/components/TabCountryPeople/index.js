@@ -308,6 +308,10 @@ function TabCountryPeople({
                           (array.length > 1 && indexInner > 0)
                         }
                         showTitle
+                        onClickWord={code => {
+                          onSelectCountry(countryCode, code);
+                          setActiveMetric(code);
+                        }}
                       />
                     ),
                   )}
