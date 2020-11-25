@@ -27,6 +27,10 @@ export default defineMessages({
       id: `${scope}.title.indicatorsRaw`,
       defaultMessage: 'How is this indicator defined?',
     },
+    subrights: {
+      id: `${scope}.title.subrights`,
+      defaultMessage: 'What indicator data are used to measure this right?',
+    },
   },
   measure: {
     id: `${scope}.measure`,
