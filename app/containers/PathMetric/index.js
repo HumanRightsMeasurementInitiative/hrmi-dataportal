@@ -54,9 +54,17 @@ export function PathMetric({
 }) {
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
-  const metricTitle = intl.formatMessage(
-    rootMessages[metric.metricType][metric.key],
-  );
+  // N.B. hacky way of handling sub-rights titles... fix later
+  // prettier-ignore
+  const metricTitle =
+    metric.metricType === 'indicators'
+      ? `${intl.formatMessage(
+        rootMessages.charts.rightsColumnLabel.esr,
+      )} ${intl
+        .formatMessage(rootMessages.subrights[metric.key])
+        .toLowerCase()}`
+      : intl.formatMessage(rootMessages[metric.metricType][metric.key]);
+
   let metricTitleShort;
   let dimensionCode = metricCode;
 

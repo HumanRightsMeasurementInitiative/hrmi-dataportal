@@ -206,9 +206,15 @@ export function AboutMetricContainer({
                               onSelectMetric(child.key);
                             }}
                             text={
-                              <FormattedMessage
-                                {...rootMessages.indicators[child.key]}
-                              />
+                              <Text size="small">
+                                {`${intl.formatMessage(
+                                  rootMessages.charts.rightsColumnLabel.esr,
+                                )} ${intl
+                                  .formatMessage(
+                                    rootMessages.subrights[child.key],
+                                  )
+                                  .toLowerCase()}`}
+                              </Text>
                             }
                           />
                         ))}

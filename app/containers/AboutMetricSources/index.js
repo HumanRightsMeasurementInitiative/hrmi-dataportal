@@ -32,7 +32,7 @@ const StyledUL = styled(UL)`
 `;
 
 const StyledNonButton = styled(Button)`
-  text-decoration: underline;
+  font-weight: bold;
   cursor: initial;
 `;
 
