@@ -7,7 +7,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import { Heading, Box, AccordionPanel, Accordion, Text } from 'grommet';
+import { Heading, Box, AccordionPanel, Accordion, Text, Button } from 'grommet';
 import { Down, Up } from 'grommet-icons';
 import styled from 'styled-components';
 
@@ -21,6 +21,9 @@ import messages from './messages';
 
 const StyledUL = styled(UL)`
   margin-top: 0;
+`;
+const StyledButton = styled(Button)`
+  text-decoration: underline;
 `;
 function AboutMetric({
   metric,
@@ -162,11 +165,7 @@ function AboutMetric({
               {childrenIndicators &&
                 childrenIndicators.map(ci => (
                   <Box margin={{ bottom: 'small' }}>
-                    <Text
-                      size="small"
-                      weight="bold"
-                      margin={{ bottom: 'xxsmall' }}
-                    >
+                    <Text size="small" margin={{ bottom: 'xxsmall' }}>
                       {`${intl.formatMessage(
                         rootMessages.settings.standard.name,
                       )}: '${intl.formatMessage(
@@ -174,9 +173,16 @@ function AboutMetric({
                       )}'`}
                     </Text>
                     {ci.indicators.map(i => (
-                      <Text size="small">
-                        <FormattedMessage {...rootMessages.subrights[i.key]} />
-                      </Text>
+                      <StyledButton onClick={() => onSelectMetric(i.key)}>
+                        <Text size="small" weight="bold">
+                          {`${intl.formatMessage(
+                            rootMessages.charts.rightsColumnLabel.esr,
+                          )} ${intl
+                            .formatMessage(rootMessages.subrights[i.key])
+                            .toLowerCase()}`}
+                          {/* <FormattedMessage {...rootMessages.subrights[i.key]} /> */}
+                        </Text>
+                      </StyledButton>
                     ))}
                   </Box>
                 ))}
