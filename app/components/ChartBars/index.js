@@ -66,6 +66,7 @@ function ChartBars({
   canShowRaw,
   rawScores,
   setRawScores,
+  closeAsideLayer
 }) {
   if (!data) return null;
   return (
@@ -102,7 +103,10 @@ function ChartBars({
                 <ButtonToggleSetting
                   // key={option.key}
                   active={!rawScores}
-                  onClick={() => setRawScores(false)}
+                  onClick={() => {
+                    setRawScores(false)
+                    closeAsideLayer()
+                  }}
                   stacked
                 >
                   <Text size="small">
@@ -117,7 +121,10 @@ function ChartBars({
                 <ButtonToggleSetting
                   // key={option.key}
                   active={rawScores}
-                  onClick={() => setRawScores(true)}
+                  onClick={() => {
+                    closeAsideLayer()
+                    setRawScores(true)
+                  }}
                   stacked
                 >
                   <Text size="small">
@@ -233,6 +240,7 @@ ChartBars.propTypes = {
   canShowRaw: PropTypes.bool,
   rawScores: PropTypes.bool,
   setRawScores: PropTypes.func,
+  closeAsideLayer: PropTypes.func,
 };
 
 export default injectIntl(ChartBars);

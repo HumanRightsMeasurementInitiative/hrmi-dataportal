@@ -407,6 +407,7 @@ export function PathCountry({
                     onMetricClick={onMetricClick}
                     activeCode={activeCode}
                     messageValues={messageValues}
+                    closeAsideLayer={() => onSetAsideLayer(false)}
                   />
                 ),
               },
