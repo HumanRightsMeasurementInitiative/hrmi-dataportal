@@ -71,7 +71,9 @@ function AboutMetric({
                     level={5}
                     margin={{ vertical: 'xsmall' }}
                   >
-                    <FormattedMessage {...messages.title[metricType]} />
+                    <FormattedMessage
+                      {...messages.title[isSubright ? 'subrights' : metricType]}
+                    />
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
@@ -87,6 +89,20 @@ function AboutMetric({
                   {...rootMessages[`${metricType}-about`][metric.key]}
                 />
               </Text>
+              {!showSources && (
+                <Box margin={{ top: '8px' }}>
+                  {isSubright && <FormattedMessage {...messages.titleSource} />}
+                  <Box margin={{ top: '4px' }}>
+                    <AboutMetricSources
+                      metric={metric}
+                      indicatorInfo={metricInfo}
+                      onSelectMetric={onSelectMetric}
+                      countryCode={countryCode}
+                      dateRange={dateRange}
+                    />
+                  </Box>
+                </Box>
+              )}
             </Box>
           </AccordionPanel>
         )}

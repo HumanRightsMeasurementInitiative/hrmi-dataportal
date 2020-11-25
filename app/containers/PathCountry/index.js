@@ -287,7 +287,9 @@ export function PathCountry({
       onSetAsideLayer({
         type: 'aboutMetric',
         background: `${dimension || code}Active`,
-        showSources: dimension === 'esr' || code === 'esr',
+        showSources:
+          typeof isSubright === 'undefined' &&
+          (dimension === 'esr' || code === 'esr'),
         key: code,
         code,
         countryCode,
