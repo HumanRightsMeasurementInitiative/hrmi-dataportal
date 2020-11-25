@@ -41,7 +41,8 @@ function AboutMetric({
   const { metricType } = metric;
   const hasAbout = rootMessages[`${metricType}-about`];
   const hasIndicator = metricType === 'indicators' && metricInfo;
-  const hasAspect = typeof isSubright === 'undefined';
+  const hasAspect =
+    metricType !== 'dimensions' && typeof isSubright === 'undefined';
   const aboutIndex = 0;
   const indicatorIndex = hasIndicator && hasAbout ? 1 : 0;
   const aspectIndex = indicatorIndex + 1;
@@ -188,18 +189,18 @@ function AboutMetric({
                         rootMessages.settings.standard[ci.key],
                       )}'`}
                     </Text>
-                    {ci.indicators.map(i => (
-                      <StyledButton onClick={() => onSelectMetric(i.key)}>
-                        <Text size="small" weight="bold">
-                          {`${intl.formatMessage(
-                            rootMessages.charts.rightsColumnLabel.esr,
-                          )} ${intl
-                            .formatMessage(rootMessages.subrights[i.key])
-                            .toLowerCase()}`}
-                          {/* <FormattedMessage {...rootMessages.subrights[i.key]} /> */}
-                        </Text>
-                      </StyledButton>
-                    ))}
+                    {ci.indicators &&
+                      ci.indicators.map(i => (
+                        <StyledButton onClick={() => onSelectMetric(i.key)}>
+                          <Text size="small" weight="bold">
+                            {`${intl.formatMessage(
+                              rootMessages.charts.rightsColumnLabel.esr,
+                            )} ${intl
+                              .formatMessage(rootMessages.subrights[i.key])
+                              .toLowerCase()}`}
+                          </Text>
+                        </StyledButton>
+                      ))}
                   </Box>
                 ))}
             </Box>
