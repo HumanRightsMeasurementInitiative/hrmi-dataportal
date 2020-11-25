@@ -134,6 +134,7 @@ export function ChartContainerCountryIndicators({
   onMetricClick,
   activeCode,
   metricSelector,
+  closeAsideLayer,
 }) {
   const [rawScores, setRawScores] = useState(false);
   useEffect(() => {
@@ -205,6 +206,7 @@ export function ChartContainerCountryIndicators({
               canShowRaw
               rawScores={rawScores}
               setRawScores={setRawScores}
+              closeAsideLayer={closeAsideLayer}
             />
           </Box>
           {currentBenchmark.key === 'best' && (
@@ -276,6 +278,7 @@ ChartContainerCountryIndicators.propTypes = {
   onMetricClick: PropTypes.func,
   intl: intlShape.isRequired,
   metricSelector: PropTypes.node,
+  closeAsideLayer: PropTypes.func,
 };
 const mapStateToProps = createStructuredSelector({
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
