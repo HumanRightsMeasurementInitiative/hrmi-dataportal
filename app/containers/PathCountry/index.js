@@ -116,7 +116,14 @@ const DEPENDENCIES = [
   'atRisk',
 ];
 
-const getMetricScore = (metric, dimensions, rights, indicators, benchmark) => {
+const getMetricScore = (
+  metric,
+  dimensions,
+  rights,
+  indicators,
+  benchmark,
+  isSubright,
+) => {
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   let currentMetric;
   if (metric.metricType === 'dimensions' && dimensions) {
@@ -129,6 +136,9 @@ const getMetricScore = (metric, dimensions, rights, indicators, benchmark) => {
     currentMetric = indicators[metric.key];
   }
   if (currentMetric && currentMetric.score) {
+    if (isSubright === false) {
+      return currentMetric.score.value;
+    }
     if (metric.type === 'esr') {
       return currentMetric.score[currentBenchmark.column];
     }
@@ -155,6 +165,7 @@ const getScoreMsg = (
     rights,
     indicators,
     benchmark,
+    isSubright,
   );
   /* eslint-disable no-nested-ternary */
   // prettier-ignore
@@ -178,19 +189,28 @@ const getScoreMsg = (
           metric,
         }),
       )
-      : score 
+      : score && isSubright === false
         ? intl.formatMessage(
-          messages.countryScoreExplainer.esr[benchmark],
+          messages.indicatorScoreExplainer[aboutMetricDetails.key],
           ({
             ...messageValues,
             score: formatScore(score, 1, intl),
             metric,
           }),
         )
-        : intl.formatMessage(
-          messages.countryScoreExplainer.noData,
-          messageValues,
-        );
+        : score 
+          ? intl.formatMessage(
+            messages.countryScoreExplainer.esr[benchmark],
+            ({
+              ...messageValues,
+              score: formatScore(score, 1, intl),
+              metric,
+            }),
+          )
+          : intl.formatMessage(
+            messages.countryScoreExplainer.noData,
+            messageValues,
+          );
     /* eslint-enable */
   }
   if (aboutMetricDetails.type === 'cpr') {

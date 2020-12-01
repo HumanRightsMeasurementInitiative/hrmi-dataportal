@@ -63,4 +63,96 @@ export default defineMessages({
       defaultMessage: 'Score not available for {countryWithArticle}',
     },
   },
+  indicatorScoreExplainer: {
+    'net-primary': {
+      id: `${scope}.countryScoreExplainer.net-primary`,
+      defaultMessage:
+        '{score}% of primary school aged children in {country} are enrolled in primary school.',
+    },
+    'sec-enrol': {
+      id: `${scope}.countryScoreExplainer.sec-enrol`,
+      defaultMessage:
+        '{score}% of secondary school aged children in {country} are enrolled in secondary school.',
+    },
+    'pisa-math': {
+      id: `${scope}.countryScoreExplainer.pisa-math`,
+      defaultMessage:
+        '{score}% of 15 year olds in {country} achieved level 3 or better on the PISA math test.',
+    },
+    'pisa-reading': {
+      id: `${scope}.countryScoreExplainer.pisa-reading`,
+      defaultMessage:
+        '{score}% of 15 year olds in {country} achieved level 3 or better on the PISA reading test.',
+    },
+    'pisa-science': {
+      id: `${scope}.countryScoreExplainer.pisa-science`,
+      defaultMessage:
+        '{score}% of 15 year olds in {country} achieved level 3 or better on the PISA science test.',
+    },
+    'not-stunted': {
+      id: `${scope}.countryScoreExplainer.not-stunted`,
+      defaultMessage:
+        '{score}% of children under 5 in {country} are a healthy height for age, indicating they are receiving adequate nutrition.',
+    },
+    'food-security': {
+      id: `${scope}.countryScoreExplainer.food-security`,
+      defaultMessage:
+        "{score}% of the population in {country} enjoy food security, according to FAO's Food Insecurity Experience Scale.",
+    },
+    'under-5-survival': {
+      id: `${scope}.countryScoreExplainer.under-5-survival`,
+      defaultMessage:
+        '{score}% of children in {country} survive to their 5th birthday.',
+    },
+    'adult-survival': {
+      id: `${scope}.countryScoreExplainer.adult-survival`,
+      defaultMessage:
+        '{score}% of youth aged 15 in {country} survive to at least age 60.',
+    },
+    contraception: {
+      id: `${scope}.countryScoreExplainer.contraception`,
+      defaultMessage:
+        '{score}% of women or couples in {country} aged 15-49 use modern contraceptive methods.',
+    },
+    'birth-weight': {
+      id: `${scope}.countryScoreExplainer.birth-weight`,
+      defaultMessage:
+        '{score}% of newborn babies in {country} weigh more than 2500 grams.',
+    },
+    'water-in-home': {
+      id: `${scope}.countryScoreExplainer.water-in-home`,
+      defaultMessage:
+        '{score}% of people in {country} have access to an improved water source on their premises that is available when needed and free of contamination.',
+    },
+    'basic-sanitation': {
+      id: `${scope}.countryScoreExplainer.basic-sanitation`,
+      defaultMessage:
+        '{score}% of people in {country} have access to sanitation facilities that are not shared with other households and hygienically separate excreta from human contact.',
+    },
+    'affordable-housing': {
+      id: `${scope}.countryScoreExplainer.affordable-housing`,
+      defaultMessage:
+        '{score}% of people in the poorest population quintile in {country} live in a household where the cost of rent or mortgage is less than 40% of their disposable income.',
+    },
+    'safe-sanitation': {
+      id: `${scope}.countryScoreExplainer.safe-sanitation`,
+      defaultMessage:
+        '{score}% of people in {country} have access to sanitation facilities that are not shared with other households; that hygienically separate excreta from human contact; and are either safely disposed in situ or transported and treated off site.',
+    },
+    'relative-poverty': {
+      id: `${scope}.countryScoreExplainer.relative-poverty`,
+      defaultMessage:
+        '{score}% of people in {country} enjoy an income that is greater than 50% of the median income.',
+    },
+    'absolute-poverty': {
+      id: `${scope}.countryScoreExplainer.absolute-poverty`,
+      defaultMessage:
+        '{score}% of people in {country} receive income greater than $3.20 ( 2011 PPP$) per day.',
+    },
+    'longterm-unemployment': {
+      id: `${scope}.countryScoreExplainer.longterm-unemployment`,
+      defaultMessage:
+        '{score}% of the unemployed in {country} have been unemployed for fewer than 12 months.',
+    },
+  },
 });
