@@ -31,7 +31,7 @@
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.url": "https://humanrightsmeasurement.org/human-rights-practitioners/",
   "hrmi.containers.PathCountry.countryScoreExplainer.cprLink.anchor": "human rights practitioners",
   "hrmi.containers.PathCountry.countryScoreExplainer.noData": "Score not available for {countryWithArticle}",
-  "hrmi.containers.PathCountry.indicatorScoreExplainer.cnet-primary": "{score}% of primary school aged children in {country} are enrolled in primary school.",
+  "hrmi.containers.PathCountry.indicatorScoreExplainer.net-primary": "{score}% of primary school aged children in {country} are enrolled in primary school.",
   "hrmi.containers.PathCountry.indicatorScoreExplainer.sec-enrol": "{score}% of secondary school aged children in {country} are enrolled in secondary school.",
   "hrmi.containers.PathCountry.indicatorScoreExplainer.pisa-math": "{score}% of 15 year olds in {country} achieved level 3 or better on the PISA math test.",
   "hrmi.containers.PathCountry.indicatorScoreExplainer.pisa-reading": "{score}% of 15 year olds in {country} achieved level 3 or better on the PISA reading test.",
