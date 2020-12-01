@@ -271,13 +271,10 @@ export function AboutMetricContainer({
       {isSubright === false && (
         <div style={{ marginTop: 12 }}>
           <Text weight="bold">
-            <FormattedMessage
-              {...messages.indicator}
-              values={{
-                right: metric.right,
-                isPlural: hasMultipleIndicators,
-              }}
-            />
+            {`${intl.formatMessage(messages.indicator, {
+              right: metric.right,
+              isPlural: hasMultipleIndicators,
+            })} ${countryScoreMsg}`}
           </Text>
         </div>
       )}
