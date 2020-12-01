@@ -567,7 +567,7 @@
   "hrmi.indicators-definition.birth-weight": "% babies NOT low birth weight (% live births weighing > 2500 grams)",
   "hrmi.indicators-definition.water-in-home": "% population with 'basic' drinking water service on premises",
   "hrmi.indicators-definition.basic-sanitation": "% population with at least 'basic' sanitation facilities",
-  "hrmi.indicators-definition.safe-sanitation": "% population with 'safely managed' sanitation',
+  "hrmi.indicators-definition.safe-sanitation": "% population with 'safely managed' sanitation",
   "hrmi.indicators-definition.relative-poverty": "% population NOT relatively poor (income > 50% median income)",
   "hrmi.indicators-definition.absolute-poverty": "% population NOT absolutely poor (income > $3.20 2011 PPP$ per day)",
   "hrmi.indicators-definition.longterm-unemployment": "% unemployed NOT long-term (>12 months) unemployed",
