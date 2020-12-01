@@ -889,7 +889,7 @@
   "hrmi.containers.Search.search": "Pesquisar",
   "hrmi.containers.Search.exampleSearch": "ex. procurar 'Brasil' ou 'Habitação’'",
   "hrmi.app.hrmi": "Human Rights Measurement Initiative",
-  "hrmi.containers.LayerHowToRead.labelWithName": "Como ler el gráfico {name}",
+  "hrmi.containers.LayerHowToRead.labelWithName": "Como ler el gráfico: {name}",
   "hrmi.containers.LayerSettings.label": "Mudar de vista",
   "hrmi.containers.LayerSettings.labelWithName": "Mudar de vista: {name}",
   "hrmi.containers.AboutMetricContainer.metricLink": "Explorar (metric) para todos os países",
