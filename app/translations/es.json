@@ -286,7 +286,7 @@
   "hrmi.components.TabCountryPeople.intro": "Pedimos a los expertos en derechos humanos que eligieran de una lista de opciones por las cuales las personas estaban particularmente en riesgo de que se violara este derecho. Las imágenes a continuación muestran sus respuestas.",
   "hrmi.components.AboutMetric.title.dimensions": "¿Cómo está definida esta categoría de derechos?",
   "hrmi.components.AboutMetric.title.rights": "¿Cómo está definido este derecho humano?",
-  "hrmi.components.AboutMetric.title.indicators": "¿Sobre qué datos está basado el indicador?",
+  "hrmi.components.AboutMetric.title.indicators": "TODO: Indicator definition and data source",
   "hrmi.components.AboutMetric.title.indicatorsRaw": "¿Cómo está definido este indicador?",
   "hrmi.components.AboutMetric.titleSource": "Fuente(s) de datos",
   "hrmi.components.ChartSettingFilters.addFilter": "Agregar filtro de país",
