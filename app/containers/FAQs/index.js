@@ -220,6 +220,17 @@ function FAQs({
                 <FormattedMessage
                   {...rootMessages[`${metricType}-about`][metrics.key]}
                 />
+                {showSources && hasIndicator && (
+                  <Box pad={{ vertical: 'small' }}>
+                    <AboutMetricSources
+                      metric={metrics}
+                      indicatorInfo={metricInfo}
+                      onSelectMetric={onSelectMetric}
+                      countryCode={countryCode}
+                      dateRange={dateRange}
+                    />
+                  </Box>
+                )}
               </StyledText>
             </Box>
           </AccordionPanel>
@@ -270,7 +281,7 @@ function FAQs({
             </Box>
           </AccordionPanel>
         )}
-        {showSources && (
+        {showSources && !hasIndicator && (
           <AccordionPanel
             header={
               <Box

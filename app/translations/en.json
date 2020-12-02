@@ -286,7 +286,7 @@
   "hrmi.components.TabCountryPeople.intro": "We asked human rights experts to choose from a list of options for which people were particularly at risk of having this right violated. The images below show their answers.",
   "hrmi.components.AboutMetric.title.dimensions": "How is this category of rights defined?",
   "hrmi.components.AboutMetric.title.rights": "How is this human right defined?",
-  "hrmi.components.AboutMetric.title.indicators": "Data source(s)",
+  "hrmi.components.AboutMetric.title.indicators": "Indicator definition and data source",
   "hrmi.components.AboutMetric.title.subrights": "What indicator data are used to measure this right?",
   "hrmi.components.AboutMetric.title.indicatorsRaw": "How is this indicator defined?",
   "hrmi.components.AboutMetric.titleSource": "Data source(s)",
