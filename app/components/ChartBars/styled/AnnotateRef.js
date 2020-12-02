@@ -6,6 +6,12 @@ export default styled.div`
   right: 0;
   bottom: 100%;
   transform: ${({ isRotated }) => (isRotated ? 'rotate(45deg)' : '')};
-  margin: ${({ type }) =>
-    type === 'diamond' ? '-36px -27px 0 0' : '-36px -27px -16px 0'};
+  margin: ${({ type, isRotated }) =>
+    /* eslint-disable */
+    isRotated
+      ? '-36px -27px 0 0'
+      : type === 'htr'
+        ? '0px'
+        : '-36px -27px -16px 0'};
+    /* eslint-enable */
 `;
