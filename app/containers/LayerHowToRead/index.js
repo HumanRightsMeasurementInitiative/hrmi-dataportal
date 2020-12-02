@@ -30,7 +30,7 @@ function LayerHowToRead({ layer }) {
         {chartName && (
           <FormattedMessage
             {...messages.labelWithName}
-            values={{ name: chartName }}
+            values={{ name: chartName.toLowerCase() }}
           />
         )}
         {!chartName && <FormattedMessage {...messages.label} />}
