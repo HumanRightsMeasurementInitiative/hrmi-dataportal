@@ -45,6 +45,8 @@ export function LayerAside({ onClose, theme, layer }) {
     }
 
     window.addEventListener('resize', handleResize);
+    // N.B. handles closing the aside when navigating back and forward with browser
+    window.onpopstate = () => onClose();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
