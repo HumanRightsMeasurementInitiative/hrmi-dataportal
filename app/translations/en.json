@@ -42,7 +42,7 @@
   "hrmi.containers.PathCountry.indicatorScoreExplainer.adult-survival": "{score}% of youth aged 15 in {country} survive to at least age 60.",
   "hrmi.containers.PathCountry.indicatorScoreExplainer.contraception": "{score}% of women or couples in {country} aged 15-49 use modern contraceptive methods.",
   "hrmi.containers.PathCountry.indicatorScoreExplainer.birth-weight": "{score}% of newborn babies in {country} weigh more than 2500 grams.",
-  "hrmi.containers.PathCountry.indicatorScoreExplainer.water-in-home": "{score}% of people in {country} have access to an improved water source on their premises that is available when needed and free of contamination.",
+  "hrmi.containers.PathCountry.indicatorScoreExplainer.water-in-home": "{score}% of people in {country} have access to a water source on their premises that is available when needed and free of contamination.",
   "hrmi.containers.PathCountry.indicatorScoreExplainer.basic-sanitation": "{score}% of people in {country} have access to sanitation facilities that are not shared with other households and hygienically separate excreta from human contact.",
   "hrmi.containers.PathCountry.indicatorScoreExplainer.affordable-housing": "{score}% of people in the poorest population quintile in {country} live in a household where the cost of rent or mortgage is less than 40% of their disposable income.",
   "hrmi.containers.PathCountry.indicatorScoreExplainer.safe-sanitation": "{score}% of people in {country} have access to sanitation facilities that are not shared with other households; that hygienically separate excreta from human contact; and are either safely disposed in situ or transported and treated off site.",
