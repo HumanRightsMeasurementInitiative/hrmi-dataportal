@@ -120,6 +120,7 @@ const prepareData = ({
     label: rawScores ? getRawIndicatorLabel(i.key ,intl) : getIndicatorLabel(i.key, intl),
     onClick: () => onClick(i.key, 'esr', null, !rawScores, indicators.length > 1),
     active: activeCode === i.key,
+    year: i.score && i.score.year,
   }));
 
 export function ChartContainerCountryIndicators({

@@ -63,6 +63,7 @@ export function BarWrapper({
               {score.label && (
                 <BarLabel
                   label={score.label}
+                  year={score.year}
                   color={
                     hover || score.active ? `${score.color}Active` : labelColor
                   }

@@ -136,48 +136,6 @@ function ChartBars({
                     />
                   </Text>
                 </ButtonToggleSetting>
-                {/* <StyledButton
-                  plain
-                  onClick={() => setRawScores(false)}
-                  label={
-                    <StyledText selected={!rawScores}>
-                      <FormattedMessage
-                        {...rootMessages.labels.indicatorToggles.hrmi}
-                        values={{
-                          isPlural: data.length > 1,
-                        }}
-                      />
-                    </StyledText>
-                  }
-                  icon={
-                    <Performance
-                      color={!rawScores ? 'dark' : '#B1B0CB'}
-                      size="large"
-                    />
-                  }
-                  reverse
-                />
-                <StyledButton
-                  plain
-                  onClick={() => setRawScores(true)}
-                  label={
-                    <StyledText selected={rawScores}>
-                      <FormattedMessage
-                        {...rootMessages.labels.indicatorToggles.indicator}
-                        values={{
-                          isPlural: data.length > 1,
-                        }}
-                      />
-                    </StyledText>
-                  }
-                  icon={
-                    <Performance
-                      color={rawScores ? 'dark' : '#B1B0CB'}
-                      size="large"
-                    />
-                  }
-                  reverse
-                /> */}
               </Box>
             )}
           </Box>
