@@ -221,6 +221,8 @@ export function ChartContainerCountryRights({
     );
   }
 
+  console.log({ dimension, currentBenchmark });
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -455,6 +457,16 @@ export function ChartContainerCountryRights({
                       countryGrammar,
                     )}
                   />
+                </Text>
+                <Text size={isMinSize(size, 'large') ? 'small' : 'xsmall'}>
+                  {dimension.score && (
+                    <FormattedMessage
+                      {...rootMessages.charts.dimensionDataSource}
+                      values={{
+                        year: dimension.score.year,
+                      }}
+                    />
+                  )}
                 </Text>
               </Box>
               <Box margin={{ bottom: 'small' }} responsive={false}>
