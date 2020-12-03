@@ -326,6 +326,10 @@ export default defineMessages({
           'How well is {needsArticle, select, true {the } false { }}{countryPossessive} government respecting each right?',
       },
     },
+    dimensionDataSource: {
+      id: `${scope}.charts.dimensionDataSource`,
+      defaultMessage: 'Chart shows most recent data available as of {year}.',
+    },
   },
   settings: {
     scale: {
