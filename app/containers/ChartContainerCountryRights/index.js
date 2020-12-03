@@ -267,6 +267,16 @@ export function ChartContainerCountryRights({
                     />
                   )}
                 </Text>
+                <Text size={isMinSize(size, 'large') ? 'small' : 'xsmall'}>
+                  {currentBenchmark && dimension.score && (
+                    <FormattedMessage
+                      {...rootMessages.charts.dimensionDataSource}
+                      values={{
+                        year: dimension.score.year,
+                      }}
+                    />
+                  )}
+                </Text>
                 <NarrativeESRStandardHint
                   country={country}
                   standard={standard}
