@@ -327,8 +327,14 @@ export default defineMessages({
       },
     },
     dimensionDataSource: {
-      id: `${scope}.charts.dimensionDataSource`,
-      defaultMessage: 'Chart shows most recent data available as of {year}.',
+      esr: {
+        id: `${scope}.charts.dimensionDataSource.esr`,
+        defaultMessage: 'Chart shows most recent data available as of {year}.',
+      },
+      cpr: {
+        id: `${scope}.charts.dimensionDataSource.cpr`,
+        defaultMessage: 'Scores show data from {year}.',
+      },
     },
   },
   settings: {
