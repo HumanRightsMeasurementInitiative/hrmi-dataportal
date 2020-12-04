@@ -272,7 +272,7 @@ export function ChartContainerCountryRights({
                 <Text size={isMinSize(size, 'large') ? 'small' : 'xsmall'}>
                   {currentBenchmark && dimension.score && (
                     <FormattedMessage
-                      {...rootMessages.charts.dimensionDataSource}
+                      {...rootMessages.charts.dimensionDataSource.esr}
                       values={{
                         year: dimension.score.year,
                       }}
@@ -461,7 +461,7 @@ export function ChartContainerCountryRights({
                 <Text size={isMinSize(size, 'large') ? 'small' : 'xsmall'}>
                   {dimension.score && (
                     <FormattedMessage
-                      {...rootMessages.charts.dimensionDataSource}
+                      {...rootMessages.charts.dimensionDataSource.cpr}
                       values={{
                         year: dimension.score.year,
                       }}
