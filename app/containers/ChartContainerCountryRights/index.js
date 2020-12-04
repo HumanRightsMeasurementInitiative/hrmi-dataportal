@@ -235,6 +235,15 @@ export function ChartContainerCountryRights({
                   dimension: intl.formatMessage(
                     rootMessages.dimensions[dimensionCode],
                   ),
+                  dimensionDataSource:
+                    currentBenchmark &&
+                    dimension.score &&
+                    intl.formatMessage(
+                      rootMessages.charts.dimensionDataSource.esr,
+                      {
+                        year: dimension.score.year,
+                      },
+                    ),
                 }}
                 includeChartName
                 tools={{
@@ -266,16 +275,6 @@ export function ChartContainerCountryRights({
                         null,
                         countryGrammar,
                       )}
-                    />
-                  )}
-                </Text>
-                <Text size={isMinSize(size, 'large') ? 'small' : 'xsmall'}>
-                  {currentBenchmark && dimension.score && (
-                    <FormattedMessage
-                      {...rootMessages.charts.dimensionDataSource.esr}
-                      values={{
-                        year: dimension.score.year,
-                      }}
                     />
                   )}
                 </Text>
@@ -434,6 +433,15 @@ export function ChartContainerCountryRights({
                   dimension: intl.formatMessage(
                     rootMessages.dimensions[dimensionCode],
                   ),
+                  dimensionDataSource:
+                    currentBenchmark &&
+                    dimension.score &&
+                    intl.formatMessage(
+                      rootMessages.charts.dimensionDataSource.cpr,
+                      {
+                        year: dimension.score.year,
+                      },
+                    ),
                 }}
                 tools={{
                   howToReadConfig: {
@@ -457,16 +465,6 @@ export function ChartContainerCountryRights({
                       countryGrammar,
                     )}
                   />
-                </Text>
-                <Text size={isMinSize(size, 'large') ? 'small' : 'xsmall'}>
-                  {dimension.score && (
-                    <FormattedMessage
-                      {...rootMessages.charts.dimensionDataSource.cpr}
-                      values={{
-                        year: dimension.score.year,
-                      }}
-                    />
-                  )}
                 </Text>
               </Box>
               <Box margin={{ bottom: 'small' }} responsive={false}>
