@@ -329,7 +329,8 @@ export default defineMessages({
     dimensionDataSource: {
       esr: {
         id: `${scope}.charts.dimensionDataSource.esr`,
-        defaultMessage: 'Chart shows most recent data available as of {year}.',
+        defaultMessage:
+          '(Charts show most recent data available as of {year}).',
       },
       cpr: {
         id: `${scope}.charts.dimensionDataSource.cpr`,
