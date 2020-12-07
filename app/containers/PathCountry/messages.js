@@ -122,7 +122,7 @@ export default defineMessages({
     'water-in-home': {
       id: `${scope}.countryScoreExplainer.water-in-home`,
       defaultMessage:
-        '{score}% of people in {country} have access to an improved water source on their premises that is available when needed and free of contamination.',
+        '{score}% of people in {country} have access to a water source on their premises that is available when needed and free of contamination.',
     },
     'basic-sanitation': {
       id: `${scope}.countryScoreExplainer.basic-sanitation`,
