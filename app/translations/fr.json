@@ -148,7 +148,7 @@
   "hrmi.charts.dimensionIntro.physint": "Dans quelle mesure le gouvernement {countryOf} respecte-t-il chaque droit ?",
   "hrmi.charts.dimensionIntro.empowerment": "Dans quelle mesure le gouvernement {countryOf} respecte-t-il chaque droit ?",
   "hrmi.charts.dimensionDataSource.esr": "TODO: (Charts show most recent data available as of {year}).",
-  "hrmi.charts.dimensionDataSource.cpr": "TODO: Scores show data from {year}.",
+  "hrmi.charts.dimensionDataSource.cpr": "TODO: ({year})",
   "hrmi.components.ChartHeader.single-metric": "Scores disponibles pour {no} pays",
   "hrmi.components.ChartHeader.countries-overview": "Affiche les scores pour {no} {no, select, 1 {pay} other {pays}} {filtered, select, true {(filtrés)} false {}}",
   "hrmi.components.ChartHeader.dimension-overview": "{dimension} aperçu",
