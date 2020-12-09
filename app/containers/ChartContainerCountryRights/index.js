@@ -234,16 +234,16 @@ export function ChartContainerCountryRights({
                     rootMessages.dimensions[dimensionCode],
                   ),
                   dimensionDataSource:
-                    (currentBenchmark && dimension.score) ||
-                    (dimension.scoreSome &&
-                      intl.formatMessage(
-                        rootMessages.charts.dimensionDataSource.esr,
-                        {
-                          year: dimension.score
-                            ? dimension.score.year
-                            : dimension.scoreSome.year,
-                        },
-                      )),
+                    currentBenchmark &&
+                    (dimension.score || dimension.scoreSome) &&
+                    intl.formatMessage(
+                      rootMessages.charts.dimensionDataSource.esr,
+                      {
+                        year: dimension.score
+                          ? dimension.score.year
+                          : dimension.scoreSome.year,
+                      },
+                    ),
                 }}
                 includeChartName
                 tools={{
