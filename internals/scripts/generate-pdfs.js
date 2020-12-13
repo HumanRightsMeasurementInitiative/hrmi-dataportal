@@ -9,6 +9,7 @@ const enJSON = require('../../app/translations/en.json')
 const esJSON = require('../../app/translations/es.json')
 const ptJSON = require('../../app/translations/pt.json')
 const frJSON = require('../../app/translations/fr.json')
+const zhJSON = require('../../app/translations/zh.json')
 
 // TODO: vscode hangs when the logo is in this file, so have moved it out for now while developing
 const logo = require('./pdf-logo')
@@ -60,7 +61,8 @@ async function printPDF({
     en: enJSON,
     es: esJSON,
     fr: frJSON,
-    pt: ptJSON
+    pt: ptJSON,
+    zh: zhJSON
   }
   for (let i = 0; i < countries.length; i++) {
     const country = countries[i];
@@ -97,7 +99,7 @@ async function printPDF({
     // countries: [{ code: 'NIU', income: '0' }],
     // countries: [{ code: 'NZL', income: '1' }],
     countries,
-    languages: ['en', 'es', 'fr', 'pt']
+    languages: ['en', 'es', 'fr', 'pt', 'zh']
   });
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)
