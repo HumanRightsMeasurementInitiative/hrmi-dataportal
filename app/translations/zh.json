@@ -847,7 +847,7 @@
   "hrmi.containers.Search.optionGroups.countries": "国家概况",
   "hrmi.containers.Search.optionGroups.people": "高危人群",
   "hrmi.containers.Search.peopleSearch": "寻找高危人群",
-  "hrmi.components.Sections.people.para1": "到目前为止，发现{countryNo}个国家/地区中每个国家/地区特别容易遭受侵犯人权的风险。",
+  "hrmi.components.Sections.people.para1": "探索至今{countryNo}个国家的人权表现，了解哪类人群在各个国家特别容易遭受侵犯人权的风险。",
   "hrmi.components.Sections.people.para2": "",
   "hrmi.components.Sections.people.link": "探索",
   "hrmi.components.Sections.about.title": "关于我们",
