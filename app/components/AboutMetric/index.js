@@ -153,7 +153,7 @@ function AboutMetric({
           </AccordionPanel>
         )}
 
-        {hasAspect && (
+        {hasAspect && metric.dimension === 'esr' && (
           <AccordionPanel
             header={
               <Box
