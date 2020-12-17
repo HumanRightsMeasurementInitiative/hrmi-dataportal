@@ -179,7 +179,7 @@ export function PathMetric({
                         onClick={() =>
                           nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)
                         }
-                        size="small"
+                        size="medium"
                         hasIcon
                       />
                     </Paragraph>
