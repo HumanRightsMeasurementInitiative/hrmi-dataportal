@@ -156,6 +156,7 @@ const QualitativeData = ({ right, index, arr, content, countryCode, intl }) => {
         }
         color="white"
         size="small"
+        textSize="large"
         label={
           <FormattedMessage
             {...messages[analysis ? 'hideAnalysis' : 'showAnalysis']}

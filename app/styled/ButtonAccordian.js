@@ -5,6 +5,7 @@ import { FormNext } from 'grommet-icons';
 function buttonContent(
   label,
   size,
+  textSize,
   icon,
   hasIcon,
   iconSize,
@@ -29,6 +30,7 @@ function buttonContent(
       style={{
         display: 'flex',
         justifyContent: spaced ? 'space-between' : 'initial',
+        fontSize: textSize || 'initial',
       }}
     >
       {label} {textIcon}
@@ -38,6 +40,7 @@ function buttonContent(
       style={{
         display: 'flex',
         justifyContent: spaced ? 'space-between' : 'initial',
+        fontSize: textSize || 'initial',
       }}
     >
       {textIcon} {label}
@@ -52,6 +55,7 @@ export function ButtonAccordian({
   label,
   secondary,
   size = 'medium',
+  textSize,
   iconSize,
   reverse = true,
   border = '1px solid lightgrey',
@@ -80,6 +84,7 @@ export function ButtonAccordian({
       {buttonContent(
         label,
         size,
+        textSize,
         icon,
         hasIcon,
         iconSize,
@@ -100,6 +105,7 @@ ButtonAccordian.propTypes = {
   border: PropTypes.string,
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   size: PropTypes.string,
+  textSize: PropTypes.string,
   iconSize: PropTypes.string,
   spaced: PropTypes.bool,
 };
