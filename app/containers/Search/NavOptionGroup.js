@@ -18,6 +18,7 @@ const StyledText = styled(Text)`
 export function NavOptionGroup({
   label,
   options,
+  optionTextSize = 'medium',
   onClick,
   subject,
   activeResult,
@@ -69,7 +70,9 @@ export function NavOptionGroup({
               active={index === activeResult}
             >
               <Box direction="row" align="end" fill="horizontal" width="100%">
-                <Text color={subject}>{m.label}</Text>
+                <Text color={subject} size={optionTextSize}>
+                  {m.label}
+                </Text>
               </Box>
             </NavOption>
             {m.indicators &&
@@ -107,6 +110,7 @@ NavOptionGroup.propTypes = {
   label: PropTypes.string,
   subject: PropTypes.string,
   options: PropTypes.array,
+  optionTextSize: PropTypes.string,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
   activeResult: PropTypes.number,
