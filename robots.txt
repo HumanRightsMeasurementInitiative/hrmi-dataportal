@@ -1,0 +1,3 @@
+# block pdfs
+User-agent: *
+Disallow: /pdfs/

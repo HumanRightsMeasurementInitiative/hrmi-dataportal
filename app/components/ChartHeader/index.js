@@ -146,7 +146,7 @@ export function ChartHeader({
                   /* eslint-disable */
                   <DownloadButton
                     as="a"
-                    href={`/${locale}-${countryCode}.pdf`}
+                    href={`/pdfs/${locale}-${countryCode}.pdf`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
