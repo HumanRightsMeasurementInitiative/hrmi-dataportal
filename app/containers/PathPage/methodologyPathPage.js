@@ -169,6 +169,17 @@ export function MethodologyPathPage({
                     />
                   );
                 }
+                if (
+                  section.includes('video-embed') &&
+                  !section.includes('end-')
+                ) {
+                  const sectionReplaced = section.replace('video-embed', ' ');
+                  return (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: sectionReplaced }}
+                    />
+                  );
+                }
                 return null;
               })}
             {/* eslint-enable react/no-danger  */}
