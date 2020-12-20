@@ -101,6 +101,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
             <NavOptionGroup
               label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
               options={dimensions}
+              optionTextSize="large"
               activeResult={search === '' ? activeResult - 1 : activeResult}
               onClick={key => {
                 onClose();
