@@ -512,7 +512,7 @@ function ChartCountrySnapshot({
                       listHeader
                       metric={getMetricDetails(dimensionCode)}
                       annotateBetter={false}
-                      bullet={type === 'cpr'}
+                      // bullet={type === 'cpr'}
                     />
                   </Dimension>
                 </ChartArea>
