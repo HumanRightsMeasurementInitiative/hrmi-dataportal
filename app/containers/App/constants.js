@@ -177,7 +177,14 @@ export const XPATHS = {
 };
 
 export const FAQS = {
-  COUNTRY_SNAPSHOT: ['scale', 'year', 'benchmarks', 'standards', 'grades'],
+  COUNTRY_SNAPSHOT: [
+    'where',
+    'scale',
+    'year',
+    'benchmarks',
+    'standards',
+    'grades',
+  ],
   COUNTRY_ESR: ['benchmarks', 'standards', 'grades'],
   COUNTRY_CPR: ['grades', 'uncertainty'],
   ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],

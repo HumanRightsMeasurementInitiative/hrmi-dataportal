@@ -224,6 +224,8 @@
   "hrmi.containers.FAQs.answers.measureDimensionCPR": "Each civil and political right metric has been produced from responses to a survey of in-country human rights experts. Respondents’ answers to questions about the frequency of violations of each civil and political right were combined using a statistical model that ensures the comparability of responses across countries. This results in a distribution of estimated levels of respect for each right in each country, represented by the scores and uncertainty bands shown throughout the data visualisations. Other information about who was identified as at risk for human rights abuse was also collected from our respondents, and can be accessed from the 'people at risk' tabs on each country page.",
   "hrmi.containers.FAQs.questions.grades": "What do the good, fair, bad, and very bad ranges mean, exactly?",
   "hrmi.containers.FAQs.answers.grades": "The labels on the graphs of good, fair, bad, and very bad are used here to give a general indication of how to understand the scores. They are NOT comprehensive descriptions of a country’s performance on an individual right.",
+  "hrmi.containers.FAQs.questions.where": "Where do HRMI's scores come from?",
+  "hrmi.containers.FAQs.answers.where": "Answer to come",
   "hrmi.containers.FAQs.methodologyGrades": "Learn more about how to interpret the range labels",
   "hrmi.containers.FAQs.methodology": "Learn more about the HRMI methodology",
   "hrmi.containers.LayerHowToRead.label": "How to read this chart",

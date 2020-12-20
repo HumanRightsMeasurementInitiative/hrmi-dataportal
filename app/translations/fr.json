@@ -224,6 +224,8 @@
   "hrmi.containers.FAQs.answers.measureDimensionCPR": "Chaque mesure des droits civils et politiques a été produite à partir des réponses à une enquête menée auprès d'experts des droits humains dans le pays concerné. Les réponses aux questions sur la fréquence des violations de chaque droit civil et politique ont été combinées en utilisant un modèle statistique qui garantit la comparabilité des réponses entre les pays. Il en résulte une distribution des niveaux estimés de respect de chaque droit dans chaque pays, représentés par les scores et les marges d'incertitude indiqués tout au long des visualisations de données. D'autres informations sur les personnes identifiées comme risquant une violation des droits humains ont également été recueillies auprès de nos répondants, et peuvent être consultées dans les onglets « personnes à risque » sur la page de chaque pays.",
   "hrmi.containers.FAQs.questions.grades": "Que signifient exactement les catégories « bon », « moyen », « mauvais » et « très mauvais » ?",
   "hrmi.containers.FAQs.answers.grades": "Les catégories sur les graphiques « bon », « moyen », « mauvais » et « très mauvais » sont utilisées ici pour donner une indication générale sur la façon de comprendre les scores. Il ne s'agit PAS de descriptions exhaustives des performances d'un pays en matière de droits individuels.",
+  "hrmi.containers.FAQs.questions.where": "TODO: Where do HRMI's scores come from?",
+  "hrmi.containers.FAQs.answers.where": "TODO: Answer to come",
   "hrmi.containers.FAQs.methodologyGrades": "En savoir plus sur la façon d'interpréter les catégories",
   "hrmi.containers.FAQs.methodology": "En savoir plus sur la méthodologie de l'HRMI",
   "hrmi.containers.LayerHowToRead.label": "Comment lire ce tableau",
