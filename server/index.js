@@ -18,7 +18,7 @@ const app = express();
 // app.use('/api', myApi);
 
 // serve the pdf files in development
-app.use(express.static('pdfs'));
+app.use('/pdfs', express.static('pdfs'));
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {

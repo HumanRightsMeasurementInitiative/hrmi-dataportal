@@ -72,7 +72,10 @@ module.exports = require('./webpack.base.babel')({
   plugins: [
     new WebpackGitHash(),
 
-    new CopyPlugin([{ from: 'pdfs', to: './' }]),
+    new CopyPlugin([
+      { from: 'pdfs', to: './pdfs/' },
+      { from: 'robots.txt', to: './robots.txt' },
+    ]),
 
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
@@ -101,7 +104,7 @@ module.exports = require('./webpack.base.babel')({
 
       // No need to cache .htaccess. See http://mxs.is/googmp,
       // this is applied before any match in `caches` section
-      excludes: ['.htaccess'],
+      excludes: ['.htaccess', '**/*.pdf'],
 
       caches: {
         main: [':rest:'],
