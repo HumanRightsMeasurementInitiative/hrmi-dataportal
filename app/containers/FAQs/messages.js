@@ -83,6 +83,10 @@ export default defineMessages({
       defaultMessage:
         'What do the good, fair, bad, and very bad ranges mean, exactly?',
     },
+    where: {
+      id: `${scope}.questions.where`,
+      defaultMessage: "Where do HRMI's scores come from?",
+    },
   },
   answers: {
     scale: {
@@ -155,6 +159,10 @@ export default defineMessages({
       id: `${scope}.answers.grades`,
       defaultMessage:
         'The labels on the graphs of good, fair, bad, and very bad are used here to give a general indication of how to understand the scores. They are NOT comprehensive descriptions of a country’s performance on an individual right.',
+    },
+    where: {
+      id: `${scope}.answers.where`,
+      defaultMessage: 'Answer to come',
     },
   },
 });

@@ -224,6 +224,8 @@
   "hrmi.containers.FAQs.answers.measureDimensionCPR": "Cada métrica de derecho civil y político se ha elaborado a partir de las respuestas a una encuesta de expertos en derechos humanos de los países. Las respuestas de los encuestados a las preguntas sobre la frecuencia de las violaciones de cada derecho civil y político se combinaron utilizando un modelo estadístico que garantiza la comparabilidad de las respuestas entre los países. Esto da como resultado una distribución de los niveles de respeto estimados para cada derecho en cada país, representados por las puntuaciones y las bandas de incertidumbre que se muestran a lo largo de las visualizaciones de los datos. También se recogió de nuestros encuestados otra información sobre quiénes se identificaron como personas en riesgo de abuso de los derechos humanos, a la que se puede acceder desde las pestañas de \"personas en situación de riesgo\" en la página de cada país.",
   "hrmi.containers.FAQs.questions.grades": "¿Qué significan exactamente los rangos de bueno, regular, malo y muy malo?",
   "hrmi.containers.FAQs.answers.grades": "Las etiquetas de los gráficos de bueno, regular, malo y muy malo se utilizan aquí para dar una indicación general de cómo entender las puntuaciones. NO son descripciones exhaustivas del desempeño de un país en un derecho individual.",
+  "hrmi.containers.FAQs.questions.where": "TODO: Where do HRMI's scores come from?",
+  "hrmi.containers.FAQs.answers.where": "TODO: Answer to come",
   "hrmi.containers.FAQs.methodologyGrades": "Aprendar más sobre cómo interpretar las etiquetas de rango.",
   "hrmi.containers.FAQs.methodology": "Aprendar más sobre la metodología del HRMI",
   "hrmi.containers.LayerHowToRead.label": "Cómo leer esta tabla",

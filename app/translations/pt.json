@@ -224,6 +224,8 @@
   "hrmi.containers.FAQs.answers.measureDimensionCPR": "Cada medição de direito civil e político foi produzida a partir de respostas a um questionário de especialistas nacionais em direitos humanos. As respostas dos entrevistados às perguntas sobre a frequência das violações de cada direito civil e político foram combinadas usando um modelo estatístico que garante a comparabilidade das respostas entre os países. Isto resulta numa distribuição dos níveis de respeito estimados para cada direito em cada país, representados pelas pontuações e bandas de incerteza evidenciados ao longo das visualizações de dados. Foram também recolhidas outras informações junto dos nossos respondentes sobre quem foi identificado como estando em risco de violação dos direitos humanos, que podem ser consultadas no separador 'pessoas em risco' na página de cada país.",
   "hrmi.containers.FAQs.questions.grades": "O que significa exatamente o espectro bom, razoável, ruim e muito ruim?",
   "hrmi.containers.FAQs.answers.grades": "As etiquetas nos gráficos para bom, razoável, mau e muito mau são usadas aqui como indicação geral para perceber as pontuações. NÃO são descrições compreensivas do desempenho de um país em relação a um direito individual.",
+  "hrmi.containers.FAQs.questions.where": "TODO: Where do HRMI's scores come from?",
+  "hrmi.containers.FAQs.answers.where": "TODO: Answer to come",
   "hrmi.containers.FAQs.methodologyGrades": "Saber mais sobre como interpretar as etiquetas do espectro",
   "hrmi.containers.FAQs.methodology": "Saber mais sobre a metodologia da HRMI",
   "hrmi.containers.LayerHowToRead.label": "Como ler este gráfico",
