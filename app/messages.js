@@ -837,6 +837,18 @@ export default defineMessages({
       id: `${scope}.dimensions.physint`,
       defaultMessage: 'physint',
     },
+    'esr-sub': {
+      id: `${scope}.dimensions.esr-sub`,
+      defaultMessage: '(5 economic and social rights)',
+    },
+    'empowerment-sub': {
+      id: `${scope}.dimensions.empowerment-sub`,
+      defaultMessage: '(3 empowerment rights)',
+    },
+    'physint-sub': {
+      id: `${scope}.dimensions.physint-sub`,
+      defaultMessage: '(5 physical integrity rights)',
+    },
   },
   'dimensions-about': {
     esr: {

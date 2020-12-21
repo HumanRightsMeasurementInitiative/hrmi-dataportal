@@ -71,7 +71,7 @@ export function NavOptionGroup({
             >
               <Box direction="row" align="end" fill="horizontal" width="100%">
                 <Text color={subject} size={optionTextSize}>
-                  {m.label}
+                  {m.label} {m.sub && <Text color={subject}>{m.sub}</Text>}
                 </Text>
               </Box>
             </NavOption>
