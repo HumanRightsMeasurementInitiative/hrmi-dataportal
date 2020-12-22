@@ -122,6 +122,28 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
       </>
     );
   }
+  if (question === 'where' || question === 'difference') {
+    return (
+      <>
+        <Text size="small">
+          <FormattedMessage {...messages.answers[question]} />
+        </Text>
+        <MethodologyLink
+          onClick={() => navMethodology()}
+          text={<FormattedMessage {...messages.methodology} />}
+        />
+      </>
+    );
+  }
+  if (question === 'how' || question === 'why') {
+    return (
+      <>
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
+          <FormattedMessage {...messages.answers[question]} />
+        </Text>
+      </>
+    );
+  }
   return (
     <>
       <Text size="small">
