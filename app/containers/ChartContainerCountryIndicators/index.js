@@ -46,7 +46,6 @@ const getRightValue = (score, benchmark) => {
 };
 
 const getRightRefs = (score, benchmark, isIndicator) => {
-  // console.log({ score, benchmark, isIndicator });
   if (benchmark && benchmark.key === 'adjusted') {
     return [{ value: 100, style: 'dotted', key: 'adjusted' }];
   }
