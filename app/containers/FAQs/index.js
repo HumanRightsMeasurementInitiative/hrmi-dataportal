@@ -125,7 +125,7 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
   if (question === 'where' || question === 'difference') {
     return (
       <>
-        <Text size="small">
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
           <FormattedMessage {...messages.answers[question]} />
         </Text>
         <MethodologyLink
