@@ -180,8 +180,6 @@ export const FAQS = {
   COUNTRY_SNAPSHOT: [
     'where',
     'how',
-    'difference',
-    'why',
     'scale',
     'year',
     'benchmarks',
