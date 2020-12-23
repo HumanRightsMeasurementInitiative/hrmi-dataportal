@@ -61,6 +61,7 @@
   "hrmi.containers.PathMetric.dimensions.empowerment.header.a": "¿Están las personas empoderadas para participar plenamente en la sociedad?",
   "hrmi.containers.PathMetric.dimensions.empowerment.header.b": "El puntaje estimado se muestra en un intervalo de credibilidad.",
   "hrmi.containers.PathMetric.dimensions.empowerment.link": "Más sobre la metodología",
+  "hrmi.containers.PathMetric.rights.tooltip": "TODO: This question shows what HRMI is measuring.\n\n For each economic and social right, HRMI selects a small number of high-level ‘bellwether’ indicators to give an overview of how well countries are doing. These indicators may not capture every aspect of the right as defined in international law.",
   "hrmi.containers.PathMetric.rights.food.header.a": "¿Dispone la gente de suficiente alimento nutritivo?",
   "hrmi.containers.PathMetric.rights.food.header.b": "Estas puntuaciones miden cómo utiliza cada país sus recursos para garantizar el acceso de las personas al derecho a la alimentación.",
   "hrmi.containers.PathMetric.rights.food.link": "Más sobre la metodología",

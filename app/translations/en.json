@@ -61,6 +61,7 @@
   "hrmi.containers.PathMetric.dimensions.empowerment.header.a": "Are people able to express themselves freely, and fully participate in public life?",
   "hrmi.containers.PathMetric.dimensions.empowerment.header.b": "The estimated score is displayed within an uncertainty band.",
   "hrmi.containers.PathMetric.dimensions.empowerment.link": "More about the methodology",
+  "hrmi.containers.PathMetric.rights.tooltip": "This question shows what HRMI is measuring.\n\n For each economic and social right, HRMI selects a small number of high-level ‘bellwether’ indicators to give an overview of how well countries are doing. These indicators may not capture every aspect of the right as defined in international law.",
   "hrmi.containers.PathMetric.rights.food.header.a": "Do people have enough nutritious food?",
   "hrmi.containers.PathMetric.rights.food.header.b": "These scores measure how well a country is using its resources to ensure people’s right to food is fulfilled.",
   "hrmi.containers.PathMetric.rights.food.link": "More about the methodology",
