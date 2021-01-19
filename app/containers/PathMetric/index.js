@@ -28,6 +28,7 @@ import AboutMetricContainer from 'containers/AboutMetricContainer';
 import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
 import Aside from 'components/Aside';
+import Tooltip from 'components/Tooltip';
 
 import ContentWrap from 'styled/ContentWrap';
 import MainColumn from 'styled/MainColumn';
@@ -158,6 +159,12 @@ export function PathMetric({
                     <p style={{ fontSize: '21px', lineHeight: '38px' }}>
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.a}
+                      />
+                      <Tooltip
+                        iconSize="medium"
+                        text={intl.formatMessage(messages.rights.tooltip)}
+                        inverse={false}
+                        inAside={false}
                       />
                     </p>
                   )}

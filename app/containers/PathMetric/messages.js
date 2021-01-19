@@ -272,6 +272,11 @@ export default defineMessages({
         defaultMessage: 'More about the methodology',
       },
     },
+    tooltip: {
+      id: `${scope}.rights.tooltip`,
+      defaultMessage:
+        'This question shows what HRMI is measuring. [NP] For each economic and social right, HRMI selects a small number of high-level ‘bellwether’ indicators to give an overview of how well countries are doing. These indicators may not capture every aspect of the right as defined in international law.',
+    },
   },
   indicators: {
     'net-primary': {
