@@ -34,7 +34,7 @@ function Content({ maxWidth, component, text, onClose, inModal, inverse }) {
       )}
       <ContentWrap>
         {component}
-        {!component && <span>{text}</span>}
+        {!component && <span style={{ whiteSpace: 'pre-line' }}>{text}</span>}
       </ContentWrap>
     </Box>
   );
