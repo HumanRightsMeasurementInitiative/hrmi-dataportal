@@ -12,6 +12,8 @@ const Styled = styled(Box)`
     image ? 0 : theme.global.edgeSize.medium};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    position: sticky;
+    top: 140px;
     padding-right: ${({ theme, image }) =>
     image ? 0 : theme.global.edgeSize.xlarge};
   }
