@@ -99,6 +99,13 @@ const RemoveFromPDFWrapper = styled.div`
 `;
 
 const prepPopulationValue = (value, intl, year) => {
+  if (intl.locale === 'zh') {
+    return {
+      value: intl.formatNumber(roundScore(value / 10000, 1)),
+      abbrev: 'myriad',
+      year,
+    };
+  }
   if (parseInt(value, 10) > 1000000) {
     return {
       value: intl.formatNumber(roundScore(value / 1000000, 1)),

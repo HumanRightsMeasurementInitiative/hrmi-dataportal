@@ -147,7 +147,7 @@
   "hrmi.containers.AboutCountryContainer.title": "国家详情",
   "hrmi.containers.AboutCountryContainer.population": "人口",
   "hrmi.containers.AboutCountryContainer.gdp": "人均GDP",
-  "hrmi.containers.AboutCountryContainer.populationValue": "{value}{abbrev, select, millions {百万} thousands {千} other {}} ({year})",
+  "hrmi.containers.AboutCountryContainer.populationValue": "{value}{abbrev, select, myriad {万} thousands {千} other {}} ({year})",
   "hrmi.containers.AboutCountryContainer.gdpValue": "${value} ({year})",
   "hrmi.containers.AboutCountryContainer.gdpHint": "美元",
   "hrmi.containers.AboutCountryContainer.gdpTooltip": "这是当前美元汇率下的价值。然而，与本网站其他国家作比较时，我们将使用以2011年购买力平价美元计算的国内人均生产总值（见下文）",
