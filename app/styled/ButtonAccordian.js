@@ -60,6 +60,7 @@ export function ButtonAccordian({
   reverse = true,
   border = '1px solid lightgrey',
   spaced = true,
+  color = '#262064',
 }) {
   return (
     <button
@@ -69,7 +70,7 @@ export function ButtonAccordian({
         alignSelf: 'start',
         fontWeight: 400,
         backgroundColor: 'transparent',
-        color: '#262064',
+        color,
         fontSize: '15px',
         padding: '0',
         margin: '5px 0',
@@ -108,6 +109,7 @@ ButtonAccordian.propTypes = {
   textSize: PropTypes.string,
   iconSize: PropTypes.string,
   spaced: PropTypes.bool,
+  color: PropTypes.string,
 };
 
 export default ButtonAccordian;
