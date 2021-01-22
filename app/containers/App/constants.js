@@ -160,6 +160,7 @@ export const XPATHS = {
     fr: '//humanrightsmeasurement.org/fr',
     es: '//humanrightsmeasurement.org/es',
     pt: '//humanrightsmeasurement.org/pt-pt',
+    zh: '//humanrightsmeasurement.org/zh/',
   },
   contact: {
     en: '//humanrightsmeasurement.org/about-hrmi/contact-hrmi/',
@@ -167,6 +168,7 @@ export const XPATHS = {
     es: '//humanrightsmeasurement.org/es/sobre-hrmi/contactar-con-hrmi/',
     pt:
       '//humanrightsmeasurement.org/pt-pt/about-hrmi/entre-em-contato-com-hrmi/',
+    zh: '//humanrightsmeasurement.org/zh/about-hrmi/%e8%81%94%e7%b3%bbhrmi/',
   },
   download: {
     en: 'https://humanrightsmeasurement.org/download-the-dataset/',
@@ -175,6 +177,8 @@ export const XPATHS = {
       'https://humanrightsmeasurement.org/pt-pt/descarregue-o-conjunto-de-dados/',
     fr:
       'https://humanrightsmeasurement.org/fr/telechargez-lensemble-de-donnees/',
+    zh:
+      'https://humanrightsmeasurement.org/zh/%e4%b8%8b%e8%bd%bd%e6%95%b0%e6%8d%ae%e9%9b%86/',
   },
 };
 
