@@ -107,6 +107,7 @@ const text = {
   small: { size: '14px', height: '18px', maxWidth: '700px' },
   xsmall: { size: '13px', height: '16px', maxWidth: '600px' },
   xxsmall: { size: '12px', height: '14px', maxWidth: '500px' },
+  xxxsmall: { size: '10px', height: '14px', maxWidth: '500px' },
 };
 const icon = {
   size: {

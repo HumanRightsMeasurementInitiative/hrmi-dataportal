@@ -47,13 +47,13 @@ const BGScaleLabelWrap = styled.span`
 `;
 const BGScaleLabel = styled.span`
   padding-left: ${({ single }) => (single ? 0 : 5)}px;
-  font-size: ${({ theme }) => theme.text.xxsmall.size};
-  line-height: ${({ theme }) => theme.text.xxsmall.size};
+  font-size: ${({ theme }) => theme.text.xxxsmall.size};
+  line-height: ${({ theme }) => theme.text.xxxsmall.size};
   color: ${({ theme }) => theme.global.colors.secondary};
   vertical-align: bottom;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.xlarge}) {
-    line-height: ${({ theme }) => theme.text.xsmall.size};
-    font-size: ${({ theme }) => theme.text.xsmall.size};
+    line-height: ${({ theme }) => theme.text.xxxsmall.size};
+    font-size: ${({ theme }) => theme.text.xxxsmall.size};
   }
 `;
 
