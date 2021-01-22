@@ -55,6 +55,7 @@ export function ChartWordCloud({
   highlight,
   setHighlight,
   showTitle,
+  onClickWord,
 }) {
   const [activeWord, setActiveWord] = useState(null);
 
@@ -141,6 +142,7 @@ export function ChartWordCloud({
               setActive={active => {
                 setActiveWord(active ? s : null);
                 if (setHighlight) setHighlight(false);
+                onClickWord(s.people_code);
               }}
               active={
                 wordHighlighted && wordHighlighted.people_code === s.people_code
@@ -162,6 +164,7 @@ ChartWordCloud.propTypes = {
   highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   setHighlight: PropTypes.func,
   intl: intlShape.isRequired,
+  onClickWord: PropTypes.func,
 };
 
 export default injectIntl(ChartWordCloud);
