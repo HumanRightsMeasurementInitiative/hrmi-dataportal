@@ -100,6 +100,13 @@ const RemoveFromPDFWrapper = styled.div`
 
 const prepPopulationValue = (value, intl, year) => {
   if (intl.locale === 'zh') {
+    if (parseInt(value, 10) > 1000000000) {
+      return {
+        value: intl.formatNumber(roundScore(value / 100000000, 1)),
+        abbrev: 'billions',
+        year,
+      };
+    }
     return {
       value: intl.formatNumber(roundScore(value / 10000, 1)),
       abbrev: 'myriad',
