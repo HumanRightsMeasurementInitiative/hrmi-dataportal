@@ -248,6 +248,7 @@ function TabCountryPeople({
                 target={dropButton.current}
                 onClickOutside={() => setOpen(false)}
                 overflow="hidden"
+                // overflow="scroll"
               >
                 {/* N.B. This is similar to MetricSelect, but specific functionality for this dropdown */}
                 <Styled>

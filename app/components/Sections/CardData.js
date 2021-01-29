@@ -17,7 +17,7 @@ const Subject = styled(Text)``;
 const Teaser = styled(Paragraph)``;
 // prettier-ignore
 
-export function CardData({onClick, no = 0, title, teaser, anchor}) {
+export function CardData({onClick, no = 0, title, teaser, anchor, measureWord }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -31,12 +31,17 @@ export function CardData({onClick, no = 0, title, teaser, anchor}) {
           pad={{horizontal: 'medium', top: 'ms', bottom: 'medium'}}
           background="white"
         >
-          <Number
-            size={isMinSize(size, 'large') ? 'xxxlarge' : 'xxlarge'}
-            weight={600}
-          >
-            {no}
-          </Number>
+          <Box direction="row" align="end">
+            <Number
+              size={isMinSize(size, 'large') ? 'xxxlarge' : 'xxlarge'}
+              weight={600}
+            >
+              {no}
+            </Number>
+            {!!measureWord && (
+              <Text margin={isMinSize(size, 'large') ? { left: '8px', bottom: '12px' }: { left: '8px', bottom: '4px' }} size={isMinSize(size, 'large') ? 'xxlarge' : 'xlarge'}>{measureWord}</Text>
+            )}
+          </Box>
           <Subject
             size={isMinSize(size, 'large') ? 'xxlarge' : 'xlarge'}
             weight={600}
@@ -60,6 +65,7 @@ CardData.propTypes = {
   teaser: PropTypes.string,
   anchor: PropTypes.string,
   onClick: PropTypes.func,
+  measureWord: PropTypes.string,
 };
 
 export default CardData;
