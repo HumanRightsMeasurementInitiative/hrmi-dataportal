@@ -11,8 +11,8 @@ import { injectIntl, intlShape } from 'react-intl';
 import { lowerCase } from 'utils/string';
 import rootMessages from 'messages';
 
-import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
-import Tooltip from 'components/Tooltip';
+// import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
+// import Tooltip from 'components/Tooltip';
 
 import { isMaxSize } from 'utils/responsive';
 
@@ -21,7 +21,7 @@ import AnnotateRefLine from './styled/AnnotateRefLine';
 import AnnotateRefInner from './styled/AnnotateRefInner';
 
 function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
-  const tooltip = type !== 'htr';
+  // const tooltip = type !== 'htr';
   const iconOnly = type === 'diamond' || type === 'icon';
   // prettier-ignore
   return (
@@ -34,7 +34,7 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
         >
           {iconOnly && type !== 'diamond' && (
             <Box
-              style={{ transform: "translate(10%, -20%)" }}
+              style={{ transform: "translate(10%, -100%)" }}
             >
               <Text
                 size="xsmall"
@@ -49,7 +49,7 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
             <AnnotateRefLine type={type} offsetTop={hasBetter} />
           )}
           <AnnotateRefInner type={type} offsetTop={hasBetter}>
-            {tooltip && (
+            {/* {tooltip && (
               <Tooltip
                 textAnchor={!iconOnly && (
                   <Text
@@ -82,8 +82,8 @@ function AnnotateBenchmark({ intl, benchmarkKey, label, type, hasBetter }) {
                   />
                 }
               />
-            )}
-            {!tooltip && (
+            )} */}
+            {type === 'htr' && (
               <Text
                 size="xsmall"
                 style={
