@@ -160,12 +160,15 @@ export function PathMetric({
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.a}
                       />
-                      <Tooltip
-                        iconSize="medium"
-                        text={intl.formatMessage(messages.rights.tooltip)}
-                        inverse={false}
-                        inAside={false}
-                      />
+                      {metric.type === 'esr' && (
+                        <Tooltip
+                          iconSize="medium"
+                          text={intl.formatMessage(messages.rights.tooltip)}
+                          inverse={false}
+                          inAside={false}
+                          superscript
+                        />
+                      )}
                     </p>
                   )}
                   {messages[metric.metricType][metricCode].header.b && (

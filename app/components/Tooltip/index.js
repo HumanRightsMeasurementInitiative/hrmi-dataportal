@@ -42,6 +42,7 @@ function Tooltip({
   textAnchor,
   inverse,
   inAside,
+  superscript = false,
 }) {
   const [over, setOver] = useState(false);
   const [open, setOpen] = useState(false);
@@ -63,7 +64,7 @@ function Tooltip({
                 textAnchor
                   ? null
                   : icon || (
-                    <CircleInformation size={iconSize} color={inverse ? 'white' : 'dark'} />
+                    <CircleInformation size={superscript ? "small" : iconSize} color={inverse ? 'white' : 'dark'} />
                   )
               }
               ref={button}
@@ -80,6 +81,7 @@ function Tooltip({
               style={{
                 WebkitAppearance: 'none',
                 MozAppearance: 'none',
+                verticalAlign: superscript ? 'super' : 'initial'
               }}
             >
               {textAnchor}
@@ -137,6 +139,7 @@ Tooltip.propTypes = {
   inverse: PropTypes.bool,
   inAside: PropTypes.bool,
   margin: PropTypes.object,
+  superscript: PropTypes.bool,
 };
 
 export default Tooltip;
