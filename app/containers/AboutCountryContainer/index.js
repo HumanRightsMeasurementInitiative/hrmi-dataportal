@@ -252,6 +252,7 @@ function AboutCountryContainer({
                     text={intl.formatMessage(messages.gdpTooltip)}
                     inverse={inverse}
                     inAside={inAside}
+                    superscript
                   />
                 </div>
               </Box>
@@ -276,6 +277,7 @@ function AboutCountryContainer({
                     text={intl.formatMessage(messages.gdpTooltipPPP)}
                     inverse={inverse}
                     inAside={inAside}
+                    superscript
                   />
                 </div>
               </Box>
