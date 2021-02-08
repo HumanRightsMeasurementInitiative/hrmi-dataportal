@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import {
+  injectIntl,
+  intlShape,
+  FormattedMessage,
+  FormattedHTMLMessage,
+} from 'react-intl';
 import styled from 'styled-components';
 import { Accordion, AccordionPanel, Box, Heading, Text } from 'grommet';
 import { Down, Up } from 'grommet-icons';
@@ -126,7 +131,7 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
     return (
       <>
         <Text size="small" style={{ whiteSpace: 'pre-line' }}>
-          <FormattedMessage {...messages.answers[question]} />
+          <FormattedHTMLMessage {...messages.answers[question]} />
         </Text>
         <MethodologyLink
           onClick={() => navMethodology()}
