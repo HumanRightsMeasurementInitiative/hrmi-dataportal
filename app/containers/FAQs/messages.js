@@ -175,9 +175,21 @@ export default defineMessages({
         'The labels on the graphs of good, fair, bad, and very bad are used here to give a general indication of how to understand the scores. They are NOT comprehensive descriptions of a country’s performance on an individual right.',
     },
     where: {
-      id: `${scope}.answers.where`,
-      defaultMessage:
-        'We use two different methodologies.\n\n To measure ‘Quality of Life’ – economic and social rights – we start with data from international databases. Then we use econometric techniques to combine the data with each country’s level of income, to produce a score. The score, expressed as a percentage, shows how well a country is using its resources to produce good human rights outcomes. Every country should be able to get near its 100% income-adjusted target by improving policies and practices, even without more money.\n\n To measure ‘Safety from the State’ and ‘Empowerment’ rights – civil and political rights – we do our own research, using an expert survey methodology. In a secure, anonymous, online questionnaire, we ask local human rights experts (such as people working for human rights organisations; human rights lawyers; journalists specialising in social issues) a series of detailed questions about government behaviour in the previous year. We use Bayesian statistical techniques to produce a score out of ten, displayed within an uncertainty band that shows the range of scores we calculate as most likely to represent the real situation in that country.',
+      both: {
+        id: `${scope}.answers.where.both`,
+        defaultMessage:
+          'We use two different methodologies.\n\n To measure <b>Quality of Life</b> – economic and social rights – we start with data from international databases. Then we use econometric techniques to combine the data with each country’s level of income, to produce a score. The score, expressed as a percentage, shows how well a country is using its resources to produce good human rights outcomes. Every country should be able to get near its 100% income-adjusted target by improving policies and practices, even without more money.\n\n To measure <b>Safety from the State</b> and <b>Empowerment</b> rights – civil and political rights – we do our own research, using an expert survey methodology. In a secure, anonymous, online questionnaire, we ask local human rights experts (such as people working for human rights organisations; human rights lawyers; journalists specialising in social issues) a series of detailed questions about government behaviour in the previous year. We use Bayesian statistical techniques to produce a score out of ten, displayed within an uncertainty band that shows the range of scores we calculate as most likely to represent the real situation in that country.',
+      },
+      esr: {
+        id: `${scope}.answers.where.esr`,
+        defaultMessage:
+          'We use two different methodologies.\n\n To measure <b>Quality of Life</b> – economic and social rights – we start with data from international databases. Then we use econometric techniques to combine the data with each country’s level of income, to produce a score. The score, expressed as a percentage, shows how well a country is using its resources to produce good human rights outcomes. Every country should be able to get near its 100% income-adjusted target by improving policies and practices, even without more money.',
+      },
+      cpr: {
+        id: `${scope}.answers.where.cpr`,
+        defaultMessage:
+          'We use two different methodologies.\n\n To measure <b>Safety from the State</b> and <b>Empowerment</b> rights – civil and political rights – we do our own research, using an expert survey methodology. In a secure, anonymous, online questionnaire, we ask local human rights experts (such as people working for human rights organisations; human rights lawyers; journalists specialising in social issues) a series of detailed questions about government behaviour in the previous year. We use Bayesian statistical techniques to produce a score out of ten, displayed within an uncertainty band that shows the range of scores we calculate as most likely to represent the real situation in that country.',
+      },
     },
     how: {
       id: `${scope}.answers.how`,

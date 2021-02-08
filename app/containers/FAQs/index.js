@@ -43,7 +43,7 @@ const StyledText = styled(Text)`
   font-size: 14px;
 `;
 
-const renderAnswer = (question, intl, msgValues, navMethodology) => {
+const renderAnswer = (question, intl, msgValues, navMethodology, questions) => {
   if (question === 'measureRightESR') {
     return (
       <>
@@ -127,7 +127,32 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
       </>
     );
   }
-  if (question === 'where' || question === 'difference') {
+  if (question === 'where') {
+    // HACK: a horrible hack to produce the right part of the FAQ answer for the 'where' question, but the FAQ container has no knowledge of what other tab is active and no easy way to pass that information down - this is as a result of treating the aside as a tab when it isn't the same as the other tabs (i.e. it is present when others are present), and with the FAQ's system not being designed to handle interchangeable multi-part answers.
+    return (
+      <>
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
+          {/* eslint-disable no-nested-ternary */}
+          {/* prettier-ignore */}
+          <FormattedHTMLMessage
+            {...messages.answers[question][
+              questions[2] === 'difference'
+                ? 'esr'
+                : questions[2] === 'grades'
+                  ? 'cpr'
+                  : 'both'
+            ]}
+          />
+          {/* eslint-enable no-nested-ternary */}
+        </Text>
+        <MethodologyLink
+          onClick={() => navMethodology()}
+          text={<FormattedMessage {...messages.methodology} />}
+        />
+      </>
+    );
+  }
+  if (question === 'difference') {
     return (
       <>
         <Text size="small" style={{ whiteSpace: 'pre-line' }}>
@@ -380,7 +405,7 @@ function FAQs({
             }
           >
             <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
-              {renderAnswer(q, intl, msgValues, navMethodology)}
+              {renderAnswer(q, intl, msgValues, navMethodology, questions)}
             </Box>
           </AccordionPanel>
         ))}
