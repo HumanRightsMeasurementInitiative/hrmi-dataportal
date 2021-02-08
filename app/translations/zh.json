@@ -142,7 +142,7 @@
   "hrmi.containers.PathMetricOverview.categoryLink": "综合分数",
   "hrmi.containers.PathMetricOverview.description.esr": "这些分数衡量一个国家利用其资源确保人们的社会经济权得到实现的程度。我们的{methodologyLink}考虑了一个国家的收入以及国际数据库中的信息。",
   "hrmi.containers.PathMetricOverview.description.empowerment": "这些赋能权用{methodologyLink}来测量。",
-  "hrmi.containers.PathMetricOverview.description.physint": "这些人身安全权限使用{methodology Link}来测量。",
+  "hrmi.containers.PathMetricOverview.description.physint": "这些人身安全权限使用{methodologyLink}来测量。",
   "hrmi.containers.PathMetricOverview.description.methodologyLink.esr": "研究方法",
   "hrmi.containers.PathMetricOverview.description.methodologyLink.cpr": "专家调查问卷",
   "hrmi.components.ChartCountrySnapshot.rightsScoresUnavailable.esr": "数据目前还不可用",
