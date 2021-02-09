@@ -56,6 +56,7 @@ export function AboutMetricContainer({
   showAboutMetric,
   isSubright,
   hasMultipleIndicators,
+  asideRef,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -118,179 +119,185 @@ export function AboutMetricContainer({
       direction="column"
       pad={{ horizontal: 'medium', bottom: 'medium', top: 'xlarge' }}
     >
-      {showRelated && (
-        <div justify="start">
-          {metricType !== 'dimensions' && (
-            <Pad>
-              <Heading
-                responsive={false}
-                size="18px"
-                margin={{ vertical: 'xsmall' }}
-              >
-                {typeof metric.aggregate === 'undefined' && (
-                  <FormattedMessage {...messages.titleParent[metricType]} />
-                )}
-              </Heading>
-              <ButtonRelative
-                onClick={evt => {
-                  if (evt) evt.preventDefault();
-                  onSelectMetric(ancestors[ancestors.length - 1].key);
-                }}
-                previous
-                text={
-                  <FormattedMessage
-                    {...rootMessages[ancestors[ancestors.length - 1].type][
-                      ancestors[ancestors.length - 1].key
-                    ]}
-                  />
-                }
-              />
-            </Pad>
-          )}
-          {metricType !== 'indicators' && children.length > 0 && (
-            <Pad>
-              <Heading
-                responsive={false}
-                size="18px"
-                margin={{ vertical: 'xsmall' }}
-              >
-                {metricType === 'dimensions' && (
-                  <FormattedMessage {...messages.titleChildren[metricType]} />
-                )}
-                {metricType === 'rights' && (
-                  <FormattedMessage
-                    {...messages.titleChildren[metricType][metric.type]}
-                  />
-                )}
-              </Heading>
-              {((metricType === 'rights' && metric.type === 'cpr') ||
-                metricType === 'dimensions') && (
-                <>
-                  {children.map(child => (
-                    <ButtonRelative
-                      key={child.key}
-                      onClick={evt => {
-                        if (evt) evt.preventDefault();
-                        onSelectMetric(child.key);
-                      }}
-                      text={
-                        <FormattedMessage
-                          {...rootMessages['rights-short'][child.key]}
-                        />
-                      }
+      <div ref={asideRef}>
+        {showRelated && (
+          <div justify="start">
+            {metricType !== 'dimensions' && (
+              <Pad>
+                <Heading
+                  responsive={false}
+                  size="18px"
+                  margin={{ vertical: 'xsmall' }}
+                >
+                  {typeof metric.aggregate === 'undefined' && (
+                    <FormattedMessage {...messages.titleParent[metricType]} />
+                  )}
+                </Heading>
+                <ButtonRelative
+                  onClick={evt => {
+                    if (evt) evt.preventDefault();
+                    onSelectMetric(ancestors[ancestors.length - 1].key);
+                  }}
+                  previous
+                  text={
+                    <FormattedMessage
+                      {...rootMessages[ancestors[ancestors.length - 1].type][
+                        ancestors[ancestors.length - 1].key
+                      ]}
                     />
-                  ))}
-                </>
-              )}
-              {metricType === 'rights' && metric.type === 'esr' && (
-                <>
-                  {children.map(as => (
-                    <Pad key={as.key}>
-                      <Text
-                        size="14px"
-                        color="#262064"
-                        margin={{ bottom: 'xxsmall' }}
-                      >
-                        {`${intl.formatMessage(
-                          rootMessages.settings.standard.name,
-                        )}: '${intl.formatMessage(
-                          rootMessages.settings.standard[as.key],
-                        )}'`}
-                      </Text>
-                      <>
-                        {as.indicators.map(child => (
-                          <ButtonRelative
-                            key={child.key}
-                            onClick={evt => {
-                              if (evt) evt.preventDefault();
-                              onSelectMetric(child.key);
-                            }}
-                            text={
-                              <Text size="small">
-                                {`${intl.formatMessage(
-                                  rootMessages.charts.rightsColumnLabel.esr,
-                                )} ${intl
-                                  .formatMessage(
-                                    rootMessages.subrights[child.key],
-                                  )
-                                  .toLowerCase()}`}
-                              </Text>
-                            }
-                          />
-                        ))}
-                      </>
-                    </Pad>
-                  ))}
-                </>
-              )}
-            </Pad>
-          )}
-        </div>
-      )}
-      {showTitle && (
-        <Heading responsive={false} level={3}>
-          {isSubright ? (
-            `Right to ${intl
-              .formatMessage(rootMessages[subMetricType][metric.key])
-              .toLowerCase()}`
-          ) : (
-            <FormattedMessage {...rootMessages[subMetricType][metric.key]} />
-          )}
-        </Heading>
-      )}
-      {countryScoreMsg && isSubright !== false && (
-        <div>
-          <Text color={inverse ? 'white' : 'dark'}>{countryScoreMsg}</Text>
-        </div>
-      )}
-      {showMetricLink && (
-        <div>
-          <ButtonHero onClick={() => onSelectMetric(metricCode)}>
-            {isSubright ? (
-              <FormattedMessage
-                {...messages['metricLink-subrights']}
-                values={{
-                  metric: lowerCase(
-                    intl.formatMessage(rootMessages[subMetricType][metricCode]),
-                  ),
-                }}
-              />
-            ) : (
-              <FormattedMessage
-                {...messages.metricLink}
-                values={{
-                  metric: lowerCase(
-                    intl.formatMessage(rootMessages[subMetricType][metricCode]),
-                  ),
-                }}
-              />
+                  }
+                />
+              </Pad>
             )}
-          </ButtonHero>
-        </div>
-      )}
-      {isSubright === false && (
-        <div style={{ marginTop: 12 }}>
-          <Text weight="bold">
-            {`${intl.formatMessage(messages.indicator, {
-              right: metric.right,
-              isPlural: hasMultipleIndicators,
-            })} ${countryScoreMsg}`}
-          </Text>
-        </div>
-      )}
-      {showAboutMetric && (
-        <AboutMetric
-          metric={metric}
-          metricInfo={metricInfo}
-          standard={standard}
-          onSelectMetric={onSelectMetric}
-          showSources={showSources}
-          dateRange={dateRange}
-          countryCode={countryCode}
-          isSubright={isSubright}
-          childrenIndicators={children}
-        />
-      )}
+            {metricType !== 'indicators' && children.length > 0 && (
+              <Pad>
+                <Heading
+                  responsive={false}
+                  size="18px"
+                  margin={{ vertical: 'xsmall' }}
+                >
+                  {metricType === 'dimensions' && (
+                    <FormattedMessage {...messages.titleChildren[metricType]} />
+                  )}
+                  {metricType === 'rights' && (
+                    <FormattedMessage
+                      {...messages.titleChildren[metricType][metric.type]}
+                    />
+                  )}
+                </Heading>
+                {((metricType === 'rights' && metric.type === 'cpr') ||
+                  metricType === 'dimensions') && (
+                  <>
+                    {children.map(child => (
+                      <ButtonRelative
+                        key={child.key}
+                        onClick={evt => {
+                          if (evt) evt.preventDefault();
+                          onSelectMetric(child.key);
+                        }}
+                        text={
+                          <FormattedMessage
+                            {...rootMessages['rights-short'][child.key]}
+                          />
+                        }
+                      />
+                    ))}
+                  </>
+                )}
+                {metricType === 'rights' && metric.type === 'esr' && (
+                  <>
+                    {children.map(as => (
+                      <Pad key={as.key}>
+                        <Text
+                          size="14px"
+                          color="#262064"
+                          margin={{ bottom: 'xxsmall' }}
+                        >
+                          {`${intl.formatMessage(
+                            rootMessages.settings.standard.name,
+                          )}: '${intl.formatMessage(
+                            rootMessages.settings.standard[as.key],
+                          )}'`}
+                        </Text>
+                        <>
+                          {as.indicators.map(child => (
+                            <ButtonRelative
+                              key={child.key}
+                              onClick={evt => {
+                                if (evt) evt.preventDefault();
+                                onSelectMetric(child.key);
+                              }}
+                              text={
+                                <Text size="small">
+                                  {`${intl.formatMessage(
+                                    rootMessages.charts.rightsColumnLabel.esr,
+                                  )} ${intl
+                                    .formatMessage(
+                                      rootMessages.subrights[child.key],
+                                    )
+                                    .toLowerCase()}`}
+                                </Text>
+                              }
+                            />
+                          ))}
+                        </>
+                      </Pad>
+                    ))}
+                  </>
+                )}
+              </Pad>
+            )}
+          </div>
+        )}
+        {showTitle && (
+          <Heading responsive={false} level={3}>
+            {isSubright ? (
+              `Right to ${intl
+                .formatMessage(rootMessages[subMetricType][metric.key])
+                .toLowerCase()}`
+            ) : (
+              <FormattedMessage {...rootMessages[subMetricType][metric.key]} />
+            )}
+          </Heading>
+        )}
+        {countryScoreMsg && isSubright !== false && (
+          <div>
+            <Text color={inverse ? 'white' : 'dark'}>{countryScoreMsg}</Text>
+          </div>
+        )}
+        {showMetricLink && (
+          <div>
+            <ButtonHero onClick={() => onSelectMetric(metricCode)}>
+              {isSubright ? (
+                <FormattedMessage
+                  {...messages['metricLink-subrights']}
+                  values={{
+                    metric: lowerCase(
+                      intl.formatMessage(
+                        rootMessages[subMetricType][metricCode],
+                      ),
+                    ),
+                  }}
+                />
+              ) : (
+                <FormattedMessage
+                  {...messages.metricLink}
+                  values={{
+                    metric: lowerCase(
+                      intl.formatMessage(
+                        rootMessages[subMetricType][metricCode],
+                      ),
+                    ),
+                  }}
+                />
+              )}
+            </ButtonHero>
+          </div>
+        )}
+        {isSubright === false && (
+          <div style={{ marginTop: 12 }}>
+            <Text weight="bold">
+              {`${intl.formatMessage(messages.indicator, {
+                right: metric.right,
+                isPlural: hasMultipleIndicators,
+              })} ${countryScoreMsg}`}
+            </Text>
+          </div>
+        )}
+        {showAboutMetric && (
+          <AboutMetric
+            metric={metric}
+            metricInfo={metricInfo}
+            standard={standard}
+            onSelectMetric={onSelectMetric}
+            showSources={showSources}
+            dateRange={dateRange}
+            countryCode={countryCode}
+            isSubright={isSubright}
+            childrenIndicators={children}
+          />
+        )}
+      </div>
       {showFAQs && (
         <FAQs
           questions={questions}
@@ -330,6 +337,7 @@ AboutMetricContainer.propTypes = {
   showAboutMetric: PropTypes.bool,
   isSubright: PropTypes.bool,
   hasMultipleIndicators: PropTypes.bool,
+  asideRef: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
