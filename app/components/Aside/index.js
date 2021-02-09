@@ -1,4 +1,5 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React from 'react';
+import useDimensions from 'react-use-dimensions';
 import PropTypes from 'prop-types';
 import { Box, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
@@ -13,36 +14,29 @@ const Styled = styled(Box)`
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
     position: sticky;
-    top: ${({ top }) => `-${top}px`};
+    top: ${({ top }) => `-${top - 44}px`};
     padding-right: ${({ theme, image }) =>
     image ? 0 : theme.global.edgeSize.xlarge};
   }
 `;
 
 function Aside({ content, image, active, children, ...other }) {
-  const [top, setTop] = useState(0);
-  const asideEl = useRef(null);
-  useLayoutEffect(() => {
-    if (asideEl.current) {
-      setTop(asideEl.current.clientHeight);
-    }
-  }, [asideEl]);
+  const [asideRef, { height }] = useDimensions();
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Styled
-          ref={asideEl}
           width={getAsideWidth(size)}
           direction="column"
           flex={{ shrink: 0 }}
           fill="vertical"
           image={image}
-          top={top}
+          top={height}
           {...other}
         >
           {content
-            ? content.content({ active })
+            ? content.content({ active, asideRef })
             : children
           }
         </Styled>
