@@ -401,7 +401,7 @@
   "hrmi.labels.xAxis.best": "% du référentiel des meilleures pratiques mondiales atteint",
   "hrmi.labels.xAxis.hrmiscore": "Score HRMI",
   "hrmi.labels.indicatorToggles.hrmi": "{isPlural, select, true {Scores} false {Score}} de HRMI",
-  "hrmi.labels.indicatorToggles.indicator": "L'indicateur {isPlural, select, true {values} false {value}}",
+  "hrmi.labels.indicatorToggles.indicator": "{isPlural, select, true {Données} false {Données}} de l'indicateur",
   "hrmi.hints.noResults": "Nous n'avons pas pu trouver de pays correspondant aux paramètres choisis",
   "hrmi.hints.noSortData": "Informations manquantes",
   "hrmi.tabs.snapshot": "Aperçu",
