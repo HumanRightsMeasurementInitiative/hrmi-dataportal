@@ -400,7 +400,7 @@
   "hrmi.labels.xAxis.adjusted": "% de referencia ajustada em função dos rendimentos alcançada",
   "hrmi.labels.xAxis.best": "% de melhor referencia global alcançada",
   "hrmi.labels.xAxis.hrmiscore": "Pontuação da HRMI",
-  "hrmi.labels.indicatorToggles.hrmi": "HRMI {isPlural, select, true {scores} false {score}}",
+  "hrmi.labels.indicatorToggles.hrmi": "{isPlural, select, true {pontuaçãos} false {pontuação}} HRMI",
   "hrmi.labels.indicatorToggles.indicator": "Indicador {isPlural, select, true {values} false {value}}",
   "hrmi.hints.noResults": "Não foi possível encontrar nenhum país com as suas configurações de filtro atuais",
   "hrmi.hints.noSortData": "Falta informação classificada",
