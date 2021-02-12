@@ -936,7 +936,7 @@
   "hrmi.containers.LayerSettings.labelWithName": "Cambiar vista por la tabla {name}",
   "hrmi.containers.AboutMetricContainer.metricLink": "Explorar {metric} para todos los países",
   "hrmi.containers.AboutMetricContainer.metricLink-subrights": "Explorar {metric} puntajes para todos los países",
-  "hrmi.containers.AboutMetricContainer.indicator": "Este {isPlural, select, true {is one of the indicators} false {indicator is}} se usa para medir el derecho a {right}",
+  "hrmi.containers.AboutMetricContainer.indicator": "Este {isPlural, select, true {es uno de los indicadores} false {indicador es}} se usa para medir el derecho a {right}",
   "hrmi.containers.AboutCountryContainer.countryLink": "Explorar {country}",
   "hrmi.components.CountryNotes.hiNote": "{hiLabel}  País de ingresos altos: para estos países es mejor utilizar el estándar de evaluación de ingresos altos. ",
   "hrmi.components.CountryNotes.govResponseNote": "{labelSuperscript} Algunos encuestados trabajaron para o con el gobierno (solo permitido para países con una población de menos de 120,000 personas)",
