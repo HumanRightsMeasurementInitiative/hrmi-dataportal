@@ -278,7 +278,9 @@ export function AboutMetricContainer({
           <div style={{ marginTop: 12 }}>
             <Text weight="bold">
               {`${intl.formatMessage(messages.indicator, {
-                right: metric.right,
+                right: intl
+                  .formatMessage(rootMessages['rights-short'][metric.right])
+                  .toLowerCase(),
                 isPlural: hasMultipleIndicators,
               })} ${countryScoreMsg}`}
             </Text>
