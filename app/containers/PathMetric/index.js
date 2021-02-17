@@ -130,7 +130,7 @@ export function PathMetric({
             <ContentContainer direction="column" header>
               <ContentMaxWidth
                 header
-                height={
+                minHeight={
                   isMinSize(size, 'large')
                     ? `${theme.sizes.top.height}px`
                     : 'auto'
