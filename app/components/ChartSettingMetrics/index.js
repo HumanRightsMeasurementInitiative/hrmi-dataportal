@@ -109,7 +109,7 @@ function ChartSettingMetrics({
                 align={{ top: 'bottom', left: 'left' }}
                 target={dropButton.current}
                 onClickOutside={() => setOpen(false)}
-                overflow="hidden"
+                overflow="scroll"
               >
                 <MetricSelect
                   onClose={() => setOpen(false)}
