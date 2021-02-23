@@ -167,6 +167,7 @@ export function PathMetric({
                           inverse={false}
                           inAside={false}
                           superscript
+                          large
                         />
                       )}
                     </p>
