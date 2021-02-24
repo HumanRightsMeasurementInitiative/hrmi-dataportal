@@ -153,7 +153,7 @@
   "hrmi.components.ChartHeader.single-metric": "Scores disponibles pour {no} pays",
   "hrmi.components.ChartHeader.countries-overview": "Affiche les scores pour {no} {no, select, 1 {pay} other {pays}} {filtered, select, true {(filtrés)} false {}}",
   "hrmi.components.ChartHeader.dimension-overview": "{dimension} aperçu",
-  "hrmi.components.ChartHeader.indicators": "Données de l’indicateur",
+  "hrmi.components.ChartHeader.indicators": "Qualité de vie - tous les détails",
   "hrmi.components.ChartHeader.sex": "Par sexe",
   "hrmi.components.ChartHeader.trend": "Au fil du temps",
   "hrmi.components.ChartHeader.people": "Personnes à risque",
