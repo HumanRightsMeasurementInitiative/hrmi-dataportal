@@ -266,6 +266,10 @@ export default defineMessages({
       id: `${scope}.charts.indicatorsColumnLabel`,
       defaultMessage: 'Indicators',
     },
+    sexLabel: {
+      id: `${scope}.charts.sexLabel`,
+      defaultMessage: 'By sex',
+    },
     noData: {
       id: `${scope}.charts.noData`,
       defaultMessage: 'No data',

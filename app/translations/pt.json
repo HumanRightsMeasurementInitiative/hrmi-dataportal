@@ -430,6 +430,7 @@
   "hrmi.charts.rightsColumnLabel.empowerment": "Direito a",
   "hrmi.charts.rightsColumnLabel.physint": "Direito à liberdade de",
   "hrmi.charts.indicatorsColumnLabel": "Indicadores",
+  "hrmi.charts.sexLabel": "Por sexo",
   "hrmi.settings.scale.name": "Quais pontuações?",
   "hrmi.settings.scale.intro": "PENDIENTE: escala de introdução",
   "hrmi.settings.scale.dimensions": "{noDimensions} categorias",

@@ -430,6 +430,7 @@
   "hrmi.charts.rightsColumnLabel.empowerment": "Derecho a",
   "hrmi.charts.rightsColumnLabel.physint": "Derecho a la libertad de",
   "hrmi.charts.indicatorsColumnLabel": "Indicadores",
+  "hrmi.charts.sexLabel": "Por género",
   "hrmi.settings.scale.name": "Resultados",
   "hrmi.settings.scale.intro": "PENDIENTE: introducción de la escala",
   "hrmi.settings.scale.dimensions": "{noDimensions} categorías",

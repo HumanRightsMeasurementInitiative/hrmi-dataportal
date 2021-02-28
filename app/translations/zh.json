@@ -433,6 +433,7 @@
   "hrmi.charts.rightsColumnLabel.empowerment": "权利",
   "hrmi.charts.rightsColumnLabel.physint": "免遭权",
   "hrmi.charts.indicatorsColumnLabel": "指标",
+  "hrmi.charts.sexLabel": "按性别分类",
   "hrmi.settings.scale.name": "哪个分数？",
   "hrmi.settings.scale.intro": "待完成：占比介绍",
   "hrmi.settings.scale.dimensions": "{noDimensions}类别",

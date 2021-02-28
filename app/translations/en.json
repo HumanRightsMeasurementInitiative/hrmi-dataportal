@@ -430,6 +430,7 @@
   "hrmi.charts.rightsColumnLabel.empowerment": "Right to",
   "hrmi.charts.rightsColumnLabel.physint": "Right to freedom from",
   "hrmi.charts.indicatorsColumnLabel": "Indicators",
+  "hrmi.charts.sexLabel": "By sex",
   "hrmi.settings.scale.name": "Which scores?",
   "hrmi.settings.scale.intro": "TODO: scale intro",
   "hrmi.settings.scale.dimensions": "{noDimensions} categories",
