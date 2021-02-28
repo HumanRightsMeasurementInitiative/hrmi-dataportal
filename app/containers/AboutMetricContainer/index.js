@@ -63,6 +63,8 @@ export function AboutMetricContainer({
     onLoadData(metric);
   }, [metric]);
 
+  console.log('here', intl);
+
   const metric = getMetricDetails(metricCode);
   const { metricType } = metric;
 
@@ -232,9 +234,9 @@ export function AboutMetricContainer({
         {showTitle && (
           <Heading responsive={false} level={3}>
             {isSubright ? (
-              `Right to ${intl
-                .formatMessage(rootMessages[subMetricType][metric.key])
-                .toLowerCase()}`
+              intl.formatMessage(
+                rootMessages[subMetricType].rightTo[metric.key],
+              )
             ) : (
               <FormattedMessage {...rootMessages[subMetricType][metric.key]} />
             )}
