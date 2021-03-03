@@ -622,17 +622,10 @@
   "hrmi.subrights.contraception": "Salud reproductiva (anticoncepción)",
   "hrmi.subrights.birth-weight": "Salud reproductiva (peso al nacer)",
   "hrmi.subrights.water-in-home": "Agua",
-<<<<<<< HEAD
-  "hrmi.subrights.basic-sanitation": "Saneamiento básico",
-  "hrmi.subrights.safe-sanitation": "Saneamiento gestionado de forma segura",
-  "hrmi.subrights.relative-poverty": "Ingreso adecuado",
-  "hrmi.subrights.absolute-poverty": "Ingreso adecuado",
-=======
   "hrmi.subrights.basic-sanitation": "Higiene",
   "hrmi.subrights.safe-sanitation": "Higiene",
   "hrmi.subrights.relative-poverty": "Ingreso adecuado (relativo)",
   "hrmi.subrights.absolute-poverty": "Ingreso de subsistencia",
->>>>>>> 1b73a1d5b1cb01229287e68aeaf072815ed5e663
   "hrmi.subrights.longterm-unemployment": "Un trabajo",
   "hrmi.subrights.rightTo.net-primary": "Derecho a educación primaria",
   "hrmi.subrights.rightTo.sec-enrol": "Derecho a educación secundaria",
