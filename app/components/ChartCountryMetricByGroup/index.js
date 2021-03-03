@@ -168,7 +168,7 @@ function ChartCountryMetricByGroup({
         labelColor="esrDark"
         padVertical="small"
         grades={GRADES.esr}
-        commonLabel="By sex"
+        commonLabel={intl.formatMessage(rootMessages.charts.sexLabel)}
         isStatic
         metric={{ type: 'esr' }}
       />
