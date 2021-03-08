@@ -953,7 +953,7 @@
   "hrmi.containers.LayerSettings.labelWithName": "Changer de vue pour le tableau {name}",
   "hrmi.containers.AboutMetricContainer.metricLink": "Explorer {metric} pour chaque pays",
   "hrmi.containers.AboutMetricContainer.metricLink-subrights": "Parcourir les scores {metric} pour tous les pays",
-  "hrmi.containers.AboutMetricContainer.indicator": "Il s'agit {isPlural, select, true {est l'un des indicateurs} false {l'indicateur est}} utilisé la mesure concernant les droits de {right}.",
+  "hrmi.containers.AboutMetricContainer.indicator": "C'est {isPlural, select, true {l'un des indicateurs utilisés} false {l'indicateur utilisé}} pour mesurer les droits de {right}.",
   "hrmi.containers.AboutCountryContainer.countryLink": "Explorer {country}",
   "hrmi.components.CountryNotes.hiNote": "{hiLabel} Pays à revenus élevés : pour ces pays, il est préférable de se référer à la norme d’évaluation des revenus élevés. ",
   "hrmi.components.CountryNotes.govResponseNote": "{labelSuperscript} Certains répondants à l'enquête travaillaient pour ou avec le gouvernement (autorisé uniquement pour les pays de moins de 120 000 habitants)",
