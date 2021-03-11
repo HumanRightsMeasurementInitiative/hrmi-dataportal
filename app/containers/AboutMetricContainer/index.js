@@ -211,13 +211,9 @@ export function AboutMetricContainer({
                               }}
                               text={
                                 <Text size="small">
-                                  {`${intl.formatMessage(
-                                    rootMessages.charts.rightsColumnLabel.esr,
-                                  )} ${intl
-                                    .formatMessage(
-                                      rootMessages.subrights[child.key],
-                                    )
-                                    .toLowerCase()}`}
+                                  {intl.formatMessage(
+                                    rootMessages.subrights.rightTo[child.key],
+                                  )}
                                 </Text>
                               }
                             />
