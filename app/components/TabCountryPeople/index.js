@@ -154,7 +154,6 @@ const QualitativeData = ({ right, index, arr, content, countryCode, intl }) => {
             </div>
           )
         }
-        color="white"
         size="small"
         textSize="large"
         label={
