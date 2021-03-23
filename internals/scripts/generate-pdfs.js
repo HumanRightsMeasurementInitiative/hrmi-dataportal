@@ -1,10 +1,11 @@
+const path = require('path')
 const fetch = require('node-fetch')
 const { csvParse } = require('d3-dsv')
-const puppeteer = require('puppeteer')
 const { Cluster } = require('puppeteer-cluster')
-const keys = require('lodash/keys')
+const mkdirp = require('mkdirp')
+// const keys = require('lodash/keys')
 
-const { getCountries } = require('./helpers/generate-files')
+// const { getCountries } = require('./helpers/generate-files')
 
 const enJSON = require('../../app/translations/en.json')
 const esJSON = require('../../app/translations/es.json')
@@ -16,6 +17,8 @@ const zhJSON = require('../../app/translations/zh.json')
 const logo = require('./pdf-logo')
 
 const currentYear = new Date(Date.now()).getFullYear()
+
+const pdfsDir = path.join(process.cwd(), './pdfs')
 
 async function printPDF({
   countries,
@@ -43,7 +46,7 @@ async function printPDF({
     
     try {
       await page.pdf({
-        path: `pdfs/${lang}-${code}.pdf`,
+        path: `${pdfsDir}/${lang}-${code}.pdf`,
         format: 'A4',
         printBackground: true,
         displayHeaderFooter: true,
@@ -98,6 +101,9 @@ async function printPDF({
     return { code: c[countryCodeAccess], income: c.high_income_country }
   })
 
+  // TODO: any error handling needed on this?
+  await mkdirp(pdfsDir)
+
   await printPDF({
     // countries: keys(getCountries(langJSON)),
     // countries: [{ code: 'NIU', income: '0' }],
@@ -105,28 +111,6 @@ async function printPDF({
     countries,
     languages: ['en', 'es', 'fr', 'pt', 'zh']
   });
-
-  // try {
-  //   const browser = await puppeteer.launch({
-  //     executablePath: '/opt/homebrew/bin/chromium'
-  //   })
-    
-  //   const page = await browser.newPage()
-  //   await page.pdf({
-  //     path: `pdfs/en-NZL.pdf`,
-  //     format: 'A4',
-  //     printBackground: true,
-  //     displayHeaderFooter: true,
-  //     headerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 35px; margin-right: 35px; margin-top: 12px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 140px"></img> <p style="font-weight: 600">${enJSON['hrmi.pdf.subtitle']} ${enJSON[`hrmi.countries.NZL`]}, ${currentYear}</p> </div>`,
-  //     footerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; height: 40px; width: 100%; background-color: #d3d3d3; -webkit-print-color-adjust: exact; display: flex; flex-direction: row; justify-content: space-around; align-items: center;"> <p style="font-weight: 600;">  HRMI 2020 </p> <a href="http://rightstracker.org" style="text-decoration: none; color: unset"> <p>rightstracker.org </p> </a> <p style="font-weight: 600;"> Page <span class="pageNumber"></span>/<span class="totalPages"></span> </p></div>`,
-  //     margin: {
-  //       top: "55px",
-  //       bottom: "76px",
-  //     }
-  //   });
-  // } catch (err) {
-  //   console.error(err)
-  // }
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)
   process.exit(0)
