@@ -43,7 +43,7 @@
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write",
-    "pdf": "concurrently 'npm start' 'node ./internals/scripts/generate-pdfs.js'"
+    "pdf": "concurrently --kill-others 'npm start' 'node ./internals/scripts/generate-pdfs.js'"
   },
   "browserslist": [
     "last 2 versions",
