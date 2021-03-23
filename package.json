@@ -43,7 +43,8 @@
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write",
-    "pdf": "concurrently --kill-others 'npm start' 'node ./internals/scripts/generate-pdfs.js'"
+    "generate-pdfs": "node ./internals/scripts/generate-pdfs.js",
+    "pdf": "npm-run-all -pr start generate-pdfs"
   },
   "browserslist": [
     "last 2 versions",
@@ -162,6 +163,7 @@
     "ngrok": "3.1.1",
     "node-fetch": "^2.6.0",
     "node-plop": "0.18.0",
+    "npm-run-all": "^4.1.5",
     "null-loader": "0.1.1",
     "offline-plugin": "5.0.6",
     "plop": "2.3.0",
