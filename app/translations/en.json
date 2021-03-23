@@ -1009,7 +1009,8 @@
   "hrmi.components.ChartHeader.countries-overview-sub": "Also showing {noWithout} {noWithout, select, 1 {country} other {countries}} without any scores",
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "Using the high income assessment standard",
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Using the low and middle income assessment standard",
-  "hrmi.pdf.subtitle": "Country Profiles | Human Rights in ",
+  "hrmi.pdf.countryProfiles": "Country Profiles",
+  "hrmi.pdf.humanRightsIn": "Human Rights in",
   "hrmi.pdf.noData": "The category {category} includes the following rights:",
   "hrmi.pdf.explore": "To explore this country's scores in more detail please go to rightstracker.org"
 }

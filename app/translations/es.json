@@ -1009,7 +1009,8 @@
   "hrmi.components.ChartHeader.countries-overview-sub": "También se muestra {noWithout} {noWithout, select, 1 {country} other {countries}} sin ningún puntaje",
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "Usando el estándar de evaluación de altos ingresos",
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Usando el estándar de evaluación de ingresos bajos y medios",
-  "hrmi.pdf.subtitle": "Perfiles de países | Derechos humanos en ",
+  "hrmi.pdf.countryProfiles": "Perfiles de países",
+  "hrmi.pdf.humanRightsIn": "Derechos humanos en",
   "hrmi.pdf.noData": "La categoría {category} incluye los siguientes derechos:",
   "hrmi.pdf.explore": "Para explorar las puntajes de este país con más detalle, visite rightstracker.org/es"
 }

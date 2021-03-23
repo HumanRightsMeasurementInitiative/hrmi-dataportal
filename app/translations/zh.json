@@ -1012,7 +1012,8 @@
   "hrmi.components.ChartHeader.countries-overview-sub": "同时显示{noWithout}个不得分的国家",
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "使用高收入评估标准",
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "使用中低收入评估标准",
-  "hrmi.pdf.subtitle": "国家概况|人权 ",
+  "hrmi.pdf.countryProfiles": "国家概况",
+  "hrmi.pdf.humanRightsIn": "人权",
   "hrmi.pdf.noData": "类别{category}包含以下权利：",
   "hrmi.pdf.explore": "要详细了解该国的分数，请访问rightstracker.org"
 }
