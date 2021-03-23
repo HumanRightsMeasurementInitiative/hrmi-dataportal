@@ -27,7 +27,7 @@ async function printPDF({
   // console.log({ languages, countries })
 
   const cluster = await Cluster.launch({
-    puppeteerOptions: {
+    puppeteerOptions: process.env.GITHUB_ACTIONS ? {} : {
       executablePath: '/opt/homebrew/bin/chromium'
     },
     concurrency: Cluster.CONCURRENCY_PAGE,
