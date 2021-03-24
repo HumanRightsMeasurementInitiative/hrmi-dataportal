@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # sudo apt-get install wget
-wget -O ~/Downloads/Source_Sans_Pro.zip https://fonts.google.com/download?family=Source%20Sans%20Pro
+sudo wget -O ~/Downloads/Source_Sans_Pro.zip https://fonts.google.com/download?family=Source%20Sans%20Pro
 pwd
 ls ~/Downloads
 cd /usr/share/fonts
