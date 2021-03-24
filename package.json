@@ -44,7 +44,8 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write",
     "generate-pdfs": "node ./internals/scripts/generate-pdfs.js",
-    "pdf": "npm-run-all -pr start generate-pdfs"
+    "pdf": "npm-run-all -pr start generate-pdfs",
+    "fonts": "sh scripts/fonts.sh"
   },
   "browserslist": [
     "last 2 versions",
