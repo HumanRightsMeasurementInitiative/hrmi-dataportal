@@ -112,6 +112,11 @@ const getDimensionRefs = (score, benchmark) => {
 const getMetricLabel = (score, intl) =>
   intl.formatMessage(rootMessages['rights-xshort'][score.key]);
 
+const getBand = score => ({
+  lo: score && parseFloat(score[COLUMNS.CPR.LO]),
+  hi: score && parseFloat(score[COLUMNS.CPR.HI]),
+});
+
 const prepareData = ({
   scores,
   dimensionCode,
@@ -148,6 +153,7 @@ const prepareData = ({
         label: getMetricLabel(s, intl),
         onClick: () => onClick(s.key, dimensionCode),
         active: activeCode === s.key,
+        band: getBand(s.score),
       }
   );
 
@@ -506,6 +512,7 @@ function ChartCountrySnapshot({
                       listHeader
                       metric={getMetricDetails(dimensionCode)}
                       annotateBetter={false}
+                      // bullet={type === 'cpr'}
                     />
                   </Dimension>
                 </ChartArea>

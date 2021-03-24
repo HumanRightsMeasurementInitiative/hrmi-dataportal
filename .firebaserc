@@ -3,6 +3,7 @@
     "default": "hrmi-dataportal",
     "stage": "hrmi-dataportal-stage",
     "dev": "hrmi-dataportal-dev",
+    "v3.2": "hrmi-dataportal-v3-2",
     "v3.1": "rightstracker-v3-1",
     "v3": "hrmi-dataportal-v3",
     "v2": "rightstracker-v2",
@@ -16,6 +17,9 @@
     "design-tweaks-3.1": "hrmi-design-tweak",
     "social-preview": "hrmi-dataportal-social-preview",
     "pdf": "hrmi-dataportal-pdf",
-    "staging": "hrmi-dataportal-staging"
+    "staging": "hrmi-dataportal-staging",
+    "raw-indicators": "hrmi-dataportal-raw-indicators",
+    "uncertainty": "hrmi-dataportal-uncertainty",
+    "zh": "hrmi-dataportal-zh"
   }
 }

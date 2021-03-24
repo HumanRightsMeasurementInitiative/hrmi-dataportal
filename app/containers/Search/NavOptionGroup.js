@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Box, Text } from 'grommet';
 
 import NavOption from './NavOption';
+import NavSubOption from './NavSubOption';
 
 const NavOptionWrap = styled(Box)`
   padding-top: 10px;
@@ -17,6 +18,7 @@ const StyledText = styled(Text)`
 export function NavOptionGroup({
   label,
   options,
+  optionTextSize = 'medium',
   onClick,
   subject,
   activeResult,
@@ -56,20 +58,48 @@ export function NavOptionGroup({
           </StyledText>
         )}
         {options.map((m, index) => (
-          <NavOption
-            key={m.code}
-            onClick={() => onClick(m.code)}
-            special={m.special}
-            ref={el => {
-              myRefs.current[index] = el;
-            }}
-            onFocus={() => onFocus && onFocus(index)}
-            active={index === activeResult}
-          >
-            <Box direction="row" align="end" fill="horizontal" width="100%">
-              <Text color={subject}>{m.label}</Text>
-            </Box>
-          </NavOption>
+          <>
+            <NavOption
+              key={m.code}
+              onClick={() => onClick(m.code)}
+              special={m.special}
+              ref={el => {
+                myRefs.current[index] = el;
+              }}
+              onFocus={() => onFocus && onFocus(index)}
+              active={index === activeResult}
+            >
+              <Box direction="row" align="end" fill="horizontal" width="100%">
+                <Text color={subject} size={optionTextSize}>
+                  {m.label} {m.sub && <Text color={subject}>{m.sub}</Text>}
+                </Text>
+              </Box>
+            </NavOption>
+            {m.indicators &&
+              m.indicators.map(i => (
+                <NavSubOption
+                  key={i.code}
+                  onClick={() => onClick(i.code)}
+                  special={i.special}
+                  ref={el => {
+                    myRefs.current[index] = el;
+                  }}
+                  onFocus={() => onFocus && onFocus(index)}
+                  active={index === activeResult}
+                >
+                  <Box
+                    direction="row"
+                    align="end"
+                    fill="horizontal"
+                    width="100%"
+                  >
+                    <Text color={subject} size="small">
+                      {i.label}
+                    </Text>
+                  </Box>
+                </NavSubOption>
+              ))}
+          </>
         ))}
       </NavOptionWrap>
     </div>
@@ -80,6 +110,7 @@ NavOptionGroup.propTypes = {
   label: PropTypes.string,
   subject: PropTypes.string,
   options: PropTypes.array,
+  optionTextSize: PropTypes.string,
   onClick: PropTypes.func,
   onFocus: PropTypes.func,
   activeResult: PropTypes.number,

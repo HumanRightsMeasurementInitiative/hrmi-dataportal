@@ -49,6 +49,11 @@ export function SectionDataCards({
                 title={intl.formatMessage(messages.dataCards.metrics)}
                 teaser={intl.formatMessage(messages.dataCards.metricsTeaser)}
                 anchor={intl.formatMessage(rootMessages.labels.allMetrics)}
+                measureWord={
+                  intl.locale === 'zh'
+                    ? intl.formatMessage(messages.dataCards.metricsMeasureWord)
+                    : null
+                }
               />
               <CardData
                 onClick={navCountries}
@@ -56,6 +61,14 @@ export function SectionDataCards({
                 title={intl.formatMessage(messages.dataCards.countries)}
                 teaser={intl.formatMessage(messages.dataCards.countriesTeaser)}
                 anchor={intl.formatMessage(rootMessages.labels.allCountries)}
+                measureWord={
+                  // prettier-ignore
+                  intl.locale === 'zh'
+                    ? intl.formatMessage(
+                      messages.dataCards.countriesMeasureWord,
+                    )
+                    : null
+                }
               />
               <CardData
                 onClick={navGroups}
@@ -63,6 +76,11 @@ export function SectionDataCards({
                 title={intl.formatMessage(messages.dataCards.people)}
                 teaser={intl.formatMessage(messages.dataCards.peopleTeaser)}
                 anchor={intl.formatMessage(rootMessages.labels.allPeople)}
+                measureWord={
+                  intl.locale === 'zh'
+                    ? intl.formatMessage(messages.dataCards.peopleMeasureWord)
+                    : null
+                }
               />
             </Slider>
           </ContentMaxWidth>

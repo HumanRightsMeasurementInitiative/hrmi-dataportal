@@ -31,8 +31,9 @@ const StyledUL = styled(UL)`
   margin-top: 0;
 `;
 
-const StyledButton = styled(Button)`
-  text-decoration: underline;
+const StyledNonButton = styled(Button)`
+  font-weight: bold;
+  cursor: initial;
 `;
 
 const DEPENDENCIES = ['esrIndicators', 'sources'];
@@ -61,7 +62,7 @@ export function AboutMetricSources({
   indicatorInfo,
   allIndicators,
   onLoadData,
-  onSelectMetric,
+  // onSelectMetric,
   intl,
   countrySources,
 }) {
@@ -175,13 +176,20 @@ export function AboutMetricSources({
             i.source_codes ? (
               <Box margin={{ bottom: 'small' }} key={i.key}>
                 <div>
-                  <StyledButton onClick={() => onSelectMetric(i.key)}>
+                  <StyledNonButton>
                     <Text size="small">
                       <FormattedMessage
                         {...rootMessages['indicators-raw'][i.key]}
                       />
                     </Text>
-                  </StyledButton>
+                  </StyledNonButton>
+                </div>
+                <div style={{ marginBottom: '8px' }}>
+                  <Text size="xsmall">
+                    <FormattedMessage
+                      {...rootMessages['indicators-definition'][i.key]}
+                    />
+                  </Text>
                 </div>
                 <div>
                   <Text size="xsmall">

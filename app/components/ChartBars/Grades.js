@@ -47,13 +47,13 @@ const BGScaleLabelWrap = styled.span`
 `;
 const BGScaleLabel = styled.span`
   padding-left: ${({ single }) => (single ? 0 : 5)}px;
-  font-size: ${({ theme }) => theme.text.xxsmall.size};
-  line-height: ${({ theme }) => theme.text.xxsmall.size};
+  font-size: ${({ theme }) => theme.text.xxxsmall.size};
+  line-height: ${({ theme }) => theme.text.xxxsmall.size};
   color: ${({ theme }) => theme.global.colors.secondary};
   vertical-align: bottom;
   @media (min-width: ${({ theme }) => theme.breakpointsMin.xlarge}) {
-    line-height: ${({ theme }) => theme.text.xsmall.size};
-    font-size: ${({ theme }) => theme.text.xsmall.size};
+    line-height: ${({ theme }) => theme.text.xxxsmall.size};
+    font-size: ${({ theme }) => theme.text.xxxsmall.size};
   }
 `;
 
@@ -71,7 +71,7 @@ const KeyWrap = styled(props => (
   margin-top: 4px;
 `;
 
-export function Grades({ grades, labels = true, hasAside }) {
+export function Grades({ grades, labels = true, hasAside, rawScores }) {
   // const minGap = grades.reduce((memo, grade, index, list) => {
   //   // console.log(memo, grade, index, list.length, list[index + 1])
   //   const gap =
@@ -87,19 +87,21 @@ export function Grades({ grades, labels = true, hasAside }) {
           left={chartLabelWidth(size)}
           right={hasAside ? scoreAsideWidth(size) : '0px'}
         >
-          {grades.map(grade => (
-            <BGScaleX min={grade.min} key={grade.class}>
-              {isMinSize(size, 'medium') && labels && (
-                <BGScaleLabelWrap>
-                  <BGScaleLabel>
-                    <FormattedMessage
-                      {...rootMessages.labels.grades[grade.class]}
-                    />
-                  </BGScaleLabel>
-                </BGScaleLabelWrap>
-              )}
-            </BGScaleX>
-          ))}
+          {!rawScores &&
+            grades.map(grade => (
+              <BGScaleX min={grade.min} key={grade.class}>
+                {isMinSize(size, 'medium') && labels && (
+                  <BGScaleLabelWrap>
+                    <BGScaleLabel>
+                      <FormattedMessage
+                        {...rootMessages.labels.grades[grade.class]}
+                      />
+                    </BGScaleLabel>
+                  </BGScaleLabelWrap>
+                )}
+              </BGScaleX>
+            ))}
+          {rawScores && <BGScaleX min={grades[0].min} key={grades[0].class} />}
           {isMaxSize(size, 'sm') && labels && (
             <BGScaleLabelWrap single>
               <Box direction="row" align="center" justify="center" gap="xsmall">
@@ -126,6 +128,7 @@ Grades.propTypes = {
   grades: PropTypes.array,
   labels: PropTypes.bool,
   hasAside: PropTypes.bool,
+  rawScores: PropTypes.bool,
 };
 
 export default Grades;

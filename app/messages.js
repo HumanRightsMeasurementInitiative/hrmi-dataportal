@@ -156,6 +156,21 @@ export default defineMessages({
         id: `${scope}.labels.xAxis.best`,
         defaultMessage: '% of global best benchmark achieved',
       },
+      hrmiscore: {
+        id: `${scope}.labels.xAxis.hrmiscore`,
+        defaultMessage: 'HRMI score',
+      },
+    },
+    indicatorToggles: {
+      hrmi: {
+        id: `${scope}.labels.indicatorToggles.hrmi`,
+        defaultMessage: 'HRMI {isPlural, select, true {scores} false {score}}',
+      },
+      indicator: {
+        id: `${scope}.labels.indicatorToggles.indicator`,
+        defaultMessage:
+          'Indicator {isPlural, select, true {values} false {value}}',
+      },
     },
   },
   assessedFilters: {
@@ -251,6 +266,10 @@ export default defineMessages({
       id: `${scope}.charts.indicatorsColumnLabel`,
       defaultMessage: 'Indicators',
     },
+    sexLabel: {
+      id: `${scope}.charts.sexLabel`,
+      defaultMessage: 'By sex',
+    },
     noData: {
       id: `${scope}.charts.noData`,
       defaultMessage: 'No data',
@@ -309,6 +328,17 @@ export default defineMessages({
         id: `${scope}.charts.dimensionIntro.empowerment`,
         defaultMessage:
           'How well is {needsArticle, select, true {the } false { }}{countryPossessive} government respecting each right?',
+      },
+    },
+    dimensionDataSource: {
+      esr: {
+        id: `${scope}.charts.dimensionDataSource.esr`,
+        defaultMessage:
+          '(Charts show most recent data available as of {year}).',
+      },
+      cpr: {
+        id: `${scope}.charts.dimensionDataSource.cpr`,
+        defaultMessage: 'Scores show data from {year}.',
       },
     },
   },
@@ -811,6 +841,18 @@ export default defineMessages({
       id: `${scope}.dimensions.physint`,
       defaultMessage: 'physint',
     },
+    'esr-sub': {
+      id: `${scope}.dimensions.esr-sub`,
+      defaultMessage: '(5 economic and social rights)',
+    },
+    'empowerment-sub': {
+      id: `${scope}.dimensions.empowerment-sub`,
+      defaultMessage: '(3 empowerment rights)',
+    },
+    'physint-sub': {
+      id: `${scope}.dimensions.physint-sub`,
+      defaultMessage: '(5 physical integrity rights)',
+    },
   },
   'dimensions-about': {
     esr: {
@@ -1162,6 +1204,228 @@ export default defineMessages({
     'affordable-housing': {
       id: `${scope}.indicators.affordable-housing`,
       defaultMessage: 'affordable-housing',
+    },
+  },
+  'indicators-definition': {
+    'net-primary': {
+      id: `${scope}.indicators-definition.net-primary`,
+      defaultMessage: 'net-primary',
+    },
+    'sec-enrol': {
+      id: `${scope}.indicators-definition.sec-enrol`,
+      defaultMessage: 'sec-enrol',
+    },
+    'pisa-science': {
+      id: `${scope}.indicators-definition.pisa-science`,
+      defaultMessage: 'pisa-science',
+    },
+    'pisa-math': {
+      id: `${scope}.indicators-definition.pisa-math`,
+      defaultMessage: 'pisa-math',
+    },
+    'pisa-reading': {
+      id: `${scope}.indicators-definition.pisa-reading`,
+      defaultMessage: 'pisa-reading',
+    },
+    'not-stunted': {
+      id: `${scope}.indicators-definition.not-stunted`,
+      defaultMessage: 'not-stunted',
+    },
+    'food-security': {
+      id: `${scope}.indicators-definition.food-security`,
+      defaultMessage: 'food-security',
+    },
+    'adult-survival': {
+      id: `${scope}.indicators-definition.adult-survival`,
+      defaultMessage: 'adult-survival',
+    },
+    'under-5-survival': {
+      id: `${scope}.indicators-definition.under-5-survival`,
+      defaultMessage: 'under-5-survival',
+    },
+    contraception: {
+      id: `${scope}.indicators-definition.contraception`,
+      defaultMessage: 'contraception',
+    },
+    'birth-weight': {
+      id: `${scope}.indicators-definition.birth-weight`,
+      defaultMessage: 'birth-weight',
+    },
+    'water-in-home': {
+      id: `${scope}.indicators-definition.water-in-home`,
+      defaultMessage: 'water-in-home',
+    },
+    'basic-sanitation': {
+      id: `${scope}.indicators-definition.basic-sanitation`,
+      defaultMessage: 'basic-sanitation',
+    },
+    'safe-sanitation': {
+      id: `${scope}.indicators-definition.safe-sanitation`,
+      defaultMessage: 'safe-sanitation',
+    },
+    'relative-poverty': {
+      id: `${scope}.indicators-definition.relative-poverty`,
+      defaultMessage: 'relative-poverty',
+    },
+    'absolute-poverty': {
+      id: `${scope}.indicators-definition.absolute-poverty`,
+      defaultMessage: 'absolute-poverty',
+    },
+    'longterm-unemployment': {
+      id: `${scope}.indicators-definition.longterm-unemployment`,
+      defaultMessage: 'longterm-unemployment',
+    },
+    'affordable-housing': {
+      id: `${scope}.indicators-definition.affordable-housing`,
+      defaultMessage: 'affordable-housing',
+    },
+  },
+  subrights: {
+    'net-primary': {
+      id: `${scope}.subrights.net-primary`,
+      defaultMessage: 'net-primary',
+    },
+    'sec-enrol': {
+      id: `${scope}.subrights.sec-enrol`,
+      defaultMessage: 'sec-enrol',
+    },
+    'pisa-science': {
+      id: `${scope}.subrights.pisa-science`,
+      defaultMessage: 'pisa-science',
+    },
+    'pisa-math': {
+      id: `${scope}.subrights.pisa-math`,
+      defaultMessage: 'pisa-math',
+    },
+    'pisa-reading': {
+      id: `${scope}.subrights.pisa-reading`,
+      defaultMessage: 'pisa-reading',
+    },
+    'not-stunted': {
+      id: `${scope}.subrights.not-stunted`,
+      defaultMessage: 'not-stunted',
+    },
+    'food-security': {
+      id: `${scope}.subrights.food-security`,
+      defaultMessage: 'food-security',
+    },
+    'adult-survival': {
+      id: `${scope}.subrights.adult-survival`,
+      defaultMessage: 'adult-survival',
+    },
+    'under-5-survival': {
+      id: `${scope}.subrights.under-5-survival`,
+      defaultMessage: 'under-5-survival',
+    },
+    contraception: {
+      id: `${scope}.subrights.contraception`,
+      defaultMessage: 'contraception',
+    },
+    'birth-weight': {
+      id: `${scope}.subrights.birth-weight`,
+      defaultMessage: 'birth-weight',
+    },
+    'water-in-home': {
+      id: `${scope}.subrights.water-in-home`,
+      defaultMessage: 'water-in-home',
+    },
+    'basic-sanitation': {
+      id: `${scope}.subrights.basic-sanitation`,
+      defaultMessage: 'basic-sanitation',
+    },
+    'safe-sanitation': {
+      id: `${scope}.subrights.safe-sanitation`,
+      defaultMessage: 'safe-sanitation',
+    },
+    'relative-poverty': {
+      id: `${scope}.subrights.relative-poverty`,
+      defaultMessage: 'relative-poverty',
+    },
+    'absolute-poverty': {
+      id: `${scope}.subrights.absolute-poverty`,
+      defaultMessage: 'absolute-poverty',
+    },
+    'longterm-unemployment': {
+      id: `${scope}.subrights.longterm-unemployment`,
+      defaultMessage: 'longterm-unemployment',
+    },
+    'affordable-housing': {
+      id: `${scope}.subrights.affordable-housing`,
+      defaultMessage: 'affordable-housing',
+    },
+    rightTo: {
+      'net-primary': {
+        id: `${scope}.subrights.rightTo.net-primary`,
+        defaultMessage: 'net-primary',
+      },
+      'sec-enrol': {
+        id: `${scope}.subrights.rightTo.sec-enrol`,
+        defaultMessage: 'sec-enrol',
+      },
+      'pisa-science': {
+        id: `${scope}.subrights.rightTo.pisa-science`,
+        defaultMessage: 'pisa-science',
+      },
+      'pisa-math': {
+        id: `${scope}.subrights.rightTo.pisa-math`,
+        defaultMessage: 'pisa-math',
+      },
+      'pisa-reading': {
+        id: `${scope}.subrights.rightTo.pisa-reading`,
+        defaultMessage: 'pisa-reading',
+      },
+      'not-stunted': {
+        id: `${scope}.subrights.rightTo.not-stunted`,
+        defaultMessage: 'not-stunted',
+      },
+      'food-security': {
+        id: `${scope}.subrights.rightTo.food-security`,
+        defaultMessage: 'food-security',
+      },
+      'adult-survival': {
+        id: `${scope}.subrights.rightTo.adult-survival`,
+        defaultMessage: 'adult-survival',
+      },
+      'under-5-survival': {
+        id: `${scope}.subrights.rightTo.under-5-survival`,
+        defaultMessage: 'under-5-survival',
+      },
+      contraception: {
+        id: `${scope}.subrights.rightTo.contraception`,
+        defaultMessage: 'contraception',
+      },
+      'birth-weight': {
+        id: `${scope}.subrights.rightTo.birth-weight`,
+        defaultMessage: 'birth-weight',
+      },
+      'water-in-home': {
+        id: `${scope}.subrights.rightTo.water-in-home`,
+        defaultMessage: 'water-in-home',
+      },
+      'basic-sanitation': {
+        id: `${scope}.subrights.rightTo.basic-sanitation`,
+        defaultMessage: 'basic-sanitation',
+      },
+      'safe-sanitation': {
+        id: `${scope}.subrights.rightTo.safe-sanitation`,
+        defaultMessage: 'safe-sanitation',
+      },
+      'relative-poverty': {
+        id: `${scope}.subrights.rightTo.relative-poverty`,
+        defaultMessage: 'relative-poverty',
+      },
+      'absolute-poverty': {
+        id: `${scope}.subrights.rightTo.absolute-poverty`,
+        defaultMessage: 'absolute-poverty',
+      },
+      'longterm-unemployment': {
+        id: `${scope}.subrights.rightTo.longterm-unemployment`,
+        defaultMessage: 'longterm-unemployment',
+      },
+      'affordable-housing': {
+        id: `${scope}.subrights.rightTo.affordable-housing`,
+        defaultMessage: 'affordable-housing',
+      },
     },
   },
   'indicators-raw': {

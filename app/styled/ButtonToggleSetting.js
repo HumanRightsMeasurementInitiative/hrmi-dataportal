@@ -9,9 +9,10 @@ const StyledPrimary = styled(ButtonPrimary)`
   border-radius: 3px !important;
   padding: 3px 6px;
   margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
+  margin-bottom: ${({ stacked }) => stacked ? '6px' : 0};
   background-color: ${({ theme, color }) => theme.global.colors[color || 'dark']};
   &:last-child {
-    margin-right: 0;
+    margin-right: ${({ stacked, theme }) => stacked ? theme.global.edgeSize.xsmall : 0};
   }
   &:hover {
     background-color:
@@ -35,12 +36,15 @@ const StyledPrimary = styled(ButtonPrimary)`
     padding: 3px 10px;
   }
 `;
+// prettier-ignore
 const StyledButton = styled(Button)`
   border-radius: 3px !important;
   padding: 3px 6px;
   margin-right: ${({ theme }) => theme.global.edgeSize.xsmall};
+  margin-bottom: ${({ stacked }) => (stacked ? '6px' : 0)};
   &:last-child {
-    margin-right: 0;
+    margin-right: ${({ stacked, theme }) =>
+    stacked ? theme.global.edgeSize.xsmall : 0};
   }
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 3px 10px;
