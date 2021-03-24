@@ -45,6 +45,8 @@ export function LayerAside({ onClose, theme, layer }) {
     }
 
     window.addEventListener('resize', handleResize);
+    // N.B. handles closing the aside when navigating back and forward with browser
+    window.onpopstate = () => onClose();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -90,12 +92,14 @@ export function LayerAside({ onClose, theme, layer }) {
                 countryCode={layer.countryCode}
                 dateRange={layer.dateRange}
                 showTitle
-                showMetricLink
+                showMetricLink={layer.isSubright !== false} // isSubright may be undefined, true or false, fix in future version
                 showAboutMetric
                 showSources={layer.showSources}
                 countryScoreMsg={layer.countryScoreMsg}
                 inverse
                 inAside
+                isSubright={layer.isSubright}
+                hasMultipleIndicators={layer.hasMultipleIndicators}
               />
             )}
             {layer.type === 'aboutCountry' && (
