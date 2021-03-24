@@ -69,7 +69,6 @@ function ChartBars({
   closeAsideLayer
 }) {
   if (!data) return null;
-  console.log({ data })
   return (
     <ResponsiveContext.Consumer>
       {() => (

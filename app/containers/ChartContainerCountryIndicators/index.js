@@ -18,6 +18,7 @@ import { scoreAsideWidth } from 'components/ChartBars/chart-utils';
 
 import {
   getIndicatorsForCountryAndRight,
+  getIndicatorsForOtherStandardForCountryAndRight,
   getStandardSearch,
   getBenchmarkSearch,
   getDependenciesReady,
@@ -127,6 +128,7 @@ export function ChartContainerCountryIndicators({
   onLoadData,
   right,
   indicators,
+  indicatorsForOtherStandard,
   standard,
   benchmark,
   dataReady,
@@ -164,6 +166,10 @@ export function ChartContainerCountryIndicators({
                   key: metricCode,
                   label: getMetricLabel(metricCode, intl),
                   onClick: () => onMetricClick(metricCode, 'esr'),
+                  hasScoreIndicators: indicators.some(i => !!i.score),
+                  hasScoreIndicatorsAlternate: indicatorsForOtherStandard.some(
+                    i => !!i.score,
+                  ),
                   active: activeCode === metricCode,
                 },
               ]}
@@ -273,6 +279,10 @@ ChartContainerCountryIndicators.propTypes = {
   dataReady: PropTypes.bool,
   right: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   indicators: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  indicatorsForOtherStandard: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.bool,
+  ]),
   standard: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   onMetricClick: PropTypes.func,
@@ -284,6 +294,10 @@ const mapStateToProps = createStructuredSelector({
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   indicators: (state, { countryCode, metricCode }) =>
     getIndicatorsForCountryAndRight(state, countryCode, { metricCode }),
+  indicatorsForOtherStandard: (state, { countryCode, metricCode }) =>
+    getIndicatorsForOtherStandardForCountryAndRight(state, countryCode, {
+      metricCode,
+    }),
   right: (state, { countryCode, metricCode }) =>
     getESRScoreForCountry(state, { countryCode, metricCode }),
   standard: state => getStandardSearch(state),

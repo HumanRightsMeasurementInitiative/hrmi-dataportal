@@ -22,7 +22,7 @@ jobs:
       - run: npm i
       # N.B. we run build twice for now, as we need to build post-PDF creation to include them in the upload, but if we only build after PDF creation we don't know if there's a build error until PDF's are done (~60 mins currently). This could be addressed with better CI.
       # TODO: we actually really only want to go through the pdf generation process if necessary... maybe we need a flag to start PDF's generating (on commit message?), or some automated way?
-      - run: npm run build
+      # - run: npm run build
       - run: npm run pdf
       - run: npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0

@@ -937,10 +937,52 @@ export const getIndicatorsForCountry = createSelector(
   },
 );
 
+export const getIndicatorsForOtherStandardForCountry = createSelector(
+  getIndicatorScoresForCountry,
+  getESRIndicators,
+  getStandardSearch,
+  (scores, indicators, standard) => {
+    const standardCode = STANDARDS.find(as => as.key !== standard).code;
+    return (
+      scores &&
+      indicators &&
+      INDICATORS.reduce((memo, i) => {
+        const details = indicators.find(id => id.metric_code === i.code);
+        if (details.standard === 'Both' || details.standard === standardCode) {
+          return {
+            ...memo,
+            [i.key]: {
+              score: scores.find(
+                s =>
+                  s.metric_code === i.code && s.group === PEOPLE_GROUPS[0].code,
+              ),
+              details,
+              ...i,
+            },
+          };
+        }
+        return memo;
+      }, {})
+    );
+  },
+);
+
 // single country, all indicators, single year
 export const getIndicatorsForCountryAndRight = createSelector(
   (state, country, { metricCode }) => metricCode,
   getIndicatorsForCountry,
+  (metricCode, indicators) => {
+    if (metricCode && indicators) {
+      // first filter by country
+      return Object.values(indicators).filter(i => i.right === metricCode);
+    }
+    return false;
+  },
+);
+// TODO: clean this up
+export const getIndicatorsForOtherStandardForCountryAndRight = createSelector(
+  (state, country, { metricCode }) => metricCode,
+  getIndicatorsForOtherStandardForCountry,
   (metricCode, indicators) => {
     if (metricCode && indicators) {
       // first filter by country

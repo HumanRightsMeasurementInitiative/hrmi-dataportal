@@ -221,7 +221,6 @@ export function ChartContainerCountryRights({
       s => s.dimension === otherCPRdimension.key && !!s.score,
     );
   }
-  console.log({ dimRights, dimension });
 
   return (
     <ResponsiveContext.Consumer>
@@ -305,9 +304,10 @@ export function ChartContainerCountryRights({
                       key: dimension.key,
                       label: getDimensionLabel(dimension, intl),
                       onClick: () => onMetricClick(dimension.key),
-                      // hasScoreAlternate: dimension.hasScoreAlternate,
-                      // hasScoreIndicators: dimension.hasScoreIndicators,
-                      // hasScoreIndicatorsAlternate: dimension.hasScoreIndicatorsAlternate,
+                      hasScoreAlternate: dimension.hasScoreAlternate,
+                      hasScoreIndicators: dimension.hasScoreIndicators,
+                      hasScoreIndicatorsAlternate:
+                        dimension.hasScoreIndicatorsAlternate,
                       active: activeCode === dimension.key,
                     },
                   ]}

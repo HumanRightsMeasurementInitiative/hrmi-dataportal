@@ -8,7 +8,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { getNoDataMessage, getIncompleteDataActionMessage } from 'utils/scores';
+import {
+  getNoDataMessage,
+  // getIncompleteDataActionMessage
+} from 'utils/scores';
 
 import NoDataHint from './NoDataHint';
 import Wrapper from './styled/BarWrap';
@@ -105,7 +108,7 @@ function Bar({
   showLabels = false,
   showScore = false,
   rotate,
-  showIncompleteAction = true,
+  // showIncompleteAction = true,
   height,
   scoreOnHover = false,
   hoverEnabled = true,
@@ -190,9 +193,9 @@ function Bar({
             <NoDataHint
               hints={[
                 getNoDataMessage(data),
-                showIncompleteAction
-                  ? getIncompleteDataActionMessage(data)
-                  : null,
+                // showIncompleteAction
+                //   ? getIncompleteDataActionMessage(data)
+                //   : null,
               ]}
               color={color}
             />
@@ -229,7 +232,7 @@ Bar.propTypes = {
   hasBackground: PropTypes.bool,
   showScore: PropTypes.bool,
   hoverEnabled: PropTypes.bool,
-  showIncompleteAction: PropTypes.bool,
+  // showIncompleteAction: PropTypes.bool,
   scoreAbove: PropTypes.bool,
   active: PropTypes.bool,
   rotate: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
