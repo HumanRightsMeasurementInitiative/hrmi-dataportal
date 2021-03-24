@@ -12,6 +12,10 @@ jobs:
   deploy_live_website:
     runs-on: ubuntu-latest
     steps:
+      - name: Github Action for wget
+        uses: wei/wget@v1.1.1
+        with:
+          args: -O ~/Downloads/Source_Sans_Pro.zip https://fonts.google.com/download?family=Source%20Sans%20Pro
       - uses: actions/checkout@v2
       # Add any build steps here. For example:
       - run: npm run fonts
