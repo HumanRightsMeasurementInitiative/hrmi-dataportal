@@ -89,4 +89,3 @@ AUTHORS text
 *.eot binary
 *.woff binary
 *.pyc binary
-*.pdf filter=lfs diff=lfs merge=lfs -text
