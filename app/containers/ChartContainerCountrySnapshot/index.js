@@ -130,7 +130,6 @@ export function ChartContainerCountrySnapshot({
   activeCode,
   locale,
 }) {
-  console.log({ standard, benchmark, country });
   useEffect(() => {
     onLoadData();
   }, []);

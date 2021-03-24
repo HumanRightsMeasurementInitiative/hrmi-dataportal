@@ -57,11 +57,16 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
   }, [activeResult]);
   const dimensions = prepMetrics(DIMENSIONS, 'dimensions', search, intl);
   const rights = prepMetrics(RIGHTS, 'rights', search, intl);
-  const indicators = prepMetrics(INDICATORS, 'indicators', search, intl);
+  const indicators = prepMetrics(INDICATORS, 'subrights', search, intl);
   const hasMetrics =
     dimensions.length > 0 || rights.length > 0 || indicators.length > 0;
   // figure out available height for IE11
   const h = window.innerHeight - getHeaderHeight(size, theme);
+  const rightsWithIndicators = rights.map(r => ({
+    ...r,
+    indicators: indicators.filter(i => i.right === r.code),
+  }));
+
   return (
     <NavWrapper h={h}>
       <NavTop
@@ -96,6 +101,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
             <NavOptionGroup
               label={intl.formatMessage(rootMessages.metricTypes.dimensions)}
               options={dimensions}
+              optionTextSize="large"
               activeResult={search === '' ? activeResult - 1 : activeResult}
               onClick={key => {
                 onClose();
@@ -106,7 +112,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
           {rights.length > 0 && (
             <NavOptionGroup
               label={intl.formatMessage(rootMessages.metricTypes.rights)}
-              options={rights}
+              options={rightsWithIndicators}
               activeResult={
                 search === ''
                   ? activeResult - 1 - dimensions.length
@@ -118,7 +124,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
               }}
             />
           )}
-          {indicators.length > 0 && (
+          {/* {indicators.length > 0 && (
             <NavOptionGroup
               label={intl.formatMessage(rootMessages.metricTypes.indicators)}
               options={indicators}
@@ -132,7 +138,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
                 onSelectMetric(key);
               }}
             />
-          )}
+          )} */}
         </Box>
       </NavScroll>
     </NavWrapper>

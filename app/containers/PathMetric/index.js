@@ -28,6 +28,7 @@ import AboutMetricContainer from 'containers/AboutMetricContainer';
 import Breadcrumb from 'components/Breadcrumb';
 import AsideBackground from 'components/AsideBackground';
 import Aside from 'components/Aside';
+import Tooltip from 'components/Tooltip';
 
 import ContentWrap from 'styled/ContentWrap';
 import MainColumn from 'styled/MainColumn';
@@ -54,9 +55,14 @@ export function PathMetric({
 }) {
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
-  const metricTitle = intl.formatMessage(
-    rootMessages[metric.metricType][metric.key],
-  );
+  // N.B. hacky way of handling sub-rights titles... fix later
+  // prettier-ignore
+  console.log({ metric })
+  const metricTitle =
+    metric.metricType === 'indicators'
+      ? intl.formatMessage(rootMessages.subrights.rightTo[metric.key])
+      : intl.formatMessage(rootMessages[metric.metricType][metric.key]);
+
   let metricTitleShort;
   let dimensionCode = metricCode;
 
@@ -121,7 +127,7 @@ export function PathMetric({
             <ContentContainer direction="column" header>
               <ContentMaxWidth
                 header
-                height={
+                minHeight={
                   isMinSize(size, 'large')
                     ? `${theme.sizes.top.height}px`
                     : 'auto'
@@ -151,6 +157,16 @@ export function PathMetric({
                       <FormattedMessage
                         {...messages[metric.metricType][metricCode].header.a}
                       />
+                      {metric.type === 'esr' && (
+                        <Tooltip
+                          iconSize="medium"
+                          text={intl.formatMessage(messages.rights.tooltip)}
+                          inverse={false}
+                          inAside={false}
+                          superscript
+                          large
+                        />
+                      )}
                     </p>
                   )}
                   {messages[metric.metricType][metricCode].header.b && (
@@ -171,7 +187,7 @@ export function PathMetric({
                         onClick={() =>
                           nav(`${PATHS.PAGE}/${PAGES.methodology.key}`)
                         }
-                        size="small"
+                        size="medium"
                         hasIcon
                       />
                     </Paragraph>

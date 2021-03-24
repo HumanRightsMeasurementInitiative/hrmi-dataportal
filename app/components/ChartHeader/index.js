@@ -100,6 +100,11 @@ export function ChartHeader({
               >
                 {chartName}
               </Heading>
+              {messageValues && messageValues.dimensionDataSource && (
+                <Text size={isMinSize(size, 'large') ? 'small' : 'xsmall'}>
+                  {messageValues.dimensionDataSource}
+                </Text>
+              )}
               {((hasSubHeading && messages[`${chartId}-sub`]) ||
                 (hasSubHeading &&
                   messages[`assessment-standard-${standard}-sub`])) && (
