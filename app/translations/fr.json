@@ -417,7 +417,7 @@
   "hrmi.tabs.mobile.people-at-risk": "Individus",
   "hrmi.tabs.mobile.about": "À propos",
   "hrmi.charts.noData": "Aucune donnée",
-  "hrmi.charts.noDataForStandard": "Aucune donnée pour la norme",
+  "hrmi.charts.noDataForStandard": "Aucune donnée disponible pour cette norme (Changer de vue pour voir d'autres données).",
   "hrmi.charts.incompleteData": "Données incomplètes",
   "hrmi.charts.incompleteData.drillDownIndicators": "explorer les données pour l'indicateur",
   "hrmi.charts.incompleteData.drillDownRights": "explorer les données pour les droits",
