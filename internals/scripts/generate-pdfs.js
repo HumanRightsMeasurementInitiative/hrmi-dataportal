@@ -1,27 +1,35 @@
+const path = require('path')
 const fetch = require('node-fetch')
 const { csvParse } = require('d3-dsv')
 const { Cluster } = require('puppeteer-cluster')
-const keys = require('lodash/keys')
+const mkdirp = require('mkdirp')
+// const keys = require('lodash/keys')
 
-const { getCountries } = require('./helpers/generate-files')
+// const { getCountries } = require('./helpers/generate-files')
 
 const enJSON = require('../../app/translations/en.json')
 const esJSON = require('../../app/translations/es.json')
 const ptJSON = require('../../app/translations/pt.json')
 const frJSON = require('../../app/translations/fr.json')
+const zhJSON = require('../../app/translations/zh.json')
 
 // TODO: vscode hangs when the logo is in this file, so have moved it out for now while developing
 const logo = require('./pdf-logo')
 
-const currentYear = new Date(Date.now()).getFullYear()
+const currentYear = '2020'
+
+const pdfsDir = path.join(process.cwd(), './pdfs')
 
 async function printPDF({
   countries,
   languages
 }) {
-  console.log({ languages, countries })
+  // console.log({ languages, countries })
 
   const cluster = await Cluster.launch({
+    puppeteerOptions: process.env.GITHUB_ACTIONS ? {} : {
+      executablePath: '/opt/homebrew/bin/chromium'
+    },
     concurrency: Cluster.CONCURRENCY_PAGE,
     maxConcurrency: 4 // should probably match the no. of cores on your machine
   })
@@ -35,14 +43,18 @@ async function printPDF({
     });
 
     const headerFooterStyle = `<style>@font-face{font-family:'Source Sans Pro';src:url(../../fonts/SourceSansPro-Regular.ttf) format("truetype");} #header { padding: 0 !important; } #footer { padding: 0 !important; } p, span { font-family: 'Source Sans Pro', sans-serif; font-size: 10px; color: #262064;}</style>`
+
+    const subtitle = lang === 'zh'
+    ? `${langFile[`hrmi.pdf.countryProfiles`]} | ${langFile[`hrmi.countries.${code}`]} ${langFile['hrmi.pdf.humanRightsIn']}, ${currentYear}`
+    : `${langFile[`hrmi.pdf.countryProfiles`]} | ${langFile['hrmi.pdf.humanRightsIn']} ${langFile[`hrmi.countries.${code}`]}, ${currentYear}`
     
     try {
       await page.pdf({
-        path: `pdfs/${lang}-${code}.pdf`,
+        path: `${pdfsDir}/${lang}-${code}.pdf`,
         format: 'A4',
         printBackground: true,
         displayHeaderFooter: true,
-        headerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 35px; margin-right: 35px; margin-top: 12px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 140px"></img> <p style="font-weight: 600">${langFile['hrmi.pdf.subtitle']} ${langFile[`hrmi.countries.${code}`]}, ${currentYear}</p> </div>`,
+        headerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 35px; margin-right: 35px; margin-top: 12px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 140px"></img> <p style="font-weight: 600">${subtitle}</p> </div>`,
         footerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; height: 40px; width: 100%; background-color: #d3d3d3; -webkit-print-color-adjust: exact; display: flex; flex-direction: row; justify-content: space-around; align-items: center;"> <p style="font-weight: 600;">  HRMI 2020 </p> <a href="http://rightstracker.org" style="text-decoration: none; color: unset"> <p>rightstracker.org </p> </a> <p style="font-weight: 600;"> Page <span class="pageNumber"></span>/<span class="totalPages"></span> </p></div>`,
         margin: {
           top: "55px",
@@ -60,7 +72,8 @@ async function printPDF({
     en: enJSON,
     es: esJSON,
     fr: frJSON,
-    pt: ptJSON
+    pt: ptJSON,
+    zh: zhJSON
   }
   for (let i = 0; i < countries.length; i++) {
     const country = countries[i];
@@ -92,14 +105,18 @@ async function printPDF({
     return { code: c[countryCodeAccess], income: c.high_income_country }
   })
 
+  // TODO: any error handling needed on this?
+  await mkdirp(pdfsDir)
+
   await printPDF({
     // countries: keys(getCountries(langJSON)),
     // countries: [{ code: 'NIU', income: '0' }],
-    // countries: [{ code: 'NZL', income: '1' }],
-    countries,
-    languages: ['en', 'es', 'fr', 'pt']
+    countries: [{ code: 'NZL', income: '1' }],
+    // countries,
+    languages: ['en', 'es', 'fr', 'pt', 'zh']
   });
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)
+  process.exit(0)
 })()
 

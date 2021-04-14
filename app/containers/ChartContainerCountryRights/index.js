@@ -140,32 +140,33 @@ const prepareData = ({
   activeCode,
 }) =>
   // prettier-ignore
-  scores.map(s =>
-    dimensionCode === 'esr'
-      ? {
-        color: dimensionCode,
-        refValues: getDimensionRefs(s.score, currentBenchmark),
-        value: getESRDimensionValue(s.score, currentBenchmark),
-        maxValue: 100,
-        unit: '%',
-        stripes: standard === 'hi',
-        key: s.key,
-        label: getMetricLabel(s, intl),
-        onClick: () => onClick(s.key, dimensionCode),
-        active: activeCode === s.key,
-      }
-      : {
-        color: dimensionCode,
-        value: getCPRDimensionValue(s.score),
-        maxValue: 10,
-        unit: '',
-        key: s.key,
-        band: getBand(s.score),
-        label: getMetricLabel(s, intl),
-        onClick: () => onClick(s.key, dimensionCode),
-        active: activeCode === s.key,
-      }
-  );
+  scores.map(s => dimensionCode === 'esr'
+    ? {
+      color: dimensionCode,
+      refValues: getDimensionRefs(s.score, currentBenchmark),
+      value: getESRDimensionValue(s.score, currentBenchmark),
+      maxValue: 100,
+      unit: '%',
+      stripes: standard === 'hi',
+      key: s.key,
+      label: getMetricLabel(s, intl),
+      onClick: () => onClick(s.key, dimensionCode),
+      hasScoreAlternate: s.hasScoreAlternate,
+      hasScoreIndicators: s.hasScoreIndicators,
+      hasScoreIndicatorsAlternate: s.hasScoreIndicatorsAlternate,
+      active: activeCode === s.key,
+    }
+    : {
+      color: dimensionCode,
+      value: getCPRDimensionValue(s.score),
+      maxValue: 10,
+      unit: '',
+      key: s.key,
+      band: getBand(s.score),
+      label: getMetricLabel(s, intl),
+      onClick: () => onClick(s.key, dimensionCode),
+      active: activeCode === s.key,
+    });
 
 export function ChartContainerCountryRights({
   type,
@@ -233,6 +234,17 @@ export function ChartContainerCountryRights({
                   dimension: intl.formatMessage(
                     rootMessages.dimensions[dimensionCode],
                   ),
+                  dimensionDataSource:
+                    currentBenchmark &&
+                    (dimension.score || dimension.scoreSome) &&
+                    intl.formatMessage(
+                      rootMessages.charts.dimensionDataSource.esr,
+                      {
+                        year: dimension.score
+                          ? dimension.score.year
+                          : dimension.scoreSome.year,
+                      },
+                    ),
                 }}
                 includeChartName
                 tools={{
@@ -292,6 +304,10 @@ export function ChartContainerCountryRights({
                       key: dimension.key,
                       label: getDimensionLabel(dimension, intl),
                       onClick: () => onMetricClick(dimension.key),
+                      hasScoreAlternate: dimension.hasScoreAlternate,
+                      hasScoreIndicators: dimension.hasScoreIndicators,
+                      hasScoreIndicatorsAlternate:
+                        dimension.hasScoreIndicatorsAlternate,
                       active: activeCode === dimension.key,
                     },
                   ]}
@@ -422,6 +438,15 @@ export function ChartContainerCountryRights({
                   dimension: intl.formatMessage(
                     rootMessages.dimensions[dimensionCode],
                   ),
+                  dimensionDataSource:
+                    currentBenchmark &&
+                    dimension.score &&
+                    intl.formatMessage(
+                      rootMessages.charts.dimensionDataSource.cpr,
+                      {
+                        year: dimension.score.year,
+                      },
+                    ),
                 }}
                 tools={{
                   howToReadConfig: {
@@ -458,6 +483,9 @@ export function ChartContainerCountryRights({
                       key: dimension.key,
                       label: getDimensionLabel(dimension, intl),
                       onClick: () => onMetricClick(dimension.key),
+                      // hasScoreAlternate: dimension.hasScoreAlternate,
+                      // hasScoreIndicators: dimension.hasScoreIndicators,
+                      // hasScoreIndicatorsAlternate: dimension.hasScoreIndicatorsAlternate,
                       active: activeCode === dimension.key,
                     },
                   ]}

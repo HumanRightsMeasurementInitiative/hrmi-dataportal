@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import {
+  injectIntl,
+  intlShape,
+  FormattedMessage,
+  FormattedHTMLMessage,
+} from 'react-intl';
 import styled from 'styled-components';
 import { Accordion, AccordionPanel, Box, Heading, Text } from 'grommet';
 import { Down, Up } from 'grommet-icons';
@@ -38,7 +43,7 @@ const StyledText = styled(Text)`
   font-size: 14px;
 `;
 
-const renderAnswer = (question, intl, msgValues, navMethodology) => {
+const renderAnswer = (question, intl, msgValues, navMethodology, questions) => {
   if (question === 'measureRightESR') {
     return (
       <>
@@ -119,6 +124,53 @@ const renderAnswer = (question, intl, msgValues, navMethodology) => {
           target="_blank"
           text={<FormattedMessage {...messages.methodologyUncertainty} />}
         />
+      </>
+    );
+  }
+  if (question === 'where') {
+    // HACK: a horrible hack to produce the right part of the FAQ answer for the 'where' question, but the FAQ container has no knowledge of what other tab is active and no easy way to pass that information down - this is as a result of treating the aside as a tab when it isn't the same as the other tabs (i.e. it is present when others are present), and with the FAQ's system not being designed to handle interchangeable multi-part answers.
+    return (
+      <>
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
+          {/* eslint-disable no-nested-ternary */}
+          {/* prettier-ignore */}
+          <FormattedHTMLMessage
+            {...messages.answers[question][
+              questions[2] === 'difference'
+                ? 'esr'
+                : questions[2] === 'grades'
+                  ? 'cpr'
+                  : 'both'
+            ]}
+          />
+          {/* eslint-enable no-nested-ternary */}
+        </Text>
+        <MethodologyLink
+          onClick={() => navMethodology()}
+          text={<FormattedMessage {...messages.methodology} />}
+        />
+      </>
+    );
+  }
+  if (question === 'difference') {
+    return (
+      <>
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
+          <FormattedHTMLMessage {...messages.answers[question]} />
+        </Text>
+        <MethodologyLink
+          onClick={() => navMethodology()}
+          text={<FormattedMessage {...messages.methodology} />}
+        />
+      </>
+    );
+  }
+  if (question === 'how' || question === 'why') {
+    return (
+      <>
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
+          <FormattedMessage {...messages.answers[question]} />
+        </Text>
       </>
     );
   }
@@ -220,6 +272,17 @@ function FAQs({
                 <FormattedMessage
                   {...rootMessages[`${metricType}-about`][metrics.key]}
                 />
+                {showSources && hasIndicator && (
+                  <Box pad={{ vertical: 'small' }}>
+                    <AboutMetricSources
+                      metric={metrics}
+                      indicatorInfo={metricInfo}
+                      onSelectMetric={onSelectMetric}
+                      countryCode={countryCode}
+                      dateRange={dateRange}
+                    />
+                  </Box>
+                )}
               </StyledText>
             </Box>
           </AccordionPanel>
@@ -270,7 +333,7 @@ function FAQs({
             </Box>
           </AccordionPanel>
         )}
-        {showSources && (
+        {showSources && !hasIndicator && (
           <AccordionPanel
             header={
               <Box
@@ -342,7 +405,7 @@ function FAQs({
             }
           >
             <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
-              {renderAnswer(q, intl, msgValues, navMethodology)}
+              {renderAnswer(q, intl, msgValues, navMethodology, questions)}
             </Box>
           </AccordionPanel>
         ))}

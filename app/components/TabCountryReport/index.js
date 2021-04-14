@@ -77,6 +77,7 @@ function TabCountryReport({
   onMetricClick,
   messageValues,
   activeCode,
+  closeAsideLayer,
 }) {
   const currentStandard = STANDARDS.find(s => s.key === standard);
   return (
@@ -107,6 +108,7 @@ function TabCountryReport({
                   countryCode={country[COLUMNS.COUNTRIES.CODE]}
                   onMetricClick={onMetricClick}
                   activeCode={activeCode}
+                  closeAsideLayer={closeAsideLayer}
                   {...props}
                 />
               )}
@@ -431,6 +433,7 @@ TabCountryReport.propTypes = {
   allIndicators: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   onMetricClick: PropTypes.func,
   messageValues: PropTypes.object,
+  closeAsideLayer: PropTypes.func,
 };
 
 // export default injectIntl(TabCountryReport);

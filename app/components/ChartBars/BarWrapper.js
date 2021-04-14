@@ -40,6 +40,7 @@ export function BarWrapper({
   scoresAside = false,
   isStatic = false,
   intl,
+  rawScores,
 }) {
   const [hover, setHover] = useState(false);
   return (
@@ -62,6 +63,7 @@ export function BarWrapper({
               {score.label && (
                 <BarLabel
                   label={score.label}
+                  year={score.year}
                   color={
                     hover || score.active ? `${score.color}Active` : labelColor
                   }
@@ -71,7 +73,7 @@ export function BarWrapper({
                 </BarLabel>
               )}
             </LabelWrap>
-            <BarWrap flex border="right">
+            <BarWrap flex border={rawScores ? false : 'right'}>
               {!bullet && (
                 <Bar
                   showScore={scoreOnHover && hover}
@@ -136,6 +138,7 @@ BarWrapper.propTypes = {
   labelColor: PropTypes.string,
   level: PropTypes.number,
   intl: intlShape,
+  rawScores: PropTypes.bool,
   // standard: PropTypes.string,
   // currentBenchmark: PropTypes.object,
 };

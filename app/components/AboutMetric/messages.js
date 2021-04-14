@@ -21,12 +21,20 @@ export default defineMessages({
     },
     indicators: {
       id: `${scope}.title.indicators`,
-      defaultMessage: 'What data is the indicator based on?',
+      defaultMessage: 'What data is used to measure this right aspect?',
     },
     indicatorsRaw: {
       id: `${scope}.title.indicatorsRaw`,
       defaultMessage: 'How is this indicator defined?',
     },
+    subrights: {
+      id: `${scope}.title.subrights`,
+      defaultMessage: 'What indicator data are used to measure this right?',
+    },
+  },
+  measure: {
+    id: `${scope}.measure`,
+    defaultMessage: 'What aspects of this right do we measure?',
   },
   titleStandards: {
     id: `${scope}.titleStandards`,

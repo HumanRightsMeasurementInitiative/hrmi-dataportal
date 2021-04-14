@@ -83,6 +83,24 @@ export default defineMessages({
       defaultMessage:
         'What do the good, fair, bad, and very bad ranges mean, exactly?',
     },
+    where: {
+      id: `${scope}.questions.where`,
+      defaultMessage: "Where do HRMI's scores come from?",
+    },
+    how: {
+      id: `${scope}.questions.how`,
+      defaultMessage: 'How does HRMI define these rights?',
+    },
+    difference: {
+      id: `${scope}.questions.difference`,
+      defaultMessage:
+        'What is the difference between HRMI scores and indicator values?',
+    },
+    why: {
+      id: `${scope}.questions.why`,
+      defaultMessage:
+        'Why does HRMI use these indicators to measure these rights?',
+    },
   },
   answers: {
     scale: {
@@ -155,6 +173,38 @@ export default defineMessages({
       id: `${scope}.answers.grades`,
       defaultMessage:
         'The labels on the graphs of good, fair, bad, and very bad are used here to give a general indication of how to understand the scores. They are NOT comprehensive descriptions of a country’s performance on an individual right.',
+    },
+    where: {
+      both: {
+        id: `${scope}.answers.where.both`,
+        defaultMessage:
+          'We use two different methodologies.\n\n To measure <b>Quality of Life</b> – economic and social rights – we start with data from international databases. Then we use econometric techniques to combine the data with each country’s level of income, to produce a score. The score, expressed as a percentage, shows how well a country is using its resources to produce good human rights outcomes. Every country should be able to get near its 100% income-adjusted target by improving policies and practices, even without more money.\n\n To measure <b>Safety from the State</b> and <b>Empowerment</b> rights – civil and political rights – we do our own research, using an expert survey methodology. In a secure, anonymous, online questionnaire, we ask local human rights experts (such as people working for human rights organisations; human rights lawyers; journalists specialising in social issues) a series of detailed questions about government behaviour in the previous year. We use Bayesian statistical techniques to produce a score out of ten, displayed within an uncertainty band that shows the range of scores we calculate as most likely to represent the real situation in that country.',
+      },
+      esr: {
+        id: `${scope}.answers.where.esr`,
+        defaultMessage:
+          'We use two different methodologies.\n\n To measure <b>Quality of Life</b> – economic and social rights – we start with data from international databases. Then we use econometric techniques to combine the data with each country’s level of income, to produce a score. The score, expressed as a percentage, shows how well a country is using its resources to produce good human rights outcomes. Every country should be able to get near its 100% income-adjusted target by improving policies and practices, even without more money.',
+      },
+      cpr: {
+        id: `${scope}.answers.where.cpr`,
+        defaultMessage:
+          'We use two different methodologies.\n\n To measure <b>Safety from the State</b> and <b>Empowerment</b> rights – civil and political rights – we do our own research, using an expert survey methodology. In a secure, anonymous, online questionnaire, we ask local human rights experts (such as people working for human rights organisations; human rights lawyers; journalists specialising in social issues) a series of detailed questions about government behaviour in the previous year. We use Bayesian statistical techniques to produce a score out of ten, displayed within an uncertainty band that shows the range of scores we calculate as most likely to represent the real situation in that country.',
+      },
+    },
+    how: {
+      id: `${scope}.answers.how`,
+      defaultMessage:
+        'We base all our measurements on the definitions of human rights contained in international law.\n\n When you are looking at a country’s scores, you can click on the name of each right on the graph and see the definition, and the legal source.',
+    },
+    difference: {
+      id: `${scope}.answers.difference`,
+      defaultMessage:
+        "The indicator values are about people's experiences in each country. The HRMI scores are about how well each government is meeting its human rights obligations.\n\n Our methodology starts with indicator values, which show what percentage of people in a country meet the indicator definition. Then we turn those indicator values into HRMI scores which show how well a country's government is doing at making sure its people enjoy their rights, given what should be possible at its level of income.",
+    },
+    why: {
+      id: `${scope}.answers.why`,
+      defaultMessage:
+        'For each economic and social right, the SERF Index methodology, which HRMI uses, selects a small number of high-level ‘bellwether’ indicators to give an overview of people’s experiences in each country. The scores produced can be tracked and compared over time, and across countries.\n\n The choice of indicators is also influenced by what data are available in international databases for enough countries in the world.',
     },
   },
 });

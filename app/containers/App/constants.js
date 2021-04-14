@@ -110,12 +110,14 @@ export const LANGUAGES = {
     es: 'ES',
     pt: 'PT',
     fr: 'FR',
+    zh: 'ZH',
   },
   long: {
     en: 'English',
     es: 'Español',
     pt: 'Português',
     fr: 'Français',
+    zh: '中文',
   },
 };
 
@@ -158,6 +160,7 @@ export const XPATHS = {
     fr: '//humanrightsmeasurement.org/fr',
     es: '//humanrightsmeasurement.org/es',
     pt: '//humanrightsmeasurement.org/pt-pt',
+    zh: '//humanrightsmeasurement.org/zh/',
   },
   contact: {
     en: '//humanrightsmeasurement.org/about-hrmi/contact-hrmi/',
@@ -165,6 +168,7 @@ export const XPATHS = {
     es: '//humanrightsmeasurement.org/es/sobre-hrmi/contactar-con-hrmi/',
     pt:
       '//humanrightsmeasurement.org/pt-pt/about-hrmi/entre-em-contato-com-hrmi/',
+    zh: '//humanrightsmeasurement.org/zh/about-hrmi/%e8%81%94%e7%b3%bbhrmi/',
   },
   download: {
     en: 'https://humanrightsmeasurement.org/download-the-dataset/',
@@ -173,15 +177,33 @@ export const XPATHS = {
       'https://humanrightsmeasurement.org/pt-pt/descarregue-o-conjunto-de-dados/',
     fr:
       'https://humanrightsmeasurement.org/fr/telechargez-lensemble-de-donnees/',
+    zh:
+      'https://humanrightsmeasurement.org/zh/%e4%b8%8b%e8%bd%bd%e6%95%b0%e6%8d%ae%e9%9b%86/',
   },
 };
 
 export const FAQS = {
-  COUNTRY_SNAPSHOT: ['scale', 'year', 'benchmarks', 'standards', 'grades'],
-  COUNTRY_ESR: ['benchmarks', 'standards', 'grades'],
-  COUNTRY_CPR: ['grades', 'uncertainty'],
+  COUNTRY_SNAPSHOT: [
+    'where',
+    'how',
+    'scale',
+    'year',
+    'benchmarks',
+    'standards',
+    'grades',
+  ],
+  COUNTRY_ESR: [
+    'where',
+    'how',
+    'difference',
+    'why',
+    'benchmarks',
+    'standards',
+    'grades',
+  ],
+  COUNTRY_CPR: ['where', 'how', 'grades', 'uncertainty'],
   ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],
-  ESR_RIGHT: ['measureRightESR', 'benchmarks', 'standards'],
+  ESR_RIGHT: ['why', 'measureRightESR', 'benchmarks', 'standards'],
   ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],
   CPR_DIMENSION: ['measureDimensionCPR', 'uncertainty'],
   CPR_RIGHT: ['measureRightCPR', 'uncertainty'],
@@ -636,13 +658,6 @@ export const INDICATORS = [
     hasGroups: true,
   },
   {
-    key: 'pisa-science',
-    code: 'PISAscience',
-    right: 'education',
-    resource: 'esrIndicatorScores',
-    hasGroups: true,
-  },
-  {
     key: 'pisa-math',
     code: 'PISAmath',
     right: 'education',
@@ -652,6 +667,13 @@ export const INDICATORS = [
   {
     key: 'pisa-reading',
     code: 'PISAreading',
+    right: 'education',
+    resource: 'esrIndicatorScores',
+    hasGroups: true,
+  },
+  {
+    key: 'pisa-science',
+    code: 'PISAscience',
     right: 'education',
     resource: 'esrIndicatorScores',
     hasGroups: true,
@@ -671,15 +693,15 @@ export const INDICATORS = [
     hasGroups: false,
   },
   {
-    key: 'adult-survival',
-    code: 'AdultSurvival',
+    key: 'under-5-survival',
+    code: 'U5Survival',
     right: 'health',
     resource: 'esrIndicatorScores',
     hasGroups: true,
   },
   {
-    key: 'under-5-survival',
-    code: 'U5Survival',
+    key: 'adult-survival',
+    code: 'AdultSurvival',
     right: 'health',
     resource: 'esrIndicatorScores',
     hasGroups: true,
@@ -713,15 +735,15 @@ export const INDICATORS = [
     hasGroups: false,
   },
   {
-    key: 'safe-sanitation',
-    code: 'SafeSanitation',
+    key: 'affordable-housing',
+    code: 'AffordHouse',
     right: 'housing',
     resource: 'esrIndicatorScores',
     hasGroups: false,
   },
   {
-    key: 'affordable-housing',
-    code: 'AffordHouse',
+    key: 'safe-sanitation',
+    code: 'SafeSanitation',
     right: 'housing',
     resource: 'esrIndicatorScores',
     hasGroups: false,

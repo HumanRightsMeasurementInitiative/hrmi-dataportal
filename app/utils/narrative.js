@@ -7,6 +7,7 @@ const ARTICLES_DEFAULT = {
   fr: 1,
   es: 0,
   pt: 1,
+  zh: 0, // TODO: is this right?
 };
 
 export const needsArticle = (locale, countryGrammar) => {
@@ -85,6 +86,7 @@ export const getCountryWithArticle = (locale, countryGrammar, countryLabel) => {
     }
     return `o ${countryLabel}`;
   }
+  // TODO: zh
   return countryLabel;
 };
 export const getCountryPossessive = (locale, countryGrammar, countryLabel) => {
@@ -162,6 +164,7 @@ export const getCountryOf = (locale, countryGrammar, countryLabel) => {
     }
     return `de ${countryLabel}`;
   }
+  // TODO: zh
   return countryLabel;
 };
 
@@ -183,6 +186,7 @@ export const getWithCountry = (locale, countryGrammar, countryLabel) => {
   if (locale === 'pt') {
     return `com ${countryWithArticle}`;
   }
+  // TODO: zh
   return countryLabel;
 };
 
@@ -191,6 +195,7 @@ const regionsNeedArticle = {
   fr: ['americas'],
   es: ['americas'],
   pt: ['americas'],
+  zh: [],
 };
 const regionsArePlural = {
   en: [
@@ -212,6 +217,7 @@ const regionsArePlural = {
     'europe-central-asia',
     'middle-east-north-africa',
   ],
+  zh: [],
 };
 const regionsAreFeminine = {
   en: [],
@@ -240,6 +246,7 @@ const regionsAreFeminine = {
     'central-asia',
     'east-asia',
   ],
+  zh: [],
 };
 const isRegionFeminine = (locale, regionCode) =>
   regionsAreFeminine[locale].indexOf(regionCode) > -1;
@@ -314,6 +321,7 @@ export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
     }
     return `o ${regionLabel}`;
   }
+  // TODO: zh
   return regionLabel;
 };
 
@@ -367,6 +375,7 @@ export const getRegionOf = (locale, regionCode, regionLabel) => {
     }
     return `de ${regionLabel}`;
   }
+  // TODO: zh
   return regionLabel;
 };
 export const getRegionIn = (locale, regionCode, regionLabel) => {
@@ -400,6 +409,7 @@ export const getRegionIn = (locale, regionCode, regionLabel) => {
     }
     return `no ${regionLabel}`;
   }
+  // TODO: zh
   return regionLabel;
 };
 

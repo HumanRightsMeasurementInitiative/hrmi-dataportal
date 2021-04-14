@@ -6,8 +6,8 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { Heading, Box, AccordionPanel, Accordion, Text } from 'grommet';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { Heading, Box, AccordionPanel, Accordion, Text, Button } from 'grommet';
 import { Down, Up } from 'grommet-icons';
 import styled from 'styled-components';
 
@@ -22,6 +22,9 @@ import messages from './messages';
 const StyledUL = styled(UL)`
   margin-top: 0;
 `;
+const StyledButton = styled(Button)`
+  text-decoration: underline;
+`;
 function AboutMetric({
   metric,
   metricInfo,
@@ -30,14 +33,22 @@ function AboutMetric({
   onSelectMetric,
   dateRange,
   countryCode,
+  isSubright,
+  childrenIndicators,
+  intl,
 }) {
   const [actives, setActive] = useState([]);
   const { metricType } = metric;
   const hasAbout = rootMessages[`${metricType}-about`];
   const hasIndicator = metricType === 'indicators' && metricInfo;
+  const hasAspect =
+    metricType !== 'dimensions' && typeof isSubright === 'undefined';
   const aboutIndex = 0;
   const indicatorIndex = hasIndicator && hasAbout ? 1 : 0;
-  const sourceIndex = aboutIndex + indicatorIndex + 1;
+  const aspectIndex = indicatorIndex + 1;
+  const sourceIndex = hasAspect
+    ? aspectIndex + 1
+    : aboutIndex + indicatorIndex + 1;
 
   return (
     <Box margin={{ top: 'medium' }}>
@@ -61,7 +72,9 @@ function AboutMetric({
                     level={5}
                     margin={{ vertical: 'xsmall' }}
                   >
-                    <FormattedMessage {...messages.title[metricType]} />
+                    <FormattedMessage
+                      {...messages.title[isSubright ? 'subrights' : metricType]}
+                    />
                   </Heading>
                 </Box>
                 <Box margin={{ left: 'auto' }}>
@@ -77,6 +90,20 @@ function AboutMetric({
                   {...rootMessages[`${metricType}-about`][metric.key]}
                 />
               </Text>
+              {!showSources && (
+                <Box margin={{ top: '8px' }}>
+                  {isSubright && <FormattedMessage {...messages.titleSource} />}
+                  <Box margin={{ top: '4px' }}>
+                    <AboutMetricSources
+                      metric={metric}
+                      indicatorInfo={metricInfo}
+                      onSelectMetric={onSelectMetric}
+                      countryCode={countryCode}
+                      dateRange={dateRange}
+                    />
+                  </Box>
+                </Box>
+              )}
             </Box>
           </AccordionPanel>
         )}
@@ -125,6 +152,61 @@ function AboutMetric({
             </Box>
           </AccordionPanel>
         )}
+
+        {hasAspect && metric.dimension === 'esr' && (
+          <AccordionPanel
+            header={
+              <Box
+                direction="row"
+                gap="xsmall"
+                align="center"
+                justify="between"
+              >
+                <Box>
+                  <Heading
+                    responsive={false}
+                    level={5}
+                    margin={{ vertical: 'xsmall' }}
+                  >
+                    <FormattedMessage {...messages.measure} />
+                  </Heading>
+                </Box>
+                <Box margin={{ left: 'auto' }}>
+                  {!actives.includes(aspectIndex) && <Down size="small" />}
+                  {actives.includes(aspectIndex) && <Up size="small" />}
+                </Box>
+              </Box>
+            }
+          >
+            <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
+              {childrenIndicators &&
+                childrenIndicators.map(ci => (
+                  <Box margin={{ bottom: 'small' }}>
+                    <Text size="small" margin={{ bottom: 'xxsmall' }}>
+                      {`${intl.formatMessage(
+                        rootMessages.settings.standard.name,
+                      )}: '${intl.formatMessage(
+                        rootMessages.settings.standard[ci.key],
+                      )}'`}
+                    </Text>
+                    {ci.indicators &&
+                      ci.indicators.map(i => (
+                        <StyledButton onClick={() => onSelectMetric(i.key)}>
+                          <Text size="small" weight="bold">
+                            {`${intl.formatMessage(
+                              rootMessages.charts.rightsColumnLabel.esr,
+                            )} ${intl
+                              .formatMessage(rootMessages.subrights[i.key])
+                              .toLowerCase()}`}
+                          </Text>
+                        </StyledButton>
+                      ))}
+                  </Box>
+                ))}
+            </Box>
+          </AccordionPanel>
+        )}
+
         {showSources && (
           <AccordionPanel
             header={
@@ -179,6 +261,9 @@ AboutMetric.propTypes = {
   onSelectMetric: PropTypes.func,
   countryCode: PropTypes.string,
   dateRange: PropTypes.object,
+  isSubright: PropTypes.bool,
+  childrenIndicators: PropTypes.array,
+  intl: intlShape.isRequired,
 };
 
-export default AboutMetric;
+export default injectIntl(AboutMetric);

@@ -43,6 +43,18 @@ export default defineMessages({
       id: `${scope}.dataCards.peopleTeaser`,
       defaultMessage: 'Who is at risk of rights violations?',
     },
+    countriesMeasureWord: {
+      id: `${scope}.dataCards.countriesMeasureWord`,
+      defaultMessage: '',
+    },
+    metricsMeasureWord: {
+      id: `${scope}.dataCards.metricsMeasureWord`,
+      defaultMessage: '',
+    },
+    peopleMeasureWord: {
+      id: `${scope}.dataCards.peopleMeasureWord`,
+      defaultMessage: '',
+    },
   },
   countries: {
     title: {

@@ -6,14 +6,18 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Box, Text, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
 
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
+import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
+import Tooltip from 'components/Tooltip';
 
 import rootMessages from 'messages';
 // import messages from './messages';
+import { isMaxSize } from 'utils/responsive';
+import { lowerCase } from 'utils/string';
 import { scoreAsideWidth, chartLabelWidth } from './chart-utils';
 
 // prettier-ignore
@@ -31,6 +35,7 @@ const CountryWrap = styled(Box)`
   border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
 `;
 const RemoveFromPDFWrapper = styled.div`
+  margin-bottom: -4px;
   @media print {
     display: none;
   }
@@ -51,6 +56,7 @@ export function ListHeader({
   benchmarkIconOnly = true,
   annotateBenchmark = true,
   annotateMinMax = true,
+  intl,
 }) {
   const annotateBk = annotateBenchmark && metric && metric.type === 'esr';
   return (
@@ -86,15 +92,61 @@ export function ListHeader({
                   0
                 </Text>
                 {metric && (
-                  <Text size="xsmall" weight={500} textAlign="center">
-                    <FormattedMessage
-                      {...rootMessages.labels.xAxis[
-                        metric.type === 'esr' ? benchmark : 'cpr'
-                      ]}
-                    />
-                  </Text>
+                  <Box direction="row">
+                    <Text size="xsmall" weight={500} textAlign="center">
+                      <FormattedMessage
+                        {...rootMessages.labels.xAxis[
+                          metric.type === 'esr' ? benchmark : 'cpr'
+                        ]}
+                      />
+                    </Text>
+                    <RemoveFromPDFWrapper>
+                      {annotateBk && (
+                        <Tooltip
+                          textAnchor={
+                            !benchmarkIconOnly && (
+                              <Text
+                                size="xsmall"
+                                color="highlight2"
+                                style={{
+                                  display: 'inline',
+                                  verticalAlign: 'middle',
+                                }}
+                              >
+                                {`${intl.formatMessage(
+                                  rootMessages.settings.benchmark[benchmark],
+                                )} ${
+                                  // prettier-ignore
+                                  isMaxSize(size, 'sm')
+                                    ? ''
+                                    : lowerCase(
+                                      intl.formatMessage(
+                                        rootMessages.settings.benchmark
+                                          .nameShort,
+                                      ),
+                                    )
+                                }`}
+                              </Text>
+                            )
+                          }
+                          insideButton
+                          iconSize="medium"
+                          maxWidth="300px"
+                          large
+                          component={
+                            <InfoBenchmark
+                              size="xsmall"
+                              singleBenchmark={benchmarkIconOnly}
+                              benchmarkKey={benchmark}
+                            />
+                          }
+                          superscript
+                        />
+                      )}
+                    </RemoveFromPDFWrapper>
+                  </Box>
                 )}
-                <Text size="xsmall" style={{ transform: 'translateX(50%)' }}>
+                <Text size="xsmall" style={{ transform: 'translate(50%)' }}>
                   {metric.type === 'esr' || metric.metricType === 'indicators'
                     ? '100%'
                     : '10'}
@@ -130,6 +182,7 @@ ListHeader.propTypes = {
   benchmarkIconOnly: PropTypes.bool,
   annotateBenchmark: PropTypes.bool,
   annotateMinMax: PropTypes.bool,
+  intl: intlShape.isRequired,
 };
 
-export default ListHeader;
+export default injectIntl(ListHeader);

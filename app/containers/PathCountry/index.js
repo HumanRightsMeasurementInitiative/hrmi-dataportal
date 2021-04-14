@@ -147,7 +147,14 @@ const generateKey = (metricCode, countryCode) => {
   return null;
 };
 
-const getMetricScore = (metric, dimensions, rights, indicators, benchmark) => {
+const getMetricScore = (
+  metric,
+  dimensions,
+  rights,
+  indicators,
+  benchmark,
+  isSubright,
+) => {
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   let currentMetric;
   if (metric.metricType === 'dimensions' && dimensions) {
@@ -160,6 +167,9 @@ const getMetricScore = (metric, dimensions, rights, indicators, benchmark) => {
     currentMetric = indicators[metric.key];
   }
   if (currentMetric && currentMetric.score) {
+    if (isSubright === false) {
+      return currentMetric.score.value;
+    }
     if (metric.type === 'esr') {
       return currentMetric.score[currentBenchmark.column];
     }
@@ -176,6 +186,7 @@ const getScoreMsg = (
   indicators,
   intl,
   messageValues,
+  isSubright,
 ) => {
   let countryScoreMsg;
   const aboutMetricDetails = getMetricDetails(code);
@@ -185,22 +196,53 @@ const getScoreMsg = (
     rights,
     indicators,
     benchmark,
+    isSubright,
   );
+  /* eslint-disable no-nested-ternary */
+  // prettier-ignore
+  const metric =
+    typeof isSubright === 'undefined'
+      ? lowerCase(
+        intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+      )
+      : isSubright
+        ? lowerCase(intl.formatMessage(rootMessages.subrights[code]))
+        : lowerCase(intl.formatMessage(rootMessages['indicators-raw'][code]));
+
   if (aboutMetricDetails.type === 'esr') {
     // prettier-ignore
-    countryScoreMsg = score
+    countryScoreMsg = score && isSubright
       ? intl.formatMessage(
-        messages.countryScoreExplainer.esr[benchmark],
+        messages.countryScoreExplainer.esr[`${benchmark}-subrights`],
         ({
           ...messageValues,
           score: formatScore(score, 1, intl),
-          metric: lowerCase(intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code])),
+          metric,
         }),
       )
-      : intl.formatMessage(
-        messages.countryScoreExplainer.noData,
-        messageValues,
-      );
+      : score && isSubright === false
+        ? intl.formatMessage(
+          messages.indicatorScoreExplainer[aboutMetricDetails.key],
+          ({
+            ...messageValues,
+            score: formatScore(score, 1, intl),
+            metric,
+          }),
+        )
+        : score 
+          ? intl.formatMessage(
+            messages.countryScoreExplainer.esr[benchmark],
+            ({
+              ...messageValues,
+              score: formatScore(score, 1, intl),
+              metric,
+            }),
+          )
+          : intl.formatMessage(
+            messages.countryScoreExplainer.noData,
+            messageValues,
+          );
+    /* eslint-enable */
   }
   if (aboutMetricDetails.type === 'cpr') {
     // prettier-ignore
@@ -210,7 +252,7 @@ const getScoreMsg = (
         values={{
           ...messageValues,
           score: formatScore(score, 1, intl),
-          metric: lowerCase(intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code])),
+          metric,
           link: (
             <ButtonText
               as="a"
@@ -294,14 +336,22 @@ export function PathCountry({
     ),
   };
 
-  const onMetricClick = (code, dimension, dateRange) => {
+  const onMetricClick = (
+    code,
+    dimension,
+    dateRange,
+    isSubright,
+    hasMultipleIndicators,
+  ) => {
     if (asideLayer && asideLayer.key === code) {
       onSetAsideLayer(false);
     } else {
       onSetAsideLayer({
         type: 'aboutMetric',
         background: `${dimension || code}Active`,
-        showSources: dimension === 'esr' || code === 'esr',
+        showSources:
+          typeof isSubright === 'undefined' &&
+          (dimension === 'esr' || code === 'esr'),
         key: code,
         code,
         countryCode,
@@ -314,7 +364,10 @@ export function PathCountry({
           indicators,
           intl,
           messageValues,
+          isSubright,
         ),
+        isSubright,
+        hasMultipleIndicators,
       });
     }
   };
@@ -419,6 +472,7 @@ export function PathCountry({
                     onMetricClick={onMetricClick}
                     activeCode={activeCode}
                     messageValues={messageValues}
+                    closeAsideLayer={() => onSetAsideLayer(false)}
                   />
                 ),
               },
