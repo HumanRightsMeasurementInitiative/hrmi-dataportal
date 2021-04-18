@@ -2,6 +2,7 @@ import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
 import { push, replace, LOCATION_CHANGE } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
 import extend from 'lodash/extend';
+import upperFirst from 'lodash/upperFirst';
 import Cookies from 'js-cookie';
 import ReactGA from 'react-ga';
 import 'whatwg-fetch';
@@ -141,37 +142,58 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
     // If haven't loaded yet, do so now.
     if (!requestedAt && !ready) {
       const requestLocale = yield locale || select(getLocale);
-      const url = `${PAGES_URL}${requestLocale}/${key}/`;
-      try {
-        // First record that we are requesting
-        yield put(contentRequested(key, Date.now()));
-        const response = yield fetch(url);
-        const responseOk = yield response.ok;
-        if (responseOk && typeof response.text === 'function') {
-          const responseBody = yield response.text();
-          if (responseBody) {
-            yield put(
-              contentLoaded(key, responseBody, Date.now(), requestLocale),
-            );
+      // TEMP: testing airtable for atrisk content
+      if (contentType === 'atrisk') {
+        const airtableRes = yield fetch(
+          process.env.NODE_ENV === 'production'
+            ? '/airtable'
+            : 'http://localhost:5001/hrmi-dataportal-staging/us-central1/airtable',
+        );
+        const airtableData = yield airtableRes.json();
+        const splitKey = key.split('/');
+        console.log({ airtableData });
+        const countryData = airtableData.data.find(
+          d => d.fields.ISO === splitKey[1],
+        );
+        const keyData = countryData.fields[upperFirst(splitKey[0])];
+        console.log({ splitKey, countryData, keyData });
+
+        yield put(contentLoaded(key, keyData, Date.now(), requestLocale));
+      } else {
+        const url = `${PAGES_URL}${requestLocale}/${key}/`;
+        console.log({ key, contentType });
+        try {
+          // First record that we are requesting
+          yield put(contentRequested(key, Date.now()));
+          const response = yield fetch(url);
+          const responseOk = yield response.ok;
+          if (responseOk && typeof response.text === 'function') {
+            const responseBody = yield response.text();
+            if (responseBody) {
+              console.log({ responseBody });
+              yield put(
+                contentLoaded(key, responseBody, Date.now(), requestLocale),
+              );
+            } else {
+              yield put(contentRequested(key, false));
+              throw new Error(response.statusText);
+            }
+          } else if (
+            quasiEquals(response.status, 404) &&
+            contentType === 'atrisk' &&
+            requestLocale !== DEFAULT_LOCALE
+          ) {
+            yield put(contentRequested(key, false));
+            yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
           } else {
             yield put(contentRequested(key, false));
             throw new Error(response.statusText);
           }
-        } else if (
-          quasiEquals(response.status, 404) &&
-          contentType === 'atrisk' &&
-          requestLocale !== DEFAULT_LOCALE
-        ) {
+        } catch (err) {
+          // throw error
           yield put(contentRequested(key, false));
-          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
-        } else {
-          yield put(contentRequested(key, false));
-          throw new Error(response.statusText);
+          throw new Error(err);
         }
-      } catch (err) {
-        // throw error
-        yield put(contentRequested(key, false));
-        throw new Error(err);
       }
     }
   }
