@@ -2,7 +2,6 @@ import { takeEvery, takeLatest, select, put, call } from 'redux-saga/effects';
 import { push, replace, LOCATION_CHANGE } from 'connected-react-router';
 import { csvParse } from 'd3-dsv';
 import extend from 'lodash/extend';
-import upperFirst from 'lodash/upperFirst';
 import Cookies from 'js-cookie';
 import ReactGA from 'react-ga';
 import 'whatwg-fetch';
@@ -151,17 +150,33 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
         );
         const airtableData = yield airtableRes.json();
         const splitKey = key.split('/');
-        console.log({ airtableData });
+
+        // TEMP: move this to constants
+        // TODO: not complete
+        const airtableRightsMap = {
+          arrest: 'Arbitrary Arrest',
+          disappearance: 'Disappearance',
+          'death-penalty': 'Death Penalty',
+          'extrajud-killing': 'Extrajudicial Killing',
+          torture: 'Torture and Ill-treatment',
+          assembly: 'Assembly and Association',
+          expression: 'Opinion and Expression',
+          participation: 'Political Participation',
+          education: 'Education',
+          food: 'Food',
+          health: 'Health',
+          housing: 'Housing',
+          work: 'Work',
+        };
+
         const countryData = airtableData.data.find(
           d => d.fields.ISO === splitKey[1],
         );
-        const keyData = countryData.fields[upperFirst(splitKey[0])];
-        console.log({ splitKey, countryData, keyData });
+        const keyData = countryData.fields[airtableRightsMap[splitKey[0]]];
 
         yield put(contentLoaded(key, keyData, Date.now(), requestLocale));
       } else {
         const url = `${PAGES_URL}${requestLocale}/${key}/`;
-        console.log({ key, contentType });
         try {
           // First record that we are requesting
           yield put(contentRequested(key, Date.now()));
@@ -170,7 +185,6 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
           if (responseOk && typeof response.text === 'function') {
             const responseBody = yield response.text();
             if (responseBody) {
-              console.log({ responseBody });
               yield put(
                 contentLoaded(key, responseBody, Date.now(), requestLocale),
               );
