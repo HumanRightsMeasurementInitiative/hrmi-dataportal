@@ -8,10 +8,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Paragraph, Box } from 'grommet';
+import ReactMarkdown from 'react-markdown';
 
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import HTMLWrapper from 'components/HTMLWrapper';
+// import HTMLWrapper from 'components/HTMLWrapper';
 import Loading from 'components/LoadingIndicator';
 import ChartWordCloud from 'components/ChartWordCloud';
 import Hint from 'styled/Hint';
@@ -31,7 +32,11 @@ const renderAnalysis = (atRiskAnalysis, intl) => (
             </Hint>
           </Paragraph>
         )}
-        <HTMLWrapper innerhtml={atRiskAnalysis.content} />
+
+        {/* eslint-disable react/no-children-prop */}
+        <ReactMarkdown children={atRiskAnalysis.content} />
+        {/* eslint-enable react/no-children-prop */}
+        {/* <HTMLWrapper innerhtml={atRiskAnalysis.content} /> */}
       </>
     )}
     {(!atRiskAnalysis || !atRiskAnalysis.content) && <Loading />}
