@@ -240,7 +240,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'cprScores',
-    file: 'cpr-scores_v3-1.csv',
+    file: 'cpr-scores_v3-3.csv',
   },
   {
     key: 'esrScores',
