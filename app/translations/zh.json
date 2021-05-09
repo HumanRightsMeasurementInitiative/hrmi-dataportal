@@ -336,7 +336,7 @@
   "hrmi.components.CountryNarrative.cpr.then.physint.b": "大部分人的人身完整性受到以下一种或多种危害：任意逮捕、酷刑、失踪、处决或法外处决。",
   "hrmi.components.CountryNarrative.cpr.then.physint.c": "尽管绝大多数人不会受到政府的迫害，但仍然存在个别或一些人士受到以下一项或多项危害：任意逮捕、酷刑、失踪、处决或法外处决。",
   "hrmi.components.CountryNarrative.cpr.govRespondents": "注意：对于{countryWithArticle}而言，我们允许部分问卷受访者为政府工作人员或与政府相关的人员。这种情况只针对人口低于12万人的国家，并且不包括政治家、警察和军人。有关更多信息，请参阅研究方法手册。",
-  "hrmi.components.CountryNarrative.esr.changeStandardNote": "请注意：生活质量数据和评论以“{otherStandard}”评估标准展示。对于{incomeCategory}国家如{countryWithArticle}，最好使用“{defaultStandard}”标准而不用“{otherStandard}”（点击“切换检视”按钮来变更标准）",
+  "hrmi.components.CountryNarrative.esr.changeStandardNote": "请注意：生活质量数据和评论以“{otherStandard}”评估标准展示。对于{incomeCategory}国家如{countryWithArticle}，最好使用“{defaultStandard}”标准而不用“{otherStandard}”（点击“切换视图”按钮来变更标准）",
   "hrmi.components.CountryNarrative.esr.noData": "由于缺少食物权、健康权、教育权、住房和工作权等其中至少一项数据，而导致{country}在{dimension}上分数不可用。",
   "hrmi.components.CountryNarrative.esr.someData": "请参考以下详细信息 （使用下方向键向右查阅）了解哪些数据可用和哪些数据缺失。",
   "hrmi.components.CountryNarrative.esr.start": "{dimension}（或称“经济和社会权利”）包括食物权、健康权、教育权、住房和工作权。HRMI给出两组分数，分别用于两种不同的基准衡量。",
