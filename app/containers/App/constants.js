@@ -228,7 +228,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrIndicators',
-    file: 'esr-indicators_v3-1.csv',
+    file: 'esr-indicators_2021.csv',
   },
   {
     key: 'atRisk',
@@ -236,7 +236,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'auxIndicators',
-    file: 'auxiliary-indicators_v3-1.csv',
+    file: 'auxiliary-indicators_2021.csv',
   },
   {
     key: 'cprScores',
@@ -244,11 +244,11 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrScores',
-    file: 'esr-scores_v3-1.csv',
+    file: 'esr-scores_2021.csv',
   },
   {
     key: 'esrIndicatorScores',
-    file: 'esr-indicator-scores_v3-1.csv',
+    file: 'esr-indicator-scores_2021.csv',
   },
   {
     key: 'featured',
@@ -256,7 +256,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'sources',
-    file: 'sources_v3-1.csv',
+    file: 'sources_2021.csv',
   },
 ];
 
