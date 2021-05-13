@@ -232,7 +232,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'atRisk',
-    file: 'people-at-risk_v3-1.csv',
+    file: 'people-at-risk_v3-3.csv',
   },
   {
     key: 'auxIndicators',
