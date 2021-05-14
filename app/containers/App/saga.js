@@ -142,14 +142,19 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
     if (!requestedAt && !ready) {
       const requestLocale = yield locale || select(getLocale);
       // TEMP: testing airtable for atrisk content
-      if (contentType === 'atrisk') {
+      // console.log({ requestLocale })
+      if (contentType === 'atrisk' && requestLocale === 'en') {
+        // First record that we are requesting
+        yield put(contentRequested(key, Date.now()));
         const airtableRes = yield fetch(
           process.env.NODE_ENV === 'production'
             ? '/airtable'
-            : 'http://localhost:5001/hrmi-dataportal-staging/us-central1/airtable',
+            : 'http://localhost:5001/hrmi-dataportal-v3-3/us-central1/airtable',
         );
         const airtableData = yield airtableRes.json();
         const splitKey = key.split('/');
+
+        // console.log({ splitKey, airtableData })
 
         // TEMP: move this to constants
         // TODO: not complete
@@ -170,9 +175,10 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
         };
 
         const countryData = airtableData.data.find(
-          d => d.fields.ISO === splitKey[1],
+          d => d.fields['ISO Code'] === splitKey[1],
         );
         const keyData = countryData.fields[airtableRightsMap[splitKey[0]]];
+        // console.log({ keyData })
 
         yield put(contentLoaded(key, keyData, Date.now(), requestLocale));
       } else {
