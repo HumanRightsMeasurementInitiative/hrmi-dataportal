@@ -71,6 +71,7 @@ function ChartCountryMetricPeople({
               const analysisSR =
                 hasSubrightAnalysis &&
                 atRiskAnalysisSubrights.find(sra => sra.key === d.subright);
+              // console.log({atRiskAnalysis, analysisSR})
               return (
                 <span key={d.code}>
                   <ChartWordCloud
