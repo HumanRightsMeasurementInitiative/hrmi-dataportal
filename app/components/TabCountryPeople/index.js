@@ -7,6 +7,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import ReactMarkdown from 'react-markdown';
 
 import {
   Heading,
@@ -24,7 +25,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import ChartWordCloud from 'components/ChartWordCloud';
 import Loading from 'components/LoadingIndicator';
-import HTMLWrapper from 'components/HTMLWrapper';
+// import HTMLWrapper from 'components/HTMLWrapper';
 
 import Hint from 'styled/Hint';
 import ButtonAccordian from 'styled/ButtonAccordian';
@@ -115,7 +116,10 @@ const renderAnalysis = (atRiskAnalysis, intl) => (
             </Hint>
           </Paragraph>
         )}
-        <HTMLWrapper innerhtml={atRiskAnalysis.content} />
+        {/* eslint-disable react/no-children-prop */}
+        <ReactMarkdown children={atRiskAnalysis.content} />
+        {/* eslint-enable react/no-children-prop */}
+        {/* <HTMLWrapper innerhtml={atRiskAnalysis.content} /> */}
       </>
     )}
     {(!atRiskAnalysis || !atRiskAnalysis.content) && <Loading />}
