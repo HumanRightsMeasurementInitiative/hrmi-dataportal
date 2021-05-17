@@ -163,7 +163,7 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
           disappearance: 'Disappearance',
           'death-penalty': 'Death Penalty',
           'extrajud-killing': 'Extrajudicial Killing',
-          torture: 'Torture and Ill-treatment',
+          torture: 'Torture and Ill-Treatment',
           assembly: 'Assembly and Association',
           expression: 'Opinion and Expression',
           participation: 'Political Participation',
