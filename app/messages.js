@@ -687,6 +687,30 @@ export default defineMessages({
       id: `${scope}.people-at-risk.33`,
       defaultMessage: 'People 33',
     },
+    34: {
+      id: `${scope}.people-at-risk.34`,
+      defaultMessage: 'People 34',
+    },
+    35: {
+      id: `${scope}.people-at-risk.35`,
+      defaultMessage: 'People 35',
+    },
+    36: {
+      id: `${scope}.people-at-risk.36`,
+      defaultMessage: 'People 36',
+    },
+    37: {
+      id: `${scope}.people-at-risk.37`,
+      defaultMessage: 'People 37',
+    },
+    38: {
+      id: `${scope}.people-at-risk.38`,
+      defaultMessage: 'People 38',
+    },
+    39: {
+      id: `${scope}.people-at-risk.39`,
+      defaultMessage: 'People 39',
+    },
   },
   'people-at-risk-intro': {
     0: {

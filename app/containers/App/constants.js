@@ -804,6 +804,12 @@ export const AT_RISK_GROUPS = [
   { key: '30', code: '30' },
   { key: '32', code: '32' },
   { key: '33', code: '33' },
+  { key: '34', code: '34' },
+  { key: '35', code: '35' },
+  { key: '36', code: '36' },
+  { key: '37', code: '37' },
+  { key: '38', code: '38' },
+  { key: '39', code: '39' },
   { key: '31', code: '31' }, // other
 ];
 
