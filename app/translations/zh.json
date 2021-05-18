@@ -420,11 +420,7 @@
   "hrmi.tabs.mobile.people-at-risk": "高风险人群",
   "hrmi.tabs.mobile.about": "关于",
   "hrmi.charts.noData": "无数据",
-<<<<<<< HEAD
-  "hrmi.charts.noDataForStandard": "没有数据作标准（切换视图可获取更多资料",
-=======
   "hrmi.charts.noDataForStandard": "没有数据作标准（切换视图可获取更多资料）",
->>>>>>> a52c1c005387b65170296e02de81c54cf12351b7
   "hrmi.charts.incompleteData": "数据不完整",
   "hrmi.charts.incompleteData.drillDownIndicators": "浏览指标数据",
   "hrmi.charts.incompleteData.drillDownRights": "浏览权利数据",
