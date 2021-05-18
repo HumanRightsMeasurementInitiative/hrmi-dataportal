@@ -591,6 +591,10 @@ export default defineMessages({
       id: `${scope}.people-at-risk.9`,
       defaultMessage: 'People 9',
     },
+    '9a': {
+      id: `${scope}.people-at-risk.9a`,
+      defaultMessage: 'People 9a',
+    },
     10: {
       id: `${scope}.people-at-risk.10`,
       defaultMessage: 'People 10',
