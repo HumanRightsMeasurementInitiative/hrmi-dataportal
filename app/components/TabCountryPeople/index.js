@@ -228,6 +228,10 @@ function TabCountryPeople({
                           {/* eslint-disable */}
                           {activeMetric === 99
                             ? intl.formatMessage(messages.peopleHeader)
+                            : activeMetric === '9'
+                            ? intl.formatMessage(
+                              rootMessages['people-at-risk']['9a'],
+                            )
                             : truncateText(
                               intl.formatMessage(
                                 rootMessages['people-at-risk'][activeMetric],
@@ -272,7 +276,9 @@ function TabCountryPeople({
                         noBorderLast
                       >
                         <FormattedMessage
-                          {...rootMessages['people-at-risk'][m.code]}
+                          {...rootMessages['people-at-risk'][
+                            m.code === '9' ? '9a' : m.code
+                          ]}
                         />
                       </StyledOption>
                     </div>

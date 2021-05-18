@@ -77,7 +77,14 @@ export function ChartWordCloud({
       });
   // prettier-ignore
   const wordHighlighted = highlight && scores
-    ? scores.find(s => quasiEquals(s.people_code, highlight))
+    ? scores.find(s => {
+      if (highlight === '9') {
+        // N.B. scores has been mapped above to replace people_code 9 with 9a for rendering purposes - so if highlight group 9 is selected, need to match with 9a.
+        return quasiEquals(s.people_code, '9a')
+      } 
+      return quasiEquals(s.people_code, highlight)
+      
+    })
     : activeWord;
 
   return (
