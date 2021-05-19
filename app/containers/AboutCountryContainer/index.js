@@ -81,7 +81,7 @@ const DetailBox = styled(Box)`
   @media print {
     flex: 1;
     flex-direction: column;
-    margin-top: 24px;
+    margin-top: 0px;
   }
 `;
 

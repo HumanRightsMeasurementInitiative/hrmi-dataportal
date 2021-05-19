@@ -515,7 +515,7 @@ export function ChartContainerCountrySnapshot({
           onCategoryClick={() => {}}
           showFAQs={false}
         />
-        <p style={{ fontWeight: 600 }}>
+        <p style={{ fontWeight: 600, fontSize: 14 }}>
           <FormattedMessage {...rootMessages.pdf.explore} />
         </p>
       </AddToPDFWrapper>
