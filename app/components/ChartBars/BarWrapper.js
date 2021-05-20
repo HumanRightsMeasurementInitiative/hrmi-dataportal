@@ -30,6 +30,12 @@ const LabelWrap = styled(Box)`
 // prettier-ignore
 const ScoreAsideWrap = styled(Box)``;
 
+const ScoreAside = styled(Text)`
+  @media print {
+    font-size: 12px;
+  }
+`;
+
 export function BarWrapper({
   score,
   bullet,
@@ -109,7 +115,7 @@ export function BarWrapper({
                 flex={{ shrink: 0 }}
                 pad={{ left: 'small' }}
               >
-                <Text
+                <ScoreAside
                   color={`${score.color}Dark`}
                   size={isMinSize(size, 'medium') ? 'small' : 'xxsmall'}
                   weight={600}
@@ -118,7 +124,7 @@ export function BarWrapper({
                     `${formatScore(score.value, 1, intl)}${score.unit || ''}`}
                   {!score.value &&
                     intl.formatMessage(rootMessages.labels.abbrev.notAvailable)}
-                </Text>
+                </ScoreAside>
               </ScoreAsideWrap>
             )}
           </Box>

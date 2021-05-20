@@ -26,6 +26,9 @@ const StyledScoreText = styled(Text)`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0;
   }
+  @media print {
+    font-size: 12px;
+  }
 `;
 
 const BarWrap = styled(Box)``;

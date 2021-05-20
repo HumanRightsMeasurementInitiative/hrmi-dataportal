@@ -43,6 +43,22 @@ const Button = styled(ButtonText)`
 
 const Label = styled(Text)`
   font-weight: 600;
+  @media print {
+    font-size: 12px;
+  }
+`;
+
+const Detail = styled(Text)`
+  @media print {
+    font-size: 12px;
+    padding: 0px;
+  }
+`;
+
+const Hint = styled(Text)`
+  @media print {
+    font-size: 10px;
+  }
 `;
 
 const MoreWrap = styled.div`
@@ -72,7 +88,6 @@ const RowBox = styled(Box)`
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    padding-top: 12px;
   }
 `;
 
@@ -81,7 +96,7 @@ const DetailBox = styled(Box)`
   @media print {
     flex: 1;
     flex-direction: column;
-    margin-top: 0px;
+    margin-bottom: 8px;
   }
 `;
 
@@ -191,7 +206,7 @@ function AboutCountryContainer({
               </Label>
             </Box>
             <RowBox margin={{ bottom: 'small' }}>
-              <Text>
+              <Detail>
                 {getTerritoryStatus(
                   countryStatus,
                   country[COLUMNS.COUNTRIES.RELATED],
@@ -200,7 +215,7 @@ function AboutCountryContainer({
                   ),
                   intl,
                 )}
-              </Text>
+              </Detail>
             </RowBox>
           </DetailBox>
         )}
@@ -212,7 +227,7 @@ function AboutCountryContainer({
               </Label>
             </Box>
             <RowBox width="50%">
-              <Text>
+              <Detail>
                 <FormattedMessage
                   {...messages.populationValue}
                   values={prepPopulationValue(
@@ -221,7 +236,7 @@ function AboutCountryContainer({
                     population.year,
                   )}
                 />
-              </Text>
+              </Detail>
             </RowBox>
           </DetailBox>
         )}
@@ -235,7 +250,7 @@ function AboutCountryContainer({
             <RowBox>
               {hasCurrentGDP && (
                 <Box direction="column" margin={{ bottom: 'small' }}>
-                  <Text>
+                  <Detail>
                     <FormattedMessage
                       {...messages.gdpValue}
                       values={{
@@ -245,11 +260,11 @@ function AboutCountryContainer({
                         year: currentGDP.year,
                       }}
                     />
-                  </Text>
+                  </Detail>
                   <div>
-                    <Text size="xsmall">
+                    <Hint size="xsmall">
                       <FormattedMessage {...messages.gdpHint} />
-                    </Text>
+                    </Hint>
                     <Tooltip
                       iconSize="medium"
                       text={intl.formatMessage(messages.gdpTooltip)}
@@ -262,7 +277,7 @@ function AboutCountryContainer({
               )}
               {hasPPPGDP && (
                 <Box direction="column" margin={{ bottom: 'xsmall' }}>
-                  <Text>
+                  <Detail>
                     <FormattedMessage
                       {...messages.gdpValue}
                       values={{
@@ -270,11 +285,11 @@ function AboutCountryContainer({
                         year: pppGDP.year,
                       }}
                     />
-                  </Text>
+                  </Detail>
                   <div>
-                    <Text size="xsmall">
+                    <Hint size="xsmall">
                       <FormattedMessage {...messages.gdpHintPPP} />
-                    </Text>
+                    </Hint>
                     <Tooltip
                       iconSize="medium"
                       text={intl.formatMessage(messages.gdpTooltipPPP)}

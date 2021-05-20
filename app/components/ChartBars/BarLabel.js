@@ -20,8 +20,8 @@ const Styled = styled.span`
     font-size: ${({ level }) => (level > 1 ? '14px' : '16px')};
   }
   @media print {
-    font-size: 15px;
-    line-height: 20px;
+    font-size: 12px;
+    line-height: 16px;
   }
 `;
 

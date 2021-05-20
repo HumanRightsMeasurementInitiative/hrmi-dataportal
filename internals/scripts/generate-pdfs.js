@@ -111,9 +111,11 @@ async function printPDF({
   await printPDF({
     // countries: keys(getCountries(langJSON)),
     // countries: [{ code: 'NIU', income: '0' }],
-    // countries: [{ code: 'NZL', income: '1' }],
+    // countries: [{ code: 'AUS', income: '1' }],
+    // countries: [{ code: 'COD', income: '0' }],
     countries,
     languages: ['en', 'es', 'fr', 'pt', 'zh']
+    // languages: ['pt']
   });
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)
