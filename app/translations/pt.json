@@ -144,6 +144,7 @@
   "hrmi.containers.PathMetricOverview.description.methodologyLink.cpr": "metodologia de pesquisa especializada.",
   "hrmi.components.ChartCountrySnapshot.rightsScoresUnavailable.esr": "Dados ainda não disponíveis",
   "hrmi.components.ChartCountrySnapshot.rightsScoresUnavailable.cpr": "Dados ainda não disponíveis",
+  "hrmi.charts.dimensionIntro.esr.adjusted": "Como se compara o que {countryWithArticle} {isPlural, select, true {estão} false {está}} a fazer em relação ao que é possível em seu nível de renda?",
   "hrmi.charts.dimensionIntro.esr.best": "Como se compara o que {countryWithArticle} {isPlural, select, true {estáo} false {está}} está a fazer em relação ao melhor do mundo?",
   "hrmi.charts.dimensionIntro.physint": "Em que medida está o governo {countryOf} a respeitar cada direito?",
   "hrmi.charts.dimensionIntro.empowerment": "Em que medida está o governo {countryOf} a respeitar cada direito?",
