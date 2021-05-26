@@ -86,6 +86,10 @@ export function ChartHeader({
   locale,
   selectedYear,
   setSelectedYear,
+  maxYearESR,
+  minYearESR,
+  maxYearCPR,
+  minYearCPR,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
@@ -211,14 +215,16 @@ export function ChartHeader({
                 )}
                 <Box direction="row">
                   <button
-                    onClick={() =>
-                      setSelectedYear((parseInt(selectedYear) - 1).toString())
-                    }
+                    disabled={minYearESR === selectedYear}
+                    onClick={() => {
+                      setSelectedYear((parseInt(selectedYear) - 1).toString());
+                    }}
                   >
                     L
                   </button>
                   {selectedYear}
                   <button
+                    disabled={maxYearESR === selectedYear}
                     onClick={() =>
                       setSelectedYear((parseInt(selectedYear) + 1).toString())
                     }
@@ -257,6 +263,10 @@ ChartHeader.propTypes = {
   locale: PropTypes.string,
   selectedYear: PropTypes.string,
   setSelectedYear: PropTypes.func,
+  maxYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export default injectIntl(ChartHeader);

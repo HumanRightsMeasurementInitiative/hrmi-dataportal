@@ -30,6 +30,10 @@ import {
   getCountries,
   getDependenciesReady,
   getAuxIndicatorsLatest,
+  getMaxYearESR,
+  getMinYearESR,
+  getMaxYearCPR,
+  getMinYearCPR,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import {
@@ -178,6 +182,10 @@ export function ChartContainerMetric({
   activeCode,
   selectedYear,
   setSelectedYear,
+  maxYearESR,
+  minYearESR,
+  maxYearCPR,
+  minYearCPR,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -272,6 +280,10 @@ export function ChartContainerMetric({
             standard={standard}
             selectedYear={selectedYear}
             setSelectedYear={setSelectedYear}
+            maxYearESR={maxYearESR}
+            minYearESR={minYearESR}
+            maxYearCPR={maxYearCPR}
+            minYearCPR={minYearCPR}
           />
           {!dataReady && <LoadingIndicator />}
           {!hasResults && dataReady && (
@@ -376,6 +388,10 @@ ChartContainerMetric.propTypes = {
   onCountryClick: PropTypes.func,
   selectedYear: PropTypes.string,
   setSelectedYear: PropTypes.func,
+  maxYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -407,6 +423,10 @@ const mapStateToProps = createStructuredSelector({
   treatyFilterValue: state => getTreatySearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
+  maxYearESR: getMaxYearESR,
+  minYearESR: getMinYearESR,
+  maxYearCPR: getMaxYearCPR,
+  minYearCPR: getMinYearCPR,
 });
 
 export function mapDispatchToProps(dispatch) {

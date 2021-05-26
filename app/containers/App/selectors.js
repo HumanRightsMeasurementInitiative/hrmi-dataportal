@@ -523,7 +523,7 @@ export const getESRDimensionScores = createSelector(
           s.metric_code === dimension.code &&
           (selectedYear
             ? quasiEquals(s.year, selectedYear)
-            quasiEquals(s.year, year)) &&
+            : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )

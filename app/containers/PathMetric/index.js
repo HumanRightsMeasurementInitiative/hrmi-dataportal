@@ -58,7 +58,14 @@ export function PathMetric({
   maxYearCPR,
 }) {
   // N.B. must declare the year selector state at this level so that ChartContainerMetric can use it passed down as a prop to feed into scores selector
+  // N.B. need the silly double states because maxYear may be false before scores are loaded on client-side
+  const [haveMaxYear, setHaveMaxYear] = useState(false);
   const [selectedYear, setSelectedYear] = useState(maxYearESR);
+
+  if (haveMaxYear !== !!maxYearESR) {
+    setHaveMaxYear(true);
+    setSelectedYear(maxYearESR);
+  }
 
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
@@ -269,8 +276,8 @@ PathMetric.propTypes = {
   onSetAsideLayer: PropTypes.func,
   asideLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   activeCode: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  maxYearESR: PropTypes.string,
-  maxYearCPR: PropTypes.string,
+  maxYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
