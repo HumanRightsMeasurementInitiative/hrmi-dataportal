@@ -59,16 +59,17 @@ export function PathMetric({
 }) {
   // N.B. must declare the year selector state at this level so that ChartContainerMetric can use it passed down as a prop to feed into scores selector
   // N.B. need the silly double states because maxYear may be false before scores are loaded on client-side
-  const [haveMaxYear, setHaveMaxYear] = useState(false);
-  const [selectedYear, setSelectedYear] = useState(maxYearESR);
-
-  if (haveMaxYear !== !!maxYearESR) {
-    setHaveMaxYear(true);
-    setSelectedYear(maxYearESR);
-  }
 
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
+  const maxYearDimension = metric.type === 'esr' ? maxYearESR : maxYearCPR;
+  const [haveMaxYear, setHaveMaxYear] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(maxYearDimension);
+
+  if (haveMaxYear !== !!maxYearDimension) {
+    setHaveMaxYear(true);
+    setSelectedYear(maxYearDimension);
+  }
   // N.B. hacky way of handling sub-rights titles... fix later
   // prettier-ignore
   const metricTitle =

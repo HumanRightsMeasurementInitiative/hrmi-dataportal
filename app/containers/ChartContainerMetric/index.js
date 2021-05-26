@@ -280,10 +280,8 @@ export function ChartContainerMetric({
             standard={standard}
             selectedYear={selectedYear}
             setSelectedYear={setSelectedYear}
-            maxYearESR={maxYearESR}
-            minYearESR={minYearESR}
-            maxYearCPR={maxYearCPR}
-            minYearCPR={minYearCPR}
+            maxYearDimension={metric.type === 'esr' ? maxYearESR : maxYearCPR}
+            minYearDimension={metric.type === 'esr' ? minYearESR : minYearCPR}
           />
           {!dataReady && <LoadingIndicator />}
           {!hasResults && dataReady && (

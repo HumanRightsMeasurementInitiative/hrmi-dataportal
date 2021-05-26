@@ -86,10 +86,8 @@ export function ChartHeader({
   locale,
   selectedYear,
   setSelectedYear,
-  maxYearESR,
-  minYearESR,
-  maxYearCPR,
-  minYearCPR,
+  maxYearDimension,
+  minYearDimension,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
@@ -213,24 +211,28 @@ export function ChartHeader({
                     hasWhiteBG={hasWhiteBG}
                   />
                 )}
-                <Box direction="row" justify='end'>
+                <Box direction="row" justify="end" align="center">
                   <Button
                     plain
-                    disabled={minYearESR === selectedYear}
+                    disabled={minYearDimension === selectedYear}
                     onClick={() => {
-                      setSelectedYear((parseInt(selectedYear) - 1).toString())
+                      setSelectedYear(
+                        (parseInt(selectedYear, 10) - 1).toString(),
+                      );
                     }}
-                    icon={<Previous />}
+                    icon={<Previous size="small" />}
                     margin={{ right: 'xsmall' }}
                   />
                   {selectedYear}
                   <Button
                     plain
-                    disabled={maxYearESR === selectedYear}
+                    disabled={maxYearDimension === selectedYear}
                     onClick={() =>
-                      setSelectedYear((parseInt(selectedYear) + 1).toString())
+                      setSelectedYear(
+                        (parseInt(selectedYear, 10) + 1).toString(),
+                      )
                     }
-                    icon={<Next />}
+                    icon={<Next size="small" />}
                     margin={{ left: 'xsmall' }}
                   />
                 </Box>
@@ -265,10 +267,8 @@ ChartHeader.propTypes = {
   locale: PropTypes.string,
   selectedYear: PropTypes.string,
   setSelectedYear: PropTypes.func,
-  maxYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  minYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-  minYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearDimension: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearDimension: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export default injectIntl(ChartHeader);

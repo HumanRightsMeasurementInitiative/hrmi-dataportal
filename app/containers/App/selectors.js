@@ -558,12 +558,21 @@ export const getCPRDimensionScores = createSelector(
 // single right, multiple countries, single year
 export const getESRRightScores = createSelector(
   (state, metric) => metric,
+  (state, metric, selectedYear) => selectedYear,
   getESRScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getStandardSearch,
   getESRYear,
-  (metric, scores, countries, hasChartSettingFilters, standardSearch, year) => {
+  (
+    metric,
+    selectedYear,
+    scores,
+    countries,
+    hasChartSettingFilters,
+    standardSearch,
+    year,
+  ) => {
     const standard = STANDARDS.find(as => as.key === standardSearch);
     const group = PEOPLE_GROUPS[0];
     const right = !!metric && RIGHTS.find(d => d.key === metric);
@@ -576,7 +585,9 @@ export const getESRRightScores = createSelector(
           s.group === group.code &&
           s.standard === standard.code &&
           s.metric_code === right.code &&
-          quasiEquals(s.year, year) &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
@@ -587,11 +598,12 @@ export const getESRRightScores = createSelector(
 // single right, multiple countries, single year
 export const getCPRRightScores = createSelector(
   (state, metric) => metric,
+  (state, metric, selectedYear) => selectedYear,
   getCPRScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getCPRYear,
-  (metric, scores, countries, hasChartSettingFilters, year) => {
+  (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     const right = !!metric && RIGHTS.find(d => d.key === metric);
     return (
       scores &&
@@ -600,7 +612,9 @@ export const getCPRRightScores = createSelector(
       scores.filter(
         s =>
           s.metric_code === right.code &&
-          quasiEquals(s.year, year) &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
@@ -610,11 +624,12 @@ export const getCPRRightScores = createSelector(
 // single indicator, multiple countries, single year
 export const getIndicatorScores = createSelector(
   (state, metric) => metric,
+  (state, metric, selectedYear) => selectedYear,
   getESRIndicatorScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getESRYear,
-  (metric, scores, countries, hasChartSettingFilters, year) => {
+  (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     if (scores && countries) {
       const indicator = metric && INDICATORS.find(d => d.key === metric);
       const group = PEOPLE_GROUPS[0];
@@ -642,10 +657,11 @@ export const getIndicatorScores = createSelector(
           return result;
         }, {});
         // finally filter by year or most recent year
-        const filteredYear = filteredScores.filter(
-          s =>
-            quasiEquals(s.year, year) ||
-            quasiEquals(s.year, countryYears[s.country_code]),
+        const filteredYear = filteredScores.filter(s =>
+          selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year) ||
+              quasiEquals(s.year, countryYears[s.country_code]),
         );
         return filteredYear;
       }
