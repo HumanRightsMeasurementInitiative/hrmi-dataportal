@@ -84,6 +84,8 @@ export function ChartHeader({
   displayInPDF,
   countryCode,
   locale,
+  selectedYear,
+  setSelectedYear,
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
@@ -196,16 +198,35 @@ export function ChartHeader({
                   hasWhiteBG={hasWhiteBG}
                 />
               )}
-              {sort && isMinSize(size, 'medium') && (
-                <ChartSettingSort
-                  sort={sort.sort}
-                  options={sort.options}
-                  order={sort.order}
-                  onSortSelect={sort.onSortSelect}
-                  onOrderToggle={sort.onOrderToggle}
-                  hasWhiteBG={hasWhiteBG}
-                />
-              )}
+              <Box>
+                {sort && isMinSize(size, 'medium') && (
+                  <ChartSettingSort
+                    sort={sort.sort}
+                    options={sort.options}
+                    order={sort.order}
+                    onSortSelect={sort.onSortSelect}
+                    onOrderToggle={sort.onOrderToggle}
+                    hasWhiteBG={hasWhiteBG}
+                  />
+                )}
+                <Box direction="row">
+                  <button
+                    onClick={() =>
+                      setSelectedYear((parseInt(selectedYear) - 1).toString())
+                    }
+                  >
+                    L
+                  </button>
+                  {selectedYear}
+                  <button
+                    onClick={() =>
+                      setSelectedYear((parseInt(selectedYear) + 1).toString())
+                    }
+                  >
+                    R
+                  </button>
+                </Box>
+              </Box>
             </Box>
           )}
         </Styled>
@@ -234,6 +255,8 @@ ChartHeader.propTypes = {
   displayInPDF: PropTypes.bool,
   countryCode: PropTypes.string,
   locale: PropTypes.string,
+  selectedYear: PropTypes.string,
+  setSelectedYear: PropTypes.func,
 };
 
 export default injectIntl(ChartHeader);

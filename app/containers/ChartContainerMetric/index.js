@@ -176,6 +176,8 @@ export function ChartContainerMetric({
   auxIndicators,
   onCountryClick,
   activeCode,
+  selectedYear,
+  setSelectedYear,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -268,6 +270,8 @@ export function ChartContainerMetric({
               onOrderToggle: onOrderChange,
             }}
             standard={standard}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
           />
           {!dataReady && <LoadingIndicator />}
           {!hasResults && dataReady && (
@@ -370,23 +374,25 @@ ChartContainerMetric.propTypes = {
   dataReady: PropTypes.bool,
   showHILabel: PropTypes.bool,
   onCountryClick: PropTypes.func,
+  selectedYear: PropTypes.string,
+  setSelectedYear: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  scores: (state, { metric }) => {
+  scores: (state, { metric, selectedYear }) => {
     if (metric.metricType === 'dimensions') {
       return metric.type === 'esr'
-        ? getESRDimensionScores(state)
-        : getCPRDimensionScores(state, metric.key);
+        ? getESRDimensionScores(state, selectedYear)
+        : getCPRDimensionScores(state, metric.key); // N.B. don't think this is ever used? therefore doesn't need selectedYear
     }
     if (metric.metricType === 'rights') {
       return metric.type === 'esr'
-        ? getESRRightScores(state, metric.key)
-        : getCPRRightScores(state, metric.key);
+        ? getESRRightScores(state, metric.key, selectedYear)
+        : getCPRRightScores(state, metric.key, selectedYear);
     }
     if (metric.metricType === 'indicators') {
-      return getIndicatorScores(state, metric.key);
+      return getIndicatorScores(state, metric.key, selectedYear);
     }
     return false;
   },

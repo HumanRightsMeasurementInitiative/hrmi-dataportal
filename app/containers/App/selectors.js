@@ -496,12 +496,20 @@ export const getIndicatorInfo = createSelector(
 
 // single dimension, multiple countries, single year
 export const getESRDimensionScores = createSelector(
+  (state, selectedYear) => selectedYear,
   getESRScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getStandardSearch,
   getESRYear,
-  (scores, countries, hasChartSettingFilters, standardSearch, year) => {
+  (
+    selectedYear,
+    scores,
+    countries,
+    hasChartSettingFilters,
+    standardSearch,
+    year,
+  ) => {
     const standard = STANDARDS.find(as => as.key === standardSearch);
     const dimension = DIMENSIONS.find(d => d.key === 'esr');
     return (
@@ -513,7 +521,9 @@ export const getESRDimensionScores = createSelector(
         s =>
           s.standard === standard.code &&
           s.metric_code === dimension.code &&
-          quasiEquals(s.year, year) &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
