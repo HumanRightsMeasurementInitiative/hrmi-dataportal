@@ -186,6 +186,7 @@ export function ChartContainerMetric({
   minYearESR,
   maxYearCPR,
   minYearCPR,
+  maxYearDimension,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -238,6 +239,8 @@ export function ChartContainerMetric({
     metric.type === 'esr' && metric.metricType !== 'indicators';
   const showGovRespondentsLabel = metric.type === 'cpr';
 
+  console.log({ currentSort });
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -272,7 +275,10 @@ export function ChartContainerMetric({
             }}
             sort={{
               sort: currentSort,
-              options: SORT_OPTIONS,
+              options:
+                maxYearDimension === selectedYear
+                  ? SORT_OPTIONS
+                  : ['score', 'name'],
               order: currentSortOrder,
               onSortSelect,
               onOrderToggle: onOrderChange,
@@ -390,6 +396,7 @@ ChartContainerMetric.propTypes = {
   minYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   minYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearDimension: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({

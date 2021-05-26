@@ -239,6 +239,7 @@ export function PathMetric({
                     activeCode={activeCode}
                     selectedYear={selectedYear}
                     setSelectedYear={setSelectedYear}
+                    maxYearDimension={maxYearDimension}
                   />
                 ),
               },

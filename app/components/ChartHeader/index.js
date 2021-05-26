@@ -91,6 +91,8 @@ export function ChartHeader({
 }) {
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
+
+  console.log({ sort });
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -214,7 +216,10 @@ export function ChartHeader({
                 <Box direction="row" justify="end" align="center">
                   <Button
                     plain
-                    disabled={minYearDimension === selectedYear}
+                    disabled={
+                      minYearDimension === selectedYear ||
+                      (sort.sort !== 'score' && sort.sort !== 'name')
+                    }
                     onClick={() => {
                       setSelectedYear(
                         (parseInt(selectedYear, 10) - 1).toString(),
@@ -226,7 +231,10 @@ export function ChartHeader({
                   {selectedYear}
                   <Button
                     plain
-                    disabled={maxYearDimension === selectedYear}
+                    disabled={
+                      maxYearDimension === selectedYear ||
+                      (sort.sort !== 'score' && sort.sort !== 'name')
+                    }
                     onClick={() =>
                       setSelectedYear(
                         (parseInt(selectedYear, 10) + 1).toString(),
