@@ -302,6 +302,13 @@ function TabCountryReport({
                 chart={props => (
                   <ChartContainerTrend
                     countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                    // add all metrics here to facilitate small multiples
+                    metrics={RIGHTS.reduce((rights, r) => {
+                      if (r.dimension !== dimension) {
+                        return rights;
+                      }
+                      return [...rights, r];
+                    }, [])}
                     {...props}
                   />
                 )}
@@ -375,6 +382,12 @@ function TabCountryReport({
                 chart={props => (
                   <ChartContainerTrend
                     countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                    metrics={RIGHTS.reduce((rights, r) => {
+                      if (r.dimension !== dimension) {
+                        return rights;
+                      }
+                      return [...rights, r];
+                    }, [])}
                     {...props}
                   />
                 )}

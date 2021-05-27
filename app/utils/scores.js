@@ -260,6 +260,7 @@ export const roundScore = (value, digits = 1) => {
   return isNumber(value) && Math.round(value * factor) / factor;
 };
 export const formatScore = (value, digits = 1, intl) => {
+  console.log({ value, digits });
   const d = Math.min(digits, 3);
   if (isNumber(value)) {
     const rounded = roundScore(value, d);
