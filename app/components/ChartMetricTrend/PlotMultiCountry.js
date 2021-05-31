@@ -82,7 +82,7 @@ function PlotMultiCountry({
         <AreaSeries
           data={getCountryData(countryScores[COLUMNS.CPR.HI])}
           style={{
-            fill: theme.global.colors[currentRegion],
+            fill: theme.global.colors[dimension],
             stroke: 'transparent',
             opacity: 0.1,
           }}
