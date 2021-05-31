@@ -727,6 +727,7 @@ export const getESRScoreForCountry = createSelector(
           s.country_code === countryCode &&
           s.metric_code === right.code &&
           s.standard === standard.code &&
+          s.group === 'All' &&
           quasiEquals(s.year, esrYear),
       )
     );

@@ -92,7 +92,6 @@ export function ChartHeader({
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
 
-  console.log({ sort });
   return (
     <ResponsiveContext.Consumer>
       {size => (
