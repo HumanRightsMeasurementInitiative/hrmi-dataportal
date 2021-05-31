@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -70,6 +70,13 @@ export function PathMetric({
     setHaveMaxYear(true);
     setSelectedYear(maxYearDimension);
   }
+
+  // needed as changing metric doesn't trigger a reload of state above
+  // and selectedYear doesn't update to the maxYear for the dimension
+  useEffect(() => {
+    setHaveMaxYear(false);
+  }, [metricCode]);
+
   // N.B. hacky way of handling sub-rights titles... fix later
   // prettier-ignore
   const metricTitle =

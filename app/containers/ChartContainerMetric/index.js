@@ -239,8 +239,6 @@ export function ChartContainerMetric({
     metric.type === 'esr' && metric.metricType !== 'indicators';
   const showGovRespondentsLabel = metric.type === 'cpr';
 
-  console.log({ currentSort });
-
   return (
     <ResponsiveContext.Consumer>
       {size => (
