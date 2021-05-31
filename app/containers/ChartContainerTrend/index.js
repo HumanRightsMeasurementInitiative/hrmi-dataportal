@@ -39,7 +39,6 @@ import {
 import ChartCountryMetricTrend from 'components/ChartCountryMetricTrend';
 import ChartMetricTrend from 'components/ChartMetricTrend';
 import getMetricDetails from 'utils/metric-details';
-import ChartCountryMetricSmallMultiples from '../../components/ChartCountryMetricSmallMultiples';
 
 const getColour = metric => {
   if (metric.metricType === 'dimensions') {
@@ -131,7 +130,6 @@ export function ChartContainerTrend({
   const [highlightYear, setYear] = useState(null);
 
   const metric = getMetricDetails(metricCode);
-  console.log({ metric });
   const currentBenchmark = BENCHMARKS.find(s => s.key === benchmark);
   const isESR = metric.metricType === 'indicators' || metric.type === 'esr';
 
@@ -146,8 +144,6 @@ export function ChartContainerTrend({
   if (metric.metricType === 'indicators' && metric.hasGroups) {
     groupsActive = activeGroups;
   }
-
-  console.log('other', { metrics });
 
   if (metric.type === 'esr') {
     // prettier-ignore
@@ -217,10 +213,19 @@ export function ChartContainerTrend({
             // country: right.scores,
             country: allMetricsScores[m.key].reduce(
               (soFar, dataForYear) => ({
-              mean: { ...soFar.mean, [dataForYear.year]: { score: dataForYear.mean } },
-              lobound_10: { ...soFar.lobound_10, [dataForYear.year]: { score: dataForYear.lobound_10 } },
-              upbound_90: { ...soFar.upbound_90, [dataForYear.year]: { score: dataForYear.upbound_90 } },
-            }),
+                mean: {
+                  ...soFar.mean,
+                  [dataForYear.year]: { score: dataForYear.mean },
+                },
+                lobound_10: {
+                  ...soFar.lobound_10,
+                  [dataForYear.year]: { score: dataForYear.lobound_10 },
+                },
+                upbound_90: {
+                  ...soFar.upbound_90,
+                  [dataForYear.year]: { score: dataForYear.upbound_90 },
+                },
+              }),
               {},
             ),
             // regions: regionRight.scores,
@@ -247,61 +252,6 @@ export function ChartContainerTrend({
       ))}
     </Box>
   );
-
-  // <ChartCountryMetricSmallMultiples
-  //   color={getColour(metric)}
-  //   colorCode={theme.global.colors[getColour(metric)]}
-  //   colorHint={`${getColour(metric)}Dark`}
-  //   scores={scores}
-  //   percentage={isESR}
-  //   maxValue={isESR ? 100 : 11}
-  //   maxYear={isESR ? maxYearESR : maxYearCPR}
-  //   minYear={isESR ? minYearESR : minYearCPR}
-  //   column={getTrendColumn(
-  //     isESR,
-  //     currentBenchmark,
-  //     metric.metricType === 'indicators' && raw
-  //   )}
-  //   rangeColumns={
-  //     !isESR && {
-  //       upper: COLUMNS.CPR.HI,
-  //       lower: COLUMNS.CPR.LO,
-  //     }
-  //   }
-  //   rangeValues={
-  //     isESR &&
-  //     metric.metricType === 'indicators' &&
-  //     raw &&
-  //     {
-  //       lower: parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_MIN]),
-  //       upper: parseFloat(metricInfo[COLUMNS.ESR.RAW_REF_BEST]),
-  //     }
-  //   }
-  //   benchmarkRefs={
-  //     isESR && getRefs(
-  //       currentBenchmark,
-  //       metric.metricType === 'indicators',
-  //       raw,
-  //       metricInfo,
-  //     )
-  //   }
-  //   hasBenchmarkOption={isESR}
-  //   hasStandardOption={
-  //     isESR && metric.metricType !== 'indicators'
-  //   }
-  //   onSetBenchmark={onSetBenchmark}
-  //   onSetStandard={onSetStandard}
-  //   standard={standard}
-  //   benchmark={benchmark}
-  //   metric={metric}
-  //   hasRawOption={false}
-  //   raw={raw}
-  //   onRawChange={onRawChange}
-  //   groupsActive={groupsActive}
-  //   onGroupToggle={onGroupToggle}
-  // />
-  //   ))
-  // }
 }
 
 ChartContainerTrend.propTypes = {
@@ -334,7 +284,7 @@ const mapStateToProps = createStructuredSelector({
   minYearCPR: state => getMinYearCPR(state),
   standard: state => getStandardSearch(state),
   benchmark: state => getBenchmarkSearch(state),
-  scores: (state, { countryCode, metricCode, metrics }) => {
+  scores: (state, { countryCode, metricCode }) => {
     const metric = getMetricDetails(metricCode);
     if (metric.metricType === 'dimensions' || metric.metricType === 'rights') {
       if (metric.type === 'esr') {
@@ -361,12 +311,12 @@ const mapStateToProps = createStructuredSelector({
     if (metric.metricType === 'dimensions' && metric.type === 'cpr') {
       return metrics.reduce(
         (soFar, m) => ({
-        ...soFar,
-        [m.key]: getCPRScoresForCountry(state, {
-          countryCode,
-          metric: m,
+          ...soFar,
+          [m.key]: getCPRScoresForCountry(state, {
+            countryCode,
+            metric: m,
+          }),
         }),
-      }),
         {},
       );
     }

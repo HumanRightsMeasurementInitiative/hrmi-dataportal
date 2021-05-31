@@ -11,13 +11,13 @@ import styled from 'styled-components';
 import { Box, ResponsiveContext } from 'grommet';
 
 import { getRegionYearCount } from 'utils/charts';
-import { isMinSize } from 'utils/responsive';
+// import { isMinSize } from 'utils/responsive';
 
 import ButtonText from 'styled/ButtonText';
 
 import Hint from 'styled/Hint';
 
-import rootMessages from 'messages';
+// import rootMessages from 'messages';
 import messages from './messages';
 
 const Styled = styled(p => <Box gap="xsmall" {...p} />)`
@@ -39,7 +39,7 @@ const Range = styled.div`
   display: block;
   width: 20px;
   height: 13px;
-  background-color: ${({ theme, region }) => theme.global.colors[region]};
+  background-color: ${({ theme, dimension }) => theme.global.colors[dimension]};
   opacity: 0.2;
 `;
 
@@ -51,18 +51,18 @@ const Mean = styled.div`
   left: 0;
   width: 20px;
   border-top: 2px solid;
-  border-color: ${({ theme, region }) => theme.global.colors[region]};
+  border-color: ${({ theme, dimension }) => theme.global.colors[dimension]};
   margin-top: -1px;
 `;
-const MeanRegion = styled.div`
-  display: block;
-  height: 2px;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  background-image: url("data:image/svg+xml, %3Csvg width='20' height='2' version='1.1' xmlns='http://www.w3.org/2000/svg'%3E%3Cline stroke='black' strokeWidth='3' stroke-dasharray='2, 5' x1='0' y1='1' x2='20' y2='1'%3E%3C/line%3E%3C/svg%3E");
-`;
+// const MeanRegion = styled.div`
+//   display: block;
+//   height: 2px;
+//   position: absolute;
+//   top: 50%;
+//   left: 0;
+//   width: 100%;
+//   background-image: url("data:image/svg+xml, %3Csvg width='20' height='2' version='1.1' xmlns='http://www.w3.org/2000/svg'%3E%3Cline stroke='black' strokeWidth='3' stroke-dasharray='2, 5' x1='0' y1='1' x2='20' y2='1'%3E%3C/line%3E%3C/svg%3E");
+// `;
 
 function CardFooter({
   regionScores,
@@ -75,6 +75,7 @@ function CardFooter({
   onSelectPage,
   mode,
   type,
+  dimension,
 }) {
   const notes = {
     regionBias:
@@ -214,107 +215,23 @@ function CardFooter({
       ),
     };
   }
+
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Styled>
-          {notes.regionBias && (
+          <Box direction="row" gap="xsmall" align="center">
+            <RangeWrapper>
+              <Range dimension={dimension} />
+              <Mean dimension={dimension} />
+            </RangeWrapper>
             <StyledHint>
-              {/* <FormattedMessage
-                {...rootMessages.charts.noteRegionalBiasESRWithLink}
-                values={{
-                  link: (
-                    <ButtonText
-                      size="xxsmall"
-                      onClick={() => onSelectPage('methodology-esr')}
-                    >
-                      <FormattedMessage
-                        {...rootMessages.charts.noteRegionalBiasESRLink}
-                      />
-                    </ButtonText>
-                  ),
-                }}
-              /> */}
-              TODO
+              <FormattedMessage
+                {...messages.hint}
+              />
             </StyledHint>
-          )}
-          {notes.regionAvg && (
-            <>
-              {(!currentRegion || currentRegion === 'all') && (
-                <StyledHint>
-                  {/* <FormattedMessage {...messages.noteAssessmentMultiple} /> */}
-                  TODO
-                </StyledHint>
-              )}
-              {currentRegion && (
-                <StyledHint>
-                  {/* {count > 0 && count < total && (
-                    <FormattedMessage
-                      {...messages[
-                        isMinSize(size, 'ms')
-                          ? 'noteAssessmentRatio'
-                          : 'noteAssessmentRatioSmall'
-                      ]}
-                      values={valuesAvg}
-                    />
-                  )}
-                  {count > 0 && count === total && (
-                    <FormattedMessage
-                      {...messages.noteAssessmentRatioAll}
-                      values={valuesAvg}
-                    />
-                  )}
-                  {count === 0 && currentRegion === 'world' && (
-                    <FormattedMessage
-                      {...messages.noteAssessmentNoneWorld}
-                      values={{ year }}
-                    />
-                  )}
-                  {count === 0 &&
-                    currentRegion !== 'world' &&
-                    type === 'cpr' && (
-                    <FormattedMessage
-                      {...messages.noteAssessmentNoneRegion}
-                      values={{ year }}
-                    />
-                  )}
-                  {count === 0 &&
-                    currentRegion !== 'world' &&
-                    type === 'esr' && (
-                    <FormattedMessage
-                      {...messages.noteAssessmentNoneRegionESR}
-                      values={{ year }}
-                    />
-                  )} */}
-                  TODO
-                </StyledHint>
-              )}
-            </>
-          )}
-          {(notes.regionIntervalCPR || notes.countryIntervalCPR) && (
-            <Box direction="row" gap="xsmall" align="center">
-              <RangeWrapper>
-                <Range region={currentRegion} />
-                <Mean region={currentRegion} />
-              </RangeWrapper>
-              <StyledHint>
-                {/* {notes.regionIntervalCPR && isMinSize(size, 'ms') && (
-                  <FormattedMessage
-                    {...messages.noteCredibleIntervalRegions}
-                    values={valuesInterval}
-                  />
-                )}
-                {(notes.countryIntervalCPR || size === 'small') && (
-                  <FormattedMessage
-                    {...messages.noteCredibleIntervalSmall}
-                    values={valuesInterval}
-                  />
-                )} */}
-                TODO
-              </StyledHint>
-            </Box>
-          )}
+          </Box>
         </Styled>
       )}
     </ResponsiveContext.Consumer>
@@ -332,6 +249,7 @@ CardFooter.propTypes = {
   type: PropTypes.string,
   onSelectMetric: PropTypes.func,
   onSelectPage: PropTypes.func,
+  dimension: PropTypes.string,
 };
 
 export default CardFooter;

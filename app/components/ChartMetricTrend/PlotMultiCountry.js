@@ -31,7 +31,7 @@ import {
 } from 'utils/charts';
 import { formatScore } from 'utils/scores';
 
-import { COLUMNS, TYPES } from 'containers/App/constants';
+import { COLUMNS } from 'containers/App/constants';
 import PlotHintHighlight from './PlotHintHighlight';
 import PlotHintWrapper from './PlotHintWrapper';
 // import messages from './messages';
@@ -58,14 +58,13 @@ function PlotMultiCountry({
   tickValuesX,
   tickValuesY,
   dataForceYRange,
+  dimension,
 }) {
   let countryYearData;
   if (countryScores && countryScores[column]) {
     countryYearData = getCountryYearData(year, countryScores[column], true);
   }
-  // const hasData = false;
   const hasData = checkDataAvailable(countryScores, column);
-  console.log({ countryScores, countryYearData });
   // prettier-ignore
   return (
     <FlexibleWidthXYPlot
@@ -100,27 +99,6 @@ function PlotMultiCountry({
           }}
         />
       )}
-      {/* {countryScores && metric.type === 'vdem' && (
-        <AreaSeries
-          data={getCountryData(countryScores[COLUMNS.VDEM.HI])}
-          style={{
-            fill: theme.global.colors[currentRegion],
-            stroke: 'transparent',
-            opacity: 0.1,
-          }}
-        />
-      )}
-      {countryScores && metric.type === 'vdem' && (
-        <AreaSeries
-          data={getCountryData(countryScores[COLUMNS.VDEM.LO])}
-          style={{
-            fill: 'white',
-            stroke: 'white',
-            opacity: 1,
-            strokeWidth: 1,
-          }}
-        />
-      )} */}
       <HorizontalGridLines
         tickValues={tickValuesY}
         style={{
@@ -190,7 +168,7 @@ function PlotMultiCountry({
         <LineSeries
           data={getCountryData(countryScores[column])}
           style={{
-            stroke: theme.global.colors[currentRegion],
+            stroke: theme.global.colors[dimension],
             strokeWidth: 1.5,
           }}
           onNearestX={point => {
@@ -201,8 +179,8 @@ function PlotMultiCountry({
       {countryYearData && (
         <MarkSeries
           data={countryYearData}
-          stroke={theme.global.colors[currentRegion]}
-          fill={theme.global.colors[currentRegion]}
+          stroke={theme.global.colors[dimension]}
+          fill={theme.global.colors[dimension]}
           size={3}
         />
       )}
@@ -260,6 +238,7 @@ PlotMultiCountry.propTypes = {
   column: PropTypes.string,
   height: PropTypes.number,
   intl: intlShape.isRequired,
+  dimension: PropTypes.string,
 };
 
 export default withTheme(injectIntl(PlotMultiCountry));

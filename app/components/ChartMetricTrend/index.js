@@ -4,12 +4,12 @@
  *
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ResponsiveContext, Box } from 'grommet';
+import { ResponsiveContext } from 'grommet';
 
-import { isMinSize } from 'utils/responsive';
+// import { isMinSize } from 'utils/responsive';
 import { getXTime, getTickValuesY, getTickValuesX } from 'utils/charts';
 
 import { COLUMNS } from 'containers/App/constants';
@@ -47,7 +47,7 @@ function ChartMetricTrend({
   // activeCountry,
 }) {
   // const [highlightYear, setYear] = useState(false);
-  const [isHighlightSource, setHighlightSource] = useState(false);
+  // const [isHighlightSource, setHighlightSource] = useState(false);
   // const [highlightCountry, setHighlightCountry] = useState(false);
 
   // console.log('ChartMetricTrend', maxYear, scores);
@@ -74,7 +74,6 @@ function ChartMetricTrend({
   return (
     <ResponsiveContext.Consumer>
       {size => {
-        console.log({mode})
         // year !== maxYear ? 'highlight' : mode,
         const tickValuesX = getTickValuesX(
           size,
@@ -86,13 +85,13 @@ function ChartMetricTrend({
           <Card
             width="200px"
             margin={{ right: '10px', bottom: '10px' }}
-            onMouseLeave={() => {
-              setHighlightYear(null);
-              setHighlightSource(false);
-            }}
-            onMouseEnter={() => {
-              setHighlightSource(true);
-            }}
+            // onMouseLeave={() => {
+            //   setHighlightYear(null);
+            //   setHighlightSource(false);
+            // }}
+            // onMouseEnter={() => {
+            //   setHighlightSource(true);
+            // }}
           >
             <CardHeader
               // onSelectMetric={tab => onSelectMetric(tab)}
@@ -116,6 +115,7 @@ function ChartMetricTrend({
               tickValuesX={tickValuesX}
               tickValuesY={tickValuesY}
               dataForceYRange={dataForceYRange}
+              dimension={metric.dimension}
             />
             <CardFooter
               mode={mode}
@@ -129,6 +129,7 @@ function ChartMetricTrend({
               // onSelectMetric={(tab, y) => onSelectMetric(tab, y)}
               // onSelectPage={onSelectPage}
               onSelectPage={() => {}}
+              dimension={metric.dimension}
             />
           </Card>
         );
@@ -147,15 +148,15 @@ ChartMetricTrend.propTypes = {
   mode: PropTypes.string,
   benchmark: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   currentRegion: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  onCountryClick: PropTypes.func,
-  onSetRegionFilter: PropTypes.func,
-  onSelectMetric: PropTypes.func,
-  onSelectPage: PropTypes.func,
+  // onCountryClick: PropTypes.func,
+  // onSetRegionFilter: PropTypes.func,
+  // onSelectMetric: PropTypes.func,
+  // onSelectPage: PropTypes.func,
   highlightYear: PropTypes.string,
   setHighlightYear: PropTypes.func,
   highlightRegion: PropTypes.string,
-  setHighlightRegion: PropTypes.func,
-  activeCountry: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  // setHighlightRegion: PropTypes.func,
+  // activeCountry: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export default ChartMetricTrend;

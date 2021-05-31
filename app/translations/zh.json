@@ -1022,5 +1022,6 @@
   "hrmi.pdf.countryProfiles": "国家概况",
   "hrmi.pdf.humanRightsIn": "人权",
   "hrmi.pdf.noData": "类别{category}包含以下权利：",
-  "hrmi.pdf.explore": "要详细了解该国的分数，请访问rightstracker.org"
+  "hrmi.pdf.explore": "要详细了解该国的分数，请访问rightstracker.org",
+  "hrmi.components.ChartMetricTrend.hint": "TODO: 80% uncertainty band"
 }

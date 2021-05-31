@@ -9,6 +9,10 @@ import { defineMessages } from 'react-intl';
 export const scope = 'hrmi.components.ChartMetricTrend';
 
 export default defineMessages({
+  hint: {
+    id: `${scope}.hint`,
+    defaultMessage: '80% uncertainty band',
+  },
   noteRatioLink: {
     id: `${scope}.noteRatioLink`,
     defaultMessage: '{count} of {total} countries',

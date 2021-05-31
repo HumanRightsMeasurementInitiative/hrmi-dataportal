@@ -1019,5 +1019,6 @@
   "hrmi.pdf.countryProfiles": "Profils par pays",
   "hrmi.pdf.humanRightsIn": "Droits humains en",
   "hrmi.pdf.noData": "La catégorie {category} comprend les droits suivants:",
-  "hrmi.pdf.explore": "Pour explorer plus en détail les scores de ce pays, consultez rightstracker.org/fr"
+  "hrmi.pdf.explore": "Pour explorer plus en détail les scores de ce pays, consultez rightstracker.org/fr",
+  "hrmi.components.ChartMetricTrend.hint": "TODO: 80% uncertainty band"
 }
