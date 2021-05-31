@@ -50,10 +50,10 @@ function CardHeader({ metric, currentRegion, onSelectMetric, mode }) {
           <Styled>
             <Box direction="row" gap="small" align="center" fill="horizontal">
               <MetricIcon
-                src={metric.iconInv}
+                src={metric.icon}
                 alt=""
                 bgr={color}
-                small={mode === 'multi-country'}
+                small
               />
               <Box gap="xxsmall" fill>
                 <Box
