@@ -403,7 +403,7 @@ const mapStateToProps = createStructuredSelector({
     if (metric.metricType === 'dimensions') {
       return metric.type === 'esr'
         ? getESRDimensionScores(state, selectedYear)
-        : getCPRDimensionScores(state, metric.key); // N.B. don't think this is ever used? therefore doesn't need selectedYear
+        : getCPRDimensionScores(state, metric.key, selectedYear);
     }
     if (metric.metricType === 'rights') {
       return metric.type === 'esr'

@@ -533,11 +533,12 @@ export const getESRDimensionScores = createSelector(
 
 export const getCPRDimensionScores = createSelector(
   (state, metric) => metric,
+  (state, metric, selectedYear) => selectedYear,
   getCPRScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getCPRYear,
-  (metric, scores, countries, hasChartSettingFilters, year) => {
+  (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     // make sure a metric is set
     const dimension = !!metric && DIMENSIONS.find(d => d.key === metric);
     return (
@@ -547,7 +548,9 @@ export const getCPRDimensionScores = createSelector(
       scores.filter(
         s =>
           s.metric_code === dimension.code &&
-          quasiEquals(s.year, year) &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
