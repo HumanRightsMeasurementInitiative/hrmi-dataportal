@@ -84,7 +84,7 @@ function PlotMultiCountry({
           style={{
             fill: theme.global.colors[dimension],
             stroke: 'transparent',
-            opacity: 0.1,
+            opacity: 0.2,
           }}
         />
       )}
