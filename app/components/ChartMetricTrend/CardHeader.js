@@ -18,7 +18,7 @@ import ButtonPlain from 'styled/ButtonPlain';
 import { isMinSize } from 'utils/responsive';
 
 import rootMessages from 'messages';
-import messages from './messages';
+// import messages from './messages';
 
 const Styled = styled.div`
   margin-bottom: 5px;
@@ -48,7 +48,7 @@ function CardHeader({ metric, currentRegion, onSelectMetric, mode }) {
         // prettier-ignore
         return (
           <Styled>
-            <Box direction="row" gap="small" align="center" fill="horizontal">
+            <Box direction="row" gap="small" align="start" fill="horizontal">
               <MetricIcon
                 src={metric.icon}
                 alt=""

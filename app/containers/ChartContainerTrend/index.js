@@ -4,7 +4,7 @@
  *
  */
 
-import { Box } from 'grommet';
+import { Box, ResponsiveContext } from 'grommet';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -39,6 +39,7 @@ import {
 import ChartCountryMetricTrend from 'components/ChartCountryMetricTrend';
 import ChartMetricTrend from 'components/ChartMetricTrend';
 import getMetricDetails from 'utils/metric-details';
+import { isMaxSize } from 'utils/responsive';
 
 const getColour = metric => {
   if (metric.metricType === 'dimensions') {
@@ -206,51 +207,59 @@ export function ChartContainerTrend({
     );
   }
   return (
-    <Box direction="row" wrap>
-      {metrics.map(m => (
-        <ChartMetricTrend
-          scores={{
-            // country: right.scores,
-            country: allMetricsScores[m.key].reduce(
-              (soFar, dataForYear) => ({
-                mean: {
-                  ...soFar.mean,
-                  [dataForYear.year]: { score: dataForYear.mean },
-                },
-                lobound_10: {
-                  ...soFar.lobound_10,
-                  [dataForYear.year]: { score: dataForYear.lobound_10 },
-                },
-                upbound_90: {
-                  ...soFar.upbound_90,
-                  [dataForYear.year]: { score: dataForYear.upbound_90 },
-                },
-              }),
-              {},
-            ),
-            // regions: regionRight.scores,
-          }}
-          // regionScores={regionScores}
-          // maxYear={maxYearESR}
-          // minYear={minYearESR}
-          // maxValue={TYPES.esr.max}
-          maxValue={isESR ? 100 : 11}
-          maxYear={isESR ? maxYearESR : maxYearCPR}
-          minYear={isESR ? minYearESR : minYearCPR}
-          benchmark={benchmark}
-          // metric={getMetricDetails(right.key)}
-          metric={getMetricDetails(m.key)}
-          mode="multi-country"
-          // onSelectMetric={() => onSelectMetric(right.key)}
-          // onSelectPage={onSelectPage}
-          // currentRegion={
-          //   country[COLUMNS.COUNTRIES.UN_REGION]
-          // }
-          setHighlightYear={setYear}
-          highlightYear={highlightYear}
-        />
-      ))}
-    </Box>
+    <ResponsiveContext.Consumer>
+      {size => (
+        <Box
+          direction={isMaxSize(size, 'sm') ? 'column' : 'row'}
+          wrap
+          align={isMaxSize(size, 'sm') ? 'center' : 'start'}
+        >
+          {metrics.map(m => (
+            <ChartMetricTrend
+              scores={{
+                // country: right.scores,
+                country: allMetricsScores[m.key].reduce(
+                  (soFar, dataForYear) => ({
+                    mean: {
+                      ...soFar.mean,
+                      [dataForYear.year]: { score: dataForYear.mean },
+                    },
+                    lobound_10: {
+                      ...soFar.lobound_10,
+                      [dataForYear.year]: { score: dataForYear.lobound_10 },
+                    },
+                    upbound_90: {
+                      ...soFar.upbound_90,
+                      [dataForYear.year]: { score: dataForYear.upbound_90 },
+                    },
+                  }),
+                  {},
+                ),
+                // regions: regionRight.scores,
+              }}
+              // regionScores={regionScores}
+              // maxYear={maxYearESR}
+              // minYear={minYearESR}
+              // maxValue={TYPES.esr.max}
+              maxValue={isESR ? 100 : 11}
+              maxYear={isESR ? maxYearESR : maxYearCPR}
+              minYear={isESR ? minYearESR : minYearCPR}
+              benchmark={benchmark}
+              // metric={getMetricDetails(right.key)}
+              metric={getMetricDetails(m.key)}
+              mode="multi-country"
+              // onSelectMetric={() => onSelectMetric(right.key)}
+              // onSelectPage={onSelectPage}
+              // currentRegion={
+              //   country[COLUMNS.COUNTRIES.UN_REGION]
+              // }
+              setHighlightYear={setYear}
+              highlightYear={highlightYear}
+            />
+          ))}
+        </Box>
+      )}
+    </ResponsiveContext.Consumer>
   );
 }
 

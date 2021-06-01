@@ -83,7 +83,6 @@ function ChartMetricTrend({
         );
         return (
           <Card
-            width="200px"
             margin={{ right: '10px', bottom: '10px' }}
             // onMouseLeave={() => {
             //   setHighlightYear(null);
