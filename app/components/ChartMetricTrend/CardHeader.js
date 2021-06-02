@@ -10,15 +10,12 @@ import { FormattedMessage } from 'react-intl';
 import styled from 'styled-components';
 import { Text, Box, ResponsiveContext } from 'grommet';
 
-// import ChartNotes from 'components/ChartNotes';
 import Tooltip from 'components/Tooltip';
 
 import ButtonPlain from 'styled/ButtonPlain';
 
-import { isMinSize } from 'utils/responsive';
-
 import rootMessages from 'messages';
-// import messages from './messages';
+import messages from './messages';
 
 const Styled = styled.div`
   margin-bottom: 5px;
@@ -42,91 +39,47 @@ function CardHeader({ metric, currentRegion, onSelectMetric, mode }) {
   const color = currentRegion === 'all' ? 'world' : currentRegion || 'world';
   return (
     <ResponsiveContext.Consumer>
-      {size => {
-        const showTooltipLabel =
-          isMinSize(size, 'ms') && mode !== 'multi-country';
-        // prettier-ignore
-        return (
-          <Styled>
-            <Box direction="row" gap="small" align="start" fill="horizontal">
-              <MetricIcon
-                src={metric.icon}
-                alt=""
-                bgr={color}
-                small
-              />
-              <Box gap="xxsmall" fill>
-                <Box
-                  direction="row"
-                  justify="between"
-                  gap="small"
-                  align="center"
+      {() => (
+        <Styled>
+          <Box
+            pad={{ horizontal: 'xsmall' }}
+            direction="row"
+            gap="small"
+            align="start"
+            justify="between"
+            fill="horizontal"
+          >
+            <MetricIcon src={metric.icon} alt="" bgr={color} small />
+            <Box direction="row" justify="between" gap="small" align="start">
+              <ButtonTitle
+                color={currentRegion}
+                onClick={() => onSelectMetric('regions')}
+              >
+                <Text
+                  size={mode === 'multi-country' ? 'medium' : 'large'}
+                  weight={600}
+                  color={currentRegion}
                 >
-                  <ButtonTitle
-                    color={currentRegion}
-                    onClick={() => onSelectMetric('regions')}
-                  >
-                    <Text
-                      size={mode === 'multi-country' ? 'medium' : 'large'}
-                      weight={600}
-                      color={currentRegion}
-                    >
-                      <FormattedMessage
-                        {...rootMessages['rights-short'][metric.key]}
-                      />
-                    </Text>
-                  </ButtonTitle>
-                  <Box direction="row" gap="xxsmall" align="center">
-                    {showTooltipLabel && (
-                      <Text size="xxsmall" color="secondary">
-                        {/* {currentRegion === 'world' && (
-                          <FormattedMessage
-                            {...rootMessages.labels.worldDetailScore}
-                          />
-                        )}
-                        {currentRegion === 'all' && (
-                          <FormattedMessage {...rootMessages.labels.allDetailScore} />
-                        )}
-                        {currentRegion !== 'world' && currentRegion !== 'all' && (
-                          <FormattedMessage
-                            {...rootMessages.labels.regionDetailScore}
-                          />
-                        )} */}
-                        TODO
+                  <FormattedMessage
+                    {...rootMessages['rights-short'][metric.key]}
+                  />
+                </Text>
+              </ButtonTitle>
+              <Box pad={{ top: 'xxsmall' }}>
+                <Tooltip
+                  component={
+                    <Box gap="small">
+                      <Text size="xsmall">
+                        <FormattedMessage {...messages.tooltip} />
                       </Text>
-                    )}
-                    <Tooltip
-                      component={
-                        <Box gap="small">
-                          <Text size="xsmall">
-                            {/* {metric.type === 'esr' && (
-                              <FormattedMessage {...messages.infoESRadditional} />
-                            )}
-                            {metric.type === 'cpr' && (
-                              <FormattedMessage {...messages.infoCPRadditional} />
-                            )}
-                            {metric.type === 'vdem' && (
-                              <FormattedMessage {...messages.infoVDEMadditional} />
-                            )} */}
-                            TODO
-                          </Text>
-                          {/* <ChartNotes
-                            notes={{
-                              gradesESR: metric.type === 'esr',
-                              gradesCPR: metric.type === 'cpr',
-                              gradesVDEM: metric.type === 'vdem',
-                            }}
-                          /> */}
-                        </Box>
-                      }
-                    />
-                  </Box>
-                </Box>
+                    </Box>
+                  }
+                />
               </Box>
             </Box>
-          </Styled>
-        );
-      }}
+          </Box>
+        </Styled>
+      )}
     </ResponsiveContext.Consumer>
   );
 }

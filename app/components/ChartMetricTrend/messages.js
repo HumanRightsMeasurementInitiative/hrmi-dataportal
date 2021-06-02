@@ -13,6 +13,11 @@ export default defineMessages({
     id: `${scope}.hint`,
     defaultMessage: '80% uncertainty band',
   },
+  tooltip: {
+    id: `${scope}.tooltip`,
+    defaultMessage:
+      'Individual country scores are based on the responses to our survey of human rights experts. The 80% uncertainty bands indicate our level of certainty in each score.',
+  },
   noteRatioLink: {
     id: `${scope}.noteRatioLink`,
     defaultMessage: '{count} of {total} countries',

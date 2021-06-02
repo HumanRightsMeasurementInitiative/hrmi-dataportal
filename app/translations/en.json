@@ -1020,5 +1020,6 @@
   "hrmi.pdf.humanRightsIn": "Human Rights in",
   "hrmi.pdf.noData": "The category {category} includes the following rights:",
   "hrmi.pdf.explore": "To explore this country's scores in more detail please go to rightstracker.org",
-  "hrmi.components.ChartMetricTrend.hint": "80% uncertainty band"
+  "hrmi.components.ChartMetricTrend.hint": "80% uncertainty band",
+  "hrmi.components.ChartMetricTrend.tooltip": "Individual country scores are based on the responses to our survey of human rights experts. The 80% uncertainty bands indicate our level of certainty in each score."
 }
