@@ -494,7 +494,7 @@ export const getIndicatorInfo = createSelector(
     indicators && indicators.find(i => i.metric_code === metricCode),
 );
 
-// single dimension, multiple countries, single year
+// single dimension, multiple countries, single year that looks back to up to previous 10 years for a score
 export const getESRDimensionScores = createSelector(
   (state, selectedYear) => selectedYear,
   getESRScores,
@@ -512,7 +512,9 @@ export const getESRDimensionScores = createSelector(
   ) => {
     const standard = STANDARDS.find(as => as.key === standardSearch);
     const dimension = DIMENSIONS.find(d => d.key === 'esr');
-    return (
+
+    // get scores for all years for multiple countries, single dimension
+    const allYearsScores =
       standard &&
       dimension &&
       scores &&
@@ -521,13 +523,52 @@ export const getESRDimensionScores = createSelector(
         s =>
           s.standard === standard.code &&
           s.metric_code === dimension.code &&
-          (selectedYear
-            ? quasiEquals(s.year, selectedYear)
-            : quasiEquals(s.year, year)) &&
+          (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-      )
-    );
+      );
+    if (!allYearsScores) return false;
+    console.log({ dimension, countries, standard, allYearsScores });
+
+    // reduce for the score for the most recent year for each country
+    // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
+    // if not, previous item was the most recent for that country
+    // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
+    return allYearsScores.reduce((soFar, score, i) => {
+      // discard first score
+      if (i === 0) return soFar;
+      // take last score
+      if (i === allYearsScores.length - 1) {
+        return soFar.concat(score);
+      }
+      // if different country to last iteration
+      const prevScore = allYearsScores[i - 1];
+      if (score.country_code !== prevScore.country_code) {
+        // is prevScore within 10 years of selectedYear
+        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
+          return soFar.concat(prevScore);
+        }
+        return soFar;
+      }
+      return soFar;
+    }, []);
+
+    // return (
+    //   standard &&
+    //   dimension &&
+    //   scores &&
+    //   countries &&
+    //   scores.filter(
+    //     s =>
+    //       s.standard === standard.code &&
+    //       s.metric_code === dimension.code &&
+    //       (selectedYear
+    //         ? quasiEquals(s.year, selectedYear)
+    //         : quasiEquals(s.year, year)) &&
+    //       (!hasChartSettingFilters ||
+    //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+    //   )
+    // );
   },
 );
 
@@ -541,20 +582,58 @@ export const getCPRDimensionScores = createSelector(
   (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     // make sure a metric is set
     const dimension = !!metric && DIMENSIONS.find(d => d.key === metric);
-    return (
+
+    // get scores for all years for multiple countries, single dimension
+    const allYearsScores =
       dimension &&
       scores &&
       countries &&
       scores.filter(
         s =>
           s.metric_code === dimension.code &&
-          (selectedYear
-            ? quasiEquals(s.year, selectedYear)
-            : quasiEquals(s.year, year)) &&
+          (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-      )
-    );
+      );
+    if (!allYearsScores) return false;
+
+    // reduce for the score for the most recent year for each country
+    // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
+    // if not, previous item was the most recent for that country
+    // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
+    return allYearsScores.reduce((soFar, score, i) => {
+      // discard first score
+      if (i === 0) return soFar;
+      // take last score
+      if (i === allYearsScores.length - 1) {
+        return soFar.concat(score);
+      }
+      // if different country to last iteration
+      const prevScore = allYearsScores[i - 1];
+      if (score.country_code !== prevScore.country_code) {
+        // is prevScore within 10 years of selectedYear
+        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
+          return soFar.concat(prevScore);
+        }
+        return soFar;
+      }
+      return soFar;
+    }, []);
+
+    // return (
+    //   dimension &&
+    //   scores &&
+    //   countries &&
+    //   scores.filter(
+    //     s =>
+    //       s.metric_code === dimension.code &&
+    //       (selectedYear
+    //         ? quasiEquals(s.year, selectedYear)
+    //         : quasiEquals(s.year, year)) &&
+    //       (!hasChartSettingFilters ||
+    //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+    //   )
+    // );
   },
 );
 
@@ -579,7 +658,8 @@ export const getESRRightScores = createSelector(
     const standard = STANDARDS.find(as => as.key === standardSearch);
     const group = PEOPLE_GROUPS[0];
     const right = !!metric && RIGHTS.find(d => d.key === metric);
-    return (
+
+    const allYearsScores =
       scores &&
       countries &&
       right &&
@@ -588,13 +668,51 @@ export const getESRRightScores = createSelector(
           s.group === group.code &&
           s.standard === standard.code &&
           s.metric_code === right.code &&
-          (selectedYear
-            ? quasiEquals(s.year, selectedYear)
-            : quasiEquals(s.year, year)) &&
+          (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-      )
-    );
+      );
+    if (!allYearsScores) return false;
+
+    // reduce for the score for the most recent year for each country
+    // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
+    // if not, previous item was the most recent for that country
+    // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
+    return allYearsScores.reduce((soFar, score, i) => {
+      // discard first score
+      if (i === 0) return soFar;
+      // take last score
+      if (i === allYearsScores.length - 1) {
+        return soFar.concat(score);
+      }
+      // if different country to last iteration
+      const prevScore = allYearsScores[i - 1];
+      if (score.country_code !== prevScore.country_code) {
+        // is prevScore within 10 years of selectedYear
+        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
+          return soFar.concat(prevScore);
+        }
+        return soFar;
+      }
+      return soFar;
+    }, []);
+
+    // return (
+    //   scores &&
+    //   countries &&
+    //   right &&
+    //   scores.filter(
+    //     s =>
+    //       s.group === group.code &&
+    //       s.standard === standard.code &&
+    //       s.metric_code === right.code &&
+    //       (selectedYear
+    //         ? quasiEquals(s.year, selectedYear)
+    //         : quasiEquals(s.year, year)) &&
+    //       (!hasChartSettingFilters ||
+    //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+    //   )
+    // );
   },
 );
 
@@ -608,20 +726,57 @@ export const getCPRRightScores = createSelector(
   getCPRYear,
   (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     const right = !!metric && RIGHTS.find(d => d.key === metric);
-    return (
+
+    const allYearsScores =
       scores &&
       countries &&
       right &&
       scores.filter(
         s =>
           s.metric_code === right.code &&
-          (selectedYear
-            ? quasiEquals(s.year, selectedYear)
-            : quasiEquals(s.year, year)) &&
+          (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-      )
-    );
+      );
+    if (!allYearsScores) return false;
+
+    // reduce for the score for the most recent year for each country
+    // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
+    // if not, previous item was the most recent for that country
+    // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
+    return allYearsScores.reduce((soFar, score, i) => {
+      // discard first score
+      if (i === 0) return soFar;
+      // take last score
+      if (i === allYearsScores.length - 1) {
+        return soFar.concat(score);
+      }
+      // if different country to last iteration
+      const prevScore = allYearsScores[i - 1];
+      if (score.country_code !== prevScore.country_code) {
+        // is prevScore within 10 years of selectedYear
+        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
+          return soFar.concat(prevScore);
+        }
+        return soFar;
+      }
+      return soFar;
+    }, []);
+
+    // return (
+    //   scores &&
+    //   countries &&
+    //   right &&
+    //   scores.filter(
+    //     s =>
+    //       s.metric_code === right.code &&
+    //       (selectedYear
+    //         ? quasiEquals(s.year, selectedYear)
+    //         : quasiEquals(s.year, year)) &&
+    //       (!hasChartSettingFilters ||
+    //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+    //   )
+    // );
   },
 );
 // single indicator, multiple countries, single year
@@ -642,31 +797,61 @@ export const getIndicatorScores = createSelector(
           s =>
             s.group === group.code &&
             s.metric_code === indicator.code &&
+            (selectedYear
+              ? s.year <= selectedYear
+              : quasiEquals(s.year, year)) &&
             (!hasChartSettingFilters ||
               countries.map(c => c.country_code).indexOf(s.country_code) > -1),
         );
         // then get the most recent year for each country
         // figure out most recent data by country
-        const countryYears = filteredScores.reduce((memo, s) => {
-          const result = memo;
-          const country = s.country_code;
-          if (
-            typeof result[country] === 'undefined' ||
-            (parseInt(s.year, 10) > result[country] &&
-              parseInt(s.year, 10) <= year)
-          ) {
-            result[country] = parseInt(s.year, 10);
+        // const countryYears = filteredScores.reduce((memo, s) => {
+        //   const result = memo;
+        //   const country = s.country_code;
+        //   if (
+        //     typeof result[country] === 'undefined' ||
+        //     (parseInt(s.year, 10) > result[country] &&
+        //       parseInt(s.year, 10) <= year)
+        //   ) {
+        //     result[country] = parseInt(s.year, 10);
+        //   }
+        //   return result;
+        // }, {});
+        // console.log({ group, indicator, filteredScores, countryYears })
+        // // finally filter by year or most recent year
+        // const filteredYear = filteredScores.filter(s =>
+        //   selectedYear
+        //     ? quasiEquals(s.year, selectedYear)
+        //     : quasiEquals(s.year, year) ||
+        //       quasiEquals(s.year, countryYears[s.country_code]),
+        // );
+        // return filteredYear;
+
+        // reduce for the score for the most recent year for each country (that is not more recent than the selected year, see pre-filter above)
+        // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
+        // if not, previous item was the most recent for that country
+        // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
+        return filteredScores.reduce((soFar, score, i) => {
+          // discard first score
+          if (i === 0) return soFar;
+          // take last score
+          if (i === filteredScores.length - 1) {
+            return soFar.concat(score);
           }
-          return result;
-        }, {});
-        // finally filter by year or most recent year
-        const filteredYear = filteredScores.filter(s =>
-          selectedYear
-            ? quasiEquals(s.year, selectedYear)
-            : quasiEquals(s.year, year) ||
-              quasiEquals(s.year, countryYears[s.country_code]),
-        );
-        return filteredYear;
+          // if different country to last iteration
+          const prevScore = filteredScores[i - 1];
+          if (score.country_code !== prevScore.country_code) {
+            // is prevScore within 10 years prior of selectedYear
+            if (
+              parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <=
+              10
+            ) {
+              return soFar.concat(prevScore);
+            }
+            return soFar;
+          }
+          return soFar;
+        }, []);
       }
       return [];
     }
