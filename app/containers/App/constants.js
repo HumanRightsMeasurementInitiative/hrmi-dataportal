@@ -102,6 +102,7 @@ export const COLUMNS = {
     CODE: 'people_code',
     METRIC_CODE: 'metric_code',
     COUNTRY_CODE: 'country_code',
+    COUNT: 'count',
   },
 };
 

@@ -1496,6 +1496,7 @@ export const getPeopleAtRiskForGroup = createSelector(
     const groupData = data
       .filter(d => quasiEquals(d.year, year))
       .filter(d => quasiEquals(d[COLUMNS.AT_RISK.CODE], group))
+      .filter(d => parseInt(d[COLUMNS.AT_RISK.COUNT], 10) > 0)
       .map(d => d[COLUMNS.AT_RISK.COUNTRY_CODE]);
     return uniq(groupData);
   },
