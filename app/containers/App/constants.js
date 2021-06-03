@@ -77,8 +77,9 @@ export const COLUMNS = {
     RAW_REF_BEST_FEMALE: 'global_best_female',
   },
   AUX: {
-    POPULATION: 'population',
+    POPULATION: 'Population',
     GDP_2011_PPP: 'gdp_per_capita_2011ppp',
+    GDP_2017_PPP: 'gdp_per_capita_2017ppp',
     GDP_CURRENT_PPP: 'gdp_per_capita_current_ppp',
     GDP_CURRENT_US: 'gdp_per_capita_current_usd',
   },
