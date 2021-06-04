@@ -3,6 +3,7 @@
     "default": "hrmi-dataportal",
     "stage": "hrmi-dataportal-stage",
     "dev": "hrmi-dataportal-dev",
+    "2021-embargoed": "rightstracker-2021-embargoed",
     "v3.3": "hrmi-dataportal-v3-3",
     "v3.2": "hrmi-dataportal-v3-2",
     "v3.1": "rightstracker-v3-1",
