@@ -37,7 +37,7 @@ function ChartMetricTrend({
   currentRegion,
   // onCountryClick,
   // onSetRegionFilter,
-  // onSelectMetric,
+  onSelectMetric,
   // onSelectPage,
   unRegionTotals,
   highlightYear,
@@ -93,6 +93,7 @@ function ChartMetricTrend({
             <CardHeader
               metric={metric}
               // onSelectMetric={tab => onSelectMetric(tab)}
+              onSelectMetric={onSelectMetric}
               dimension={metric.dimension}
             />
             <PlotMultiCountry
@@ -143,7 +144,7 @@ ChartMetricTrend.propTypes = {
   currentRegion: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   // onCountryClick: PropTypes.func,
   // onSetRegionFilter: PropTypes.func,
-  // onSelectMetric: PropTypes.func,
+  onSelectMetric: PropTypes.func,
   // onSelectPage: PropTypes.func,
   highlightYear: PropTypes.string,
   setHighlightYear: PropTypes.func,

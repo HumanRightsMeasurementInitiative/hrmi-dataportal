@@ -309,6 +309,7 @@ function TabCountryReport({
                       }
                       return [...rights, r];
                     }, [])}
+                    onMetricClick={onMetricClick}
                     {...props}
                   />
                 )}

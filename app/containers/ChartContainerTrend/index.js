@@ -123,6 +123,7 @@ export function ChartContainerTrend({
   metricSelector,
   metrics,
   allMetricsScores,
+  onMetricClick,
 }) {
   useEffect(() => {
     onLoadData();
@@ -248,7 +249,7 @@ export function ChartContainerTrend({
               // metric={getMetricDetails(right.key)}
               metric={getMetricDetails(m.key)}
               mode="multi-country"
-              // onSelectMetric={() => onSelectMetric(right.key)}
+              onSelectMetric={() => onMetricClick(m.key, m.dimension)}
               // onSelectPage={onSelectPage}
               // currentRegion={
               //   country[COLUMNS.COUNTRIES.UN_REGION]
@@ -284,6 +285,7 @@ ChartContainerTrend.propTypes = {
   metricSelector: PropTypes.node,
   metrics: PropTypes.array,
   allMetricsScores: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  onMetricClick: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
