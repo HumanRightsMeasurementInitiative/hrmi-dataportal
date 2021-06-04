@@ -68,8 +68,6 @@ function ChartMetricTrend({
   // const countriesScores = scores.countries;
   const year = highlightYear || maxYear;
 
-  // console.log({ scores })
-
   // prettier-ignore
   return (
     <ResponsiveContext.Consumer>
@@ -93,13 +91,9 @@ function ChartMetricTrend({
             // }}
           >
             <CardHeader
-              // onSelectMetric={tab => onSelectMetric(tab)}
-              // regionScores={regionScores}
-              year={year}
-              column={column}
               metric={metric}
-              currentRegion={currentRegion}
-              mode={mode}
+              // onSelectMetric={tab => onSelectMetric(tab)}
+              dimension={metric.dimension}
             />
             <PlotMultiCountry
               height={120}

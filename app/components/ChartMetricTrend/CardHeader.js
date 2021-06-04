@@ -35,8 +35,7 @@ const ButtonTitle = styled(ButtonPlain)`
   }
 `;
 
-function CardHeader({ metric, currentRegion, onSelectMetric, mode }) {
-  const color = currentRegion === 'all' ? 'world' : currentRegion || 'world';
+function CardHeader({ metric, onSelectMetric, dimension }) {
   return (
     <ResponsiveContext.Consumer>
       {() => (
@@ -49,17 +48,13 @@ function CardHeader({ metric, currentRegion, onSelectMetric, mode }) {
             justify="between"
             fill="horizontal"
           >
-            <MetricIcon src={metric.icon} alt="" bgr={color} small />
+            <MetricIcon src={metric.icon} alt="" small />
             <Box direction="row" justify="between" gap="small" align="start">
               <ButtonTitle
-                color={currentRegion}
+                color={dimension}
                 onClick={() => onSelectMetric('regions')}
               >
-                <Text
-                  size={mode === 'multi-country' ? 'medium' : 'large'}
-                  weight={600}
-                  color={currentRegion}
-                >
+                <Text size="medium" weight={600} color={dimension}>
                   <FormattedMessage
                     {...rootMessages['rights-short'][metric.key]}
                   />
@@ -86,9 +81,8 @@ function CardHeader({ metric, currentRegion, onSelectMetric, mode }) {
 
 CardHeader.propTypes = {
   metric: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  currentRegion: PropTypes.string,
   onSelectMetric: PropTypes.func,
-  mode: PropTypes.string,
+  dimension: PropTypes.string,
 };
 
 export default CardHeader;

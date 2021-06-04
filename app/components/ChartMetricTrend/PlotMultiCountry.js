@@ -195,7 +195,7 @@ function PlotMultiCountry({
           }}
         >
           <PlotHintWrapper vertical="top">
-            <PlotHintHighlight color={currentRegion} active>
+            <PlotHintHighlight color={dimension} active>
               {formatScore(
                 countryYearData[0].y,
                 // metric.type,
