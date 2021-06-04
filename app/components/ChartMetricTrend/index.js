@@ -92,7 +92,6 @@ function ChartMetricTrend({
           >
             <CardHeader
               metric={metric}
-              // onSelectMetric={tab => onSelectMetric(tab)}
               onSelectMetric={onSelectMetric}
               dimension={metric.dimension}
             />

@@ -50,10 +50,7 @@ function CardHeader({ metric, onSelectMetric, dimension }) {
           >
             <MetricIcon src={metric.icon} alt="" small />
             <Box direction="row" justify="between" gap="small" align="start">
-              <ButtonTitle
-                color={dimension}
-                onClick={() => onSelectMetric('regions')}
-              >
+              <ButtonTitle color={dimension} onClick={onSelectMetric}>
                 <Text size="medium" weight={600} color={dimension}>
                   <FormattedMessage
                     {...rootMessages['rights-short'][metric.key]}
