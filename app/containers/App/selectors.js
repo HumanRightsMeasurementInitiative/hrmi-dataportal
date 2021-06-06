@@ -43,6 +43,56 @@ import {
   SUBREGIONS_FOR_COMPARISON_CPR,
 } from './constants';
 
+// TEMP: move this elsewhere in refactor
+function lookback(collection, selectedYear) {
+  // reduce for the score for the most recent year for each country (that is not more recent than the selected year, see pre-filter above)
+  // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
+  // if not, previous item was the most recent for that country
+  // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
+  return collection.reduce((soFar, score, i) => {
+    // discard first score unless array is length 1
+    // in which case test for valid score
+    if (i === 0) {
+      // is prevScore within 10 years prior of selectedYear
+      if (
+        collection.length === 1 &&
+        parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10
+      ) {
+        return soFar.concat(prevScore);
+      }
+      return soFar;
+    }
+    // handle last score
+    // TODO: if prevScore was a diff country, take both if valid score
+    // else only take last score if valid score
+    const prevScore = collection[i - 1];
+    if (i === collection.length - 1) {
+      let toConcat = [];
+      if (parseInt(selectedYear, 10) - parseInt(score.year, 10) <= 10) {
+        toConcat = toConcat.concat(score);
+      }
+
+      if (score.country_code !== prevScore.country_code) {
+        // is prevScore within 10 years prior of selectedYear
+        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
+          toConcat = toConcat.concat(prevScore);
+        }
+      }
+
+      return soFar.concat(toConcat);
+    }
+    // if not last item in array and different country to last iteration
+    if (score.country_code !== prevScore.country_code) {
+      // is prevScore within 10 years prior of selectedYear
+      if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
+        return soFar.concat(prevScore);
+      }
+      return soFar;
+    }
+    return soFar;
+  }, []);
+}
+
 // global sub-state
 const getGlobal = state => state.global || initialState;
 
@@ -530,28 +580,7 @@ export const getESRDimensionScores = createSelector(
     if (!allYearsScores) return false;
     console.log({ dimension, countries, standard, allYearsScores });
 
-    // reduce for the score for the most recent year for each country
-    // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
-    // if not, previous item was the most recent for that country
-    // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
-    return allYearsScores.reduce((soFar, score, i) => {
-      // discard first score
-      if (i === 0) return soFar;
-      // take last score
-      if (i === allYearsScores.length - 1) {
-        return soFar.concat(score);
-      }
-      // if different country to last iteration
-      const prevScore = allYearsScores[i - 1];
-      if (score.country_code !== prevScore.country_code) {
-        // is prevScore within 10 years of selectedYear
-        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
-          return soFar.concat(prevScore);
-        }
-        return soFar;
-      }
-      return soFar;
-    }, []);
+    return lookback(allYearsScores, selectedYear);
 
     // return (
     //   standard &&
@@ -597,28 +626,7 @@ export const getCPRDimensionScores = createSelector(
       );
     if (!allYearsScores) return false;
 
-    // reduce for the score for the most recent year for each country
-    // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
-    // if not, previous item was the most recent for that country
-    // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
-    return allYearsScores.reduce((soFar, score, i) => {
-      // discard first score
-      if (i === 0) return soFar;
-      // take last score
-      if (i === allYearsScores.length - 1) {
-        return soFar.concat(score);
-      }
-      // if different country to last iteration
-      const prevScore = allYearsScores[i - 1];
-      if (score.country_code !== prevScore.country_code) {
-        // is prevScore within 10 years of selectedYear
-        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
-          return soFar.concat(prevScore);
-        }
-        return soFar;
-      }
-      return soFar;
-    }, []);
+    return lookback(allYearsScores, selectedYear);
 
     // return (
     //   dimension &&
@@ -674,28 +682,7 @@ export const getESRRightScores = createSelector(
       );
     if (!allYearsScores) return false;
 
-    // reduce for the score for the most recent year for each country
-    // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
-    // if not, previous item was the most recent for that country
-    // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
-    return allYearsScores.reduce((soFar, score, i) => {
-      // discard first score
-      if (i === 0) return soFar;
-      // take last score
-      if (i === allYearsScores.length - 1) {
-        return soFar.concat(score);
-      }
-      // if different country to last iteration
-      const prevScore = allYearsScores[i - 1];
-      if (score.country_code !== prevScore.country_code) {
-        // is prevScore within 10 years of selectedYear
-        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
-          return soFar.concat(prevScore);
-        }
-        return soFar;
-      }
-      return soFar;
-    }, []);
+    return lookback(allYearsScores, selectedYear);
 
     // return (
     //   scores &&
@@ -740,28 +727,7 @@ export const getCPRRightScores = createSelector(
       );
     if (!allYearsScores) return false;
 
-    // reduce for the score for the most recent year for each country
-    // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
-    // if not, previous item was the most recent for that country
-    // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
-    return allYearsScores.reduce((soFar, score, i) => {
-      // discard first score
-      if (i === 0) return soFar;
-      // take last score
-      if (i === allYearsScores.length - 1) {
-        return soFar.concat(score);
-      }
-      // if different country to last iteration
-      const prevScore = allYearsScores[i - 1];
-      if (score.country_code !== prevScore.country_code) {
-        // is prevScore within 10 years of selectedYear
-        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
-          return soFar.concat(prevScore);
-        }
-        return soFar;
-      }
-      return soFar;
-    }, []);
+    return lookback(allYearsScores, selectedYear);
 
     // return (
     //   scores &&
@@ -827,31 +793,7 @@ export const getIndicatorScores = createSelector(
         // );
         // return filteredYear;
 
-        // reduce for the score for the most recent year for each country (that is not more recent than the selected year, see pre-filter above)
-        // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
-        // if not, previous item was the most recent for that country
-        // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
-        return filteredScores.reduce((soFar, score, i) => {
-          // discard first score
-          if (i === 0) return soFar;
-          // take last score
-          if (i === filteredScores.length - 1) {
-            return soFar.concat(score);
-          }
-          // if different country to last iteration
-          const prevScore = filteredScores[i - 1];
-          if (score.country_code !== prevScore.country_code) {
-            // is prevScore within 10 years prior of selectedYear
-            if (
-              parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <=
-              10
-            ) {
-              return soFar.concat(prevScore);
-            }
-            return soFar;
-          }
-          return soFar;
-        }, []);
+        return lookback(filteredScores, selectedYear);
       }
       return [];
     }
