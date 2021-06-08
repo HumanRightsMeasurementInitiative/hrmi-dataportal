@@ -373,7 +373,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (this comparison is calculated using the '{benchmark}' benchmark).",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "For {countryWithArticle} no rights scores are available due to missing data in the relevant international databases.",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
-  "hrmi.components.Source.source": "Source: HRMI 2020 rightstracker.org",
+  "hrmi.components.Source.source": "Source: HRMI 2021 rightstracker.org",
   "hrmi.components.ReadMore.more": "Read more",
   "hrmi.components.ReadMore.less": "Show less",
   "hrmi.components.ChartCountryDiamond.hiForCore": "UNUSED: High income country: best use the 'high income' standard",
