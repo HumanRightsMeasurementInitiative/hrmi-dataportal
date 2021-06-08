@@ -26,15 +26,14 @@ const BarWrap = styled(Box)``;
 const LabelWrap = styled(Box)`
   border-right: 1px solid;
   border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
+  @media print {
+    width: 160px;
+  }
 `;
 // prettier-ignore
 const ScoreAsideWrap = styled(Box)``;
 
-const ScoreAside = styled(Text)`
-  @media print {
-    font-size: 12px;
-  }
-`;
+const ScoreAside = styled(Text)``;
 
 export function BarWrapper({
   score,

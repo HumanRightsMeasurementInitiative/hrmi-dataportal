@@ -51,6 +51,13 @@ const PDFBox = styled(Box)`
   }
 `;
 
+const PDFText = styled(Text)`
+  @media print {
+    font-size: 14px;
+    line-height: 18px;
+  }
+`;
+
 const ChartArea = props => (
   <Box direction="column" fill="horizontal" {...props} />
 );
@@ -469,7 +476,7 @@ function ChartCountrySnapshot({
                       margin={{ top: 'small', bottom: 'xsmall' }}
                       responsive={false}
                     >
-                      <Text
+                      <PDFText
                         size={isMinSize(size, 'large') ? 'medium' : 'small'}
                       >
                         {type === 'esr' && currentBenchmark && (
@@ -488,7 +495,7 @@ function ChartCountrySnapshot({
                             values={grammar}
                           />
                         )}
-                      </Text>
+                      </PDFText>
                     </Box>
                     <ChartBars
                       summaryScore={summaryScore}

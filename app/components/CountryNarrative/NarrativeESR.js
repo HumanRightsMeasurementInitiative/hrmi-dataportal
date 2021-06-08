@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
+import styled from 'styled-components';
 
 import { formatScore } from 'utils/scores';
 import { getESRScoreRange, getMessageGrammar } from 'utils/narrative';
@@ -12,6 +13,13 @@ import { BENCHMARKS } from 'containers/App/constants';
 
 import rootMessages from 'messages';
 import messages from './messages';
+
+const PDFParagraph = styled(Paragraph)`
+  @media print {
+    font-size: 15px;
+    line-height: 20px;
+  }
+`;
 
 function NarrativeESR({
   country,
@@ -60,7 +68,7 @@ function NarrativeESR({
     const rangeBest = getESRScoreRange(scoreBest);
     if (short) {
       return (
-        <Paragraph>
+        <PDFParagraph>
           {benchmark === 'adjusted' && (
             <FormattedMessage
               {...messages.esr.scoreAdjusted}
@@ -73,17 +81,17 @@ function NarrativeESR({
               values={messageValues}
             />
           )}
-        </Paragraph>
+        </PDFParagraph>
       );
     }
     return (
       <>
-        <Paragraph>
+        <PDFParagraph>
           <FormattedMessage {...messages.esr.start} values={messageValues} />
-        </Paragraph>
+        </PDFParagraph>
         <OL>
           <li>
-            <Paragraph>
+            <PDFParagraph>
               <FormattedMessage
                 {...messages.esr.scoreAdjusted}
                 values={messageValues}
@@ -92,8 +100,8 @@ function NarrativeESR({
                 {...messages.esr.scoreAdjustedExplanation}
                 values={messageValues}
               />
-            </Paragraph>
-            <Paragraph>
+            </PDFParagraph>
+            <PDFParagraph>
               <FormattedMessage
                 {...messages.esr.scoreAdjustedAnalysis}
                 values={messageValues}
@@ -108,10 +116,10 @@ function NarrativeESR({
                 {...messages.esr.scoreAdjustedEnd}
                 values={messageValues}
               />
-            </Paragraph>
+            </PDFParagraph>
           </li>
           <li>
-            <Paragraph>
+            <PDFParagraph>
               <FormattedMessage
                 {...messages.esr.scoreBestAnalysis}
                 values={messageValues}
@@ -126,7 +134,7 @@ function NarrativeESR({
                 {...messages.esr.scoreBestEnd}
                 values={messageValues}
               />
-            </Paragraph>
+            </PDFParagraph>
           </li>
         </OL>
       </>

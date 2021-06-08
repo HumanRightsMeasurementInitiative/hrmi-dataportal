@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
+import styled from 'styled-components';
 
 import { compareRange, getMessageGrammar } from 'utils/narrative';
 import { isCountryHighIncome, isCountryOECD } from 'utils/countries';
@@ -12,6 +13,13 @@ import rootMessages from 'messages';
 import messages from './messages';
 
 import NarrativeCPRNoData from './NarrativeCPRNoData';
+
+const PDFParagraph = styled(Paragraph)`
+  @media print {
+    font-size: 15px;
+    line-height: 20px;
+  }
+`;
 
 function NarrativeCPRCompAssessment({
   dimensionKey,
@@ -47,7 +55,7 @@ function NarrativeCPRCompAssessment({
     );
   }
   return (
-    <Paragraph>
+    <PDFParagraph>
       {isHiOECD && (
         <FormattedMessage
           {...messages.compAssessmentCPR.startHiOECD}
@@ -82,7 +90,7 @@ function NarrativeCPRCompAssessment({
         {...messages.compAssessmentCPR.end[dimensionKey]}
         values={messageValues}
       />
-    </Paragraph>
+    </PDFParagraph>
   );
 }
 NarrativeCPRCompAssessment.propTypes = {
