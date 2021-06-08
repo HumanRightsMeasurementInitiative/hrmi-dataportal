@@ -22,6 +22,9 @@ const BGScale = styled.div`
   right: ${({ right }) => right};
   top: 0;
   bottom: 0;
+  @media print {
+    left: 160px;
+  }
 `;
 
 // background: rgba(0, 0, 0, 0.05);

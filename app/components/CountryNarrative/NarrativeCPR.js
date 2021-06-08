@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
+import styled from 'styled-components';
 
 import { formatScore } from 'utils/scores';
 
@@ -9,6 +10,13 @@ import { getCPRScoreRange, getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
+
+const PDFParagraph = styled(Paragraph)`
+  @media print {
+    font-size: 15px;
+    line-height: 20px;
+  }
+`;
 
 function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
   const messageValues = {
@@ -30,7 +38,7 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
     const range = score && getCPRScoreRange(score.mean);
     return (
       range && (
-        <Paragraph>
+        <PDFParagraph>
           <FormattedMessage
             {...messages.cpr.start}
             values={{
@@ -49,7 +57,7 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
               ...messageValues,
             }}
           />
-        </Paragraph>
+        </PDFParagraph>
       )
     );
   }
@@ -57,7 +65,7 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
     const range = score && getCPRScoreRange(score.mean);
     return (
       range && (
-        <Paragraph>
+        <PDFParagraph>
           <FormattedMessage
             {...messages.cpr.start}
             values={{
@@ -72,7 +80,7 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
               ...messageValues,
             }}
           />
-        </Paragraph>
+        </PDFParagraph>
       )
     );
   }

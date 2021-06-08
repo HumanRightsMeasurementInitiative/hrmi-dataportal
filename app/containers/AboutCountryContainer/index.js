@@ -43,23 +43,21 @@ const Button = styled(ButtonText)`
 
 const Label = styled(Text)`
   font-weight: 600;
-  @media print {
-    font-size: 12px;
-  }
 `;
+// @media print {
+//   font-size: 12px;
+// }
 
-const Detail = styled(Text)`
-  @media print {
-    font-size: 12px;
-    padding: 0px;
-  }
-`;
+const Detail = styled(Text)``;
+// @media print {
+//   font-size: 12px;
+//   padding: 0px;
+// }
 
-const Hint = styled(Text)`
-  @media print {
-    font-size: 10px;
-  }
-`;
+const Hint = styled(Text)``;
+// @media print {
+//   font-size: 10px;
+// }
 
 const MoreWrap = styled.div`
   text-align: left;

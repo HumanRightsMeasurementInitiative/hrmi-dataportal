@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { Paragraph } from 'grommet';
+import styled from 'styled-components';
 
 import { compareRange, getMessageGrammar } from 'utils/narrative';
 
@@ -12,6 +13,13 @@ import NarrativeESRNoData from './NarrativeESRNoData';
 const RANGE = 5;
 
 const isCountryHighIncome = country => country.high_income_country === '1';
+
+const PDFParagraph = styled(Paragraph)`
+  @media print {
+    font-size: 15px;
+    line-height: 20px;
+  }
+`;
 
 function NarrativeESRCompAssessment({
   benchmark,
@@ -46,7 +54,7 @@ function NarrativeESRCompAssessment({
     const rangeLo = comparativeScore - RANGE;
     const rangeHi = comparativeScore + RANGE;
     return (
-      <Paragraph>
+      <PDFParagraph>
         {isCountryHighIncome(country) && (
           <FormattedMessage
             {...messages.compAssessmentESR.startHi}
@@ -101,7 +109,7 @@ function NarrativeESRCompAssessment({
             ),
           }}
         />
-      </Paragraph>
+      </PDFParagraph>
     );
   }
   return null;

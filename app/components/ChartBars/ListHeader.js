@@ -26,9 +26,6 @@ const StyledScoreText = styled(Text)`
   @media (min-width: ${({ theme }) => theme.breakpointsMin.medium}) {
     padding: 0;
   }
-  @media print {
-    font-size: 12px;
-  }
 `;
 
 const BarWrap = styled(Box)``;
@@ -36,6 +33,9 @@ const BarWrap = styled(Box)``;
 const CountryWrap = styled(Box)`
   border-right: 1px solid;
   border-color: ${({ theme, noBorder }) => noBorder ? 'transparent' : theme.global.colors.dark};
+  @media print {
+    width: 160px;
+  }
 `;
 const RemoveFromPDFWrapper = styled.div`
   margin-bottom: -4px;
