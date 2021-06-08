@@ -373,7 +373,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (cette comparaison est établie grâce au niveau de performance « {benchmark} »).",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "En ce qui concerne {countryWithArticle}, aucun score en matière de droits n'est disponible en raison de données manquantes dans les bases de données internationales pertinentes. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "Avec des financements supplémentaires, HRMI pourrait enquêter sur la raison de chaque manque de données et trouver un moyen de les combler. ",
-  "hrmi.components.Source.source": "Source : HRMI 2020 rightstracker.org/fr",
+  "hrmi.components.Source.source": "Source : HRMI 2021 rightstracker.org/fr",
   "hrmi.components.ReadMore.more": "Lire la suite",
   "hrmi.components.ReadMore.less": "Afficher moins",
   "hrmi.components.ChartCountryDiamond.hiForCore": "NON UTILISÉ : Pays à revenus élevés : il est préférable d'utiliser la norme « revenus élevés »",
