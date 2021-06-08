@@ -373,7 +373,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (esta comparación se calcula utilizando la referencia \"{benchmark}\").",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "En cuanto a {countryWithArticle} no hay puntajes de derechos disponibles debido a la falta de datos en las bases de datos internacionales relevantes. ",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "Con una mayor financiación, HRMI podría investigar la razón de cada uno de estos vacíos de información y buscar maneras para poder cubrirlos. ",
-  "hrmi.components.Source.source": "Fuente: HRMI 2020 rightstracker.org/es",
+  "hrmi.components.Source.source": "Fuente: HRMI 2021 rightstracker.org/es",
   "hrmi.components.ReadMore.more": "Leer más",
   "hrmi.components.ReadMore.less": "Mostrar menos",
   "hrmi.components.ChartCountryDiamond.hiForCore": "SIN UTILIZAR: País de ingresos altos: mejor utilizar el estándar de \"altos ingresos\"",
