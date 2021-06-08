@@ -376,7 +376,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": "（根据“{benchmark}”标准比较）",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "由于{countryWithArticle}相关国际数据库中数据缺失，没有权利分数。",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "如果有更多的资金，HRMI可以调查每一个数据缺口的原因，并寻找有助于填补缺口的方法。",
-  "hrmi.components.Source.source": "数据来源：HRMI 2020 rightstracker.org",
+  "hrmi.components.Source.source": "数据来源：HRMI 2021 rightstracker.org",
   "hrmi.components.ReadMore.more": "阅读更多详情",
   "hrmi.components.ReadMore.less": "收起",
   "hrmi.components.ChartCountryDiamond.hiForCore": "高收入国家",
