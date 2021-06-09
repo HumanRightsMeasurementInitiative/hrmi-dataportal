@@ -79,6 +79,8 @@
     "d3-scale": "^2.2.2",
     "d3-time-format": "^2.2.3",
     "express": "4.16.4",
+    "firebase": "^8.6.5",
+    "firebase-admin": "^9.9.0",
     "fontfaceobserver": "2.1.0",
     "grommet": "^2.13.0",
     "grommet-icons": "^4.4.0",
@@ -108,6 +110,7 @@
     "redux-saga": "1.0.2",
     "regenerator-runtime": "^0.13.5",
     "reselect": "4.0.0",
+    "run-parallel-limit": "^1.1.0",
     "sanitize.css": "8.0.0",
     "styled-components": "4.2.0",
     "url-search-params-polyfill": "^7.0.1"

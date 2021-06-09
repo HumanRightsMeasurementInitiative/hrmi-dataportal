@@ -4,12 +4,14 @@
  *
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Heading, ResponsiveContext, Box, Text, Button } from 'grommet';
 import { Share, Next, Previous } from 'grommet-icons';
 import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+
+// necessary for pdf downloads
 
 import ChartTools from 'containers/ChartTools';
 
@@ -21,6 +23,7 @@ import { isMinSize, isMaxSize } from 'utils/responsive';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 
 import rootMessages from 'messages';
+import firebase from '../../../firebase';
 import messages from './messages';
 
 const Styled = styled.div`
@@ -68,6 +71,8 @@ const DownloadButton = styled(ButtonNavPrimary)`
   }
 `;
 
+const storage = firebase.storage();
+
 export function ChartHeader({
   title,
   chartId,
@@ -89,8 +94,17 @@ export function ChartHeader({
   maxYearDimension,
   minYearDimension,
 }) {
+  const [pdfURL, setPdfURL] = useState('');
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
+
+  useEffect(() => {
+    const ref = storage.ref(`pdfs/${locale}-${countryCode}.pdf`);
+    ref
+      .getDownloadURL()
+      .then(setPdfURL)
+      .catch(err => console.log(err));
+  }, [locale, countryCode]);
 
   return (
     <ResponsiveContext.Consumer>
@@ -151,7 +165,7 @@ export function ChartHeader({
                   /* eslint-disable */
                   <DownloadButton
                     as="a"
-                    href={`/pdfs/${locale}-${countryCode}.pdf`}
+                    href={pdfURL}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
