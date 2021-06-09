@@ -1020,6 +1020,6 @@
   "hrmi.pdf.humanRightsIn": "Droits humains en",
   "hrmi.pdf.noData": "La catégorie {category} comprend les droits suivants:",
   "hrmi.pdf.explore": "Pour explorer plus en détail les scores de ce pays, consultez rightstracker.org/fr",
-  "hrmi.components.ChartMetricTrend.hint": "TODO: 80% uncertainty band",
-  "hrmi.components.ChartMetricTrend.tooltip": "TODO: Individual country scores are based on the responses to our survey of human rights experts. The 80% uncertainty bands indicate our level of certainty in each score."
+  "hrmi.components.ChartMetricTrend.hint": "La bande d'incertitude de 80 %",
+  "hrmi.components.ChartMetricTrend.tooltip": "Les scores de chaque pays sont basés sur les réponses à notre enquête auprès d'experts des droits de l'homme. Les bandes d'incertitude de 80 % indiquent notre niveau de certitude dans chaque score."
 }
