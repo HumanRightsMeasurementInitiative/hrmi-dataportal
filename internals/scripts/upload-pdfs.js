@@ -14,6 +14,7 @@ admin.initializeApp({
 const bucket = admin.storage().bucket()
 
 // read a pdf, and upload to storage, but with a parallel limit so as not overload memory
+const time = process.hrtime()
 const pdfsFolder = path.join(__dirname, '../../pdfs')
 fs.readdir(pdfsFolder)
 .then(files => {
@@ -26,7 +27,10 @@ fs.readdir(pdfsFolder)
       return bucket.upload(`${pdfsFolder}/${f}`, {
         destination: `pdfs/${f}`
       })
-      .then(() => cb(null, f))
+      .then(() => {
+        console.log(`${f} uploaded successfully`)
+        cb(null, f)
+      })
       .catch(err => cb(err))
     }
   })
@@ -37,4 +41,7 @@ fs.readdir(pdfsFolder)
       resolve(results)
     })
   })
+})
+.then(() => {
+  console.log(`time taken: ${process.hrtime(time)[0]}.${process.hrtime(time)[1]} seconds}`)
 })

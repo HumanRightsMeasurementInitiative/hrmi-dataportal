@@ -73,7 +73,7 @@ module.exports = require('./webpack.base.babel')({
     new WebpackGitHash(),
 
     new CopyPlugin([
-      { from: 'pdfs', to: './pdfs/' },
+      // { from: 'pdfs', to: './pdfs/' },
       { from: 'robots.txt', to: './robots.txt' },
     ]),
 
