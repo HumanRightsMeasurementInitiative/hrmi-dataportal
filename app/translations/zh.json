@@ -1023,6 +1023,6 @@
   "hrmi.pdf.humanRightsIn": "人权",
   "hrmi.pdf.noData": "类别{category}包含以下权利：",
   "hrmi.pdf.explore": "要详细了解该国的分数，请访问rightstracker.org",
-  "hrmi.components.ChartMetricTrend.hint": "TODO: 80% uncertainty band",
-  "hrmi.components.ChartMetricTrend.tooltip": "TODO: Individual country scores are based on the responses to our survey of human rights experts. The 80% uncertainty bands indicate our level of certainty in each score."
+  "hrmi.components.ChartMetricTrend.hint": "80% 的置信区间",
+  "hrmi.components.ChartMetricTrend.tooltip": "各个国家/地区的得分基于人权专家调查的答复。80% 的置信区间表明我们对每个分数中的确定性程度。"
 }
