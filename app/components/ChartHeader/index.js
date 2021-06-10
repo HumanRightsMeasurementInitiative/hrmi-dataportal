@@ -99,11 +99,13 @@ export function ChartHeader({
     title || intl.formatMessage(messages[chartId], messageValues);
 
   useEffect(() => {
-    const ref = storage.ref(`pdfs/${locale}-${countryCode}.pdf`);
-    ref
-      .getDownloadURL()
-      .then(setPdfURL)
-      .catch(err => console.log(err));
+    if (locale && countryCode) {
+      const ref = storage.ref(`pdfs/${locale}-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setPdfURL)
+        .catch(err => console.log(err));
+    }
   }, [locale, countryCode]);
 
   return (
