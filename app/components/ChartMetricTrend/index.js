@@ -17,9 +17,6 @@ import { COLUMNS } from 'containers/App/constants';
 import Card from './Card';
 import CardHeader from './CardHeader';
 import CardFooter from './CardFooter';
-// import ScoreSheet from './ScoreSheet';
-// import PlotDetailRegion from './PlotDetailRegion';
-// import PlotMultiRegion from './PlotMultiRegion';
 import PlotMultiCountry from './PlotMultiCountry';
 
 // const isEven = n => n % 2 === 0;
