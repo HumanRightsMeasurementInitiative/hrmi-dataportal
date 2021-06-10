@@ -578,7 +578,6 @@ export const getESRDimensionScores = createSelector(
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       );
     if (!allYearsScores) return false;
-    console.log({ dimension, countries, standard, allYearsScores });
 
     return lookback(allYearsScores, selectedYear);
 
@@ -1464,6 +1463,18 @@ export const getCPRScoresForYear = createSelector(
   getCPRScores,
   (year, scores) => filterScoresByYear(year, scores),
 );
+// get one score per country per metric, for most recent year with lookback
+// for lookback function, must sort collection by metric, country, year in that order of precedence
+export const getESRScoresForYearWithLookback = createSelector(
+  getESRYear,
+  getESRScores,
+  (year, scores) => lookback(scores, year),
+);
+export const getCPRScoresForYearWithLookback = createSelector(
+  getCPRYear,
+  getCPRScores,
+  (year, scores) => lookback(scores, year),
+);
 
 // export const getESRDimensionScoresForYear = createSelector(
 //   getESRYear,
@@ -1570,8 +1581,8 @@ export const getReferenceScores = createSelector(
   getCountryFromRouter,
   getCountries,
   getStandardSearch,
-  getESRScoresForYear,
-  getCPRScoresForYear,
+  getESRScoresForYearWithLookback,
+  getCPRScoresForYearWithLookback,
   (country, countries, standard, esrScores, cprScores) => {
     if (!country || !countries || !esrScores || !cprScores) return false;
 
