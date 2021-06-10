@@ -43,8 +43,6 @@ function ChartSettingMetrics({
   const [open, setOpen] = useState(false);
   const dropButton = useRef(null);
 
-  console.log({ metrics });
-
   // fall back to activeDefault if activeMetric not included in metrics
   useEffect(() => {
     if (activeMetric !== activeDefault) {

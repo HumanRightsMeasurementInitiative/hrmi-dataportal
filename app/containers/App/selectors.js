@@ -1468,12 +1468,12 @@ export const getCPRScoresForYear = createSelector(
 export const getESRScoresForYearWithLookback = createSelector(
   getESRYear,
   getESRScores,
-  (year, scores) => lookback(scores, year),
+  (year, scores) => !!scores && lookback(scores, year),
 );
 export const getCPRScoresForYearWithLookback = createSelector(
   getCPRYear,
   getCPRScores,
-  (year, scores) => lookback(scores, year),
+  (year, scores) => !!scores && lookback(scores, year),
 );
 
 // export const getESRDimensionScoresForYear = createSelector(
