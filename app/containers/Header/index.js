@@ -306,14 +306,29 @@ export function Header({
                 )}
                 {showMenu && isMaxSize(size, 'medium') && (
                   <Layer
-                    full={isMaxSize(size, 'sm') ? 'horizontal' : false}
-                    margin={{ top: '50px' }}
-                    onClickOutside={() => setShowMenu(false)}
+                    // TODO: something breaking here with "full" prop
+                    full
+                    onClickOutside={() => {
+                      console.log('wefawea');
+                      setShowMenu(false);
+                    }}
+                    onEsc={() => setShowMenu(false)}
                     responsive={false}
                     position={isMaxSize(size, 'sm') ? 'top' : 'top-right'}
                     modal={false}
                     animate={false}
                   >
+                    {/* TODO: this shouldn't be necessary, but the layer full prop above is breaking: this is a temp solution so user can close the menu */}
+                    <div style={{ position: 'absolute', top: 10, right: 12 }}>
+                      <ToggleMenu
+                        plain
+                        onClick={() => setShowMenu(!showMenu)}
+                        ref={menuRef}
+                      >
+                        {!showMenu && <Menu color="dark" />}
+                        {showMenu && <Close color="dark" />}
+                      </ToggleMenu>
+                    </div>
                     <MenuList elevation="large">
                       <MenuGroup>
                         {navButtonOnClick({
