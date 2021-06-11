@@ -48,11 +48,11 @@ const Label = styled(Text)`
 //   font-size: 12px;
 // }
 
-const Detail = styled(Text)``;
-// @media print {
-//   font-size: 12px;
-//   padding: 0px;
-// }
+const Detail = styled(Text)`
+  @media print {
+    margin-right: 16px;
+  }
+`;
 
 const Hint = styled(Text)``;
 // @media print {
