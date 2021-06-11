@@ -110,9 +110,10 @@ async function printPDF({
 
   await printPDF({
     // countries: keys(getCountries(langJSON)),
-    // countries: [{ code: 'NIU', income: '0' }],
+    // countries: [{ code: 'AFG', income: '0' }],
     // countries: [{ code: 'AUS', income: '1' }],
     // countries: [{ code: 'COD', income: '0' }],
+    // countries: [{ code: 'SAU', income: '0' }],
     countries,
     languages: ['en', 'es', 'fr', 'pt', 'zh']
     // languages: ['pt']

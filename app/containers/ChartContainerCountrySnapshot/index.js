@@ -85,8 +85,11 @@ const AddToPDFWrapper = styled.div`
 const BreakBefore = styled(Box)`
   @media print {
     position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
-    break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
-    margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+    posittion: relative;
+    // break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    break-before: page;
+    // margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+    margin-top: -150px;
   }
 `;
 
@@ -253,7 +256,8 @@ export function ChartContainerCountrySnapshot({
           activeCode={activeCode}
         />
         <AddToPDFWrapper>
-          <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}>
+          {/* <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}> */}
+          <Box>
             <NarrativeCPR
               dimensionKey="physint"
               score={dimensions.physint.score}
@@ -291,10 +295,12 @@ export function ChartContainerCountrySnapshot({
                   : 'all'
               }
             />
-          </BreakBefore>
+          </Box>
+          {/* </BreakBefore> */}
         </AddToPDFWrapper>
         {/* Empowerment */}
-        <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}>
+        {/* <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}> */}
+        <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}>
           <ChartCountrySnapshot
             type="cpr"
             dimensionCode="empowerment"

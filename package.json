@@ -45,6 +45,7 @@
     "prettify": "prettier --write",
     "generate-pdfs": "node ./internals/scripts/generate-pdfs.js",
     "pdf": "npm-run-all -pr start generate-pdfs",
+    "upload-pdfs": "node ./internals/scripts/upload-pdfs.js",
     "fonts": "sh scripts/fonts.sh"
   },
   "browserslist": [

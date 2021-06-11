@@ -361,7 +361,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.startNotHiOECD": "Em relação aos direitos civis e políticos, não temos dados para um número suficiente de países em {regionWithArticle} para fazer uma comparação regional. Contudo, quando em comparação com {referenceCount} outros países na nossa amostra, {countryWithArticle} {isPlural, select, true {estáo} false {está}} ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": " quanto aos direitos de empoderamento",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": " quanto ao direito de integridade física.",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "Os dados de {dimension} ainda não foram produzidos para {countryWithArticle}. Gostaríamos de expandir nossa coleta de dados para o mundo inteiro o mais rápido possível. Para saber mais sobre como você pode ajudar, visite",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "Os dados de {dimension} ainda não foram produzidos para {countryWithArticle}. Gostaríamos de expandir nossa coleta de dados para o mundo inteiro o mais rápido possível. Para saber mais sobre como você pode ajudar, visite ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/pt-pt/do-you-want-hrmi-human-rights-scores-for-your-country",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": " nesta página no site da HRMI.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButRights": "Um conjunto completo de dados de {dimension} ainda não foi produzido para {countryWithArticle}. Gostaríamos de coletar dados mais completos nos próximos anos. ",
