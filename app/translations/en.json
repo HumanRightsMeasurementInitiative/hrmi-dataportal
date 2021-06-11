@@ -930,7 +930,7 @@
   "hrmi.labels.allPeople": "All groups",
   "hrmi.labels.people": "People",
   "hrmi.containers.PathPeople.supTitle": "People at risk",
-  "hrmi.containers.PathPeople.header": "We conducted our annual survey of human rights experts in {no} countries in 2020.",
+  "hrmi.containers.PathPeople.header": "We conducted our annual survey of human rights experts in {no} countries in 2021.",
   "hrmi.containers.PathPeople.text": "Human rights experts said that {group} were at extra risk of at least some rights violations in the following countries.",
   "hrmi.containers.PathPeopleOverview.title": "{no} at risk groups",
   "hrmi.containers.PathPeopleOverview.header": "For the {no} countries included in our annual survey, we asked human rights experts to choose, from a list of options, which groups of people were particularly at risk of rights violations.",

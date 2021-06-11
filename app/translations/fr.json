@@ -930,7 +930,7 @@
   "hrmi.labels.allPeople": "Tous les groupes",
   "hrmi.labels.people": "Personnes",
   "hrmi.containers.PathPeople.supTitle": "Personnes à risque",
-  "hrmi.containers.PathPeople.header": "Nous avons effectué notre enquête annuelle auprès d'experts des droits humains dans {no} pays en 2020.",
+  "hrmi.containers.PathPeople.header": "Nous avons effectué notre enquête annuelle auprès d'experts des droits humains dans {no} pays en 2021.",
   "hrmi.containers.PathPeople.text": "Des experts des droits humains ont déclaré que {group} courait un risque supplémentaire d'au moins certaines de violations de leurs droits dans les pays suivants.",
   "hrmi.containers.PathPeopleOverview.title": "{no} groupes à risque",
   "hrmi.containers.PathPeopleOverview.header": "Pour les {no} pays inclus dans notre enquête annuelle, nous avons demandé à des experts des droits humains de nous indiquer, parmi une liste d'options, quelles étaient les personnes les plus exposées à subir la violation de leurs droits.",

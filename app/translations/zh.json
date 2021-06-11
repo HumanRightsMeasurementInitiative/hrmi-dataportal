@@ -933,7 +933,7 @@
   "hrmi.labels.allPeople": "所有人群",
   "hrmi.labels.people": "人群",
   "hrmi.containers.PathPeople.supTitle": "高风险人群",
-  "hrmi.containers.PathPeople.header": "我们在2020年对{no}个国家/地区的人权专家进行了年度调查。",
+  "hrmi.containers.PathPeople.header": "我们在2021年对{no}个国家/地区的人权专家进行了年度调查。",
   "hrmi.containers.PathPeople.text": "人权专家说，{group}在以下国家中至少有一些被侵犯人权的额外风险。",
   "hrmi.containers.PathPeopleOverview.title": "{no}类高风险人群",
   "hrmi.containers.PathPeopleOverview.header": "对于我们年度调查中包括的{no}个国家，我们请人权专家从选项列表中选择哪些人群特别容易遭受侵犯人权的危险。",
