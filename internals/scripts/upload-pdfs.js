@@ -22,7 +22,7 @@ fs.readdir(pdfsFolder)
 
   // run-parallel-limit takes an array of tasks, which are functions that accept callbacks to call when done
   // see https://github.com/feross/run-parallel-limit#parallellimittasks-limit-callback
-  const tasks = files.filter(f => f === 'vi-VNM.pdf').map(f => {
+  const tasks = files.map(f => {
     return (cb) => {
       return bucket.upload(`${pdfsFolder}/${f}`, {
         destination: `pdfs/${f}`
