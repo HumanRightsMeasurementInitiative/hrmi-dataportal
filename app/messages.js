@@ -136,9 +136,9 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
       },
-      downloadSpecialPDF: {
-        id: `${scope}.labels.chartTools.downloadSpecialPDF`,
-        defaultMessage: 'Download PDF in local language',
+      downloadPDFvi: {
+        id: `${scope}.labels.chartTools.downloadPDFvi`,
+        defaultMessage: 'Download PDF in Vietnamese',
       },
     },
     abbrev: {

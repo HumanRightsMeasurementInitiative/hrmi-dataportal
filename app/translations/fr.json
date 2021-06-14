@@ -396,7 +396,7 @@
   "hrmi.labels.chartTools.howToRead": "Comment le lire",
   "hrmi.labels.chartTools.settings": "Changer de vue",
   "hrmi.labels.chartTools.downloadPDF": "Télécharger PDF",
-  "hrmi.labels.chartTools.downloadSpecialPDF": "TODO: Download PDF in local language",
+  "hrmi.labels.chartTools.downloadPDFvi": "TODO: Download PDF in Vietnamese",
   "hrmi.labels.xAxis.cpr": "Score",
   "hrmi.labels.xAxis.adjusted": "% du référentiel ajusté aux revenus atteint",
   "hrmi.labels.xAxis.best": "% du référentiel des meilleures pratiques mondiales atteint",

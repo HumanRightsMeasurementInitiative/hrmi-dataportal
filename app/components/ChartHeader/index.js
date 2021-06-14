@@ -196,7 +196,7 @@ export function ChartHeader({
                       >
                         <TextWrap>
                           <FormattedMessage
-                            {...rootMessages.labels.chartTools.downloadSpecialPDF}
+                            {...rootMessages.labels.chartTools.downloadPDFvi}
                           />
                         </TextWrap>
                         <StyledShare />
