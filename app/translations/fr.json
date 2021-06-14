@@ -148,7 +148,7 @@
   "hrmi.charts.dimensionIntro.esr.best": "Dans quelle mesure {countryWithArticle} {genderNumber, select, mp {font-t-ils} m {fait-t-il} fp {font-t-elles} f {fait-t-elle}}  {isPlural, select, true {leur} false {son}} possible comparé aux leaders mondiaux ?",
   "hrmi.charts.dimensionIntro.physint": "Dans quelle mesure le gouvernement {countryOf} respecte-t-il chaque droit ?",
   "hrmi.charts.dimensionIntro.empowerment": "Dans quelle mesure le gouvernement {countryOf} respecte-t-il chaque droit ?",
-  "hrmi.charts.dimensionDataSource.esr": "(Les graphiques indiquent les données les plus récentes à partir de {year}).",
+  "hrmi.charts.dimensionDataSource.esr": "({year})",
   "hrmi.charts.dimensionDataSource.cpr": "({year})",
   "hrmi.components.ChartHeader.single-metric": "Scores disponibles pour {no} pays",
   "hrmi.components.ChartHeader.countries-overview": "Affiche les scores pour {no} {no, select, 1 {pay} other {pays}} {filtered, select, true {(filtrés)} false {}}",

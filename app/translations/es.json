@@ -148,7 +148,7 @@
   "hrmi.charts.dimensionIntro.esr.best": "¿Qué tal le va a {countryWithArticle} en comparación con los mejores del mundo?",
   "hrmi.charts.dimensionIntro.physint": "¿Hasta qué nivel el gobierno {countryOf} está respetando cada derecho?",
   "hrmi.charts.dimensionIntro.empowerment": "¿Hasta qué nivel el gobierno {countryOf} está respetando cada derecho?",
-  "hrmi.charts.dimensionDataSource.esr": "(Los gráficos muestran los datos más recientes disponibles a partir de {year}).",
+  "hrmi.charts.dimensionDataSource.esr": "({year})",
   "hrmi.charts.dimensionDataSource.cpr": "({year})",
   "hrmi.components.ChartHeader.single-metric": "Calificaciones disponibles para {no} países",
   "hrmi.components.ChartHeader.countries-overview": "Mostrando puntajes para {no} {no, select, 1 {país} other {países}} {filtered, select, true {(filtrados)} false {}}",

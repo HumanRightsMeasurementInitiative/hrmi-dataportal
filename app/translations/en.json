@@ -148,7 +148,7 @@
   "hrmi.charts.dimensionIntro.esr.best": "How well {isPlural, select, true {are} false {is}} {countryWithArticle} doing compared to the best in the world?",
   "hrmi.charts.dimensionIntro.physint": "How well is {needsArticle, select, true {the } false { }}{countryPossessive} government respecting each right?",
   "hrmi.charts.dimensionIntro.empowerment": "How well is {needsArticle, select, true {the } false { }}{countryPossessive} government respecting each right?",
-  "hrmi.charts.dimensionDataSource.esr": "(Charts show most recent data available as of {year}).",
+  "hrmi.charts.dimensionDataSource.esr": "({year})",
   "hrmi.charts.dimensionDataSource.cpr": "({year})",
   "hrmi.components.ChartHeader.single-metric": "Showing scores for {no} {no, select, 1 {country} other {countries}}",
   "hrmi.components.ChartHeader.countries-overview": "Showing scores for {no} {no, select, 1 {country} other {countries}} {filtered, select, true {(filtered)} false {}}",
