@@ -151,7 +151,7 @@
   "hrmi.charts.dimensionIntro.esr.best": "与最佳的国家相比，{countryWithArticle}的表现如何？",
   "hrmi.charts.dimensionIntro.physint": "{countryWithArticle}政府尊重各项权利的情况如何？",
   "hrmi.charts.dimensionIntro.empowerment": "{countryWithArticle}政府尊重各项权利的情况如何？",
-  "hrmi.charts.dimensionDataSource.esr": "（图表显示了截至{year}的最新数据）。",
+  "hrmi.charts.dimensionDataSource.esr": "({year})",
   "hrmi.charts.dimensionDataSource.cpr": "({year})",
   "hrmi.components.ChartHeader.single-metric": "{no}个国家的分数",
   "hrmi.components.ChartHeader.countries-overview": "{no}个国家的分数{filtered, select, true {(筛选过)} false {}}",
