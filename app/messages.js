@@ -136,6 +136,10 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
       },
+      downloadSpecialPDF: {
+        id: `${scope}.labels.chartTools.downloadSpecialPDF`,
+        defaultMessage: 'Download PDF in local language',
+      },
     },
     abbrev: {
       notAvailable: {

@@ -396,6 +396,7 @@
   "hrmi.labels.chartTools.howToRead": "Como interpretar",
   "hrmi.labels.chartTools.settings": "Alterar visualização",
   "hrmi.labels.chartTools.downloadPDF": "Baixar PDF",
+  "hrmi.labels.chartTools.downloadSpecialPDF": "TODO: Download PDF in local language",
   "hrmi.labels.xAxis.cpr": "Pontuação",
   "hrmi.labels.xAxis.adjusted": "% de referencia ajustada em função dos rendimentos alcançada",
   "hrmi.labels.xAxis.best": "% de melhor referencia global alcançada",

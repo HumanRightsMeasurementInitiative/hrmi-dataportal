@@ -399,6 +399,7 @@
   "hrmi.labels.chartTools.howToRead": "如何阅读",
   "hrmi.labels.chartTools.settings": "切换视图",
   "hrmi.labels.chartTools.downloadPDF": "下载PDF",
+  "hrmi.labels.chartTools.downloadSpecialPDF": "TODO: Download PDF in local language",
   "hrmi.labels.xAxis.cpr": "分数",
   "hrmi.labels.xAxis.adjusted": "调整收入后基准比对评分",
   "hrmi.labels.xAxis.best": "达到全球最佳基准的百分比",

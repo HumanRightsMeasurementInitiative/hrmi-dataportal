@@ -95,6 +95,7 @@ export function ChartHeader({
   minYearDimension,
 }) {
   const [pdfURL, setPdfURL] = useState('');
+  const [specialPdfURL, setSpecialPdfURL] = useState('');
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
 
@@ -104,6 +105,13 @@ export function ChartHeader({
       ref
         .getDownloadURL()
         .then(setPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (countryCode === 'VNM') {
+      const ref = storage.ref(`pdfs/vi-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
         .catch(err => console.log(err));
     }
   }, [locale, countryCode]);
@@ -165,19 +173,36 @@ export function ChartHeader({
                   tools.settingsConfig &&
                   tools.settingsConfig.key === 'tab-snapshot' && (
                   /* eslint-disable */
-                  <DownloadButton
-                    as="a"
-                    href={pdfURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <TextWrap>
-                      <FormattedMessage
-                        {...rootMessages.labels.chartTools.downloadPDF}
-                      />
-                    </TextWrap>
-                    <StyledShare />
-                  </DownloadButton>
+                  <>
+                    <DownloadButton
+                      as="a"
+                      href={pdfURL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <TextWrap>
+                        <FormattedMessage
+                          {...rootMessages.labels.chartTools.downloadPDF}
+                        />
+                      </TextWrap>
+                      <StyledShare />
+                    </DownloadButton>
+                    {countryCode === 'VNM' && (
+                      <DownloadButton
+                        as="a"
+                        href={specialPdfURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TextWrap>
+                          <FormattedMessage
+                            {...rootMessages.labels.chartTools.downloadSpecialPDF}
+                          />
+                        </TextWrap>
+                        <StyledShare />
+                      </DownloadButton>
+                    )}
+                  </>
                 )}
               </ChartToolWrapper>
                 /* eslint-enable */

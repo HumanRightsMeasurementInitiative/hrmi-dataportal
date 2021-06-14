@@ -125,7 +125,7 @@ export const LANGUAGES = {
 
 // URLs for external resources loaded on request
 export const DATA_URL = '//data-store.humanrightsmeasurement.org/data';
-export const PAGES_URL = '//content-store.humanrightsmeasurement.org/v3_1/';
+export const PAGES_URL = '//content-store.humanrightsmeasurement.org/v3_3/';
 
 export const PAGES = {
   about: {
