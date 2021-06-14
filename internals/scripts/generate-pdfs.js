@@ -13,7 +13,14 @@ const ptJSON = require('../../app/translations/pt.json')
 const frJSON = require('../../app/translations/fr.json')
 const zhJSON = require('../../app/translations/zh.json')
 // pdf-specific languages
+// NOTE that creating each of these one-off PDF's may require changes at build-time in i18n.js and narrative.js to get the right translation file for the target country
+// this is to be revisited with the refactor work
 const viJSON = require('../../app/translations/vi.json')
+const koJSON = require('../../app/translations/ko.json')
+const ruKAZJSON = require('../../app/translations/ru-KAZ.json')
+const ruKGZJSON = require('../../app/translations/ru-KGZ.json')
+const arJORJSON = require('../../app/translations/ar-JOR.json')
+const arSAUJSON = require('../../app/translations/ar-SAU.json')
 
 // TODO: vscode hangs when the logo is in this file, so have moved it out for now while developing
 const logo = require('./pdf-logo')
@@ -22,9 +29,6 @@ const currentYear = '2021'
 
 const pdfsDir = path.join(process.cwd(), './pdfs')
 
-// const specialLangPDFs = {
-
-// }
 
 async function printPDF({
   countries,
@@ -80,7 +84,12 @@ async function printPDF({
     fr: frJSON,
     pt: ptJSON,
     zh: zhJSON,
-    vi: viJSON
+    vi: viJSON,
+    ko: koJSON,
+    ru: ruKAZJSON, 
+    // ru: ruKGZJSON, 
+    ar: arJORJSON, 
+    // ar: arSAUJSON, 
   }
   for (let i = 0; i < countries.length; i++) {
     const country = countries[i];
@@ -102,7 +111,33 @@ async function printPDF({
         langFile: langFileMap['vi'],
         as
       })
-
+    }
+    if (country.code === 'KOR') {
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang: 'ko',
+        code: country.code,
+        langFile: langFileMap['ko'],
+        as
+      })
+    }
+    if (country.code === 'KAZ' || country.code === 'KGZ') {
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang: 'ru',
+        code: country.code,
+        langFile: langFileMap['ru'],
+        as
+      })
+    }
+    if (country.code === 'JOR' || country.code === 'SAU') {
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang: 'ar',
+        code: country.code,
+        langFile: langFileMap['ar'],
+        as
+      })
     }
   }
 
@@ -132,9 +167,10 @@ async function printPDF({
     // countries: [{ code: 'COD', income: '0' }],
     // countries: [{ code: 'SAU', income: '0' }],
     // countries: [{ code: 'VNM', income: '0' }],
-    countries,
-    languages: ['en', 'es', 'fr', 'pt', 'zh']
-    // languages: ['pt']
+    countries: [{ code: 'KAZ', income: '0' }],
+    // countries,
+    // languages: ['en', 'es', 'fr', 'pt', 'zh']
+    languages: ['pt']
   });
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)
