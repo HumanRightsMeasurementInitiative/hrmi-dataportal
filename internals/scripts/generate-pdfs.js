@@ -12,6 +12,8 @@ const esJSON = require('../../app/translations/es.json')
 const ptJSON = require('../../app/translations/pt.json')
 const frJSON = require('../../app/translations/fr.json')
 const zhJSON = require('../../app/translations/zh.json')
+// pdf-specific languages
+const viJSON = require('../../app/translations/vi.json')
 
 // TODO: vscode hangs when the logo is in this file, so have moved it out for now while developing
 const logo = require('./pdf-logo')
@@ -19,6 +21,10 @@ const logo = require('./pdf-logo')
 const currentYear = '2021'
 
 const pdfsDir = path.join(process.cwd(), './pdfs')
+
+// const specialLangPDFs = {
+
+// }
 
 async function printPDF({
   countries,
@@ -73,7 +79,8 @@ async function printPDF({
     es: esJSON,
     fr: frJSON,
     pt: ptJSON,
-    zh: zhJSON
+    zh: zhJSON,
+    vi: viJSON
   }
   for (let i = 0; i < countries.length; i++) {
     const country = countries[i];
@@ -86,6 +93,16 @@ async function printPDF({
         langFile: langFileMap[lang],
         as
       })
+    }
+    if (country.code === 'VNM') {
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang: 'vi',
+        code: country.code,
+        langFile: langFileMap['vi'],
+        as
+      })
+
     }
   }
 
@@ -114,7 +131,8 @@ async function printPDF({
     // countries: [{ code: 'AUS', income: '1' }],
     // countries: [{ code: 'COD', income: '0' }],
     // countries: [{ code: 'SAU', income: '0' }],
-    countries,
+    countries: [{ code: 'VNM', income: '0' }],
+    // countries,
     languages: ['en', 'es', 'fr', 'pt', 'zh']
     // languages: ['pt']
   });

@@ -8,6 +8,7 @@ const ARTICLES_DEFAULT = {
   es: 0,
   pt: 1,
   zh: 0, // TODO: is this right?
+  vi: 0, // TODO: is this right?
 };
 
 export const needsArticle = (locale, countryGrammar) => {
@@ -196,6 +197,7 @@ const regionsNeedArticle = {
   es: ['americas'],
   pt: ['americas'],
   zh: [],
+  vi: [],
 };
 const regionsArePlural = {
   en: [
@@ -218,6 +220,7 @@ const regionsArePlural = {
     'middle-east-north-africa',
   ],
   zh: [],
+  vi: [],
 };
 const regionsAreFeminine = {
   en: [],
@@ -247,6 +250,7 @@ const regionsAreFeminine = {
     'east-asia',
   ],
   zh: [],
+  vi: [],
 };
 const isRegionFeminine = (locale, regionCode) =>
   regionsAreFeminine[locale].indexOf(regionCode) > -1;

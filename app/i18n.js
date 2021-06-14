@@ -14,17 +14,22 @@ const ptLocaleData = require('react-intl/locale-data/pt');
 const frLocaleData = require('react-intl/locale-data/fr');
 const zhLocaleData = require('react-intl/locale-data/zh');
 
+const viLocaleData = require('react-intl/locale-data/vi');
 const enTranslationMessages = require('./translations/en.json');
 const esTranslationMessages = require('./translations/es.json');
 const ptTranslationMessages = require('./translations/pt.json');
 const frTranslationMessages = require('./translations/fr.json');
 const zhTranslationMessages = require('./translations/zh.json');
 
+// one-off PDF translations
+const viTranslationMessages = require('./translations/vi.json');
+
 addLocaleData(enLocaleData);
 addLocaleData(esLocaleData);
 addLocaleData(ptLocaleData);
 addLocaleData(frLocaleData);
 addLocaleData(zhLocaleData);
+addLocaleData(viLocaleData);
 
 const DEFAULT_LOCALE = 'en';
 
@@ -35,6 +40,7 @@ const appLocales = [
   'pt',
   'fr',
   'zh',
+  'vi'
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -66,6 +72,9 @@ const translationMessages = {
   zh:
     zhTranslationMessages &&
     formatTranslationMessages('zh', zhTranslationMessages),
+  vi:
+    viTranslationMessages &&
+    formatTranslationMessages('vi', viTranslationMessages),
 };
 
 exports.appLocales = appLocales;
