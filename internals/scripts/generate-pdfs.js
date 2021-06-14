@@ -131,8 +131,8 @@ async function printPDF({
     // countries: [{ code: 'AUS', income: '1' }],
     // countries: [{ code: 'COD', income: '0' }],
     // countries: [{ code: 'SAU', income: '0' }],
-    countries: [{ code: 'VNM', income: '0' }],
-    // countries,
+    // countries: [{ code: 'VNM', income: '0' }],
+    countries,
     languages: ['en', 'es', 'fr', 'pt', 'zh']
     // languages: ['pt']
   });
