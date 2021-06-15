@@ -68,6 +68,32 @@ const hasScoreRights = (metricScores, standard) => {
   );
   return noRightsScores > 0;
 };
+const hasScoreRightsPhysInt = metricScores => {
+  if (Object.keys(metricScores).length === 0) return false;
+  const noRightsScores = Object.keys(metricScores).reduce(
+    (m, right) =>
+      RIGHTS.filter(r => r.dimension === 'physint')
+        .map(r => r.key)
+        .includes(right)
+        ? m + 1
+        : m,
+    0,
+  );
+  return noRightsScores > 0;
+};
+const hasScoreRightsEmpower = metricScores => {
+  if (Object.keys(metricScores).length === 0) return false;
+  const noRightsScores = Object.keys(metricScores).reduce(
+    (m, right) =>
+      RIGHTS.filter(r => r.dimension === 'empowerment')
+        .map(r => r.key)
+        .includes(right)
+        ? m + 1
+        : m,
+    0,
+  );
+  return noRightsScores > 0;
+};
 const hasScoreIndicators = (indicatorScores, indicators, right, standard) => {
   if (!indicatorScores || !indicators) return false;
   const indicatorsStandard = indicators.filter(i => {
@@ -156,8 +182,18 @@ const getDimensions = (
       scores.esr &&
       scores.esr.esr &&
       !!scores.esr.esr.find(s => s.standard === otherStandard.code),
+    /* eslint-disable no-nested-ternary */
     hasScoreRights:
-      dim.type === 'esr' && scores.esr && hasScoreRights(scores.esr, standard),
+      dim.type === 'esr'
+        ? scores.esr && hasScoreRights(scores.esr, standard)
+        : // prettier-ignore
+        dim.key === 'physint'
+          ? 
+          // prettier-ignore
+          scores.cpr && hasScoreRightsPhysInt(scores.cpr)
+          : 
+          scores.cpr && hasScoreRightsEmpower(scores.cpr),
+    /* eslint-enable */
     hasScoreRightsAlternate:
       dim.type === 'esr' &&
       scores.esr &&
