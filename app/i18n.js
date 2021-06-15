@@ -14,10 +14,10 @@ const ptLocaleData = require('react-intl/locale-data/pt');
 const frLocaleData = require('react-intl/locale-data/fr');
 const zhLocaleData = require('react-intl/locale-data/zh');
 // one-off PDF translations
-const viLocaleData = require('react-intl/locale-data/vi');
-const koLocaleData = require('react-intl/locale-data/ko');
-const ruLocaleData = require('react-intl/locale-data/ru');
-const arLocaleData = require('react-intl/locale-data/ar');
+// const viLocaleData = require('react-intl/locale-data/vi');
+// const koLocaleData = require('react-intl/locale-data/ko');
+// const ruLocaleData = require('react-intl/locale-data/ru');
+// const arLocaleData = require('react-intl/locale-data/ar');
 
 const enTranslationMessages = require('./translations/en.json');
 const esTranslationMessages = require('./translations/es.json');
@@ -27,11 +27,11 @@ const zhTranslationMessages = require('./translations/zh.json');
 
 // one-off PDF translations
 // note we may use temp lang files specific to individual countries
-const viTranslationMessages = require('./translations/vi.json');
-const koTranslationMessages = require('./translations/ko.json');
-const ruKAZTranslationMessages = require('./translations/ru-KAZ.json');
+// const viTranslationMessages = require('./translations/vi.json');
+// const koTranslationMessages = require('./translations/ko.json');
+// const ruKAZTranslationMessages = require('./translations/ru-KAZ.json');
 // const ruKGZTranslationMessages = require('./translations/ru-KGZ.json');
-const arJORTranslationMessages = require('./translations/ar-JOR.json');
+// const arJORTranslationMessages = require('./translations/ar-JOR.json');
 // const arSAUTranslationMessages = require('./translations/ar-SAU.json');
 
 addLocaleData(enLocaleData);
@@ -40,10 +40,10 @@ addLocaleData(ptLocaleData);
 addLocaleData(frLocaleData);
 addLocaleData(zhLocaleData);
 
-addLocaleData(viLocaleData);
-addLocaleData(koLocaleData);
-addLocaleData(ruLocaleData);
-addLocaleData(arLocaleData);
+// addLocaleData(viLocaleData);
+// addLocaleData(koLocaleData);
+// addLocaleData(ruLocaleData);
+// addLocaleData(arLocaleData);
 
 const DEFAULT_LOCALE = 'en';
 
@@ -54,10 +54,10 @@ const appLocales = [
   'pt',
   'fr',
   'zh',
-  'vi',
-  'ko',
-  'ru',
-  'ar',
+  // 'vi',
+  // 'ko',
+  // 'ru',
+  // 'ar',
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -89,21 +89,21 @@ const translationMessages = {
   zh:
     zhTranslationMessages &&
     formatTranslationMessages('zh', zhTranslationMessages),
-  vi:
-    viTranslationMessages &&
-    formatTranslationMessages('vi', viTranslationMessages),
-  ko:
-    koTranslationMessages &&
-    formatTranslationMessages('ko', koTranslationMessages),
-  ru:
-    ruKAZTranslationMessages &&
-    formatTranslationMessages('ru', ruKAZTranslationMessages),
+  // vi:
+  //   viTranslationMessages &&
+  //   formatTranslationMessages('vi', viTranslationMessages),
+  // ko:
+  //   koTranslationMessages &&
+  //   formatTranslationMessages('ko', koTranslationMessages),
+  // ru:
+  //   ruKAZTranslationMessages &&
+  //   formatTranslationMessages('ru', ruKAZTranslationMessages),
   // ru:
   //   ruKGZTranslationMessages &&
   //   formatTranslationMessages('ru', ruKGZTranslationMessages),
-  ar:
-    arJORTranslationMessages &&
-    formatTranslationMessages('ar', arJORTranslationMessages),
+  // ar:
+  //   arJORTranslationMessages &&
+  //   formatTranslationMessages('ar', arJORTranslationMessages),
   // ar:
   //   arSAUTranslationMessages &&
   //   formatTranslationMessages('ar', arSAUTranslationMessages),
