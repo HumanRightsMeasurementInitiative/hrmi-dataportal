@@ -564,24 +564,7 @@ export const getESRDimensionScores = createSelector(
     const dimension = DIMENSIONS.find(d => d.key === 'esr');
 
     // get scores for all years for multiple countries, single dimension
-    const allYearsScores =
-      standard &&
-      dimension &&
-      scores &&
-      countries &&
-      scores.filter(
-        s =>
-          s.standard === standard.code &&
-          s.metric_code === dimension.code &&
-          (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
-          (!hasChartSettingFilters ||
-            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-      );
-    if (!allYearsScores) return false;
-
-    return lookback(allYearsScores, selectedYear);
-
-    // return (
+    // const allYearsScores =
     //   standard &&
     //   dimension &&
     //   scores &&
@@ -590,13 +573,30 @@ export const getESRDimensionScores = createSelector(
     //     s =>
     //       s.standard === standard.code &&
     //       s.metric_code === dimension.code &&
-    //       (selectedYear
-    //         ? quasiEquals(s.year, selectedYear)
-    //         : quasiEquals(s.year, year)) &&
+    //       (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
     //       (!hasChartSettingFilters ||
     //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-    //   )
-    // );
+    //   );
+    // if (!allYearsScores) return false;
+
+    // return lookback(allYearsScores, selectedYear);
+
+    return (
+      standard &&
+      dimension &&
+      scores &&
+      countries &&
+      scores.filter(
+        s =>
+          s.standard === standard.code &&
+          s.metric_code === dimension.code &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
+          (!hasChartSettingFilters ||
+            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+      )
+    );
   },
 );
 
@@ -612,35 +612,35 @@ export const getCPRDimensionScores = createSelector(
     const dimension = !!metric && DIMENSIONS.find(d => d.key === metric);
 
     // get scores for all years for multiple countries, single dimension
-    const allYearsScores =
-      dimension &&
-      scores &&
-      countries &&
-      scores.filter(
-        s =>
-          s.metric_code === dimension.code &&
-          (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
-          (!hasChartSettingFilters ||
-            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-      );
-    if (!allYearsScores) return false;
-
-    return lookback(allYearsScores, selectedYear);
-
-    // return (
+    // const allYearsScores =
     //   dimension &&
     //   scores &&
     //   countries &&
     //   scores.filter(
     //     s =>
     //       s.metric_code === dimension.code &&
-    //       (selectedYear
-    //         ? quasiEquals(s.year, selectedYear)
-    //         : quasiEquals(s.year, year)) &&
+    //       (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
     //       (!hasChartSettingFilters ||
     //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-    //   )
-    // );
+    //   );
+    // if (!allYearsScores) return false;
+
+    // return lookback(allYearsScores, selectedYear);
+
+    return (
+      dimension &&
+      scores &&
+      countries &&
+      scores.filter(
+        s =>
+          s.metric_code === dimension.code &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
+          (!hasChartSettingFilters ||
+            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+      )
+    );
   },
 );
 
@@ -666,24 +666,7 @@ export const getESRRightScores = createSelector(
     const group = PEOPLE_GROUPS[0];
     const right = !!metric && RIGHTS.find(d => d.key === metric);
 
-    const allYearsScores =
-      scores &&
-      countries &&
-      right &&
-      scores.filter(
-        s =>
-          s.group === group.code &&
-          s.standard === standard.code &&
-          s.metric_code === right.code &&
-          (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
-          (!hasChartSettingFilters ||
-            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-      );
-    if (!allYearsScores) return false;
-
-    return lookback(allYearsScores, selectedYear);
-
-    // return (
+    // const allYearsScores =
     //   scores &&
     //   countries &&
     //   right &&
@@ -692,13 +675,30 @@ export const getESRRightScores = createSelector(
     //       s.group === group.code &&
     //       s.standard === standard.code &&
     //       s.metric_code === right.code &&
-    //       (selectedYear
-    //         ? quasiEquals(s.year, selectedYear)
-    //         : quasiEquals(s.year, year)) &&
+    //       (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
     //       (!hasChartSettingFilters ||
     //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-    //   )
-    // );
+    //   );
+    // if (!allYearsScores) return false;
+
+    // return lookback(allYearsScores, selectedYear);
+
+    return (
+      scores &&
+      countries &&
+      right &&
+      scores.filter(
+        s =>
+          s.group === group.code &&
+          s.standard === standard.code &&
+          s.metric_code === right.code &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
+          (!hasChartSettingFilters ||
+            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+      )
+    );
   },
 );
 
@@ -713,35 +713,35 @@ export const getCPRRightScores = createSelector(
   (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     const right = !!metric && RIGHTS.find(d => d.key === metric);
 
-    const allYearsScores =
-      scores &&
-      countries &&
-      right &&
-      scores.filter(
-        s =>
-          s.metric_code === right.code &&
-          (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
-          (!hasChartSettingFilters ||
-            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-      );
-    if (!allYearsScores) return false;
-
-    return lookback(allYearsScores, selectedYear);
-
-    // return (
+    // const allYearsScores =
     //   scores &&
     //   countries &&
     //   right &&
     //   scores.filter(
     //     s =>
     //       s.metric_code === right.code &&
-    //       (selectedYear
-    //         ? quasiEquals(s.year, selectedYear)
-    //         : quasiEquals(s.year, year)) &&
+    //       (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
     //       (!hasChartSettingFilters ||
     //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
-    //   )
-    // );
+    //   );
+    // if (!allYearsScores) return false;
+
+    // return lookback(allYearsScores, selectedYear);
+
+    return (
+      scores &&
+      countries &&
+      right &&
+      scores.filter(
+        s =>
+          s.metric_code === right.code &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
+          (!hasChartSettingFilters ||
+            countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+      )
+    );
   },
 );
 // single indicator, multiple countries, single year
