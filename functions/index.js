@@ -7,9 +7,9 @@ const base = new Airtable({
 
 exports.airtable = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
-    const data = await base('Qualitative Data_English_All Countries')
+    const data = await base(req.query.locale.toUpperCase())
       .select({
-        view: 'Grid view', // change based on language once set up
+        view: 'Grid view',
       })
       .firstPage();
     res.json({ data });
