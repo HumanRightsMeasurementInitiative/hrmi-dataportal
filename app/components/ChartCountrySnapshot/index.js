@@ -23,12 +23,24 @@ import { formatScoreMax } from 'utils/scores';
 
 import rootMessages from 'messages';
 
+const SummaryScorePDF = styled(Text)`
+  display: none;
+  @media print {
+    display: initial;
+  }
+`;
+
 const Dimension = styled(Box)`
   margin-bottom: 6px;
   position: relative;
 `;
 
 const RemoveFromPDFWrapper = styled.div`
+  @media print {
+    display: none;
+  }
+`;
+const RemoveFromPDFWrapperBox = styled(Box)`
   @media print {
     display: none;
   }
@@ -455,7 +467,24 @@ function ChartCountrySnapshot({
                           }}
                         >
                           {/* prettier-ignore */}
-                          <Text
+                          <RemoveFromPDFWrapperBox>
+                            <Text
+                              size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                              color="white"
+                            >
+                              {summaryScore
+                                ? formatScoreMax(
+                                  summaryScore.score,
+                                  summaryScore.maxValue,
+                                  1,
+                                  false,
+                                  intl,
+                                )
+                                : 'N/A'}
+                            </Text>
+                          </RemoveFromPDFWrapperBox>
+                          {/* prettier-ignore */}
+                          <SummaryScorePDF
                             size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
                             color="white"
                           >
@@ -464,11 +493,11 @@ function ChartCountrySnapshot({
                                 summaryScore.score,
                                 summaryScore.maxValue,
                                 1,
-                                false,
+                                true,
                                 intl,
                               )
                               : 'N/A'}
-                          </Text>
+                          </SummaryScorePDF>
                         </Box>
                       </Box>
                     </Box>
