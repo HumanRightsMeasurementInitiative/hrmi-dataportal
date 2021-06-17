@@ -28,7 +28,9 @@ function NarrativeCPR({ dimensionKey, country, score, intl, countryGrammar }) {
     ),
     physint: intl.formatMessage(rootMessages.dimensions.physint),
     empowerment: intl.formatMessage(rootMessages.dimensions.empowerment),
-    scoreBold: score && <strong>{formatScore(score.mean, 1, intl)}</strong>,
+    scoreBold: score && (
+      <strong>{formatScore(score.mean, 1, intl)} / 10</strong>
+    ),
     score: score && formatScore(score.mean, 1, intl),
   };
   if (!score) {
