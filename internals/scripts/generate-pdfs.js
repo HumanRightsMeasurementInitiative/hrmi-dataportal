@@ -67,7 +67,7 @@ async function printPDF({
         headerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; width: 100%; display: flex; flex-direction: row; justify-content: space-between; align-items: center; margin-left: 35px; margin-right: 35px; margin-top: 12px; margin-bottom: 0;"> <img src=${logo} alt="logo" style="width: 140px"></img> <p style="font-weight: 600">${subtitle}</p> </div>`,
         footerTemplate: `${headerFooterStyle} <div style="font-family: 'Source Sans Pro', sans-serif; height: 40px; width: 100%; background-color: #d3d3d3; -webkit-print-color-adjust: exact; display: flex; flex-direction: row; justify-content: space-around; align-items: center;"> <p style="font-weight: 600;">  HRMI ${currentYear} </p> <a href="http://rightstracker.org" style="text-decoration: none; color: unset"> <p>rightstracker.org </p> </a> <p style="font-weight: 600;"> Page <span class="pageNumber"></span>/<span class="totalPages"></span> </p></div>`,
         margin: {
-          top: "55px",
+          top: "65px",
           bottom: "76px",
         }
       });
