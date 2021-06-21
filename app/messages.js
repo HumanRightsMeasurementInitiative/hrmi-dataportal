@@ -140,6 +140,14 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.downloadPDFvi`,
         defaultMessage: 'Download PDF in Vietnamese',
       },
+      downloadPDFko: {
+        id: `${scope}.labels.chartTools.downloadPDFko`,
+        defaultMessage: 'Download PDF in Korean',
+      },
+      downloadPDFru: {
+        id: `${scope}.labels.chartTools.downloadPDFru`,
+        defaultMessage: 'Download PDF in Russian',
+      },
     },
     abbrev: {
       notAvailable: {

@@ -114,6 +114,20 @@ export function ChartHeader({
         .then(setSpecialPdfURL)
         .catch(err => console.log(err));
     }
+    if (countryCode === 'KOR') {
+      const ref = storage.ref(`pdfs/ko-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (countryCode === 'KAZ' || countryCode === 'KGZ') {
+      const ref = storage.ref(`pdfs/ru-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
   }, [locale, countryCode]);
 
   return (
@@ -197,6 +211,36 @@ export function ChartHeader({
                         <TextWrap>
                           <FormattedMessage
                             {...rootMessages.labels.chartTools.downloadPDFvi}
+                          />
+                        </TextWrap>
+                        <StyledShare />
+                      </DownloadButton>
+                    )}
+                    {countryCode === 'KOR' && (
+                      <DownloadButton
+                        as="a"
+                        href={specialPdfURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TextWrap>
+                          <FormattedMessage
+                            {...rootMessages.labels.chartTools.downloadPDFko}
+                          />
+                        </TextWrap>
+                        <StyledShare />
+                      </DownloadButton>
+                    )}
+                    {(countryCode === 'KAZ' || countryCode === 'KGZ') && (
+                      <DownloadButton
+                        as="a"
+                        href={specialPdfURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TextWrap>
+                          <FormattedMessage
+                            {...rootMessages.labels.chartTools.downloadPDFru}
                           />
                         </TextWrap>
                         <StyledShare />
