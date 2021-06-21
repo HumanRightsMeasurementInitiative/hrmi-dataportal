@@ -173,9 +173,14 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
         const countryData = airtableData.data.find(
           d => d.fields['ISO Code'] === splitKey[1],
         );
-        const keyData = countryData.fields[airtableRightsMap[splitKey[0]]];
 
-        yield put(contentLoaded(key, keyData, Date.now(), requestLocale));
+        if (!countryData) {
+          yield put(contentRequested(key, false));
+          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
+        } else {
+          const keyData = countryData.fields[airtableRightsMap[splitKey[0]]];
+          yield put(contentLoaded(key, keyData, Date.now(), requestLocale));
+        }
       } else {
         const url = `${PAGES_URL}${requestLocale}/${key}/`;
         try {
