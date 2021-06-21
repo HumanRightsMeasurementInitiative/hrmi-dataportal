@@ -93,7 +93,7 @@ function ChartMetricTrend({
               dimension={metric.dimension}
             />
             <PlotMultiCountry
-              height={120}
+              height={180}
               highlightRegion={highlightRegion}
               countryScores={scores.country}
               // regionScores={regionScores}
