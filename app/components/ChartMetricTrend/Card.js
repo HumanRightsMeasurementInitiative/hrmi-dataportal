@@ -6,7 +6,7 @@ export default styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 300px;
+  width: 240px;
   min-height: 300px;
   background: white;
   position: relative;
