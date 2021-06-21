@@ -365,7 +365,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": "的赋权权利。",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.physint": "的免受政府迫害保障。",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noData": "尚未为{country}生成{dimension}数据。我们希望尽快将数据收集扩大到全世界范围内。想了解您如何能帮助我们，请访问 ",
-  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country",
+  "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkURL": "https://humanrightsmeasurement.org/zh/do-you-want-hrmi-human-rights-scores-for-your-country",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": "HRMI网站上的该页面。",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButRights": "有关{dimension}的完整数据尚为{countryWithArticle}生成。我们希望在将来几年内收集更多的数据。",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButSurvey": "{dimension} 尚无{countryWithArticle}数据。我们希望，未来数年能够弥补差距。",
