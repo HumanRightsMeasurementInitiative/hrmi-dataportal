@@ -93,26 +93,22 @@ export function MetricSelect({
                       />
                     </StyledOption>
                     {m2.children &&
-                      m2.children.map(m3 => {
-                        const details3 = getMetricDetails(m3.key);
-                        console.log({ details3 });
-                        return (
-                          <div key={m3.key}>
-                            <StyledOption
-                              level={3}
-                              fill="horizontal"
-                              active={m3.key === activeMetric}
-                              disabled={m3.key === activeMetric}
-                              onClick={() => setActiveMetric(m3.key)}
-                              noBorderLast
-                            >
-                              <FormattedMessage
-                                {...rootMessages.subrights[m3.key]}
-                              />
-                            </StyledOption>
-                          </div>
-                        );
-                      })}
+                      m2.children.map(m3 => (
+                        <div key={m3.key}>
+                          <StyledOption
+                            level={3}
+                            fill="horizontal"
+                            active={m3.key === activeMetric}
+                            disabled={m3.key === activeMetric}
+                            onClick={() => setActiveMetric(m3.key)}
+                            noBorderLast
+                          >
+                            <FormattedMessage
+                              {...rootMessages.subrights[m3.key]}
+                            />
+                          </StyledOption>
+                        </div>
+                      ))}
                   </div>
                 );
               })}

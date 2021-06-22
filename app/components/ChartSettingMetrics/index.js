@@ -90,7 +90,11 @@ function ChartSettingMetrics({
                         >
                           {truncateText(
                             intl.formatMessage(
-                              rootMessages[details.metricType][activeMetric],
+                              rootMessages[
+                                details.metricType === 'indicators'
+                                  ? 'subrights'
+                                  : details.metricType
+                              ][activeMetric],
                             ),
                             isMaxSize(size, 'sm') ? 30 : 60,
                           )}
