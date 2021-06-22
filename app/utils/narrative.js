@@ -81,7 +81,7 @@ export const getCountryWithArticle = (locale, countryGrammar, countryLabel) => {
   if (locale === 'pt') {
     if (isPlural(locale, countryGrammar)) {
       if (isFeminine(locale, countryGrammar)) {
-        return `nas ${countryLabel}`;
+        return `as ${countryLabel}`;
       }
       return `os ${countryLabel}`;
     }
@@ -328,7 +328,7 @@ export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
   if (locale === 'pt') {
     if (isPluralRegion(locale, regionCode)) {
       if (isFeminineRegion(locale, regionCode)) {
-        return `as ${regionLabel}`;
+        return `nas ${regionLabel}`;
       }
       return `os ${regionLabel}`;
     }
