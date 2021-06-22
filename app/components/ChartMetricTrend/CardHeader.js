@@ -17,9 +17,7 @@ import ButtonPlain from 'styled/ButtonPlain';
 import rootMessages from 'messages';
 import messages from './messages';
 
-const Styled = styled.div`
-  margin-bottom: 5px;
-`;
+const Styled = styled.div``;
 const MetricIcon = styled.img`
   background: ${({ theme, bgr }) => theme.global.colors[bgr]};
   height: ${({ small }) => (small ? 40 : 48)}px;
