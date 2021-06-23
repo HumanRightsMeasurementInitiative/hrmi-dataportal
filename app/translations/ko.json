@@ -29,7 +29,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": " this page on the HRMI website.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButRights": "A full set of {dimension} data has not yet been produced for {countryWithArticle}. We hope to collect more complete data in future years.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButSurvey": "{dimension} data have not yet been produced for {countryWithArticle}. We hope to be able to fill this gap in future years.",
-  "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Compared with all other high-income countries, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "사회적 권리 데이터를 가지고 있는 다른 고소득 국가에 비해 평균보다 더 나은 성과를 내고 있다 ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": " on Quality of Life rights",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " on the {right}",
   "hrmi.components.CountryNarrative.compAssessmentESR.endSome": " 성과를 내고 있다",
