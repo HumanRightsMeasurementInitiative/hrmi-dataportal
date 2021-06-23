@@ -128,6 +128,13 @@ export function ChartHeader({
         .then(setSpecialPdfURL)
         .catch(err => console.log(err));
     }
+    if (countryCode === 'JOR' || countryCode === 'SAU') {
+      const ref = storage.ref(`pdfs/ar-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
   }, [locale, countryCode]);
 
   return (
