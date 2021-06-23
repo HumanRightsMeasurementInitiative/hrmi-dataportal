@@ -148,6 +148,10 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.downloadPDFru`,
         defaultMessage: 'Download PDF in Russian',
       },
+      downloadPDFar: {
+        id: `${scope}.labels.chartTools.downloadPDFar`,
+        defaultMessage: 'Download PDF in Arabic',
+      },
     },
     abbrev: {
       notAvailable: {
