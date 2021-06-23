@@ -253,6 +253,21 @@ export function ChartHeader({
                         <StyledShare />
                       </DownloadButton>
                     )}
+                    {(countryCode === 'JOR' || countryCode === 'SAU') && (
+                      <DownloadButton
+                        as="a"
+                        href={specialPdfURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TextWrap>
+                          <FormattedMessage
+                            {...rootMessages.labels.chartTools.downloadPDFar}
+                          />
+                        </TextWrap>
+                        <StyledShare />
+                      </DownloadButton>
+                    )}
                   </>
                 )}
               </ChartToolWrapper>
