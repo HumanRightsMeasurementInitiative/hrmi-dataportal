@@ -8,7 +8,8 @@ const serviceAccount = require(path.join(__dirname, '../../firebase-adminsdk.jso
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: "rightstracker-2021-embargoed.appspot.com"
+  // storageBucket: "rightstracker-2021-embargoed.appspot.com"
+  storageBucket: "hrmi-dataportal.appspot.com"
 })
 
 const bucket = admin.storage().bucket()
