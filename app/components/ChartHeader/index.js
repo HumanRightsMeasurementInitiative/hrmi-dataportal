@@ -6,7 +6,14 @@
 
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, ResponsiveContext, Box, Text, Button } from 'grommet';
+import {
+  Heading,
+  ResponsiveContext,
+  Box,
+  Text,
+  Button,
+  Spinner,
+} from 'grommet';
 import { Share, Next, Previous } from 'grommet-icons';
 import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -195,20 +202,22 @@ export function ChartHeader({
                   tools.settingsConfig.key === 'tab-snapshot' && (
                   /* eslint-disable */
                   <>
-                    <DownloadButton
-                      as="a"
-                      href={pdfURL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <TextWrap>
-                        <FormattedMessage
-                          {...rootMessages.labels.chartTools.downloadPDF}
-                        />
-                      </TextWrap>
-                      <StyledShare />
-                    </DownloadButton>
-                    {countryCode === 'VNM' && (
+                    {!pdfURL
+                    ? <Spinner />
+                    : <DownloadButton
+                    as="a"
+                    href={pdfURL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <TextWrap>
+                      <FormattedMessage
+                        {...rootMessages.labels.chartTools.downloadPDF}
+                      />
+                    </TextWrap>
+                    <StyledShare />
+                  </DownloadButton>}
+                    {countryCode === 'VNM' && !specialPdfURL ? <Spinner /> : countryCode === 'VNM' && (
                       <DownloadButton
                         as="a"
                         href={specialPdfURL}
@@ -223,7 +232,7 @@ export function ChartHeader({
                         <StyledShare />
                       </DownloadButton>
                     )}
-                    {countryCode === 'KOR' && (
+                    {countryCode === 'KOR' && !specialPdfURL ? <Spinner /> : countryCode === 'KOR' && (
                       <DownloadButton
                         as="a"
                         href={specialPdfURL}
@@ -238,7 +247,7 @@ export function ChartHeader({
                         <StyledShare />
                       </DownloadButton>
                     )}
-                    {(countryCode === 'KAZ' || countryCode === 'KGZ') && (
+                    {(countryCode === 'KAZ' || countryCode === 'KGZ') && !specialPdfURL ? <Spinner /> : (countryCode === 'KAZ' || countryCode === 'KGZ') && (
                       <DownloadButton
                         as="a"
                         href={specialPdfURL}
@@ -253,7 +262,7 @@ export function ChartHeader({
                         <StyledShare />
                       </DownloadButton>
                     )}
-                    {(countryCode === 'JOR' || countryCode === 'SAU') && (
+                    {(countryCode === 'JOR' || countryCode === 'SAU') && !specialPdfURL ? <Spinner /> : (countryCode === 'JOR' || countryCode === 'SAU') && (
                       <DownloadButton
                         as="a"
                         href={specialPdfURL}
