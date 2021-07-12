@@ -54,6 +54,7 @@ function NarrativeCPRCompAssessment({
       />
     );
   }
+
   return (
     <PDFParagraph>
       {isHiOECD && (

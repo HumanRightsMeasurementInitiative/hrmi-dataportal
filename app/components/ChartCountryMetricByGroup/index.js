@@ -134,6 +134,7 @@ const prepareData = ({
       label: intl.formatMessage(rootMessages.groups[group.key]),
       unit: '%',
       key: group.key,
+      year: groupScore && groupScore.year,
     };
   });
 

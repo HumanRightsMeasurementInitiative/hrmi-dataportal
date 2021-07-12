@@ -62,20 +62,31 @@ export function ChartWordCloud({
   const scores =
     data.scores &&
     data.scores.length > 0 &&
-    data.scores.sort((a, b) => {
-      if (a.proportion === b.proportion) {
-        return intl.formatMessage(
-          rootMessages['people-at-risk'][a.people_code],
-        ) > intl.formatMessage(rootMessages['people-at-risk'][b.people_code])
-          ? 1
-          : -1;
-      }
-      return a.proportion > b.proportion ? -1 : 1;
-    });
+    // map to use people_code 9a rather than 9 for word cloud
+    data.scores
+      .map(s => (s.people_code === '9' ? { ...s, people_code: '9a' } : s))
+      .sort((a, b) => {
+        if (a.proportion === b.proportion) {
+          return intl.formatMessage(
+            rootMessages['people-at-risk'][a.people_code],
+          ) > intl.formatMessage(rootMessages['people-at-risk'][b.people_code])
+            ? 1
+            : -1;
+        }
+        return a.proportion > b.proportion ? -1 : 1;
+      });
   // prettier-ignore
   const wordHighlighted = highlight && scores
-    ? scores.find(s => quasiEquals(s.people_code, highlight))
+    ? scores.find(s => {
+      if (highlight === '9') {
+        // N.B. scores has been mapped above to replace people_code 9 with 9a for rendering purposes - so if highlight group 9 is selected, need to match with 9a.
+        return quasiEquals(s.people_code, '9a')
+      } 
+      return quasiEquals(s.people_code, highlight)
+      
+    })
     : activeWord;
+
   return (
     <Styled
       direction="column"

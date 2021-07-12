@@ -20,7 +20,7 @@ import {
   getCountry,
   getLatestCountryPopulation,
   getLatestCountryCurrentGDP,
-  getLatestCountry2011PPPGDP,
+  getLatestCountry2017PPPGDP,
   getCountriesGrammar,
 } from 'containers/App/selectors';
 import Tooltip from 'components/Tooltip';
@@ -48,11 +48,11 @@ const Label = styled(Text)`
 //   font-size: 12px;
 // }
 
-const Detail = styled(Text)``;
-// @media print {
-//   font-size: 12px;
-//   padding: 0px;
-// }
+const Detail = styled(Text)`
+  @media print {
+    margin-right: 16px;
+  }
+`;
 
 const Hint = styled(Text)``;
 // @media print {
@@ -469,7 +469,7 @@ const mapStateToProps = createStructuredSelector({
   currentGDP: (state, { countryCode }) =>
     getLatestCountryCurrentGDP(state, countryCode),
   pppGDP: (state, { countryCode }) =>
-    getLatestCountry2011PPPGDP(state, countryCode),
+    getLatestCountry2017PPPGDP(state, countryCode),
   population: (state, { countryCode }) =>
     getLatestCountryPopulation(state, countryCode),
 });

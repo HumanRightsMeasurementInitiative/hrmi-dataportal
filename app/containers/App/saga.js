@@ -141,37 +141,79 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
     // If haven't loaded yet, do so now.
     if (!requestedAt && !ready) {
       const requestLocale = yield locale || select(getLocale);
-      const url = `${PAGES_URL}${requestLocale}/${key}/`;
-      try {
+      // TEMP: testing airtable for atrisk content
+      if (contentType === 'atrisk') {
         // First record that we are requesting
         yield put(contentRequested(key, Date.now()));
-        const response = yield fetch(url);
-        const responseOk = yield response.ok;
-        if (responseOk && typeof response.text === 'function') {
-          const responseBody = yield response.text();
-          if (responseBody) {
-            yield put(
-              contentLoaded(key, responseBody, Date.now(), requestLocale),
-            );
+        const airtableRes = yield fetch(
+          process.env.NODE_ENV === 'production'
+            ? `/airtable?locale=${requestLocale}`
+            : `http://localhost:5001/rightstracker-2021-embargoed/us-central1/airtable?locale=${requestLocale}`,
+        );
+        const airtableData = yield airtableRes.json();
+        const splitKey = key.split('/');
+
+        // TEMP: move this to constants
+        const airtableRightsMap = {
+          arrest: 'Arbitrary Arrest',
+          disappearance: 'Disappearance',
+          'death-penalty': 'Death Penalty',
+          'extrajud-killing': 'Extrajudicial Killing',
+          torture: 'Torture and Ill-Treatment',
+          assembly: 'Assembly and Association',
+          expression: 'Opinion and Expression',
+          participation: 'Political Participation',
+          education: 'Education',
+          food: 'Food',
+          health: 'Health',
+          housing: 'Housing',
+          work: 'Work',
+        };
+
+        const countryData = airtableData.data.find(
+          d => d.fields['ISO Code'] === splitKey[1],
+        );
+
+        if (!countryData) {
+          yield put(contentRequested(key, false));
+          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
+        } else {
+          const keyData = countryData.fields[airtableRightsMap[splitKey[0]]];
+          yield put(contentLoaded(key, keyData, Date.now(), requestLocale));
+        }
+      } else {
+        const url = `${PAGES_URL}${requestLocale}/${key}/`;
+        try {
+          // First record that we are requesting
+          yield put(contentRequested(key, Date.now()));
+          const response = yield fetch(url);
+          const responseOk = yield response.ok;
+          if (responseOk && typeof response.text === 'function') {
+            const responseBody = yield response.text();
+            if (responseBody) {
+              yield put(
+                contentLoaded(key, responseBody, Date.now(), requestLocale),
+              );
+            } else {
+              yield put(contentRequested(key, false));
+              throw new Error(response.statusText);
+            }
+          } else if (
+            quasiEquals(response.status, 404) &&
+            contentType === 'atrisk' &&
+            requestLocale !== DEFAULT_LOCALE
+          ) {
+            yield put(contentRequested(key, false));
+            yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
           } else {
             yield put(contentRequested(key, false));
             throw new Error(response.statusText);
           }
-        } else if (
-          quasiEquals(response.status, 404) &&
-          contentType === 'atrisk' &&
-          requestLocale !== DEFAULT_LOCALE
-        ) {
+        } catch (err) {
+          // throw error
           yield put(contentRequested(key, false));
-          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
-        } else {
-          yield put(contentRequested(key, false));
-          throw new Error(response.statusText);
+          throw new Error(err);
         }
-      } catch (err) {
-        // throw error
-        yield put(contentRequested(key, false));
-        throw new Error(err);
       }
     }
   }

@@ -30,6 +30,10 @@ import {
   getCountries,
   getDependenciesReady,
   getAuxIndicatorsLatest,
+  getMaxYearESR,
+  getMinYearESR,
+  getMaxYearCPR,
+  getMinYearCPR,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import {
@@ -176,6 +180,13 @@ export function ChartContainerMetric({
   auxIndicators,
   onCountryClick,
   activeCode,
+  selectedYear,
+  setSelectedYear,
+  maxYearESR,
+  minYearESR,
+  maxYearCPR,
+  minYearCPR,
+  maxYearDimension,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -262,12 +273,19 @@ export function ChartContainerMetric({
             }}
             sort={{
               sort: currentSort,
-              options: SORT_OPTIONS,
+              options:
+                maxYearDimension === selectedYear
+                  ? SORT_OPTIONS
+                  : ['score', 'name'],
               order: currentSortOrder,
               onSortSelect,
               onOrderToggle: onOrderChange,
             }}
             standard={standard}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+            maxYearDimension={metric.type === 'esr' ? maxYearESR : maxYearCPR}
+            minYearDimension={metric.type === 'esr' ? minYearESR : minYearCPR}
           />
           {!dataReady && <LoadingIndicator />}
           {!hasResults && dataReady && (
@@ -370,23 +388,30 @@ ChartContainerMetric.propTypes = {
   dataReady: PropTypes.bool,
   showHILabel: PropTypes.bool,
   onCountryClick: PropTypes.func,
+  selectedYear: PropTypes.string,
+  setSelectedYear: PropTypes.func,
+  maxYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearDimension: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  scores: (state, { metric }) => {
+  scores: (state, { metric, selectedYear }) => {
     if (metric.metricType === 'dimensions') {
       return metric.type === 'esr'
-        ? getESRDimensionScores(state)
-        : getCPRDimensionScores(state, metric.key);
+        ? getESRDimensionScores(state, selectedYear)
+        : getCPRDimensionScores(state, metric.key, selectedYear);
     }
     if (metric.metricType === 'rights') {
       return metric.type === 'esr'
-        ? getESRRightScores(state, metric.key)
-        : getCPRRightScores(state, metric.key);
+        ? getESRRightScores(state, metric.key, selectedYear)
+        : getCPRRightScores(state, metric.key, selectedYear);
     }
     if (metric.metricType === 'indicators') {
-      return getIndicatorScores(state, metric.key);
+      return getIndicatorScores(state, metric.key, selectedYear);
     }
     return false;
   },
@@ -401,6 +426,10 @@ const mapStateToProps = createStructuredSelector({
   treatyFilterValue: state => getTreatySearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
+  maxYearESR: getMaxYearESR,
+  minYearESR: getMinYearESR,
+  maxYearCPR: getMaxYearCPR,
+  minYearCPR: getMinYearCPR,
 });
 
 export function mapDispatchToProps(dispatch) {

@@ -35,6 +35,9 @@ const Styled = styled(Box)`
     padding-right: ${({ hasAside, theme }) =>
     hasAside ? theme.global.edgeSize.large : 0};
   }
+  @media print {
+    padding-top: 15px;
+  }
 `;
 
 function MainColumn(props) {

@@ -42,6 +42,13 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages, appLocales, DEFAULT_LOCALE } from './i18n';
 
+// HACK: firebase redirects not working, use JS implementation instead
+if (window.location.hostname === 'rightstracker-2021-embargoed.web.app') {
+  window.location = `https://rightstracker.org${window.location.pathname}${
+    window.location.search
+  }`;
+}
+
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);

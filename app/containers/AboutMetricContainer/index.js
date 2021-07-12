@@ -63,8 +63,6 @@ export function AboutMetricContainer({
     onLoadData(metric);
   }, [metric]);
 
-  console.log('here', intl);
-
   const metric = getMetricDetails(metricCode);
   const { metricType } = metric;
 

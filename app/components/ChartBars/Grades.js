@@ -58,6 +58,11 @@ const BGScaleLabel = styled.span`
     line-height: ${({ theme }) => theme.text.xxxsmall.size};
     font-size: ${({ theme }) => theme.text.xxxsmall.size};
   }
+  @media print {
+    padding-left: ${({ single }) => (single ? 0 : 2)}px;
+    display: inline-block;
+    max-width: 28px;
+  }
 `;
 
 const Key = styled.span`

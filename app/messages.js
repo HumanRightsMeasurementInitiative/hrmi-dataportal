@@ -136,6 +136,22 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
       },
+      downloadPDFvi: {
+        id: `${scope}.labels.chartTools.downloadPDFvi`,
+        defaultMessage: 'Download PDF in Vietnamese',
+      },
+      downloadPDFko: {
+        id: `${scope}.labels.chartTools.downloadPDFko`,
+        defaultMessage: 'Download PDF in Korean',
+      },
+      downloadPDFru: {
+        id: `${scope}.labels.chartTools.downloadPDFru`,
+        defaultMessage: 'Download PDF in Russian',
+      },
+      downloadPDFar: {
+        id: `${scope}.labels.chartTools.downloadPDFar`,
+        defaultMessage: 'Download PDF in Arabic',
+      },
     },
     abbrev: {
       notAvailable: {
@@ -591,6 +607,10 @@ export default defineMessages({
       id: `${scope}.people-at-risk.9`,
       defaultMessage: 'People 9',
     },
+    '9a': {
+      id: `${scope}.people-at-risk.9a`,
+      defaultMessage: 'People 9a',
+    },
     10: {
       id: `${scope}.people-at-risk.10`,
       defaultMessage: 'People 10',
@@ -686,6 +706,30 @@ export default defineMessages({
     33: {
       id: `${scope}.people-at-risk.33`,
       defaultMessage: 'People 33',
+    },
+    34: {
+      id: `${scope}.people-at-risk.34`,
+      defaultMessage: 'People 34',
+    },
+    35: {
+      id: `${scope}.people-at-risk.35`,
+      defaultMessage: 'People 35',
+    },
+    36: {
+      id: `${scope}.people-at-risk.36`,
+      defaultMessage: 'People 36',
+    },
+    37: {
+      id: `${scope}.people-at-risk.37`,
+      defaultMessage: 'People 37',
+    },
+    38: {
+      id: `${scope}.people-at-risk.38`,
+      defaultMessage: 'People 38',
+    },
+    39: {
+      id: `${scope}.people-at-risk.39`,
+      defaultMessage: 'People 39',
     },
   },
   'people-at-risk-intro': {
