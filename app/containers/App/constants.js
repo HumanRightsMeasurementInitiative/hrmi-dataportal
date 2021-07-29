@@ -276,7 +276,7 @@ export const COUNTRY_SORTS = {
   gdp: {
     order: 'desc',
     data: 'aux',
-    column: COLUMNS.AUX.GDP_2011_PPP,
+    column: COLUMNS.AUX.GDP_2017_PPP,
   },
   population: {
     order: 'desc',
