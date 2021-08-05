@@ -229,9 +229,7 @@ function ChartCountrySnapshot({
                           : `${dimensionCode}Dark`
                       }
                     >
-                      <FormattedMessage
-                        {...rootMessages.dimensions[dimensionCode]}
-                      />
+                      <FormattedMessage {...rootMessages.tabs[dimensionCode]} />
                     </DimensionHeading>
                   </Button>
                   <Text
@@ -248,7 +246,7 @@ function ChartCountrySnapshot({
                       {...rootMessages.pdf.noData}
                       values={{
                         category: intl.formatMessage(
-                          rootMessages.dimensions[dimensionCode],
+                          rootMessages.tabs[dimensionCode],
                         ),
                       }}
                     />
@@ -297,7 +295,7 @@ function ChartCountrySnapshot({
                               }
                             >
                               <FormattedMessage
-                                {...rootMessages.dimensions[dimensionCode]}
+                                {...rootMessages.tabs[dimensionCode]}
                               />
                             </DimensionHeading>
                           </Button>
@@ -411,7 +409,9 @@ function ChartCountrySnapshot({
                       direction="row"
                       justify="between"
                       align={isMaxSize(size, 'sm') ? 'start' : 'end'}
-                      margin={isMaxSize(size, 'sm') ? { top: '12px' } : 'none'}
+                      margin={
+                        isMaxSize(size, 'sm') ? { top: '12px' } : { top: '8px' }
+                      }
                     >
                       <Box direction="column" align="start">
                         <Button
@@ -433,7 +433,7 @@ function ChartCountrySnapshot({
                             }
                           >
                             <FormattedMessage
-                              {...rootMessages.dimensions[dimensionCode]}
+                              {...rootMessages.tabs[dimensionCode]}
                             />
                           </DimensionHeading>
                         </Button>
