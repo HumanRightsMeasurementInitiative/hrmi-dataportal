@@ -32,6 +32,7 @@ import {
   getAsideLayerActiveCode,
   getAtRiskSearch,
   getContent,
+  getLatestPacificScoresForCountry,
 } from 'containers/App/selectors';
 
 import {
@@ -83,6 +84,7 @@ import { getMessageGrammar } from 'utils/narrative';
 import { lowerCase } from 'utils/string';
 
 import messages from './messages';
+import TabCountryPacific from '../../components/TabCountryPacific';
 
 const RemoveFromPDFWrapper = styled.div`
   @media print {
@@ -118,6 +120,7 @@ const DEPENDENCIES = [
   'esrIndicatorScores',
   'auxIndicators',
   'atRisk',
+  'pacific',
 ];
 
 const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
@@ -297,6 +300,7 @@ export function PathCountry({
   content,
   onLoadContent,
   onSelectCountry,
+  pacificScores,
 }) {
   // const [activeCode, setActiveCode] = useState();
   useInjectSaga({ key: 'app', saga });
@@ -305,6 +309,8 @@ export function PathCountry({
     // kick off loading of data
     onLoadData();
   }, []);
+
+  console.log({ pacificScores });
 
   const countryCode = match.params.country;
   const keys = RIGHTS.map(r => generateKey(r.key, countryCode));
@@ -532,6 +538,25 @@ export function PathCountry({
                   ),
               },
               {
+                key: 'pacific-region-data',
+                title: intl.formatMessage(rootMessages.tabs.pacific),
+                content: props =>
+                  pacificScores.length > 0 && (
+                    <TabCountryPacific
+                      {...props}
+                      data={pacificScores}
+                      countryTitle={countryTitle}
+                      countryCode={countryCode}
+                      messageValues={messageValues}
+                      highlight={highlightGroup}
+                      setHighlight={onSetHighlightGroup}
+                      content={content}
+                      keys={keys}
+                      onSelectCountry={onSelectCountry}
+                    />
+                  ),
+              },
+              {
                 aside: true,
                 key: 'about',
                 title: intl.formatMessage(rootMessages.tabs.about),
@@ -626,6 +651,8 @@ const mapStateToProps = createStructuredSelector({
   activeCode: state => getAsideLayerActiveCode(state),
   highlightGroup: state => getAtRiskSearch(state),
   content: state => getContent(state),
+  pacificScores: (state, { match }) =>
+    getLatestPacificScoresForCountry(state, match.params.country),
 });
 
 export function mapDispatchToProps(dispatch) {

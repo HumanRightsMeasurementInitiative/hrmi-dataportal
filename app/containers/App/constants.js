@@ -260,6 +260,10 @@ export const DATA_RESOURCES = [
     key: 'sources',
     file: 'sources_2021.csv',
   },
+  {
+    key: 'pacific',
+    file: 'pm-formatted.csv',
+  },
 ];
 
 export const COUNTRY_SORTS = {

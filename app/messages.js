@@ -228,6 +228,10 @@ export default defineMessages({
       id: `${scope}.tabs.people-at-risk`,
       defaultMessage: 'People at risk',
     },
+    pacific: {
+      id: `${scope}.tabs.pacific`,
+      defaultMessage: 'Pacific Region Data',
+    },
     about: {
       id: `${scope}.tabs.about`,
       defaultMessage: 'About',

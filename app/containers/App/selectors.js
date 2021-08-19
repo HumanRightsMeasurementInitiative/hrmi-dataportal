@@ -2071,3 +2071,41 @@ export const getHasCountryESRScores = createSelector(
     };
   },
 );
+
+export const getPacificScores = createSelector(
+  getData,
+  data => data.pacific,
+);
+
+export const getMaxYearPacific = createSelector(
+  getPacificScores,
+  scores => calcMaxYear(scores),
+);
+
+export const getPacificScoresForCountry = createSelector(
+  (state, countryCode) => countryCode,
+  getPacificScores,
+  (countryCode, scores) =>
+    scores && scores.filter(s => s.country_code === countryCode),
+);
+
+export const getLatestPacificScores = createSelector(
+  getMaxYearPacific,
+  getPacificScores,
+  (maxYear, scores) =>
+    scores && scores.filter(s => quasiEquals(s.year, maxYear)),
+);
+
+export const getLatestPacificScoresForCountry = createSelector(
+  getMaxYearPacific,
+  getPacificScoresForCountry,
+  (maxYear, scores) =>
+    scores && scores.filter(s => quasiEquals(s.year, maxYear)),
+);
+
+export const getPacificScoresByMetric = createSelector(
+  (state, metricCode) => metricCode,
+  getPacificScores,
+  (metricCode, scores) =>
+    scores && scores.filter(s => s.metric_code === metricCode),
+);
