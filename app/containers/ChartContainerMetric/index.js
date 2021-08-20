@@ -241,6 +241,8 @@ export function ChartContainerMetric({
     metric.type === 'esr' && metric.metricType !== 'indicators';
   const showGovRespondentsLabel = metric.type === 'cpr';
 
+  console.log({ metric });
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -263,16 +265,18 @@ export function ChartContainerMetric({
               },
             }}
             messageValues={{ no: scores.length }}
-            filter={{
-              regionFilterValue,
-              subregionFilterValue,
-              onRemoveFilter,
-              onAddFilter,
-              incomeFilterValue,
-              countryGroupFilterValue,
-              treatyFilterValue,
-              filterValues,
-            }}
+            filter={
+              metric.right !== 'violence' && {
+                regionFilterValue,
+                subregionFilterValue,
+                onRemoveFilter,
+                onAddFilter,
+                incomeFilterValue,
+                countryGroupFilterValue,
+                treatyFilterValue,
+                filterValues,
+              }
+            }
             sort={{
               sort: currentSort,
               options:
@@ -413,7 +417,7 @@ const mapStateToProps = createStructuredSelector({
         : getCPRRightScores(state, metric.key, selectedYear);
     }
     if (metric.right === 'violence') {
-      return getPacificScoresByMetricByYear(state, metric.code, selectedYear) 
+      return getPacificScoresByMetricByYear(state, metric.code, selectedYear);
     }
     if (metric.metricType === 'indicators') {
       return getIndicatorScores(state, metric.key, selectedYear);

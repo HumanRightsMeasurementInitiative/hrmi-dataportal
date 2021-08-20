@@ -303,7 +303,7 @@ export function ChartHeader({
                   hasWhiteBG={hasWhiteBG}
                 />
               )}
-              {filter && (
+              {filter ? (
                 <ChartSettingFilters
                   regionFilterValue={filter.regionFilterValue}
                   subregionFilterValue={filter.subregionFilterValue}
@@ -316,6 +316,9 @@ export function ChartHeader({
                   filterValues={filter.filterValues}
                   hasWhiteBG={hasWhiteBG}
                 />
+              ) : (
+                // placeholder for space for when no filter
+                <Box />
               )}
               <Box>
                 {sort && isMinSize(size, 'medium') && (
