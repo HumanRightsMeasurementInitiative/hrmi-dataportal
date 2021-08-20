@@ -71,6 +71,7 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
   .concat({
     code: 'violence',
     label: intl.formatMessage(rootMessages.rights.violence),
+    disabled: true,
     indicators: [
       {
         code: 'vchild',
