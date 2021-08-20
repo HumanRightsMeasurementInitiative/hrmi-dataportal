@@ -109,8 +109,11 @@ export function AboutMetricContainer({
       }));
       questions = FAQS.ESR_RIGHT;
     }
-    if (metricType === 'indicators') {
+    if (metricType === 'indicators' && metric.right !== 'violence') {
       questions = FAQS.ESR_INDICATOR;
+    }
+    if (metric.right === 'violence') {
+      questions = FAQS.PACIFIC_INDICATOR;
     }
   }
 
@@ -296,7 +299,7 @@ export function AboutMetricContainer({
           />
         )}
       </div>
-      {showFAQs && metric.right !== 'violence' && (
+      {showFAQs && (
         <FAQs
           questions={questions}
           metric={intl.formatMessage(

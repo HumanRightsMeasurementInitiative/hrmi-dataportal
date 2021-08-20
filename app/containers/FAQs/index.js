@@ -183,6 +183,24 @@ const renderAnswer = (question, intl, msgValues, navMethodology, questions) => {
       </>
     );
   }
+  if (question === 'whereViolence-indicator') {
+    return (
+      <>
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
+          <FormattedMessage {...messages.answers[question]} />
+        </Text>
+      </>
+    );
+  }
+  if (question === 'violenceResponsibility') {
+    return (
+      <>
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
+          <FormattedMessage {...messages.answers[question]} />
+        </Text>
+      </>
+    );
+  }
   return (
     <>
       <Text size="small">
@@ -240,7 +258,7 @@ function FAQs({
   }
 
   return (
-    <Box pad={{ vertical: 'large' }}>
+    <Box pad={metrics.right !== 'violence' && { vertical: 'large' }}>
       <Heading responsive={false} level={3}>
         <FormattedMessage {...messages.title} />
       </Heading>
@@ -250,7 +268,7 @@ function FAQs({
         onActive={newActive => setActive(newActive)}
       >
         {/* for metric pages */}
-        {hasAbout && (
+        {hasAbout && metrics.right !== 'violence' && (
           <AccordionPanel
             header={
               <Box
@@ -342,7 +360,7 @@ function FAQs({
             </Box>
           </AccordionPanel>
         )}
-        {showSources && !hasIndicator && (
+        {showSources && !hasIndicator && metrics.right !== 'violence' && (
           <AccordionPanel
             header={
               <Box
