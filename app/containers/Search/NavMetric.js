@@ -65,7 +65,35 @@ export function NavMetric({ onSelectMetric, intl, onClose, size, nav, theme }) {
   const rightsWithIndicators = rights.map(r => ({
     ...r,
     indicators: indicators.filter(i => i.right === r.code),
-  }));
+  }))
+  // N.B. concat a fake right and indicators for Pacific module
+  // this means we don't mess things up by adding actual rights / indicators into the app constants
+  .concat({
+    code: 'violence',
+    label: intl.formatMessage(rootMessages.rights.violence),
+    indicators: [
+      {
+        code: 'vchild',
+        label: intl.formatMessage(rootMessages.subrights['violence-children']),
+        right: 'violence'
+      },
+      {
+        code: 'vdisab',
+        label: intl.formatMessage(rootMessages.subrights['violence-disabilities']),
+        right: 'violence'
+      },
+      {
+        code: 'vwomen',
+        label: intl.formatMessage(rootMessages.subrights['violence-women-and-girls']),
+        right: 'violence'
+      },
+      {
+        code: 'vmvpfaff',
+        label: intl.formatMessage(rootMessages.subrights['violence-mvpfaff-lgbtqia']),
+        right: 'violence'
+      }
+    ]
+  });
 
   return (
     <NavWrapper h={h}>

@@ -312,7 +312,6 @@ export function PathCountry({
 
   const countryCode = match.params.country;
   const keys = RIGHTS.map(r => generateKey(r.key, countryCode));
-  console.log({ atRisk, content });
 
   // loads content for all rights for people at risk tab
   // re-runs when country code changes

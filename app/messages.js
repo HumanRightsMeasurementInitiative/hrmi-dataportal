@@ -981,6 +981,10 @@ export default defineMessages({
       id: `${scope}.rights.union`,
       defaultMessage: 'union',
     },
+    violence: {
+      id: `${scope}.rights.violence`,
+      defaultMessage: 'violence',
+    },
   },
   'rights-short': {
     arrest: {
@@ -1400,6 +1404,22 @@ export default defineMessages({
     'affordable-housing': {
       id: `${scope}.subrights.affordable-housing`,
       defaultMessage: 'affordable-housing',
+    },
+    'violence-children': {
+      id: `${scope}.subrights.violence-children`,
+      defaultMessage: 'violence-children',
+    },
+    'violence-disabilities': {
+      id: `${scope}.subrights.violence-disabilities`,
+      defaultMessage: 'violence-disabilities',
+    },
+    'violence-women-and-girls': {
+      id: `${scope}.subrights.violence-women-and-girls`,
+      defaultMessage: 'violence-women-and-girls',
+    },
+    'violence-mvpfaff-lgbtqia': {
+      id: `${scope}.subrights.violence-mvpfaff-lgbtqia`,
+      defaultMessage: 'violence-mvpfaff-lgbtqia',
     },
     rightTo: {
       'net-primary': {
