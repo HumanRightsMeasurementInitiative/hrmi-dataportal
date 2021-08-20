@@ -2077,6 +2077,11 @@ export const getPacificScores = createSelector(
   data => data.pacific,
 );
 
+export const getMinYearPacific = createSelector(
+  getPacificScores,
+  scores => calcMinYear(scores),
+);
+
 export const getMaxYearPacific = createSelector(
   getPacificScores,
   scores => calcMaxYear(scores),
@@ -2107,12 +2112,11 @@ export const getPacificScoresByMetric = createSelector(
   (state, metricCode) => metricCode,
   getPacificScores,
   (metricCode, scores) =>
-    scores && scores.filter(s => s.metric_code === metricCode)
+    scores && scores.filter(s => s.metric_code === metricCode),
 );
 
 export const getPacificScoresByMetricByYear = createSelector(
   (state, metricCode, year) => year,
-  getPacificScoresByMetric ,
-  (year, scores) =>
-    scores && scores.filter(s => quasiEquals(s.year, year)),
+  getPacificScoresByMetric,
+  (year, scores) => scores && scores.filter(s => quasiEquals(s.year, year)),
 );

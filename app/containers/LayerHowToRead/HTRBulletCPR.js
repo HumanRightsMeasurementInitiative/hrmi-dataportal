@@ -16,12 +16,14 @@ import messages from './messages';
 
 const Styled = styled.div``;
 
-function HTRBulletCPR({ contxt, dimension, intl }) {
+function HTRBulletCPR({ contxt, dimension, noIntro, intl }) {
   return (
     <Styled>
-      <HTRParagraph>
-        <FormattedMessage {...messages.bullet.intro} />
-      </HTRParagraph>
+      {!noIntro && (
+        <HTRParagraph>
+          <FormattedMessage {...messages.bullet.intro} />
+        </HTRParagraph>
+      )}
       <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
@@ -156,6 +158,7 @@ HTRBulletCPR.propTypes = {
   contxt: PropTypes.string,
   dimension: PropTypes.string,
   intl: intlShape.isRequired,
+  noIntro: PropTypes.bool,
 };
 
 export default injectIntl(HTRBulletCPR);

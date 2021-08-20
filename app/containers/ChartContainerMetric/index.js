@@ -34,6 +34,8 @@ import {
   getMinYearESR,
   getMaxYearCPR,
   getMinYearCPR,
+  getMaxYearPacific,
+  getMinYearPacific,
   getPacificScoresByMetricByYear,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
@@ -188,6 +190,8 @@ export function ChartContainerMetric({
   minYearESR,
   maxYearCPR,
   minYearCPR,
+  maxYearPacific,
+  minYearPacific,
   maxYearDimension,
 }) {
   useEffect(() => {
@@ -241,8 +245,6 @@ export function ChartContainerMetric({
     metric.type === 'esr' && metric.metricType !== 'indicators';
   const showGovRespondentsLabel = metric.type === 'cpr';
 
-  console.log({ metric });
-
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -256,9 +258,11 @@ export function ChartContainerMetric({
                 chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
                 dimension: metric.color,
                 data: metric.color,
+                noIntro: metric.right === 'violence',
               },
-              settingsConfig: (metric.type === 'esr' ||
-                metric.metricType === 'indicators') && {
+              settingsConfig: metric.right !== 'violence' &&
+                (metric.type === 'esr' ||
+                  metric.metricType === 'indicators') && {
                 key: 'metric',
                 showStandard: metric.metricType !== 'indicators',
                 showBenchmark: true,
@@ -290,8 +294,20 @@ export function ChartContainerMetric({
             standard={standard}
             selectedYear={selectedYear}
             setSelectedYear={setSelectedYear}
-            maxYearDimension={metric.type === 'esr' ? maxYearESR : maxYearCPR}
-            minYearDimension={metric.type === 'esr' ? minYearESR : minYearCPR}
+            maxYearDimension={
+              metric.right === 'violence'
+                ? maxYearPacific
+                : metric.type === 'esr'
+                  ? maxYearESR
+                  : maxYearCPR
+            }
+            minYearDimension={
+              metric.right === 'violence'
+                ? minYearPacific
+                : metric.type === 'esr'
+                  ? minYearESR
+                  : minYearCPR
+            }
           />
           {!dataReady && <LoadingIndicator />}
           {!hasResults && dataReady && (
@@ -400,6 +416,8 @@ ChartContainerMetric.propTypes = {
   minYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   minYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearPacific: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearPacific: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   maxYearDimension: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
@@ -439,6 +457,8 @@ const mapStateToProps = createStructuredSelector({
   minYearESR: getMinYearESR,
   maxYearCPR: getMaxYearCPR,
   minYearCPR: getMinYearCPR,
+  maxYearPacific: getMaxYearPacific,
+  minYearPacific: getMinYearPacific,
 });
 
 export function mapDispatchToProps(dispatch) {

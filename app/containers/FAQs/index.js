@@ -258,7 +258,9 @@ function FAQs({
   }
 
   return (
-    <Box pad={metrics.right !== 'violence' && { vertical: 'large' }}>
+    <Box
+      pad={metrics && metrics.right === 'violence' ? {} : { vertical: 'large' }}
+    >
       <Heading responsive={false} level={3}>
         <FormattedMessage {...messages.title} />
       </Heading>
