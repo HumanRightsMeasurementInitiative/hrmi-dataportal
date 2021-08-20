@@ -1494,6 +1494,22 @@ export default defineMessages({
         id: `${scope}.subrights.rightTo.affordable-housing`,
         defaultMessage: 'affordable-housing',
       },
+      'violence-children': {
+        id: `${scope}.subrights.rightTo.violence-children`,
+        defaultMessage: 'violence-children',
+      },
+      'violence-disabilities': {
+        id: `${scope}.subrights.rightTo.violence-disabilities`,
+        defaultMessage: 'violence-disabilities',
+      },
+      'violence-women-and-girls': {
+        id: `${scope}.subrights.rightTo.violence-women-and-girls`,
+        defaultMessage: 'violence-women-and-girls',
+      },
+      'violence-mvpfaff-lgbtqia': {
+        id: `${scope}.subrights.rightTo.violence-mvpfaff-lgbtqia`,
+        defaultMessage: 'violence-mvpfaff-lgbtqia',
+      },
     },
   },
   'indicators-raw': {

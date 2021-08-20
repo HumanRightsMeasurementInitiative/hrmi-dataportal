@@ -34,6 +34,7 @@ import {
   getMinYearESR,
   getMaxYearCPR,
   getMinYearCPR,
+  getPacificScoresByMetricByYear,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import {
@@ -66,6 +67,7 @@ const DEPENDENCIES = [
   'esrIndicators',
   'esrIndicatorScores',
   'auxIndicators',
+  'pacific',
 ];
 
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
@@ -119,7 +121,7 @@ const prepareData = ({
 }) =>
   // prettier-ignore
   scores.map(s =>
-    metric.type === 'esr' || metric.metricType === 'indicators'
+    (metric.type === 'esr' || metric.metricType === 'indicators') && metric.right !== 'violence'
       ? {
         color: 'esr',
         refValues: getDimensionRefs(s, currentBenchmark, metric.metricType),
@@ -139,7 +141,7 @@ const prepareData = ({
         active: activeCode === s.country_code,
       }
       : {
-        color: metric.dimension || metric.key,
+        color: metric.right === 'violence' ? 'physint' : metric.dimension || metric.key,
         value: getCPRDimensionValue(s),
         maxValue: 10,
         unit: '',
@@ -199,7 +201,7 @@ export function ChartContainerMetric({
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
 
   // prettier-ignore
-  const countriesForScores = scores
+  const countriesForScores = (scores && countries)
     ? scores.map(s =>
       countries.find(c => c.country_code === s.country_code),
     )
@@ -309,7 +311,7 @@ export function ChartContainerMetric({
               currentBenchmark={currentBenchmark}
               metric={metric}
               listHeader
-              bullet={metric.type === 'cpr'}
+              bullet={metric.type === 'cpr' || metric.right === 'violence'}
               allowWordBreak
               labelColor={`${metric.color}Dark`}
               padVertical="xsmall"
@@ -409,6 +411,9 @@ const mapStateToProps = createStructuredSelector({
       return metric.type === 'esr'
         ? getESRRightScores(state, metric.key, selectedYear)
         : getCPRRightScores(state, metric.key, selectedYear);
+    }
+    if (metric.right === 'violence') {
+      return getPacificScoresByMetricByYear(state, metric.code, selectedYear) 
     }
     if (metric.metricType === 'indicators') {
       return getIndicatorScores(state, metric.key, selectedYear);

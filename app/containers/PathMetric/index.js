@@ -65,6 +65,7 @@ export function PathMetric({
   const maxYearDimension = metric.type === 'esr' ? maxYearESR : maxYearCPR;
   const [haveMaxYear, setHaveMaxYear] = useState(false);
   const [selectedYear, setSelectedYear] = useState(maxYearDimension);
+  console.log({ metric })
 
   if (haveMaxYear !== !!maxYearDimension) {
     setHaveMaxYear(true);
@@ -77,6 +78,7 @@ export function PathMetric({
     setHaveMaxYear(false);
   }, [metricCode]);
 
+  console.log({metricCode})
   // N.B. hacky way of handling sub-rights titles... fix later
   // prettier-ignore
   const metricTitle =
@@ -156,6 +158,7 @@ export function PathMetric({
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
+                  {metricCode !== 'vchild' && metricCode !== 'vdisab' && metricCode !== 'vwomen' && metricCode !== 'vmvpfaff' && (
                   <div>
                     <Breadcrumb
                       onItemClick={key => onMetricClick(key)}
@@ -170,6 +173,7 @@ export function PathMetric({
                       }))}
                     />
                   </div>
+                  )}
                   <div>
                     <PageTitle>{metricTitle}</PageTitle>
                   </div>

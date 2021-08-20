@@ -122,7 +122,7 @@ export function AboutMetricContainer({
       <div ref={asideRef}>
         {showRelated && (
           <div justify="start">
-            {metricType !== 'dimensions' && (
+            {metricType !== 'dimensions' && metric.right !== 'violence' && (
               <Pad>
                 <Heading
                   responsive={false}
@@ -296,7 +296,7 @@ export function AboutMetricContainer({
           />
         )}
       </div>
-      {showFAQs && (
+      {/* {showFAQs && (
         <FAQs
           questions={questions}
           metric={intl.formatMessage(
@@ -310,7 +310,7 @@ export function AboutMetricContainer({
           dateRange={dateRange}
           countryCode={countryCode}
         />
-      )}
+      )} */}
     </Box>
   );
 }
@@ -341,7 +341,7 @@ AboutMetricContainer.propTypes = {
 const mapStateToProps = createStructuredSelector({
   metricInfo: (state, { metricCode }) => {
     const metric = getMetricDetails(metricCode);
-    if (metric.metricType === 'indicators') {
+    if (metric.metricType === 'indicators' && metric.right !== 'violence') {
       return getIndicatorInfo(state, metric.code);
     }
     return false;

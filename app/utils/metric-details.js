@@ -19,7 +19,7 @@ export default function(code) {
       ...right,
     };
   }
-  const indicator = INDICATORS.find(m => m.key === code);
+  const indicator = INDICATORS.find(m => m.key === code)
   if (indicator) {
     return {
       metricType: 'indicators',
@@ -27,6 +27,24 @@ export default function(code) {
       type: 'esr',
       color: 'esr',
       ...indicator,
+    };
+  }
+  // N.B. violence exceptions
+  if (
+    code === 'vchild'
+    || code === 'vdisab'
+    || code === 'vwomen'
+    || code === 'vmvpfaff'
+  ) {
+    return {
+      metricType: 'indicators',
+      metricTypeSingle: 'indicator',
+      type: 'cpr',
+      color: 'cpr',
+      key: code === 'vchild' ? 'violence-children' : code === 'vdisab' ? 'violence-disabilities' : code === 'vwomen' ? 'violence-women-and-girls' : 'violence-mvpfaff-lgbtqia',
+      code,
+      right: 'violence',
+      resource: 'pacific'
     };
   }
   return false;
