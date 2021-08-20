@@ -61,7 +61,7 @@ function TabCountryPacific({
             issueTKeyPart="climate-crisis"
             countryWithArticle={messageValues.countryWithArticle}
             score={data.find(d => d.metric_code === 'climate').mean}
-            qualData={content[`climate/${countryCode}`].content}
+            qualData={content[`climate/${countryCode}`] && content[`climate/${countryCode}`].content}
             barChartResponseOptions={[
               { value: 1, tKey: 'not-at-all' },
               { value: 2, tKey: 'slightly' },
@@ -80,7 +80,7 @@ function TabCountryPacific({
             issueTKeyPart="indigenous-sovereignty"
             countryWithArticle={messageValues.countryWithArticle}
             score={data.find(d => d.metric_code === 'indigsov').mean}
-            qualData={content[`indigsov/${countryCode}`].content}
+            qualData={content[`indigsov/${countryCode}`] && content[`indigsov/${countryCode}`].content}
             barChartResponseOptions={[
               { value: 1, tKey: 'not-at-all' },
               { value: 2, tKey: 'slightly' },
@@ -99,7 +99,7 @@ function TabCountryPacific({
             issueTKeyPart="indigenous-lands"
             countryWithArticle={messageValues.countryWithArticle}
             score={data.find(d => d.metric_code === 'indigland').mean}
-            qualData={content[`indigland/${countryCode}`].content}
+            qualData={content[`indigland/${countryCode}`] && content[`indigland/${countryCode}`].content}
             barChartResponseOptions={[
               { value: 1, tKey: 'not-at-all' },
               { value: 2, tKey: 'slightly' },
@@ -118,7 +118,7 @@ function TabCountryPacific({
             issueTKeyPart="cultural-rights"
             countryWithArticle={messageValues.countryWithArticle}
             score={data.find(d => d.metric_code === 'culture').mean}
-            qualData={content[`culture/${countryCode}`].content}
+            qualData={content[`culture/${countryCode}`] && content[`culture/${countryCode}`].content}
             barChartResponseOptions={[
               { value: 1, tKey: 'not-at-all' },
               { value: 2, tKey: 'slightly' },
@@ -132,6 +132,63 @@ function TabCountryPacific({
             }
             id="cultural-rights"
           />
+
+          <Flex id="violence" mb={12} direction="column" width="100%">
+            <Heading fontSize={24} fontWeight="600" color="purple">
+              {/* {t("hrmi.pacific.violence")} */}
+              <FormattedMessage {...rootMessages.pacific.violence} />
+            </Heading>
+            <Box mt={2}>
+              <Text color="purple">
+                {/* {t(`hrmi.pacific.violence-subheading`, { countryWithArticle })} */}
+                <FormattedMessage {...{...rootMessages.pacific['violence-subheading'], values: messageValues }} />
+              </Text>
+            </Box>
+            <Box mt={4} width="100%">
+              {/* <PacificViolenceBoxPlotChart
+                violenceScores={pick(pacificQuantData, ['vchild', 'vdisab', 'vwomen', 'vmvpfaff'])}
+                yLabelTKey="hrmi.pacific.violence-against"
+                xLabelTKey="hrmi.labels.score"
+                range={['0', '10']}
+                getLabelTKey={k => `hrmi.pacific.${k}`}
+                color="physint"
+                grades={CPR_GRADES}
+                  onClick={() => {}}
+              /> */}
+            </Box>
+            <Box mt={6}>
+              <Heading fontSize={18} fontWeight="600" color="purple">
+                <FormattedMessage {...rootMessages.pacific['violence-mvpfaff']} />
+              </Heading>
+              <ReactMarkdown
+                children={content[`vmvpfaff/${countryCode}`] && content[`vmvpfaff/${countryCode}`].content}
+              />
+            </Box>
+            <Box mt={6}>
+              <Heading fontSize={18} fontWeight="600" color="purple">
+                <FormattedMessage {...rootMessages.pacific['violence-women']} />
+              </Heading>
+              <ReactMarkdown
+                children={content[`vwomen/${countryCode}`] && content[`vwomen/${countryCode}`].content}
+              />
+            </Box>
+            <Box mt={6}>
+              <Heading fontSize={18} fontWeight="600" color="purple">
+                <FormattedMessage {...rootMessages.pacific['violence-children']} />
+              </Heading>
+              <ReactMarkdown
+                children={content[`vchild/${countryCode}`] && content[`vchild/${countryCode}`].content}
+              />
+            </Box>
+            <Box mt={6}>
+              <Heading fontSize={18} fontWeight="600" color="purple">
+                <FormattedMessage {...rootMessages.pacific['violence-disabled']} />
+              </Heading>
+              <ReactMarkdown
+                children={content[`vdisab/${countryCode}`] && content[`vdisab/${countryCode}`].content}
+              />
+            </Box>
+          </Flex>
         </>
       )}
     </ResponsiveContext.Consumer>

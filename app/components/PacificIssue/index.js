@@ -18,6 +18,7 @@ import { injectIntl, FormattedMessage } from 'react-intl';
 
 import rootMessages from 'messages';
 
+import Loading from 'components/LoadingIndicator';
 import SingleBarChart from '../SingleBarChart';
 
 function PacificIssue({
@@ -79,16 +80,13 @@ function PacificIssue({
 						}} />
 			   </Text>
 			 </Box> */}
-      <ReactMarkdown
-        components={
-          {
-            //  p: props => <Text color='purple' {...props} />,
-            //  ul: props => <UnorderedList mt={4} ms={12} {...props} />,
-            //  li: props => <ListItem color='purple' {...props} />
-          }
-        }
-        children={qualData}
-      />
+			 {qualData ? (
+				<ReactMarkdown
+					children={qualData}
+				/>
+			 ) : (
+				 <Loading />
+			 )}
     </Flex>
   );
 }
