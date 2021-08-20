@@ -101,6 +101,10 @@ export default defineMessages({
       defaultMessage:
         'Why does HRMI use these indicators to measure these rights?',
     },
+    whereViolence: {
+      id: `${scope}.questions.whereViolence`,
+      defaultMessage: "Where do HRMI's scores come from?",
+    },
   },
   answers: {
     scale: {
@@ -205,6 +209,11 @@ export default defineMessages({
       id: `${scope}.answers.why`,
       defaultMessage:
         'For each economic and social right, the SERF Index methodology, which HRMI uses, selects a small number of high-level ‘bellwether’ indicators to give an overview of people’s experiences in each country. The scores produced can be tracked and compared over time, and across countries.\n\n The choice of indicators is also influenced by what data are available in international databases for enough countries in the world.',
+    },
+    whereViolence: {
+      id: `${scope}.answers.whereViolence`,
+      defaultMessage:
+        'Every year we use a secure, anonymous, online survey to ask human rights experts about the situation in their country. As well as the questions we ask all respondents about civil and political rights, and economic and social rights, for Pacific countries we ask an extra set of questions about issues of particular importance in the region.\n\n For the first four issues on this page, we ask a single question, and present the average response along a continuum, along with extra information given by respondents. These scores are not comparable between different countries.\n\n For questions about violence in the community, we use a range of questions, and Bayesian statistical techniques, to produce a score out of ten, displayed within an uncertainty band that shows the range of scores we calculate as most likely to represent the real situation in that country. These scores are comparable across time and across countries. You can compare countries by finding the ‘Right to freedom from violence’ section in the ‘Rights’ menu above.',
     },
   },
 });

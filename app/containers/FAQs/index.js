@@ -174,6 +174,15 @@ const renderAnswer = (question, intl, msgValues, navMethodology, questions) => {
       </>
     );
   }
+  if (question === 'whereViolence') {
+    return (
+      <>
+        <Text size="small" style={{ whiteSpace: 'pre-line' }}>
+          <FormattedMessage {...messages.answers[question]} />
+        </Text>
+      </>
+    );
+  }
   return (
     <>
       <Text size="small">

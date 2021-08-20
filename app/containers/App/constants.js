@@ -204,6 +204,7 @@ export const FAQS = {
     'grades',
   ],
   COUNTRY_CPR: ['where', 'how', 'grades', 'uncertainty'],
+  COUNTRY_PACIFIC: ['whereViolence'],
   ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],
   ESR_RIGHT: ['why', 'measureRightESR', 'benchmarks', 'standards'],
   ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],

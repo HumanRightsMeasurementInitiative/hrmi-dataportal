@@ -578,6 +578,9 @@ export function PathCountry({
                   ) {
                     faqs = FAQS.COUNTRY_CPR;
                   }
+                  if (props && props.active === 'pacific-region-data') {
+                    faqs = FAQS.COUNTRY_PACIFIC;
+                  }
                   // TODO check about tab
                   return (
                     <AboutCountryContainer
@@ -630,6 +633,7 @@ PathCountry.propTypes = {
   content: PropTypes.object,
   onLoadContent: PropTypes.func,
   onSelectCountry: PropTypes.func,
+  pacificScores: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
