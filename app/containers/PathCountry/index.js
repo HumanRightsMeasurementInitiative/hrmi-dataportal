@@ -310,15 +310,16 @@ export function PathCountry({
     onLoadData();
   }, []);
 
-  console.log({ pacificScores });
-
   const countryCode = match.params.country;
   const keys = RIGHTS.map(r => generateKey(r.key, countryCode));
+  console.log({ atRisk, content });
 
   // loads content for all rights for people at risk tab
   // re-runs when country code changes
   useEffect(() => {
-    keys.forEach(k => onLoadContent(k));
+    // keys.forEach(k => onLoadContent(k));
+    onLoadContent(`atrisk/${countryCode}`);
+    onLoadContent(`pacific/${countryCode}`);
     onLoadData();
   }, [match.params.country]);
 
@@ -688,6 +689,7 @@ export function mapDispatchToProps(dispatch) {
     },
     onTrackEvent: e => dispatch(trackEvent(e)),
     onLoadContent: path => {
+      // N.B. loading pacific data through this now, gets contentType of 'atrisk' which is not really accurate, but allows us to easily use the airtable loading path for now
       if (Array.isArray(path)) {
         path.forEach(p => dispatch(loadContentIfNeeded(p, 'atrisk')));
       } else {
