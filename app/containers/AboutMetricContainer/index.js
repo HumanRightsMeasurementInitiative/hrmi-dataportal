@@ -296,7 +296,7 @@ export function AboutMetricContainer({
           />
         )}
       </div>
-      {/* {showFAQs && (
+      {showFAQs && metric.right !== 'violence' && (
         <FAQs
           questions={questions}
           metric={intl.formatMessage(
@@ -310,7 +310,7 @@ export function AboutMetricContainer({
           dateRange={dateRange}
           countryCode={countryCode}
         />
-      )} */}
+      )}
     </Box>
   );
 }
