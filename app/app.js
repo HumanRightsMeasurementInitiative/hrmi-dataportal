@@ -61,6 +61,31 @@ const chakraTheme = extendTheme({
       "'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif",
     body: "'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif",
   },
+  components: {
+    Button: {
+      variants: {
+        chartRow: props => ({
+          cursor: 'pointer',
+          py: 0,
+          pe: 0,
+          ps: 2,
+          ms: -3,
+          bg: 'none',
+          border: 'none',
+          borderRadius: 0,
+          height: 'auto',
+          borderLeftStyle: 'solid',
+          borderLeftWidth: 4,
+          borderLeftColor: 'white',
+          ':hover': {
+            borderLeftStyle: 'solid',
+            borderLeftWidth: 4,
+            borderLeftColor: 'purple'
+          }
+        })
+      }
+    }
+  }
 });
 delete chakraTheme.colors;
 chakraTheme.colors = { ...theme.global.colors, purple: '#262064' };

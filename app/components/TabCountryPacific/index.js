@@ -4,17 +4,14 @@
  *
  */
 
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import ReactMarkdown from 'react-markdown';
 import {
   Flex,
   Box,
   Text,
-  Heading,
-  UnorderedList,
-  ListItem,
+  Heading
 } from '@chakra-ui/react';
 
 import {
@@ -32,6 +29,7 @@ import rootMessages from 'messages';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import PacificIssue from '../PacificIssue';
+import PacificViolenceBoxPlotChart from '../PacificViolenceBoxPlotChart';
 
 // // prettier-ignore
 // const StyledHeading = styled(Heading)`
@@ -145,16 +143,15 @@ function TabCountryPacific({
               </Text>
             </Box>
             <Box mt={4} width="100%">
-              {/* <PacificViolenceBoxPlotChart
-                violenceScores={pick(pacificQuantData, ['vchild', 'vdisab', 'vwomen', 'vmvpfaff'])}
-                yLabelTKey="hrmi.pacific.violence-against"
-                xLabelTKey="hrmi.labels.score"
+              <PacificViolenceBoxPlotChart
+                violenceScores={data.filter(d => ['vchild', 'vdisab', 'vwomen', 'vmvpfaff'].includes(d.metric_code))}
+                yLabelText={intl.formatMessage(rootMessages.pacific["violence-against"])}
+                xLabelText={intl.formatMessage(rootMessages.labels.score)}
                 range={['0', '10']}
-                getLabelTKey={k => `hrmi.pacific.${k}`}
+                getLabelText={k => intl.formatMessage(rootMessages.pacific[k])}
                 color="physint"
-                grades={CPR_GRADES}
-                  onClick={() => {}}
-              /> */}
+                onClick={() => {}}
+              />
             </Box>
             <Box mt={6}>
               <Heading fontSize={18} fontWeight="600" color="purple">
