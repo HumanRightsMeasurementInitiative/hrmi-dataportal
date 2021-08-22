@@ -15,6 +15,7 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import rootMessages from 'messages';
 import { isMinSize } from 'utils/responsive';
+import messages from './messages';
 
 import PacificIssue from '../PacificIssue';
 import PacificViolenceBoxPlotChart from '../PacificViolenceBoxPlotChart';
@@ -53,9 +54,23 @@ function TabCountryPacific({
     <ResponsiveContext.Consumer>
       {size => (
         <>
-          <Text mt={16}>
-            <FormattedMessage {...rootMessages.pacific.intro} />
-          </Text>
+          <Box mt={16}>
+            {!(
+              (intl.locale === 'fr' &&
+                (countryCode === 'PYF' ||
+                  countryCode === 'NCL' ||
+                  countryCode === 'WLF' ||
+                  countryCode === 'VUT')) ||
+              intl.locale === 'en'
+            ) && (
+              <Text mb={4} fontStyle="italic">
+                <FormattedMessage {...messages.noAnalysisInLanguage} />
+              </Text>
+            )}
+            <Text>
+              <FormattedMessage {...rootMessages.pacific.intro} />
+            </Text>
+          </Box>
           <Flex mt={4} mb={8} justify="space-between" width="100%">
             <Text fontWeight="600" color="purple">
               <FormattedMessage {...rootMessages.pacific.jump} />
