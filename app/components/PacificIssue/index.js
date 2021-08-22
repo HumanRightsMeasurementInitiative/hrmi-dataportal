@@ -29,10 +29,10 @@ function PacificIssue({
       {/* HACK to get the 'jump to' hash links to scroll to the appropriate location */}
       <Box id={id} position="absolute" visibility="hidden" top={-144} />
       <Flex direction="column">
-        <Heading fontSize={24} fontWeight="600" color="purple">
+        <Heading my={1} fontSize={24} fontWeight="600" color="purple">
           <FormattedMessage {...rootMessages.pacific[issueTKeyPart]} />
         </Heading>
-        <Text display="inline" mt={1} fontSize={14} color="purple">
+        <Text display="inline" mt={0} fontSize={14} color="purple">
           {' '}
           ({year})
         </Text>
