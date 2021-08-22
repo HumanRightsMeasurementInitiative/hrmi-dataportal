@@ -150,7 +150,9 @@ export function ListHeader({
                   </Box>
                 )}
                 <Text size="xsmall" style={{ transform: 'translate(50%)' }}>
-                  {metric.type === 'esr' || metric.metricType === 'indicators'
+                  {metric.type === 'esr' ||
+                  (metric.metricType === 'indicators' &&
+                    metric.right !== 'violence')
                     ? '100%'
                     : '10'}
                 </Text>
