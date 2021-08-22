@@ -288,34 +288,6 @@ function TabCountryPacific({
             <Box mt={6}>
               <Heading fontSize={18} fontWeight="600" color="purple">
                 <FormattedMessage
-                  {...rootMessages.pacific['violence-mvpfaff']}
-                />
-              </Heading>
-              <ReactMarkdown
-                /* eslint-disable */
-                children={
-                  content[`vmvpfaff/${countryCode}`] &&
-                  content[`vmvpfaff/${countryCode}`].content
-                }
-                /* eslint-enable */
-              />
-            </Box>
-            <Box mt={6}>
-              <Heading fontSize={18} fontWeight="600" color="purple">
-                <FormattedMessage {...rootMessages.pacific['violence-women']} />
-              </Heading>
-              <ReactMarkdown
-                /* eslint-disable */
-                children={
-                  content[`vwomen/${countryCode}`] &&
-                  content[`vwomen/${countryCode}`].content
-                }
-                /* eslint-enable */
-              />
-            </Box>
-            <Box mt={6}>
-              <Heading fontSize={18} fontWeight="600" color="purple">
-                <FormattedMessage
                   {...rootMessages.pacific['violence-children']}
                 />
               </Heading>
@@ -339,6 +311,34 @@ function TabCountryPacific({
                 children={
                   content[`vdisab/${countryCode}`] &&
                   content[`vdisab/${countryCode}`].content
+                }
+                /* eslint-enable */
+              />
+            </Box>
+            <Box mt={6}>
+              <Heading fontSize={18} fontWeight="600" color="purple">
+                <FormattedMessage
+                  {...rootMessages.pacific['violence-mvpfaff']}
+                />
+              </Heading>
+              <ReactMarkdown
+                /* eslint-disable */
+                children={
+                  content[`vmvpfaff/${countryCode}`] &&
+                  content[`vmvpfaff/${countryCode}`].content
+                }
+                /* eslint-enable */
+              />
+            </Box>
+            <Box mt={6}>
+              <Heading fontSize={18} fontWeight="600" color="purple">
+                <FormattedMessage {...rootMessages.pacific['violence-women']} />
+              </Heading>
+              <ReactMarkdown
+                /* eslint-disable */
+                children={
+                  content[`vwomen/${countryCode}`] &&
+                  content[`vwomen/${countryCode}`].content
                 }
                 /* eslint-enable */
               />
