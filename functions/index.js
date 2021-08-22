@@ -12,7 +12,6 @@ exports.airtable = functions.https.onRequest((req, res) => {
     const baseConfig = functions.config().airtable[
       req.query.base === 'pacific' ? 'pacific_base' : 'base'
     ];
-    console.log({ apiKey, baseConfig });
 
     if (!apiKey || !baseConfig) {
       res.send(500);
@@ -20,7 +19,6 @@ exports.airtable = functions.https.onRequest((req, res) => {
       const base = new Airtable({
         apiKey,
       }).base(baseConfig);
-      console.log({ base });
       try {
         const tableName =
           req.query.base === 'pacific'
