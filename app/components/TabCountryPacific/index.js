@@ -7,23 +7,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
-import {
-  Flex,
-  Box,
-  Text,
-  Heading
-} from '@chakra-ui/react';
+import { Flex, Box, Text, Heading } from '@chakra-ui/react';
 
-import {
-  // Heading,
-  Paragraph,
-  // Box,
-  // Text,
-  ResponsiveContext,
-  Button,
-  Drop,
-} from 'grommet';
-import { Up, Down, FormDown, FormUp } from 'grommet-icons';
+import { ResponsiveContext } from 'grommet';
 
 import rootMessages from 'messages';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
@@ -31,35 +17,110 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PacificIssue from '../PacificIssue';
 import PacificViolenceBoxPlotChart from '../PacificViolenceBoxPlotChart';
 
-// // prettier-ignore
-// const StyledHeading = styled(Heading)`
-//   font-size: ${({ theme, level = 1 }) => theme.heading.level[level].small.size};
-//   line-height: ${({ theme, level = 1 }) => theme.heading.level[level].small.height};
-//   @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
-//     font-size: ${({ theme, level = 1 }) => theme.heading.level[level].medium.size};
-//     line-height: ${({ theme, level = 1 }) => theme.heading.level[level].medium.height};
-//   }
-// `;
 function TabCountryPacific({
+  intl,
   data,
   messageValues,
-  highlight,
-  setHighlight,
   content,
   countryCode,
-  intl,
-  onSelectCountry,
 }) {
   return (
     <ResponsiveContext.Consumer>
-      {size => (
+      {() => (
         <>
+          <Text mt={16}>
+            <FormattedMessage {...rootMessages.pacific.intro} />
+          </Text>
+          <Flex mt={4} mb={8} justify="space-between" width="100%">
+            <Text fontWeight="600" color="purple">
+              <FormattedMessage {...rootMessages.pacific.jump} />
+            </Text>
+            <a
+              mx={2}
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#climate-crisis`}
+            >
+              <Text fontWeight="600" color="purple">
+                <FormattedMessage {...rootMessages.pacific['climate-crisis']} />
+              </Text>
+            </a>
+            <Box
+              borderRightStyle="solid"
+              borderRightWidth="2px"
+              borderRightColor="purple"
+            />
+            <a
+              mx={2}
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#indigenous-sovereignty`}
+            >
+              <Text fontWeight="600" color="purple">
+                <FormattedMessage
+                  {...rootMessages.pacific['indigenous-sovereignty']}
+                />
+              </Text>
+            </a>
+            <Box
+              borderRightStyle="solid"
+              borderRightWidth="2px"
+              borderRightColor="purple"
+            />
+            <a
+              mx={2}
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#indigenous-lands`}
+            >
+              <Text fontWeight="600" color="purple">
+                <FormattedMessage
+                  {...rootMessages.pacific['indigenous-lands']}
+                />
+              </Text>
+            </a>
+            <Box
+              borderRightStyle="solid"
+              borderRightWidth="2px"
+              borderRightColor="purple"
+            />
+            <a
+              mx={2}
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#cultural-rights`}
+            >
+              <Text fontWeight="600" color="purple">
+                <FormattedMessage
+                  {...rootMessages.pacific['cultural-rights']}
+                />
+              </Text>
+            </a>
+            <Box
+              borderRightStyle="solid"
+              borderRightWidth="2px"
+              borderRightColor="purple"
+            />
+            <a
+              mx={2}
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#violence`}
+            >
+              <Text fontWeight="600" color="purple">
+                <FormattedMessage {...rootMessages.pacific.violence} />
+              </Text>
+            </a>
+          </Flex>
           <PacificIssue
             year={data.find(d => d.metric_code === 'climate').year}
             issueTKeyPart="climate-crisis"
             countryWithArticle={messageValues.countryWithArticle}
             score={data.find(d => d.metric_code === 'climate').mean}
-            qualData={content[`climate/${countryCode}`] && content[`climate/${countryCode}`].content}
+            qualData={
+              content[`climate/${countryCode}`] &&
+              content[`climate/${countryCode}`].content
+            }
             barChartResponseOptions={[
               { value: 1, tKey: 'not-at-all' },
               { value: 2, tKey: 'slightly' },
@@ -78,7 +139,10 @@ function TabCountryPacific({
             issueTKeyPart="indigenous-sovereignty"
             countryWithArticle={messageValues.countryWithArticle}
             score={data.find(d => d.metric_code === 'indigsov').mean}
-            qualData={content[`indigsov/${countryCode}`] && content[`indigsov/${countryCode}`].content}
+            qualData={
+              content[`indigsov/${countryCode}`] &&
+              content[`indigsov/${countryCode}`].content
+            }
             barChartResponseOptions={[
               { value: 1, tKey: 'not-at-all' },
               { value: 2, tKey: 'slightly' },
@@ -97,7 +161,10 @@ function TabCountryPacific({
             issueTKeyPart="indigenous-lands"
             countryWithArticle={messageValues.countryWithArticle}
             score={data.find(d => d.metric_code === 'indigland').mean}
-            qualData={content[`indigland/${countryCode}`] && content[`indigland/${countryCode}`].content}
+            qualData={
+              content[`indigland/${countryCode}`] &&
+              content[`indigland/${countryCode}`].content
+            }
             barChartResponseOptions={[
               { value: 1, tKey: 'not-at-all' },
               { value: 2, tKey: 'slightly' },
@@ -116,7 +183,10 @@ function TabCountryPacific({
             issueTKeyPart="cultural-rights"
             countryWithArticle={messageValues.countryWithArticle}
             score={data.find(d => d.metric_code === 'culture').mean}
-            qualData={content[`culture/${countryCode}`] && content[`culture/${countryCode}`].content}
+            qualData={
+              content[`culture/${countryCode}`] &&
+              content[`culture/${countryCode}`].content
+            }
             barChartResponseOptions={[
               { value: 1, tKey: 'not-at-all' },
               { value: 2, tKey: 'slightly' },
@@ -139,13 +209,24 @@ function TabCountryPacific({
             <Box mt={2}>
               <Text color="purple">
                 {/* {t(`hrmi.pacific.violence-subheading`, { countryWithArticle })} */}
-                <FormattedMessage {...{...rootMessages.pacific['violence-subheading'], values: messageValues }} />
+                <FormattedMessage
+                  {...{
+                    ...rootMessages.pacific['violence-subheading'],
+                    values: messageValues,
+                  }}
+                />
               </Text>
             </Box>
             <Box mt={4} width="100%">
               <PacificViolenceBoxPlotChart
-                violenceScores={data.filter(d => ['vchild', 'vdisab', 'vwomen', 'vmvpfaff'].includes(d.metric_code))}
-                yLabelText={intl.formatMessage(rootMessages.pacific["violence-against"])}
+                violenceScores={data.filter(d =>
+                  ['vchild', 'vdisab', 'vwomen', 'vmvpfaff'].includes(
+                    d.metric_code,
+                  ),
+                )}
+                yLabelText={intl.formatMessage(
+                  rootMessages.pacific['violence-against'],
+                )}
                 xLabelText={intl.formatMessage(rootMessages.labels.score)}
                 range={['0', '10']}
                 getLabelText={k => intl.formatMessage(rootMessages.pacific[k])}
@@ -155,10 +236,17 @@ function TabCountryPacific({
             </Box>
             <Box mt={6}>
               <Heading fontSize={18} fontWeight="600" color="purple">
-                <FormattedMessage {...rootMessages.pacific['violence-mvpfaff']} />
+                <FormattedMessage
+                  {...rootMessages.pacific['violence-mvpfaff']}
+                />
               </Heading>
               <ReactMarkdown
-                children={content[`vmvpfaff/${countryCode}`] && content[`vmvpfaff/${countryCode}`].content}
+                /* eslint-disable */
+                children={
+                  content[`vmvpfaff/${countryCode}`] &&
+                  content[`vmvpfaff/${countryCode}`].content
+                }
+                /* eslint-enable */
               />
             </Box>
             <Box mt={6}>
@@ -166,23 +254,42 @@ function TabCountryPacific({
                 <FormattedMessage {...rootMessages.pacific['violence-women']} />
               </Heading>
               <ReactMarkdown
-                children={content[`vwomen/${countryCode}`] && content[`vwomen/${countryCode}`].content}
+                /* eslint-disable */
+                children={
+                  content[`vwomen/${countryCode}`] &&
+                  content[`vwomen/${countryCode}`].content
+                }
+                /* eslint-enable */
               />
             </Box>
             <Box mt={6}>
               <Heading fontSize={18} fontWeight="600" color="purple">
-                <FormattedMessage {...rootMessages.pacific['violence-children']} />
+                <FormattedMessage
+                  {...rootMessages.pacific['violence-children']}
+                />
               </Heading>
               <ReactMarkdown
-                children={content[`vchild/${countryCode}`] && content[`vchild/${countryCode}`].content}
+                /* eslint-disable */
+                children={
+                  content[`vchild/${countryCode}`] &&
+                  content[`vchild/${countryCode}`].content
+                }
+                /* eslint-enable */
               />
             </Box>
             <Box mt={6}>
               <Heading fontSize={18} fontWeight="600" color="purple">
-                <FormattedMessage {...rootMessages.pacific['violence-disabled']} />
+                <FormattedMessage
+                  {...rootMessages.pacific['violence-disabled']}
+                />
               </Heading>
               <ReactMarkdown
-                children={content[`vdisab/${countryCode}`] && content[`vdisab/${countryCode}`].content}
+                /* eslint-disable */
+                children={
+                  content[`vdisab/${countryCode}`] &&
+                  content[`vdisab/${countryCode}`].content
+                }
+                /* eslint-enable */
               />
             </Box>
           </Flex>
@@ -193,6 +300,7 @@ function TabCountryPacific({
 }
 
 TabCountryPacific.propTypes = {
+  messageValues: PropTypes.object,
   hasAside: PropTypes.bool,
   data: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
   highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
