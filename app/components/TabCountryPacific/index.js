@@ -8,14 +8,38 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactMarkdown from 'react-markdown';
 import { Flex, Box, Text, Heading } from '@chakra-ui/react';
-
-import { ResponsiveContext } from 'grommet';
+import { ResponsiveContext, Button, Text as GText } from 'grommet';
+import { CircleQuestion } from 'grommet-icons';
+import styled from 'styled-components';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import rootMessages from 'messages';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { isMinSize } from 'utils/responsive';
 
 import PacificIssue from '../PacificIssue';
 import PacificViolenceBoxPlotChart from '../PacificViolenceBoxPlotChart';
+
+// prettier-ignore
+const StyledText = styled(GText)`
+  border-bottom: 3px solid
+    ${({ theme, hasWhiteBG = true }) =>
+    hasWhiteBG
+      ? theme.global.colors.buttonSecondaryOnWhiteHover
+      : theme.global.colors.buttonSecondaryHover};
+`;
+const StyledButton = styled(Button)`
+  background: transparent;
+  padding: 3px;
+  margin-right: ${({ theme }) => theme.global.edgeSize.xxsmall};
+  font-weight: 600;
+  &:last-child {
+    margin-right: 0;
+    padding-right: 0;
+  }
+  @media (min-width: ${({ theme }) => theme.breakpointsMin.large}) {
+    padding: 3px 10px;
+  }
+`;
 
 function TabCountryPacific({
   intl,
@@ -23,10 +47,11 @@ function TabCountryPacific({
   messageValues,
   content,
   countryCode,
+  onSetAsideLayer,
 }) {
   return (
     <ResponsiveContext.Consumer>
-      {() => (
+      {size => (
         <>
           <Text mt={16}>
             <FormattedMessage {...rootMessages.pacific.intro} />
@@ -202,10 +227,36 @@ function TabCountryPacific({
           />
 
           <Flex id="violence" mb={12} direction="column" width="100%">
-            <Heading fontSize={24} fontWeight="600" color="purple">
-              {/* {t("hrmi.pacific.violence")} */}
-              <FormattedMessage {...rootMessages.pacific.violence} />
-            </Heading>
+            <Flex justify="space-between">
+              <Heading fontSize={24} fontWeight="600" color="purple">
+                <FormattedMessage {...rootMessages.pacific.violence} />
+              </Heading>
+              <StyledButton
+                onClick={() => {
+                  onSetAsideLayer({
+                    type: 'htr',
+                    // ...howToReadConfig,
+                    key: 'country-indicators',
+                    chart: 'Bullet',
+                    dimension: 'cpr',
+                    noIntro: true,
+                  });
+                }}
+                icon={<CircleQuestion color="dark" size="large" />}
+                plain
+                label={
+                  isMinSize(size, 'medium') ? (
+                    <StyledText hasWhiteBG>
+                      {intl.formatMessage(
+                        rootMessages.labels.chartTools.howToRead,
+                      )}
+                    </StyledText>
+                  ) : null
+                }
+                gap="xsmall"
+                reverse
+              />
+            </Flex>
             <Box mt={2}>
               <Text color="purple">
                 {/* {t(`hrmi.pacific.violence-subheading`, { countryWithArticle })} */}
@@ -309,6 +360,7 @@ TabCountryPacific.propTypes = {
   countryCode: PropTypes.string,
   intl: intlShape,
   onSelectCountry: PropTypes.func,
+  onSetAsideLayer: PropTypes.func,
 };
 
 export default injectIntl(TabCountryPacific);

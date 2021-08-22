@@ -553,6 +553,7 @@ export function PathCountry({
                       content={content}
                       keys={keys}
                       onSelectCountry={onSelectCountry}
+                      onSetAsideLayer={onSetAsideLayer}
                     />
                   ),
               },
