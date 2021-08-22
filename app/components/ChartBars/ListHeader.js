@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { Box, Text, ResponsiveContext } from 'grommet';
 import styled from 'styled-components';
+import { ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
 
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import InfoBenchmark from 'containers/LayerSettings/InfoBenchmark';
@@ -91,71 +92,101 @@ export function ListHeader({
           >
             {annotateMinMax && metric && (
               <Box direction="row" justify="between" width="100%">
-                <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
-                  0
-                </Text>
-                {metric && (
-                  <Box direction="row">
-                    <Text size="xsmall" weight={500} textAlign="center">
-                      <FormattedMessage
-                        {...rootMessages.labels.xAxis[
-                          metric.type === 'esr' ? benchmark : 'cpr'
-                        ]}
-                      />
-                    </Text>
-                    <RemoveFromPDFWrapper>
-                      {annotateBk && (
-                        <Tooltip
-                          textAnchor={
-                            !benchmarkIconOnly && (
-                              <Text
-                                size="xsmall"
-                                color="highlight2"
-                                style={{
-                                  display: 'inline',
-                                  verticalAlign: 'middle',
-                                }}
-                              >
-                                {`${intl.formatMessage(
-                                  rootMessages.settings.benchmark[benchmark],
-                                )} ${
-                                  // prettier-ignore
-                                  isMaxSize(size, 'sm')
-                                    ? ''
-                                    : lowerCase(
-                                      intl.formatMessage(
-                                        rootMessages.settings.benchmark
-                                          .nameShort,
-                                      ),
-                                    )
-                                }`}
-                              </Text>
-                            )
-                          }
-                          insideButton
-                          iconSize="medium"
-                          maxWidth="300px"
-                          large
-                          component={
-                            <InfoBenchmark
-                              size="xsmall"
-                              singleBenchmark={benchmarkIconOnly}
-                              benchmarkKey={benchmark}
-                            />
-                          }
-                          superscript
+                <Box direction="column" align="start" justify="end">
+                  {metric.right === 'violence' && (
+                    <Box
+                      direction="row"
+                      align="center"
+                      style={{ transform: 'translateX(-10px)' }}
+                    >
+                      <ChevronLeftIcon boxSize={5} />
+                      <Text>
+                        <FormattedMessage {...rootMessages.pacific.lessSafe} />
+                      </Text>
+                    </Box>
+                  )}
+                  <Text size="xsmall" style={{ transform: 'translateX(-50%)' }}>
+                    0
+                  </Text>
+                </Box>
+                <Box direction="column" justify="end">
+                  {metric && (
+                    <Box direction="row">
+                      <Text size="xsmall" weight={500} textAlign="center">
+                        <FormattedMessage
+                          {...rootMessages.labels.xAxis[
+                            metric.type === 'esr' ? benchmark : 'cpr'
+                          ]}
                         />
-                      )}
-                    </RemoveFromPDFWrapper>
-                  </Box>
-                )}
-                <Text size="xsmall" style={{ transform: 'translate(50%)' }}>
-                  {metric.type === 'esr' ||
-                  (metric.metricType === 'indicators' &&
-                    metric.right !== 'violence')
-                    ? '100%'
-                    : '10'}
-                </Text>
+                      </Text>
+                      <RemoveFromPDFWrapper>
+                        {annotateBk && (
+                          <Tooltip
+                            textAnchor={
+                              !benchmarkIconOnly && (
+                                <Text
+                                  size="xsmall"
+                                  color="highlight2"
+                                  style={{
+                                    display: 'inline',
+                                    verticalAlign: 'middle',
+                                  }}
+                                >
+                                  {`${intl.formatMessage(
+                                    rootMessages.settings.benchmark[benchmark],
+                                  )} ${
+                                    // prettier-ignore
+                                    isMaxSize(size, 'sm')
+                                      ? ''
+                                      : lowerCase(
+                                        intl.formatMessage(
+                                          rootMessages.settings.benchmark
+                                            .nameShort,
+                                        ),
+                                      )
+                                  }`}
+                                </Text>
+                              )
+                            }
+                            insideButton
+                            iconSize="medium"
+                            maxWidth="300px"
+                            large
+                            component={
+                              <InfoBenchmark
+                                size="xsmall"
+                                singleBenchmark={benchmarkIconOnly}
+                                benchmarkKey={benchmark}
+                              />
+                            }
+                            superscript
+                          />
+                        )}
+                      </RemoveFromPDFWrapper>
+                    </Box>
+                  )}
+                </Box>
+                <Box direction="column" align="end" justify="end">
+                  {metric.right === 'violence' && (
+                    <Box
+                      direction="row"
+                      align="center"
+                      style={{ transform: 'translateX(10px)' }}
+                    >
+                      <Text>
+                        <FormattedMessage {...rootMessages.pacific.moreSafe} />
+                      </Text>
+                      <ChevronRightIcon boxSize={5} />
+                    </Box>
+                  )}
+                  <Text size="xsmall" style={{ transform: 'translate(50%)' }}>
+                    {metric.type === 'esr' ||
+                    (metric.metricType === 'indicators' &&
+                      metric.right !== 'violence')
+                      ? '100%'
+                      : '10'}
+                  </Text>
+                </Box>
               </Box>
             )}
             <RemoveFromPDFWrapper>
