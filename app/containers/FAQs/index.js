@@ -43,7 +43,14 @@ const StyledText = styled(Text)`
   font-size: 14px;
 `;
 
-const renderAnswer = (question, intl, msgValues, navMethodology, questions) => {
+const renderAnswer = (
+  question,
+  intl,
+  msgValues,
+  navMethodology,
+  questions,
+  code,
+) => {
   if (question === 'measureRightESR') {
     return (
       <>
@@ -192,11 +199,11 @@ const renderAnswer = (question, intl, msgValues, navMethodology, questions) => {
       </>
     );
   }
-  if (question === 'violenceResponsibility') {
+  if (question === 'violenceInfo') {
     return (
       <>
         <Text size="small" style={{ whiteSpace: 'pre-line' }}>
-          <FormattedMessage {...messages.answers[question]} />
+          <FormattedMessage {...messages.answers[question][code]} />
         </Text>
       </>
     );
@@ -434,7 +441,14 @@ function FAQs({
             }
           >
             <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
-              {renderAnswer(q, intl, msgValues, navMethodology, questions)}
+              {renderAnswer(
+                q,
+                intl,
+                msgValues,
+                navMethodology,
+                questions,
+                metrics.code,
+              )}
             </Box>
           </AccordionPanel>
         ))}

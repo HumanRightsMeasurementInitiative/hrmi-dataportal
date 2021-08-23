@@ -110,8 +110,8 @@ export default defineMessages({
       defaultMessage:
         "Where do HRMI's right to freedom from violence scores come from?",
     },
-    violenceResponsibility: {
-      id: `${scope}.questions.violenceResponsibility`,
+    violenceInfo: {
+      id: `${scope}.questions.violenceInfo`,
       defaultMessage:
         'What is the government’s responsibility with regard to community violence?',
     },
@@ -230,9 +230,27 @@ export default defineMessages({
       defaultMessage:
         'Every year we use a secure, anonymous, online survey to ask human rights experts about the situation in their country. As well as the questions we ask all respondents about civil and political rights, and economic and social rights, for Pacific countries we ask an extra set of questions about issues of particular importance in the region.\n\n For questions about violence in the community, we use Bayesian statistical techniques to produce a score out of ten, displayed within an uncertainty band that shows the range of scores we calculate as most likely to represent the real situation in that country.',
     },
-    violenceResponsibility: {
-      id: `${scope}.answers.violenceResponsibility`,
-      defaultMessage: 'TODO',
+    violenceInfo: {
+      vchild: {
+        id: `${scope}.answers.vchild`,
+        defaultMessage:
+          'Statements on the right of children to be free from violence can be found in Article 19 of the UN Convention on the Rights of the Child.',
+      },
+      vdisab: {
+        id: `${scope}.answers.vdisab`,
+        defaultMessage:
+          'Statements on the right of people with disabilities to be free from violence can be found in Article 16 of the Convention on the Rights of Persons with Disabilities.',
+      },
+      vmvpfaff: {
+        id: `${scope}.answers.vmvpfaff`,
+        defaultMessage:
+          'Statements on the right of MVPFAFF+/LGBTQIA+ people to be free from violence can be found in Human Rights Council Resolutions 17/19, 27/32, and 32/2, as well as in the Yogyakarta Principles and the Yogyakarta Principles plus 10, which apply existing international law in relation to sexual orientation and gender identity.',
+      },
+      vwomen: {
+        id: `${scope}.answers.vwomen`,
+        defaultMessage:
+          'Statements on the right of women and girls to be free from violence can be found in CEDAW Committee General Recommendations No. 19 and No. 35, as well as in the Declaration on the Elimination of Violence against Women.',
+      },
     },
   },
 });

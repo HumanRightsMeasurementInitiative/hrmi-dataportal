@@ -210,7 +210,7 @@ export const FAQS = {
   ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],
   CPR_DIMENSION: ['measureDimensionCPR', 'uncertainty'],
   CPR_RIGHT: ['measureRightCPR', 'uncertainty'],
-  PACIFIC_INDICATOR: ['whereViolence-indicator', 'violenceResponsibility'],
+  PACIFIC_INDICATOR: ['whereViolence-indicator', 'violenceInfo'],
 };
 
 // countries: country lookup table
