@@ -11,19 +11,22 @@ import { Heading, Box } from 'grommet';
 import BarBullet from 'components/ChartBars/BarBullet';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
 
+import rootMessages from 'messages';
 import HTRParagraph from './HTRParagraph';
 import messages from './messages';
 
 const Styled = styled.div``;
 
-function HTRBulletCPR({ contxt, dimension, noIntro, intl }) {
+function HTRBulletCPR({ contxt, dimension, pacific, intl }) {
   return (
     <Styled>
-      {!noIntro && (
-        <HTRParagraph>
+      <HTRParagraph>
+        {pacific ? (
+          <FormattedMessage {...rootMessages.pacific.htr} />
+        ) : (
           <FormattedMessage {...messages.bullet.intro} />
-        </HTRParagraph>
-      )}
+        )}
+      </HTRParagraph>
       <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
@@ -158,7 +161,7 @@ HTRBulletCPR.propTypes = {
   contxt: PropTypes.string,
   dimension: PropTypes.string,
   intl: intlShape.isRequired,
-  noIntro: PropTypes.bool,
+  pacific: PropTypes.bool,
 };
 
 export default injectIntl(HTRBulletCPR);

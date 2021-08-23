@@ -258,15 +258,16 @@ export function ChartContainerMetric({
                 chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
                 dimension: metric.color,
                 data: metric.color,
-                noIntro: metric.right === 'violence',
+                pacific: metric.right === 'violence',
               },
+              // prettier-ignore
               settingsConfig: metric.right !== 'violence' &&
                 (metric.type === 'esr' ||
                   metric.metricType === 'indicators') && {
                 key: 'metric',
                 showStandard: metric.metricType !== 'indicators',
                 showBenchmark: true,
-              },
+              }
             }}
             messageValues={{ no: scores.length }}
             filter={
@@ -294,6 +295,7 @@ export function ChartContainerMetric({
             standard={standard}
             selectedYear={selectedYear}
             setSelectedYear={setSelectedYear}
+            /* eslint-disable */
             maxYearDimension={
               metric.right === 'violence'
                 ? maxYearPacific
@@ -308,6 +310,7 @@ export function ChartContainerMetric({
                   ? minYearESR
                   : minYearCPR
             }
+            /* eslint-enable */
           />
           {!dataReady && <LoadingIndicator />}
           {!hasResults && dataReady && (

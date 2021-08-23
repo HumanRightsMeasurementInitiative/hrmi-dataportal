@@ -2943,5 +2943,10 @@ export default defineMessages({
       defaultMessage:
         'When asked this question, our {no} respondents in {countryWithArticle} gave an average answer of {score}, suggesting that {issue} has affected human rights conditions between {lowerBandLabel} and {upperBandLabel}.',
     },
+    htr: {
+      id: `${scope}.pacific.htr`,
+      defaultMessage:
+        'Each country score has been produced from responses to a detailed survey of human rights experts who either live in or specialise in monitoring that country. Scores closer to 10 are better.',
+    },
   },
 });

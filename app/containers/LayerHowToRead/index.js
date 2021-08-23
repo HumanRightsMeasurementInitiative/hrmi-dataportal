@@ -19,7 +19,7 @@ import HTRTrendESR from './HTRTrendESR';
 import HTRTrendCPR from './HTRTrendCPR';
 
 function LayerHowToRead({ layer }) {
-  const { contxt, scale, dimension, chart, chartName, noIntro } = layer;
+  const { contxt, scale, dimension, chart, chartName, pacific } = layer;
   const charts = chart ? asArray(chart) : [];
   return (
     <Box
@@ -44,7 +44,7 @@ function LayerHowToRead({ layer }) {
               <HTRBulletCPR
                 contxt={contxt}
                 dimension={dimension}
-                noIntro={noIntro}
+                pacific={pacific}
               />
             )}
             {chrt === 'Bar' && <HTRBar contxt={contxt} dimension={dimension} />}

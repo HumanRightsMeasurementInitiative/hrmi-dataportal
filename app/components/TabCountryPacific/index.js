@@ -254,7 +254,7 @@ function TabCountryPacific({
                     key: 'country-indicators',
                     chart: 'Bullet',
                     dimension: 'cpr',
-                    noIntro: true,
+                    pacific: true,
                   });
                 }}
                 icon={<CircleQuestion color="dark" size="large" />}
