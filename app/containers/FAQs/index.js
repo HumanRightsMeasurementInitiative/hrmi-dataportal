@@ -447,7 +447,7 @@ function FAQs({
                 msgValues,
                 navMethodology,
                 questions,
-                metrics.code,
+                metrics && metrics.code,
               )}
             </Box>
           </AccordionPanel>
