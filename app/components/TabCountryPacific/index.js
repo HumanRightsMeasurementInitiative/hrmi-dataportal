@@ -251,10 +251,9 @@ function TabCountryPacific({
                 onClick={() => {
                   onSetAsideLayer({
                     type: 'htr',
-                    // ...howToReadConfig,
                     key: 'country-indicators',
                     chart: 'Bullet',
-                    dimension: 'cpr',
+                    dimension: 'physint',
                     pacific: true,
                   });
                 }}
