@@ -4,8 +4,6 @@ const cors = require('cors')({ origin: true });
 
 exports.airtable = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
-    console.log(req.query);
-    console.log(functions.config());
     const apiKey = functions.config().airtable[
       req.query.base === 'pacific' ? 'pacific_api_key' : 'api_key'
     ];
@@ -29,7 +27,6 @@ exports.airtable = functions.https.onRequest((req, res) => {
             view: 'Grid view',
           })
           .firstPage();
-        // console.log({ data })
         res.json({ data });
       } catch (err) {
         console.log({ err });
