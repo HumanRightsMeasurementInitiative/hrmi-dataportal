@@ -285,7 +285,7 @@ export function AboutMetricContainer({
             </Text>
           </div>
         )}
-        {showAboutMetric && (
+        {showAboutMetric && metric.right !== 'violence' && (
           <AboutMetric
             metric={metric}
             metricInfo={metricInfo}

@@ -204,13 +204,17 @@ const getScoreMsg = (
   /* eslint-disable no-nested-ternary */
   // prettier-ignore
   const metric =
-    typeof isSubright === 'undefined'
+    aboutMetricDetails.right === 'violence'
       ? lowerCase(
-        intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+        intl.formatMessage(rootMessages.pacific[code]),
       )
-      : isSubright
-        ? lowerCase(intl.formatMessage(rootMessages.subrights[code]))
-        : lowerCase(intl.formatMessage(rootMessages['indicators-raw'][code]));
+      : typeof isSubright === 'undefined'
+        ? lowerCase(
+          intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+        )
+        : isSubright
+          ? lowerCase(intl.formatMessage(rootMessages.subrights[code]))
+          : lowerCase(intl.formatMessage(rootMessages['indicators-raw'][code]));
 
   if (aboutMetricDetails.type === 'esr') {
     // prettier-ignore
@@ -246,6 +250,9 @@ const getScoreMsg = (
             messageValues,
           );
     /* eslint-enable */
+  }
+  if (aboutMetricDetails.right === 'violence') {
+    return null;
   }
   if (aboutMetricDetails.type === 'cpr') {
     // prettier-ignore
@@ -554,6 +561,7 @@ export function PathCountry({
                       keys={keys}
                       onSelectCountry={onSelectCountry}
                       onSetAsideLayer={onSetAsideLayer}
+                      onMetricClick={c => onMetricClick(c, 'physint')}
                     />
                   ),
               },

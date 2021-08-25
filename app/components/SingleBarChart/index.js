@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Flex, Box, Text } from '@chakra-ui/react';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape } from 'react-intl';
 
 import rootMessages from 'messages';
 
@@ -29,6 +30,12 @@ function GradeAndLabel({ left, text, value }) {
   );
 }
 
+GradeAndLabel.propTypes = {
+  left: PropTypes.number,
+  text: PropTypes.string,
+  value: PropTypes.string,
+};
+
 function SingleBarChart({ intl, score, responseOptions }) {
   return (
     <Flex mt={8} mb={24} px={12} width="100%" height={6}>
@@ -52,7 +59,6 @@ function SingleBarChart({ intl, score, responseOptions }) {
             position="absolute"
             bottom="100%"
             mb={2}
-            py={1}
             px={2}
             transform="translate(-50%)"
             bg="white"
@@ -76,5 +82,11 @@ function SingleBarChart({ intl, score, responseOptions }) {
     </Flex>
   );
 }
+
+SingleBarChart.propTypes = {
+  intl: intlShape.isRequired,
+  score: PropTypes.number,
+  responseOptions: PropTypes.array,
+};
 
 export default injectIntl(SingleBarChart);

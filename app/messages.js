@@ -1273,6 +1273,22 @@ export default defineMessages({
       id: `${scope}.indicators.violence-mvpfaff-lgbtqia`,
       defaultMessage: 'violence-mvpfaff-lgbtqia',
     },
+    vchild: {
+      id: `${scope}.indicators.vchild`,
+      defaultMessage: 'vchild',
+    },
+    vdisab: {
+      id: `${scope}.indicators.vdisab`,
+      defaultMessage: 'vdisab',
+    },
+    vwomen: {
+      id: `${scope}.indicators.vwomen`,
+      defaultMessage: 'vwomen',
+    },
+    vmvpfaff: {
+      id: `${scope}.indicators.vmvpfaff`,
+      defaultMessage: 'vmvpfaff',
+    },
   },
   'indicators-definition': {
     'net-primary': {

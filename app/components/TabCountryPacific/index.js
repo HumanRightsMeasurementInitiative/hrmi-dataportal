@@ -49,6 +49,7 @@ function TabCountryPacific({
   content,
   countryCode,
   onSetAsideLayer,
+  onMetricClick,
 }) {
   return (
     <ResponsiveContext.Consumer>
@@ -297,7 +298,7 @@ function TabCountryPacific({
                 range={['0', '10']}
                 getLabelText={k => intl.formatMessage(rootMessages.pacific[k])}
                 color="physint"
-                onClick={() => {}}
+                onClick={c => onMetricClick(c.metric_code)}
               />
             </Box>
             <Box mt={6}>
@@ -376,6 +377,7 @@ TabCountryPacific.propTypes = {
   intl: intlShape,
   onSelectCountry: PropTypes.func,
   onSetAsideLayer: PropTypes.func,
+  onMetricClick: PropTypes.func,
 };
 
 export default injectIntl(TabCountryPacific);

@@ -309,7 +309,6 @@ export function Header({
                     // TODO: something breaking here with "full" prop
                     full
                     onClickOutside={() => {
-                      console.log('wefawea');
                       setShowMenu(false);
                     }}
                     onEsc={() => setShowMenu(false)}
