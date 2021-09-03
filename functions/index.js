@@ -18,10 +18,7 @@ exports.airtable = functions.https.onRequest((req, res) => {
         apiKey,
       }).base(baseConfig);
       try {
-        const tableName =
-          req.query.base === 'pacific'
-            ? 'Pacific Qualitative Data 2021'
-            : req.query.locale.toUpperCase();
+        const tableName = req.query.locale.toUpperCase();
         const data = await base(tableName)
           .select({
             view: 'Grid view',
