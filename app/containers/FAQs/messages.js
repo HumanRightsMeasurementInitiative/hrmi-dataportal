@@ -232,22 +232,22 @@ export default defineMessages({
     },
     violenceInfo: {
       vchild: {
-        id: `${scope}.answers.vchild`,
+        id: `${scope}.answers.violenceInfo.vchild`,
         defaultMessage:
           'Statements on the right of children to be free from violence can be found in Article 19 of the UN Convention on the Rights of the Child.',
       },
       vdisab: {
-        id: `${scope}.answers.vdisab`,
+        id: `${scope}.answers.violenceInfo.vdisab`,
         defaultMessage:
           'Statements on the right of people with disabilities to be free from violence can be found in Article 16 of the Convention on the Rights of Persons with Disabilities.',
       },
       vmvpfaff: {
-        id: `${scope}.answers.vmvpfaff`,
+        id: `${scope}.answers.violenceInfo.vmvpfaff`,
         defaultMessage:
           'Statements on the right of MVPFAFF+/LGBTQIA+ people to be free from violence can be found in Human Rights Council Resolutions 17/19, 27/32, and 32/2, as well as in the Yogyakarta Principles and the Yogyakarta Principles plus 10, which apply existing international law in relation to sexual orientation and gender identity.',
       },
       vwomen: {
-        id: `${scope}.answers.vwomen`,
+        id: `${scope}.answers.violenceInfo.vwomen`,
         defaultMessage:
           'Statements on the right of women and girls to be free from violence can be found in CEDAW Committee General Recommendations No. 19 and No. 35, as well as in the Declaration on the Elimination of Violence against Women.',
       },
