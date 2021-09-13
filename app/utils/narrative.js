@@ -93,6 +93,32 @@ export const getCountryWithArticle = (locale, countryGrammar, countryLabel) => {
   // TODO: zh
   return countryLabel;
 };
+export const getCountryWithPrepositionedArticle = (
+  locale,
+  countryGrammar,
+  countryLabel,
+) => {
+  if (locale === 'fr') {
+    if (isPlural(locale, countryGrammar)) {
+      return `aux ${countryLabel}`;
+    }
+    return `en ${countryLabel}`;
+  }
+  if (locale === 'pt') {
+    if (isPlural(locale, countryGrammar)) {
+      if (isFeminine(locale, countryGrammar)) {
+        return `nas ${countryLabel}`;
+      }
+      return `nos ${countryLabel}`;
+    }
+    if (isFeminine(locale, countryGrammar)) {
+      return `na ${countryLabel}`;
+    }
+    return `no ${countryLabel}`;
+  }
+  // TODO: zh
+  return getCountryWithArticle(locale, countryGrammar, countryLabel);
+};
 export const getCountryPossessive = (locale, countryGrammar, countryLabel) => {
   if (!countryGrammar || !countryLabel) {
     return countryLabel;
@@ -453,6 +479,11 @@ export const getMessageGrammar = (
     countryGrammar,
     countryLabel,
   );
+  const countryWithPrepositionedArticle = getCountryWithPrepositionedArticle(
+    locale,
+    countryGrammar,
+    countryLabel,
+  );
   return {
     country: countryLabel,
     countryPossessive: getCountryPossessive(
@@ -461,6 +492,7 @@ export const getMessageGrammar = (
       countryLabel,
     ),
     countryWithArticle,
+    countryWithPrepositionedArticle,
     countryWithArticleCap: upperCaseFirst(countryWithArticle),
     needsArticle: needsArticle(locale, countryGrammar),
     isPlural: isPlural(locale, countryGrammar),

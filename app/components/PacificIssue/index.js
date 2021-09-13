@@ -18,7 +18,7 @@ import SingleBarChart from '../SingleBarChart';
 function PacificIssue({
   year,
   issueTKeyPart,
-  countryWithArticle,
+  countryWithPrepositionedArticle,
   score,
   qualData,
   barChartResponseOptions,
@@ -42,7 +42,7 @@ function PacificIssue({
           <FormattedMessage
             {...{
               ...rootMessages.pacific[`${issueTKeyPart}-subheading`],
-              values: { countryWithArticle },
+              values: { countryWithPrepositionedArticle },
             }}
           />
         </Text>
@@ -64,7 +64,7 @@ function PacificIssue({
 PacificIssue.propTypes = {
   year: PropTypes.string,
   issueTKeyPart: PropTypes.string,
-  countryWithArticle: PropTypes.string,
+  countryWithPrepositionedArticle: PropTypes.string,
   score: PropTypes.string,
   qualData: PropTypes.object,
   barChartResponseOptions: PropTypes.array,

@@ -156,7 +156,9 @@ function TabCountryPacific({
           <PacificIssue
             year={data.find(d => d.metric_code === 'climate').year}
             issueTKeyPart="climate-crisis"
-            countryWithArticle={messageValues.countryWithArticle}
+            countryWithPrepositionedArticle={
+              messageValues.countryWithPrepositionedArticle
+            }
             score={data.find(d => d.metric_code === 'climate').mean}
             qualData={
               content[`climate/${countryCode}`] &&
@@ -178,7 +180,9 @@ function TabCountryPacific({
           <PacificIssue
             year={data.find(d => d.metric_code === 'indigsov').year}
             issueTKeyPart="indigenous-sovereignty"
-            countryWithArticle={messageValues.countryWithArticle}
+            countryWithPrepositionedArticle={
+              messageValues.countryWithPrepositionedArticle
+            }
             score={data.find(d => d.metric_code === 'indigsov').mean}
             qualData={
               content[`indigsov/${countryCode}`] &&
@@ -200,7 +204,9 @@ function TabCountryPacific({
           <PacificIssue
             year={data.find(d => d.metric_code === 'indigland').year}
             issueTKeyPart="indigenous-lands"
-            countryWithArticle={messageValues.countryWithArticle}
+            countryWithPrepositionedArticle={
+              messageValues.countryWithPrepositionedArticle
+            }
             score={data.find(d => d.metric_code === 'indigland').mean}
             qualData={
               content[`indigland/${countryCode}`] &&
@@ -222,7 +228,9 @@ function TabCountryPacific({
           <PacificIssue
             year={data.find(d => d.metric_code === 'culture').year}
             issueTKeyPart="cultural-rights"
-            countryWithArticle={messageValues.countryWithArticle}
+            countryWithPrepositionedArticle={
+              messageValues.countryWithPrepositionedArticle
+            }
             score={data.find(d => d.metric_code === 'culture').mean}
             qualData={
               content[`culture/${countryCode}`] &&
