@@ -20,10 +20,13 @@ function GradeAndLabel({ left, text, value }) {
         top="100%"
         mt={1}
         transform="translate(-50%)"
-        minW={12}
+        minW={16}
       >
-        <Text textAlign="center">
-          {text} {`(${value})`}
+        <Text mb={0} textAlign="center">
+          {text}
+        </Text>
+        <Text mt={0} textAlign="center">
+          {`(${value})`}
         </Text>
       </Box>
     </Box>
