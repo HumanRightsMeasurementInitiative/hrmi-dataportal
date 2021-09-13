@@ -24,7 +24,8 @@ const StyledDropButton = styled(DropButton)`
 `;
 
 const StyledSortButton = styled(DropButton)`
-  width: 85px;
+  margin-left: 12px;
+  max-width: 105px;
   text-align: right;
 `;
 
