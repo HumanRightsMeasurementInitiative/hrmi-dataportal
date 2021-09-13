@@ -235,7 +235,7 @@ export function PathMetric({
                       style={{
                         overflow: 'hidden',
                         objectFit: 'cover',
-                        maxWidth: '350px',
+                        // maxWidth: '350px',
                       }}
                     />
                   </Aside>
