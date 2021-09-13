@@ -113,7 +113,12 @@ export function AboutMetricContainer({
       questions = FAQS.ESR_INDICATOR;
     }
     if (metric.right === 'violence') {
-      questions = FAQS.PACIFIC_INDICATOR;
+      // only info faq for aside on violence charts, see ternary in UI below
+      if (!showFAQs) {
+        questions = ['violenceInfo'];
+      } else {
+        questions = FAQS.PACIFIC_INDICATOR;
+      }
     }
   }
 
@@ -299,7 +304,7 @@ export function AboutMetricContainer({
           />
         )}
       </div>
-      {showFAQs && (
+      {(showFAQs || metric.right === 'violence') && (
         <FAQs
           questions={questions}
           metric={intl.formatMessage(
