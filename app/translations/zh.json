@@ -329,6 +329,7 @@
   "hrmi.components.ChartSettingSort.sortOrderAsc": "升序",
   "hrmi.components.ChartSettingSort.sortOrderDesc": "降序",
   "hrmi.components.CountryNarrative.cpr.start": "{countryWithArticle}的{dimension}分数是十分之{scoreBold}。分数显示",
+  "hrmi.components.CountryNarrative.cpr.outOf10": "out of 10",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.a": "很多人没有享受到他们该有的权利和政治自由（言论权利、集会和结社权利以及民主权利）。",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.b": "多数人享受到他们该有的权利和政治自由（言论、集会和结社和民主权利），但也有大量人群未能享受到上述权利。",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.c": "大部分人在享受到他们该有的权利和政治自由时（言论、集会和结社和民主权利），仍有一些人未能享受到上述权利。",

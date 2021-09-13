@@ -326,6 +326,7 @@
   "hrmi.components.ChartSettingSort.sortOrderAsc": "Ascendente",
   "hrmi.components.ChartSettingSort.sortOrderDesc": "Descendiendo",
   "hrmi.components.CountryNarrative.cpr.start": "La puntuación de {scoreBold} sobre 10 {countryOf} en la categoría de '{dimension}' sugiere que ",
+  "hrmi.components.CountryNarrative.cpr.outOf10": "out of 10",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.a": "muchas personas no disfrutan de sus libertades civiles y políticas (libertad de expresión, de reunión y asociación, y derechos democráticos). ",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.b": "si bien muchas personas disfrutan de sus libertades civiles y políticas (libertad de expresión, de reunión y asociación, y derechos democráticos), un número significativo de personas no lo hace. ",
   "hrmi.components.CountryNarrative.cpr.then.empowerment.c": "si bien la mayoría de las personas disfrutan de sus libertades civiles y políticas (libertad de expresión, de reunión y asociación, y derechos democráticos), otras no. ",
