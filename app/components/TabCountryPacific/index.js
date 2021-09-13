@@ -65,7 +65,7 @@ function TabCountryPacific({
               intl.locale === 'en'
             ) && (
               <Text mb={4} fontStyle="italic">
-                <FormattedMessage {...messages.noAnalysisInLanguage} />
+                <FormattedMessage {...messages.apology} />
               </Text>
             )}
             <Text>

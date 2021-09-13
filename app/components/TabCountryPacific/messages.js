@@ -6,12 +6,12 @@
 
 import { defineMessages } from 'react-intl';
 
-export const scope = 'hrmi.components.TabCountryPeople';
+export const scope = 'hrmi.pacific';
 
 export default defineMessages({
-  noAnalysisInLanguage: {
-    id: `${scope}.noAnalysisInLanguage`,
+  apology: {
+    id: `${scope}.apology`,
     defaultMessage:
-      'We are sorry but this information is not yet available in your language',
+      'We are sorry but this information is not yet available in your language.',
   },
 });
