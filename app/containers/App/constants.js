@@ -8,19 +8,19 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
-import arrest from 'images/metrics/arrest.svg';
-import assembly from 'images/metrics/assembly.svg';
-import deathPenalty from 'images/metrics/death-penalty.svg';
-import disappearance from 'images/metrics/disappearance.svg';
-import education from 'images/metrics/education.svg';
-import expression from 'images/metrics/expression.svg';
-import extrajudKilling from 'images/metrics/extrajud-killing.svg';
-import food from 'images/metrics/food.svg';
-import health from 'images/metrics/health.svg';
-import housing from 'images/metrics/housing.svg';
-import participation from 'images/metrics/participation.svg';
-import torture from 'images/metrics/torture.svg';
-import work from 'images/metrics/work.svg';
+import arrest from '../../images/metrics/arrest.svg';
+import assembly from '../../images/metrics/assembly.svg';
+import deathPenalty from '../../images/metrics/death-penalty.svg';
+import disappearance from '../../images/metrics/disappearance.svg';
+import education from '../../images/metrics/education.svg';
+import expression from '../../images/metrics/expression.svg';
+import extrajudKilling from '../../images/metrics/extrajud-killing.svg';
+import food from '../../images/metrics/food.svg';
+import health from '../../images/metrics/health.svg';
+import housing from '../../images/metrics/housing.svg';
+import participation from '../../images/metrics/participation.svg';
+import torture from '../../images/metrics/torture.svg';
+import work from '../../images/metrics/work.svg';
 
 export const CHECK_COOKIECONSENT = 'hrmi/App/CHECK_COOKIECONSENT';
 export const COOKIECONSENT_CHECKED = 'hrmi/App/COOKIECONSENT_CHECKED';
