@@ -27,7 +27,7 @@ function PacificIssue({
   return (
     <Flex position="relative" mb={12} direction="column" width="100%">
       {/* HACK to get the 'jump to' hash links to scroll to the appropriate location */}
-      <Box id={id} position="absolute" visibility="hidden" top={-144} />
+      <Box id={id} position="absolute" visibility="hidden" top={-164} />
       <Flex direction="column">
         <Heading my={1} fontSize={24} fontWeight="600" color="purple">
           <FormattedMessage {...rootMessages.pacific[issueTKeyPart]} />

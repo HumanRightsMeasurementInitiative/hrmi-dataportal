@@ -250,7 +250,14 @@ function TabCountryPacific({
             id="cultural-rights"
           />
 
-          <Flex id="violence" mb={12} direction="column" width="100%">
+          <Flex position="relative" mb={12} direction="column" width="100%">
+            {/* HACK to get the 'jump to' hash links to scroll to the appropriate location */}
+            <Box
+              id="violence"
+              position="absolute"
+              visibility="hidden"
+              top={-164}
+            />
             <Flex justify="space-between">
               <Heading fontSize={24} fontWeight="600" color="purple">
                 <FormattedMessage {...rootMessages.pacific.violence} />
