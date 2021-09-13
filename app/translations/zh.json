@@ -1053,8 +1053,8 @@
   "hrmi.pacific.slightly": "几乎没有",
   "hrmi.pacific.somewhat": "少许",
   "hrmi.pacific.moderately": "某种程度",
-  "hrmi.pacific.greatly": "很同意",
-  "hrmi.pacific.extremely": "非常同意",
+  "hrmi.pacific.greatly": "非常",
+  "hrmi.pacific.extremely": "极度",
   "hrmi.pacific.highly": "高度",
   "hrmi.pacific.completely": "完全",
   "hrmi.pacific.jump": "跳转到:",
@@ -1098,12 +1098,4 @@
   "hrmi.subrights.violence-mvpfaff-lgbtqia": "针对性少数群体的暴力",
   "hrmi.tabs.pacific": "太平洋地区数据",
   "hrmi.pacific.apology": "很抱歉。 部分信息仅提供英文版本。",
-  "hrmi.pacific.not-at-all.climatecrisis": "完全没有",
-  "hrmi.pacific.slightly.climatecrisis": "几乎没有",
-  "hrmi.pacific.somewhat.climatecrisis": "稍微",
-  "hrmi.pacific.moderately.climatecrisis": "中度",
-  "hrmi.pacific.greatly.climatecrisis": "非常",
-  "hrmi.pacific.extremely.climatecrisis": "极度",
-  "hrmi.pacific.highly.climatecrisis": "高度同意",
-  "hrmi.pacific.completely.climatecrisis": "完全同意"
-}
+ }
