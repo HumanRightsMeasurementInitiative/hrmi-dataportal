@@ -16,6 +16,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Grommet } from 'grommet';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import theme from 'theme';
 
 import history from 'utils/history';
@@ -54,23 +55,60 @@ const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
+const chakraTheme = extendTheme({
+  fonts: {
+    heading:
+      "'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+    body: "'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+  },
+  components: {
+    Button: {
+      variants: {
+        chartRow: props => ({
+          cursor: 'pointer',
+          py: 0,
+          pe: 0,
+          ps: 2,
+          ms: -3,
+          bg: 'none',
+          border: 'none',
+          borderRadius: 0,
+          height: 'auto',
+          borderLeftStyle: 'solid',
+          borderLeftWidth: 4,
+          borderLeftColor: 'white',
+          ':hover': {
+            borderLeftStyle: 'solid',
+            borderLeftWidth: 4,
+            borderLeftColor: 'purple'
+          }
+        })
+      }
+    }
+  }
+});
+delete chakraTheme.colors;
+chakraTheme.colors = { ...theme.global.colors, purple: '#262064' };
+
 // setting up route for locale: will forward to default locale
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
-      <Grommet theme={theme}>
-        <LanguageProvider messages={messages}>
-          <ConnectedRouter history={history}>
-            <Switch>
-              <Route
-                path={`/:locale(${appLocales.join('|')})`}
-                component={App}
-              />
-              <Redirect to={`/${DEFAULT_LOCALE}`} />
-            </Switch>
-          </ConnectedRouter>
-        </LanguageProvider>
-      </Grommet>
+      <ChakraProvider theme={chakraTheme} resetCSS={false}>
+        <Grommet theme={theme}>
+          <LanguageProvider messages={messages}>
+            <ConnectedRouter history={history}>
+              <Switch>
+                <Route
+                  path={`/:locale(${appLocales.join('|')})`}
+                  component={App}
+                />
+                <Redirect to={`/${DEFAULT_LOCALE}`} />
+              </Switch>
+            </ConnectedRouter>
+          </LanguageProvider>
+        </Grommet>
+      </ChakraProvider>
     </Provider>,
     MOUNT_NODE,
   );

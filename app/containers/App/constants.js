@@ -204,11 +204,13 @@ export const FAQS = {
     'grades',
   ],
   COUNTRY_CPR: ['where', 'how', 'grades', 'uncertainty'],
+  COUNTRY_PACIFIC: ['whereViolence'],
   ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],
   ESR_RIGHT: ['why', 'measureRightESR', 'benchmarks', 'standards'],
   ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],
   CPR_DIMENSION: ['measureDimensionCPR', 'uncertainty'],
   CPR_RIGHT: ['measureRightCPR', 'uncertainty'],
+  PACIFIC_INDICATOR: ['whereViolence-indicator', 'violenceInfo'],
 };
 
 // countries: country lookup table
@@ -259,6 +261,10 @@ export const DATA_RESOURCES = [
   {
     key: 'sources',
     file: 'sources_2021.csv',
+  },
+  {
+    key: 'pacific',
+    file: 'pm-formatted.csv',
   },
 ];
 

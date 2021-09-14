@@ -32,6 +32,7 @@ import {
   getAsideLayerActiveCode,
   getAtRiskSearch,
   getContent,
+  getLatestPacificScoresForCountry,
 } from 'containers/App/selectors';
 
 import {
@@ -83,6 +84,7 @@ import { getMessageGrammar } from 'utils/narrative';
 import { lowerCase } from 'utils/string';
 
 import messages from './messages';
+import TabCountryPacific from '../../components/TabCountryPacific';
 
 const RemoveFromPDFWrapper = styled.div`
   @media print {
@@ -118,6 +120,7 @@ const DEPENDENCIES = [
   'esrIndicatorScores',
   'auxIndicators',
   'atRisk',
+  'pacific',
 ];
 
 const getSubrights = metric => RIGHTS.filter(r => r.aggregate === metric.key);
@@ -201,13 +204,17 @@ const getScoreMsg = (
   /* eslint-disable no-nested-ternary */
   // prettier-ignore
   const metric =
-    typeof isSubright === 'undefined'
+    aboutMetricDetails.right === 'violence'
       ? lowerCase(
-        intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+        intl.formatMessage(rootMessages.pacific[code]),
       )
-      : isSubright
-        ? lowerCase(intl.formatMessage(rootMessages.subrights[code]))
-        : lowerCase(intl.formatMessage(rootMessages['indicators-raw'][code]));
+      : typeof isSubright === 'undefined'
+        ? lowerCase(
+          intl.formatMessage(rootMessages[aboutMetricDetails.metricType][code]),
+        )
+        : isSubright
+          ? lowerCase(intl.formatMessage(rootMessages.subrights[code]))
+          : lowerCase(intl.formatMessage(rootMessages['indicators-raw'][code]));
 
   if (aboutMetricDetails.type === 'esr') {
     // prettier-ignore
@@ -243,6 +250,9 @@ const getScoreMsg = (
             messageValues,
           );
     /* eslint-enable */
+  }
+  if (aboutMetricDetails.right === 'violence') {
+    return null;
   }
   if (aboutMetricDetails.type === 'cpr') {
     // prettier-ignore
@@ -297,6 +307,7 @@ export function PathCountry({
   content,
   onLoadContent,
   onSelectCountry,
+  pacificScores,
 }) {
   // const [activeCode, setActiveCode] = useState();
   useInjectSaga({ key: 'app', saga });
@@ -312,7 +323,9 @@ export function PathCountry({
   // loads content for all rights for people at risk tab
   // re-runs when country code changes
   useEffect(() => {
-    keys.forEach(k => onLoadContent(k));
+    // keys.forEach(k => onLoadContent(k));
+    onLoadContent(`atrisk/${countryCode}`);
+    onLoadContent(`pacific/${countryCode}`);
     onLoadData();
   }, [match.params.country]);
 
@@ -532,6 +545,27 @@ export function PathCountry({
                   ),
               },
               {
+                key: 'pacific-region-data',
+                title: intl.formatMessage(rootMessages.tabs.pacific),
+                content: props =>
+                  pacificScores.length > 0 && (
+                    <TabCountryPacific
+                      {...props}
+                      data={pacificScores}
+                      countryTitle={countryTitle}
+                      countryCode={countryCode}
+                      messageValues={messageValues}
+                      highlight={highlightGroup}
+                      setHighlight={onSetHighlightGroup}
+                      content={content}
+                      keys={keys}
+                      onSelectCountry={onSelectCountry}
+                      onSetAsideLayer={onSetAsideLayer}
+                      onMetricClick={c => onMetricClick(c, 'physint')}
+                    />
+                  ),
+              },
+              {
                 aside: true,
                 key: 'about',
                 title: intl.formatMessage(rootMessages.tabs.about),
@@ -552,6 +586,9 @@ export function PathCountry({
                       props.active === 'report-empowerment')
                   ) {
                     faqs = FAQS.COUNTRY_CPR;
+                  }
+                  if (props && props.active === 'pacific-region-data') {
+                    faqs = FAQS.COUNTRY_PACIFIC;
                   }
                   // TODO check about tab
                   return (
@@ -605,6 +642,7 @@ PathCountry.propTypes = {
   content: PropTypes.object,
   onLoadContent: PropTypes.func,
   onSelectCountry: PropTypes.func,
+  pacificScores: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -626,6 +664,8 @@ const mapStateToProps = createStructuredSelector({
   activeCode: state => getAsideLayerActiveCode(state),
   highlightGroup: state => getAtRiskSearch(state),
   content: state => getContent(state),
+  pacificScores: (state, { match }) =>
+    getLatestPacificScoresForCountry(state, match.params.country),
 });
 
 export function mapDispatchToProps(dispatch) {
@@ -661,6 +701,7 @@ export function mapDispatchToProps(dispatch) {
     },
     onTrackEvent: e => dispatch(trackEvent(e)),
     onLoadContent: path => {
+      // N.B. loading pacific data through this now, gets contentType of 'atrisk' which is not really accurate, but allows us to easily use the airtable loading path for now
       if (Array.isArray(path)) {
         path.forEach(p => dispatch(loadContentIfNeeded(p, 'atrisk')));
       } else {

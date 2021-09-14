@@ -228,6 +228,10 @@ export default defineMessages({
       id: `${scope}.tabs.people-at-risk`,
       defaultMessage: 'People at risk',
     },
+    pacific: {
+      id: `${scope}.tabs.pacific`,
+      defaultMessage: 'Pacific Region Data',
+    },
     about: {
       id: `${scope}.tabs.about`,
       defaultMessage: 'About',
@@ -977,6 +981,10 @@ export default defineMessages({
       id: `${scope}.rights.union`,
       defaultMessage: 'union',
     },
+    violence: {
+      id: `${scope}.rights.violence`,
+      defaultMessage: 'violence',
+    },
   },
   'rights-short': {
     arrest: {
@@ -1249,6 +1257,38 @@ export default defineMessages({
       id: `${scope}.indicators.affordable-housing`,
       defaultMessage: 'affordable-housing',
     },
+    'violence-children': {
+      id: `${scope}.indicators.violence-children`,
+      defaultMessage: 'violence-children',
+    },
+    'violence-disabilities': {
+      id: `${scope}.indicators.violence-disabilities`,
+      defaultMessage: 'violence-disabilities',
+    },
+    'violence-women-and-girls': {
+      id: `${scope}.indicators.violence-women-and-girls`,
+      defaultMessage: 'violence-women-and-girls',
+    },
+    'violence-mvpfaff-lgbtqia': {
+      id: `${scope}.indicators.violence-mvpfaff-lgbtqia`,
+      defaultMessage: 'violence-mvpfaff-lgbtqia',
+    },
+    vchild: {
+      id: `${scope}.indicators.vchild`,
+      defaultMessage: 'vchild',
+    },
+    vdisab: {
+      id: `${scope}.indicators.vdisab`,
+      defaultMessage: 'vdisab',
+    },
+    vwomen: {
+      id: `${scope}.indicators.vwomen`,
+      defaultMessage: 'vwomen',
+    },
+    vmvpfaff: {
+      id: `${scope}.indicators.vmvpfaff`,
+      defaultMessage: 'vmvpfaff',
+    },
   },
   'indicators-definition': {
     'net-primary': {
@@ -1397,6 +1437,22 @@ export default defineMessages({
       id: `${scope}.subrights.affordable-housing`,
       defaultMessage: 'affordable-housing',
     },
+    'violence-children': {
+      id: `${scope}.subrights.violence-children`,
+      defaultMessage: 'violence-children',
+    },
+    'violence-disabilities': {
+      id: `${scope}.subrights.violence-disabilities`,
+      defaultMessage: 'violence-disabilities',
+    },
+    'violence-women-and-girls': {
+      id: `${scope}.subrights.violence-women-and-girls`,
+      defaultMessage: 'violence-women-and-girls',
+    },
+    'violence-mvpfaff-lgbtqia': {
+      id: `${scope}.subrights.violence-mvpfaff-lgbtqia`,
+      defaultMessage: 'violence-mvpfaff-lgbtqia',
+    },
     rightTo: {
       'net-primary': {
         id: `${scope}.subrights.rightTo.net-primary`,
@@ -1469,6 +1525,22 @@ export default defineMessages({
       'affordable-housing': {
         id: `${scope}.subrights.rightTo.affordable-housing`,
         defaultMessage: 'affordable-housing',
+      },
+      'violence-children': {
+        id: `${scope}.subrights.rightTo.violence-children`,
+        defaultMessage: 'violence-children',
+      },
+      'violence-disabilities': {
+        id: `${scope}.subrights.rightTo.violence-disabilities`,
+        defaultMessage: 'violence-disabilities',
+      },
+      'violence-women-and-girls': {
+        id: `${scope}.subrights.rightTo.violence-women-and-girls`,
+        defaultMessage: 'violence-women-and-girls',
+      },
+      'violence-mvpfaff-lgbtqia': {
+        id: `${scope}.subrights.rightTo.violence-mvpfaff-lgbtqia`,
+        defaultMessage: 'violence-mvpfaff-lgbtqia',
       },
     },
   },
@@ -2749,6 +2821,148 @@ export default defineMessages({
       id: `${scope}.pdf.explore`,
       defaultMessage:
         "To explore this country's scores in more detail please go to rightstracker.org",
+    },
+  },
+  pacific: {
+    intro: {
+      id: `${scope}.pacific.intro`,
+      defaultMessage:
+        'On this tab you can find data collected only in Pacific countries, on five themes.',
+    },
+    vchild: {
+      id: `${scope}.pacific.vchild`,
+      defaultMessage: 'Children',
+    },
+    vwomen: {
+      id: `${scope}.pacific.vwomen`,
+      defaultMessage: 'Women and Girls',
+    },
+    vmvpfaff: {
+      id: `${scope}.pacific.vmvpfaff`,
+      defaultMessage: 'MVPFAFF+/LGBTQIA+',
+    },
+    vdisab: {
+      id: `${scope}.pacific.vdisab`,
+      defaultMessage: 'People with disabilities',
+    },
+    'violence-against': {
+      id: `${scope}.pacific.violence-against`,
+      defaultMessage: 'Violence against',
+    },
+    violence: {
+      id: `${scope}.pacific.violence`,
+      defaultMessage: 'Violence',
+    },
+    'violence-subheading': {
+      id: `${scope}.pacific.violence-subheading`,
+      defaultMessage:
+        'To what extent are people in {countryWithArticle} free from violence in the community?',
+    },
+    'climate-crisis': {
+      id: `${scope}.pacific.climate-crisis`,
+      defaultMessage: 'Climate crisis',
+    },
+    'climate-crisis-subheading': {
+      id: `${scope}.pacific.climate-crisis-subheading`,
+      defaultMessage:
+        'How much has climate crisis worsened human rights conditions in {countryWithArticle}?',
+    },
+    'indigenous-sovereignty': {
+      id: `${scope}.pacific.indigenous-sovereignty`,
+      defaultMessage: 'Indigenous sovereignty',
+    },
+    'indigenous-sovereignty-subheading': {
+      id: `${scope}.pacific.indigenous-sovereignty-subheading`,
+      defaultMessage:
+        'To what extent are Indigenous and/or native communities in {countryWithArticle} able to exercise self-determination?',
+    },
+    'indigenous-lands': {
+      id: `${scope}.pacific.indigenous-lands`,
+      defaultMessage: 'Indigenous lands',
+    },
+    'indigenous-lands-subheading': {
+      id: `${scope}.pacific.indigenous-lands-subheading`,
+      defaultMessage:
+        'To what extent do Indigenous and/or native communities in {countryWithArticle} have possession and enjoyment of their traditional lands?',
+    },
+    'cultural-rights': {
+      id: `${scope}.pacific.cultural-rights`,
+      defaultMessage: 'Cultural rights',
+    },
+    'cultural-rights-subheading': {
+      id: `${scope}.pacific.cultural-rights-subheading`,
+      defaultMessage:
+        'To what extent do people in {countryWithArticle} enjoy their cultural rights?',
+    },
+    'violence-children': {
+      id: `${scope}.pacific.violence-children`,
+      defaultMessage: 'Violence against children',
+    },
+    'violence-women': {
+      id: `${scope}.pacific.violence-women`,
+      defaultMessage: 'Violence against women and girls',
+    },
+    'violence-mvpfaff': {
+      id: `${scope}.pacific.violence-mvpfaff`,
+      defaultMessage: 'Violence against MVPFAFF+/LGBTQIA+',
+    },
+    'violence-disabled': {
+      id: `${scope}.pacific.violence-disabled`,
+      defaultMessage: 'Violence against people with disabilities',
+    },
+    'not-at-all': {
+      id: `${scope}.pacific.not-at-all`,
+      defaultMessage: 'Not at All',
+    },
+    slightly: {
+      id: `${scope}.pacific.slightly`,
+      defaultMessage: 'Slightly',
+    },
+    somewhat: {
+      id: `${scope}.pacific.somewhat`,
+      defaultMessage: 'Somewhat',
+    },
+    moderately: {
+      id: `${scope}.pacific.moderately`,
+      defaultMessage: 'Moderately',
+    },
+    greatly: {
+      id: `${scope}.pacific.greatly`,
+      defaultMessage: 'Greatly',
+    },
+    extremely: {
+      id: `${scope}.pacific.extremely`,
+      defaultMessage: 'Extremely',
+    },
+    highly: {
+      id: `${scope}.pacific.highly`,
+      defaultMessage: 'Highly',
+    },
+    completely: {
+      id: `${scope}.pacific.completely`,
+      defaultMessage: 'Completely',
+    },
+    jump: {
+      id: `${scope}.pacific.jump`,
+      defaultMessage: 'Jump to:',
+    },
+    lessSafe: {
+      id: `${scope}.pacific.lessSafe`,
+      defaultMessage: 'Less safe',
+    },
+    moreSafe: {
+      id: `${scope}.pacific.moreSafe`,
+      defaultMessage: 'More safe',
+    },
+    explanation: {
+      id: `${scope}.pacific.explanation`,
+      defaultMessage:
+        'When asked this question, our {no} respondents in {countryWithArticle} gave an average answer of {score}, suggesting that {issue} has affected human rights conditions between {lowerBandLabel} and {upperBandLabel}.',
+    },
+    htr: {
+      id: `${scope}.pacific.htr`,
+      defaultMessage:
+        'Each country score has been produced from responses to a detailed survey of human rights experts who either live in or specialise in monitoring that country. Scores closer to 10 are better.',
     },
   },
 });
