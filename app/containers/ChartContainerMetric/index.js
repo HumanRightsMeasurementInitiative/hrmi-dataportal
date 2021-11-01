@@ -30,6 +30,13 @@ import {
   getCountries,
   getDependenciesReady,
   getAuxIndicatorsLatest,
+  getMaxYearESR,
+  getMinYearESR,
+  getMaxYearCPR,
+  getMinYearCPR,
+  getMaxYearPacific,
+  getMinYearPacific,
+  getPacificScoresByMetricByYear,
 } from 'containers/App/selectors';
 import { loadDataIfNeeded, navigate } from 'containers/App/actions';
 import {
@@ -62,6 +69,7 @@ const DEPENDENCIES = [
   'esrIndicators',
   'esrIndicatorScores',
   'auxIndicators',
+  'pacific',
 ];
 
 const SORT_OPTIONS = ['score', 'name', 'population', 'gdp'];
@@ -115,7 +123,7 @@ const prepareData = ({
 }) =>
   // prettier-ignore
   scores.map(s =>
-    metric.type === 'esr' || metric.metricType === 'indicators'
+    (metric.type === 'esr' || metric.metricType === 'indicators') && metric.right !== 'violence'
       ? {
         color: 'esr',
         refValues: getDimensionRefs(s, currentBenchmark, metric.metricType),
@@ -135,7 +143,7 @@ const prepareData = ({
         active: activeCode === s.country_code,
       }
       : {
-        color: metric.dimension || metric.key,
+        color: metric.right === 'violence' ? 'physint' : metric.dimension || metric.key,
         value: getCPRDimensionValue(s),
         maxValue: 10,
         unit: '',
@@ -176,6 +184,15 @@ export function ChartContainerMetric({
   auxIndicators,
   onCountryClick,
   activeCode,
+  selectedYear,
+  setSelectedYear,
+  maxYearESR,
+  minYearESR,
+  maxYearCPR,
+  minYearCPR,
+  maxYearPacific,
+  minYearPacific,
+  maxYearDimension,
 }) {
   useEffect(() => {
     // kick off loading of data
@@ -188,7 +205,7 @@ export function ChartContainerMetric({
   const currentSortOrder = sortOrder || COUNTRY_SORTS[currentSort].order;
 
   // prettier-ignore
-  const countriesForScores = scores
+  const countriesForScores = (scores && countries)
     ? scores.map(s =>
       countries.find(c => c.country_code === s.country_code),
     )
@@ -239,35 +256,62 @@ export function ChartContainerMetric({
               howToReadConfig: {
                 contxt: 'PathMetric',
                 chart: metric.type === 'cpr' ? 'Bullet' : 'Bar',
-                dimension: metric.color,
+                dimension:
+                  metric.right === 'violence' ? 'physint' : metric.color,
                 data: metric.color,
+                pacific: metric.right === 'violence',
               },
-              settingsConfig: (metric.type === 'esr' ||
-                metric.metricType === 'indicators') && {
+              // prettier-ignore
+              settingsConfig: metric.right !== 'violence' &&
+                (metric.type === 'esr' ||
+                  metric.metricType === 'indicators') && {
                 key: 'metric',
                 showStandard: metric.metricType !== 'indicators',
                 showBenchmark: true,
-              },
+              }
             }}
             messageValues={{ no: scores.length }}
-            filter={{
-              regionFilterValue,
-              subregionFilterValue,
-              onRemoveFilter,
-              onAddFilter,
-              incomeFilterValue,
-              countryGroupFilterValue,
-              treatyFilterValue,
-              filterValues,
-            }}
+            filter={
+              metric.right !== 'violence' && {
+                regionFilterValue,
+                subregionFilterValue,
+                onRemoveFilter,
+                onAddFilter,
+                incomeFilterValue,
+                countryGroupFilterValue,
+                treatyFilterValue,
+                filterValues,
+              }
+            }
             sort={{
               sort: currentSort,
-              options: SORT_OPTIONS,
+              options:
+                maxYearDimension === selectedYear
+                  ? SORT_OPTIONS
+                  : ['score', 'name'],
               order: currentSortOrder,
               onSortSelect,
               onOrderToggle: onOrderChange,
             }}
             standard={standard}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+            /* eslint-disable */
+            maxYearDimension={
+              metric.right === 'violence'
+                ? maxYearPacific
+                : metric.type === 'esr'
+                  ? maxYearESR
+                  : maxYearCPR
+            }
+            minYearDimension={
+              metric.right === 'violence'
+                ? minYearPacific
+                : metric.type === 'esr'
+                  ? minYearESR
+                  : minYearCPR
+            }
+            /* eslint-enable */
           />
           {!dataReady && <LoadingIndicator />}
           {!hasResults && dataReady && (
@@ -291,7 +335,7 @@ export function ChartContainerMetric({
               currentBenchmark={currentBenchmark}
               metric={metric}
               listHeader
-              bullet={metric.type === 'cpr'}
+              bullet={metric.type === 'cpr' || metric.right === 'violence'}
               allowWordBreak
               labelColor={`${metric.color}Dark`}
               padVertical="xsmall"
@@ -370,23 +414,35 @@ ChartContainerMetric.propTypes = {
   dataReady: PropTypes.bool,
   showHILabel: PropTypes.bool,
   onCountryClick: PropTypes.func,
+  selectedYear: PropTypes.string,
+  setSelectedYear: PropTypes.func,
+  maxYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearPacific: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearPacific: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearDimension: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
-  scores: (state, { metric }) => {
+  scores: (state, { metric, selectedYear }) => {
     if (metric.metricType === 'dimensions') {
       return metric.type === 'esr'
-        ? getESRDimensionScores(state)
-        : getCPRDimensionScores(state, metric.key);
+        ? getESRDimensionScores(state, selectedYear)
+        : getCPRDimensionScores(state, metric.key, selectedYear);
     }
     if (metric.metricType === 'rights') {
       return metric.type === 'esr'
-        ? getESRRightScores(state, metric.key)
-        : getCPRRightScores(state, metric.key);
+        ? getESRRightScores(state, metric.key, selectedYear)
+        : getCPRRightScores(state, metric.key, selectedYear);
+    }
+    if (metric.right === 'violence') {
+      return getPacificScoresByMetricByYear(state, metric.code, selectedYear);
     }
     if (metric.metricType === 'indicators') {
-      return getIndicatorScores(state, metric.key);
+      return getIndicatorScores(state, metric.key, selectedYear);
     }
     return false;
   },
@@ -401,6 +457,12 @@ const mapStateToProps = createStructuredSelector({
   treatyFilterValue: state => getTreatySearch(state),
   sort: state => getSortSearch(state),
   sortOrder: state => getSortOrderSearch(state),
+  maxYearESR: getMaxYearESR,
+  minYearESR: getMinYearESR,
+  maxYearCPR: getMaxYearCPR,
+  minYearCPR: getMinYearCPR,
+  maxYearPacific: getMaxYearPacific,
+  minYearPacific: getMinYearPacific,
 });
 
 export function mapDispatchToProps(dispatch) {

@@ -88,7 +88,11 @@ export function MetricSelect({
                       noBorderLast
                     >
                       <FormattedMessage
-                        {...rootMessages[details2.metricType][m2.key]}
+                        {...rootMessages[
+                          details2.metricType === 'indicators'
+                            ? 'subrights'
+                            : details2.metricType
+                        ][m2.key]}
                       />
                     </StyledOption>
                     {m2.children &&
@@ -105,7 +109,11 @@ export function MetricSelect({
                               noBorderLast
                             >
                               <FormattedMessage
-                                {...rootMessages[details3.metricType][m3.key]}
+                                {...rootMessages[
+                                  details3.metricType === 'indicators'
+                                    ? 'subrights'
+                                    : details3.metricType
+                                ][m3.key]}
                               />
                             </StyledOption>
                           </div>

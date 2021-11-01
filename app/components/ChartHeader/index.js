@@ -4,12 +4,21 @@
  *
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Heading, ResponsiveContext, Box, Text } from 'grommet';
-import { Share } from 'grommet-icons';
+import {
+  Heading,
+  ResponsiveContext,
+  Box,
+  Text,
+  Button,
+  Spinner,
+} from 'grommet';
+import { Share, Next, Previous } from 'grommet-icons';
 import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+
+// necessary for pdf downloads
 
 import ChartTools from 'containers/ChartTools';
 
@@ -21,6 +30,7 @@ import { isMinSize, isMaxSize } from 'utils/responsive';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 
 import rootMessages from 'messages';
+import firebase from '../../../firebase';
 import messages from './messages';
 
 const Styled = styled.div`
@@ -68,6 +78,8 @@ const DownloadButton = styled(ButtonNavPrimary)`
   }
 `;
 
+const storage = firebase.storage();
+
 export function ChartHeader({
   title,
   chartId,
@@ -84,9 +96,54 @@ export function ChartHeader({
   displayInPDF,
   countryCode,
   locale,
+  selectedYear,
+  setSelectedYear,
+  maxYearDimension,
+  minYearDimension,
 }) {
+  const [pdfURL, setPdfURL] = useState('');
+  const [specialPdfURL, setSpecialPdfURL] = useState('');
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
+
+  useEffect(() => {
+    if (locale && countryCode) {
+      const ref = storage.ref(`pdfs/${locale}-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (countryCode === 'VNM') {
+      const ref = storage.ref(`pdfs/vi-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (countryCode === 'KOR') {
+      const ref = storage.ref(`pdfs/ko-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (countryCode === 'KAZ' || countryCode === 'KGZ') {
+      const ref = storage.ref(`pdfs/ru-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (countryCode === 'JOR' || countryCode === 'SAU') {
+      const ref = storage.ref(`pdfs/ar-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
+  }, [locale, countryCode]);
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -144,9 +201,12 @@ export function ChartHeader({
                   tools.settingsConfig &&
                   tools.settingsConfig.key === 'tab-snapshot' && (
                   /* eslint-disable */
-                  <DownloadButton
+                  <>
+                    {!pdfURL
+                    ? <Spinner />
+                    : <DownloadButton
                     as="a"
-                    href={`/pdfs/${locale}-${countryCode}.pdf`}
+                    href={pdfURL}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -156,7 +216,68 @@ export function ChartHeader({
                       />
                     </TextWrap>
                     <StyledShare />
-                  </DownloadButton>
+                  </DownloadButton>}
+                    {countryCode === 'VNM' && !specialPdfURL ? <Spinner /> : countryCode === 'VNM' && (
+                      <DownloadButton
+                        as="a"
+                        href={specialPdfURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TextWrap>
+                          <FormattedMessage
+                            {...rootMessages.labels.chartTools.downloadPDFvi}
+                          />
+                        </TextWrap>
+                        <StyledShare />
+                      </DownloadButton>
+                    )}
+                    {countryCode === 'KOR' && !specialPdfURL ? <Spinner /> : countryCode === 'KOR' && (
+                      <DownloadButton
+                        as="a"
+                        href={specialPdfURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TextWrap>
+                          <FormattedMessage
+                            {...rootMessages.labels.chartTools.downloadPDFko}
+                          />
+                        </TextWrap>
+                        <StyledShare />
+                      </DownloadButton>
+                    )}
+                    {(countryCode === 'KAZ' || countryCode === 'KGZ') && !specialPdfURL ? <Spinner /> : (countryCode === 'KAZ' || countryCode === 'KGZ') && (
+                      <DownloadButton
+                        as="a"
+                        href={specialPdfURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TextWrap>
+                          <FormattedMessage
+                            {...rootMessages.labels.chartTools.downloadPDFru}
+                          />
+                        </TextWrap>
+                        <StyledShare />
+                      </DownloadButton>
+                    )}
+                    {(countryCode === 'JOR' || countryCode === 'SAU') && !specialPdfURL ? <Spinner /> : (countryCode === 'JOR' || countryCode === 'SAU') && (
+                      <DownloadButton
+                        as="a"
+                        href={specialPdfURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TextWrap>
+                          <FormattedMessage
+                            {...rootMessages.labels.chartTools.downloadPDFar}
+                          />
+                        </TextWrap>
+                        <StyledShare />
+                      </DownloadButton>
+                    )}
+                  </>
                 )}
               </ChartToolWrapper>
                 /* eslint-enable */
@@ -182,7 +303,7 @@ export function ChartHeader({
                   hasWhiteBG={hasWhiteBG}
                 />
               )}
-              {filter && (
+              {filter ? (
                 <ChartSettingFilters
                   regionFilterValue={filter.regionFilterValue}
                   subregionFilterValue={filter.subregionFilterValue}
@@ -195,17 +316,53 @@ export function ChartHeader({
                   filterValues={filter.filterValues}
                   hasWhiteBG={hasWhiteBG}
                 />
+              ) : (
+                // placeholder for space for when no filter
+                <Box />
               )}
-              {sort && isMinSize(size, 'medium') && (
-                <ChartSettingSort
-                  sort={sort.sort}
-                  options={sort.options}
-                  order={sort.order}
-                  onSortSelect={sort.onSortSelect}
-                  onOrderToggle={sort.onOrderToggle}
-                  hasWhiteBG={hasWhiteBG}
-                />
-              )}
+              <Box>
+                {sort && isMinSize(size, 'medium') && (
+                  <ChartSettingSort
+                    sort={sort.sort}
+                    options={sort.options}
+                    order={sort.order}
+                    onSortSelect={sort.onSortSelect}
+                    onOrderToggle={sort.onOrderToggle}
+                    hasWhiteBG={hasWhiteBG}
+                  />
+                )}
+                <Box direction="row" justify="end" align="center">
+                  <Button
+                    plain
+                    disabled={
+                      minYearDimension === selectedYear ||
+                      (sort.sort !== 'score' && sort.sort !== 'name')
+                    }
+                    onClick={() => {
+                      setSelectedYear(
+                        (parseInt(selectedYear, 10) - 1).toString(),
+                      );
+                    }}
+                    icon={<Previous size="small" />}
+                    margin={{ right: 'xsmall' }}
+                  />
+                  {selectedYear}
+                  <Button
+                    plain
+                    disabled={
+                      maxYearDimension === selectedYear ||
+                      (sort.sort !== 'score' && sort.sort !== 'name')
+                    }
+                    onClick={() =>
+                      setSelectedYear(
+                        (parseInt(selectedYear, 10) + 1).toString(),
+                      )
+                    }
+                    icon={<Next size="small" />}
+                    margin={{ left: 'xsmall' }}
+                  />
+                </Box>
+              </Box>
             </Box>
           )}
         </Styled>
@@ -234,6 +391,10 @@ ChartHeader.propTypes = {
   displayInPDF: PropTypes.bool,
   countryCode: PropTypes.string,
   locale: PropTypes.string,
+  selectedYear: PropTypes.string,
+  setSelectedYear: PropTypes.func,
+  maxYearDimension: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  minYearDimension: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export default injectIntl(ChartHeader);

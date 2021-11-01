@@ -63,8 +63,6 @@ export function AboutMetricContainer({
     onLoadData(metric);
   }, [metric]);
 
-  console.log('here', intl);
-
   const metric = getMetricDetails(metricCode);
   const { metricType } = metric;
 
@@ -111,8 +109,16 @@ export function AboutMetricContainer({
       }));
       questions = FAQS.ESR_RIGHT;
     }
-    if (metricType === 'indicators') {
+    if (metricType === 'indicators' && metric.right !== 'violence') {
       questions = FAQS.ESR_INDICATOR;
+    }
+    if (metric.right === 'violence') {
+      // only info faq for aside on violence charts, see ternary in UI below
+      if (!showFAQs) {
+        questions = ['violenceInfo'];
+      } else {
+        questions = FAQS.PACIFIC_INDICATOR;
+      }
     }
   }
 
@@ -124,7 +130,7 @@ export function AboutMetricContainer({
       <div ref={asideRef}>
         {showRelated && (
           <div justify="start">
-            {metricType !== 'dimensions' && (
+            {metricType !== 'dimensions' && metric.right !== 'violence' && (
               <Pad>
                 <Heading
                   responsive={false}
@@ -284,7 +290,7 @@ export function AboutMetricContainer({
             </Text>
           </div>
         )}
-        {showAboutMetric && (
+        {showAboutMetric && metric.right !== 'violence' && (
           <AboutMetric
             metric={metric}
             metricInfo={metricInfo}
@@ -298,7 +304,7 @@ export function AboutMetricContainer({
           />
         )}
       </div>
-      {showFAQs && (
+      {(showFAQs || metric.right === 'violence') && (
         <FAQs
           questions={questions}
           metric={intl.formatMessage(
@@ -343,7 +349,7 @@ AboutMetricContainer.propTypes = {
 const mapStateToProps = createStructuredSelector({
   metricInfo: (state, { metricCode }) => {
     const metric = getMetricDetails(metricCode);
-    if (metric.metricType === 'indicators') {
+    if (metric.metricType === 'indicators' && metric.right !== 'violence') {
       return getIndicatorInfo(state, metric.code);
     }
     return false;

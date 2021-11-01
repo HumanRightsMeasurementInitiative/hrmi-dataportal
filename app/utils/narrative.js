@@ -1,4 +1,4 @@
-import rootMessages from 'messages';
+import rootMessages from '../messages';
 import { roundScore } from './scores';
 import { startsWithVowel, upperCaseFirst } from './string';
 
@@ -8,6 +8,10 @@ const ARTICLES_DEFAULT = {
   es: 0,
   pt: 1,
   zh: 0, // TODO: is this right?
+  // vi: 0, // TODO: is this right?
+  // ko: 0, // TODO: is this right?
+  // ru: 0, // TODO: is this right?
+  // ar: 0, // TODO: is this right?
 };
 
 export const needsArticle = (locale, countryGrammar) => {
@@ -88,6 +92,32 @@ export const getCountryWithArticle = (locale, countryGrammar, countryLabel) => {
   }
   // TODO: zh
   return countryLabel;
+};
+export const getCountryWithPrepositionedArticle = (
+  locale,
+  countryGrammar,
+  countryLabel,
+) => {
+  if (locale === 'fr') {
+    if (isPlural(locale, countryGrammar)) {
+      return `aux ${countryLabel}`;
+    }
+    return `en ${countryLabel}`;
+  }
+  if (locale === 'pt') {
+    if (isPlural(locale, countryGrammar)) {
+      if (isFeminine(locale, countryGrammar)) {
+        return `nas ${countryLabel}`;
+      }
+      return `nos ${countryLabel}`;
+    }
+    if (isFeminine(locale, countryGrammar)) {
+      return `na ${countryLabel}`;
+    }
+    return `no ${countryLabel}`;
+  }
+  // TODO: zh
+  return getCountryWithArticle(locale, countryGrammar, countryLabel);
 };
 export const getCountryPossessive = (locale, countryGrammar, countryLabel) => {
   if (!countryGrammar || !countryLabel) {
@@ -196,6 +226,10 @@ const regionsNeedArticle = {
   es: ['americas'],
   pt: ['americas'],
   zh: [],
+  // vi: [],
+  // ko: [],
+  // ru: [],
+  // ar: [],
 };
 const regionsArePlural = {
   en: [
@@ -218,6 +252,10 @@ const regionsArePlural = {
     'middle-east-north-africa',
   ],
   zh: [],
+  // vi: [],
+  // ko: [],
+  // ru: [],
+  // ar: [],
 };
 const regionsAreFeminine = {
   en: [],
@@ -247,6 +285,10 @@ const regionsAreFeminine = {
     'east-asia',
   ],
   zh: [],
+  // vi: [],
+  // ko: [],
+  // ru: [],
+  // ar: [],
 };
 const isRegionFeminine = (locale, regionCode) =>
   regionsAreFeminine[locale].indexOf(regionCode) > -1;
@@ -312,7 +354,7 @@ export const getRegionWithArticle = (locale, regionCode, regionLabel) => {
   if (locale === 'pt') {
     if (isPluralRegion(locale, regionCode)) {
       if (isFeminineRegion(locale, regionCode)) {
-        return `as ${regionLabel}`;
+        return `nas ${regionLabel}`;
       }
       return `os ${regionLabel}`;
     }
@@ -437,6 +479,11 @@ export const getMessageGrammar = (
     countryGrammar,
     countryLabel,
   );
+  const countryWithPrepositionedArticle = getCountryWithPrepositionedArticle(
+    locale,
+    countryGrammar,
+    countryLabel,
+  );
   return {
     country: countryLabel,
     countryPossessive: getCountryPossessive(
@@ -445,6 +492,7 @@ export const getMessageGrammar = (
       countryLabel,
     ),
     countryWithArticle,
+    countryWithPrepositionedArticle,
     countryWithArticleCap: upperCaseFirst(countryWithArticle),
     needsArticle: needsArticle(locale, countryGrammar),
     isPlural: isPlural(locale, countryGrammar),

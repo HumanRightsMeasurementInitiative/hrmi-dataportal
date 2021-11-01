@@ -8,19 +8,19 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
-import arrest from 'images/metrics/arrest.svg';
-import assembly from 'images/metrics/assembly.svg';
-import deathPenalty from 'images/metrics/death-penalty.svg';
-import disappearance from 'images/metrics/disappearance.svg';
-import education from 'images/metrics/education.svg';
-import expression from 'images/metrics/expression.svg';
-import extrajudKilling from 'images/metrics/extrajud-killing.svg';
-import food from 'images/metrics/food.svg';
-import health from 'images/metrics/health.svg';
-import housing from 'images/metrics/housing.svg';
-import participation from 'images/metrics/participation.svg';
-import torture from 'images/metrics/torture.svg';
-import work from 'images/metrics/work.svg';
+import arrest from '../../images/metrics/arrest.svg';
+import assembly from '../../images/metrics/assembly.svg';
+import deathPenalty from '../../images/metrics/death-penalty.svg';
+import disappearance from '../../images/metrics/disappearance.svg';
+import education from '../../images/metrics/education.svg';
+import expression from '../../images/metrics/expression.svg';
+import extrajudKilling from '../../images/metrics/extrajud-killing.svg';
+import food from '../../images/metrics/food.svg';
+import health from '../../images/metrics/health.svg';
+import housing from '../../images/metrics/housing.svg';
+import participation from '../../images/metrics/participation.svg';
+import torture from '../../images/metrics/torture.svg';
+import work from '../../images/metrics/work.svg';
 
 export const CHECK_COOKIECONSENT = 'hrmi/App/CHECK_COOKIECONSENT';
 export const COOKIECONSENT_CHECKED = 'hrmi/App/COOKIECONSENT_CHECKED';
@@ -77,8 +77,9 @@ export const COLUMNS = {
     RAW_REF_BEST_FEMALE: 'global_best_female',
   },
   AUX: {
-    POPULATION: 'population',
+    POPULATION: 'Population',
     GDP_2011_PPP: 'gdp_per_capita_2011ppp',
+    GDP_2017_PPP: 'gdp_per_capita_2017ppp',
     GDP_CURRENT_PPP: 'gdp_per_capita_current_ppp',
     GDP_CURRENT_US: 'gdp_per_capita_current_usd',
   },
@@ -124,7 +125,7 @@ export const LANGUAGES = {
 
 // URLs for external resources loaded on request
 export const DATA_URL = '//data-store.humanrightsmeasurement.org/data';
-export const PAGES_URL = '//content-store.humanrightsmeasurement.org/v3_1/';
+export const PAGES_URL = '//content-store.humanrightsmeasurement.org/v3_3/';
 
 export const PAGES = {
   about: {
@@ -203,11 +204,13 @@ export const FAQS = {
     'grades',
   ],
   COUNTRY_CPR: ['where', 'how', 'grades', 'uncertainty'],
+  COUNTRY_PACIFIC: ['whereViolence'],
   ESR_DIMENSION: ['measureDimensionESR', 'benchmarks', 'standards'],
   ESR_RIGHT: ['why', 'measureRightESR', 'benchmarks', 'standards'],
   ESR_INDICATOR: ['measureIndicators', 'benchmarks', 'standards'],
   CPR_DIMENSION: ['measureDimensionCPR', 'uncertainty'],
   CPR_RIGHT: ['measureRightCPR', 'uncertainty'],
+  PACIFIC_INDICATOR: ['whereViolence-indicator', 'violenceInfo'],
 };
 
 // countries: country lookup table
@@ -229,27 +232,27 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrIndicators',
-    file: 'esr-indicators_v3-1.csv',
+    file: 'esr-indicators_2021.csv',
   },
   {
     key: 'atRisk',
-    file: 'people-at-risk_v3-1.csv',
+    file: 'people-at-risk_v3-3.csv',
   },
   {
     key: 'auxIndicators',
-    file: 'auxiliary-indicators_v3-1.csv',
+    file: 'auxiliary-indicators_2021.csv',
   },
   {
     key: 'cprScores',
-    file: 'cpr-scores_v3-1.csv',
+    file: 'cpr-scores_v3-3.csv',
   },
   {
     key: 'esrScores',
-    file: 'esr-scores_v3-1.csv',
+    file: 'esr-scores_2021.csv',
   },
   {
     key: 'esrIndicatorScores',
-    file: 'esr-indicator-scores_v3-1.csv',
+    file: 'esr-indicator-scores_2021.csv',
   },
   {
     key: 'featured',
@@ -257,7 +260,11 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'sources',
-    file: 'sources_v3-1.csv',
+    file: 'sources_2021.csv',
+  },
+  {
+    key: 'pacific',
+    file: 'pm-formatted.csv',
   },
 ];
 
@@ -275,7 +282,7 @@ export const COUNTRY_SORTS = {
   gdp: {
     order: 'desc',
     data: 'aux',
-    column: COLUMNS.AUX.GDP_2011_PPP,
+    column: COLUMNS.AUX.GDP_2017_PPP,
   },
   population: {
     order: 'desc',
@@ -805,6 +812,12 @@ export const AT_RISK_GROUPS = [
   { key: '30', code: '30' },
   { key: '32', code: '32' },
   { key: '33', code: '33' },
+  { key: '34', code: '34' },
+  { key: '35', code: '35' },
+  { key: '36', code: '36' },
+  { key: '37', code: '37' },
+  { key: '38', code: '38' },
+  { key: '39', code: '39' },
   { key: '31', code: '31' }, // other
 ];
 

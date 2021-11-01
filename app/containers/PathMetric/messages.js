@@ -495,5 +495,53 @@ export default defineMessages({
         },
       },
     },
+    'vchild': {
+      header: {
+        a: {
+          id: `${scope}.indicators.violence-children.header.a`,
+          defaultMessage: 'indicators.violence-children.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.violence-children.header.b`,
+          defaultMessage: 'indicators.violence-children.header.b',
+        },
+      },
+    },
+    'vdisab': {
+      header: {
+        a: {
+          id: `${scope}.indicators.violence-disabilities.header.a`,
+          defaultMessage: 'indicators.violence-disabilities.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.violence-disabilities.header.b`,
+          defaultMessage: 'indicators.violence-disabilities.header.b',
+        },
+      },
+    },
+    'vwomen': {
+      header: {
+        a: {
+          id: `${scope}.indicators.violence-women-and-girls.header.a`,
+          defaultMessage: 'indicators.violence-women-and-girls.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.violence-women-and-girls.header.b`,
+          defaultMessage: 'indicators.violence-women-and-girls.header.b',
+        },
+      },
+    },
+    'vmvpfaff': {
+      header: {
+        a: {
+          id: `${scope}.indicators.violence-mvpfaff-lgbtqia.header.a`,
+          defaultMessage: 'indicators.violence-mvpfaff-lgbtqia.header.a',
+        },
+        b: {
+          id: `${scope}.indicators.violence-mvpfaff-lgbtqia.header.b`,
+          defaultMessage: 'indicators.violence-mvpfaff-lgbtqia.header.b',
+        },
+      },
+    },
   },
 });

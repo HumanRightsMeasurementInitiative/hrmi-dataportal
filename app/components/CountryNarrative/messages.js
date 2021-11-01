@@ -208,6 +208,10 @@ export default defineMessages({
       defaultMessage:
         "{needsArticle, select, true {The } false { }}{country}'{isPlural, select, true {} false {s}} {dimension} score of {scoreBold} suggests that ",
     },
+    outOf10: {
+      id: `${scope}.cpr.outOf10`,
+      defaultMessage: 'out of 10',
+    },
     then: {
       empowerment: {
         a: {

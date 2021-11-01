@@ -4,7 +4,7 @@
  *
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -19,6 +19,9 @@ import {
   getCloseTargetMetric,
   getAsideLayer,
   getAsideLayerActiveCode,
+  getMaxYearESR,
+  getMaxYearCPR,
+  getMaxYearPacific,
 } from 'containers/App/selectors';
 import { PATHS, IMAGE_PATH, PAGES, RIGHTS } from 'containers/App/constants';
 import ChartContainerMetric from 'containers/ChartContainerMetric';
@@ -52,12 +55,37 @@ export function PathMetric({
   onSetAsideLayer,
   asideLayer,
   activeCode,
+  maxYearESR,
+  maxYearCPR,
+  maxYearPacific,
 }) {
+  // N.B. must declare the year selector state at this level so that ChartContainerMetric can use it passed down as a prop to feed into scores selector
+  // N.B. need the silly double states because maxYear may be false before scores are loaded on client-side
+
   const metricCode = match.params.metric;
   const metric = getMetricDetails(metricCode);
+  const maxYearDimension =
+    metric.right === 'violence'
+      ? maxYearPacific
+      : metric.type === 'esr'
+        ? maxYearESR
+        : maxYearCPR;
+  const [haveMaxYear, setHaveMaxYear] = useState(false);
+  const [selectedYear, setSelectedYear] = useState(maxYearDimension);
+
+  if (haveMaxYear !== !!maxYearDimension) {
+    setHaveMaxYear(true);
+    setSelectedYear(maxYearDimension);
+  }
+
+  // needed as changing metric doesn't trigger a reload of state above
+  // and selectedYear doesn't update to the maxYear for the dimension
+  useEffect(() => {
+    setHaveMaxYear(false);
+  }, [metricCode]);
+
   // N.B. hacky way of handling sub-rights titles... fix later
   // prettier-ignore
-  console.log({ metric })
   const metricTitle =
     metric.metricType === 'indicators'
       ? intl.formatMessage(rootMessages.subrights.rightTo[metric.key])
@@ -135,20 +163,25 @@ export function PathMetric({
                 hasAside={isMinSize(size, 'large')}
               >
                 <MainColumn hasAside={isMinSize(size, 'large')} header hasLinks>
-                  <div>
-                    <Breadcrumb
-                      onItemClick={key => onMetricClick(key)}
-                      breadcrumb
-                      items={ancestors.map(ancestor => ({
-                        key: ancestor.key,
-                        label: intl.formatMessage(
-                          ancestor.key === 'all'
-                            ? rootMessages.labels.allMetrics
-                            : rootMessages[ancestor.type][ancestor.key],
-                        ),
-                      }))}
-                    />
-                  </div>
+                  {metricCode !== 'vchild' &&
+                    metricCode !== 'vdisab' &&
+                    metricCode !== 'vwomen' &&
+                    metricCode !== 'vmvpfaff' && (
+                      <div>
+                      <Breadcrumb
+                        onItemClick={key => onMetricClick(key)}
+                        breadcrumb
+                        items={ancestors.map(ancestor => ({
+                          key: ancestor.key,
+                          label: intl.formatMessage(
+                            ancestor.key === 'all'
+                              ? rootMessages.labels.allMetrics
+                                : rootMessages[ancestor.type][ancestor.key],
+                          ),
+                          }))}
+                      />
+                      </div>
+                  )}
                   <div>
                     <PageTitle>{metricTitle}</PageTitle>
                   </div>
@@ -202,7 +235,7 @@ export function PathMetric({
                       style={{
                         overflow: 'hidden',
                         objectFit: 'cover',
-                        maxWidth: '350px',
+                        // maxWidth: '350px',
                       }}
                     />
                   </Aside>
@@ -223,6 +256,9 @@ export function PathMetric({
                     metric={metric}
                     onCountryClick={onCountryClick}
                     activeCode={activeCode}
+                    selectedYear={selectedYear}
+                    setSelectedYear={setSelectedYear}
+                    maxYearDimension={maxYearDimension}
                   />
                 ),
               },
@@ -261,12 +297,18 @@ PathMetric.propTypes = {
   onSetAsideLayer: PropTypes.func,
   asideLayer: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   activeCode: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearESR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearCPR: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  maxYearPacific: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
   closeTarget: state => getCloseTargetMetric(state),
   asideLayer: state => getAsideLayer(state),
   activeCode: state => getAsideLayerActiveCode(state),
+  maxYearESR: getMaxYearESR,
+  maxYearCPR: getMaxYearCPR,
+  maxYearPacific: getMaxYearPacific,
 });
 
 export function mapDispatchToProps(dispatch) {

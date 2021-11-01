@@ -43,6 +43,56 @@ import {
   SUBREGIONS_FOR_COMPARISON_CPR,
 } from './constants';
 
+// TEMP: move this elsewhere in refactor
+function lookback(collection, selectedYear) {
+  // reduce for the score for the most recent year for each country (that is not more recent than the selected year, see pre-filter above)
+  // we take advantage of the array being pre-sorted by ascending year, and look back at previous item in array to check if it was the same country
+  // if not, previous item was the most recent for that country
+  // this should be much faster than a reduce which compares each item and iteratively swaps into soFar (as we don't write object to memory each iteration)
+  return collection.reduce((soFar, score, i) => {
+    // discard first score unless array is length 1
+    // in which case test for valid score
+    if (i === 0) {
+      // is prevScore within 10 years prior of selectedYear
+      if (
+        collection.length === 1 &&
+        parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10
+      ) {
+        return soFar.concat(prevScore);
+      }
+      return soFar;
+    }
+    // handle last score
+    // TODO: if prevScore was a diff country, take both if valid score
+    // else only take last score if valid score
+    const prevScore = collection[i - 1];
+    if (i === collection.length - 1) {
+      let toConcat = [];
+      if (parseInt(selectedYear, 10) - parseInt(score.year, 10) <= 10) {
+        toConcat = toConcat.concat(score);
+      }
+
+      if (score.country_code !== prevScore.country_code) {
+        // is prevScore within 10 years prior of selectedYear
+        if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
+          toConcat = toConcat.concat(prevScore);
+        }
+      }
+
+      return soFar.concat(toConcat);
+    }
+    // if not last item in array and different country to last iteration
+    if (score.country_code !== prevScore.country_code) {
+      // is prevScore within 10 years prior of selectedYear
+      if (parseInt(selectedYear, 10) - parseInt(prevScore.year, 10) <= 10) {
+        return soFar.concat(prevScore);
+      }
+      return soFar;
+    }
+    return soFar;
+  }, []);
+}
+
 // global sub-state
 const getGlobal = state => state.global || initialState;
 
@@ -494,16 +544,43 @@ export const getIndicatorInfo = createSelector(
     indicators && indicators.find(i => i.metric_code === metricCode),
 );
 
-// single dimension, multiple countries, single year
+// single dimension, multiple countries, single year that looks back to up to previous 10 years for a score
 export const getESRDimensionScores = createSelector(
+  (state, selectedYear) => selectedYear,
   getESRScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getStandardSearch,
   getESRYear,
-  (scores, countries, hasChartSettingFilters, standardSearch, year) => {
+  (
+    selectedYear,
+    scores,
+    countries,
+    hasChartSettingFilters,
+    standardSearch,
+    year,
+  ) => {
     const standard = STANDARDS.find(as => as.key === standardSearch);
     const dimension = DIMENSIONS.find(d => d.key === 'esr');
+
+    // get scores for all years for multiple countries, single dimension
+    // const allYearsScores =
+    //   standard &&
+    //   dimension &&
+    //   scores &&
+    //   countries &&
+    //   scores.filter(
+    //     s =>
+    //       s.standard === standard.code &&
+    //       s.metric_code === dimension.code &&
+    //       (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
+    //       (!hasChartSettingFilters ||
+    //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+    //   );
+    // if (!allYearsScores) return false;
+
+    // return lookback(allYearsScores, selectedYear);
+
     return (
       standard &&
       dimension &&
@@ -513,7 +590,9 @@ export const getESRDimensionScores = createSelector(
         s =>
           s.standard === standard.code &&
           s.metric_code === dimension.code &&
-          quasiEquals(s.year, year) &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
@@ -523,13 +602,31 @@ export const getESRDimensionScores = createSelector(
 
 export const getCPRDimensionScores = createSelector(
   (state, metric) => metric,
+  (state, metric, selectedYear) => selectedYear,
   getCPRScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getCPRYear,
-  (metric, scores, countries, hasChartSettingFilters, year) => {
+  (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     // make sure a metric is set
     const dimension = !!metric && DIMENSIONS.find(d => d.key === metric);
+
+    // get scores for all years for multiple countries, single dimension
+    // const allYearsScores =
+    //   dimension &&
+    //   scores &&
+    //   countries &&
+    //   scores.filter(
+    //     s =>
+    //       s.metric_code === dimension.code &&
+    //       (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
+    //       (!hasChartSettingFilters ||
+    //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+    //   );
+    // if (!allYearsScores) return false;
+
+    // return lookback(allYearsScores, selectedYear);
+
     return (
       dimension &&
       scores &&
@@ -537,7 +634,9 @@ export const getCPRDimensionScores = createSelector(
       scores.filter(
         s =>
           s.metric_code === dimension.code &&
-          quasiEquals(s.year, year) &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
@@ -548,15 +647,42 @@ export const getCPRDimensionScores = createSelector(
 // single right, multiple countries, single year
 export const getESRRightScores = createSelector(
   (state, metric) => metric,
+  (state, metric, selectedYear) => selectedYear,
   getESRScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getStandardSearch,
   getESRYear,
-  (metric, scores, countries, hasChartSettingFilters, standardSearch, year) => {
+  (
+    metric,
+    selectedYear,
+    scores,
+    countries,
+    hasChartSettingFilters,
+    standardSearch,
+    year,
+  ) => {
     const standard = STANDARDS.find(as => as.key === standardSearch);
     const group = PEOPLE_GROUPS[0];
     const right = !!metric && RIGHTS.find(d => d.key === metric);
+
+    // const allYearsScores =
+    //   scores &&
+    //   countries &&
+    //   right &&
+    //   scores.filter(
+    //     s =>
+    //       s.group === group.code &&
+    //       s.standard === standard.code &&
+    //       s.metric_code === right.code &&
+    //       (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
+    //       (!hasChartSettingFilters ||
+    //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+    //   );
+    // if (!allYearsScores) return false;
+
+    // return lookback(allYearsScores, selectedYear);
+
     return (
       scores &&
       countries &&
@@ -566,7 +692,9 @@ export const getESRRightScores = createSelector(
           s.group === group.code &&
           s.standard === standard.code &&
           s.metric_code === right.code &&
-          quasiEquals(s.year, year) &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
@@ -577,12 +705,29 @@ export const getESRRightScores = createSelector(
 // single right, multiple countries, single year
 export const getCPRRightScores = createSelector(
   (state, metric) => metric,
+  (state, metric, selectedYear) => selectedYear,
   getCPRScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getCPRYear,
-  (metric, scores, countries, hasChartSettingFilters, year) => {
+  (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     const right = !!metric && RIGHTS.find(d => d.key === metric);
+
+    // const allYearsScores =
+    //   scores &&
+    //   countries &&
+    //   right &&
+    //   scores.filter(
+    //     s =>
+    //       s.metric_code === right.code &&
+    //       (selectedYear ? s.year <= selectedYear : quasiEquals(s.year, year)) &&
+    //       (!hasChartSettingFilters ||
+    //         countries.map(c => c.country_code).indexOf(s.country_code) > -1),
+    //   );
+    // if (!allYearsScores) return false;
+
+    // return lookback(allYearsScores, selectedYear);
+
     return (
       scores &&
       countries &&
@@ -590,7 +735,9 @@ export const getCPRRightScores = createSelector(
       scores.filter(
         s =>
           s.metric_code === right.code &&
-          quasiEquals(s.year, year) &&
+          (selectedYear
+            ? quasiEquals(s.year, selectedYear)
+            : quasiEquals(s.year, year)) &&
           (!hasChartSettingFilters ||
             countries.map(c => c.country_code).indexOf(s.country_code) > -1),
       )
@@ -600,11 +747,12 @@ export const getCPRRightScores = createSelector(
 // single indicator, multiple countries, single year
 export const getIndicatorScores = createSelector(
   (state, metric) => metric,
+  (state, metric, selectedYear) => selectedYear,
   getESRIndicatorScores,
   getCountriesFiltered,
   getHasChartSettingFilters,
   getESRYear,
-  (metric, scores, countries, hasChartSettingFilters, year) => {
+  (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
     if (scores && countries) {
       const indicator = metric && INDICATORS.find(d => d.key === metric);
       const group = PEOPLE_GROUPS[0];
@@ -614,30 +762,37 @@ export const getIndicatorScores = createSelector(
           s =>
             s.group === group.code &&
             s.metric_code === indicator.code &&
+            (selectedYear
+              ? s.year <= selectedYear
+              : quasiEquals(s.year, year)) &&
             (!hasChartSettingFilters ||
               countries.map(c => c.country_code).indexOf(s.country_code) > -1),
         );
         // then get the most recent year for each country
         // figure out most recent data by country
-        const countryYears = filteredScores.reduce((memo, s) => {
-          const result = memo;
-          const country = s.country_code;
-          if (
-            typeof result[country] === 'undefined' ||
-            (parseInt(s.year, 10) > result[country] &&
-              parseInt(s.year, 10) <= year)
-          ) {
-            result[country] = parseInt(s.year, 10);
-          }
-          return result;
-        }, {});
-        // finally filter by year or most recent year
-        const filteredYear = filteredScores.filter(
-          s =>
-            quasiEquals(s.year, year) ||
-            quasiEquals(s.year, countryYears[s.country_code]),
-        );
-        return filteredYear;
+        // const countryYears = filteredScores.reduce((memo, s) => {
+        //   const result = memo;
+        //   const country = s.country_code;
+        //   if (
+        //     typeof result[country] === 'undefined' ||
+        //     (parseInt(s.year, 10) > result[country] &&
+        //       parseInt(s.year, 10) <= year)
+        //   ) {
+        //     result[country] = parseInt(s.year, 10);
+        //   }
+        //   return result;
+        // }, {});
+        // console.log({ group, indicator, filteredScores, countryYears })
+        // // finally filter by year or most recent year
+        // const filteredYear = filteredScores.filter(s =>
+        //   selectedYear
+        //     ? quasiEquals(s.year, selectedYear)
+        //     : quasiEquals(s.year, year) ||
+        //       quasiEquals(s.year, countryYears[s.country_code]),
+        // );
+        // return filteredYear;
+
+        return lookback(filteredScores, selectedYear);
       }
       return [];
     }
@@ -701,6 +856,7 @@ export const getESRScoreForCountry = createSelector(
           s.country_code === countryCode &&
           s.metric_code === right.code &&
           s.standard === standard.code &&
+          s.group === 'All' &&
           quasiEquals(s.year, esrYear),
       )
     );
@@ -1307,6 +1463,18 @@ export const getCPRScoresForYear = createSelector(
   getCPRScores,
   (year, scores) => filterScoresByYear(year, scores),
 );
+// get one score per country per metric, for most recent year with lookback
+// for lookback function, must sort collection by metric, country, year in that order of precedence
+export const getESRScoresForYearWithLookback = createSelector(
+  getESRYear,
+  getESRScores,
+  (year, scores) => !!scores && lookback(scores, year),
+);
+export const getCPRScoresForYearWithLookback = createSelector(
+  getCPRYear,
+  getCPRScores,
+  (year, scores) => !!scores && lookback(scores, year),
+);
 
 // export const getESRDimensionScoresForYear = createSelector(
 //   getESRYear,
@@ -1413,8 +1581,8 @@ export const getReferenceScores = createSelector(
   getCountryFromRouter,
   getCountries,
   getStandardSearch,
-  getESRScoresForYear,
-  getCPRScoresForYear,
+  getESRScoresForYearWithLookback,
+  getCPRScoresForYearWithLookback,
   (country, countries, standard, esrScores, cprScores) => {
     if (!country || !countries || !esrScores || !cprScores) return false;
 
@@ -1773,17 +1941,17 @@ export const getLatestCountryCurrentGDP = createSelector(
     return false;
   },
 );
-export const getLatestCountry2011PPPGDP = createSelector(
+export const getLatestCountry2017PPPGDP = createSelector(
   (state, country) => country,
   getAuxIndicators,
   (country, data) => {
     if (!data) return false;
     const sorted = data
-      .filter(d => d.country_code === country && d[COLUMNS.AUX.GDP_2011_PPP])
+      .filter(d => d.country_code === country && d[COLUMNS.AUX.GDP_2017_PPP])
       .sort((a, b) => (parseInt(a.year, 10) > parseInt(b.year, 10) ? -1 : 1));
     if (sorted.length > 0) {
       return {
-        value: sorted[0][COLUMNS.AUX.GDP_2011_PPP],
+        value: sorted[0][COLUMNS.AUX.GDP_2017_PPP],
         year: sorted[0].year,
       };
     }
@@ -1902,4 +2070,53 @@ export const getHasCountryESRScores = createSelector(
         countryScores.filter(s => s.standard === otherStandard.code).length > 0,
     };
   },
+);
+
+export const getPacificScores = createSelector(
+  getData,
+  data => data.pacific,
+);
+
+export const getMinYearPacific = createSelector(
+  getPacificScores,
+  scores => calcMinYear(scores),
+);
+
+export const getMaxYearPacific = createSelector(
+  getPacificScores,
+  scores => calcMaxYear(scores),
+);
+
+export const getPacificScoresForCountry = createSelector(
+  (state, countryCode) => countryCode,
+  getPacificScores,
+  (countryCode, scores) =>
+    scores && scores.filter(s => s.country_code === countryCode),
+);
+
+export const getLatestPacificScores = createSelector(
+  getMaxYearPacific,
+  getPacificScores,
+  (maxYear, scores) =>
+    scores && scores.filter(s => quasiEquals(s.year, maxYear)),
+);
+
+export const getLatestPacificScoresForCountry = createSelector(
+  getMaxYearPacific,
+  getPacificScoresForCountry,
+  (maxYear, scores) =>
+    scores && scores.filter(s => quasiEquals(s.year, maxYear)),
+);
+
+export const getPacificScoresByMetric = createSelector(
+  (state, metricCode) => metricCode,
+  getPacificScores,
+  (metricCode, scores) =>
+    scores && scores.filter(s => s.metric_code === metricCode),
+);
+
+export const getPacificScoresByMetricByYear = createSelector(
+  (state, metricCode, year) => year,
+  getPacificScoresByMetric,
+  (year, scores) => scores && scores.filter(s => quasiEquals(s.year, year)),
 );

@@ -85,8 +85,11 @@ const AddToPDFWrapper = styled.div`
 const BreakBefore = styled(Box)`
   @media print {
     position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+    posittion: relative;
     break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    // break-before: page;
     margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+    // margin-top: -150px;
   }
 `;
 
@@ -161,6 +164,7 @@ export function ChartContainerCountrySnapshot({
   const hasSomeEmpowermentScore = Object.values(rights).some(
     s => s.dimension === 'empowerment' && !!s.score,
   );
+  const esrData = dimensions.esr.score;
   const physIntData = dimensions.physint.score;
 
   return (
@@ -253,7 +257,8 @@ export function ChartContainerCountrySnapshot({
           activeCode={activeCode}
         />
         <AddToPDFWrapper>
-          <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}>
+          {/* <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}> */}
+          <Box margin={{ bottom: 'medium' }}>
             <NarrativeCPR
               dimensionKey="physint"
               score={dimensions.physint.score}
@@ -291,10 +296,15 @@ export function ChartContainerCountrySnapshot({
                   : 'all'
               }
             />
-          </BreakBefore>
+          </Box>
+          {/* </BreakBefore> */}
         </AddToPDFWrapper>
         {/* Empowerment */}
-        <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}>
+        {/* <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}> */}
+        <BreakBefore
+          margin={{ bottom: 'medium' }}
+          shouldBreak={(!esrData && physIntData) || (esrData && !physIntData)}
+        >
           <ChartCountrySnapshot
             type="cpr"
             dimensionCode="empowerment"

@@ -23,12 +23,24 @@ import { formatScoreMax } from 'utils/scores';
 
 import rootMessages from 'messages';
 
+const SummaryScorePDF = styled(Text)`
+  display: none;
+  @media print {
+    display: initial;
+  }
+`;
+
 const Dimension = styled(Box)`
   margin-bottom: 6px;
   position: relative;
 `;
 
 const RemoveFromPDFWrapper = styled.div`
+  @media print {
+    display: none;
+  }
+`;
+const RemoveFromPDFWrapperBox = styled(Box)`
   @media print {
     display: none;
   }
@@ -217,9 +229,7 @@ function ChartCountrySnapshot({
                           : `${dimensionCode}Dark`
                       }
                     >
-                      <FormattedMessage
-                        {...rootMessages.dimensions[dimensionCode]}
-                      />
+                      <FormattedMessage {...rootMessages.tabs[dimensionCode]} />
                     </DimensionHeading>
                   </Button>
                   <Text
@@ -236,7 +246,7 @@ function ChartCountrySnapshot({
                       {...rootMessages.pdf.noData}
                       values={{
                         category: intl.formatMessage(
-                          rootMessages.dimensions[dimensionCode],
+                          rootMessages.tabs[dimensionCode],
                         ),
                       }}
                     />
@@ -285,7 +295,7 @@ function ChartCountrySnapshot({
                               }
                             >
                               <FormattedMessage
-                                {...rootMessages.dimensions[dimensionCode]}
+                                {...rootMessages.tabs[dimensionCode]}
                               />
                             </DimensionHeading>
                           </Button>
@@ -399,7 +409,9 @@ function ChartCountrySnapshot({
                       direction="row"
                       justify="between"
                       align={isMaxSize(size, 'sm') ? 'start' : 'end'}
-                      margin={isMaxSize(size, 'sm') ? { top: '12px' } : 'none'}
+                      margin={
+                        isMaxSize(size, 'sm') ? { top: '12px' } : { top: '8px' }
+                      }
                     >
                       <Box direction="column" align="start">
                         <Button
@@ -421,7 +433,7 @@ function ChartCountrySnapshot({
                             }
                           >
                             <FormattedMessage
-                              {...rootMessages.dimensions[dimensionCode]}
+                              {...rootMessages.tabs[dimensionCode]}
                             />
                           </DimensionHeading>
                         </Button>
@@ -455,7 +467,24 @@ function ChartCountrySnapshot({
                           }}
                         >
                           {/* prettier-ignore */}
-                          <Text
+                          <RemoveFromPDFWrapperBox>
+                            <Text
+                              size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
+                              color="white"
+                            >
+                              {summaryScore
+                                ? formatScoreMax(
+                                  summaryScore.score,
+                                  summaryScore.maxValue,
+                                  1,
+                                  false,
+                                  intl,
+                                )
+                                : 'N/A'}
+                            </Text>
+                          </RemoveFromPDFWrapperBox>
+                          {/* prettier-ignore */}
+                          <SummaryScorePDF
                             size={isMinSize(size, 'large') ? 'small' : 'xsmall'}
                             color="white"
                           >
@@ -464,11 +493,11 @@ function ChartCountrySnapshot({
                                 summaryScore.score,
                                 summaryScore.maxValue,
                                 1,
-                                false,
+                                true,
                                 intl,
                               )
                               : 'N/A'}
-                          </Text>
+                          </SummaryScorePDF>
                         </Box>
                       </Box>
                     </Box>

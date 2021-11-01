@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import ReactGA from 'react-ga';
 import 'whatwg-fetch';
 import 'url-search-params-polyfill';
+import pick from 'lodash/pick';
 
 import quasiEquals from 'utils/quasi-equals';
 import { disableAnalytics } from 'utils/analytics';
@@ -141,37 +142,117 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
     // If haven't loaded yet, do so now.
     if (!requestedAt && !ready) {
       const requestLocale = yield locale || select(getLocale);
-      const url = `${PAGES_URL}${requestLocale}/${key}/`;
-      try {
+      // TEMP: testing airtable for atrisk content
+      if (contentType === 'atrisk') {
         // First record that we are requesting
         yield put(contentRequested(key, Date.now()));
-        const response = yield fetch(url);
-        const responseOk = yield response.ok;
-        if (responseOk && typeof response.text === 'function') {
-          const responseBody = yield response.text();
-          if (responseBody) {
-            yield put(
-              contentLoaded(key, responseBody, Date.now(), requestLocale),
+        const splitKey = key.split('/');
+        const airtableRes = yield fetch(
+          process.env.NODE_ENV === 'production'
+            ? `/airtable?locale=${requestLocale}&base=${splitKey[0]}`
+            : `http://localhost:5001/hrmi-dataportal/us-central1/airtable?locale=${requestLocale}&base=${
+              splitKey[0]
+            }`,
+        );
+        const airtableData = yield airtableRes.json();
+
+        const countryData = airtableData.data.find(
+          d => d.fields['ISO Code'] === splitKey[1],
+        );
+
+        if (!countryData) {
+          yield put(contentRequested(key, false));
+          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
+        } else {
+          // TODO: this is a mess, but will be superseeded by refactor approach
+          // data is either atrisk or pacific data - put into appropriate key in store
+          if (splitKey[0] === 'atrisk') {
+            // TEMP: move this to constants
+            const airtableRightsMap = {
+              arrest: 'Arbitrary Arrest',
+              disappearance: 'Disappearance',
+              'death-penalty': 'Death Penalty',
+              'extrajud-killing': 'Extrajudicial Killing',
+              torture: 'Torture and Ill-Treatment',
+              assembly: 'Assembly and Association',
+              expression: 'Opinion and Expression',
+              participation: 'Political Participation',
+              education: 'Education',
+              food: 'Food',
+              health: 'Health',
+              housing: 'Housing',
+              work: 'Work',
+            };
+            const fieldsData = pick(
+              countryData.fields,
+              Object.values(airtableRightsMap),
             );
+            for (let i = 0; i < Object.keys(fieldsData).length; i++) {
+              const oldKey = `${Object.keys(airtableRightsMap)[i]}/${
+                splitKey[1]
+              }`;
+              const d = fieldsData[Object.keys(fieldsData)[i]];
+              yield put(contentLoaded(oldKey, d, Date.now(), requestLocale));
+            }
+            // const keyData = countryData.fields[airtableRightsMap[splitKey[0]]];
+            // yield put(contentLoaded(key, keyData, Date.now(), requestLocale));
+          } else {
+            const airtablePacificMap = {
+              climate: 'Climate Crisis',
+              indigsov: 'Indigenous Self-Determination',
+              indigland: 'Indigenous Land Rights',
+              culture: 'Cultural Rights',
+              vchild: 'Violence Children',
+              vdisab: 'Violence Disabilities',
+              vwomen: 'Violence Women',
+              vmvpfaff: 'Violence LGBTQIA+',
+            };
+            const fieldsData = pick(
+              countryData.fields,
+              Object.values(airtablePacificMap),
+            );
+            for (let i = 0; i < Object.keys(fieldsData).length; i++) {
+              const oldKey = `${Object.keys(airtablePacificMap)[i]}/${
+                splitKey[1]
+              }`;
+              const d = fieldsData[Object.keys(fieldsData)[i]];
+              yield put(contentLoaded(oldKey, d, Date.now(), requestLocale));
+            }
+          }
+        }
+      } else {
+        const url = `${PAGES_URL}${requestLocale}/${key}/`;
+        try {
+          // First record that we are requesting
+          yield put(contentRequested(key, Date.now()));
+          const response = yield fetch(url);
+          const responseOk = yield response.ok;
+          if (responseOk && typeof response.text === 'function') {
+            const responseBody = yield response.text();
+            if (responseBody) {
+              yield put(
+                contentLoaded(key, responseBody, Date.now(), requestLocale),
+              );
+            } else {
+              yield put(contentRequested(key, false));
+              throw new Error(response.statusText);
+            }
+          } else if (
+            quasiEquals(response.status, 404) &&
+            contentType === 'atrisk' &&
+            requestLocale !== DEFAULT_LOCALE
+          ) {
+            yield put(contentRequested(key, false));
+            yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
           } else {
             yield put(contentRequested(key, false));
             throw new Error(response.statusText);
           }
-        } else if (
-          quasiEquals(response.status, 404) &&
-          contentType === 'atrisk' &&
-          requestLocale !== DEFAULT_LOCALE
-        ) {
+        } catch (err) {
+          // throw error
           yield put(contentRequested(key, false));
-          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
-        } else {
-          yield put(contentRequested(key, false));
-          throw new Error(response.statusText);
+          throw new Error(err);
         }
-      } catch (err) {
-        // throw error
-        yield put(contentRequested(key, false));
-        throw new Error(err);
       }
     }
   }
