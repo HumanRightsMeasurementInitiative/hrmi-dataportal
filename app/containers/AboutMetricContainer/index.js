@@ -24,7 +24,7 @@ import AboutMetric from 'components/AboutMetric';
 import ButtonHero from 'styled/ButtonHero';
 
 import getMetricDetails from 'utils/metric-details';
-import { lowerCase } from 'utils/string';
+import { lowerCasePreserveAcronyms } from 'utils/string';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -256,7 +256,7 @@ export function AboutMetricContainer({
                 <FormattedMessage
                   {...messages['metricLink-subrights']}
                   values={{
-                    metric: lowerCase(
+                    metric: lowerCasePreserveAcronyms(
                       intl.formatMessage(
                         rootMessages[subMetricType][metricCode],
                       ),
@@ -267,7 +267,7 @@ export function AboutMetricContainer({
                 <FormattedMessage
                   {...messages.metricLink}
                   values={{
-                    metric: lowerCase(
+                    metric: lowerCasePreserveAcronyms(
                       intl.formatMessage(
                         rootMessages[subMetricType][metricCode],
                       ),
