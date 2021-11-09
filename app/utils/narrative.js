@@ -1,4 +1,4 @@
-import rootMessages from 'messages';
+import rootMessages from '../messages';
 import { roundScore } from './scores';
 import { startsWithVowel, upperCaseFirst } from './string';
 

@@ -1,7 +1,7 @@
-import messages from 'messages';
-import { RIGHTS, COUNTRY_SORTS, COLUMNS } from 'containers/App/constants';
-import quasiEquals from 'utils/quasi-equals';
-import isNumber from 'utils/is-number';
+import messages from '../messages';
+import { RIGHTS, COUNTRY_SORTS, COLUMNS } from '../containers/App/constants';
+import quasiEquals from './quasi-equals';
+import isNumber from './is-number';
 
 export const getRightsScoresForDimension = (rights, dimensionKey) =>
   rights &&

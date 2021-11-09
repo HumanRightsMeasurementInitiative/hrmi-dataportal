@@ -7,6 +7,8 @@ const mkdirp = require('mkdirp')
 
 // const { getCountries } = require('./helpers/generate-files')
 
+const { getCountryWithArticle } = require('../../app/utils/narrative')
+
 const enJSON = require('../../app/translations/en.json')
 const esJSON = require('../../app/translations/es.json')
 const ptJSON = require('../../app/translations/pt.json')
@@ -44,7 +46,7 @@ async function printPDF({
     maxConcurrency: 4 // should probably match the no. of cores on your machine
   })
 
-  await cluster.task(async ({ page, data: { lang, code, langFile, as } }) => {
+  await cluster.task(async ({ page, data: { lang, code, grammar, langFile, as } }) => {
     const timePagePDF = process.hrtime()
 
     await page.emulateMediaType('print');
@@ -52,11 +54,13 @@ async function printPDF({
       waitUntil: 'networkidle2',
     });
 
+    const countryWithArticle = getCountryWithArticle(lang, grammar, langFile[`hrmi.countries.${code}`])
+
     const headerFooterStyle = `<style>@font-face{font-family:'Source Sans Pro';src:url(../../fonts/SourceSansPro-Regular.ttf) format("truetype");} #header { padding: 0 !important; } #footer { padding: 0 !important; } p, span { font-family: 'Source Sans Pro', sans-serif; font-size: 10px; color: #262064;}</style>`
 
     const subtitle = lang === 'zh'
-    ? `${langFile[`hrmi.pdf.countryProfiles`]} | ${langFile[`hrmi.countries.${code}`]} ${langFile['hrmi.pdf.humanRightsIn']}, ${currentYear}`
-    : `${langFile[`hrmi.pdf.countryProfiles`]} | ${langFile['hrmi.pdf.humanRightsIn']} ${langFile[`hrmi.countries.${code}`]}, ${currentYear}`
+    ? `${langFile[`hrmi.pdf.countryProfiles`]} | ${countryWithArticle} ${langFile['hrmi.pdf.humanRightsIn']}, ${currentYear}`
+    : `${langFile[`hrmi.pdf.countryProfiles`]} | ${langFile['hrmi.pdf.humanRightsIn']} ${countryWithArticle}, ${currentYear}`
     
     try {
       await page.pdf({
@@ -99,6 +103,7 @@ async function printPDF({
       cluster.queue({
         lang,
         code: country.code,
+        grammar: country.grammar,
         langFile: langFileMap[lang],
         as
       })
@@ -150,11 +155,18 @@ async function printPDF({
   const dataResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/countries_v3-1.csv')
   const countriesCsv = await dataResponse.text()
   const countriesData = csvParse(countriesCsv)
+  const grammarResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/countries_grammar_v3.csv')
+  const grammarCsv = await grammarResponse.text()
+  const grammarData = csvParse(grammarCsv)
 
   const countries = countriesData.map(c => {
     // N.B. can't just access with country_code due to weird csv column key parsing
     const countryCodeAccess = Object.keys(c)[0]
-    return { code: c[countryCodeAccess], income: c.high_income_country }
+    return {
+      code: c[countryCodeAccess],
+      income: c.high_income_country,
+      grammar: grammarData.find(g => g[countryCodeAccess] === c[countryCodeAccess])
+    }
   })
 
   // TODO: any error handling needed on this?
@@ -163,14 +175,15 @@ async function printPDF({
   await printPDF({
     // countries: keys(getCountries(langJSON)),
     // countries: [{ code: 'AFG', income: '0' }],
-    // countries: [{ code: 'AUS', income: '1' }],
+    // countries: [{ code: 'AUS', income: '1', grammar: grammarData.find(g => g[Object.keys(g)[0]] === 'AUS') }],
+    // countries: [{ code: 'USA', income: '1', grammar: grammarData.find(g => g[Object.keys(g)[0]] === 'USA') }],
     // countries: [{ code: 'COD', income: '0' }],
     // countries: [{ code: 'SAU', income: '1' }],
     // countries: [{ code: 'VNM', income: '0' }],
     // countries: [{ code: 'KAZ', income: '0' }],
     countries,
     languages: ['en', 'es', 'fr', 'pt', 'zh']
-    // languages: ['pt']
+    // languages: ['en']
   });
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)

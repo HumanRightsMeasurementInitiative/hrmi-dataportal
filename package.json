@@ -43,7 +43,7 @@
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "prettify": "prettier --write",
-    "generate-pdfs": "node ./internals/scripts/generate-pdfs.js",
+    "generate-pdfs": "npx babel-node --presets '@babel/preset-env' --plugins 'babel-plugin-inline-svg' ./internals/scripts/generate-pdfs.js",
     "pdf": "npm-run-all -pr start generate-pdfs",
     "upload-pdfs": "node ./internals/scripts/upload-pdfs.js",
     "fonts": "sh scripts/fonts.sh"
@@ -124,6 +124,7 @@
   "devDependencies": {
     "@babel/cli": "7.4.3",
     "@babel/core": "7.4.3",
+    "@babel/node": "7.15.4",
     "@babel/plugin-proposal-class-properties": "7.4.0",
     "@babel/plugin-syntax-dynamic-import": "7.2.0",
     "@babel/plugin-transform-modules-commonjs": "7.4.3",
@@ -137,6 +138,7 @@
     "babel-eslint": "10.0.1",
     "babel-loader": "8.0.5",
     "babel-plugin-dynamic-import-node": "2.2.0",
+    "babel-plugin-inline-svg": "^1.2.0",
     "babel-plugin-lodash": "3.3.4",
     "babel-plugin-react-intl": "3.0.1",
     "babel-plugin-styled-components": "1.10.0",
