@@ -6,6 +6,22 @@ const invalid = /[°"§%()\[\]{}=\\?´`'#<>|,;.:+_-]+/g;
 const sanitise = str => loCase(deburr(str)).replace(invalid, '');
 
 export const lowerCase = str => loCase(str);
+
+// convert words to lower case, unless greater than 60% upper case
+export const lowerCasePreserveAcronyms = str => {
+  const words = str.split(' ');
+
+  const procWords = words.map(value => {
+    const totalAlpha = value.replace(/[^A-Za-z]/g, '').length;
+    const numUpper = value.replace(/[^A-Z]/g, '').length;
+    const isAcronym = (100 / totalAlpha) * numUpper > 60;
+
+    return isAcronym ? value : lowerCase(value);
+  });
+
+  return procWords.join(' ');
+};
+
 export const upperCaseFirst = str => str.charAt(0).toUpperCase() + str.slice(1);
 
 export const cleanupSearchTarget = str => loCase(deburr(str));
