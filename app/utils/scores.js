@@ -16,7 +16,9 @@ export const getRightsScoresForDimension = (rights, dimensionKey) =>
         : -1,
     );
 
-export const hasCPR = data =>
+export const hasPhysint = data => data && data.physint && !!data.physint.score;
+
+export const hasEmpowerment = data =>
   data && data.empowerment && !!data.empowerment.score;
 
 const isDataIncomplete = data => data.hasScoreRights || data.hasScoreIndicators;
