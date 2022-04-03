@@ -6,6 +6,7 @@ import { Box, ResponsiveContext } from 'grommet';
 import Bar from 'components/ChartBars/Bar';
 import AnnotateBenchmark from 'components/ChartBars/AnnotateBenchmark';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
+import Grades from 'components/ChartBars/Grades';
 
 import rootMessages from 'messages';
 import messages from './messages';
@@ -14,6 +15,13 @@ const Styled = styled.div``;
 
 const stackContent = size =>
   size === 'large' || size === 'small' || size === 'sm';
+
+const grades = [
+  { class: 'poor', min: 0 },
+  { class: 'bad', min: 75 },
+  { class: 'fair', min: 85 },
+  { class: 'good', min: 95 },
+];
 
 function HTRBar({ contxt, intl, dimension }) {
   return (
@@ -36,7 +44,7 @@ function HTRBar({ contxt, intl, dimension }) {
               responsive={false}
             >
               <Box
-                style={{ position: 'relative' }}
+                style={{ position: 'relative', border: '1px solid black' }}
                 margin={{ bottom: 'medium' }}
                 responsive={false}
               >
@@ -66,7 +74,7 @@ function HTRBar({ contxt, intl, dimension }) {
                   showLabels
                   hasBackground
                 />
-                <AnnotateBetterWorse absolute />
+                <Grades grades={grades} useChartLabels={false} />
               </Box>
             </Box>
             <Box
