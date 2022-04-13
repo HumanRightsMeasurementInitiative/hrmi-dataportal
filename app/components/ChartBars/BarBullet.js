@@ -85,11 +85,6 @@ function BarBullet({
   const [touched, setTouched] = useState(false);
   const { color, value, maxValue, unit, band, labels } = data;
 
-  const loLabelOffset =
-    labels && labels.loOffsetOverride ? labels.loOffsetOverride : band.lo;
-  const hiLabelOffset =
-    labels && labels.hiOffsetOverride ? labels.hiOffsetOverride : band.hi;
-
   return (
     <Wrapper
       onTouchStart={() => {
@@ -157,7 +152,7 @@ function BarBullet({
           )}
           {((hover && annotateOnHover) || annotate) && (
             <Score
-              left={(loLabelOffset / maxValue) * 100}
+              left={(band.lo / maxValue) * 100}
               color={color}
               level={Math.max(2, level)}
               direction={scoreAbove ? 'top' : 'bottom'}
@@ -168,7 +163,7 @@ function BarBullet({
           )}
           {((hover && annotateOnHover) || annotate) && (
             <Score
-              left={(hiLabelOffset / maxValue) * 100}
+              left={(band.hi / maxValue) * 100}
               color={color}
               level={Math.max(2, level)}
               direction={scoreAbove ? 'top' : 'bottom'}
