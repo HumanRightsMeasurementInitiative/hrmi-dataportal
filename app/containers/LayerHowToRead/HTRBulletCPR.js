@@ -66,8 +66,6 @@ function HTRBulletCPR({ contxt, dimension, pacific, intl }) {
                 value: intl.formatMessage(messages.bullet.scoreAverage),
                 lo: intl.formatMessage(messages.bullet.score10),
                 hi: intl.formatMessage(messages.bullet.score90),
-                loOffsetOverride: 2.5,
-                hiOffsetOverride: 7.5,
               },
             }}
           />
