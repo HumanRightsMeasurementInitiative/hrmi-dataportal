@@ -65,6 +65,7 @@ function PlotMultiCountry({
     countryYearData = getCountryYearData(year, countryScores[column], true);
   }
   const hasData = checkDataAvailable(countryScores, column);
+  const hasCountryScores = Object.keys(countryScores).length > 0;
   // prettier-ignore
   return (
     <FlexibleWidthXYPlot
@@ -78,7 +79,7 @@ function PlotMultiCountry({
       }}
     >
       <AreaSeries data={dataForceYRange} style={{ opacity: 0 }} />
-      {countryScores && metric.type === 'cpr' && (
+      {countryScores && hasCountryScores && metric.type === 'cpr' && (
         <AreaSeries
           data={getCountryData(countryScores[COLUMNS.CPR.HI])}
           style={{
@@ -88,7 +89,7 @@ function PlotMultiCountry({
           }}
         />
       )}
-      {countryScores && metric.type === 'cpr' && (
+      {countryScores && hasCountryScores && metric.type === 'cpr' && (
         <AreaSeries
           data={getCountryData(countryScores[COLUMNS.CPR.LO])}
           style={{
@@ -164,7 +165,7 @@ function PlotMultiCountry({
               />
             );
           })}
-      {countryScores && (
+      {countryScores && hasCountryScores && (
         <LineSeries
           data={getCountryData(countryScores[column])}
           style={{
@@ -209,7 +210,7 @@ function PlotMultiCountry({
       {!hasData && (
         <ChartLabel
           // text={intl.formatMessage(messages.noDataForCountry)}
-          text="no data TODO"
+          text="no data"
           className="sotw-chart-nodata-watermark-small"
           includeMargin={false}
           xPercent={0.5}
