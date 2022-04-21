@@ -44,7 +44,7 @@ function HTRBar({ contxt, intl, dimension }) {
               responsive={false}
             >
               <Box
-                style={{ position: 'relative', border: '1px solid black' }}
+                style={{ position: 'relative' }}
                 margin={{ bottom: 'medium' }}
                 responsive={false}
               >
