@@ -38,6 +38,7 @@ function HTRBulletCPR({ contxt, dimension, pacific, intl }) {
       <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
+      <br />
       <Box
         pad={{ horizontal: 'small', top: 'xsmall', bottom: 'medium' }}
         responsive={false}
@@ -59,8 +60,8 @@ function HTRBulletCPR({ contxt, dimension, pacific, intl }) {
               maxValue: 10,
               unit: '',
               band: {
-                lo: 4,
-                hi: 6,
+                lo: 3.5,
+                hi: 6.5,
               },
               labels: {
                 value: intl.formatMessage(messages.bullet.scoreAverage),
