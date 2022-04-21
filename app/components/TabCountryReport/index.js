@@ -278,49 +278,47 @@ function TabCountryReport({
               countryMessageValues={messageValues}
             />
           </SectionContainer>
-          {hasDimensionScore && (
-            <SectionContainer>
-              <ChartSettingMetrics
-                activeDefault={dimension}
-                metrics={DIMENSIONS.reduce((dims, d) => {
-                  if (d.key !== dimension) {
-                    return dims;
-                  }
-                  return [
-                    ...dims,
-                    {
-                      ...d,
-                      children: RIGHTS.reduce((rights, r) => {
-                        if (r.dimension !== d.key) {
-                          return rights;
-                        }
-                        return [...rights, r];
-                      }, []),
-                    },
-                  ];
-                }, [])}
-                chart={props => (
-                  <ChartContainerTrend
-                    countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                    // add all metrics here to facilitate small multiples
-                    metrics={RIGHTS.reduce((rights, r) => {
-                      if (r.dimension !== dimension) {
+          <SectionContainer>
+            <ChartSettingMetrics
+              activeDefault={dimension}
+              metrics={DIMENSIONS.reduce((dims, d) => {
+                if (d.key !== dimension) {
+                  return dims;
+                }
+                return [
+                  ...dims,
+                  {
+                    ...d,
+                    children: RIGHTS.reduce((rights, r) => {
+                      if (r.dimension !== d.key) {
                         return rights;
                       }
                       return [...rights, r];
-                    }, [])}
-                    onMetricClick={onMetricClick}
-                    {...props}
-                  />
-                )}
-                header={props => (
-                  <ChartHeader chartId="trend" includeChartName {...props} />
-                )}
-                countryMessageValues={messageValues}
-                chartId="trend"
-              />
-            </SectionContainer>
-          )}
+                    }, []),
+                  },
+                ];
+              }, [])}
+              chart={props => (
+                <ChartContainerTrend
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  // add all metrics here to facilitate small multiples
+                  metrics={RIGHTS.reduce((rights, r) => {
+                    if (r.dimension !== dimension) {
+                      return rights;
+                    }
+                    return [...rights, r];
+                  }, [])}
+                  onMetricClick={onMetricClick}
+                  {...props}
+                />
+              )}
+              header={props => (
+                <ChartHeader chartId="trend" includeChartName {...props} />
+              )}
+              countryMessageValues={messageValues}
+              chartId="trend"
+            />
+          </SectionContainer>
           <SectionContainer>
             <ChartSettingMetrics
               activeDefault={
@@ -359,49 +357,47 @@ function TabCountryReport({
               countryMessageValues={messageValues}
             />
           </SectionContainer>
-          {hasDimensionScore && (
-            <SectionContainer>
-              <ChartSettingMetrics
-                activeDefault={dimension}
-                metrics={DIMENSIONS.reduce((dims, d) => {
-                  if (d.key !== dimension) {
-                    return dims;
-                  }
-                  return [
-                    ...dims,
-                    {
-                      ...d,
-                      children: RIGHTS.reduce((rights, r) => {
-                        if (r.dimension !== d.key) {
-                          return rights;
-                        }
-                        return [...rights, r];
-                      }, []),
-                    },
-                  ];
-                }, [])}
-                chart={props => (
-                  <ChartContainerTrend
-                    countryCode={country[COLUMNS.COUNTRIES.CODE]}
-                    // add all metrics here to facilitate small multiples
-                    metrics={RIGHTS.reduce((rights, r) => {
-                      if (r.dimension !== dimension) {
+          <SectionContainer>
+            <ChartSettingMetrics
+              activeDefault={dimension}
+              metrics={DIMENSIONS.reduce((dims, d) => {
+                if (d.key !== dimension) {
+                  return dims;
+                }
+                return [
+                  ...dims,
+                  {
+                    ...d,
+                    children: RIGHTS.reduce((rights, r) => {
+                      if (r.dimension !== d.key) {
                         return rights;
                       }
                       return [...rights, r];
-                    }, [])}
-                    onMetricClick={onMetricClick}
-                    {...props}
-                  />
-                )}
-                header={props => (
-                  <ChartHeader chartId="trend" includeChartName {...props} />
-                )}
-                countryMessageValues={messageValues}
-                chartId="trend"
-              />
-            </SectionContainer>
-          )}
+                    }, []),
+                  },
+                ];
+              }, [])}
+              chart={props => (
+                <ChartContainerTrend
+                  countryCode={country[COLUMNS.COUNTRIES.CODE]}
+                  // add all metrics here to facilitate small multiples
+                  metrics={RIGHTS.reduce((rights, r) => {
+                    if (r.dimension !== dimension) {
+                      return rights;
+                    }
+                    return [...rights, r];
+                  }, [])}
+                  onMetricClick={onMetricClick}
+                  {...props}
+                />
+              )}
+              header={props => (
+                <ChartHeader chartId="trend" includeChartName {...props} />
+              )}
+              countryMessageValues={messageValues}
+              chartId="trend"
+            />
+          </SectionContainer>
           <SectionContainer>
             <ChartSettingMetrics
               activeDefault={
