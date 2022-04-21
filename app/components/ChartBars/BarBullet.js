@@ -159,6 +159,7 @@ function BarBullet({
               secondary
               align="right"
               title={labels && labels.lo}
+              titleRightOffset="15px"
             />
           )}
           {((hover && annotateOnHover) || annotate) && (
@@ -170,6 +171,7 @@ function BarBullet({
               secondary
               align="left"
               title={labels && labels.hi}
+              titleLeftOffset="15px"
             />
           )}
           {((hover && annotateOnHover) || annotate) && (

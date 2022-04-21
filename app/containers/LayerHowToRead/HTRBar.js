@@ -34,7 +34,7 @@ function HTRBar({ contxt, intl, dimension }) {
             responsive={false}
           >
             <Box
-              width={stackContent(size) ? '100%' : '50%'}
+              width={'100%'}
               flex={{ shrink: 0 }}
               pad={
                 stackContent(size)
@@ -59,7 +59,7 @@ function HTRBar({ contxt, intl, dimension }) {
                 <Bar
                   level={2}
                   data={{
-                    value: dimension === 'esr' ? 78 : 7.8,
+                    value: dimension === 'esr' ? 60 : 6.0,
                     unit: dimension === 'esr' ? '%' : '',
                     maxValue: dimension === 'esr' ? 100 : 10,
                     color: dimension || 'esr',
@@ -77,22 +77,17 @@ function HTRBar({ contxt, intl, dimension }) {
                 <Grades grades={grades} useChartLabels={false} />
               </Box>
             </Box>
-            <Box
-              width={stackContent(size) ? '100%' : '50%'}
-              flex={{ shrink: 0 }}
-              pad={stackContent(size) ? 'none' : { left: 'medium' }}
-            >
-              <HTRParagraph>
-                <FormattedMessage
-                  {...messages.simpleBar.intro}
-                  values={{
-                    unit: dimension === 'esr' ? '%' : '',
-                    maxValue: dimension === 'esr' ? 100 : 10,
-                  }}
-                />
-              </HTRParagraph>
-            </Box>
           </Box>
+          <br />
+          <HTRParagraph>
+            <FormattedMessage
+              {...messages.simpleBar.intro}
+              values={{
+                unit: dimension === 'esr' ? '%' : '',
+                maxValue: dimension === 'esr' ? 100 : 10,
+              }}
+            />
+          </HTRParagraph>
           {dimension === 'esr' && (
             <Box margin={{ top: 'small' }} responsive={false}>
               <HTRParagraph>

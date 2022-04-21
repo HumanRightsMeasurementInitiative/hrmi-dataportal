@@ -64,6 +64,8 @@ function Score({
   rotate,
   title,
   intl,
+  titleRightOffset,
+  titleLeftOffset,
 }) {
   return (
     <Styled
@@ -78,12 +80,15 @@ function Score({
         pad={{ horizontal: 'xsmall', vertical: 'hair' }}
         background="white"
         round="xxsmall"
+        style={{ marginLeft: titleLeftOffset, marginRight: titleRightOffset }}
       >
         {title && (
           <Text
             color={`${color}Dark`}
             size={score ? 'xsmall' : getSize(level)}
-            style={{ fontWeight: score || level > 1 ? 400 : 600 }}
+            style={{
+              fontWeight: score || level > 1 ? 400 : 600,
+            }}
           >
             {title}
           </Text>
