@@ -23,6 +23,9 @@
     "staging": "hrmi-dataportal-staging",
     "raw-indicators": "hrmi-dataportal-raw-indicators",
     "uncertainty": "hrmi-dataportal-uncertainty",
-    "zh": "hrmi-dataportal-zh"
-  }
+    "zh": "hrmi-dataportal-zh",
+    "prod": "hrmi-dataportal",
+    "uat": "hrmi-dataportal-uat"
+  },
+  "targets": {}
 }
