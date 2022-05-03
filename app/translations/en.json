@@ -1000,7 +1000,7 @@
   "hrmi.indicators-definition.adult-survival": "Adult (15-60) % survival rate. (100 – % adult mortality rate)",
   "hrmi.subrights.adult-survival": "Health (adult)",
   "hrmi.subrights.rightTo.adult-survival": "Right to health (adult)",
-  "hrmi.indicators-raw.adult-survival": "Adult (15-60) Survival",
+  "hrmi.indicators-raw.adult-survival": "Adult (15-60) survival",
   "hrmi.indicators-about.adult-survival": "Percentage probability that a 15-year-old person will survive to reach his or her 60th birthday.",
   "hrmi.people-at-risk.32": "Men and/or boys",
   "hrmi.people-at-risk.33": "Street children or homeless youth",
