@@ -10,12 +10,20 @@ import styled from 'styled-components';
 import { Heading, Box } from 'grommet';
 import BarBullet from 'components/ChartBars/BarBullet';
 import AnnotateBetterWorse from 'components/AnnotateBetterWorse';
+import Grades from 'components/ChartBars/Grades';
 
 import rootMessages from 'messages';
 import HTRParagraph from './HTRParagraph';
 import messages from './messages';
 
 const Styled = styled.div``;
+
+const grades = [
+  { class: 'poor', min: 0 },
+  { class: 'bad', min: 35 },
+  { class: 'fair', min: 60 },
+  { class: 'good', min: 80 },
+];
 
 function HTRBulletCPR({ contxt, dimension, pacific, intl }) {
   return (
@@ -30,6 +38,7 @@ function HTRBulletCPR({ contxt, dimension, pacific, intl }) {
       <Heading responsive={false} level={4}>
         <FormattedMessage {...messages.bullet.rangeTitle} />
       </Heading>
+      <br />
       <Box
         pad={{ horizontal: 'small', top: 'xsmall', bottom: 'medium' }}
         responsive={false}
@@ -51,8 +60,8 @@ function HTRBulletCPR({ contxt, dimension, pacific, intl }) {
               maxValue: 10,
               unit: '',
               band: {
-                lo: 2.5,
-                hi: 7.5,
+                lo: 3.5,
+                hi: 6.5,
               },
               labels: {
                 value: intl.formatMessage(messages.bullet.scoreAverage),
@@ -61,7 +70,7 @@ function HTRBulletCPR({ contxt, dimension, pacific, intl }) {
               },
             }}
           />
-          <AnnotateBetterWorse absolute />
+          <Grades grades={grades} useChartLabels={false} />
         </Box>
       </Box>
       <HTRParagraph above>

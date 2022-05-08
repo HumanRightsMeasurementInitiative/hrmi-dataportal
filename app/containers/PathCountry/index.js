@@ -77,7 +77,7 @@ import ButtonText from 'styled/ButtonText';
 
 import getMetricDetails from 'utils/metric-details';
 // import quasiEquals from 'utils/quasi-equals';
-import { hasCPR, formatScore } from 'utils/scores';
+import { hasPhysint, hasEmpowerment, formatScore } from 'utils/scores';
 
 import { isMinSize } from 'utils/responsive';
 import { getMessageGrammar } from 'utils/narrative';
@@ -498,7 +498,7 @@ export function PathCountry({
                     type="cpr"
                     dimension="physint"
                     countryTitle={countryTitle}
-                    hasDimensionScore={dataReady && hasCPR(dimensions)}
+                    hasDimensionScore={dataReady && hasPhysint(dimensions)}
                     country={country}
                     dataReady={dataReady}
                     onMetricClick={onMetricClick}
@@ -516,7 +516,7 @@ export function PathCountry({
                     type="cpr"
                     dimension="empowerment"
                     countryTitle={countryTitle}
-                    hasDimensionScore={dataReady && hasCPR(dimensions)}
+                    hasDimensionScore={dataReady && hasEmpowerment(dimensions)}
                     country={country}
                     dataReady={dataReady}
                     onMetricClick={onMetricClick}

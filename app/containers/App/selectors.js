@@ -2104,8 +2104,16 @@ export const getLatestPacificScores = createSelector(
 export const getLatestPacificScoresForCountry = createSelector(
   getMaxYearPacific,
   getPacificScoresForCountry,
-  (maxYear, scores) =>
-    scores && scores.filter(s => quasiEquals(s.year, maxYear)),
+  (maxYear, scores) => {
+    const minYear = calcMinYear(scores);
+    let year = maxYear;
+    let sc = null;
+    do {
+      sc = scores && scores.filter(s => quasiEquals(s.year, year));
+      year--;
+    } while ((!sc || sc.length === 0) && year >= minYear);
+    return sc;
+  },
 );
 
 export const getPacificScoresByMetric = createSelector(

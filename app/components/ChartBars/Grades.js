@@ -78,7 +78,13 @@ const KeyWrap = styled(props => (
   margin-top: 4px;
 `;
 
-export function Grades({ grades, labels = true, hasAside, rawScores }) {
+export function Grades({
+  grades,
+  labels = true,
+  hasAside,
+  rawScores,
+  useChartLabels = true,
+}) {
   // const minGap = grades.reduce((memo, grade, index, list) => {
   //   // console.log(memo, grade, index, list.length, list[index + 1])
   //   const gap =
@@ -87,11 +93,12 @@ export function Grades({ grades, labels = true, hasAside, rawScores }) {
   //       : list[index + 1].min - grade.min;
   //   return Math.min(memo, gap);
   // }, 1000);
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <BGScale
-          left={chartLabelWidth(size)}
+          left={useChartLabels ? chartLabelWidth(size) : 0}
           right={hasAside ? scoreAsideWidth(size) : '0px'}
         >
           {!rawScores &&

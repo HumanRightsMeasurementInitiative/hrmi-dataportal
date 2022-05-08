@@ -67,6 +67,36 @@ const BarBand = styled.div`
   }};
 `;
 
+const LeftLabelLine = styled.div`
+  z-index: 1;
+  top: auto;
+  bottom: 100%;
+  position: absolute;
+  width: 15px;
+  height: 10px;
+  background: linear-gradient(
+    to top right,
+    transparent calc(50% - 1px),
+    black,
+    transparent calc(50% + 1px)
+  );
+`;
+
+const RightLabelLine = styled.div`
+  z-index: 1;
+  top: auto;
+  bottom: 100%;
+  position: absolute;
+  width: 15px;
+  height: 10px;
+  background: linear-gradient(
+    to top left,
+    transparent calc(50% - 1px),
+    black,
+    transparent calc(50% + 1px)
+  );
+`;
+
 function BarBullet({
   data,
   level = 2,
@@ -151,26 +181,42 @@ function BarBullet({
             />
           )}
           {((hover && annotateOnHover) || annotate) && (
-            <Score
-              left={(band.lo / maxValue) * 100}
-              color={color}
-              level={Math.max(2, level)}
-              direction={scoreAbove ? 'top' : 'bottom'}
-              secondary
-              align="right"
-              title={labels && labels.lo}
-            />
+            <React.Fragment>
+              <Score
+                left={(band.lo / maxValue) * 100}
+                color={color}
+                level={Math.max(2, level)}
+                direction={scoreAbove ? 'top' : 'bottom'}
+                secondary
+                align="right"
+                title={labels && labels.lo}
+                titleRightOffset="15px"
+              />
+              <LeftLabelLine
+                style={{
+                  left: `calc(${(band.lo / maxValue) * 100 + '%'} - 15px)`,
+                }}
+              />
+            </React.Fragment>
           )}
           {((hover && annotateOnHover) || annotate) && (
-            <Score
-              left={(band.hi / maxValue) * 100}
-              color={color}
-              level={Math.max(2, level)}
-              direction={scoreAbove ? 'top' : 'bottom'}
-              secondary
-              align="left"
-              title={labels && labels.hi}
-            />
+            <React.Fragment>
+              <Score
+                left={(band.hi / maxValue) * 100}
+                color={color}
+                level={Math.max(2, level)}
+                direction={scoreAbove ? 'top' : 'bottom'}
+                secondary
+                align="left"
+                title={labels && labels.hi}
+                titleLeftOffset="15px"
+              />
+              <RightLabelLine
+                style={{
+                  left: (band.hi / maxValue) * 100 + '%',
+                }}
+              />
+            </React.Fragment>
           )}
           {((hover && annotateOnHover) || annotate) && (
             <Score

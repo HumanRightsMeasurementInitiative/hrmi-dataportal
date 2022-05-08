@@ -4,7 +4,6 @@ build
 node_modules
 stats.json
 .firebase
-package-lock.json
 
 # Cruft
 .DS_Store
