@@ -224,7 +224,7 @@ export const FAQS = {
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countries_v3-1.csv',
+    file: 'Countries_2022_v1.csv',
   },
   {
     key: 'countriesGrammar',
@@ -232,7 +232,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrIndicators',
-    file: 'esr-indicators_2021.csv',
+    file: 'esr-indicators_2022_v1.csv',
   },
   {
     key: 'atRisk',
@@ -240,7 +240,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'auxIndicators',
-    file: 'auxiliary-indicators_2021.csv',
+    file: 'auxilliary-indicators_2022_final.csv',
   },
   {
     key: 'cprScores',
@@ -248,11 +248,11 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrScores',
-    file: 'esr-scores_2021.csv',
+    file: 'esr-scores_2022_final.csv',
   },
   {
     key: 'esrIndicatorScores',
-    file: 'esr-indicator-scores_2021.csv',
+    file: 'esr-indicator-scores_2022_final.csv',
   },
   {
     key: 'featured',
@@ -260,7 +260,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'sources',
-    file: 'sources_2021.csv',
+    file: 'sources_2022_final.csv',
   },
   {
     key: 'pacific',
@@ -698,7 +698,7 @@ export const INDICATORS = [
     code: 'FoodSecure',
     right: 'food',
     resource: 'esrIndicatorScores',
-    hasGroups: false,
+    hasGroups: true,
   },
   {
     key: 'under-5-survival',
