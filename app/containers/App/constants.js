@@ -453,7 +453,7 @@ export const SUBREGIONS_FOR_COMPARISON_CPR = ['pacific'];
 export const DIMENSIONS = [
   {
     key: 'esr',
-    code: 'SER_Average',
+    code: 'QoL',
     type: 'esr',
     resource: 'esrScores',
   },
