@@ -236,7 +236,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'atRisk',
-    file: 'people-at-risk_v3-3.csv',
+    file: 'people-at-risk_v3-4.csv',
   },
   {
     key: 'auxIndicators',
@@ -244,7 +244,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'cprScores',
-    file: 'cpr-scores_v3-3.csv',
+    file: 'cpr-scores_v5-1.csv',
   },
   {
     key: 'esrScores',
