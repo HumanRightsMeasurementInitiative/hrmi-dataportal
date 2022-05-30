@@ -85,11 +85,8 @@ const AddToPDFWrapper = styled.div`
 const BreakBefore = styled(Box)`
   @media print {
     position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
-    posittion: relative;
     break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
-    // break-before: page;
     margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
-    // margin-top: -150px;
   }
 `;
 
@@ -257,47 +254,48 @@ export function ChartContainerCountrySnapshot({
           activeCode={activeCode}
         />
         <AddToPDFWrapper>
-          {/* <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}> */}
-          <Box margin={{ bottom: 'medium' }}>
-            <NarrativeCPR
-              dimensionKey="physint"
-              score={dimensions.physint.score}
-              country={country}
-              countryGrammar={countryGrammar}
-              showNoData={false}
-            />
-            <NarrativeCPRCompAssessment
-              dimensionKey="physint"
-              score={dimensions.physint.score}
-              someRights={hasSomePhysintScore}
-              hadSurvey={
-                hasSomePhysintScore ||
-                hasSomeEmpowermentScore ||
-                SUBREGIONS_CPR_COMPLETE.indexOf(
-                  country[COLUMNS.COUNTRIES.SUBREGION],
-                ) > -1
-              }
-              country={country}
-              countryGrammar={countryGrammar}
-              referenceScore={
-                dimensionAverages &&
-                dimensionAverages.physint &&
-                dimensionAverages.physint.average
-              }
-              referenceCount={
-                dimensionAverages &&
-                dimensionAverages.physint &&
-                dimensionAverages.physint.count
-              }
-              comparativeGroup={
-                SUBREGIONS_FOR_COMPARISON_CPR.indexOf(country.subregion_code) >
-                -1
-                  ? 'subregion'
-                  : 'all'
-              }
-            />
-          </Box>
-          {/* </BreakBefore> */}
+          <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}>
+            <Box margin={{ bottom: 'medium' }}>
+              <NarrativeCPR
+                dimensionKey="physint"
+                score={dimensions.physint.score}
+                country={country}
+                countryGrammar={countryGrammar}
+                showNoData={false}
+              />
+              <NarrativeCPRCompAssessment
+                dimensionKey="physint"
+                score={dimensions.physint.score}
+                someRights={hasSomePhysintScore}
+                hadSurvey={
+                  hasSomePhysintScore ||
+                  hasSomeEmpowermentScore ||
+                  SUBREGIONS_CPR_COMPLETE.indexOf(
+                    country[COLUMNS.COUNTRIES.SUBREGION],
+                  ) > -1
+                }
+                country={country}
+                countryGrammar={countryGrammar}
+                referenceScore={
+                  dimensionAverages &&
+                  dimensionAverages.physint &&
+                  dimensionAverages.physint.average
+                }
+                referenceCount={
+                  dimensionAverages &&
+                  dimensionAverages.physint &&
+                  dimensionAverages.physint.count
+                }
+                comparativeGroup={
+                  SUBREGIONS_FOR_COMPARISON_CPR.indexOf(
+                    country.subregion_code,
+                  ) > -1
+                    ? 'subregion'
+                    : 'all'
+                }
+              />
+            </Box>
+          </BreakBefore>
         </AddToPDFWrapper>
         {/* Empowerment */}
         {/* <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}> */}
