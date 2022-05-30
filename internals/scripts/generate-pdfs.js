@@ -27,7 +27,7 @@ const zhJSON = require('../../app/translations/zh.json')
 // TODO: vscode hangs when the logo is in this file, so have moved it out for now while developing
 const logo = require('./pdf-logo')
 
-const currentYear = '2021'
+const currentYear = '2022'
 
 const pdfsDir = path.join(process.cwd(), './pdfs')
 
