@@ -36,7 +36,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (이 비교는 '조정된 소득' 벤치마크를 사용하여 계산됨).",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "For {countryWithArticle} no rights scores are available due to missing data in the relevant international databases.",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
-  "hrmi.components.Source.source": "Source: HRMI 2021 rightstracker.org",
+  "hrmi.components.Source.source": "Source: HRMI 2022 rightstracker.org",
   "hrmi.components.ReadMore.more": "Read more",
   "hrmi.components.ReadMore.less": "Show less",
   "hrmi.labels.score": "점수",

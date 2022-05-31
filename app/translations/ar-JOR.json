@@ -38,7 +38,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (يتم حساب هذه المقارنة باستخدام مقياس 'معدل الدخل').",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "For {countryWithArticle} no rights scores are available due to missing data in the relevant international databases.",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
-  "hrmi.components.Source.source": "Source: HRMI 2021 rightstracker.org",
+  "hrmi.components.Source.source": "Source: HRMI 2022 rightstracker.org",
   "hrmi.components.ReadMore.more": "Read more",
   "hrmi.components.ReadMore.less": "Show less",
   "hrmi.labels.score": "النتيجة",
