@@ -164,6 +164,11 @@ export function ChartContainerCountrySnapshot({
   const esrData = dimensions.esr.score;
   const physIntData = dimensions.physint.score;
 
+  const shdBrk = (!esrData && physIntData) || (esrData && !physIntData);
+  console.log('shdBrk', shdBrk);
+  console.log('esrData', esrData);
+  console.log('physIntData', physIntData);
+
   return (
     <Styled>
       <ChartHeader
@@ -298,11 +303,7 @@ export function ChartContainerCountrySnapshot({
           </BreakBefore>
         </AddToPDFWrapper>
         {/* Empowerment */}
-        {/* <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}> */}
-        <BreakBefore
-          margin={{ bottom: 'medium' }}
-          shouldBreak={(!esrData && physIntData) || (esrData && !physIntData)}
-        >
+        <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={!physIntData}>
           <ChartCountrySnapshot
             type="cpr"
             dimensionCode="empowerment"
