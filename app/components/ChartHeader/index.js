@@ -108,8 +108,6 @@ export function ChartHeader({
 
   const pdfFolder = process.env.PDF_DIR;
 
-  console.log('env', process.env);
-
   useEffect(() => {
     if (locale && countryCode) {
       const ref = storage.ref(`${pdfFolder}/${locale}-${countryCode}.pdf`);
