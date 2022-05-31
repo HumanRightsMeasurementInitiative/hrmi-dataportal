@@ -164,11 +164,6 @@ export function ChartContainerCountrySnapshot({
   const esrData = dimensions.esr.score;
   const physIntData = dimensions.physint.score;
 
-  const shdBrk = (!esrData && physIntData) || (esrData && !physIntData);
-  console.log('shdBrk', shdBrk);
-  console.log('esrData', esrData);
-  console.log('physIntData', physIntData);
-
   return (
     <Styled>
       <ChartHeader
