@@ -1,4 +1,4 @@
-const fs = require('fs/promises')
+const fs = require('fs').promises
 const path = require('path')
 const admin = require('firebase-admin')
 const parallelLimit = require('run-parallel-limit')
@@ -26,7 +26,7 @@ fs.readdir(pdfsFolder)
   const tasks = files.map(f => {
     return (cb) => {
       return bucket.upload(`${pdfsFolder}/${f}`, {
-        destination: `pdfs/${f}`
+        destination: `pdfs-uat/${f}`
       })
       .then(() => {
         console.log(`${f} uploaded successfully`)

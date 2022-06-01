@@ -17,12 +17,12 @@ const zhJSON = require('../../app/translations/zh.json')
 // pdf-specific languages
 // NOTE that creating each of these one-off PDF's may require changes at build-time in i18n.js and narrative.js to get the right translation file for the target country
 // this is to be revisited with the refactor work
-// const viJSON = require('../../app/translations/vi.json')
-// const koJSON = require('../../app/translations/ko.json')
-// const ruKAZJSON = require('../../app/translations/ru-KAZ.json')
-// const ruKGZJSON = require('../../app/translations/ru-KGZ.json')
-// const arJORJSON = require('../../app/translations/ar-JOR.json')
-// const arSAUJSON = require('../../app/translations/ar-SAU.json')
+const viJSON = require('../../app/translations/vi.json')
+const koJSON = require('../../app/translations/ko.json')
+const ruKAZJSON = require('../../app/translations/ru-KAZ.json')
+const ruKGZJSON = require('../../app/translations/ru-KGZ.json')
+const arJORJSON = require('../../app/translations/ar-JOR.json')
+const arSAUJSON = require('../../app/translations/ar-SAU.json')
 
 // TODO: vscode hangs when the logo is in this file, so have moved it out for now while developing
 const logo = require('./pdf-logo')
@@ -40,7 +40,7 @@ async function printPDF({
 
   const cluster = await Cluster.launch({
     puppeteerOptions: process.env.GITHUB_ACTIONS ? {} : {
-      executablePath: '/opt/homebrew/bin/chromium'
+      executablePath: 'google-chrome'
     },
     concurrency: Cluster.CONCURRENCY_PAGE,
     maxConcurrency: 4 // should probably match the no. of cores on your machine
@@ -55,6 +55,7 @@ async function printPDF({
     });
 
     const countryWithArticle = getCountryWithArticle(lang, grammar, langFile[`hrmi.countries.${code}`])
+    console.log(`Country code: ${code} - ${countryWithArticle}`);
 
     const headerFooterStyle = `<style>@font-face{font-family:'Source Sans Pro';src:url(../../fonts/SourceSansPro-Regular.ttf) format("truetype");} #header { padding: 0 !important; } #footer { padding: 0 !important; } p, span { font-family: 'Source Sans Pro', sans-serif; font-size: 10px; color: #262064;}</style>`
 
@@ -88,62 +89,63 @@ async function printPDF({
     fr: frJSON,
     pt: ptJSON,
     zh: zhJSON,
-    // vi: viJSON,
-    // ko: koJSON,
-    // ru: ruKAZJSON, 
-    // ru: ruKGZJSON, 
-    // ar: arJORJSON, 
-    // ar: arSAUJSON, 
+    vi: viJSON,
+    ko: koJSON,
+    //ru: ruKAZJSON, 
+    ru: ruKGZJSON, 
+    //ar: arJORJSON, 
+    ar: arSAUJSON, 
   }
   for (let i = 0; i < countries.length; i++) {
     const country = countries[i];
-    for (let j = 0; j < languages.length; j++) {
-      const lang = languages[j];
+
+    // for (let j = 0; j < languages.length; j++) {
+    //   const lang = languages[j];
+    //   const as = country.income === '1' ? 'hi' : 'core'
+    //   cluster.queue({
+    //     lang,
+    //     code: country.code,
+    //     grammar: country.grammar,
+    //     langFile: langFileMap[lang],
+    //     as
+    //   })
+    // }
+    if (country.code === 'VNM') {
       const as = country.income === '1' ? 'hi' : 'core'
       cluster.queue({
-        lang,
+        lang: 'vi',
         code: country.code,
-        grammar: country.grammar,
-        langFile: langFileMap[lang],
+        langFile: langFileMap['vi'],
         as
       })
     }
-    // if (country.code === 'VNM') {
-    //   const as = country.income === '1' ? 'hi' : 'core'
-    //   cluster.queue({
-    //     lang: 'vi',
-    //     code: country.code,
-    //     langFile: langFileMap['vi'],
-    //     as
-    //   })
-    // }
-    // if (country.code === 'KOR') {
-    //   const as = country.income === '1' ? 'hi' : 'core'
-    //   cluster.queue({
-    //     lang: 'ko',
-    //     code: country.code,
-    //     langFile: langFileMap['ko'],
-    //     as
-    //   })
-    // }
-    // if (country.code === 'KAZ' || country.code === 'KGZ') {
-    //   const as = country.income === '1' ? 'hi' : 'core'
-    //   cluster.queue({
-    //     lang: 'ru',
-    //     code: country.code,
-    //     langFile: langFileMap['ru'],
-    //     as
-    //   })
-    // }
-    // if (country.code === 'JOR' || country.code === 'SAU') {
-    //   const as = country.income === '1' ? 'hi' : 'core'
-    //   cluster.queue({
-    //     lang: 'ar',
-    //     code: country.code,
-    //     langFile: langFileMap['ar'],
-    //     as
-    //   })
-    // }
+    if (country.code === 'KOR') {
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang: 'ko',
+        code: country.code,
+        langFile: langFileMap['ko'],
+        as
+      })
+    }
+    if (country.code === 'KGZ') {
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang: 'ru',
+        code: country.code,
+        langFile: langFileMap['ru'],
+        as
+      })
+    }
+    if (country.code === 'SAU') {
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang: 'ar',
+        code: country.code,
+        langFile: langFileMap['ar'],
+        as
+      })
+    }
   }
 
   await cluster.idle()
