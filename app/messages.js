@@ -2969,4 +2969,10 @@ export default defineMessages({
         'Each country score has been produced from responses to a detailed survey of human rights experts who either live in or specialise in monitoring that country. Scores closer to 10 are better.',
     },
   },
+  BehindTheNumbers: {
+    header: {
+      id: `${scope}.BehindTheNumbers.header`,
+      defaultMessage: 'Behind the numbers',
+    },
+  },
 });
