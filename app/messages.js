@@ -1393,6 +1393,10 @@ export default defineMessages({
       id: `${scope}.subrights.food-security`,
       defaultMessage: 'food-security',
     },
+    'food-security-by-sex': {
+      id: `${scope}.subrights.food-security-by-sex`,
+      defaultMessage: 'food-security',
+    },
     'adult-survival': {
       id: `${scope}.subrights.adult-survival`,
       defaultMessage: 'adult-survival',
