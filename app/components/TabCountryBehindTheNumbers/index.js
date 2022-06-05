@@ -21,9 +21,9 @@ function TabCountryBehindTheNumbers() {
     <ResponsiveContext.Consumer>
       {size => (
         <>
-          <h2>
+          <Text as="h2" fontWeight={600}>
             <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
-          </h2>
+          </Text>
           <BehindTheNumbersQol />
         </>
       )}

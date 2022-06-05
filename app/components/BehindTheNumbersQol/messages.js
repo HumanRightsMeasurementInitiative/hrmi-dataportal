@@ -17,4 +17,28 @@ export default defineMessages({
     id: `${scope}.part1`,
     defaultMessage: '-',
   },
+  part2: {
+    id: `${scope}.part2`,
+    defaultMessage: '-',
+  },
+  part3: {
+    id: `${scope}.part3`,
+    defaultMessage: '-',
+  },
+  peopleAtRiskHeader: {
+    id: `${scope}.peopleAtRiskHeader`,
+    defaultMessage: '-',
+  },
+  peopleAtRisk: {
+    id: `${scope}.peopleAtRisk`,
+    defaultMessage: '-',
+  },
+  roomForImprovementHeader: {
+    id: `${scope}.roomForImprovementHeader`,
+    defaultMessage: '-',
+  },
+  roomForImprovement: {
+    id: `${scope}.roomForImprovement`,
+    defaultMessage: '-',
+  },
 });

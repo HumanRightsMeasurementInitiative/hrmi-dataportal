@@ -15,21 +15,42 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import messages from './messages';
 
 import infographicSanitation from 'images/People-Infographics-China-Sanitation.png';
+import infographicWater from 'images/People-Infographics-China-Water.png';
 
-function BehindTheNumbersQol() {
+function BehindTheNumbersQol({ intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <Box>
-          <h3>
+          <Text as="h3" fontWeight={600} fontSize={21}>
             <FormattedMessage {...messages.header} />
-          </h3>
-          <Text style={{ whiteSpace: 'pre-line' }}>
-            <FormattedMessage {...messages.part1} />
           </Text>
+          <ReactMarkdown children={intl.formatMessage(messages.part1)} />
+          <br />
           <Box width="100%" textAlign="center">
             <Image src={infographicSanitation} />
           </Box>
+          <br />
+          <ReactMarkdown children={intl.formatMessage(messages.part2)} />
+          <br />
+          <Box width="100%" textAlign="center">
+            <Image src={infographicWater} />
+          </Box>
+          <br />
+          <ReactMarkdown children={intl.formatMessage(messages.part3)} />
+          <br />
+          <Text as="h4" fontWeight={600} fontSize={19}>
+            <FormattedMessage {...messages.peopleAtRiskHeader} />
+          </Text>
+          <ReactMarkdown children={intl.formatMessage(messages.peopleAtRisk)} />
+          <br />
+          <Text as="h4" fontWeight={600} fontSize={19}>
+            <FormattedMessage {...messages.roomForImprovementHeader} />
+          </Text>
+          <ReactMarkdown
+            children={intl.formatMessage(messages.roomForImprovement)}
+          />
+          <br />
         </Box>
       )}
     </ResponsiveContext.Consumer>
