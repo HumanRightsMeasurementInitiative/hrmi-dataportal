@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
 import BehindTheNumbersQol from '../BehindTheNumbersQol';
+import BehindTheNumbersSfs from '../BehindTheNumbersSfs';
 import rootMessages from 'messages';
 
 function TabCountryBehindTheNumbers() {
@@ -25,6 +26,8 @@ function TabCountryBehindTheNumbers() {
             <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
           </Text>
           <BehindTheNumbersQol />
+          <br />
+          <BehindTheNumbersSfs />
         </>
       )}
     </ResponsiveContext.Consumer>
