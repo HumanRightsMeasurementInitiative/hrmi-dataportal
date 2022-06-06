@@ -135,7 +135,7 @@ const mapStateToProps = createStructuredSelector({
   dataReady: state => getDependenciesReady(state, DEPENDENCIES),
   countries: state => getCountries(state),
   scores: (state, { metric, selectedYear }) =>
-    getCPRRightScores(state, metric.key, selectedYear),
+    getCPRRightScores(state, metric.key, selectedYear, true),
   auxIndicators: state => getAuxIndicatorsLatest(state),
 });
 
