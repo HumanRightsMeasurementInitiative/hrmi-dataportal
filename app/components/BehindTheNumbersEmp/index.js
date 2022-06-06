@@ -59,17 +59,17 @@ function BehindTheNumbersEmp({ intl }) {
           </Text>
           <ReactMarkdown children={intl.formatMessage(messages.part1)} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.assemblyHeader} />
           </Text>
           <CprChart metric={metrics['assembly']} selectedYear={2021} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.expressionHeader} />
           </Text>
           <CprChart metric={metrics['expression']} selectedYear={2021} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.participationHeader} />
           </Text>
           <CprChart metric={metrics['participation']} selectedYear={2021} />

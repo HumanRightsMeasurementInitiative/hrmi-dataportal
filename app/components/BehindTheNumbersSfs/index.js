@@ -80,31 +80,31 @@ function BehindTheNumbersSfs({ intl }) {
           <ReactMarkdown children={intl.formatMessage(messages.part1)} />
           <br />
 
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.arrestHeader} />
           </Text>
           <CprChart metric={metrics['arrest']} selectedYear={2021} />
           <br />
 
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.disappearanceHeader} />
           </Text>
           <CprChart metric={metrics['disappearance']} selectedYear={2021} />
           <br />
 
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.deathPenaltyHeader} />
           </Text>
           <CprChart metric={metrics['death-penalty']} selectedYear={2021} />
           <br />
 
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.extraJudKillingHeader} />
           </Text>
           <CprChart metric={metrics['extrajud-killing']} selectedYear={2021} />
           <br />
 
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.tortureHeader} />
           </Text>
           <CprChart metric={metrics['torture']} selectedYear={2021} />

@@ -39,12 +39,12 @@ function BehindTheNumbersQol({ intl }) {
           <br />
           <ReactMarkdown children={intl.formatMessage(messages.part3)} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.peopleAtRiskHeader} />
           </Text>
           <ReactMarkdown children={intl.formatMessage(messages.peopleAtRisk)} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={19}>
+          <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.roomForImprovementHeader} />
           </Text>
           <ReactMarkdown
