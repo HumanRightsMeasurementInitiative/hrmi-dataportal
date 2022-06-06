@@ -119,7 +119,7 @@ function CprChart({
       <ChartBars
         data={data}
         listHeader={true}
-        labelColor="physintDark"
+        labelColor={`${metric.color}Dark`}
         padVertical="xsmall"
         metric={metric}
         allowWordBreak={true}
