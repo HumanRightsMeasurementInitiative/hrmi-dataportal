@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { ResponsiveContext, Button, Text } from 'grommet';
-import { CircleQuestion, Performance } from 'grommet-icons';
+import { CircleQuestion, Performance, BarChart } from 'grommet-icons';
 
 import { setAsideLayer } from 'containers/App/actions';
 
@@ -46,6 +46,7 @@ const StyledButton = styled(Button)`
 export function ChartTools({
   howToReadConfig,
   settingsConfig,
+  behindTheNumbersConfig,
   onSetAsideLayer,
   intl,
   hasWhiteBG = true,
@@ -92,6 +93,29 @@ export function ChartTools({
                   <StyledText hasWhiteBG={hasWhiteBG}>
                     {intl.formatMessage(
                       rootMessages.labels.chartTools.settings,
+                    )}
+                  </StyledText>
+                ) : null
+              }
+              gap="xsmall"
+              reverse
+            />
+          )}
+          {behindTheNumbersConfig && (
+            <StyledButton
+              onClick={() => {
+                onSetAsideLayer({
+                  type: 'btn',
+                  ...behindTheNumbersConfig,
+                });
+              }}
+              icon={<BarChart color="dark" size="large" />}
+              plain
+              label={
+                isMinSize(size, 'medium') ? (
+                  <StyledText hasWhiteBG={hasWhiteBG}>
+                    {intl.formatMessage(
+                      rootMessages.labels.chartTools.behindTheNumbers,
                     )}
                   </StyledText>
                 ) : null

@@ -258,6 +258,9 @@ export function ChartContainerCountryRights({
                     showStandard: true,
                     showBenchmark: true,
                   },
+                  behindTheNumbersConfig: {
+                    key: dimension.key,
+                  },
                 }}
               />
               <Box
@@ -453,6 +456,9 @@ export function ChartContainerCountryRights({
                     key: 'country-dimension-cpr',
                     chart: 'Bullet',
                     dimension: dimensionCode,
+                  },
+                  behindTheNumbersConfig: {
+                    key: dimension.key,
                   },
                 }}
               />

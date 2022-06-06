@@ -132,6 +132,10 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.settings`,
         defaultMessage: 'Data settings',
       },
+      behindTheNumbers: {
+        id: `${scope}.labels.chartTools.behindTheNumbers`,
+        defaultMessage: 'Behind the numbers',
+      },
       downloadPDF: {
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
