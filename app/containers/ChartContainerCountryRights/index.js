@@ -258,9 +258,12 @@ export function ChartContainerCountryRights({
                     showStandard: true,
                     showBenchmark: true,
                   },
-                  behindTheNumbersConfig: {
-                    key: dimension.key,
-                  },
+                  behindTheNumbersConfig:
+                    countryCode === 'CHN'
+                      ? {
+                          key: dimension.key,
+                        }
+                      : null,
                 }}
               />
               <Box
@@ -457,9 +460,12 @@ export function ChartContainerCountryRights({
                     chart: 'Bullet',
                     dimension: dimensionCode,
                   },
-                  behindTheNumbersConfig: {
-                    key: dimension.key,
-                  },
+                  behindTheNumbersConfig:
+                    countryCode === 'CHN'
+                      ? {
+                          key: dimension.key,
+                        }
+                      : null,
                 }}
               />
               <Box
