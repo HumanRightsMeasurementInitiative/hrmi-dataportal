@@ -11,7 +11,7 @@ import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { ResponsiveContext, Button, Text } from 'grommet';
-import { CircleQuestion, Performance, BarChart } from 'grommet-icons';
+import { CircleQuestion, Performance, DocumentText } from 'grommet-icons';
 
 import { setAsideLayer } from 'containers/App/actions';
 
@@ -109,7 +109,7 @@ export function ChartTools({
                   ...behindTheNumbersConfig,
                 });
               }}
-              icon={<BarChart color="dark" size="large" />}
+              icon={<DocumentText color="dark" size="large" />}
               plain
               label={
                 isMinSize(size, 'medium') ? (
