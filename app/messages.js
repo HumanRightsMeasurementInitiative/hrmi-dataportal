@@ -2978,5 +2978,10 @@ export default defineMessages({
       id: `${scope}.BehindTheNumbers.header`,
       defaultMessage: 'Behind the numbers',
     },
+    noAnalysisInLanguage: {
+      id: `${scope}.BehindTheNumbers.noAnalysisInlanguage`,
+      defaultMessage:
+        'We are sorry. This information is not yet available in your language',
+    },
   },
 });

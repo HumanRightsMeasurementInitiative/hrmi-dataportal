@@ -13,6 +13,7 @@ import { CircleQuestion } from 'grommet-icons';
 import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import messages from './messages';
+import rootMessages from 'messages';
 
 import infographicSanitation from 'images/People-Infographics-China-Sanitation.png';
 import infographicWater from 'images/People-Infographics-China-Water.png';
@@ -22,6 +23,13 @@ function BehindTheNumbersQol({ intl }) {
     <ResponsiveContext.Consumer>
       {size => (
         <Box>
+          {intl.locale !== 'en' && intl.locale !== 'zh' && (
+            <Text fontStyle="italic">
+              <FormattedMessage
+                {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
+              />
+            </Text>
+          )}
           <Text as="h3" fontWeight={600} fontSize={21}>
             <FormattedMessage {...messages.header} />
           </Text>
