@@ -23,6 +23,8 @@ function TabCountryBehindTheNumbers() {
     <ResponsiveContext.Consumer>
       {size => (
         <>
+          <br />
+          <br />
           <Text as="h2" fontWeight={600}>
             <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
           </Text>
