@@ -52,6 +52,8 @@ function BehindTheNumbersQol({ intl }) {
           </Text>
           <ReactMarkdown children={intl.formatMessage(messages.peopleAtRisk)} />
           <br />
+          <ReactMarkdown children={intl.formatMessage(messages.part4)} />
+          <br />
           <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.roomForImprovementHeader} />
           </Text>

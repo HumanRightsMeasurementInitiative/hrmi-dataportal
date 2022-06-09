@@ -37,6 +37,11 @@ export default defineMessages({
     defaultMessage:
       'While China has room for improvement in all the rights we measure, a further consideration is inequity. There are several groups of people who our experts identified as being at higher risk of missing out. These include:\n\n- People with lower social or economic status\n- People from ethnic minorities, including Tibetans, Uyghurs, Mongolians, and Kazakhs\n- Human rights advocates, protestors, and anyone who criticises the government\n- People living in rural areas, particularly older people, and women\n- Disabled people\n- Detainees\n- People from religious minorities, particularly those practising Falun Gong, Christianity, or Islam\n- Internally displaced people\n',
   },
+  part4: {
+    id: `${scope}.part4`,
+    defaultMessage:
+      'See the people at risk tab on the Rights Tracker for the full lists. The data also show a strong connection between political activity, especially criticism of the government, and lack of enjoyment of economic and social rights.',
+  },
   roomForImprovementHeader: {
     id: `${scope}.roomForImprovementHeader`,
     defaultMessage: 'Room for improvement',
