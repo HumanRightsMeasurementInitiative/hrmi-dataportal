@@ -1096,6 +1096,8 @@
   "hrmi.subrights.violence-mvpfaff-lgbtqia": "Violence envers les MVPFAFF+/LGBTQIA+",
   "hrmi.tabs.pacific": "Données de la région du Pacifique",
   "hrmi.pacific.apology": "Nous sommes désolés. Certaines informations de cette page ne sont pas disponibles dans votre langue.",
+  "hrmi.tabs.behindTheNumbers": "TODO: Behind the numbers",
+  "hrmi.labels.chartTools.behindTheNumbers": "TODO: Behind the numbers",
   "hrmi.BehindTheNumbers.noAnalysisInLanguage": "Nous sommes désolés. Certaines informations de cette page ne sont pas disponibles dans votre langue.",
   "hrmi.BehindTheNumbers.header": "Behind the numbers",
   "hrmi.BehindTheNumbers.China.Qol.header": "Quality of Life",
