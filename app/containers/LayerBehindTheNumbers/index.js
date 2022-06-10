@@ -21,6 +21,16 @@ export function LayerBehindTheNumbers({ layer }) {
       {layer.key === 'esr' && <BehindTheNumbersQol />}
       {layer.key === 'physint' && <BehindTheNumbersSfs />}
       {layer.key === 'empowerment' && <BehindTheNumbersEmp />}
+
+      {layer.key === 'all' && (
+        <>
+          <BehindTheNumbersQol />
+          <br />
+          <BehindTheNumbersSfs />
+          <br />
+          <BehindTheNumbersEmp />
+        </>
+      )}
     </Box>
   );
 }
