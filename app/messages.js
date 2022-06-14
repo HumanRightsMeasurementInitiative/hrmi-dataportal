@@ -132,6 +132,10 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.settings`,
         defaultMessage: 'Data settings',
       },
+      behindTheNumbers: {
+        id: `${scope}.labels.chartTools.behindTheNumbers`,
+        defaultMessage: 'Behind the numbers',
+      },
       downloadPDF: {
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
@@ -1391,6 +1395,10 @@ export default defineMessages({
     },
     'food-security': {
       id: `${scope}.subrights.food-security`,
+      defaultMessage: 'food-security',
+    },
+    'food-security-by-sex': {
+      id: `${scope}.subrights.food-security-by-sex`,
       defaultMessage: 'food-security',
     },
     'adult-survival': {
@@ -2963,6 +2971,17 @@ export default defineMessages({
       id: `${scope}.pacific.htr`,
       defaultMessage:
         'Each country score has been produced from responses to a detailed survey of human rights experts who either live in or specialise in monitoring that country. Scores closer to 10 are better.',
+    },
+  },
+  BehindTheNumbers: {
+    header: {
+      id: `${scope}.BehindTheNumbers.header`,
+      defaultMessage: 'Behind the numbers',
+    },
+    noAnalysisInLanguage: {
+      id: `${scope}.BehindTheNumbers.noAnalysisInlanguage`,
+      defaultMessage:
+        'We are sorry. This information is not yet available in your language',
     },
   },
 });

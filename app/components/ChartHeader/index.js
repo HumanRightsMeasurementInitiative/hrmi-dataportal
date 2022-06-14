@@ -198,6 +198,7 @@ export function ChartHeader({
                       ...tools.settingsConfig,
                     }
                   }
+                  behindTheNumbersConfig={tools.behindTheNumbersConfig}
                 />
                 {tools &&
                   tools.settingsConfig &&

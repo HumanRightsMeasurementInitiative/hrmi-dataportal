@@ -151,8 +151,8 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
           process.env.NODE_ENV === 'production'
             ? `/airtable?locale=${requestLocale}&base=${splitKey[0]}`
             : `http://localhost:5001/hrmi-dataportal/us-central1/airtable?locale=${requestLocale}&base=${
-              splitKey[0]
-            }`,
+                splitKey[0]
+              }`,
         );
         const airtableData = yield airtableRes.json();
 
@@ -160,10 +160,7 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
           d => d.fields['ISO Code'] === splitKey[1],
         );
 
-        if (!countryData) {
-          yield put(contentRequested(key, false));
-          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
-        } else {
+        if (countryData) {
           // TODO: this is a mess, but will be superseeded by refactor approach
           // data is either atrisk or pacific data - put into appropriate key in store
           if (splitKey[0] === 'atrisk') {

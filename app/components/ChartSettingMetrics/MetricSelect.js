@@ -77,6 +77,8 @@ export function MetricSelect({
             {m.children &&
               m.children.map(m2 => {
                 const details2 = getMetricDetails(m2.key);
+                const m2key =
+                  m2.key === 'food-security' ? 'food-security-by-sex' : m2.key;
                 return (
                   <div key={m2.key}>
                     <StyledOption
@@ -92,7 +94,7 @@ export function MetricSelect({
                           details2.metricType === 'indicators'
                             ? 'subrights'
                             : details2.metricType
-                        ][m2.key]}
+                        ][m2key]}
                       />
                     </StyledOption>
                     {m2.children &&

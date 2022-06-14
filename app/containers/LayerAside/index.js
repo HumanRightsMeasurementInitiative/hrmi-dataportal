@@ -19,6 +19,7 @@ import AboutMetricContainer from 'containers/AboutMetricContainer';
 import AboutCountryContainer from 'containers/AboutCountryContainer';
 import LayerSettings from 'containers/LayerSettings';
 import LayerHowToRead from 'containers/LayerHowToRead';
+import LayerBehindTheNumbers from 'containers/LayerBehindTheNumbers';
 
 import ButtonIcon from 'styled/ButtonIcon';
 
@@ -86,6 +87,7 @@ export function LayerAside({ onClose, theme, layer }) {
             </ButtonWrap>
             {layer.type === 'htr' && <LayerHowToRead layer={layer} />}
             {layer.type === 'settings' && <LayerSettings layer={layer} />}
+            {layer.type === 'btn' && <LayerBehindTheNumbers layer={layer} />}
             {layer.type === 'aboutMetric' && (
               <AboutMetricContainer
                 metricCode={layer.code}
