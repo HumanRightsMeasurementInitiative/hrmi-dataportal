@@ -21,27 +21,45 @@ import BehindTheNumbersSfsTC from '../BehindTheNumbersSfsTC';
 import BehindTheNumbersEmpTC from '../BehindTheNumbersEmpTC';
 import rootMessages from 'messages';
 
-function TabCountryBehindTheNumbers() {
+const BreakBefore = styled(Box)`
+  @media print {
+    position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+    break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+  }
+`;
+function TabCountryBehindTheNumbers({ intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <>
           <br />
           <br />
+          <BreakBefore shouldBreak={true} />
           <Text as="h2" fontWeight={600}>
             <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
           </Text>
           <BehindTheNumbersQol />
           <br />
+          <BreakBefore shouldBreak={true} />
           <BehindTheNumbersSfs />
           <br />
+          <BreakBefore shouldBreak={true} />
           <BehindTheNumbersEmp />
           <br />
           <br />
+          <BreakBefore shouldBreak={true} />
+          {intl.locale === 'zh' && (
+            <Text as="h2" fontWeight={600}>
+              <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
+            </Text>
+          )}
           <BehindTheNumbersQolTC />
           <br />
+          <BreakBefore shouldBreak={true} />
           <BehindTheNumbersSfsTC />
           <br />
+          <BreakBefore shouldBreak={true} />
           <BehindTheNumbersEmpTC />
         </>
       )}

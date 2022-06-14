@@ -17,6 +17,14 @@ import rootMessages from 'messages';
 
 import CprChart from '../CprChart';
 
+const BreakBefore = styled(Box)`
+  @media print {
+    position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+    break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+  }
+`;
+
 function BehindTheNumbersEmpTC({ intl }) {
   if (intl.locale !== 'zh') {
     return null;
@@ -64,6 +72,7 @@ function BehindTheNumbersEmpTC({ intl }) {
           </Text>
           <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
           <br />
+          <BreakBefore shouldBreak={true} />
           <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.tc.assemblyHeader} />
           </Text>

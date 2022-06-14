@@ -17,6 +17,14 @@ import rootMessages from 'messages';
 
 import CprChart from '../CprChart';
 
+const BreakBefore = styled(Box)`
+  @media print {
+    position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+    break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+  }
+`;
+
 function BehindTheNumbersSfs({ intl }) {
   const metrics = {
     arrest: {
@@ -87,7 +95,7 @@ function BehindTheNumbersSfs({ intl }) {
           </Text>
           <ReactMarkdown children={intl.formatMessage(messages.part1)} />
           <br />
-
+          <BreakBefore shouldBreak={true} />
           <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.arrestHeader} />
           </Text>
@@ -106,6 +114,7 @@ function BehindTheNumbersSfs({ intl }) {
           <CprChart metric={metrics['death-penalty']} selectedYear={2021} />
           <br />
 
+          <BreakBefore shouldBreak={true} />
           <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.extraJudKillingHeader} />
           </Text>

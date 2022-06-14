@@ -21,8 +21,13 @@ import infographicWater from 'images/People-Infographics-China-Water.png';
 import infographicSanitationSC from 'images/People-Infographics-China-Sanitation-SC.png';
 import infographicWaterSC from 'images/People-Infographics-China-Water-SC.png';
 
-import infographicSanitationTC from 'images/People-Infographics-China-Sanitation-TC.png';
-import infographicWaterTC from 'images/People-Infographics-China-Water-TC.png';
+const BreakBefore = styled(Box)`
+  @media print {
+    position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+    break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+  }
+`;
 
 function BehindTheNumbersQol({ intl }) {
   return (
@@ -54,6 +59,7 @@ function BehindTheNumbersQol({ intl }) {
               {intl.locale === 'zh' && <Image src={infographicWaterSC} />}
             </Box>
             <br />
+            <BreakBefore shouldBreak={true} />
             <ReactMarkdown children={intl.formatMessage(messages.part3)} />
             <br />
             <Text as="h4" fontWeight={600} fontSize={18}>
@@ -65,6 +71,7 @@ function BehindTheNumbersQol({ intl }) {
             <br />
             <ReactMarkdown children={intl.formatMessage(messages.part4)} />
             <br />
+            <BreakBefore shouldBreak={true} />
             <Text as="h4" fontWeight={600} fontSize={18}>
               <FormattedMessage {...messages.roomForImprovementHeader} />
             </Text>
