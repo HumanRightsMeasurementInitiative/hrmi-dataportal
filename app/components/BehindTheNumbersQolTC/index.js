@@ -18,6 +18,14 @@ import rootMessages from 'messages';
 import infographicSanitationTC from 'images/People-Infographics-China-Sanitation-TC.png';
 import infographicWaterTC from 'images/People-Infographics-China-Water-TC.png';
 
+const BreakBefore = styled(Box)`
+  @media print {
+    position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+    break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+  }
+`;
+
 function BehindTheNumbersQolTC({ intl }) {
   if (intl.locale !== 'zh') {
     return null;
@@ -41,6 +49,7 @@ function BehindTheNumbersQolTC({ intl }) {
             {intl.locale === 'zh' && <Image src={infographicWaterTC} />}
           </Box>
           <br />
+          <BreakBefore shouldBreak={true} />
           <ReactMarkdown children={intl.formatMessage(messages.tc.part3)} />
           <br />
           <Text as="h4" fontWeight={600} fontSize={18}>
@@ -52,6 +61,7 @@ function BehindTheNumbersQolTC({ intl }) {
           <br />
           <ReactMarkdown children={intl.formatMessage(messages.tc.part4)} />
           <br />
+          <BreakBefore shouldBreak={true} />
           <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.tc.roomForImprovementHeader} />
           </Text>

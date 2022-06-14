@@ -532,7 +532,9 @@ export function ChartContainerCountrySnapshot({
         </p>
       </AddToPDFWrapper>
       {countryCode === 'CHN' && (
-        <AddToPDFWrapper>{TabCountryBehindTheNumbers}</AddToPDFWrapper>
+        <AddToPDFWrapper>
+          <TabCountryBehindTheNumbers />
+        </AddToPDFWrapper>
       )}
     </Styled>
   );
