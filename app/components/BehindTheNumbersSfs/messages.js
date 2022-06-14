@@ -41,4 +41,34 @@ export default defineMessages({
     defaultMessage:
       'Right to Freedom from Torture and Ill-treatment in East Asia',
   },
+  tc: {
+    header: {
+      id: `${scope}.header`,
+      defaultMessage: '',
+    },
+    part1: {
+      id: `${scope}.part1`,
+      defaultMessage: '',
+    },
+    arrestHeader: {
+      id: `${scope}.arrestHeader`,
+      defaultMessage: '',
+    },
+    disappearanceHeader: {
+      id: `${scope}.disappearanceHeader`,
+      defaultMessage: '',
+    },
+    deathPenaltyHeader: {
+      id: `${scope}.deathPenaltyHeader`,
+      defaultMessage: '',
+    },
+    extraJudKillingHeader: {
+      id: `${scope}.extraJudKillingHeader`,
+      defaultMessage: '',
+    },
+    tortureHeader: {
+      id: `${scope}.tortureHeader`,
+      defaultMessage: '',
+    },
+  },
 });

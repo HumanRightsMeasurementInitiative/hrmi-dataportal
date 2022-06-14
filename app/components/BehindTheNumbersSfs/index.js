@@ -74,50 +74,97 @@ function BehindTheNumbersSfs({ intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box>
-          {intl.locale !== 'en' && intl.locale !== 'zh' && (
-            <Text fontStyle="italic">
-              <FormattedMessage
-                {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
-              />
+        <React.Fragment>
+          <Box>
+            {intl.locale !== 'en' && intl.locale !== 'zh' && (
+              <Text fontStyle="italic">
+                <FormattedMessage
+                  {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
+                />
+              </Text>
+            )}
+            <Text as="h3" fontWeight={600} fontSize={21}>
+              <FormattedMessage {...messages.header} />
             </Text>
+            <ReactMarkdown children={intl.formatMessage(messages.part1)} />
+            <br />
+
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.arrestHeader} />
+            </Text>
+            <CprChart metric={metrics['arrest']} selectedYear={2021} />
+            <br />
+
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.disappearanceHeader} />
+            </Text>
+            <CprChart metric={metrics['disappearance']} selectedYear={2021} />
+            <br />
+
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.deathPenaltyHeader} />
+            </Text>
+            <CprChart metric={metrics['death-penalty']} selectedYear={2021} />
+            <br />
+
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.extraJudKillingHeader} />
+            </Text>
+            <CprChart
+              metric={metrics['extrajud-killing']}
+              selectedYear={2021}
+            />
+            <br />
+
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.tc.tortureHeader} />
+            </Text>
+            <CprChart metric={metrics['torture']} selectedYear={2021} />
+            <br />
+          </Box>
+          {intl.locale === 'zh' && (
+            <Box>
+              <Text as="h3" fontWeight={600} fontSize={21}>
+                <FormattedMessage {...messages.tc.header} />
+              </Text>
+              <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
+              <br />
+
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.arrestHeader} />
+              </Text>
+              <CprChart metric={metrics['arrest']} selectedYear={2021} />
+              <br />
+
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.disappearanceHeader} />
+              </Text>
+              <CprChart metric={metrics['disappearance']} selectedYear={2021} />
+              <br />
+
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.deathPenaltyHeader} />
+              </Text>
+              <CprChart metric={metrics['death-penalty']} selectedYear={2021} />
+              <br />
+
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.extraJudKillingHeader} />
+              </Text>
+              <CprChart
+                metric={metrics['extrajud-killing']}
+                selectedYear={2021}
+              />
+              <br />
+
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.tortureHeader} />
+              </Text>
+              <CprChart metric={metrics['torture']} selectedYear={2021} />
+              <br />
+            </Box>
           )}
-          <Text as="h3" fontWeight={600} fontSize={21}>
-            <FormattedMessage {...messages.header} />
-          </Text>
-          <ReactMarkdown children={intl.formatMessage(messages.part1)} />
-          <br />
-
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.arrestHeader} />
-          </Text>
-          <CprChart metric={metrics['arrest']} selectedYear={2021} />
-          <br />
-
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.disappearanceHeader} />
-          </Text>
-          <CprChart metric={metrics['disappearance']} selectedYear={2021} />
-          <br />
-
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.deathPenaltyHeader} />
-          </Text>
-          <CprChart metric={metrics['death-penalty']} selectedYear={2021} />
-          <br />
-
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.extraJudKillingHeader} />
-          </Text>
-          <CprChart metric={metrics['extrajud-killing']} selectedYear={2021} />
-          <br />
-
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.tortureHeader} />
-          </Text>
-          <CprChart metric={metrics['torture']} selectedYear={2021} />
-          <br />
-        </Box>
+        </React.Fragment>
       )}
     </ResponsiveContext.Consumer>
   );

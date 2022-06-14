@@ -18,50 +18,101 @@ import rootMessages from 'messages';
 import infographicSanitation from 'images/People-Infographics-China-Sanitation.png';
 import infographicWater from 'images/People-Infographics-China-Water.png';
 
+import infographicSanitationSC from 'images/People-Infographics-China-Sanitation-SC.png';
+import infographicWaterSC from 'images/People-Infographics-China-Water-SC.png';
+
+import infographicSanitationTC from 'images/People-Infographics-China-Sanitation-TC.png';
+import infographicWaterTC from 'images/People-Infographics-China-Water-TC.png';
+
 function BehindTheNumbersQol({ intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box>
-          {intl.locale !== 'en' && intl.locale !== 'zh' && (
-            <Text fontStyle="italic">
-              <FormattedMessage
-                {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
-              />
+        <React.Fragment>
+          <Box>
+            {intl.locale !== 'en' && intl.locale !== 'zh' && (
+              <Text fontStyle="italic">
+                <FormattedMessage
+                  {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
+                />
+              </Text>
+            )}
+            <Text as="h3" fontWeight={600} fontSize={21}>
+              <FormattedMessage {...messages.header} />
             </Text>
+            <ReactMarkdown children={intl.formatMessage(messages.part1)} />
+            <br />
+            <Box width="100%" textAlign="center">
+              {intl.locale === 'en' && <Image src={infographicSanitation} />}
+              {intl.locale === 'zh' && <Image src={infographicSanitationSC} />}
+            </Box>
+            <br />
+            <ReactMarkdown children={intl.formatMessage(messages.part2)} />
+            <br />
+            <Box width="100%" textAlign="center">
+              {intl.locale === 'en' && <Image src={infographicWater} />}
+              {intl.locale === 'zh' && <Image src={infographicWaterSC} />}
+            </Box>
+            <br />
+            <ReactMarkdown children={intl.formatMessage(messages.part3)} />
+            <br />
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.peopleAtRiskHeader} />
+            </Text>
+            <ReactMarkdown
+              children={intl.formatMessage(messages.peopleAtRisk)}
+            />
+            <br />
+            <ReactMarkdown children={intl.formatMessage(messages.part4)} />
+            <br />
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.roomForImprovementHeader} />
+            </Text>
+            <ReactMarkdown
+              children={intl.formatMessage(messages.roomForImprovement)}
+            />
+            <br />
+          </Box>
+          {intl.locale === 'zh' && (
+            <Box>
+              <Text as="h3" fontWeight={600} fontSize={21}>
+                <FormattedMessage {...messages.tc.header} />
+              </Text>
+              <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
+              <br />
+              <Box width="100%" textAlign="center">
+                {intl.locale === 'zh' && (
+                  <Image src={infographicSanitationTC} />
+                )}
+              </Box>
+              <br />
+              <ReactMarkdown children={intl.formatMessage(messages.tc.part2)} />
+              <br />
+              <Box width="100%" textAlign="center">
+                {intl.locale === 'zh' && <Image src={infographicWaterTC} />}
+              </Box>
+              <br />
+              <ReactMarkdown children={intl.formatMessage(messages.tc.part3)} />
+              <br />
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.peopleAtRiskHeader} />
+              </Text>
+              <ReactMarkdown
+                children={intl.formatMessage(messages.tc.peopleAtRisk)}
+              />
+              <br />
+              <ReactMarkdown children={intl.formatMessage(messages.tc.part4)} />
+              <br />
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.roomForImprovementHeader} />
+              </Text>
+              <ReactMarkdown
+                children={intl.formatMessage(messages.tc.roomForImprovement)}
+              />
+              <br />
+            </Box>
           )}
-          <Text as="h3" fontWeight={600} fontSize={21}>
-            <FormattedMessage {...messages.header} />
-          </Text>
-          <ReactMarkdown children={intl.formatMessage(messages.part1)} />
-          <br />
-          <Box width="100%" textAlign="center">
-            <Image src={infographicSanitation} />
-          </Box>
-          <br />
-          <ReactMarkdown children={intl.formatMessage(messages.part2)} />
-          <br />
-          <Box width="100%" textAlign="center">
-            <Image src={infographicWater} />
-          </Box>
-          <br />
-          <ReactMarkdown children={intl.formatMessage(messages.part3)} />
-          <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.peopleAtRiskHeader} />
-          </Text>
-          <ReactMarkdown children={intl.formatMessage(messages.peopleAtRisk)} />
-          <br />
-          <ReactMarkdown children={intl.formatMessage(messages.part4)} />
-          <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.roomForImprovementHeader} />
-          </Text>
-          <ReactMarkdown
-            children={intl.formatMessage(messages.roomForImprovement)}
-          />
-          <br />
-        </Box>
+        </React.Fragment>
       )}
     </ResponsiveContext.Consumer>
   );

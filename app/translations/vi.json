@@ -357,6 +357,7 @@
   "hrmi.components.CountryNarrative.compAssessment.result.a": "tốt hơn mức trung bình",
   "hrmi.components.CountryNarrative.compAssessment.result.b": "tệ hơn mức trung bình",
   "hrmi.components.CountryNarrative.compAssessment.result.c": "close to average",
+  "hrmi.components.CountryNarrative.cpr.outOf10": " / 10",
   "hrmi.components.CountryNarrative.compAssessmentCPR.startHiOECD": "Compared with the small group of {referenceCount} high-income OECD countries we have civil and political rights data for, {needsArticle, select, true {the } false {}}{country} {isPlural, select, true {are} false {is}} performing ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.startNotHiOECD": "Đối với các quyền dân sự và chính trị, chúng tôi không có đủ dữ liệu cho các quốc gia trong khu vực Đông Á và Thái Bình Dương để đối chiếu theo khu vực. Tuy nhiên, so với {referenceCount} quốc gia khác được chúng tôi khảo sát, Việt Nam đang thực hiện  ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": " về các quyền về trao quyền.",
