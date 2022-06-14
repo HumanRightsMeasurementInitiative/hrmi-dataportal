@@ -11,6 +11,9 @@ import { Box } from 'grommet';
 import BehindTheNumbersQol from '../../components/BehindTheNumbersQol';
 import BehindTheNumbersSfs from '../../components/BehindTheNumbersSfs';
 import BehindTheNumbersEmp from '../../components/BehindTheNumbersEmp';
+import BehindTheNumbersQolTC from '../../components/BehindTheNumbersQolTC';
+import BehindTheNumbersSfsTC from '../../components/BehindTheNumbersSfsTC';
+import BehindTheNumbersEmpTC from '../../components/BehindTheNumbersEmpTC';
 
 export function LayerBehindTheNumbers({ layer }) {
   return (
@@ -18,9 +21,27 @@ export function LayerBehindTheNumbers({ layer }) {
       direction="column"
       pad={{ left: 'medium', bottom: 'medium', top: 'small' }}
     >
-      {layer.key === 'esr' && <BehindTheNumbersQol />}
-      {layer.key === 'physint' && <BehindTheNumbersSfs />}
-      {layer.key === 'empowerment' && <BehindTheNumbersEmp />}
+      {layer.key === 'esr' && (
+        <>
+          <BehindTheNumbersQol />
+          <br />
+          <BehindTheNumbersQolTC />
+        </>
+      )}
+      {layer.key === 'physint' && (
+        <>
+          <BehindTheNumbersSfs />
+          <br />
+          <BehindTheNumbersSfsTC />
+        </>
+      )}
+      {layer.key === 'empowerment' && (
+        <>
+          <BehindTheNumbersEmp />
+          <br />
+          <BehindTheNumbersEmpTC />
+        </>
+      )}
 
       {layer.key === 'all' && (
         <>
@@ -29,6 +50,13 @@ export function LayerBehindTheNumbers({ layer }) {
           <BehindTheNumbersSfs />
           <br />
           <BehindTheNumbersEmp />
+          <br />
+          <br />
+          <BehindTheNumbersQolTC />
+          <br />
+          <BehindTheNumbersSfsTC />
+          <br />
+          <BehindTheNumbersEmpTC />
         </>
       )}
     </Box>

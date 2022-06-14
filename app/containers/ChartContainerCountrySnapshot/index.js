@@ -56,6 +56,8 @@ import { getMessageGrammar } from 'utils/narrative';
 import rootMessages from 'messages';
 import messages from './messages';
 
+import TabCountryBehindTheNumbers from '../components/TabCountryBehindTheNumbers';
+
 const Styled = styled.div`
   margin-bottom: 35px;
   @media print {
@@ -529,6 +531,9 @@ export function ChartContainerCountrySnapshot({
           <FormattedMessage {...rootMessages.pdf.explore} />
         </p>
       </AddToPDFWrapper>
+      {countryCode === 'CHN' && (
+        <AddToPDFWrapper>{TabCountryBehindTheNumbers}</AddToPDFWrapper>
+      )}
     </Styled>
   );
 }
