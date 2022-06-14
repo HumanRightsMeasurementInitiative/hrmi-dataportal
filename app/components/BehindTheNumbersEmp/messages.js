@@ -30,4 +30,26 @@ export default defineMessages({
     id: `${scope}.participationHeader`,
     defaultMessage: 'Right to Participate in Government in East Asia',
   },
+  tc: {
+    header: {
+      id: `${scope}.header`,
+      defaultMessage: '',
+    },
+    part1: {
+      id: `${scope}.part1`,
+      defaultMessage: '',
+    },
+    assemblyHeader: {
+      id: `${scope}.assemblyHeader`,
+      defaultMessage: '',
+    },
+    expressionHeader: {
+      id: `${scope}.expressionHeader`,
+      defaultMessage: '',
+    },
+    participationHeader: {
+      id: `${scope}.participationHeader`,
+      defaultMessage: '',
+    },
+  },
 });

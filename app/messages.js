@@ -212,6 +212,10 @@ export default defineMessages({
     },
   },
   tabs: {
+    behindTheNumbers: {
+      id: `${scope}.tabs.behindTheNumbers`,
+      defaultMessage: 'Behind the numbers',
+    },
     snapshot: {
       id: `${scope}.tabs.snapshot`,
       defaultMessage: 'Snapshot',

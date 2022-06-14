@@ -37,6 +37,11 @@ export default defineMessages({
     defaultMessage:
       'While China has room for improvement in all the rights we measure, a further consideration is inequity. There are several groups of people who our experts identified as being at higher risk of missing out. These include:\n\n- People with lower social or economic status\n- People from ethnic minorities, including Tibetans, Uyghurs, Mongolians, and Kazakhs\n- Human rights advocates, protestors, and anyone who criticises the government\n- People living in rural areas, particularly older people, and women\n- Disabled people\n- Detainees\n- People from religious minorities, particularly those practising Falun Gong, Christianity, or Islam\n- Internally displaced people\n',
   },
+  part4: {
+    id: `${scope}.part4`,
+    defaultMessage:
+      'See the people at risk tab on the Rights Tracker for the full lists. The data also show a strong connection between political activity, especially criticism of the government, and lack of enjoyment of economic and social rights.',
+  },
   roomForImprovementHeader: {
     id: `${scope}.roomForImprovementHeader`,
     defaultMessage: 'Room for improvement',
@@ -45,5 +50,43 @@ export default defineMessages({
     id: `${scope}.roomForImprovement`,
     defaultMessage:
       'All our Quality of Life scores show that China could make significant improvements to its people’s lives, even without more resources.\n\nIf China were using its resources more efficiently to ensure its people’s wellbeing, it could achieve 100% for all the rights we measure. Yet, while its best score is close to that mark—98.4% on the right to health — its worst score — 87.2% on the right to housing — is far from that level.\n\nIf China better upheld its rights obligations, and achieved a full 100% score on all the rights we measure, we would see millions more Chinese people living lives of dignity, even without income growth. For example, if China reached 100% we would see the following number of extra people benefitting:\n- If China were to operate at its full potential given its current resources, we would expect an **additional 2.5 million children under five to grow well and not be stunted.**\n- If China were operating at best practice, each year we would expect **an extra 56,900 newborn babies to survive until their fifth birthday.**\n- If China were reaching its full potential, given its income constraints, **an extra 343,300 15-year-olds could eventually reach the age of 60.**\n- If China used its resources efficiently, **an additional 129 million people could have a toilet at home, and an extra 109 million people could have access to water in their homes.**\n- If China were operating at its full potential given its current resources, it could **lift 76 million people out of absolute poverty.**',
+  },
+  tc: {
+    header: {
+      id: `${scope}.header`,
+      defaultMessage: '',
+    },
+    part1: {
+      id: `${scope}.part1`,
+      defaultMessage: '',
+    },
+    part2: {
+      id: `${scope}.part2`,
+      defaultMessage: '',
+    },
+    part3: {
+      id: `${scope}.part3`,
+      defaultMessage: '',
+    },
+    peopleAtRiskHeader: {
+      id: `${scope}.peopleAtRiskHeader`,
+      defaultMessage: '',
+    },
+    peopleAtRisk: {
+      id: `${scope}.peopleAtRisk`,
+      defaultMessage: '',
+    },
+    part4: {
+      id: `${scope}.part4`,
+      defaultMessage: '',
+    },
+    roomForImprovementHeader: {
+      id: `${scope}.roomForImprovementHeader`,
+      defaultMessage: '',
+    },
+    roomForImprovement: {
+      id: `${scope}.roomForImprovement`,
+      defaultMessage: '',
+    },
   },
 });

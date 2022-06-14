@@ -54,35 +54,61 @@ function BehindTheNumbersEmp({ intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box>
-          {intl.locale !== 'en' && intl.locale !== 'zh' && (
-            <Text fontStyle="italic">
-              <FormattedMessage
-                {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
-              />
+        <React.Fragment>
+          <Box>
+            {intl.locale !== 'en' && intl.locale !== 'zh' && (
+              <Text fontStyle="italic">
+                <FormattedMessage
+                  {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
+                />
+              </Text>
+            )}
+            <Text as="h3" fontWeight={600} fontSize={21}>
+              <FormattedMessage {...messages.header} />
             </Text>
+            <ReactMarkdown children={intl.formatMessage(messages.part1)} />
+            <br />
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.assemblyHeader} />
+            </Text>
+            <CprChart metric={metrics['assembly']} selectedYear={2021} />
+            <br />
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.expressionHeader} />
+            </Text>
+            <CprChart metric={metrics['expression']} selectedYear={2021} />
+            <br />
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.participationHeader} />
+            </Text>
+            <CprChart metric={metrics['participation']} selectedYear={2021} />
+            <br />
+          </Box>
+          {intl.locale === 'zh' && (
+            <Box>
+              <Text as="h3" fontWeight={600} fontSize={21}>
+                <FormattedMessage {...messages.tc.header} />
+              </Text>
+              <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
+              <br />
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.assemblyHeader} />
+              </Text>
+              <CprChart metric={metrics['assembly']} selectedYear={2021} />
+              <br />
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.expressionHeader} />
+              </Text>
+              <CprChart metric={metrics['expression']} selectedYear={2021} />
+              <br />
+              <Text as="h4" fontWeight={600} fontSize={18}>
+                <FormattedMessage {...messages.tc.participationHeader} />
+              </Text>
+              <CprChart metric={metrics['participation']} selectedYear={2021} />
+              <br />
+            </Box>
           )}
-          <Text as="h3" fontWeight={600} fontSize={21}>
-            <FormattedMessage {...messages.header} />
-          </Text>
-          <ReactMarkdown children={intl.formatMessage(messages.part1)} />
-          <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.assemblyHeader} />
-          </Text>
-          <CprChart metric={metrics['assembly']} selectedYear={2021} />
-          <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.expressionHeader} />
-          </Text>
-          <CprChart metric={metrics['expression']} selectedYear={2021} />
-          <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.participationHeader} />
-          </Text>
-          <CprChart metric={metrics['participation']} selectedYear={2021} />
-          <br />
-        </Box>
+        </React.Fragment>
       )}
     </ResponsiveContext.Consumer>
   );

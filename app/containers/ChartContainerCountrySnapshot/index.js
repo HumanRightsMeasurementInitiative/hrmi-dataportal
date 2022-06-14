@@ -181,6 +181,12 @@ export function ChartContainerCountrySnapshot({
             showStandard: true,
             showBenchmark: true,
           },
+          behindTheNumbersConfig:
+            countryCode === 'CHN'
+              ? {
+                  key: 'all',
+                }
+              : null,
         }}
         displayInPDF={false}
         countryCode={countryCode}

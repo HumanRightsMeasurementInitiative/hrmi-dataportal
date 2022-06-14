@@ -569,7 +569,7 @@ export function PathCountry({
 
               {
                 key: 'behind-the-numbers',
-                title: 'Behind the numbers',
+                title: intl.formatMessage(rootMessages.tabs.behindTheNumbers),
                 content: props =>
                   countryCode === 'CHN' && (
                     <TabCountryBehindTheNumbers {...props} />
