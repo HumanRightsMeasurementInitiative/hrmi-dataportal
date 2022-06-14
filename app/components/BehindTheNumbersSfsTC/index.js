@@ -17,7 +17,11 @@ import rootMessages from 'messages';
 
 import CprChart from '../CprChart';
 
-function BehindTheNumbersSfs({ intl }) {
+function BehindTheNumbersSfsTC({ intl }) {
+  if (intl.locale !== 'zh') {
+    return null;
+  }
+
   const metrics = {
     arrest: {
       metricType: 'rights',
@@ -75,39 +79,32 @@ function BehindTheNumbersSfs({ intl }) {
     <ResponsiveContext.Consumer>
       {size => (
         <Box>
-          {intl.locale !== 'en' && intl.locale !== 'zh' && (
-            <Text fontStyle="italic">
-              <FormattedMessage
-                {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
-              />
-            </Text>
-          )}
           <Text as="h3" fontWeight={600} fontSize={21}>
-            <FormattedMessage {...messages.header} />
+            <FormattedMessage {...messages.tc.header} />
           </Text>
-          <ReactMarkdown children={intl.formatMessage(messages.part1)} />
+          <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
           <br />
 
           <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.arrestHeader} />
+            <FormattedMessage {...messages.tc.arrestHeader} />
           </Text>
           <CprChart metric={metrics['arrest']} selectedYear={2021} />
           <br />
 
           <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.disappearanceHeader} />
+            <FormattedMessage {...messages.tc.disappearanceHeader} />
           </Text>
           <CprChart metric={metrics['disappearance']} selectedYear={2021} />
           <br />
 
           <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.deathPenaltyHeader} />
+            <FormattedMessage {...messages.tc.deathPenaltyHeader} />
           </Text>
           <CprChart metric={metrics['death-penalty']} selectedYear={2021} />
           <br />
 
           <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.extraJudKillingHeader} />
+            <FormattedMessage {...messages.tc.extraJudKillingHeader} />
           </Text>
           <CprChart metric={metrics['extrajud-killing']} selectedYear={2021} />
           <br />
@@ -123,6 +120,6 @@ function BehindTheNumbersSfs({ intl }) {
   );
 }
 
-BehindTheNumbersSfs.propTypes = {};
+BehindTheNumbersSfsTC.propTypes = {};
 
-export default injectIntl(BehindTheNumbersSfs);
+export default injectIntl(BehindTheNumbersSfsTC);

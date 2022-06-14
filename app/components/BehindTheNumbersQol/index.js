@@ -73,45 +73,6 @@ function BehindTheNumbersQol({ intl }) {
             />
             <br />
           </Box>
-          {intl.locale === 'zh' && (
-            <Box>
-              <Text as="h3" fontWeight={600} fontSize={21}>
-                <FormattedMessage {...messages.tc.header} />
-              </Text>
-              <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
-              <br />
-              <Box width="100%" textAlign="center">
-                {intl.locale === 'zh' && (
-                  <Image src={infographicSanitationTC} />
-                )}
-              </Box>
-              <br />
-              <ReactMarkdown children={intl.formatMessage(messages.tc.part2)} />
-              <br />
-              <Box width="100%" textAlign="center">
-                {intl.locale === 'zh' && <Image src={infographicWaterTC} />}
-              </Box>
-              <br />
-              <ReactMarkdown children={intl.formatMessage(messages.tc.part3)} />
-              <br />
-              <Text as="h4" fontWeight={600} fontSize={18}>
-                <FormattedMessage {...messages.tc.peopleAtRiskHeader} />
-              </Text>
-              <ReactMarkdown
-                children={intl.formatMessage(messages.tc.peopleAtRisk)}
-              />
-              <br />
-              <ReactMarkdown children={intl.formatMessage(messages.tc.part4)} />
-              <br />
-              <Text as="h4" fontWeight={600} fontSize={18}>
-                <FormattedMessage {...messages.tc.roomForImprovementHeader} />
-              </Text>
-              <ReactMarkdown
-                children={intl.formatMessage(messages.tc.roomForImprovement)}
-              />
-              <br />
-            </Box>
-          )}
         </React.Fragment>
       )}
     </ResponsiveContext.Consumer>
