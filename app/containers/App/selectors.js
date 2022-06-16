@@ -706,12 +706,25 @@ export const getESRRightScores = createSelector(
 export const getCPRRightScores = createSelector(
   (state, metric) => metric,
   (state, metric, selectedYear) => selectedYear,
+  (state, metric, selectedYear, noFilter) => noFilter,
   getCPRScores,
   getCountriesFiltered,
+  getCountries,
   getHasChartSettingFilters,
   getCPRYear,
-  (metric, selectedYear, scores, countries, hasChartSettingFilters, year) => {
+  (
+    metric,
+    selectedYear,
+    noFilter,
+    scores,
+    countriesFiltered,
+    countriesUnfiltered,
+    hasChartSettingFilters,
+    year,
+  ) => {
     const right = !!metric && RIGHTS.find(d => d.key === metric);
+
+    const countries = noFilter ? countriesUnfiltered : countriesFiltered;
 
     // const allYearsScores =
     //   scores &&

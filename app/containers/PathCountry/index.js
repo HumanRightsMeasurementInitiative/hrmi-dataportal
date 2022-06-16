@@ -85,6 +85,7 @@ import { lowerCase } from 'utils/string';
 
 import messages from './messages';
 import TabCountryPacific from '../../components/TabCountryPacific';
+import TabCountryBehindTheNumbers from '../../components/TabCountryBehindTheNumbers';
 
 const RemoveFromPDFWrapper = styled.div`
   @media print {
@@ -563,6 +564,15 @@ export function PathCountry({
                       onSetAsideLayer={onSetAsideLayer}
                       onMetricClick={c => onMetricClick(c, 'physint')}
                     />
+                  ),
+              },
+
+              {
+                key: 'behind-the-numbers',
+                title: intl.formatMessage(rootMessages.tabs.behindTheNumbers),
+                content: props =>
+                  countryCode === 'CHN' && (
+                    <TabCountryBehindTheNumbers {...props} />
                   ),
               },
               {
