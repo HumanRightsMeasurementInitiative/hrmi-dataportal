@@ -12,6 +12,7 @@ const ARTICLES_DEFAULT = {
   ko: 0, // TODO: is this right?
   ru: 0, // TODO: is this right?
   ar: 0, // TODO: is this right?
+  hi: 0,
 };
 
 export const needsArticle = (locale, countryGrammar) => {
@@ -230,6 +231,7 @@ const regionsNeedArticle = {
   ko: [],
   ru: [],
   ar: [],
+  hi: [],
 };
 const regionsArePlural = {
   en: [
@@ -256,6 +258,7 @@ const regionsArePlural = {
   ko: [],
   ru: [],
   ar: [],
+  hi: [],
 };
 const regionsAreFeminine = {
   en: [],
@@ -289,6 +292,7 @@ const regionsAreFeminine = {
   ko: [],
   ru: [],
   ar: [],
+  hi: [],
 };
 const isRegionFeminine = (locale, regionCode) =>
   regionsAreFeminine[locale].indexOf(regionCode) > -1;

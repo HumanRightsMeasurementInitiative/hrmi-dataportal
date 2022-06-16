@@ -18,6 +18,7 @@ const viLocaleData = require('react-intl/locale-data/vi');
 const koLocaleData = require('react-intl/locale-data/ko');
 const ruLocaleData = require('react-intl/locale-data/ru');
 const arLocaleData = require('react-intl/locale-data/ar');
+const hiLocaleData = require('react-intl/locale-data/hi');
 
 const enTranslationMessages = require('./translations/en.json');
 const esTranslationMessages = require('./translations/es.json');
@@ -29,10 +30,11 @@ const zhTranslationMessages = require('./translations/zh.json');
 // note we may use temp lang files specific to individual countries
 const viTranslationMessages = require('./translations/vi.json');
 const koTranslationMessages = require('./translations/ko.json');
-//const ruKAZTranslationMessages = require('./translations/ru-KAZ.json');
-const ruKGZTranslationMessages = require('./translations/ru-KGZ.json');
-//const arJORTranslationMessages = require('./translations/ar-JOR.json');
-const arSAUTranslationMessages = require('./translations/ar-SAU.json');
+const ruKAZTranslationMessages = require('./translations/ru-KAZ.json');
+//const ruKGZTranslationMessages = require('./translations/ru-KGZ.json');
+const arJORTranslationMessages = require('./translations/ar-JOR.json');
+//const arSAUTranslationMessages = require('./translations/ar-SAU.json');
+const hiTranslationMessages = require('./translations/hi.json');
 
 addLocaleData(enLocaleData);
 addLocaleData(esLocaleData);
@@ -44,6 +46,7 @@ addLocaleData(viLocaleData);
 addLocaleData(koLocaleData);
 addLocaleData(ruLocaleData);
 addLocaleData(arLocaleData);
+addLocaleData(hiLocaleData);
 
 const DEFAULT_LOCALE = 'en';
 
@@ -58,6 +61,7 @@ const appLocales = [
   'ko',
   'ru',
   'ar',
+  'hi',
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -95,18 +99,21 @@ const translationMessages = {
   ko:
     koTranslationMessages &&
     formatTranslationMessages('ko', koTranslationMessages),
-  // ru:
-  //   ruKAZTranslationMessages &&
-  //   formatTranslationMessages('ru', ruKAZTranslationMessages),
   ru:
-    ruKGZTranslationMessages &&
-    formatTranslationMessages('ru', ruKGZTranslationMessages),
-  // ar:
-  //   arJORTranslationMessages &&
-  //   formatTranslationMessages('ar', arJORTranslationMessages),
+    ruKAZTranslationMessages &&
+    formatTranslationMessages('ru', ruKAZTranslationMessages),
+  // ru:
+  //   ruKGZTranslationMessages &&
+  //   formatTranslationMessages('ru', ruKGZTranslationMessages),
   ar:
-    arSAUTranslationMessages &&
-    formatTranslationMessages('ar', arSAUTranslationMessages),
+    arJORTranslationMessages &&
+    formatTranslationMessages('ar', arJORTranslationMessages),
+  // ar:
+  //   arSAUTranslationMessages &&
+  //   formatTranslationMessages('ar', arSAUTranslationMessages),
+  hi:
+    hiTranslationMessages &&
+    formatTranslationMessages('hi', hiTranslationMessages),
 };
 
 exports.appLocales = appLocales;
