@@ -2986,6 +2986,12 @@ export default defineMessages({
       id: `${scope}.BehindTheNumbers.header`,
       defaultMessage: 'Behind the numbers',
     },
+    tc: {
+      header: {
+        id: `${scope}.BehindTheNumbers.tc.header`,
+        defaultMessage: 'Behind the numbers',
+      },
+    },
     noAnalysisInLanguage: {
       id: `${scope}.BehindTheNumbers.noAnalysisInlanguage`,
       defaultMessage:
