@@ -132,7 +132,7 @@
   "hrmi.rights-xshort.job": "Job",
   "hrmi.countries.IND": "भारत",
   "hrmi.pdf.countryProfiles": "देश प्रोफाइल ",
-  "hrmi.pdf.humanRightsIn": "भारत में मानवाधिकार, {year}",
+  "hrmi.pdf.humanRightsIn": "भारत में मानवाधिकार",
   "hrmi.pdf.noData": "The category {category} includes the following rights:",
   "hrmi.pdf.explore": "इस देश के प्राप्तांकों (स्कोर) के बारे में अधिक विस्तार से जानने के लिए righttracker.org पर जाएँ"
 }
