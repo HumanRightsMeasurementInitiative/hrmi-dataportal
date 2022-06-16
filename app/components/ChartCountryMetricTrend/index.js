@@ -565,6 +565,12 @@ function ChartCountryMetricTrend({
               top: currentBenchmark.key === 'best' ? 'xsmall' : 'medium',
             }}
           >
+            {metric.key === 'food-security' && (
+              <>
+                <FormattedMessage {...rootMessages.app.foodSecurityNote} />
+                <br />
+              </>
+            )}
             <Source />
           </Box>
           {(hasRawOption || groupsActive) && (

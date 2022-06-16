@@ -30,6 +30,10 @@ export default defineMessages({
       id: `${scope}.app.metaDescription`,
       defaultMessage: 'HRMI Rights Tracker - Measuring what matters',
     },
+    foodSecurityNote: {
+      id: `${scope}.app.foodSecurityNote`,
+      defaultMessage: '',
+    },
   },
   hints: {
     noResults: {
@@ -212,6 +216,10 @@ export default defineMessages({
     },
   },
   tabs: {
+    behindTheNumbers: {
+      id: `${scope}.tabs.behindTheNumbers`,
+      defaultMessage: 'Behind the numbers',
+    },
     snapshot: {
       id: `${scope}.tabs.snapshot`,
       defaultMessage: 'Snapshot',
