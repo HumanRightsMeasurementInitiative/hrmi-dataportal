@@ -403,6 +403,8 @@
   "hrmi.labels.chartTools.downloadPDFko": "한국어 PDF 다운로드",
   "hrmi.labels.chartTools.downloadPDFru": "Скачать PDF на русском языке",
   "hrmi.labels.chartTools.downloadPDFar": "تنزيل متنزيل ملف PDF باللغة العربية",
+  "hrmi.labels.chartTools.downloadPDFtc": "下載PDF (繁體)",
+  "hrmi.labels.chartTools.downloadPDFhi": "पीड़ीएफ (PDF) डाउनलोड करें ",
   "hrmi.labels.xAxis.cpr": "Score",
   "hrmi.labels.xAxis.adjusted": "% of income adjusted benchmark achieved",
   "hrmi.labels.xAxis.best": "% of global best benchmark achieved",

@@ -125,30 +125,35 @@ export function ChartTools({
                 gap="xsmall"
                 reverse
               />
-              <br />
-              <Flex width="100%" justifyContent="end" paddingRight="12px">
-                <StyledButton
-                  onClick={() => {
-                    onSetAsideLayer({
-                      type: 'btn',
-                      ...behindTheNumbersConfig,
-                    });
-                  }}
-                  icon={<DocumentText color="dark" size="large" />}
-                  plain
-                  label={
-                    isMinSize(size, 'medium') ? (
-                      <StyledText hasWhiteBG={hasWhiteBG}>
-                        {intl.formatMessage(
-                          rootMessages.labels.chartTools.behindTheNumbers.tc,
-                        )}
-                      </StyledText>
-                    ) : null
-                  }
-                  gap="xsmall"
-                  reverse
-                />
-              </Flex>
+              {intl.locale === 'zh' && (
+                <>
+                  <br />
+                  <Flex width="100%" justifyContent="end" paddingRight="12px">
+                    <StyledButton
+                      onClick={() => {
+                        onSetAsideLayer({
+                          type: 'btn',
+                          ...behindTheNumbersConfig,
+                        });
+                      }}
+                      icon={<DocumentText color="dark" size="large" />}
+                      plain
+                      label={
+                        isMinSize(size, 'medium') ? (
+                          <StyledText hasWhiteBG={hasWhiteBG}>
+                            {intl.formatMessage(
+                              rootMessages.labels.chartTools.behindTheNumbers
+                                .tc,
+                            )}
+                          </StyledText>
+                        ) : null
+                      }
+                      gap="xsmall"
+                      reverse
+                    />
+                  </Flex>
+                </>
+              )}
             </>
           )}
         </Styled>

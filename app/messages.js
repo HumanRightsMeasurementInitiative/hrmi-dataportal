@@ -148,6 +148,14 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
       },
+      downloadPDFtc: {
+        id: `${scope}.labels.chartTools.downloadPDFtc`,
+        defaultMessage: 'Download PDF in Traditional Chinese',
+      },
+      downloadPDFhi: {
+        id: `${scope}.labels.chartTools.downloadPDFhi`,
+        defaultMessage: 'Download PDF in Hindi',
+      },
       downloadPDFvi: {
         id: `${scope}.labels.chartTools.downloadPDFvi`,
         defaultMessage: 'Download PDF in Vietnamese',
