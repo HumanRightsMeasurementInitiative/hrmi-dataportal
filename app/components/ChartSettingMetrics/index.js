@@ -67,7 +67,9 @@ function ChartSettingMetrics({
   const details = getMetricDetails(activeMetric);
 
   const activeMetricKey =
-    activeMetric === 'food-security' ? 'food-security-by-sex' : activeMetric;
+    activeMetric === 'food-security' && chartId !== 'trend'
+      ? 'food-security-by-sex'
+      : activeMetric;
 
   const metricSelector = (
     <ResponsiveContext.Consumer>
