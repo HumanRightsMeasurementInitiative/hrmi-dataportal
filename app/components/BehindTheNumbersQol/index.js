@@ -14,6 +14,12 @@ import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import messages from './messages';
 import rootMessages from 'messages';
+import ButtonTextIcon from 'styled/ButtonTextIcon';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+
+import { navigate } from 'containers/App/actions';
 
 import infographicSanitation from 'images/People-Infographics-China-Sanitation.png';
 import infographicWater from 'images/People-Infographics-China-Water.png';
@@ -29,7 +35,7 @@ const BreakBefore = styled(Box)`
   }
 `;
 
-function BehindTheNumbersQol({ intl }) {
+function BehindTheNumbersQol({ nav, intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -69,7 +75,11 @@ function BehindTheNumbersQol({ intl }) {
               children={intl.formatMessage(messages.peopleAtRisk)}
             />
             <br />
-            <ReactMarkdown children={intl.formatMessage(messages.part4)} />
+            <ButtonTextIcon
+              onClick={() => nav(`country/CHN?tab=atrisk`)}
+              label={intl.formatMessage(messages.part4)}
+              secondary
+            />
             <br />
             <BreakBefore shouldBreak={true} />
             <Text as="h4" fontWeight={600} fontSize={18}>
@@ -88,4 +98,24 @@ function BehindTheNumbersQol({ intl }) {
 
 BehindTheNumbersQol.propTypes = {};
 
-export default injectIntl(BehindTheNumbersQol);
+const mapStateToProps = createStructuredSelector({});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    // navigate to location
+    nav: location => {
+      dispatch(
+        navigate(location, {
+          keepTab: false,
+        }),
+      );
+    },
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(injectIntl(BehindTheNumbersQol));

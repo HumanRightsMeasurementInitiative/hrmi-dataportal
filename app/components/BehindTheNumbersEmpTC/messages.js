@@ -32,23 +32,23 @@ export default defineMessages({
   },
   tc: {
     header: {
-      id: `${scope}.header`,
+      id: `${scope}.tc.header`,
       defaultMessage: '',
     },
     part1: {
-      id: `${scope}.part1`,
+      id: `${scope}.tc.part1`,
       defaultMessage: '',
     },
     assemblyHeader: {
-      id: `${scope}.assemblyHeader`,
+      id: `${scope}.tc.assemblyHeader`,
       defaultMessage: '',
     },
     expressionHeader: {
-      id: `${scope}.expressionHeader`,
+      id: `${scope}.tc.expressionHeader`,
       defaultMessage: '',
     },
     participationHeader: {
-      id: `${scope}.participationHeader`,
+      id: `${scope}.tc.participationHeader`,
       defaultMessage: '',
     },
   },
