@@ -139,6 +139,10 @@ export default defineMessages({
       behindTheNumbers: {
         id: `${scope}.labels.chartTools.behindTheNumbers`,
         defaultMessage: 'Behind the numbers',
+        tc: {
+          id: `${scope}.labels.chartTools.behindTheNumbers.tc`,
+          defaultMessage: 'Behind the numbers',
+        },
       },
       downloadPDF: {
         id: `${scope}.labels.chartTools.downloadPDF`,

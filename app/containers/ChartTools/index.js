@@ -12,6 +12,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { ResponsiveContext, Button, Text } from 'grommet';
 import { CircleQuestion, Performance, DocumentText } from 'grommet-icons';
+import { Flex } from '@chakra-ui/react';
 
 import { setAsideLayer } from 'containers/App/actions';
 
@@ -102,27 +103,53 @@ export function ChartTools({
             />
           )}
           {behindTheNumbersConfig && (
-            <StyledButton
-              onClick={() => {
-                onSetAsideLayer({
-                  type: 'btn',
-                  ...behindTheNumbersConfig,
-                });
-              }}
-              icon={<DocumentText color="dark" size="large" />}
-              plain
-              label={
-                isMinSize(size, 'medium') ? (
-                  <StyledText hasWhiteBG={hasWhiteBG}>
-                    {intl.formatMessage(
-                      rootMessages.labels.chartTools.behindTheNumbers,
-                    )}
-                  </StyledText>
-                ) : null
-              }
-              gap="xsmall"
-              reverse
-            />
+            <>
+              <StyledButton
+                onClick={() => {
+                  onSetAsideLayer({
+                    type: 'btn',
+                    ...behindTheNumbersConfig,
+                  });
+                }}
+                icon={<DocumentText color="dark" size="large" />}
+                plain
+                label={
+                  isMinSize(size, 'medium') ? (
+                    <StyledText hasWhiteBG={hasWhiteBG}>
+                      {intl.formatMessage(
+                        rootMessages.labels.chartTools.behindTheNumbers,
+                      )}
+                    </StyledText>
+                  ) : null
+                }
+                gap="xsmall"
+                reverse
+              />
+              <br />
+              <Flex width="100%" justifyContent="end" paddingRight="12px">
+                <StyledButton
+                  onClick={() => {
+                    onSetAsideLayer({
+                      type: 'btn',
+                      ...behindTheNumbersConfig,
+                    });
+                  }}
+                  icon={<DocumentText color="dark" size="large" />}
+                  plain
+                  label={
+                    isMinSize(size, 'medium') ? (
+                      <StyledText hasWhiteBG={hasWhiteBG}>
+                        {intl.formatMessage(
+                          rootMessages.labels.chartTools.behindTheNumbers.tc,
+                        )}
+                      </StyledText>
+                    ) : null
+                  }
+                  gap="xsmall"
+                  reverse
+                />
+              </Flex>
+            </>
           )}
         </Styled>
       )}
