@@ -46,7 +46,7 @@ function TabCountryBehindTheNumbers({ intl }) {
                 window.location.search
               }#tc`}
             >
-              <Text as="h2" fontWeight={600} color="secondary">
+              <Text as="h2" fontWeight={600} color="purple">
                 <FormattedMessage
                   {...rootMessages.BehindTheNumbers.tc.header}
                 />
@@ -70,7 +70,7 @@ function TabCountryBehindTheNumbers({ intl }) {
                 window.location.search
               }#sc`}
             >
-              <Text as="h2" fontWeight={600} color="secondary">
+              <Text as="h2" fontWeight={600} color="purple">
                 <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
               </Text>
             </a>
