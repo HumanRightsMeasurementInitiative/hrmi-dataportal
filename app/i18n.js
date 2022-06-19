@@ -31,9 +31,9 @@ const zhTranslationMessages = require('./translations/zh.json');
 const viTranslationMessages = require('./translations/vi.json');
 const koTranslationMessages = require('./translations/ko.json');
 const ruKAZTranslationMessages = require('./translations/ru-KAZ.json');
-//const ruKGZTranslationMessages = require('./translations/ru-KGZ.json');
+const ruKGZTranslationMessages = require('./translations/ru-KGZ.json');
 const arJORTranslationMessages = require('./translations/ar-JOR.json');
-//const arSAUTranslationMessages = require('./translations/ar-SAU.json');
+const arSAUTranslationMessages = require('./translations/ar-SAU.json');
 const hiTranslationMessages = require('./translations/hi.json');
 
 addLocaleData(enLocaleData);
@@ -105,12 +105,12 @@ const translationMessages = {
   // ru:
   //   ruKGZTranslationMessages &&
   //   formatTranslationMessages('ru', ruKGZTranslationMessages),
-  ar:
-    arJORTranslationMessages &&
-    formatTranslationMessages('ar', arJORTranslationMessages),
   // ar:
-  //   arSAUTranslationMessages &&
-  //   formatTranslationMessages('ar', arSAUTranslationMessages),
+  //   arJORTranslationMessages &&
+  //   formatTranslationMessages('ar', arJORTranslationMessages),
+  ar:
+    arSAUTranslationMessages &&
+    formatTranslationMessages('ar', arSAUTranslationMessages),
   hi:
     hiTranslationMessages &&
     formatTranslationMessages('hi', hiTranslationMessages),

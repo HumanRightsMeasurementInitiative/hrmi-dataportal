@@ -112,51 +112,51 @@ async function printPDF({
     //     as
     //   })
     // }
-    if (country.code === 'VNM') {
-      const as = country.income === '1' ? 'hi' : 'core'
-      cluster.queue({
-        lang: 'vi',
-        code: country.code,
-        langFile: langFileMap['vi'],
-        as
-      })
-    }
-    if (country.code === 'KOR') {
-      const as = country.income === '1' ? 'hi' : 'core'
-      cluster.queue({
-        lang: 'ko',
-        code: country.code,
-        langFile: langFileMap['ko'],
-        as
-      })
-    }
-    if (country.code === 'KAZ') {
-      const as = country.income === '1' ? 'hi' : 'core'
-      cluster.queue({
-        lang: 'ru',
-        code: country.code,
-        langFile: langFileMap['ru'],
-        as
-      })
-    }
-    if (country.code === 'JOR') {
-      const as = country.income === '1' ? 'hi' : 'core'
-      cluster.queue({
-        lang: 'ar',
-        code: country.code,
-        langFile: langFileMap['ar'],
-        as
-      })
-    }
-    if (country.code === 'IND') {
-      const as = country.income === '1' ? 'hi' : 'core'
-      cluster.queue({
-        lang: 'hi',
-        code: country.code,
-        langFile: langFileMap['hi'],
-        as
-      })
-    }
+    // if (country.code === 'VNM') {
+    //   const as = country.income === '1' ? 'hi' : 'core'
+    //   cluster.queue({
+    //     lang: 'vi',
+    //     code: country.code,
+    //     langFile: langFileMap['vi'],
+    //     as
+    //   })
+    // }
+    // if (country.code === 'KOR') {
+    //   const as = country.income === '1' ? 'hi' : 'core'
+    //   cluster.queue({
+    //     lang: 'ko',
+    //     code: country.code,
+    //     langFile: langFileMap['ko'],
+    //     as
+    //   })
+    // }
+    // if (country.code === 'KAZ') {
+    //   const as = country.income === '1' ? 'hi' : 'core'
+    //   cluster.queue({
+    //     lang: 'ru',
+    //     code: country.code,
+    //     langFile: langFileMap['ru'],
+    //     as
+    //   })
+    // }
+    // if (country.code === 'SAU') {
+    //   const as = country.income === '1' ? 'hi' : 'core'
+    //   cluster.queue({
+    //     lang: 'ar',
+    //     code: country.code,
+    //     langFile: langFileMap['ar'],
+    //     as
+    //   })
+    // }
+    // if (country.code === 'IND') {
+    //   const as = country.income === '1' ? 'hi' : 'core'
+    //   cluster.queue({
+    //     lang: 'hi',
+    //     code: country.code,
+    //     langFile: langFileMap['hi'],
+    //     as
+    //   })
+    // }
     if (country.code === 'CHN') {
       const as = country.income === '1' ? 'hi' : 'core'
       cluster.queue({
