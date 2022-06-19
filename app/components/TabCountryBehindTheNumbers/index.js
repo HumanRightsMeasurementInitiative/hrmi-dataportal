@@ -37,25 +37,22 @@ function TabCountryBehindTheNumbers({ intl }) {
           <br />
           <br />
           <BreakBefore shouldBreak={true} />
+          <Text as="h2" fontWeight={600}>
+            <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
+          </Text>
           {intl.locale === 'zh' && (
             <a
               href={`${window.location.origin}${window.location.pathname}${
                 window.location.search
               }#tc`}
-              style={{ textDecoration: 'none' }}
             >
-              <Text as="h2" fontWeight={600} color="secondary">
-                (
+              <Text as="h2" fontWeight={600} color="purple">
                 <FormattedMessage
                   {...rootMessages.BehindTheNumbers.tc.header}
                 />
-                )
               </Text>
             </a>
           )}
-          <Text as="h2" fontWeight={600}>
-            <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
-          </Text>
           <BehindTheNumbersQol />
           <br />
           <BreakBefore shouldBreak={true} />
@@ -72,10 +69,9 @@ function TabCountryBehindTheNumbers({ intl }) {
               href={`${window.location.origin}${window.location.pathname}${
                 window.location.search
               }#sc`}
-              style={{ textDecoration: 'none' }}
             >
-              <Text as="h2" fontWeight={600} color="secondary">
-                (<FormattedMessage {...rootMessages.BehindTheNumbers.header} />)
+              <Text as="h2" fontWeight={600} color="purple">
+                <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
               </Text>
             </a>
           )}
