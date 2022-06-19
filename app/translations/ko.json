@@ -133,5 +133,6 @@
   "hrmi.pdf.countryProfiles": "국가 프로필",
   "hrmi.pdf.humanRightsIn": "인권",
   "hrmi.pdf.noData": "The category {category} includes the following rights:",
-  "hrmi.pdf.explore": "이 국가의 점수를 더 자세히 알아 보려면 rightstracker.org로 이동하십시오."
+  "hrmi.pdf.explore": "이 국가의 점수를 더 자세히 알아 보려면 rightstracker.org로 이동하십시오.",
+  "hrmi.components.CountryNarrative.cpr.outOf10": " / 10"
 }
