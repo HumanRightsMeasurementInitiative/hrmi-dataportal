@@ -18,6 +18,7 @@ import ButtonTextIcon from 'styled/ButtonTextIcon';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { navigate } from 'containers/App/actions';
 
 import infographicSanitationTC from 'images/People-Infographics-China-Sanitation-TC.png';
 import infographicWaterTC from 'images/People-Infographics-China-Water-TC.png';
