@@ -100,24 +100,33 @@ function BehindTheNumbersSfsTC({ intl }) {
           <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
           <br />
           <BreakBefore shouldBreak={true} />
-          <a href={`/${intl.locale}/metric/arrest?subregion=east-asia`}>
-            <Text as="h4" fontWeight={600} fontSize={18}>
+          <a
+            href={`/${intl.locale}/metric/arrest?subregion=east-asia`}
+            style={{ textDecorationColor: '#551A8B' }}
+          >
+            <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
               <FormattedMessage {...messages.tc.arrestHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['arrest']} selectedYear={2021} />
           <br />
 
-          <a href={`/${intl.locale}/metric/disappearance?subregion=east-asia`}>
-            <Text as="h4" fontWeight={600} fontSize={18}>
+          <a
+            href={`/${intl.locale}/metric/disappearance?subregion=east-asia`}
+            style={{ textDecorationColor: '#551A8B' }}
+          >
+            <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
               <FormattedMessage {...messages.tc.disappearanceHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['disappearance']} selectedYear={2021} />
           <br />
 
-          <a href={`/${intl.locale}/metric/death-penalty?subregion=east-asia`}>
-            <Text as="h4" fontWeight={600} fontSize={18}>
+          <a
+            href={`/${intl.locale}/metric/death-penalty?subregion=east-asia`}
+            style={{ textDecorationColor: '#551A8B' }}
+          >
+            <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
               <FormattedMessage {...messages.tc.deathPenaltyHeader} />
             </Text>
           </a>
@@ -127,16 +136,20 @@ function BehindTheNumbersSfsTC({ intl }) {
           <BreakBefore shouldBreak={true} />
           <a
             href={`/${intl.locale}/metric/extrajud-killing?subregion=east-asia`}
+            style={{ textDecorationColor: '#551A8B' }}
           >
-            <Text as="h4" fontWeight={600} fontSize={18}>
+            <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
               <FormattedMessage {...messages.tc.extraJudKillingHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['extrajud-killing']} selectedYear={2021} />
           <br />
 
-          <a href={`/${intl.locale}/metric/torture?subregion=east-asia`}>
-            <Text as="h4" fontWeight={600} fontSize={18}>
+          <a
+            href={`/${intl.locale}/metric/torture?subregion=east-asia`}
+            style={{ textDecorationColor: '#551A8B' }}
+          >
+            <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
               <FormattedMessage {...messages.tc.tortureHeader} />
             </Text>
           </a>

@@ -80,22 +80,46 @@ function BehindTheNumbersEmpTC({ intl }) {
           <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
           <br />
           <BreakBefore shouldBreak={true} />
-          <a href={`/${intl.locale}/metric/assembly?subregion=east-asia`}>
-            <Text as="h4" fontWeight={600} fontSize={18}>
+          <a
+            href={`/${intl.locale}/metric/assembly?subregion=east-asia`}
+            style={{ textDecorationColor: '#262262' }}
+          >
+            <Text
+              as="h4"
+              fontWeight={600}
+              fontSize={18}
+              color="empowermentDark"
+            >
               <FormattedMessage {...messages.tc.assemblyHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['assembly']} selectedYear={2021} />
           <br />
-          <a href={`/${intl.locale}/metric/expression?subregion=east-asia`}>
-            <Text as="h4" fontWeight={600} fontSize={18}>
+          <a
+            href={`/${intl.locale}/metric/expression?subregion=east-asia`}
+            style={{ textDecorationColor: '#262262' }}
+          >
+            <Text
+              as="h4"
+              fontWeight={600}
+              fontSize={18}
+              color="empowermentDark"
+            >
               <FormattedMessage {...messages.tc.expressionHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['expression']} selectedYear={2021} />
           <br />
-          <a href={`/${intl.locale}/metric/participation?subregion=east-asia`}>
-            <Text as="h4" fontWeight={600} fontSize={18}>
+          <a
+            href={`/${intl.locale}/metric/participation?subregion=east-asia`}
+            style={{ textDecorationColor: '#262262' }}
+          >
+            <Text
+              as="h4"
+              fontWeight={600}
+              fontSize={18}
+              color="empowermentDark"
+            >
               <FormattedMessage {...messages.tc.participationHeader} />
             </Text>
           </a>
