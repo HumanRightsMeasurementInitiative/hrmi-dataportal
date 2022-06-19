@@ -33,12 +33,26 @@ function TabCountryBehindTheNumbers({ intl }) {
     <ResponsiveContext.Consumer>
       {size => (
         <>
+          <a name="sc" />
           <br />
           <br />
           <BreakBefore shouldBreak={true} />
           <Text as="h2" fontWeight={600}>
             <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
           </Text>
+          {intl.locale === 'zh' && (
+            <a
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#tc`}
+            >
+              <Text as="h2" fontWeight={600} color="purple">
+                <FormattedMessage
+                  {...rootMessages.BehindTheNumbers.tc.header}
+                />
+              </Text>
+            </a>
+          )}
           <BehindTheNumbersQol />
           <br />
           <BreakBefore shouldBreak={true} />
@@ -46,14 +60,24 @@ function TabCountryBehindTheNumbers({ intl }) {
           <br />
           <BreakBefore shouldBreak={true} />
           <BehindTheNumbersEmp />
+          <a name="tc" />
           <br />
           <br />
           <BreakBefore shouldBreak={true} />
           {intl.locale === 'zh' && (
-            <Text as="h2" fontWeight={600}>
-              <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
-            </Text>
+            <a
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#sc`}
+            >
+              <Text as="h2" fontWeight={600} color="purple">
+                <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
+              </Text>
+            </a>
           )}
+          <Text as="h2" fontWeight={600}>
+            <FormattedMessage {...rootMessages.BehindTheNumbers.tc.header} />
+          </Text>
           <BehindTheNumbersQolTC />
           <br />
           <BreakBefore shouldBreak={true} />

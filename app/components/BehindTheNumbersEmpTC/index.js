@@ -67,25 +67,62 @@ function BehindTheNumbersEmpTC({ intl }) {
     <ResponsiveContext.Consumer>
       {size => (
         <Box>
+          {intl.locale !== 'en' && intl.locale !== 'zh' && (
+            <Text fontStyle="italic">
+              <FormattedMessage
+                {...rootMessages.BehindTheNumbers.noAnalysisInLanguage}
+              />
+            </Text>
+          )}
           <Text as="h3" fontWeight={600} fontSize={21}>
             <FormattedMessage {...messages.tc.header} />
           </Text>
           <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
           <br />
           <BreakBefore shouldBreak={true} />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.tc.assemblyHeader} />
-          </Text>
+          <a
+            href={`/${intl.locale}/metric/assembly?subregion=east-asia`}
+            style={{ textDecorationColor: '#262262' }}
+          >
+            <Text
+              as="h4"
+              fontWeight={600}
+              fontSize={18}
+              color="empowermentDark"
+            >
+              <FormattedMessage {...messages.tc.assemblyHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['assembly']} selectedYear={2021} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.tc.expressionHeader} />
-          </Text>
+          <a
+            href={`/${intl.locale}/metric/expression?subregion=east-asia`}
+            style={{ textDecorationColor: '#262262' }}
+          >
+            <Text
+              as="h4"
+              fontWeight={600}
+              fontSize={18}
+              color="empowermentDark"
+            >
+              <FormattedMessage {...messages.tc.expressionHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['expression']} selectedYear={2021} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.tc.participationHeader} />
-          </Text>
+          <a
+            href={`/${intl.locale}/metric/participation?subregion=east-asia`}
+            style={{ textDecorationColor: '#262262' }}
+          >
+            <Text
+              as="h4"
+              fontWeight={600}
+              fontSize={18}
+              color="empowermentDark"
+            >
+              <FormattedMessage {...messages.tc.participationHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['participation']} selectedYear={2021} />
           <br />
         </Box>

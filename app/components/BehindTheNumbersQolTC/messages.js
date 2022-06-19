@@ -53,39 +53,39 @@ export default defineMessages({
   },
   tc: {
     header: {
-      id: `${scope}.header`,
+      id: `${scope}.tc.header`,
       defaultMessage: '',
     },
     part1: {
-      id: `${scope}.part1`,
+      id: `${scope}.tc.part1`,
       defaultMessage: '',
     },
     part2: {
-      id: `${scope}.part2`,
+      id: `${scope}.tc.part2`,
       defaultMessage: '',
     },
     part3: {
-      id: `${scope}.part3`,
+      id: `${scope}.tc.part3`,
       defaultMessage: '',
     },
     peopleAtRiskHeader: {
-      id: `${scope}.peopleAtRiskHeader`,
+      id: `${scope}.tc.peopleAtRiskHeader`,
       defaultMessage: '',
     },
     peopleAtRisk: {
-      id: `${scope}.peopleAtRisk`,
+      id: `${scope}.tc.peopleAtRisk`,
       defaultMessage: '',
     },
     part4: {
-      id: `${scope}.part4`,
+      id: `${scope}.tc.part4`,
       defaultMessage: '',
     },
     roomForImprovementHeader: {
-      id: `${scope}.roomForImprovementHeader`,
+      id: `${scope}.tc.roomForImprovementHeader`,
       defaultMessage: '',
     },
     roomForImprovement: {
-      id: `${scope}.roomForImprovement`,
+      id: `${scope}.tc.roomForImprovement`,
       defaultMessage: '',
     },
   },

@@ -43,31 +43,31 @@ export default defineMessages({
   },
   tc: {
     header: {
-      id: `${scope}.header`,
+      id: `${scope}.tc.header`,
       defaultMessage: '',
     },
     part1: {
-      id: `${scope}.part1`,
+      id: `${scope}.tc.part1`,
       defaultMessage: '',
     },
     arrestHeader: {
-      id: `${scope}.arrestHeader`,
+      id: `${scope}.tc.arrestHeader`,
       defaultMessage: '',
     },
     disappearanceHeader: {
-      id: `${scope}.disappearanceHeader`,
+      id: `${scope}.tc.disappearanceHeader`,
       defaultMessage: '',
     },
     deathPenaltyHeader: {
-      id: `${scope}.deathPenaltyHeader`,
+      id: `${scope}.tc.deathPenaltyHeader`,
       defaultMessage: '',
     },
     extraJudKillingHeader: {
-      id: `${scope}.extraJudKillingHeader`,
+      id: `${scope}.tc.extraJudKillingHeader`,
       defaultMessage: '',
     },
     tortureHeader: {
-      id: `${scope}.tortureHeader`,
+      id: `${scope}.tc.tortureHeader`,
       defaultMessage: '',
     },
   },

@@ -14,6 +14,11 @@ import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import messages from './messages';
 import rootMessages from 'messages';
+import ButtonTextIcon from 'styled/ButtonTextIcon';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+import { navigate } from 'containers/App/actions';
 
 import infographicSanitationTC from 'images/People-Infographics-China-Sanitation-TC.png';
 import infographicWaterTC from 'images/People-Infographics-China-Water-TC.png';
@@ -26,7 +31,7 @@ const BreakBefore = styled(Box)`
   }
 `;
 
-function BehindTheNumbersQolTC({ intl }) {
+function BehindTheNumbersQolTC({ nav, intl }) {
   if (intl.locale !== 'zh') {
     return null;
   }
@@ -59,7 +64,11 @@ function BehindTheNumbersQolTC({ intl }) {
             children={intl.formatMessage(messages.tc.peopleAtRisk)}
           />
           <br />
-          <ReactMarkdown children={intl.formatMessage(messages.tc.part4)} />
+          <ButtonTextIcon
+            onClick={() => nav(`country/CHN?tab=atrisk`)}
+            label={intl.formatMessage(messages.tc.part4)}
+            secondary
+          />
           <br />
           <BreakBefore shouldBreak={true} />
           <Text as="h4" fontWeight={600} fontSize={18}>
@@ -77,4 +86,24 @@ function BehindTheNumbersQolTC({ intl }) {
 
 BehindTheNumbersQolTC.propTypes = {};
 
-export default injectIntl(BehindTheNumbersQolTC);
+const mapStateToProps = createStructuredSelector({});
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    // navigate to location
+    nav: location => {
+      dispatch(
+        navigate(location, {
+          keepTab: false,
+        }),
+      );
+    },
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(withConnect)(injectIntl(BehindTheNumbersQolTC));
