@@ -144,6 +144,24 @@ export function ChartHeader({
         .then(setSpecialPdfURL)
         .catch(err => console.log(err));
     }
+    if (
+      countryCode === 'CHN' ||
+      countryCode === 'TWN' ||
+      countryCode === 'HKG'
+    ) {
+      const ref = storage.ref(`${pdfFolder}/tc-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (countryCode === 'IND') {
+      const ref = storage.ref(`${pdfFolder}/hi-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
   }, [locale, countryCode]);
 
   return (
@@ -242,6 +260,26 @@ export function ChartHeader({
                           </DownloadButton>
                         )
                       )}
+                      {countryCode === 'IND' && !specialPdfURL ? (
+                        <Spinner />
+                      ) : (
+                        countryCode === 'IND' && (
+                          <DownloadButton
+                            as="a"
+                            href={specialPdfURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <TextWrap>
+                              <FormattedMessage
+                                {...rootMessages.labels.chartTools
+                                  .downloadPDFhi}
+                              />
+                            </TextWrap>
+                            <StyledShare />
+                          </DownloadButton>
+                        )
+                      )}
                       {countryCode === 'KOR' && !specialPdfURL ? (
                         <Spinner />
                       ) : (
@@ -298,6 +336,31 @@ export function ChartHeader({
                               <FormattedMessage
                                 {...rootMessages.labels.chartTools
                                   .downloadPDFar}
+                              />
+                            </TextWrap>
+                            <StyledShare />
+                          </DownloadButton>
+                        )
+                      )}
+                      {(countryCode === 'CHN' ||
+                        countryCode === 'TWN' ||
+                        countryCode === 'HKG') &&
+                      !specialPdfURL ? (
+                        <Spinner />
+                      ) : (
+                        (countryCode === 'CHN' ||
+                          countryCode === 'TWN' ||
+                          countryCode === 'HKG') && (
+                          <DownloadButton
+                            as="a"
+                            href={specialPdfURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <TextWrap>
+                              <FormattedMessage
+                                {...rootMessages.labels.chartTools
+                                  .downloadPDFtc}
                               />
                             </TextWrap>
                             <StyledShare />

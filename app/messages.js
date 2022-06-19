@@ -139,10 +139,22 @@ export default defineMessages({
       behindTheNumbers: {
         id: `${scope}.labels.chartTools.behindTheNumbers`,
         defaultMessage: 'Behind the numbers',
+        tc: {
+          id: `${scope}.labels.chartTools.behindTheNumbers.tc`,
+          defaultMessage: 'Behind the numbers',
+        },
       },
       downloadPDF: {
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
+      },
+      downloadPDFtc: {
+        id: `${scope}.labels.chartTools.downloadPDFtc`,
+        defaultMessage: 'Download PDF in Traditional Chinese',
+      },
+      downloadPDFhi: {
+        id: `${scope}.labels.chartTools.downloadPDFhi`,
+        defaultMessage: 'Download PDF in Hindi',
       },
       downloadPDFvi: {
         id: `${scope}.labels.chartTools.downloadPDFvi`,
