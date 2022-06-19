@@ -76,19 +76,25 @@ function BehindTheNumbersEmp({ intl }) {
           <ReactMarkdown children={intl.formatMessage(messages.part1)} />
           <br />
           <BreakBefore shouldBreak={true} />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.assemblyHeader} />
-          </Text>
+          <a href={`/${intl.locale}/metric/assembly?subregion=east-asia`}>
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.assemblyHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['assembly']} selectedYear={2021} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.expressionHeader} />
-          </Text>
+          <a href={`/${intl.locale}/metric/expression?subregion=east-asia`}>
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.expressionHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['expression']} selectedYear={2021} />
           <br />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.participationHeader} />
-          </Text>
+          <a href={`/${intl.locale}/metric/participation?subregion=east-asia`}>
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.participationHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['participation']} selectedYear={2021} />
           <br />
         </Box>

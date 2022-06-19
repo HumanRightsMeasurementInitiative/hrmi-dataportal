@@ -96,34 +96,46 @@ function BehindTheNumbersSfs({ intl }) {
           <ReactMarkdown children={intl.formatMessage(messages.part1)} />
           <br />
           <BreakBefore shouldBreak={true} />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.arrestHeader} />
-          </Text>
+          <a href={`/${intl.locale}/metric/arrest?subregion=east-asia`}>
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.arrestHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['arrest']} selectedYear={2021} />
           <br />
 
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.disappearanceHeader} />
-          </Text>
+          <a href={`/${intl.locale}/metric/disappearance?subregion=east-asia`}>
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.disappearanceHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['disappearance']} selectedYear={2021} />
           <br />
 
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.deathPenaltyHeader} />
-          </Text>
+          <a href={`/${intl.locale}/metric/death-penalty?subregion=east-asia`}>
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.deathPenaltyHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['death-penalty']} selectedYear={2021} />
           <br />
 
           <BreakBefore shouldBreak={true} />
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.extraJudKillingHeader} />
-          </Text>
+          <a
+            href={`/${intl.locale}/metric/extrajud-killing?subregion=east-asia`}
+          >
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.extraJudKillingHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['extrajud-killing']} selectedYear={2021} />
           <br />
 
-          <Text as="h4" fontWeight={600} fontSize={18}>
-            <FormattedMessage {...messages.tc.tortureHeader} />
-          </Text>
+          <a href={`/${intl.locale}/metric/torture?subregion=east-asia`}>
+            <Text as="h4" fontWeight={600} fontSize={18}>
+              <FormattedMessage {...messages.tortureHeader} />
+            </Text>
+          </a>
           <CprChart metric={metrics['torture']} selectedYear={2021} />
           <br />
         </Box>
