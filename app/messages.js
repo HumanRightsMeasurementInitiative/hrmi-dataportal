@@ -3001,7 +3001,7 @@ export default defineMessages({
     tc: {
       header: {
         id: `${scope}.BehindTheNumbers.tc.header`,
-        defaultMessage: 'Behind the numbers',
+        defaultMessage: ' ',
       },
     },
     noAnalysisInLanguage: {
