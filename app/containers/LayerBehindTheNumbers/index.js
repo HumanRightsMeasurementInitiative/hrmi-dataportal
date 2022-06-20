@@ -24,21 +24,35 @@ export function LayerBehindTheNumbers({ layer }) {
       {layer.key === 'esr' && (
         <>
           <BehindTheNumbersQol />
-          <br />
+        </>
+      )}
+
+      {layer.key === 'esr-tc' && (
+        <>
           <BehindTheNumbersQolTC />
         </>
       )}
+
       {layer.key === 'physint' && (
         <>
           <BehindTheNumbersSfs />
-          <br />
+        </>
+      )}
+
+      {layer.key === 'physint-tc' && (
+        <>
           <BehindTheNumbersSfsTC />
         </>
       )}
+
       {layer.key === 'empowerment' && (
         <>
           <BehindTheNumbersEmp />
-          <br />
+        </>
+      )}
+
+      {layer.key === 'empowerment-tc' && (
+        <>
           <BehindTheNumbersEmpTC />
         </>
       )}
@@ -50,8 +64,11 @@ export function LayerBehindTheNumbers({ layer }) {
           <BehindTheNumbersSfs />
           <br />
           <BehindTheNumbersEmp />
-          <br />
-          <br />
+        </>
+      )}
+
+      {layer.key === 'all-tc' && (
+        <>
           <BehindTheNumbersQolTC />
           <br />
           <BehindTheNumbersSfsTC />
