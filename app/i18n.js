@@ -35,6 +35,9 @@ const ruKGZTranslationMessages = require('./translations/ru-KGZ.json');
 const arJORTranslationMessages = require('./translations/ar-JOR.json');
 const arSAUTranslationMessages = require('./translations/ar-SAU.json');
 const hiTranslationMessages = require('./translations/hi.json');
+const zhTCCHNTranslationMessages = require('./translations/zhTC-CHN.json');
+const zhTCHKGTranslationMessages = require('./translations/zhTC-HKG.json');
+const zhTCTWNTranslationMessages = require('./translations/zhTC-TWN.json');
 
 addLocaleData(enLocaleData);
 addLocaleData(esLocaleData);
@@ -90,9 +93,6 @@ const translationMessages = {
   fr:
     frTranslationMessages &&
     formatTranslationMessages('fr', frTranslationMessages),
-  zh:
-    zhTranslationMessages &&
-    formatTranslationMessages('zh', zhTranslationMessages),
   vi:
     viTranslationMessages &&
     formatTranslationMessages('vi', viTranslationMessages),
@@ -114,6 +114,18 @@ const translationMessages = {
   hi:
     hiTranslationMessages &&
     formatTranslationMessages('hi', hiTranslationMessages),
+  // zh:
+  //   zhTranslationMessages &&
+  //     formatTranslationMessages('zh', zhTranslationMessages),
+  // zh:
+  //   zhTCCHNTranslationMessages &&
+  //   formatTranslationMessages('zh', zhTCCHNTranslationMessages),
+  // zh:
+  //   zhTCHKGTranslationMessages &&
+  //   formatTranslationMessages('zh', zhTCHKGTranslationMessages),
+  zh:
+    zhTCTWNTranslationMessages &&
+    formatTranslationMessages('zh', zhTCTWNTranslationMessages),
 };
 
 exports.appLocales = appLocales;

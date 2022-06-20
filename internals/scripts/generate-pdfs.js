@@ -24,6 +24,9 @@ const ruKGZJSON = require('../../app/translations/ru-KGZ.json')
 const arJORJSON = require('../../app/translations/ar-JOR.json')
 const arSAUJSON = require('../../app/translations/ar-SAU.json')
 const hiJSON = require('../../app/translations/hi.json')
+const zhTCCHNJSON = require('../../app/translations/zhTC-CHN.json')
+const zhTCHKGJSON = require('../../app/translations/zhTC-HKG.json')
+const zhTCTWNJSON = require('../../app/translations/zhTC-TWN.json')
 
 // TODO: vscode hangs when the logo is in this file, so have moved it out for now while developing
 const logo = require('./pdf-logo')
@@ -89,7 +92,9 @@ async function printPDF({
     es: esJSON,
     fr: frJSON,
     pt: ptJSON,
-    zh: zhJSON,
+    //zh: zhJSON,
+    //zh: zhTCHKGJSON,
+    zh: zhTCTWNJSON,
     vi: viJSON,
     ko: koJSON,
     //ru: ruKAZJSON, 
@@ -157,14 +162,14 @@ async function printPDF({
     //     as
     //   })
     // }
-    if (country.code === 'CHN') {
+    if (country.code === 'TWN') {
       const as = country.income === '1' ? 'hi' : 'core'
-      cluster.queue({
-        lang: 'en',
-        code: country.code,
-        langFile: langFileMap['en'],
-        as
-      })
+      // cluster.queue({
+      //   lang: 'en',
+      //   code: country.code,
+      //   langFile: langFileMap['en'],
+      //   as
+      // })
       cluster.queue({
         lang: 'zh',
         code: country.code,

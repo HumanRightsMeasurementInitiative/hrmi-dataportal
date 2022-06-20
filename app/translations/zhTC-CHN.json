@@ -19,9 +19,9 @@
   "hrmi.components.CountryNarrative.esr.scoreAdjusted": "Оценка Казахстана по показателю «Права, обеспечивающие достойный уровень жизни», равна 87,8% при измерении с показателем «Скорректированный доход». ",
   "hrmi.components.CountryNarrative.esr.scoreBestSimple": "Оценка Казахстана по показателю «Права, обеспечивающие достойный уровень жизни», равна 87,8% при измерении с показателем «Скорректированный доход». ",
   "hrmi.components.CountryNarrative.compAssessment.start": "與其他東亞國家相比， 中國",
-  "hrmi.components.CountryNarrative.compAssessment.result.a": "",
-  "hrmi.components.CountryNarrative.compAssessment.result.b": "",
-  "hrmi.components.CountryNarrative.compAssessment.result.c": "",
+  "hrmi.components.CountryNarrative.compAssessment.result.a": " ",
+  "hrmi.components.CountryNarrative.compAssessment.result.b": " ",
+  "hrmi.components.CountryNarrative.compAssessment.result.c": " ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.startHiOECD": "Compared with the small group of {referenceCount} high-income OECD countries we have civil and political rights data for, {needsArticle, select, true {the } false {}}{country} {isPlural, select, true {are} false {is}} performing ",
   "hrmi.components.CountryNarrative.compAssessmentCPR.startNotHiOECD": "由於我們在東亞和太平洋地區沒有掌握足夠公⺠和政治權利的數據，所以在這方面不能作區域比較。 在39個樣本國家中 ，中國",
   "hrmi.components.CountryNarrative.compAssessmentCPR.end.empowerment": " 的賦權得分低於平均。",
@@ -34,7 +34,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Compared with all other high-income countries, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": " 生活質量的表現要高於平均。 由於我們只掌握中國部分數據，所以此評分僅根 據現有的數據計算。",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " on the {right}",
-  "hrmi.components.CountryNarrative.compAssessmentESR.endSome": " when we look across the rights for which we have data",
+  "hrmi.components.CountryNarrative.compAssessmentESR.endSome": " ",
   "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": "（根據'調整收入后比對'標準比較）.",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "For {countryWithArticle} no rights scores are available due to missing data in the relevant international databases.",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
@@ -134,7 +134,8 @@
   "hrmi.countries.TWN": "臺灣",
   "hrmi.countries.HKG": "⾹港",
   "hrmi.pdf.countryProfiles": "國家概況",
-  "hrmi.pdf.humanRightsIn": "中國人權, {year}",
+  "hrmi.pdf.humanRightsIn": "中國人權",
   "hrmi.pdf.noData": "The category {category} includes the following rights:",
-  "hrmi.pdf.explore": "要詳細了解該國的分數，請訪問 rightstracker.org/zh"
+  "hrmi.pdf.explore": "要詳細了解該國的分數，請訪問 rightstracker.org/zh",
+  "hrmi.labels.abbrev.notAvailable": "–"
 }
