@@ -25,7 +25,11 @@ const BreakBefore = styled(Box)`
   }
 `;
 
-function BehindTheNumbersEmp({ intl }) {
+function BehindTheNumbersEmpTC({ intl }) {
+  if (intl.locale !== 'zh') {
+    return null;
+  }
+
   const metrics = {
     assembly: {
       metricType: 'rights',
@@ -71,9 +75,9 @@ function BehindTheNumbersEmp({ intl }) {
             </Text>
           )}
           <Text as="h3" fontWeight={600} fontSize={21}>
-            <FormattedMessage {...messages.header} />
+            <FormattedMessage {...messages.tc.header} />
           </Text>
-          <ReactMarkdown children={intl.formatMessage(messages.part1)} />
+          <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
           <br />
           <BreakBefore shouldBreak={true} />
           <a
@@ -86,7 +90,7 @@ function BehindTheNumbersEmp({ intl }) {
               fontSize={18}
               color="empowermentDark"
             >
-              <FormattedMessage {...messages.assemblyHeader} />
+              <FormattedMessage {...messages.tc.assemblyHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['assembly']} selectedYear={2021} />
@@ -101,7 +105,7 @@ function BehindTheNumbersEmp({ intl }) {
               fontSize={18}
               color="empowermentDark"
             >
-              <FormattedMessage {...messages.expressionHeader} />
+              <FormattedMessage {...messages.tc.expressionHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['expression']} selectedYear={2021} />
@@ -116,7 +120,7 @@ function BehindTheNumbersEmp({ intl }) {
               fontSize={18}
               color="empowermentDark"
             >
-              <FormattedMessage {...messages.participationHeader} />
+              <FormattedMessage {...messages.tc.participationHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['participation']} selectedYear={2021} />
@@ -127,6 +131,6 @@ function BehindTheNumbersEmp({ intl }) {
   );
 }
 
-BehindTheNumbersEmp.propTypes = {};
+BehindTheNumbersEmpTC.propTypes = {};
 
-export default injectIntl(BehindTheNumbersEmp);
+export default injectIntl(BehindTheNumbersEmpTC);

@@ -16,23 +16,75 @@ import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import BehindTheNumbersQol from '../BehindTheNumbersQol';
 import BehindTheNumbersSfs from '../BehindTheNumbersSfs';
 import BehindTheNumbersEmp from '../BehindTheNumbersEmp';
+import BehindTheNumbersQolTC from '../BehindTheNumbersQolTC';
+import BehindTheNumbersSfsTC from '../BehindTheNumbersSfsTC';
+import BehindTheNumbersEmpTC from '../BehindTheNumbersEmpTC';
 import rootMessages from 'messages';
 
-function TabCountryBehindTheNumbers() {
+const BreakBefore = styled(Box)`
+  @media print {
+    position: ${({ shouldBreak }) => (shouldBreak ? 'relative' : 'initial')};
+    break-before: ${({ shouldBreak }) => (shouldBreak ? 'page' : 'initial')};
+    margin-top: ${({ shouldBreak }) => (shouldBreak ? '-150px' : '0px')};
+  }
+`;
+function TabCountryBehindTheNumbers({ intl }) {
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <>
+          <a name="sc" />
           <br />
           <br />
+          <BreakBefore shouldBreak={true} />
           <Text as="h2" fontWeight={600}>
             <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
           </Text>
+          {intl.locale === 'zh' && (
+            <a
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#tc`}
+            >
+              <Text as="h2" fontWeight={600} color="purple">
+                <FormattedMessage
+                  {...rootMessages.BehindTheNumbers.tc.header}
+                />
+              </Text>
+            </a>
+          )}
           <BehindTheNumbersQol />
           <br />
+          <BreakBefore shouldBreak={true} />
           <BehindTheNumbersSfs />
           <br />
+          <BreakBefore shouldBreak={true} />
           <BehindTheNumbersEmp />
+          <a name="tc" />
+          <br />
+          <br />
+          <BreakBefore shouldBreak={true} />
+          {intl.locale === 'zh' && (
+            <a
+              href={`${window.location.origin}${window.location.pathname}${
+                window.location.search
+              }#sc`}
+            >
+              <Text as="h2" fontWeight={600} color="purple">
+                <FormattedMessage {...rootMessages.BehindTheNumbers.header} />
+              </Text>
+            </a>
+          )}
+          <Text as="h2" fontWeight={600}>
+            <FormattedMessage {...rootMessages.BehindTheNumbers.tc.header} />
+          </Text>
+          <BehindTheNumbersQolTC />
+          <br />
+          <BreakBefore shouldBreak={true} />
+          <BehindTheNumbersSfsTC />
+          <br />
+          <BreakBefore shouldBreak={true} />
+          <BehindTheNumbersEmpTC />
         </>
       )}
     </ResponsiveContext.Consumer>

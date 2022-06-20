@@ -30,6 +30,10 @@ export default defineMessages({
       id: `${scope}.app.metaDescription`,
       defaultMessage: 'HRMI Rights Tracker - Measuring what matters',
     },
+    foodSecurityNote: {
+      id: `${scope}.app.foodSecurityNote`,
+      defaultMessage: '',
+    },
   },
   hints: {
     noResults: {
@@ -135,10 +139,22 @@ export default defineMessages({
       behindTheNumbers: {
         id: `${scope}.labels.chartTools.behindTheNumbers`,
         defaultMessage: 'Behind the numbers',
+        tc: {
+          id: `${scope}.labels.chartTools.behindTheNumbers.tc`,
+          defaultMessage: 'Behind the numbers',
+        },
       },
       downloadPDF: {
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
+      },
+      downloadPDFtc: {
+        id: `${scope}.labels.chartTools.downloadPDFtc`,
+        defaultMessage: 'Download PDF in Traditional Chinese',
+      },
+      downloadPDFhi: {
+        id: `${scope}.labels.chartTools.downloadPDFhi`,
+        defaultMessage: 'Download PDF in Hindi',
       },
       downloadPDFvi: {
         id: `${scope}.labels.chartTools.downloadPDFvi`,
@@ -212,6 +228,10 @@ export default defineMessages({
     },
   },
   tabs: {
+    behindTheNumbers: {
+      id: `${scope}.tabs.behindTheNumbers`,
+      defaultMessage: 'Behind the numbers',
+    },
     snapshot: {
       id: `${scope}.tabs.snapshot`,
       defaultMessage: 'Snapshot',
@@ -2977,6 +2997,12 @@ export default defineMessages({
     header: {
       id: `${scope}.BehindTheNumbers.header`,
       defaultMessage: 'Behind the numbers',
+    },
+    tc: {
+      header: {
+        id: `${scope}.BehindTheNumbers.tc.header`,
+        defaultMessage: ' ',
+      },
     },
     noAnalysisInLanguage: {
       id: `${scope}.BehindTheNumbers.noAnalysisInlanguage`,

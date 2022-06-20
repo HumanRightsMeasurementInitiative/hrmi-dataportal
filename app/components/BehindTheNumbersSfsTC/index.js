@@ -25,7 +25,11 @@ const BreakBefore = styled(Box)`
   }
 `;
 
-function BehindTheNumbersSfs({ intl }) {
+function BehindTheNumbersSfsTC({ intl }) {
+  if (intl.locale !== 'zh') {
+    return null;
+  }
+
   const metrics = {
     arrest: {
       metricType: 'rights',
@@ -91,9 +95,9 @@ function BehindTheNumbersSfs({ intl }) {
             </Text>
           )}
           <Text as="h3" fontWeight={600} fontSize={21}>
-            <FormattedMessage {...messages.header} />
+            <FormattedMessage {...messages.tc.header} />
           </Text>
-          <ReactMarkdown children={intl.formatMessage(messages.part1)} />
+          <ReactMarkdown children={intl.formatMessage(messages.tc.part1)} />
           <br />
           <BreakBefore shouldBreak={true} />
           <a
@@ -101,7 +105,7 @@ function BehindTheNumbersSfs({ intl }) {
             style={{ textDecorationColor: '#551A8B' }}
           >
             <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
-              <FormattedMessage {...messages.arrestHeader} />
+              <FormattedMessage {...messages.tc.arrestHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['arrest']} selectedYear={2021} />
@@ -112,7 +116,7 @@ function BehindTheNumbersSfs({ intl }) {
             style={{ textDecorationColor: '#551A8B' }}
           >
             <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
-              <FormattedMessage {...messages.disappearanceHeader} />
+              <FormattedMessage {...messages.tc.disappearanceHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['disappearance']} selectedYear={2021} />
@@ -123,7 +127,7 @@ function BehindTheNumbersSfs({ intl }) {
             style={{ textDecorationColor: '#551A8B' }}
           >
             <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
-              <FormattedMessage {...messages.deathPenaltyHeader} />
+              <FormattedMessage {...messages.tc.deathPenaltyHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['death-penalty']} selectedYear={2021} />
@@ -135,7 +139,7 @@ function BehindTheNumbersSfs({ intl }) {
             style={{ textDecorationColor: '#551A8B' }}
           >
             <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
-              <FormattedMessage {...messages.extraJudKillingHeader} />
+              <FormattedMessage {...messages.tc.extraJudKillingHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['extrajud-killing']} selectedYear={2021} />
@@ -146,7 +150,7 @@ function BehindTheNumbersSfs({ intl }) {
             style={{ textDecorationColor: '#551A8B' }}
           >
             <Text as="h4" fontWeight={600} fontSize={18} color="physintDark">
-              <FormattedMessage {...messages.tortureHeader} />
+              <FormattedMessage {...messages.tc.tortureHeader} />
             </Text>
           </a>
           <CprChart metric={metrics['torture']} selectedYear={2021} />
@@ -157,6 +161,6 @@ function BehindTheNumbersSfs({ intl }) {
   );
 }
 
-BehindTheNumbersSfs.propTypes = {};
+BehindTheNumbersSfsTC.propTypes = {};
 
-export default injectIntl(BehindTheNumbersSfs);
+export default injectIntl(BehindTheNumbersSfsTC);
