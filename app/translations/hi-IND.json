@@ -35,7 +35,7 @@
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": "प्रदर्शन **औसत से भी खराब** है।",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " on the {right}",
   "hrmi.components.CountryNarrative.compAssessmentESR.endSome": " when we look across the rights for which we have data",
-  "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (यह तुलनात्मक गणना आय-समायोजित सर्वोत्तम मानक का उपयोग कर की जाती है ।.)",
+  "hrmi.components.CountryNarrative.compAssessmentESR.benchmarkNote": " (यह तुलनात्मक गणना आय-समायोजित सर्वोत्तम मानक का उपयोग कर की जाती है ।)",
   "hrmi.components.CountryNarrative.compAssessmentESR.noData": "For {countryWithArticle} no rights scores are available due to missing data in the relevant international databases.",
   "hrmi.components.CountryNarrative.compAssessmentESR.noDataFunding": "With more funding, HRMI could investigate the reason for each data gap, and explore ways to help fill it. ",
   "hrmi.components.Source.source": "Source: HRMI 2022 rightstracker.org",
