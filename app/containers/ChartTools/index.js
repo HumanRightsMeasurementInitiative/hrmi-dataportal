@@ -134,6 +134,7 @@ export function ChartTools({
                         onSetAsideLayer({
                           type: 'btn',
                           ...behindTheNumbersConfig,
+                          key: behindTheNumbersConfig.key + '-tc',
                         });
                       }}
                       icon={<DocumentText color="dark" size="large" />}
