@@ -63,7 +63,7 @@ async function printPDF({
 
     const headerFooterStyle = `<style>@font-face{font-family:'Source Sans Pro';src:url(../../fonts/SourceSansPro-Regular.ttf) format("truetype");} #header { padding: 0 !important; } #footer { padding: 0 !important; } p, span { font-family: 'Source Sans Pro', sans-serif; font-size: 10px; color: #262064;}</style>`
 
-    const subtitle = lang === 'zh'
+    const subtitle = lang === 'zh' || lang === 'hi'
     ? `${langFile[`hrmi.pdf.countryProfiles`]} | ${countryWithArticle} ${langFile['hrmi.pdf.humanRightsIn']}, ${currentYear}`
     : `${langFile[`hrmi.pdf.countryProfiles`]} | ${langFile['hrmi.pdf.humanRightsIn']} ${countryWithArticle}, ${currentYear}`
     
