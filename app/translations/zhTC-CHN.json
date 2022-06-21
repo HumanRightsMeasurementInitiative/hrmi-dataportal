@@ -31,7 +31,7 @@
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataLinkAnchor": " this page on the HRMI website.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButRights": "A full set of {dimension} data has not yet been produced for {countryWithArticle}. We hope to collect more complete data in future years.",
   "hrmi.components.CountryNarrative.compAssessmentCPR.noDataButSurvey": "{dimension} data have not yet been produced for {countryWithArticle}. We hope to be able to fill this gap in future years.",
-  "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "Compared with all other high-income countries, {countryWithArticle} {isPlural, select, true {are} false {is}} performing ",
+  "hrmi.components.CountryNarrative.compAssessmentESR.startHi": "與其他東亞國家相比， 中國生活質量的表現要高於平均。 由於我們只掌握中國部分數據，所以此評分僅根 據現有的數據計算。 ",
   "hrmi.components.CountryNarrative.compAssessmentESR.endAll": "",
   "hrmi.components.CountryNarrative.compAssessmentESR.endOne": " on the {right}",
   "hrmi.components.CountryNarrative.compAssessmentESR.endSome": " ",
@@ -134,7 +134,7 @@
   "hrmi.countries.TWN": "臺灣",
   "hrmi.countries.HKG": "⾹港",
   "hrmi.pdf.countryProfiles": "國家概況",
-  "hrmi.pdf.humanRightsIn": "中國人權",
+  "hrmi.pdf.humanRightsIn": "人權",
   "hrmi.pdf.noData": "The category {category} includes the following rights:",
   "hrmi.pdf.explore": "要詳細了解該國的分數，請訪問 rightstracker.org/zh",
   "hrmi.labels.abbrev.notAvailable": "–"

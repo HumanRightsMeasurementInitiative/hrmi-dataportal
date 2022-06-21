@@ -153,30 +153,30 @@ async function printPDF({
     //     as
     //   })
     // }
-    // if (country.code === 'IND') {
-    //   const as = country.income === '1' ? 'hi' : 'core'
-    //   cluster.queue({
-    //     lang: 'hi',
-    //     code: country.code,
-    //     langFile: langFileMap['hi'],
-    //     as
-    //   })
-    // }
-    if (country.code === 'TWN') {
+    if (country.code === 'IND') {
       const as = country.income === '1' ? 'hi' : 'core'
-      // cluster.queue({
-      //   lang: 'en',
-      //   code: country.code,
-      //   langFile: langFileMap['en'],
-      //   as
-      // })
       cluster.queue({
-        lang: 'zh',
+        lang: 'hi',
         code: country.code,
-        langFile: langFileMap['zh'],
+        langFile: langFileMap['hi'],
         as
       })
     }
+    // if (country.code === 'TWN') {
+    //   const as = country.income === '1' ? 'hi' : 'core'
+    //   // cluster.queue({
+    //   //   lang: 'en',
+    //   //   code: country.code,
+    //   //   langFile: langFileMap['en'],
+    //   //   as
+    //   // })
+    //   cluster.queue({
+    //     lang: 'zh',
+    //     code: country.code,
+    //     langFile: langFileMap['zh'],
+    //     as
+    //   })
+    // }
   }
 
   await cluster.idle()
