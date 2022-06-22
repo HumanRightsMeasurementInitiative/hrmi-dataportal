@@ -159,8 +159,10 @@ export function* loadContentSaga({ key, contentType = 'page', locale }) {
         const countryData = airtableData.data.find(
           d => d.fields['ISO Code'] === splitKey[1],
         );
-
-        if (countryData) {
+        if (!countryData && requestLocale !== DEFAULT_LOCALE) {
+          yield put(contentRequested(key, false));
+          yield put(loadContentIfNeeded(key, 'atrisk', DEFAULT_LOCALE));
+        } else {
           // TODO: this is a mess, but will be superseeded by refactor approach
           // data is either atrisk or pacific data - put into appropriate key in store
           if (splitKey[0] === 'atrisk') {
