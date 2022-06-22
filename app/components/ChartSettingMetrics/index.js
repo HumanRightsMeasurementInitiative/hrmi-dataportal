@@ -66,6 +66,11 @@ function ChartSettingMetrics({
 
   const details = getMetricDetails(activeMetric);
 
+  const activeMetricKey =
+    activeMetric === 'food-security' && chartId !== 'trend'
+      ? 'food-security-by-sex'
+      : activeMetric;
+
   const metricSelector = (
     <ResponsiveContext.Consumer>
       {size => (
@@ -94,7 +99,7 @@ function ChartSettingMetrics({
                                 details.metricType === 'indicators'
                                   ? 'subrights'
                                   : details.metricType
-                              ][activeMetric],
+                              ][activeMetricKey],
                             ),
                             isMaxSize(size, 'sm') ? 30 : 60,
                           )}

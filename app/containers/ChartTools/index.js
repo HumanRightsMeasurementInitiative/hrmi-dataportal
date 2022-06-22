@@ -11,7 +11,8 @@ import { compose } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 import styled from 'styled-components';
 import { ResponsiveContext, Button, Text } from 'grommet';
-import { CircleQuestion, Performance } from 'grommet-icons';
+import { CircleQuestion, Performance, DocumentText } from 'grommet-icons';
+import { Flex } from '@chakra-ui/react';
 
 import { setAsideLayer } from 'containers/App/actions';
 
@@ -46,6 +47,7 @@ const StyledButton = styled(Button)`
 export function ChartTools({
   howToReadConfig,
   settingsConfig,
+  behindTheNumbersConfig,
   onSetAsideLayer,
   intl,
   hasWhiteBG = true,
@@ -99,6 +101,61 @@ export function ChartTools({
               gap="xsmall"
               reverse
             />
+          )}
+          {behindTheNumbersConfig && (
+            <>
+              <StyledButton
+                onClick={() => {
+                  onSetAsideLayer({
+                    type: 'btn',
+                    ...behindTheNumbersConfig,
+                  });
+                }}
+                icon={<DocumentText color="dark" size="large" />}
+                plain
+                label={
+                  isMinSize(size, 'medium') ? (
+                    <StyledText hasWhiteBG={hasWhiteBG}>
+                      {intl.formatMessage(
+                        rootMessages.labels.chartTools.behindTheNumbers,
+                      )}
+                    </StyledText>
+                  ) : null
+                }
+                gap="xsmall"
+                reverse
+              />
+              {intl.locale === 'zh' && (
+                <>
+                  <br />
+                  <Flex width="100%" justifyContent="end" paddingRight="12px">
+                    <StyledButton
+                      onClick={() => {
+                        onSetAsideLayer({
+                          type: 'btn',
+                          ...behindTheNumbersConfig,
+                          key: behindTheNumbersConfig.key + '-tc',
+                        });
+                      }}
+                      icon={<DocumentText color="dark" size="large" />}
+                      plain
+                      label={
+                        isMinSize(size, 'medium') ? (
+                          <StyledText hasWhiteBG={hasWhiteBG}>
+                            {intl.formatMessage(
+                              rootMessages.labels.chartTools.behindTheNumbers
+                                .tc,
+                            )}
+                          </StyledText>
+                        ) : null
+                      }
+                      gap="xsmall"
+                      reverse
+                    />
+                  </Flex>
+                </>
+              )}
+            </>
           )}
         </Styled>
       )}

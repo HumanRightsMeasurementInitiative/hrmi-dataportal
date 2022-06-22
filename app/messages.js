@@ -30,6 +30,10 @@ export default defineMessages({
       id: `${scope}.app.metaDescription`,
       defaultMessage: 'HRMI Rights Tracker - Measuring what matters',
     },
+    foodSecurityNote: {
+      id: `${scope}.app.foodSecurityNote`,
+      defaultMessage: '',
+    },
   },
   hints: {
     noResults: {
@@ -132,9 +136,25 @@ export default defineMessages({
         id: `${scope}.labels.chartTools.settings`,
         defaultMessage: 'Data settings',
       },
+      behindTheNumbers: {
+        id: `${scope}.labels.chartTools.behindTheNumbers`,
+        defaultMessage: 'Behind the numbers',
+        tc: {
+          id: `${scope}.labels.chartTools.behindTheNumbers.tc`,
+          defaultMessage: 'Behind the numbers',
+        },
+      },
       downloadPDF: {
         id: `${scope}.labels.chartTools.downloadPDF`,
         defaultMessage: 'Download PDF',
+      },
+      downloadPDFtc: {
+        id: `${scope}.labels.chartTools.downloadPDFtc`,
+        defaultMessage: 'Download PDF in Traditional Chinese',
+      },
+      downloadPDFhi: {
+        id: `${scope}.labels.chartTools.downloadPDFhi`,
+        defaultMessage: 'Download PDF in Hindi',
       },
       downloadPDFvi: {
         id: `${scope}.labels.chartTools.downloadPDFvi`,
@@ -208,6 +228,10 @@ export default defineMessages({
     },
   },
   tabs: {
+    behindTheNumbers: {
+      id: `${scope}.tabs.behindTheNumbers`,
+      defaultMessage: 'Behind the numbers',
+    },
     snapshot: {
       id: `${scope}.tabs.snapshot`,
       defaultMessage: 'Snapshot',
@@ -1391,6 +1415,10 @@ export default defineMessages({
     },
     'food-security': {
       id: `${scope}.subrights.food-security`,
+      defaultMessage: 'food-security',
+    },
+    'food-security-by-sex': {
+      id: `${scope}.subrights.food-security-by-sex`,
       defaultMessage: 'food-security',
     },
     'adult-survival': {
@@ -2963,6 +2991,23 @@ export default defineMessages({
       id: `${scope}.pacific.htr`,
       defaultMessage:
         'Each country score has been produced from responses to a detailed survey of human rights experts who either live in or specialise in monitoring that country. Scores closer to 10 are better.',
+    },
+  },
+  BehindTheNumbers: {
+    header: {
+      id: `${scope}.BehindTheNumbers.header`,
+      defaultMessage: 'Behind the numbers',
+    },
+    tc: {
+      header: {
+        id: `${scope}.BehindTheNumbers.tc.header`,
+        defaultMessage: ' ',
+      },
+    },
+    noAnalysisInLanguage: {
+      id: `${scope}.BehindTheNumbers.noAnalysisInlanguage`,
+      defaultMessage:
+        'We are sorry. This information is not yet available in your language',
     },
   },
 });

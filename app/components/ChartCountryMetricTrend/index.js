@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
 import { Box, Text, ResponsiveContext } from 'grommet';
+import { Text as CText } from '@chakra-ui/react';
 import {
   FlexibleWidthXYPlot,
   XAxis,
@@ -565,6 +566,14 @@ function ChartCountryMetricTrend({
               top: currentBenchmark.key === 'best' ? 'xsmall' : 'medium',
             }}
           >
+            {metric.key === 'food-security' && (
+              <>
+                <CText fontSize={14} color="#393393">
+                  <FormattedMessage {...rootMessages.app.foodSecurityNote} />
+                </CText>
+                <br />
+              </>
+            )}
             <Source />
           </Box>
           {(hasRawOption || groupsActive) && (

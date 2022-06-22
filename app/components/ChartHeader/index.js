@@ -30,8 +30,17 @@ import { isMinSize, isMaxSize } from 'utils/responsive';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 
 import rootMessages from 'messages';
-import firebase from '../../../firebase';
+import firebasePROD from '../../../firebase.prod';
+import firebaseUAT from '../../../firebase.uat';
 import messages from './messages';
+
+import firebase from 'firebase/app';
+
+if (process.env.FIREBASE_ENV === 'prod') {
+  firebase.initializeApp(firebasePROD);
+} else {
+  firebase.initializeApp(firebaseUAT);
+}
 
 const Styled = styled.div`
   margin-top: 10px;
@@ -106,37 +115,57 @@ export function ChartHeader({
   const chartName =
     title || intl.formatMessage(messages[chartId], messageValues);
 
+  const pdfFolder = process.env.PDF_DIR;
+
   useEffect(() => {
     if (locale && countryCode) {
-      const ref = storage.ref(`pdfs/${locale}-${countryCode}.pdf`);
+      const ref = storage.ref(`${pdfFolder}/${locale}-${countryCode}.pdf`);
       ref
         .getDownloadURL()
         .then(setPdfURL)
         .catch(err => console.log(err));
     }
     if (countryCode === 'VNM') {
-      const ref = storage.ref(`pdfs/vi-${countryCode}.pdf`);
+      const ref = storage.ref(`${pdfFolder}/vi-${countryCode}.pdf`);
       ref
         .getDownloadURL()
         .then(setSpecialPdfURL)
         .catch(err => console.log(err));
     }
     if (countryCode === 'KOR') {
-      const ref = storage.ref(`pdfs/ko-${countryCode}.pdf`);
+      const ref = storage.ref(`${pdfFolder}/ko-${countryCode}.pdf`);
       ref
         .getDownloadURL()
         .then(setSpecialPdfURL)
         .catch(err => console.log(err));
     }
     if (countryCode === 'KAZ' || countryCode === 'KGZ') {
-      const ref = storage.ref(`pdfs/ru-${countryCode}.pdf`);
+      const ref = storage.ref(`${pdfFolder}/ru-${countryCode}.pdf`);
       ref
         .getDownloadURL()
         .then(setSpecialPdfURL)
         .catch(err => console.log(err));
     }
     if (countryCode === 'JOR' || countryCode === 'SAU') {
-      const ref = storage.ref(`pdfs/ar-${countryCode}.pdf`);
+      const ref = storage.ref(`${pdfFolder}/ar-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (
+      countryCode === 'CHN' ||
+      countryCode === 'TWN' ||
+      countryCode === 'HKG'
+    ) {
+      const ref = storage.ref(`${pdfFolder}/tc-${countryCode}.pdf`);
+      ref
+        .getDownloadURL()
+        .then(setSpecialPdfURL)
+        .catch(err => console.log(err));
+    }
+    if (countryCode === 'IND') {
+      const ref = storage.ref(`${pdfFolder}/hi-${countryCode}.pdf`);
       ref
         .getDownloadURL()
         .then(setSpecialPdfURL)
@@ -196,91 +225,161 @@ export function ChartHeader({
                       ...tools.settingsConfig,
                     }
                   }
+                  behindTheNumbersConfig={tools.behindTheNumbersConfig}
                 />
                 {tools &&
                   tools.settingsConfig &&
                   tools.settingsConfig.key === 'tab-snapshot' && (
-                  /* eslint-disable */
-                  <>
-                    {!pdfURL
-                    ? <Spinner />
-                    : <DownloadButton
-                    as="a"
-                    href={pdfURL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <TextWrap>
-                      <FormattedMessage
-                        {...rootMessages.labels.chartTools.downloadPDF}
-                      />
-                    </TextWrap>
-                    <StyledShare />
-                  </DownloadButton>}
-                    {countryCode === 'VNM' && !specialPdfURL ? <Spinner /> : countryCode === 'VNM' && (
-                      <DownloadButton
-                        as="a"
-                        href={specialPdfURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <TextWrap>
-                          <FormattedMessage
-                            {...rootMessages.labels.chartTools.downloadPDFvi}
-                          />
-                        </TextWrap>
-                        <StyledShare />
-                      </DownloadButton>
-                    )}
-                    {countryCode === 'KOR' && !specialPdfURL ? <Spinner /> : countryCode === 'KOR' && (
-                      <DownloadButton
-                        as="a"
-                        href={specialPdfURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <TextWrap>
-                          <FormattedMessage
-                            {...rootMessages.labels.chartTools.downloadPDFko}
-                          />
-                        </TextWrap>
-                        <StyledShare />
-                      </DownloadButton>
-                    )}
-                    {(countryCode === 'KAZ' || countryCode === 'KGZ') && !specialPdfURL ? <Spinner /> : (countryCode === 'KAZ' || countryCode === 'KGZ') && (
-                      <DownloadButton
-                        as="a"
-                        href={specialPdfURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <TextWrap>
-                          <FormattedMessage
-                            {...rootMessages.labels.chartTools.downloadPDFru}
-                          />
-                        </TextWrap>
-                        <StyledShare />
-                      </DownloadButton>
-                    )}
-                    {(countryCode === 'JOR' || countryCode === 'SAU') && !specialPdfURL ? <Spinner /> : (countryCode === 'JOR' || countryCode === 'SAU') && (
-                      <DownloadButton
-                        as="a"
-                        href={specialPdfURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <TextWrap>
-                          <FormattedMessage
-                            {...rootMessages.labels.chartTools.downloadPDFar}
-                          />
-                        </TextWrap>
-                        <StyledShare />
-                      </DownloadButton>
-                    )}
-                  </>
-                )}
+                    /* eslint-disable */
+                    <>
+                      {!pdfURL ? (
+                        <Spinner />
+                      ) : (
+                        <DownloadButton
+                          as="a"
+                          href={pdfURL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <TextWrap>
+                            <FormattedMessage
+                              {...rootMessages.labels.chartTools.downloadPDF}
+                            />
+                          </TextWrap>
+                          <StyledShare />
+                        </DownloadButton>
+                      )}
+                      {countryCode === 'VNM' && !specialPdfURL ? (
+                        <Spinner />
+                      ) : (
+                        countryCode === 'VNM' && (
+                          <DownloadButton
+                            as="a"
+                            href={specialPdfURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <TextWrap>
+                              <FormattedMessage
+                                {...rootMessages.labels.chartTools
+                                  .downloadPDFvi}
+                              />
+                            </TextWrap>
+                            <StyledShare />
+                          </DownloadButton>
+                        )
+                      )}
+                      {countryCode === 'IND' && !specialPdfURL ? (
+                        <Spinner />
+                      ) : (
+                        countryCode === 'IND' && (
+                          <DownloadButton
+                            as="a"
+                            href={specialPdfURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <TextWrap>
+                              <FormattedMessage
+                                {...rootMessages.labels.chartTools
+                                  .downloadPDFhi}
+                              />
+                            </TextWrap>
+                            <StyledShare />
+                          </DownloadButton>
+                        )
+                      )}
+                      {countryCode === 'KOR' && !specialPdfURL ? (
+                        <Spinner />
+                      ) : (
+                        countryCode === 'KOR' && (
+                          <DownloadButton
+                            as="a"
+                            href={specialPdfURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <TextWrap>
+                              <FormattedMessage
+                                {...rootMessages.labels.chartTools
+                                  .downloadPDFko}
+                              />
+                            </TextWrap>
+                            <StyledShare />
+                          </DownloadButton>
+                        )
+                      )}
+                      {(countryCode === 'KAZ' || countryCode === 'KGZ') &&
+                      !specialPdfURL ? (
+                        <Spinner />
+                      ) : (
+                        (countryCode === 'KAZ' || countryCode === 'KGZ') && (
+                          <DownloadButton
+                            as="a"
+                            href={specialPdfURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <TextWrap>
+                              <FormattedMessage
+                                {...rootMessages.labels.chartTools
+                                  .downloadPDFru}
+                              />
+                            </TextWrap>
+                            <StyledShare />
+                          </DownloadButton>
+                        )
+                      )}
+                      {(countryCode === 'JOR' || countryCode === 'SAU') &&
+                      !specialPdfURL ? (
+                        <Spinner />
+                      ) : (
+                        (countryCode === 'JOR' || countryCode === 'SAU') && (
+                          <DownloadButton
+                            as="a"
+                            href={specialPdfURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <TextWrap>
+                              <FormattedMessage
+                                {...rootMessages.labels.chartTools
+                                  .downloadPDFar}
+                              />
+                            </TextWrap>
+                            <StyledShare />
+                          </DownloadButton>
+                        )
+                      )}
+                      {(countryCode === 'CHN' ||
+                        countryCode === 'TWN' ||
+                        countryCode === 'HKG') &&
+                      !specialPdfURL ? (
+                        <Spinner />
+                      ) : (
+                        (countryCode === 'CHN' ||
+                          countryCode === 'TWN' ||
+                          countryCode === 'HKG') && (
+                          <DownloadButton
+                            as="a"
+                            href={specialPdfURL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <TextWrap>
+                              <FormattedMessage
+                                {...rootMessages.labels.chartTools
+                                  .downloadPDFtc}
+                              />
+                            </TextWrap>
+                            <StyledShare />
+                          </DownloadButton>
+                        )
+                      )}
+                    </>
+                  )}
               </ChartToolWrapper>
-                /* eslint-enable */
+              /* eslint-enable */
             )}
           </Top>
           {(filter || sort) && (

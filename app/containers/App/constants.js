@@ -224,7 +224,7 @@ export const FAQS = {
 export const DATA_RESOURCES = [
   {
     key: 'countries',
-    file: 'countries_v3-1.csv',
+    file: 'Countries_2022_v1.csv',
   },
   {
     key: 'countriesGrammar',
@@ -232,27 +232,27 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'esrIndicators',
-    file: 'esr-indicators_2021.csv',
+    file: 'esr-indicators_2022_v1.csv',
   },
   {
     key: 'atRisk',
-    file: 'people-at-risk_v3-3.csv',
+    file: 'people-at-risk_v3-4.csv',
   },
   {
     key: 'auxIndicators',
-    file: 'auxiliary-indicators_2021.csv',
+    file: 'auxilliary-indicators_2022_final.csv',
   },
   {
     key: 'cprScores',
-    file: 'cpr-scores_v3-3.csv',
+    file: 'cpr-scores_v5-1.csv',
   },
   {
     key: 'esrScores',
-    file: 'esr-scores_2021.csv',
+    file: 'esr-scores_2022_final.csv',
   },
   {
     key: 'esrIndicatorScores',
-    file: 'esr-indicator-scores_2021.csv',
+    file: 'esr-indicator-scores_2022_final.csv',
   },
   {
     key: 'featured',
@@ -260,7 +260,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'sources',
-    file: 'sources_2021.csv',
+    file: 'sources_2022_final.csv',
   },
   {
     key: 'pacific',
@@ -453,7 +453,7 @@ export const SUBREGIONS_FOR_COMPARISON_CPR = ['pacific'];
 export const DIMENSIONS = [
   {
     key: 'esr',
-    code: 'SER_Average',
+    code: 'QoL',
     type: 'esr',
     resource: 'esrScores',
   },
@@ -698,7 +698,7 @@ export const INDICATORS = [
     code: 'FoodSecure',
     right: 'food',
     resource: 'esrIndicatorScores',
-    hasGroups: false,
+    hasGroups: true,
   },
   {
     key: 'under-5-survival',
