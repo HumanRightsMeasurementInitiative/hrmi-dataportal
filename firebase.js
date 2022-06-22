@@ -1,19 +1,20 @@
 import firebase from 'firebase/app';
 import 'firebase/storage';
+import { getAnalytics } from 'firebase/analytics';
 
 // NOTE: these values should be changed for the correct deployment target.
 // This is not a long-term solution - instead we will use dotenv with the new Vercel / Nextjs refactor.
 const firebaseConfig = {
-  apiKey: 'AIzaSyAPR0rUorI5CEQguoUfjm8_0mSasH3X9d4',
-  authDomain: 'hrmi-dataportal.firebaseapp.com',
-  projectId: 'hrmi-dataportal',
-  storageBucket: 'hrmi-dataportal.appspot.com',
-  messagingSenderId: '478758585192',
-  appId: '1:478758585192:web:53cec2a41b431500574cdd',
+  apiKey: 'AIzaSyDZGRvfoRxeB2m8nL_C1yVq55SJPXgYk_M',
+  authDomain: 'hrmi-dataportal-uat.firebaseapp.com',
+  projectId: 'hrmi-dataportal-uat',
+  storageBucket: 'hrmi-dataportal-uat.appspot.com',
+  messagingSenderId: '1007539889235',
+  appId: '1:1007539889235:web:0c367be8ad49f0dc34d2a6',
+  measurementId: 'G-X82CBX9NLW',
 };
 
-if (firebase.apps.length < 1) {
-  firebase.initializeApp(firebaseConfig);
-}
+const app = firebase.initializeApp(firebaseConfig);
+//const analytics = getAnalytics(app);
 
 export default firebase;

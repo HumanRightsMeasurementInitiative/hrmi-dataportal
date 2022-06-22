@@ -1,4 +1,4 @@
-const fs = require('fs/promises')
+const fs = require('fs').promises
 const path = require('path')
 const admin = require('firebase-admin')
 const parallelLimit = require('run-parallel-limit')
@@ -9,7 +9,7 @@ const serviceAccount = require(path.join(__dirname, '../../firebase-adminsdk.jso
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   // storageBucket: "rightstracker-2021-embargoed.appspot.com"
-  storageBucket: "hrmi-dataportal.appspot.com"
+  storageBucket: "hrmi-dataportal-uat.appspot.com"
 })
 
 const bucket = admin.storage().bucket()

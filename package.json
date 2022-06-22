@@ -23,7 +23,7 @@
     "build:prod": "cross-env NODE_ENV=production PDF_DIR=pdfs webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:uat": "cross-env NODE_ENV=production PDF_DIR=pdfs-uat webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "build:clean": "rimraf ./build",
-    "start": "cross-env NODE_ENV=development PDF_DIR=pdfs-uat node server",
+    "start": "cross-env NODE_ENV=development PDF_DIR=pdfs node server",
     "start:tunnel": "cross-env NODE_ENV=development ENABLE_TUNNEL=true node server",
     "start:production": "npm run test && npm run build && npm run start:prod",
     "start:prod": "cross-env NODE_ENV=production PDF_DIR=pdfs node server",
