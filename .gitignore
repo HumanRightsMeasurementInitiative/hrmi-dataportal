@@ -19,4 +19,5 @@ functions/firebase-debug.log
 
 # pdfs
 pdfs
-firebase-adminsdk.json
+firebase-adminsdk.prod.json
+firebase-adminsdk.uat.json

@@ -3,13 +3,16 @@ const path = require('path')
 const admin = require('firebase-admin')
 const parallelLimit = require('run-parallel-limit')
 
+const firebaseAdminSdk = (process.env.FIREBASE_ENV === 'prod') ? '../../firebase-adminsdk.prod' : '../../firebase-adminsdk.uat'
+const storageBucketName = (process.env.FIREBASE_ENV === 'prod') ? 'hrmi-dataportal.appspot.com' : 'hrmi-dataportal-uat.appspot.com'
+
 // renamed service account json
-const serviceAccount = require(path.join(__dirname, '../../firebase-adminsdk.json'))
+const serviceAccount = require(path.join(__dirname, firebaseAdminSdk))
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   // storageBucket: "rightstracker-2021-embargoed.appspot.com"
-  storageBucket: "hrmi-dataportal-uat.appspot.com"
+  storageBucket: storageBucketName
 })
 
 const bucket = admin.storage().bucket()
