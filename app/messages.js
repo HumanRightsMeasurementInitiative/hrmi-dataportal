@@ -3005,7 +3005,7 @@ export default defineMessages({
       },
     },
     noAnalysisInLanguage: {
-      id: `${scope}.BehindTheNumbers.noAnalysisInlanguage`,
+      id: `${scope}.BehindTheNumbers.noAnalysisInLanguage`,
       defaultMessage:
         'We are sorry. This information is not yet available in your language',
     },
