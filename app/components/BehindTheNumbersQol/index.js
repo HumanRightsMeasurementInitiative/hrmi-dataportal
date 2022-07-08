@@ -75,11 +75,14 @@ function BehindTheNumbersQol({ nav, intl }) {
               children={intl.formatMessage(messages.peopleAtRisk)}
             />
             <br />
+            {intl.formatMessage(messages.part4)}
             <ButtonTextIcon
               onClick={() => nav(`country/CHN?tab=atrisk`)}
-              label={intl.formatMessage(messages.part4)}
+              label={intl.formatMessage(messages.peopleAtRiskLink)}
               secondary
+              color="blue"
             />
+            {intl.formatMessage(messages.part5)}
             <br />
             <BreakBefore shouldBreak={true} />
             <Text as="h4" fontWeight={600} fontSize={18}>
@@ -107,6 +110,14 @@ export function mapDispatchToProps(dispatch) {
       dispatch(
         navigate(location, {
           keepTab: false,
+          deleteParams: [
+            'as',
+            'pb',
+            'income',
+            'region',
+            'subregion',
+            'assessed',
+          ],
         }),
       );
     },

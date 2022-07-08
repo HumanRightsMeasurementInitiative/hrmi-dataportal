@@ -35,6 +35,9 @@ function BehindTheNumbersQolTC({ nav, intl }) {
   if (intl.locale !== 'zh') {
     return null;
   }
+
+  console.log('messages', messages.tc.peopleAtRiskLink);
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -64,11 +67,14 @@ function BehindTheNumbersQolTC({ nav, intl }) {
             children={intl.formatMessage(messages.tc.peopleAtRisk)}
           />
           <br />
+          {intl.formatMessage(messages.tc.part4)}
           <ButtonTextIcon
             onClick={() => nav(`country/CHN?tab=atrisk`)}
-            label={intl.formatMessage(messages.tc.part4)}
+            label={intl.formatMessage(messages.tc.peopleAtRiskLink)}
             secondary
+            color="blue"
           />
+          {intl.formatMessage(messages.tc.part5)}
           <br />
           <BreakBefore shouldBreak={true} />
           <Text as="h4" fontWeight={600} fontSize={18}>
@@ -95,6 +101,14 @@ export function mapDispatchToProps(dispatch) {
       dispatch(
         navigate(location, {
           keepTab: false,
+          deleteParams: [
+            'as',
+            'pb',
+            'income',
+            'region',
+            'subregion',
+            'assessed',
+          ],
         }),
       );
     },
