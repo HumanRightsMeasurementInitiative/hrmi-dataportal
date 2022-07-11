@@ -12,7 +12,6 @@ import { ResponsiveContext, Button, Image, Text as GText } from 'grommet';
 import { CircleQuestion } from 'grommet-icons';
 import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import messages from './messages';
 import rootMessages from 'messages';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 import { connect } from 'react-redux';
@@ -22,6 +21,7 @@ import { navigate } from 'containers/App/actions';
 
 import infographicSanitationTC from 'images/People-Infographics-China-Sanitation-TC.png';
 import infographicWaterTC from 'images/People-Infographics-China-Water-TC.png';
+import messages from './messages';
 
 const BreakBefore = styled(Box)`
   @media print {
@@ -35,8 +35,6 @@ function BehindTheNumbersQolTC({ nav, intl }) {
   if (intl.locale !== 'zh') {
     return null;
   }
-
-  console.log('messages', messages.tc.peopleAtRiskLink);
 
   return (
     <ResponsiveContext.Consumer>
@@ -57,7 +55,7 @@ function BehindTheNumbersQolTC({ nav, intl }) {
             {intl.locale === 'zh' && <Image src={infographicWaterTC} />}
           </Box>
           <br />
-          <BreakBefore shouldBreak={true} />
+          <BreakBefore shouldBreak />
           <ReactMarkdown children={intl.formatMessage(messages.tc.part3)} />
           <br />
           <Text as="h4" fontWeight={600} fontSize={18}>
@@ -72,11 +70,11 @@ function BehindTheNumbersQolTC({ nav, intl }) {
             onClick={() => nav(`country/CHN?tab=atrisk`)}
             label={intl.formatMessage(messages.tc.peopleAtRiskLink)}
             secondary
-            color="blue"
+            color="purple"
           />
           {intl.formatMessage(messages.tc.part5)}
           <br />
-          <BreakBefore shouldBreak={true} />
+          <BreakBefore shouldBreak />
           <Text as="h4" fontWeight={600} fontSize={18}>
             <FormattedMessage {...messages.tc.roomForImprovementHeader} />
           </Text>
