@@ -11,6 +11,7 @@ const Styled = styled(Button)`
   font-size: ${({ theme, size }) => theme.text[size].size};
   padding: ${({ padding }) => padding || '0px'};
   border-radius: ${({ borderRadius }) => borderRadius || '18px'};
+  text-decoration: ${({underline}) => underline ? 'underline' : 'none'};
   &:hover {
     text-decoration: underline;
   }
@@ -25,6 +26,7 @@ export function ButtonTextIcon({
   iconSize,
   reverse = true,
   gap,
+  underline = false,
   ...rest
 }) {
   let iSize = iconSize;
@@ -48,6 +50,7 @@ export function ButtonTextIcon({
       gap={gap || (size !== 'medium' ? 'hair' : '0')}
       alignSelf="start"
       size={size}
+      underline
       {...rest}
     />
   );

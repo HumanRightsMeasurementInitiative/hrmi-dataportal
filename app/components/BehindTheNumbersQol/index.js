@@ -80,7 +80,8 @@ function BehindTheNumbersQol({ nav, intl }) {
               onClick={() => nav(`country/CHN?tab=atrisk`)}
               label={intl.formatMessage(messages.peopleAtRiskLink)}
               secondary
-              color="purple"
+              color="#262064"
+              underline={true}
             />
             {intl.formatMessage(messages.part5)}
             <br />
