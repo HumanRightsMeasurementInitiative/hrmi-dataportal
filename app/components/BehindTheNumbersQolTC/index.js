@@ -71,6 +71,7 @@ function BehindTheNumbersQolTC({ nav, intl }) {
             label={intl.formatMessage(messages.tc.peopleAtRiskLink)}
             secondary
             color="purple"
+            underline={true}
           />
           {intl.formatMessage(messages.tc.part5)}
           <br />
