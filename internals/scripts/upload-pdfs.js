@@ -29,7 +29,7 @@ fs.readdir(pdfsFolder)
   const tasks = files.map(f => {
     return (cb) => {
       return bucket.upload(`${pdfsFolder}/${f}`, {
-        destination: `pdfs-uat/${f}`
+        destination: `pdfs/${f}`
       })
       .then(() => {
         console.log(`${f} uploaded successfully`)
