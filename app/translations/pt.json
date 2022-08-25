@@ -1026,7 +1026,7 @@
   "hrmi.components.ChartHeader.assessment-standard-high-sub": "Usando o padrão de avaliação de rendimentos elevados",
   "hrmi.components.ChartHeader.assessment-standard-low-sub": "Usando o padrão de avaliação de rendimentos baixos e médios",
   "hrmi.pdf.countryProfiles": "Perfis dos países",
-  "hrmi.pdf.humanRightsIn": "Direitos Humanos {countryWithPrepositionedArticle}",
+  "hrmi.pdf.humanRightsIn": "Direitos Humanos",
   "hrmi.pdf.noData": "A categoria {category} inclui os seguintes direitos:",
   "hrmi.pdf.explore": "Para explorar as pontuações deste país em mais detalhes, visite rightstracker.org/pt",
   "hrmi.components.ChartMetricTrend.hint": "Intervalo de credibilidade de 80%",
