@@ -30,8 +30,17 @@ import { isMinSize, isMaxSize } from 'utils/responsive';
 import ButtonNavPrimary from 'styled/ButtonNavPrimary';
 
 import rootMessages from 'messages';
-import firebase from '../../../firebase';
+import firebasePROD from '../../../firebase.prod';
+import firebaseUAT from '../../../firebase.uat';
 import messages from './messages';
+
+import firebase from 'firebase/app';
+
+if (process.env.FIREBASE_ENV === 'prod') {
+  firebase.initializeApp(firebasePROD);
+} else {
+  firebase.initializeApp(firebaseUAT);
+}
 
 const Styled = styled.div`
   margin-top: 10px;

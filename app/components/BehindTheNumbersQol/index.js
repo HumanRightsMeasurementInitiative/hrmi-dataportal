@@ -12,7 +12,6 @@ import { ResponsiveContext, Button, Image, Text as GText } from 'grommet';
 import { CircleQuestion } from 'grommet-icons';
 import styled from 'styled-components';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import messages from './messages';
 import rootMessages from 'messages';
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 import { connect } from 'react-redux';
@@ -26,6 +25,7 @@ import infographicWater from 'images/People-Infographics-China-Water.png';
 
 import infographicSanitationSC from 'images/People-Infographics-China-Sanitation-SC.png';
 import infographicWaterSC from 'images/People-Infographics-China-Water-SC.png';
+import messages from './messages';
 
 const BreakBefore = styled(Box)`
   @media print {
@@ -65,7 +65,7 @@ function BehindTheNumbersQol({ nav, intl }) {
               {intl.locale === 'zh' && <Image src={infographicWaterSC} />}
             </Box>
             <br />
-            <BreakBefore shouldBreak={true} />
+            <BreakBefore shouldBreak />
             <ReactMarkdown children={intl.formatMessage(messages.part3)} />
             <br />
             <Text as="h4" fontWeight={600} fontSize={18}>
@@ -75,13 +75,17 @@ function BehindTheNumbersQol({ nav, intl }) {
               children={intl.formatMessage(messages.peopleAtRisk)}
             />
             <br />
+            {intl.formatMessage(messages.part4)}
             <ButtonTextIcon
               onClick={() => nav(`country/CHN?tab=atrisk`)}
-              label={intl.formatMessage(messages.part4)}
+              label={intl.formatMessage(messages.peopleAtRiskLink)}
               secondary
+              color="#262064"
+              underline={true}
             />
+            {intl.formatMessage(messages.part5)}
             <br />
-            <BreakBefore shouldBreak={true} />
+            <BreakBefore shouldBreak />
             <Text as="h4" fontWeight={600} fontSize={18}>
               <FormattedMessage {...messages.roomForImprovementHeader} />
             </Text>
@@ -107,6 +111,14 @@ export function mapDispatchToProps(dispatch) {
       dispatch(
         navigate(location, {
           keepTab: false,
+          deleteParams: [
+            'as',
+            'pb',
+            'income',
+            'region',
+            'subregion',
+            'assessed',
+          ],
         }),
       );
     },
