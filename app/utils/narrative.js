@@ -8,11 +8,11 @@ const ARTICLES_DEFAULT = {
   es: 0,
   pt: 1,
   zh: 0, // TODO: is this right?
-  vi: 0, // TODO: is this right?
-  ko: 0, // TODO: is this right?
-  ru: 0, // TODO: is this right?
-  ar: 0, // TODO: is this right?
-  hi: 0,
+  // vi: 0, // TODO: is this right?
+  // ko: 0, // TODO: is this right?
+  // ru: 0, // TODO: is this right?
+  // ar: 0, // TODO: is this right?
+  // hi: 0,
 };
 
 export const needsArticle = (locale, countryGrammar) => {

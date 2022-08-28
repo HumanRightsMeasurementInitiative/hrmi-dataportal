@@ -17,16 +17,16 @@ const zhJSON = require('../../app/translations/zh.json')
 // pdf-specific languages
 // NOTE that creating each of these one-off PDF's may require changes at build-time in i18n.js and narrative.js to get the right translation file for the target country
 // this is to be revisited with the refactor work
-const viJSON = require('../../app/translations/vi.json')
-const koJSON = require('../../app/translations/ko.json')
-const ruKAZJSON = require('../../app/translations/ru-KAZ.json')
-const ruKGZJSON = require('../../app/translations/ru-KGZ.json')
-const arJORJSON = require('../../app/translations/ar-JOR.json')
-const arSAUJSON = require('../../app/translations/ar-SAU.json')
-const hiJSON = require('../../app/translations/hi.json')
-const zhTCCHNJSON = require('../../app/translations/zhTC-CHN.json')
-const zhTCHKGJSON = require('../../app/translations/zhTC-HKG.json')
-const zhTCTWNJSON = require('../../app/translations/zhTC-TWN.json')
+// const viJSON = require('../../app/translations/vi.json')
+// const koJSON = require('../../app/translations/ko.json')
+// const ruKAZJSON = require('../../app/translations/ru-KAZ.json')
+// const ruKGZJSON = require('../../app/translations/ru-KGZ.json')
+// const arJORJSON = require('../../app/translations/ar-JOR.json')
+// const arSAUJSON = require('../../app/translations/ar-SAU.json')
+// const hiJSON = require('../../app/translations/hi.json')
+// const zhTCCHNJSON = require('../../app/translations/zhTC-CHN.json')
+// const zhTCHKGJSON = require('../../app/translations/zhTC-HKG.json')
+// const zhTCTWNJSON = require('../../app/translations/zhTC-TWN.json')
 
 // TODO: vscode hangs when the logo is in this file, so have moved it out for now while developing
 const logo = require('./pdf-logo')
@@ -92,31 +92,31 @@ async function printPDF({
     es: esJSON,
     fr: frJSON,
     pt: ptJSON,
-    //zh: zhJSON,
-    //zh: zhTCHKGJSON,
-    zh: zhTCTWNJSON,
-    vi: viJSON,
-    ko: koJSON,
-    //ru: ruKAZJSON, 
-    ru: ruKGZJSON, 
-    //ar: arJORJSON, 
-    ar: arSAUJSON,
-    hi: hiJSON,
+    zh: zhJSON,
+    // zh: zhTCHKGJSON,
+    // zh: zhTCTWNJSON,
+    // vi: viJSON,
+    // ko: koJSON,
+    // ru: ruKAZJSON, 
+    // ru: ruKGZJSON, 
+    // ar: arJORJSON, 
+    // ar: arSAUJSON,
+    // hi: hiJSON,
   }
   for (let i = 0; i < countries.length; i++) {
     const country = countries[i];
 
-    // for (let j = 0; j < languages.length; j++) {
-    //   const lang = languages[j];
-    //   const as = country.income === '1' ? 'hi' : 'core'
-    //   cluster.queue({
-    //     lang,
-    //     code: country.code,
-    //     grammar: country.grammar,
-    //     langFile: langFileMap[lang],
-    //     as
-    //   })
-    // }
+    for (let j = 0; j < languages.length; j++) {
+      const lang = languages[j];
+      const as = country.income === '1' ? 'hi' : 'core'
+      cluster.queue({
+        lang,
+        code: country.code,
+        grammar: country.grammar,
+        langFile: langFileMap[lang],
+        as
+      })
+    }
     // if (country.code === 'VNM') {
     //   const as = country.income === '1' ? 'hi' : 'core'
     //   cluster.queue({
@@ -153,15 +153,15 @@ async function printPDF({
     //     as
     //   })
     // }
-    if (country.code === 'IND') {
-      const as = country.income === '1' ? 'hi' : 'core'
-      cluster.queue({
-        lang: 'hi',
-        code: country.code,
-        langFile: langFileMap['hi'],
-        as
-      })
-    }
+    // if (country.code === 'IND') {
+    //   const as = country.income === '1' ? 'hi' : 'core'
+    //   cluster.queue({
+    //     lang: 'hi',
+    //     code: country.code,
+    //     langFile: langFileMap['hi'],
+    //     as
+    //   })
+    // }
     // if (country.code === 'TWN') {
     //   const as = country.income === '1' ? 'hi' : 'core'
     //   // cluster.queue({
