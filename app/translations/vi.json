@@ -1021,5 +1021,6 @@
   "hrmi.pdf.noData": "The category {category} includes the following rights:",
   "hrmi.pdf.explore": "Để tìm hiểu thêm chi tiết về điểm số của quốc gia này, hãy truy cập rightstracker.org",
   "hrmi.components.ChartMetricTrend.hint": "80% uncertainty band",
-  "hrmi.components.ChartMetricTrend.tooltip": "Individual country scores are based on the responses to our survey of human rights experts. The 80% uncertainty bands indicate our level of certainty in each score."
+  "hrmi.components.ChartMetricTrend.tooltip": "Individual country scores are based on the responses to our survey of human rights experts. The 80% uncertainty bands indicate our level of certainty in each score.",
+  "hrmi.components.CountryNarrative.cpr.outOf10": " / 10"
 }
