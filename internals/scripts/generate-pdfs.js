@@ -8,6 +8,7 @@ const mkdirp = require('mkdirp')
 // const { getCountries } = require('./helpers/generate-files')
 
 const { getCountryWithArticle } = require('../../app/utils/narrative')
+const { getCountryWithPrepositionedArticle } = require ('../../app/utils/narrative')
 
 const enJSON = require('../../app/translations/en.json')
 const esJSON = require('../../app/translations/es.json')
@@ -59,12 +60,14 @@ async function printPDF({
     });
 
     const countryWithArticle = getCountryWithArticle(lang, grammar, langFile[`hrmi.countries.${code}`])
+    const countryWithPrepositionedArticle = getCountryWithPrepositionedArticle(lang, grammar, langFile[`hrmi.countries.${code}`])
     console.log(`Country code: ${code} - ${countryWithArticle}`);
 
     const headerFooterStyle = `<style>@font-face{font-family:'Source Sans Pro';src:url(../../fonts/SourceSansPro-Regular.ttf) format("truetype");} #header { padding: 0 !important; } #footer { padding: 0 !important; } p, span { font-family: 'Source Sans Pro', sans-serif; font-size: 10px; color: #262064;}</style>`
 
     const subtitle = lang === 'zh' || lang === 'hi'
     ? `${langFile[`hrmi.pdf.countryProfiles`]} | ${countryWithArticle} ${langFile['hrmi.pdf.humanRightsIn']}, ${currentYear}`
+    : lang === 'pt' ? `${langFile[`hrmi.pdf.countryProfiles`]} | ${langFile['hrmi.pdf.humanRightsIn']} ${countryWithPrepositionedArticle}, ${currentYear}`
     : `${langFile[`hrmi.pdf.countryProfiles`]} | ${langFile['hrmi.pdf.humanRightsIn']} ${countryWithArticle}, ${currentYear}`
     
     try {
@@ -216,7 +219,6 @@ async function printPDF({
     // countries: [{ code: 'KAZ', income: '0' }],
     countries,
     languages: ['en', 'es', 'fr', 'pt', 'zh']
-    // languages: ['en']
   });
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)
