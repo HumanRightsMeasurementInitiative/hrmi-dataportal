@@ -531,11 +531,11 @@ export function ChartContainerCountrySnapshot({
           <FormattedMessage {...rootMessages.pdf.explore} />
         </p>
       </AddToPDFWrapper>
-      {countryCode === 'CHN' && (
+      {/* {countryCode === 'CHN' && (
         <AddToPDFWrapper>
           <TabCountryBehindTheNumbers />
         </AddToPDFWrapper>
-      )}
+      )} */}
     </Styled>
   );
 }

@@ -18,6 +18,7 @@ const zhLocaleData = require('react-intl/locale-data/zh');
 // const koLocaleData = require('react-intl/locale-data/ko');
 // const ruLocaleData = require('react-intl/locale-data/ru');
 // const arLocaleData = require('react-intl/locale-data/ar');
+// const hiLocaleData = require('react-intl/locale-data/hi');
 
 const enTranslationMessages = require('./translations/en.json');
 const esTranslationMessages = require('./translations/es.json');
@@ -33,6 +34,10 @@ const zhTranslationMessages = require('./translations/zh.json');
 // const ruKGZTranslationMessages = require('./translations/ru-KGZ.json');
 // const arJORTranslationMessages = require('./translations/ar-JOR.json');
 // const arSAUTranslationMessages = require('./translations/ar-SAU.json');
+// const hiTranslationMessages = require('./translations/hi.json');
+// const zhTCCHNTranslationMessages = require('./translations/zhTC-CHN.json');
+// const zhTCHKGTranslationMessages = require('./translations/zhTC-HKG.json');
+// const zhTCTWNTranslationMessages = require('./translations/zhTC-TWN.json');
 
 addLocaleData(enLocaleData);
 addLocaleData(esLocaleData);
@@ -44,6 +49,7 @@ addLocaleData(zhLocaleData);
 // addLocaleData(koLocaleData);
 // addLocaleData(ruLocaleData);
 // addLocaleData(arLocaleData);
+// addLocaleData(hiLocaleData);
 
 const DEFAULT_LOCALE = 'en';
 
@@ -58,6 +64,7 @@ const appLocales = [
   // 'ko',
   // 'ru',
   // 'ar',
+  // 'hi',
 ];
 
 const formatTranslationMessages = (locale, messages) => {
@@ -86,9 +93,6 @@ const translationMessages = {
   fr:
     frTranslationMessages &&
     formatTranslationMessages('fr', frTranslationMessages),
-  zh:
-    zhTranslationMessages &&
-    formatTranslationMessages('zh', zhTranslationMessages),
   // vi:
   //   viTranslationMessages &&
   //   formatTranslationMessages('vi', viTranslationMessages),
@@ -107,6 +111,21 @@ const translationMessages = {
   // ar:
   //   arSAUTranslationMessages &&
   //   formatTranslationMessages('ar', arSAUTranslationMessages),
+  // hi:
+  //   hiTranslationMessages &&
+  //   formatTranslationMessages('hi', hiTranslationMessages),
+  zh:
+    zhTranslationMessages &&
+    formatTranslationMessages('zh', zhTranslationMessages),
+  // zh:
+  //   zhTCCHNTranslationMessages &&
+  //   formatTranslationMessages('zh', zhTCCHNTranslationMessages),
+  // zh:
+  //   zhTCHKGTranslationMessages &&
+  //   formatTranslationMessages('zh', zhTCHKGTranslationMessages),
+  // zh:
+  //   zhTCTWNTranslationMessages &&
+  //   formatTranslationMessages('zh', zhTCTWNTranslationMessages),
 };
 
 exports.appLocales = appLocales;
