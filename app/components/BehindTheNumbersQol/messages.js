@@ -39,8 +39,16 @@ export default defineMessages({
   },
   part4: {
     id: `${scope}.part4`,
+    defaultMessage: 'See the ',
+  },
+  peopleAtRiskLink: {
+    id: `${scope}.peopleAtRiskLink`,
+    defaultMessage: 'people at risk tab',
+  },
+  part5: {
+    id: `${scope}.part5`,
     defaultMessage:
-      'See the people at risk tab on the Rights Tracker for the full lists. The data also show a strong connection between political activity, especially criticism of the government, and lack of enjoyment of economic and social rights.',
+      ' on the Rights Tracker for the full lists. The data also show a strong connection between political activity, especially criticism of the government, and lack of enjoyment of economic and social rights.',
   },
   roomForImprovementHeader: {
     id: `${scope}.roomForImprovementHeader`,
@@ -53,39 +61,47 @@ export default defineMessages({
   },
   tc: {
     header: {
-      id: `${scope}.header`,
+      id: `${scope}.tc.header`,
       defaultMessage: '',
     },
     part1: {
-      id: `${scope}.part1`,
+      id: `${scope}.tc.part1`,
       defaultMessage: '',
     },
     part2: {
-      id: `${scope}.part2`,
+      id: `${scope}.tc.part2`,
       defaultMessage: '',
     },
     part3: {
-      id: `${scope}.part3`,
+      id: `${scope}.tc.part3`,
       defaultMessage: '',
     },
     peopleAtRiskHeader: {
-      id: `${scope}.peopleAtRiskHeader`,
+      id: `${scope}.tc.peopleAtRiskHeader`,
       defaultMessage: '',
     },
     peopleAtRisk: {
-      id: `${scope}.peopleAtRisk`,
+      id: `${scope}.tc.peopleAtRisk`,
       defaultMessage: '',
     },
     part4: {
-      id: `${scope}.part4`,
+      id: `${scope}.tc.part4`,
+      defaultMessage: '',
+    },
+    peopleAtRiskLink: {
+      id: `${scope}.tc.peopleAtRiskLink`,
+      defaultMessage: '',
+    },
+    part5: {
+      id: `${scope}.tc.part5`,
       defaultMessage: '',
     },
     roomForImprovementHeader: {
-      id: `${scope}.roomForImprovementHeader`,
+      id: `${scope}.tc.roomForImprovementHeader`,
       defaultMessage: '',
     },
     roomForImprovement: {
-      id: `${scope}.roomForImprovement`,
+      id: `${scope}.tc.roomForImprovement`,
       defaultMessage: '',
     },
   },

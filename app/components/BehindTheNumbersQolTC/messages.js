@@ -80,6 +80,14 @@ export default defineMessages({
       id: `${scope}.tc.part4`,
       defaultMessage: '',
     },
+    peopleAtRiskLink: {
+      id: `${scope}.tc.peopleAtRiskLink`,
+      defaultMessage: '',
+    },
+    part5: {
+      id: `${scope}.tc.part5`,
+      defaultMessage: '',
+    },
     roomForImprovementHeader: {
       id: `${scope}.tc.roomForImprovementHeader`,
       defaultMessage: '',
