@@ -264,7 +264,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'pacific',
-    file: 'pm-formatted.csv',
+    file: 'pm-formatted-2022.csv',
   },
 ];
 
