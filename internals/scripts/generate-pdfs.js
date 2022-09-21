@@ -188,10 +188,10 @@ async function printPDF({
 
 (async () => {
   const timePrintPDF = process.hrtime()
-  const dataResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/countries_v3-1.csv')
+  const dataResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/Countries_2022_v1.csv')
   const countriesCsv = await dataResponse.text()
   const countriesData = csvParse(countriesCsv)
-  const grammarResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/countries_grammar_v3.csv')
+  const grammarResponse = await fetch('http://data-store.humanrightsmeasurement.org/data/countries_grammar_v3-1.csv')
   const grammarCsv = await grammarResponse.text()
   const grammarData = csvParse(grammarCsv)
 
@@ -218,7 +218,8 @@ async function printPDF({
     // countries: [{ code: 'VNM', income: '0' }],
     // countries: [{ code: 'KAZ', income: '0' }],
     countries,
-    languages: ['en', 'es', 'fr', 'pt', 'zh']
+    //languages: ['en', 'es', 'fr', 'pt', 'zh']
+    languages: ['pt'],
   });
 
   console.log(`generate-pdfs done, timePrintPDF: ${process.hrtime(timePrintPDF)[0]}.${process.hrtime(timePrintPDF)[1]} seconds`)
