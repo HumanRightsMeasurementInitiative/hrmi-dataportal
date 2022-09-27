@@ -228,7 +228,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'countriesGrammar',
-    file: 'countries_grammar_v3.csv',
+    file: 'countries_grammar_v3-1.csv',
   },
   {
     key: 'esrIndicators',
@@ -264,7 +264,7 @@ export const DATA_RESOURCES = [
   },
   {
     key: 'pacific',
-    file: 'pm-formatted.csv',
+    file: 'pm-formatted-2022.csv',
   },
 ];
 
