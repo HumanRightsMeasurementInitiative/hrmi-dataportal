@@ -69,7 +69,7 @@ function ChartBars({
   closeAsideLayer
 }) {
   if (!data) return null;
-  
+
   return (
     <ResponsiveContext.Consumer>
       {() => (
@@ -149,7 +149,7 @@ function ChartBars({
                 rawScores={rawScores}
               />
             )}
-            {data.map(d => (
+            {data.filter(d => !isNaN(d.value)).map(d => (
               <BarWrapper
                 key={d.key}
                 score={d}
