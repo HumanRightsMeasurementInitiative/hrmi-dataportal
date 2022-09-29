@@ -245,6 +245,8 @@ export function ChartContainerMetric({
     metric.type === 'esr' && metric.metricType !== 'indicators';
   const showGovRespondentsLabel = metric.type === 'cpr';
 
+  console.log(scores);
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -270,7 +272,15 @@ export function ChartContainerMetric({
                 showBenchmark: true,
               }
             }}
-            messageValues={{ no: scores.length }}
+            messageValues={{
+              no: scores.filter(
+                s =>
+                  !isNaN(parseInt(s.mean)) &&
+                  !isNaN(parseInt(s.sd)) &&
+                  !isNaN(parseInt(s.upbound_90)) &&
+                  !isNaN(parseInt(s.lobound_10)),
+              ).length,
+            }}
             filter={
               metric.right !== 'violence' && {
                 regionFilterValue,
@@ -301,15 +311,15 @@ export function ChartContainerMetric({
               metric.right === 'violence'
                 ? maxYearPacific
                 : metric.type === 'esr'
-                  ? maxYearESR
-                  : maxYearCPR
+                ? maxYearESR
+                : maxYearCPR
             }
             minYearDimension={
               metric.right === 'violence'
                 ? minYearPacific
                 : metric.type === 'esr'
-                  ? minYearESR
-                  : minYearCPR
+                ? minYearESR
+                : minYearCPR
             }
             /* eslint-enable */
           />
