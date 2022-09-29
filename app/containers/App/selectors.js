@@ -1908,11 +1908,19 @@ export const getAuxIndicatorsLatest = createSelector(
     return countries.map(c =>
       latestYearsPerAttribute.reduce(
         (countryData, attribute) => {
-          const value = values.find(
-            val =>
-              val.country_code === countryData.country_code &&
-              val.year === attribute.year,
-          );
+          const maxYear = parseInt(attribute.year);
+          let year = maxYear;
+          let value = null;
+
+          do {
+            value = values.find(
+              val =>
+                val.country_code === countryData.country_code &&
+                val.year == year &&
+                val[attribute.col],
+            );
+            year--;
+          } while (!value && year > maxYear - 10);
           // prettier-ignore
           return value
             ? {
