@@ -245,8 +245,6 @@ export function ChartContainerMetric({
     metric.type === 'esr' && metric.metricType !== 'indicators';
   const showGovRespondentsLabel = metric.type === 'cpr';
 
-  console.log(scores);
-
   return (
     <ResponsiveContext.Consumer>
       {size => (
@@ -273,13 +271,11 @@ export function ChartContainerMetric({
               }
             }}
             messageValues={{
-              no: scores.filter(
-                s =>
-                  !isNaN(parseInt(s.mean)) &&
-                  !isNaN(parseInt(s.sd)) &&
-                  !isNaN(parseInt(s.upbound_90)) &&
-                  !isNaN(parseInt(s.lobound_10)),
-              ).length,
+              no:
+                scores &&
+                scores.filter(
+                  s => !s.hasOwnProperty('mean') || !isNaN(parseInt(s.mean)),
+                ).length,
             }}
             filter={
               metric.right !== 'violence' && {
