@@ -270,7 +270,13 @@ export function ChartContainerMetric({
                 showBenchmark: true,
               }
             }}
-            messageValues={{ no: scores.length }}
+            messageValues={{
+              no:
+                scores &&
+                scores.filter(
+                  s => !s.hasOwnProperty('mean') || !isNaN(parseInt(s.mean)),
+                ).length,
+            }}
             filter={
               metric.right !== 'violence' && {
                 regionFilterValue,
@@ -301,15 +307,15 @@ export function ChartContainerMetric({
               metric.right === 'violence'
                 ? maxYearPacific
                 : metric.type === 'esr'
-                  ? maxYearESR
-                  : maxYearCPR
+                ? maxYearESR
+                : maxYearCPR
             }
             minYearDimension={
               metric.right === 'violence'
                 ? minYearPacific
                 : metric.type === 'esr'
-                  ? minYearESR
-                  : minYearCPR
+                ? minYearESR
+                : minYearCPR
             }
             /* eslint-enable */
           />
