@@ -149,7 +149,7 @@ function ChartBars({
                 rawScores={rawScores}
               />
             )}
-            {data.filter(d => !isNaN(d.value)).map(d => (
+            {data.filter(d => !isNaN(d.value) || d.value === undefined).map(d => 
               <BarWrapper
                 key={d.key}
                 score={d}
@@ -164,7 +164,7 @@ function ChartBars({
                 isStatic={isStatic}
                 rawScores={rawScores}
               />
-            ))}
+            )}
           </WrapInnerChart>
         </Styled>
       )}
