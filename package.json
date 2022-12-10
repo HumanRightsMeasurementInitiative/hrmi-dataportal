@@ -85,7 +85,7 @@
     "d3-dsv": "^1.2.0",
     "d3-scale": "^2.2.2",
     "d3-time-format": "^2.2.3",
-    "express": "4.16.4",
+    "express": "4.17.3",
     "firebase": "^8.6.5",
     "firebase-admin": "^9.9.0",
     "fontfaceobserver": "2.1.0",
