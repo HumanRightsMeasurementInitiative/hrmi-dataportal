@@ -35,7 +35,7 @@ keys(pages).forEach(code => {
   const right = rights[code]
   const indicator = indicators[code]
 
-  $("head meta[property='og:title']").attr('content', `${country || right || indicator} - HRMI Rights Tracker`)
+  $("head meta[property='og:title']").attr('content', `${country || right || indicator} - Human Rights Tracker`)
   if (country) {
     $("head meta[property='og:image']").attr('content', `http://content-store.humanrightsmeasurement.org/assets/uploads/country_${code}.png`)
   } else if (indicator) {
@@ -45,7 +45,7 @@ keys(pages).forEach(code => {
   }
   
   
-  $("head title").text(`${country || right || indicator} - HRMI Rights Tracker`)
+  $("head title").text(`${country || right || indicator} - Human Rights Tracker`)
   fs.writeFileSync(path.join(__dirname, `../../app/templates/${code}.html`), $.html())
 })
 
