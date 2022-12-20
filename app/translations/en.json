@@ -1,8 +1,8 @@
 {
   "hrmi.app.title": "Rights Tracker",
   "hrmi.app.claim": "Measuring the human rights performance of countries",
-  "hrmi.app.metaTitle": "HRMI Rights Tracker",
-  "hrmi.app.metaDescription": "HRMI Rights Tracker - Measuring Measuring the human rights performance of countries",
+  "hrmi.app.metaTitle": "Human Rights Tracker",
+  "hrmi.app.metaDescription": "HRMI Rights Tracker - Measuring the human rights performance of countries",
   "hrmi.app.foodSecurityNote": "Note: All people scores refer to all ages; Female and Male scores refer to people aged 15 and over.",
   "hrmi.components.Sections.intro": "Explore human rights scores across countries, rights, and people.",
   "hrmi.components.Sections.dataCards.title": "Use our data",
