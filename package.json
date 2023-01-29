@@ -97,6 +97,7 @@
     "framer-motion": "^4.1.17",
     "grommet": "^2.13.0",
     "grommet-icons": "^4.4.0",
+    "helmet": "^6.0.1",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",
     "immer": "^8.0.1",
