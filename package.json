@@ -48,7 +48,8 @@
     "pdf": "npm-run-all -pr start generate-pdfs",
     "upload-pdfs-uat": "cross-env FIREBASE_ENV=uat node ./internals/scripts/upload-pdfs.js",
     "upload-pdfs-prod": "cross-env FIREBASE_ENV=prod node ./internals/scripts/upload-pdfs.js",
-    "fonts": "sh scripts/fonts.sh"
+    "fonts": "sh scripts/fonts.sh",
+    "sitemap": "babel-node ./internals/scripts/sitemap-builder.js"
   },
   "browserslist": [
     "last 2 versions",
@@ -77,6 +78,10 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@rebass/grid": "^6.1.0",
+    "babel-node": "0.0.1-security",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
     "chalk": "^2.4.2",
     "compression": "1.7.4",
     "connected-react-router": "6.4.0",
@@ -92,6 +97,7 @@
     "framer-motion": "^4.1.17",
     "grommet": "^2.13.0",
     "grommet-icons": "^4.4.0",
+    "helmet": "^6.0.1",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",
     "immer": "^8.0.1",
@@ -112,6 +118,7 @@
     "react-redux": "7.0.2",
     "react-remarkable": "^1.1.3",
     "react-router-dom": "5.0.0",
+    "react-router-sitemap": "^1.2.0",
     "react-use-dimensions": "^1.2.1",
     "react-vis": "^1.11.7",
     "redux": "4.0.1",
