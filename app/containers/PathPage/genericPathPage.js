@@ -52,11 +52,15 @@ export function GenericPathPage({
   const page = match && match.params.page;
   const pageTitle = intl.formatMessage(rootMessages.page[page]);
 
+  const metaDescription =
+    intl.formatMessage(rootMessages.app.title) + ' - ' + pageTitle;
+
   return (
     <ContentWrap>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content="Description of Page" />
+        <meta name="description" content={metaDescription} />
+        <meta name="og:description" content={metaDescription} />
       </Helmet>
       <ContentContainer direction="column" header>
         <ContentMaxWidth>

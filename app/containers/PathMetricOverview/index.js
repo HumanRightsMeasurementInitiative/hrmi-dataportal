@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import styled, { withTheme } from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import { ResponsiveContext, Paragraph } from 'grommet';
 
@@ -48,10 +49,20 @@ export function PathMetricOverview({
   intl,
   theme,
 }) {
+  const metaTitle = intl.formatMessage(rootMessages.labels.allMetrics);
+
+  const metaDescription =
+    intl.formatMessage(rootMessages.app.title) + ' - ' + metaTitle;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
+          <Helmet>
+            <title>{metaTitle}</title>
+            <meta name="description" content={metaDescription} />
+            <meta property="og:description" content={metaDescription} />
+          </Helmet>
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header

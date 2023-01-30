@@ -68,8 +68,8 @@ export function PathMetric({
     metric.right === 'violence'
       ? maxYearPacific
       : metric.type === 'esr'
-        ? maxYearESR
-        : maxYearCPR;
+      ? maxYearESR
+      : maxYearCPR;
   const [haveMaxYear, setHaveMaxYear] = useState(false);
   const [selectedYear, setSelectedYear] = useState(maxYearDimension);
 
@@ -142,13 +142,18 @@ export function PathMetric({
       });
     }
   };
+
+  const metaDescription =
+    intl.formatMessage(rootMessages.app.title) + ' - ' + metricTitle;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
           <Helmet>
             <title>{metricTitle}</title>
-            <meta name="description" content="Description of metric" />
+            <meta name="description" content={metaDescription} />
+            <meta property="og:description" content={metaDescription} />
           </Helmet>
           <div style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}
@@ -168,20 +173,20 @@ export function PathMetric({
                     metricCode !== 'vwomen' &&
                     metricCode !== 'vmvpfaff' && (
                       <div>
-                      <Breadcrumb
-                        onItemClick={key => onMetricClick(key)}
-                        breadcrumb
-                        items={ancestors.map(ancestor => ({
-                          key: ancestor.key,
-                          label: intl.formatMessage(
-                            ancestor.key === 'all'
-                              ? rootMessages.labels.allMetrics
+                        <Breadcrumb
+                          onItemClick={key => onMetricClick(key)}
+                          breadcrumb
+                          items={ancestors.map(ancestor => ({
+                            key: ancestor.key,
+                            label: intl.formatMessage(
+                              ancestor.key === 'all'
+                                ? rootMessages.labels.allMetrics
                                 : rootMessages[ancestor.type][ancestor.key],
-                          ),
+                            ),
                           }))}
-                      />
+                        />
                       </div>
-                  )}
+                    )}
                   <div>
                     <PageTitle>{metricTitle}</PageTitle>
                   </div>
