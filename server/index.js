@@ -21,6 +21,9 @@ const app = express();
 // serve the pdf files in development
 app.use('/pdfs', express.static('pdfs'));
 
+// serve the sitemap
+app.use('/sitemap.xml', express.static('sitemap/sitemap.xml'));
+
 app.use(helmet.frameguard({ action: 'deny' }));
 
 // In production we need to pass these values in instead of relying on webpack
