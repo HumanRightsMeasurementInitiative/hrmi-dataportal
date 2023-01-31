@@ -7,11 +7,17 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+  formatMessage,
+} from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Paragraph, ResponsiveContext } from 'grommet';
 import styled, { withTheme } from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import { STANDARDS, RIGHTS } from 'containers/App/constants';
 
@@ -96,10 +102,20 @@ export function PathCountryOverview({
     )
     : countries;
 
+  const metaTitle = intl.formatMessage(messages.title);
+
+  const metaDescription =
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + metaTitle;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
+          <Helmet>
+            <title>{metaTitle}</title>
+            <meta name="description" content={metaDescription} />
+            <meta property="og:description" content={metaDescription} />
+          </Helmet>
           <CountryNotes settingHint />
           <ContentContainer direction="column" header>
             <ContentMaxWidth

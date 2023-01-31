@@ -10,7 +10,12 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import {
+  FormattedMessage,
+  injectIntl,
+  intlShape,
+  formatMessage,
+} from 'react-intl';
 
 import { ResponsiveContext, Image as GImage } from 'grommet';
 import styled, { withTheme } from 'styled-components';
@@ -386,13 +391,17 @@ export function PathCountry({
     }
   };
 
+  const metaDescription =
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + countryTitle;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
           <Helmet>
             <title>{countryTitle}</title>
-            <meta name="description" content="Description of Country page" />
+            <meta name="description" content={metaDescription} />
+            <meta property="og:description" content={metaDescription} />
           </Helmet>
           <div style={{ position: 'relative' }}>
             {isMinSize(size, 'large') && <AsideBackground />}

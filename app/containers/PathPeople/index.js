@@ -111,6 +111,10 @@ export function PathPeople({
         ),
       c => c[COLUMNS.COUNTRIES.REGION],
     );
+
+  const metaDescription =
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + groupTitle;
+
   /* eslint-enable no-console */
   return (
     <ResponsiveContext.Consumer>
@@ -128,7 +132,8 @@ export function PathPeople({
           <ContentWrap>
             <Helmet>
               <title>{groupTitle}</title>
-              <meta name="description" content="Description of Country page" />
+              <meta name="description" content={metaDescription} />
+              <meta property="og:description" content={metaDescription} />
             </Helmet>
             <Box style={{ position: 'relative' }}>
               {isMinSize(size, 'large') && <AsideBackground color="white" />}

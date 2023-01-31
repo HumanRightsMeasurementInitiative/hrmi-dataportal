@@ -12,6 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Paragraph, ResponsiveContext, Box } from 'grommet';
 import styled, { withTheme } from 'styled-components';
+import { Helmet } from 'react-helmet';
 
 import {
   // getDependenciesReady,
@@ -97,10 +98,23 @@ export function PathPeopleOverview({
   const cardWidth = gridWidth
     ? getCardWidth(gridWidth, cardNumber, theme)
     : CARD_WIDTH.min;
+
+  const metaTitle = intl.formatMessage(messages.title, {
+    no: AT_RISK_GROUPS.length,
+  });
+
+  const metaDescription =
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + metaTitle;
+
   return (
     <ResponsiveContext.Consumer>
       {size => (
         <ContentWrap>
+          <Helmet>
+            <title>{metaTitle}</title>
+            <meta name="description" content={metaDescription} />
+            <meta property="og:description" content={metaDescription} />
+          </Helmet>
           <ContentContainer direction="column" header>
             <ContentMaxWidth
               header
