@@ -392,7 +392,7 @@ export function PathCountry({
   };
 
   const metaDescription =
-    intl.formatMessage(rootMessages.app.title) + ' - ' + countryTitle;
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + countryTitle;
 
   return (
     <ResponsiveContext.Consumer>

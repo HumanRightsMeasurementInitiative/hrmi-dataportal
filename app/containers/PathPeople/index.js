@@ -113,7 +113,7 @@ export function PathPeople({
     );
 
   const metaDescription =
-    intl.formatMessage(rootMessages.app.title) + ' - ' + groupTitle;
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + groupTitle;
 
   /* eslint-enable no-console */
   return (

@@ -101,7 +101,7 @@ export function AboutPathPage({
   const bulkContent = content.content;
 
   const metaDescription =
-    intl.formatMessage(rootMessages.app.title) + ' - ' + pageTitle;
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + pageTitle;
 
   return (
     <ContentWrap>

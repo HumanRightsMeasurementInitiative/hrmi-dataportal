@@ -52,7 +52,7 @@ export function PathMetricOverview({
   const metaTitle = intl.formatMessage(rootMessages.labels.allMetrics);
 
   const metaDescription =
-    intl.formatMessage(rootMessages.app.title) + ' - ' + metaTitle;
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + metaTitle;
 
   return (
     <ResponsiveContext.Consumer>

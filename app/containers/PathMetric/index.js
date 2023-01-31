@@ -144,7 +144,7 @@ export function PathMetric({
   };
 
   const metaDescription =
-    intl.formatMessage(rootMessages.app.title) + ' - ' + metricTitle;
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + metricTitle;
 
   return (
     <ResponsiveContext.Consumer>

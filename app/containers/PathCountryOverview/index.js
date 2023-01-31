@@ -105,7 +105,7 @@ export function PathCountryOverview({
   const metaTitle = intl.formatMessage(messages.title);
 
   const metaDescription =
-    intl.formatMessage(rootMessages.app.title) + ' - ' + metaTitle;
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + metaTitle;
 
   return (
     <ResponsiveContext.Consumer>

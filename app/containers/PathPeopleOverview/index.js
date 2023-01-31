@@ -104,7 +104,7 @@ export function PathPeopleOverview({
   });
 
   const metaDescription =
-    intl.formatMessage(rootMessages.app.title) + ' - ' + metaTitle;
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + metaTitle;
 
   return (
     <ResponsiveContext.Consumer>

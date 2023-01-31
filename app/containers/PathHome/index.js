@@ -76,7 +76,7 @@ export function PathHome({
   }, []);
 
   const metaTitle = intl.formatMessage(rootMessages.app.metaTitle);
-  const metaDescription = intl.formatMessage(rootMessages.app.title);
+  const metaDescription = intl.formatMessage(rootMessages.app.metaTitle);
 
   return (
     <ContentWrap>

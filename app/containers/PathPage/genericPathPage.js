@@ -53,7 +53,7 @@ export function GenericPathPage({
   const pageTitle = intl.formatMessage(rootMessages.page[page]);
 
   const metaDescription =
-    intl.formatMessage(rootMessages.app.title) + ' - ' + pageTitle;
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + pageTitle;
 
   return (
     <ContentWrap>
