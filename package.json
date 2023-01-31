@@ -48,7 +48,8 @@
     "pdf": "npm-run-all -pr start generate-pdfs",
     "upload-pdfs-uat": "cross-env FIREBASE_ENV=uat node ./internals/scripts/upload-pdfs.js",
     "upload-pdfs-prod": "cross-env FIREBASE_ENV=prod node ./internals/scripts/upload-pdfs.js",
-    "fonts": "sh scripts/fonts.sh"
+    "fonts": "sh scripts/fonts.sh",
+    "sitemap": "node ./internals/scripts/sitemap-builder.js"
   },
   "browserslist": [
     "last 2 versions",
