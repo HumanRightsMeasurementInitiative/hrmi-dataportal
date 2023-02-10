@@ -4,6 +4,8 @@
   "hrmi.app.metaTitle": "HRMI人权追踪系统",
   "hrmi.app.metaDescription": "HRMI人权追踪系统 - 衡量各国的人权表现",
   "hrmi.app.foodSecurityNote": "注释: 所有关于人的分数是指所有年龄层；女性和男性分数均指 15 岁及以上的人。",
+  "hrmi.app.showGraphData": "以纯文字显示图表数据",
+  "hrmi.app.hideGraphData": "隐藏纯文字的图表数据",
   "hrmi.components.Sections.intro": "了解国家、权利和人群之间的人权得分。",
   "hrmi.components.Sections.dataCards.title": "使用我们的数据",
   "hrmi.components.Sections.dataCards.countries": "国家",
