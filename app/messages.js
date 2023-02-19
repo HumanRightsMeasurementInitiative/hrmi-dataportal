@@ -34,6 +34,14 @@ export default defineMessages({
       id: `${scope}.app.foodSecurityNote`,
       defaultMessage: '',
     },
+    showGraphData: {
+      id: `${scope}.app.showGraphData`,
+      defaultMessage: 'Show graph data in plain text',
+    },
+    hideGraphData: {
+      id: `${scope}.app.hideGraphData`,
+      defaultMessage: 'Hide graph data in plain text',
+    },
   },
   hints: {
     noResults: {

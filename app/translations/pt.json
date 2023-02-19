@@ -4,6 +4,8 @@
   "hrmi.app.metaTitle": "Rights Tracker da Iniciativa de Medição dos Direitos Humanos (HRMI)",
   "hrmi.app.metaDescription": "Rights Tracker HRMI - Medir o desempenho dos países relativamente aos direitos humanos",
   "hrmi.app.foodSecurityNote": "Nota: As pontuações de “todas as pessoas” referem-se a todas as idades; As pontuações para homens e mulheres referem-se a pessoas com 15 anos ou mais.",
+  "hrmi.app.showGraphData": "Mostrar dados do gráfico em texto simples",
+  "hrmi.app.hideGraphData": "Ocultar dados do gráfico em texto simples",
   "hrmi.components.Sections.intro": "Explore as pontuações dos direitos humanos em países, direitos e pessoas.",
   "hrmi.components.Sections.dataCards.title": "Utilize os nossos dados",
   "hrmi.components.Sections.dataCards.countries": "Países",
