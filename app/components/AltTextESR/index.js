@@ -8,6 +8,10 @@ import rootMessages from 'messages';
 function AltTextESR({ esrScores, standard, benchmark, intl }) {
   const [expanded, setExpanded] = useState(false);
 
+  if (esrScores.filter(s => s.score.standard == standard.code).length === 0) {
+    return null;
+  }
+
   return (
     <Accordion onActive={() => setExpanded(!expanded)}>
       <AccordionPanel
