@@ -8,6 +8,10 @@ import rootMessages from 'messages';
 function AltTextCPR({ cprScores, intl }) {
   const [expanded, setExpanded] = useState(false);
 
+  if (cprScores.filter(s => s.score).length === 0) {
+    return null;
+  }
+
   return (
     <Accordion onActive={() => setExpanded(!expanded)}>
       <AccordionPanel
@@ -38,12 +42,14 @@ function AltTextCPR({ cprScores, intl }) {
         }
       >
         <Box pad={{ vertical: 'small', horizontal: 'xsmall' }} border="top">
-          {cprScores.map(s => (
-            <Text>
-              {intl.formatMessage(rootMessages.rights[s.key])} -{' '}
-              {(Math.round(s.score.mean * 10) / 10).toFixed(1)}
-            </Text>
-          ))}
+          {cprScores
+            .filter(s => s.score)
+            .map(s => (
+              <Text>
+                {intl.formatMessage(rootMessages.rights[s.key])} -{' '}
+                {(Math.round(s.score.mean * 10) / 10).toFixed(1)}
+              </Text>
+            ))}
         </Box>
       </AccordionPanel>
     </Accordion>
