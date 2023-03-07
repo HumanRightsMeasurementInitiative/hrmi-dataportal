@@ -1039,6 +1039,10 @@
           {
             "key": "Expires",
             "value": "0"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
           }
         ]
       },
@@ -1048,6 +1052,10 @@
           {
             "key": "Cache-Control",
             "value": "max-age=604800"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "DENY"
           }
         ]
       }
