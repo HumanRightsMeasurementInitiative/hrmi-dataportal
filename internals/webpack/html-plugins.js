@@ -37,4 +37,24 @@ const htmlPlugins = keys(pages).map(
     }),
 );
 
+htmlPlugins.push(
+  new HtmlWebpackPlugin({
+    filename: `sitemap.xml`,
+    template: `sitemap/sitemap.xml`,
+    minify: {
+      removeComments: true,
+      collapseWhitespace: true,
+      removeRedundantAttributes: true,
+      useShortDoctype: true,
+      removeEmptyAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      keepClosingSlash: true,
+      minifyJS: true,
+      minifyCSS: true,
+      minifyURLs: true,
+    },
+    inject: true,
+  }),
+);
+
 module.exports = htmlPlugins;

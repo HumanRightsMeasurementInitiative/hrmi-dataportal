@@ -93,7 +93,7 @@ module.exports = options => ({
         ],
       },
       {
-        test: /\.html$/,
+        test: /\.(html|xml)$/,
         use: 'html-loader',
       },
       {
