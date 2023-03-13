@@ -8,6 +8,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const WebpackGitHash = require('webpack-git-hash');
 const CopyPlugin = require('copy-webpack-plugin');
+const XMLWebpackPlugin = require('xml-webpack-plugin');
 
 const htmlPlugins = require('./html-plugins');
 
@@ -93,6 +94,15 @@ module.exports = require('./webpack.base.babel')({
         minifyURLs: true,
       },
       inject: true,
+    }),
+
+    new XMLWebpackPlugin({
+      files: [
+        {
+          filename: `sitemap.xml`,
+          template: `sitemap/sitemap.xml`,
+        },
+      ],
     }),
 
     // Put it in the end to capture all the HtmlWebpackPlugin's
