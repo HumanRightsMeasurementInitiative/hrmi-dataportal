@@ -3,6 +3,8 @@ import { Heading, Box, AccordionPanel, Accordion, Text } from 'grommet';
 import { Down, Up } from 'grommet-icons';
 import { injectIntl } from 'react-intl';
 
+import { formatScore } from 'utils/scores';
+
 import rootMessages from 'messages';
 
 function AltTextCPR({ cprScores, intl }) {
@@ -46,8 +48,8 @@ function AltTextCPR({ cprScores, intl }) {
             .filter(s => s.score)
             .map(s => (
               <Text>
-                {intl.formatMessage(rootMessages.rights[s.key])} -{' '}
-                {(Math.round(s.score.mean * 10) / 10).toFixed(1)}
+                {intl.formatMessage(rootMessages['rights-shortened'][s.key])} -{' '}
+                {formatScore(s.score.mean, 1, intl)}
               </Text>
             ))}
         </Box>
