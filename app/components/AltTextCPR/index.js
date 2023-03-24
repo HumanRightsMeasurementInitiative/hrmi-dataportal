@@ -48,7 +48,7 @@ function AltTextCPR({ cprScores, intl }) {
             .filter(s => s.score)
             .map(s => (
               <Text>
-                {intl.formatMessage(rootMessages['rights-shortened'][s.key])} -{' '}
+                {intl.formatMessage(rootMessages['rights-shortened'][s.key])} ={' '}
                 {formatScore(s.score.mean, 1, intl)}
               </Text>
             ))}
