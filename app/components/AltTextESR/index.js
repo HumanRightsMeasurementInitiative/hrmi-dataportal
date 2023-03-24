@@ -48,7 +48,7 @@ function AltTextESR({ esrScores, standard, benchmark, intl }) {
             .filter(s => s.score.standard == standard.code)
             .map(s => (
               <Text>
-                {intl.formatMessage(rootMessages['rights-shortened'][s.key])} -{' '}
+                {intl.formatMessage(rootMessages['rights-shortened'][s.key])} ={' '}
                 {formatScore(s.score[benchmark.column], 1, intl)}%
               </Text>
             ))}
