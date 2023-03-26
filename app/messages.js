@@ -34,6 +34,14 @@ export default defineMessages({
       id: `${scope}.app.foodSecurityNote`,
       defaultMessage: '',
     },
+    showGraphData: {
+      id: `${scope}.app.showGraphData`,
+      defaultMessage: 'Show graph data in plain text',
+    },
+    hideGraphData: {
+      id: `${scope}.app.hideGraphData`,
+      defaultMessage: 'Hide graph data in plain text',
+    },
   },
   hints: {
     noResults: {
@@ -1007,6 +1015,76 @@ export default defineMessages({
     },
     violence: {
       id: `${scope}.rights.violence`,
+      defaultMessage: 'violence',
+    },
+  },
+  'rights-shortened': {
+    arrest: {
+      id: `${scope}.rights-shortened.arrest`,
+      defaultMessage: 'arrest',
+    },
+    assembly: {
+      id: `${scope}.rights-shortened.assembly`,
+      defaultMessage: 'assembly',
+    },
+    disappearance: {
+      id: `${scope}.rights-shortened.disappearance`,
+      defaultMessage: 'disappearance',
+    },
+    'death-penalty': {
+      id: `${scope}.rights-shortened.death-penalty`,
+      defaultMessage: 'death-penalty',
+    },
+    'extrajud-killing': {
+      id: `${scope}.rights-shortened.extrajud-killing`,
+      defaultMessage: 'extrajud-killing',
+    },
+    expression: {
+      id: `${scope}.rights-shortened.expression`,
+      defaultMessage: 'expression',
+    },
+    participation: {
+      id: `${scope}.rights-shortened.participation`,
+      defaultMessage: 'participation',
+    },
+    torture: {
+      id: `${scope}.rights-shortened.torture`,
+      defaultMessage: 'torture',
+    },
+    education: {
+      id: `${scope}.rights-shortened.education`,
+      defaultMessage: 'education',
+    },
+    food: {
+      id: `${scope}.rights-shortened.food`,
+      defaultMessage: 'food',
+    },
+    health: {
+      id: `${scope}.rights-shortened.health`,
+      defaultMessage: 'health',
+    },
+    housing: {
+      id: `${scope}.rights-shortened.housing`,
+      defaultMessage: 'housing',
+    },
+    work: {
+      id: `${scope}.rights-shortened.work`,
+      defaultMessage: 'work',
+    },
+    job: {
+      id: `${scope}.rights-shortened.job`,
+      defaultMessage: 'job',
+    },
+    jobcond: {
+      id: `${scope}.rights-shortened.jobcond`,
+      defaultMessage: 'jobcond',
+    },
+    union: {
+      id: `${scope}.rights-shortened.union`,
+      defaultMessage: 'union',
+    },
+    violence: {
+      id: `${scope}.rights-shortened.violence`,
       defaultMessage: 'violence',
     },
   },

@@ -93,6 +93,10 @@ module.exports = options => ({
         ],
       },
       {
+        test: /\.xml$/,
+        use: 'xml-loader',
+      },
+      {
         test: /\.html$/,
         use: 'html-loader',
       },

@@ -48,7 +48,8 @@
     "pdf": "npm-run-all -pr start generate-pdfs",
     "upload-pdfs-uat": "cross-env FIREBASE_ENV=uat node ./internals/scripts/upload-pdfs.js",
     "upload-pdfs-prod": "cross-env FIREBASE_ENV=prod node ./internals/scripts/upload-pdfs.js",
-    "fonts": "sh scripts/fonts.sh"
+    "fonts": "sh scripts/fonts.sh",
+    "sitemap": "node ./internals/scripts/sitemap-builder.js"
   },
   "browserslist": [
     "last 2 versions",
@@ -92,6 +93,7 @@
     "framer-motion": "^4.1.17",
     "grommet": "^2.13.0",
     "grommet-icons": "^4.4.0",
+    "helmet": "^6.0.1",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",
     "immer": "^8.0.1",
@@ -121,7 +123,9 @@
     "run-parallel-limit": "^1.1.0",
     "sanitize.css": "8.0.0",
     "styled-components": "4.2.0",
-    "url-search-params-polyfill": "^7.0.1"
+    "url-search-params-polyfill": "^7.0.1",
+    "xml-loader": "^1.2.1",
+    "xml-webpack-plugin": "^1.3.0"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",

@@ -11,7 +11,7 @@ import { createStructuredSelector } from 'reselect';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import styled from 'styled-components';
-import { intlShape, injectIntl } from 'react-intl';
+import { intlShape, injectIntl, formatMessage } from 'react-intl';
 
 import { loadContentIfNeeded } from 'containers/App/actions';
 import { getContentByKey, getCloseTargetPage } from 'containers/App/selectors';
@@ -99,26 +99,16 @@ export function AboutPathPage({
 
   // actual data
   const bulkContent = content.content;
-  // dummy data
-  // let bulkContent =
-  //   '<div><p>---sub-heading</p><p>The Human Rights Measurement Initiative (HRMI) is a unique collaborative venture between human rights practitioners, researchers, academics, and other human rights supporters.</p><p>---end-sub-heading</p><p>---text-section</p><p>Our goal is to produce the first comprehensive set of measurements for tracking the human rights performance of countries.</p><p>Our 2020 data set includes:</p><ul>  <li>Annual data on five economic and social rights for 197 countries (depending on the right) from 2007 to 2017, based on the award-winning <a href="https://serfindex.uconn.edu/">SERF Index</a> methodology.</li>  <li>Annual data on eight civil and political rights for 33 countries for the years 2018 - 2019, or 2017 - 2019 (depending on the country), with more countries added each year.</li></ul><p>Over time we aim to extend our civil and political rights data to the rest of the world, and expand our work to measure more human rights.</p><p>---end-text-section</p><p>---info-box</p><p><b>Learn more about the Human Rights Measurement Initiative:</b></p><p><a href="https://humanrightsmeasurement.org/about-hrmi/the-team/">Who are we?</a></p><p><a href="https://humanrightsmeasurement.org/methodology/overview/">Read about our methodology</a></p><p><a href="https://humanrightsmeasurement.org">Visit the main HRMI website</a></p><p><a href="https://humanrightsmeasurement.org/do-you-want-hrmi-human-rights-scores-for-your-country/">Work with us to produce more data for your country</a></p><p><a href="https://humanrightsmeasurement.org/get-involved/exploring-new-workstreams/">Work with us to measure more human rights</a></p><p>---end-info-box</p></div>';
 
-  // let subHeading = '';
-
-  // const sortText = () => {
-  // subHeading = bulkContent
-  //   .split('sub-heading')[1]
-  //   .replace('===end-', ' ')
-  //   .replace(/<\W?p>/g, ' ');
-  // bulkContent = bulkContent.split('===');
-  // };
-  // sortText();
+  const metaDescription =
+    intl.formatMessage(rootMessages.app.metaTitle) + ' - ' + pageTitle;
 
   return (
     <ContentWrap>
       <Helmet>
         <title>{pageTitle}</title>
-        <meta name="description" content="Description of Page" />
+        <meta name="description" content={metaDescription} />
+        <meta name="og:description" content={metaDescription} />
       </Helmet>
       <ContentContainer direction="column" header>
         <StyledContentHeader>

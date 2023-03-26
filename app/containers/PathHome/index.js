@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { Helmet } from 'react-helmet';
+import { injectIntl } from 'react-intl';
 
 import {
   getNumberCountriesWithScores,
@@ -45,6 +47,8 @@ import SectionFooter from 'components/Sections/SectionFooter';
 // styles
 import ContentWrap from 'styled/ContentWrap';
 
+import rootMessages from 'messages';
+
 const DEPENDENCIES = [
   'countries',
   'featured',
@@ -63,14 +67,24 @@ export function PathHome({
   onSelectCountryCategory,
   locale,
   countryCountAtRisk,
+  intl,
 }) {
   useInjectSaga({ key: 'app', saga });
   useEffect(() => {
     // kick off loading of data
     onLoadData();
   }, []);
+
+  const metaTitle = intl.formatMessage(rootMessages.app.metaTitle);
+  const metaDescription = intl.formatMessage(rootMessages.app.metaTitle);
+
   return (
     <ContentWrap>
+      <Helmet>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta property="og:description" content={metaDescription} />
+      </Helmet>
       <SectionIntro />
       <SectionDataCards
         noCountries={countryCount}
@@ -169,4 +183,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(PathHome);
+export default compose(withConnect)(injectIntl(PathHome));

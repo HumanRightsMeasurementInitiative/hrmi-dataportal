@@ -82,9 +82,6 @@ export function App({ match, intl }) {
   const description = intl.formatMessage(rootMessages.app.metaDescription);
   return (
     <AppWrapper>
-      <Helmet titleTemplate={`%s - ${title}`} defaultTitle={title}>
-        <meta name="description" content={description} />
-      </Helmet>
       <ScrollToTop>
         <CookieConsent />
         <RemoveFromPDFBox>

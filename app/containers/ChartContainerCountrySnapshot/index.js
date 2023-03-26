@@ -46,6 +46,8 @@ import NarrativeESRCompAssessment from 'components/CountryNarrative/NarrativeESR
 import NarrativeCPR from 'components/CountryNarrative/NarrativeCPR';
 import NarrativeCPRCompAssessment from 'components/CountryNarrative/NarrativeCPRCompAssessment';
 import Source from 'components/Source';
+import AltTextESR from 'components/AltTextESR';
+import AltTextCPR from 'components/AltTextCPR';
 
 import ButtonTextIcon from 'styled/ButtonTextIcon';
 import Hint from 'styled/Hint';
@@ -55,8 +57,6 @@ import { getMessageGrammar } from 'utils/narrative';
 
 import rootMessages from 'messages';
 import messages from './messages';
-
-import TabCountryBehindTheNumbers from '../../components/TabCountryBehindTheNumbers';
 
 const Styled = styled.div`
   margin-bottom: 35px;
@@ -166,6 +166,10 @@ export function ChartContainerCountrySnapshot({
   const esrData = dimensions.esr.score;
   const physIntData = dimensions.physint.score;
 
+  const esrScores = getRightsScoresForDimension(rights, 'esr');
+  const physintScores = getRightsScoresForDimension(rights, 'physint');
+  const empowermentScores = getRightsScoresForDimension(rights, 'empowerment');
+
   return (
     <Styled>
       <ChartHeader
@@ -220,6 +224,14 @@ export function ChartContainerCountrySnapshot({
           grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
           activeCode={activeCode}
         />
+        <RemoveFromPDFWrapper>
+          <AltTextESR
+            esrScores={esrScores}
+            standard={currentStandard}
+            benchmark={currentBenchmark}
+          />
+          <br />
+        </RemoveFromPDFWrapper>
         <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
             <NarrativeESR
@@ -261,6 +273,10 @@ export function ChartContainerCountrySnapshot({
           grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
           activeCode={activeCode}
         />
+        <RemoveFromPDFWrapper>
+          <AltTextCPR cprScores={physintScores} />
+          <br />
+        </RemoveFromPDFWrapper>
         <AddToPDFWrapper>
           <BreakBefore margin={{ bottom: 'medium' }} shouldBreak={physIntData}>
             <Box margin={{ bottom: 'medium' }}>
@@ -321,6 +337,10 @@ export function ChartContainerCountrySnapshot({
             grammar={getMessageGrammar(intl, countryCode, null, countryGrammar)}
             activeCode={activeCode}
           />
+          <RemoveFromPDFWrapper>
+            <AltTextCPR cprScores={empowermentScores} />
+            <br />
+          </RemoveFromPDFWrapper>
         </BreakBefore>
         <AddToPDFWrapper>
           <Box margin={{ bottom: 'medium' }}>
